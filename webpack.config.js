@@ -1,17 +1,17 @@
-const path = require('path')
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const { AureliaPlugin } = require('aurelia-webpack-plugin');
-const { optimize: { CommonsChunkPlugin }, ProvidePlugin } = require('webpack')
+const { optimize: { CommonsChunkPlugin }, ProvidePlugin } = require('webpack');
 
 // config helpers:
-const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || []
+const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
 const when = (condition, config, negativeConfig) =>
-  condition ? ensureArray(config) : ensureArray(negativeConfig)
+condition ? ensureArray(config) : ensureArray(negativeConfig);
 
 // primary config:
-const title = 'Aurelia Navigation Skeleton';
+const title = 'Web Jam LLC';
 const outDir = path.resolve(__dirname, 'dist');
 const srcDir = path.resolve(__dirname, 'src');
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
@@ -23,26 +23,26 @@ const cssRules = [
     loader: 'postcss-loader',
     options: { plugins: () => [require('autoprefixer')({ browsers: ['last 2 versions'] })]}
   }
-]
+];
 
 module.exports = ({production, server, extractCss, coverage} = {}) => ({
   resolve: {
     extensions: ['.js'],
-    modules: [srcDir, 'node_modules'],
+    modules: [srcDir, 'node_modules']
   },
   entry: {
     app: ['aurelia-bootstrapper'],
-    vendor: ['bluebird', 'jquery', 'bootstrap'],
+    vendor: ['bluebird', 'jquery', 'bootstrap']
   },
   output: {
     path: outDir,
     publicPath: baseUrl,
     filename: production ? '[name].[chunkhash].bundle.js' : '[name].[hash].bundle.js',
     sourceMapFilename: production ? '[name].[chunkhash].bundle.map' : '[name].[hash].bundle.map',
-    chunkFilename: production ? '[chunkhash].chunk.js' : '[hash].chunk.js',
+    chunkFilename: production ? '[chunkhash].chunk.js' : '[hash].chunk.js'
   },
   devServer: {
-    contentBase: baseUrl,
+    contentBase: baseUrl
   },
   module: {
     rules: [
@@ -53,15 +53,15 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
         issuer: [{ not: [{ test: /\.html$/i }] }],
         use: extractCss ? ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: cssRules,
-        }) : ['style-loader', ...cssRules],
+          use: cssRules
+        }) : ['style-loader', ...cssRules]
       },
       {
         test: /\.css$/i,
         issuer: [{ test: /\.html$/i }],
         // CSS required in templates cannot be extracted safely
         // because Aurelia would try to require it again in runtime
-        use: cssRules,
+        use: cssRules
       },
       { test: /\.html$/i, loader: 'html-loader' },
       { test: /\.js$/i, loader: 'babel-loader', exclude: nodeModulesDir },
@@ -79,8 +79,8 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       ...when(coverage, {
         test: /\.[jt]s$/i, loader: 'istanbul-instrumenter-loader',
         include: srcDir, exclude: [/\.{spec,test}\.[jt]s$/i],
-        enforce: 'post', options: { esModules: true },
-      }),
+        enforce: 'post', options: { esModules: true }
+      })
     ]
   },
   plugins: [
@@ -89,7 +89,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       'Promise': 'bluebird',
       '$': 'jquery',
       'jQuery': 'jquery',
-      'window.jQuery': 'jquery',
+      'window.jQuery': 'jquery'
     }),
     new HtmlWebpackPlugin({
       template: 'index.ejs',
@@ -100,17 +100,37 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       metadata: {
         // available in index.ejs //
         title, server, baseUrl
-      },
+      }
     }),
+    new HtmlWebpackPlugin({  // Also generate a test.html
+      filename: 'includes.html',
+      template: 'includes.html'
+    }),
+    new HtmlWebpackPlugin({  // Also generate a test.html
+      filename: 'polymer.html',
+      template: 'bower_components/polymer/polymer.html'
+    }),
+    new HtmlWebpackPlugin({  // Also generate a test.html
+      filename: 'polymer-mini.html',
+      template: 'bower_components/polymer/polymer-mini.html'
+    }),
+    new HtmlWebpackPlugin({  // Also generate a test.html
+      filename: 'polymer-micro.html',
+      template: 'bower_components/polymer/polymer-micro.html'
+    }),
+    new CopyWebpackPlugin([
+        { from: 'bower_components/webcomponentsjs/webcomponents.min.js', to: 'webcomponents.min.js' }
+    ]),
     ...when(extractCss, new ExtractTextPlugin({
       filename: production ? '[contenthash].css' : '[id].css',
-      allChunks: true,
+      allChunks: true
     })),
     ...when(production, new CommonsChunkPlugin({
       name: ['common']
     })),
     ...when(production, new CopyWebpackPlugin([
       { from: 'static/favicon.ico', to: 'favicon.ico' }
+      // { from: 'static/includes.html', to: 'includes.html' }
     ]))
-  ],
-})
+  ]
+});

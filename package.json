@@ -16,7 +16,8 @@
   "scripts": {
     "start": "nps",
     "test": "nps test",
-    "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && npm i -g yarn && yarn cache clean && yarn install"
+    "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && npm i -g yarn && yarn cache clean && yarn install",
+    "postinstall": "yarn global add bower && bower install"
   },
   "jest": {
     "modulePaths": [
@@ -90,6 +91,7 @@
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
+    "aurelia-polymer": "^1.0.0",
     "aurelia-bootstrapper": "^2.1.1",
     "aurelia-fetch-client": "^1.1.2",
     "aurelia-framework": "^1.1.2",
