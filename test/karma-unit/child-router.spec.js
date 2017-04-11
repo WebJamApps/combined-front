@@ -29,7 +29,7 @@ describe('the Child Router module', () => {
   });
 
   it('should have a welcome route', () => {
-    expect(sut.router.routes).toContain({ route: ['', 'welcome'], name: 'welcome',  moduleId: './welcome', nav: true, title: 'Welcome' });
+    expect(sut.router.routes).toContain({ route: ['welcome', 'welcome'], name: 'welcome',  moduleId: './welcome', nav: true, title: 'Welcome' });
   });
 
   it('should have a users route', () => {
@@ -38,5 +38,9 @@ describe('the Child Router module', () => {
 
   it('should have a child router route', () => {
     expect(sut.router.routes).toContain({ route: 'child-router', name: 'child-router', moduleId: './child-router', nav: true, title: 'Child Router' });
+  });
+  
+  it('should have a home route', () => {
+    expect(sut.router.routes).toContain({ route: '',  name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: true, title: 'Web Jam LLC' });
   });
 });
