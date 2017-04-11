@@ -7,7 +7,7 @@ module.exports = {
     [
       "env", {
         "targets": process.env.babelTarget === 'node' ? {
-          "node": ["current"]
+          "node": ["7.8.0"]
         } : {
           "browsers": [
             "last 2 versions",

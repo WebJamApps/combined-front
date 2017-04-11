@@ -1,17 +1,22 @@
 {
-  "name": "skeleton-esnext-webpack",
-  "version": "1.0.0",
-  "description": "A starter kit for building a standard navigation-style app with Aurelia and Webpack.",
+  "name": "web-jam-front",
+  "version": "0.1.0",
+  "description": "Front End of web-jam.com App",
   "main": "dist/app.bundle.js",
   "repository": {
-    "url": "git+ssh://git@github.com/aurelia/skeleton-navigation.git",
+    "url": "git+ssh://git@github.com/WebJamApps/web-jam-front.git",
     "type": "git"
   },
-  "author": "Bazyli Brzóska <bazyli.brzoska@gmail.com> (https://invent.life/)",
-  "license": "CC0-1.0",
+  "author": "HandlersAndKickers",
+  "license": "MIT",
+  "engines": {
+    "node": "7.8.0",
+    "npm": "4.2.0"
+  },
   "scripts": {
     "start": "nps",
-    "test": "nps test"
+    "test": "nps test",
+    "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && npm i -g yarn && yarn cache clean && yarn install"
   },
   "jest": {
     "modulePaths": [
@@ -35,6 +40,12 @@
     }
   },
   "devDependencies": {
+    "aurelia-tools": "^1.0.0",
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.15.0",
+    "html-hint": "^0.2.4",
+    "stylelint": "^7.8.0",
+    "stylelint-config-standard": "^16.0.0",
     "aurelia-loader-nodejs": "^1.0.1",
     "aurelia-pal-nodejs": "1.0.0-beta.1.0.0",
     "aurelia-protractor-plugin": "^1.0.1",
