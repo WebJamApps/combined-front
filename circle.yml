@@ -5,7 +5,7 @@ dependencies:
   override:
     - npm install -g yarn
     - yarn install
-    - npm start -- test.all
+    - npm start -- test.karma
 general:
   artifacts:
     - ./test/karma-coverage
