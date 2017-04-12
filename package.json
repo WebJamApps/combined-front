@@ -4,7 +4,7 @@
   "description": "Front End of web-jam.com App",
   "main": "dist/app.bundle.js",
   "repository": {
-    "url": "git+ssh://git@github.com/WebJamApps/web-jam-front.git",
+    "url": "git+ssh://git@github.com/WebJamApps/combined-front.git",
     "type": "git"
   },
   "author": "HandlersAndKickers",
@@ -17,7 +17,7 @@
     "start": "nps",
     "test": "nps test",
     "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && npm i -g yarn && yarn cache clean && yarn install",
-    "postinstall": "yarn global add bower && bower install", 
+    "postinstall": "yarn global add bower && bower install && npm run build:p && npm start -- build", 
     "build:p": "rm -rf static/includes.html && vulcanize --inline-scripts --inline-css includes.html > static/includes.html"
   },
   "jest": {
@@ -42,6 +42,7 @@
     }
   },
   "devDependencies": {
+    "dotenv": "^4.0.0",
     "aurelia-loader-nodejs": "^1.0.1",
     "aurelia-pal-nodejs": "1.0.0-beta.1.0.0",
     "aurelia-protractor-plugin": "^1.0.1",
@@ -94,6 +95,8 @@
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
+    "au-table": "^0.1.12",
+    "aurelia-auth": "^3.0.5",
     "aurelia-polymer": "^1.0.0",
     "aurelia-bootstrapper": "^2.1.1",
     "aurelia-fetch-client": "^1.1.2",
