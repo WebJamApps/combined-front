@@ -1,0 +1,11 @@
+<template>
+  <paper-material class="material-content">
+    <h2 class="material-content-h2">Our ${title}</h2>
+    <p class="material-content-p">By clicking this button and creating an account, I certify that I am 13 years of age or older 
+      and agree to the terms and conditions in the Privacy Policy and the Rights and Use policy.
+    </p>
+    <div style="text-align:center">
+      <button click.delegate="authenticate('google')" class="material-content-button">Login with Google</button>
+    </div>
+  </paper-material>
+</template>
