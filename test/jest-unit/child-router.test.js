@@ -31,7 +31,7 @@ describe('the Child Router module', () => {
   });
 
   it('should have a welcome route', () => {
-    expect(sut.router.routes).toContainEqual({ route: ['', 'welcome'], name: 'welcome',  moduleId: './welcome', nav: true, title: 'Welcome' });
+    expect(sut.router.routes).toContainEqual({ route: ['welcome', 'welcome'], name: 'welcome',  moduleId: './welcome', nav: true, title: 'Welcome' });
   });
 
   it('should have a users route', () => {

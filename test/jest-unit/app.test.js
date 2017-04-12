@@ -27,11 +27,11 @@ describe('the App module', () => {
   });
 
   it('configures the router title', () => {
-    expect(sut.router.title).toEqual('Aurelia');
+    expect(sut.router.title).toEqual('Web Jam LLC');
   });
 
   it('should have a welcome route', () => {
-    expect(sut.router.routes).toContainEqual({ route: ['', 'welcome'], name: 'welcome',  moduleId: './welcome', nav: true, title: 'Welcome' });
+    expect(sut.router.routes).toContainEqual({ route: ['welcome', 'welcome'], name: 'welcome',  moduleId: './welcome', nav: true, title: 'Welcome' });
   });
 
   it('should have a users route', () => {
