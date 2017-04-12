@@ -1,45 +1,70 @@
+
+const Counter = require('assertions-counter');
 import {App} from '../../src/app';
+import {AppState} from '../../src/classes/AppState.js';
+import {AuthStub, RouterStub, HttpMock} from './commons';
 
-class RouterStub {
-  configure(handler) {
-    handler(this);
-  }
-
-  map(routes) {
-    this.routes = routes;
+class AuthStub2 extends AuthStub {
+  isAuthenticated() {
+    this.authenticated = false;
+    return this.authenticated;
   }
 }
 
 describe('the App module', () => {
-  var sut;
-  var mockedRouter;
-
+  let app1;
+  let app2;
   beforeEach(() => {
-    mockedRouter = new RouterStub();
-    sut = new App();
-    sut.configureRouter(mockedRouter, mockedRouter);
+    app1 = new App(null, null, new AuthStub, new RouterStub, new HttpMock, new AppState);
+    app1.auth.setToken('No token');
+    app2 = new App(null, null, new AuthStub2, new RouterStub, new HttpMock, new AppState);
   });
 
-  it('contains a router property', () => {
-    expect(sut.router).toBeDefined();
+  it('tests configHttpClient', (done) => {
+    const { add: ok } = new Counter(2, done);
+    app1.auth.tokenInterceptor = 'tokenInterceptor';
+    app1.configHttpClient();
+    app1.httpClient.__configureCallback(new(class {
+      withDefaults(opts) {
+        expect(opts.mode).toBe('cors');
+        ok();
+        return this;
+      }
+      withInterceptor(token) {
+        expect(token).toBe(app1.auth.tokenInterceptor);
+        ok();
+        return this;
+      }
+    })());
   });
 
-  it('configures the router title', () => {
-    expect(sut.router.title).toEqual('Web Jam LLC');
+  it('tests logout', () => {
+    //console.log(app1);
+    app1.activate();
+    app1.logout();
+    expect(app1.authenticated).toBe(false);
   });
 
-  it('should have a welcome route', () => {
-    expect(sut.router.routes).toContain({ route: ['welcome', 'welcome'], name: 'welcome',  moduleId: './welcome', nav: true, title: 'Welcome' });
+  it('should get widescreen', () => {
+    //console.log(app1);
+    const app3 = new App(null, null, new AuthStub, new RouterStub, new HttpMock, new AppState);
+    expect(app3.widescreen).toBe(true);
   });
 
-  it('should have a users route', () => {
-    expect(sut.router.routes).toContain({ route: 'users', name: 'users', moduleId: './users', nav: true, title: 'Github Users' });
+  it('should toggle menu to be icons only', () => {
+    app2.activate();
+    app2.fullmenu = true;
+    //console.log(app1);
+    app2.togglemenu();
+    expect(app2.fullmenu).toBe(false);
+    expect(app2.drawerWidth).toBe('50px');
   });
 
-  it('should have a child router route', () => {
-    expect(sut.router.routes).toContain({ route: 'child-router', name: 'child-router', moduleId: './child-router', nav: true, title: 'Child Router' });
-  });
-  it('should have a home route', () => {
-    expect(sut.router.routes).toContain({ route: '',  name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: false, title: 'Web Jam LLC' });
+  it('should toggle menu to be icons with text', () => {
+    app1.fullmenu = false;
+    //console.log(app1);
+    app1.togglemenu();
+    expect(app1.fullmenu).toBe(true);
+    expect(app1.drawerWidth).toBe('175px');
   });
 });

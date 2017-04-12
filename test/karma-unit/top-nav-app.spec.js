@@ -1,4 +1,4 @@
-import {ChildRouter} from '../../src/child-router';
+import {TopNavApp} from '../../src/top-nav-app';
 
 class RouterStub {
   configure(handler) {
@@ -10,13 +10,13 @@ class RouterStub {
   }
 }
 
-describe('the Child Router module', () => {
+describe('the App module', () => {
   var sut;
   var mockedRouter;
 
   beforeEach(() => {
     mockedRouter = new RouterStub();
-    sut = new ChildRouter();
+    sut = new TopNavApp();
     sut.configureRouter(mockedRouter, mockedRouter);
   });
 
@@ -24,8 +24,8 @@ describe('the Child Router module', () => {
     expect(sut.router).toBeDefined();
   });
 
-  it('configures the heading', () => {
-    expect(sut.heading).toEqual('Child Router');
+  it('configures the router title', () => {
+    expect(sut.router.title).toEqual('Web Jam LLC');
   });
 
   it('should have a welcome route', () => {
@@ -39,8 +39,7 @@ describe('the Child Router module', () => {
   it('should have a child router route', () => {
     expect(sut.router.routes).toContain({ route: 'child-router', name: 'child-router', moduleId: './child-router', nav: true, title: 'Child Router' });
   });
-  
   it('should have a home route', () => {
-    expect(sut.router.routes).toContain({ route: '',  name: 'home', moduleId: './home', nav: true, title: 'Web Jam LLC' });
+    expect(sut.router.routes).toContain({ route: '',  name: 'home', moduleId: './home', nav: false, title: 'Web Jam LLC' });
   });
 });

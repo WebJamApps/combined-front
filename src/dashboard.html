@@ -1,0 +1,27 @@
+<template>
+<h2>Welcome ${user.name} to the Dashboard</h2>
+<!-- This form only displays if the user object has account_type = null -->
+<form>
+  <p>Since you are a new user, please provide the following information.</p>
+  <!-- input validation, must be 10 digits -->
+     <paper-input style="margin-left: 0.5cm; width:180px" label="10 Digit Phone Number" value.two-way="user.userPhone" required></paper-input>
+
+     <!-- <paper-dropdown-menu style="margin-left: 0.5cm; width:180px" label="Account Type" (iron-select)="genreChange($event.detail.item.value, 0)"> -->
+     <paper-dropdown-menu style="margin-left: 0.5cm; width:180px" label="Account Type">
+        <paper-listbox  required  class="dropdown-content" selected.two-way="user.userType">
+          <paper-item value=""></paper-item>
+          <template is="dom-repeat" items.two-way="types">
+            <paper-item model="{{item}}">{{item}}</paper-item>
+          </template>
+
+          <!-- Charity or Volunteer -->
+                    <!-- <paper-item  repeat.for="type of types" value.bind="type">${type}</paper-item> -->
+        </paper-listbox>
+      </paper-dropdown-menu>
+      <!-- <br>
+      selected product: ${user.type} -->
+       <paper-input style="margin-left: 0.5cm; width:180px" label="City" value.two-way="user.userCity" required></paper-input>
+        <paper-input style="margin-left: 0.5cm; width:180px" label="Zip Code" value.two-way="user.userZip" required></paper-input>
+       <paper-button style="margin:20px 3.5cm 0" raised click.trigger="updateUser()">Update</paper-button>
+    </form>
+</template>

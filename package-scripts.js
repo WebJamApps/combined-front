@@ -85,6 +85,6 @@ module.exports = {
         hmr: `webpack-dev-server -d --devtool '#source-map' --inline --hot --env.server`
       }
     },
-    serve: 'http-server dist --cors'
+    serve: 'pushstate-server dist'
   }
 };

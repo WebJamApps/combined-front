@@ -1,42 +1,43 @@
-import {PageObjectWelcome} from './welcome.po.js';
+//import {PageObjectWelcome} from './welcome.po.js';
 import {PageObjectSkeleton} from './skeleton.po.js';
-import {config} from '../protractor.conf'
+import {config} from '../protractor.conf';
 
 describe('aurelia skeleton app', function() {
-  let poWelcome;
+  //let poWelcome;
   let poSkeleton;
 
   beforeEach(() => {
     poSkeleton = new PageObjectSkeleton();
-    poWelcome = new PageObjectWelcome();
+    //poWelcome = new PageObjectWelcome();
 
     browser.loadAndWaitForAureliaPage(`http://localhost:${config.port}`);
   });
 
   it('should load the page and display the initial page title', () => {
-    expect(poSkeleton.getCurrentPageTitle()).toBe('Welcome | Aurelia');
+    expect(poSkeleton.getCurrentPageTitle()).toBe('Web Jam LLC | Web Jam LLC');
   });
 
-  it('should display greeting', () => {
-    expect(poWelcome.getGreeting()).toBe('Welcome to the Aurelia Navigation App!');
-  });
+  // it('should display greeting', () => {
+  //   expect(poWelcome.getGreeting()).toBe('Welcome to the Aurelia Navigation App!');
+  // });
 
-  it('should automatically write down the fullname', () => {
-    poWelcome.setFirstname('John');
-    poWelcome.setLastname('Doe');
-
-    // For now there is a timing issue with the binding.
-    // Until resolved we will use a short sleep to overcome the issue.
-    browser.sleep(200);
-    expect(poWelcome.getFullname()).toBe('JOHN DOE');
-  });
-
-  it('should show alert message when clicking submit button', () => {
-    expect(poWelcome.openAlertDialog()).toBe(true);
-  });
+  // it('should automatically write down the fullname', () => {
+  //   poWelcome.setFirstname('John');
+  //   poWelcome.setLastname('Doe');
+  //
+  //   // For now there is a timing issue with the binding.
+  //   // Until resolved we will use a short sleep to overcome the issue.
+  //   browser.sleep(200);
+  //   expect(poWelcome.getFullname()).toBe('JOHN DOE');
+  // });
+  //
+  // it('should show alert message when clicking submit button', () => {
+  //   expect(poWelcome.openAlertDialog()).toBe(true);
+  // });
 
   it('should navigate to users page', () => {
-    poSkeleton.navigateTo('#/users');
-    expect(poSkeleton.getCurrentPageTitle()).toBe('Github Users | Aurelia');
+    poSkeleton.navigateTo('/news');
+    browser.sleep(200);
+    expect(poSkeleton.getCurrentPageTitle()).toBe('News | Web Jam LLC');
   });
 });
