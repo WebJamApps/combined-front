@@ -1,6 +1,6 @@
 import {PLATFORM} from 'aurelia-pal';
 
-export class App {
+export class TopNavApp {
   configureRouter(config, router) {
     config.title = 'Web Jam LLC';
     config.map([
