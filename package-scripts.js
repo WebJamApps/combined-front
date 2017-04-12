@@ -1,5 +1,5 @@
-const {series, crossEnv, concurrent, rimraf} = require('nps-utils')
-const {config: {port : E2E_PORT}} = require('./test/protractor.conf')
+const {series, crossEnv, concurrent, rimraf} = require('nps-utils');
+const {config: {port: E2E_PORT}} = require('./test/protractor.conf');
 
 module.exports = {
   scripts: {
@@ -8,7 +8,7 @@ module.exports = {
       default: 'nps test.jest',
       jest: {
         default: crossEnv('babelTarget=node jest'),
-        watch: crossEnv('babelTarget=node jest --watch'),
+        watch: crossEnv('babelTarget=node jest --watch')
       },
       karma: {
         default: series(
@@ -20,13 +20,13 @@ module.exports = {
       },
       all: concurrent({
         browser: series.nps('test.karma', 'e2e'),
-        jest: 'nps test.jest',
+        jest: 'nps test.jest'
       })
     },
     e2e: {
       default: concurrent({
         webpack: `webpack-dev-server --inline --port=${E2E_PORT}`,
-        protractor: 'nps e2e.whenReady',
+        protractor: 'nps e2e.whenReady'
       }) + ' --kill-others --success first',
       protractor: {
         install: 'webdriver-manager update --standalone --chrome',
@@ -37,12 +37,12 @@ module.exports = {
         debug: series(
           'nps e2e.protractor.install',
           'protractor test/protractor.conf.js --elementExplorer'
-        ),
+        )
       },
       whenReady: series(
         `wait-on --timeout 120000 http-get://localhost:${E2E_PORT}/index.html`,
         'nps e2e.protractor'
-      ),
+      )
     },
     build: 'nps webpack.build',
     webpack: {
@@ -62,7 +62,7 @@ module.exports = {
           serve: series.nps(
             'webpack.build.development',
             'serve'
-          ),
+          )
         },
         production: {
           inlineCss: series(
@@ -76,15 +76,15 @@ module.exports = {
           serve: series.nps(
             'webpack.build.production',
             'serve'
-          ),
+          )
         }
       },
       server: {
         default: `webpack-dev-server -d --devtool '#source-map' --inline --env.server`,
         extractCss: `webpack-dev-server -d --devtool '#source-map' --inline --env.server --env.extractCss`,
         hmr: `webpack-dev-server -d --devtool '#source-map' --inline --hot --env.server`
-      },
+      }
     },
-    serve: 'http-server dist --cors',
-  },
-}
+    serve: 'http-server dist --cors'
+  }
+};
