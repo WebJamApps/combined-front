@@ -102,22 +102,23 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
         title, server, baseUrl
       }
     }),
-    new HtmlWebpackPlugin({  // Also generate a test.html
-      filename: 'includes.html',
-      template: 'includes.html'
-    }),
-    new HtmlWebpackPlugin({  // Also generate a test.html
-      filename: 'polymer.html',
-      template: 'bower_components/polymer/polymer.html'
-    }),
-    new HtmlWebpackPlugin({  // Also generate a test.html
-      filename: 'polymer-mini.html',
-      template: 'bower_components/polymer/polymer-mini.html'
-    }),
-    new HtmlWebpackPlugin({  // Also generate a test.html
-      filename: 'polymer-micro.html',
-      template: 'bower_components/polymer/polymer-micro.html'
-    }),
+    new CopyWebpackPlugin(
+      [{ from: 'static/favicon.ico', to: 'favicon.ico' },
+      { from: 'static/includes.html', to: 'includes.html' },
+      { from: 'static/imgs', to: 'styles/imgs' }]
+    ),
+    // new HtmlWebpackPlugin({
+    //   filename: 'polymer.html',
+    //   template: 'bower_components/polymer/polymer.html'
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: 'polymer-mini.html',
+    //   template: 'bower_components/polymer/polymer-mini.html'
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: 'polymer-micro.html',
+    //   template: 'bower_components/polymer/polymer-micro.html'
+    // }),
     new CopyWebpackPlugin([
         { from: 'bower_components/webcomponentsjs/webcomponents.min.js', to: 'webcomponents.min.js' }
     ]),

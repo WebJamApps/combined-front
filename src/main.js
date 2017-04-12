@@ -22,9 +22,10 @@ export async function configure(aurelia) {
   // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
   // aurelia.use.plugin(PLATFORM.moduleName('aurelia-html-import-template-loader'));
   
-  // document.addEventListener('WebComponentsReady', function() {
-  //   aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));
-  // });
-  await aurelia.start();
-  await aurelia.setRoot(PLATFORM.moduleName('app'));
+  document.addEventListener('WebComponentsReady', function() {
+    aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));
+  });
+  
+  // await aurelia.start();
+  // await aurelia.setRoot(PLATFORM.moduleName('app'));
 }
