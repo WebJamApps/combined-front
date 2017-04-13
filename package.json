@@ -17,8 +17,9 @@
     "start": "nps",
     "test": "npm start -- test.karma && nps test",
     "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && npm i -g yarn && yarn cache clean && yarn install",
-    "postinstall": "yarn global add bower && bower install && npm run build:p && npm start -- build", 
-    "build:p": "rm -rf static/includes.html && vulcanize --inline-scripts --inline-css includes.html > static/includes.html"
+    "postinstall": "yarn global add bower && bower install && npm run vulc && npm start -- build", 
+    "vulc": "rm -rf static/includes.html && vulcanize --inline-scripts --inline-css includes.html > static/includes.html",
+    "prod": "npm run vulc && npm start -- build && npm start -- serve"
   },
   "jest": {
     "modulePaths": [
