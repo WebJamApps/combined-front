@@ -41,6 +41,6 @@ describe('the Child Router module', () => {
   });
   
   it('should have a home route', () => {
-    expect(sut.router.routes).toContain({ route: '',  name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: true, title: 'Web Jam LLC' });
+    expect(sut.router.routes).toContain({ route: '',  name: 'home', moduleId: './home', nav: true, title: 'Web Jam LLC' });
   });
 });

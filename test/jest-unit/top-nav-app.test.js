@@ -1,4 +1,4 @@
-import {App} from '../../src/app';
+import {TopNavApp} from '../../src/top-nav-app';
 
 class RouterStub {
   routes;
@@ -18,7 +18,7 @@ describe('the App module', () => {
 
   beforeEach(() => {
     mockedRouter = new RouterStub();
-    sut = new App();
+    sut = new TopNavApp();
     sut.configureRouter(mockedRouter, mockedRouter);
   });
 

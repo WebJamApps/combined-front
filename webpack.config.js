@@ -1,10 +1,12 @@
 const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config({path: '.env'});
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const { AureliaPlugin } = require('aurelia-webpack-plugin');
 const { optimize: { CommonsChunkPlugin }, ProvidePlugin } = require('webpack');
-
+const webpack = require('webpack');
 // config helpers:
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
 const when = (condition, config, negativeConfig) =>
@@ -42,8 +44,10 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     chunkFilename: production ? '[chunkhash].chunk.js' : '[hash].chunk.js'
   },
   devServer: {
-    contentBase: baseUrl
+    contentBase: baseUrl,
+    port: parseInt(process.env.PORT, 10)
   },
+  // server: {port: parseInt(process.env.PORT, 10)},
   module: {
     rules: [
       // CSS required in JS/TS files should use the style-loader that auto-injects it into the website
@@ -107,20 +111,26 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       { from: 'static/includes.html', to: 'includes.html' },
       { from: 'static/imgs', to: 'styles/imgs' }]
     ),
-    // new HtmlWebpackPlugin({
-    //   filename: 'polymer.html',
-    //   template: 'bower_components/polymer/polymer.html'
-    // }),
-    // new HtmlWebpackPlugin({
-    //   filename: 'polymer-mini.html',
-    //   template: 'bower_components/polymer/polymer-mini.html'
-    // }),
-    // new HtmlWebpackPlugin({
-    //   filename: 'polymer-micro.html',
-    //   template: 'bower_components/polymer/polymer-micro.html'
-    // }),
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'AuthProductionBaseURL', 'PORT', 'BackendUrl', 'GoogleClientId']),
+    new webpack.DefinePlugin({'process.env': Object.keys(process.env).reduce((o, k) => {
+      o[k] = JSON.stringify(process.env[k]);
+      return o;
+    }, {})}
+  ),
+  // new HtmlWebpackPlugin({
+  //   filename: 'polymer.html',
+  //   template: 'bower_components/polymer/polymer.html'
+  // }),
+  // new HtmlWebpackPlugin({
+  //   filename: 'polymer-mini.html',
+  //   template: 'bower_components/polymer/polymer-mini.html'
+  // }),
+  // new HtmlWebpackPlugin({
+  //   filename: 'polymer-micro.html',
+  //   template: 'bower_components/polymer/polymer-micro.html'
+  // }),
     new CopyWebpackPlugin([
-        { from: 'bower_components/webcomponentsjs/webcomponents.min.js', to: 'webcomponents.min.js' }
+    { from: 'bower_components/webcomponentsjs/webcomponents.min.js', to: 'webcomponents.min.js' }
     ]),
     ...when(extractCss, new ExtractTextPlugin({
       filename: production ? '[contenthash].css' : '[id].css',
@@ -130,8 +140,8 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       name: ['common']
     })),
     ...when(production, new CopyWebpackPlugin([
-      { from: 'static/favicon.ico', to: 'favicon.ico' }
-      // { from: 'static/includes.html', to: 'includes.html' }
+    { from: 'static/favicon.ico', to: 'favicon.ico' }
+    // { from: 'static/includes.html', to: 'includes.html' }
     ]))
   ]
 });
