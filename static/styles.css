@@ -62,6 +62,10 @@ polymer-slideshow {
   padding-bottom: 38%;
 }
 
+div.page-host {
+  top: 0;
+}
+
 .splash {
   text-align: center;
   margin: 10% 0 0;
