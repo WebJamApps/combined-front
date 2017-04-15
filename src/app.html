@@ -1,66 +1,69 @@
 <template>
-  <div class="page-host">
-    <paper-drawer-panel right-drawer drawer-width.bind="drawerWidth">
-      <paper-header-panel drawer>
+    <div class="page-host">
+        <paper-drawer-panel right-drawer drawer-width.bind="drawerWidth">
+            <paper-header-panel drawer class="${currentStyles.sidebarClass}">
+                <div >
 
-          <img if.bind="fullmenu" width="100%" src=${currentStyles.sidebarImagePath} alt="Web Jam">
+                    <img if.bind="fullmenu" width="100%" src=${currentStyles.sidebarImagePath} alt="Web Jam">
 
-          <paper-item if.bind="widescreen" class="menu-toggle">
-            <i class="fa fa-bars pull-left fa-1x" click.delegate="togglemenu()"></i>
-          </paper-item>
+                    <paper-item if.bind="widescreen" class="menu-toggle">
+                        <i class="fa fa-bars pull-left fa-1x ${currentStyles.menuToggleClass}" click.delegate="toggleMenu()"></i>
+                    </paper-item>
 
-          <div class="nav-list">
-            <paper-item if.bind="!authenticated" class="login">
-              <a paper-drawer-toggle href="/login" class="nav-link">
-                <span class="fa fa-sign-in"></span>
-                <span if.bind="fullmenu" class="nav-item">Login</span>
-              </a>
-            </paper-item>
+                    <div class="nav-list">
+                        <paper-item if.bind="!authenticated" class="login">
+                            <a paper-drawer-toggle href="/login" class="nav-link">
+                                <span class="fa fa-sign-in"></span>
+                                <span if.bind="fullmenu" class="nav-item">Login</span>
+                            </a>
+                        </paper-item>
 
-            <paper-item if.bind="authenticated" class="login">
-              <a paper-drawer-toggle href="/dashboard" class="nav-link" >
-                <span class="fa fa-tachometer"></span>
-                <span class="nav-item" if.bind="fullmenu">Dashboard</span>
-              </a>
-            </paper-item>
+                        <paper-item if.bind="authenticated" class="login">
+                            <a paper-drawer-toggle href="/dashboard" class="nav-link">
+                                <span class="fa fa-tachometer"></span>
+                                <span class="nav-item" if.bind="fullmenu">Dashboard</span>
+                            </a>
+                        </paper-item>
 
-            <paper-item repeat.for="row of router.navigation"
-                        class="${row.isActive ? 'active' : ''} menu-toggle">
-              <a paper-drawer-toggle href.bind="row.href" class="nav-link">
-                <span class="${row.settings}"></span>
-                <span if.bind="fullmenu" class="nav-item">${row.title}</span>
-              </a>
-            </paper-item>
+                        <paper-item repeat.for="row of router.navigation"
+                                    class="${row.isActive ? 'active' : ''} menu-toggle">
+                            <a paper-drawer-toggle href.bind="row.href" class="nav-link">
+                                <span class="${row.settings}"></span>
+                                <span if.bind="fullmenu" class="nav-item">${row.title}</span>
+                            </a>
+                        </paper-item>
 
-            <paper-item if.bind="authenticated" class="login">
-              <a paper-drawer-toggle class="nav-link" click.delegate="logout()">
-                <span class="fa fa-sign-out"></span>
-              </a>
-              <span if.bind="fullmenu">&nbsp;</span>
-              <button if.bind="fullmenu" click.delegate="logout()" class="material-content-button">
-                Logout
-              </button>
-            </paper-item>
-        </div>
+                        <paper-item if.bind="authenticated" class="login">
+                            <a paper-drawer-toggle class="nav-link" click.delegate="logout()">
+                                <span class="fa fa-sign-out"></span>
+                            </a>
+                            <span if.bind="fullmenu">&nbsp;</span>
+                            <button if.bind="fullmenu" click.delegate="logout()" class="material-content-button">
+                                Logout
+                            </button>
+                        </paper-item>
+                    </div>
 
-      </paper-header-panel>
+                </div>
+            </paper-header-panel>
 
-      <paper-header-panel main class="main-panel">
+            <paper-header-panel main class="main-panel">
 
-        <paper-material class="material-header ${currentStyles.headerClass}" elevation="0">
+                <paper-material class="material-header ${currentStyles.headerClass}" elevation="0">
 
-          <paper-card alt="Web Jam" image="${currentStyles.headerImagePath}" class="${currentStyles.headerImageClass} ${currentStyles.headerClass}"></paper-card>
-          <paper-card class="${currentStyles.headerClass} header-text-card">
-            <h3 class="header-text ${currentStyles.headerClass}">Web Jam LLC</h3>
-          </paper-card>
+                    <paper-card alt="Web Jam" image="${currentStyles.headerImagePath}"
+                                class="${currentStyles.headerImageClass} ${currentStyles.headerClass}"></paper-card>
+                    <paper-card class="${currentStyles.headerClass} header-text-card">
+                        <h3 class="header-text ${currentStyles.headerClass}">${currentStyles.headerText}</h3>
+                    </paper-card>
 
-        </paper-material>
+                </paper-material>
 
-        <i class="fa fa-bars pull-right fa-2x mobile-menu-toggle" paper-drawer-toggle aria-hidden="true"></i>
+                <i class="fa fa-bars pull-right fa-2x mobile-menu-toggle" paper-drawer-toggle aria-hidden="true"></i>
 
-        <router-view></router-view>
+                <router-view></router-view>
 
-      </paper-header-panel>
-    </paper-drawer-panel>
-  </div>
+            </paper-header-panel>
+        </paper-drawer-panel>
+    </div>
 </template>

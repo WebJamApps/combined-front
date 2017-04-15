@@ -581,16 +581,30 @@ div.au-stagger {
     text-align: center;
 }
 
+.ohaf-sidebar {
+    background-color: #2a222a;
+}
 .ohaf-header {
     background-color: #565656;
 }
+.ohaf-header-image {
+    width: 85px;
+}
+.ohaf-menu-toggle {
+    color: white;
+}
 
+.home-sidebar {
+    background-color: #c0c0c0;
+}
 .home-header {
     background-color: #2a222a;
 }
-
 .home-header-image {
     width: 85px;
+}
+.home-menu-toggle {
+    color: #333;
 }
 
 .sidebar-image {
