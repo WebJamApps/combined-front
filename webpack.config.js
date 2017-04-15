@@ -45,6 +45,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
   },
   devServer: {
     contentBase: baseUrl,
+    historyApiFallback: true,
     port: parseInt(process.env.PORT, 10)
   },
   // server: {port: parseInt(process.env.PORT, 10)},
