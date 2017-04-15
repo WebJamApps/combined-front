@@ -7,3 +7,4 @@ yarn-error.log
 /.chrome
 bower_components
 .env
+.idea

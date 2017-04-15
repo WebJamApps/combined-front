@@ -1,65 +1,69 @@
 <template>
-<style>
-paper-item:hover {
-background-color: white;
-}
-</style>
-  <div class="page-host">
-    <paper-drawer-panel right-drawer drawer-width.bind="drawerWidth">
-      <paper-header-panel drawer>
-        <paper-material class="material-header" elevation="0" style="background-color: #2a222a">
-          <paper-card if.bind="fullmenu" image="../styles/imgs/webjamlogo1.png" style="width:180px; border:0">
-          </paper-card>    
-        </paper-material>
-        <div style="background-color: #c0c0c0;padding-top:5px; margin:0;padding-left:0">
-          <paper-item if.bind="widescreen" style="padding-left:10px">
-            <i class="fa fa-bars pull-left fa-1x" click.delegate="togglemenu()"></i>
-          </paper-item>
-          
-          <paper-item if.bind="!authenticated" style="background-color: #c09580; padding-left:10px">
-            <a paper-drawer-toggle style="display:block" href="/login" class="navlink">
-              <span class="fa fa-sign-in"></span>
-              <span style="padding-right:0; margin-right:0" if.bind="fullmenu">Login</span>
-            </a>
-          </paper-item>
-          
-          <paper-item if.bind="authenticated" style="background-color: #c09580; padding-left:10px">
-            <a paper-drawer-toggle style="display:block" href="/dashboard" class="navlink">
-              <span class="fa fa-tachometer"></span>
-              <span style="padding-right:0; margin-right:0" if.bind="fullmenu">Dashboard</span>
-            </a>
-          </paper-item>
-          
-          <paper-item style="padding-right:0; padding-left:10px" repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
-            <a paper-drawer-toggle style="display:block" href.bind="row.href" class="navlink">
-              <span class="${row.settings}"></span>
-              <span if.bind="fullmenu" style="padding-right:0; margin-right:0">${row.title}</span>
-            </a>
-          </paper-item>
+    <div class="page-host">
+        <paper-drawer-panel right-drawer drawer-width.bind="drawerWidth">
+            <paper-header-panel drawer class="${currentStyles.sidebarClass}">
+                <div >
 
-          
-          <paper-item if.bind="authenticated" style="background-color: #c09580; padding-left:10px">
-            <a paper-drawer-toggle style="display:block; color:#0275d8" click.delegate="logout()" class="navlink">
-              <span class="fa fa-sign-out"></span>
-            </a>
-            <span if.bind="fullmenu">&nbsp;</span>
-            <button if.bind="fullmenu" click.delegate="logout()" class="material-content-button">
-              Logout
-            </button>
-          </paper-item>
-        </div>
-      </paper-header-panel>
-      <paper-header-panel main class="main-panel">
-        <paper-material class="material-header" elevation="0">
-          <paper-card alt="web-jam-icon" image="../styles/imgs/webjamicon7.png" style="width:80px; background-color:#2a222a">
-          </paper-card> 
-          <paper-card  style="background-color:#2a222a;top:-30px;left:5px;text-align:center;">
-            <h3 style="color: white">Web Jam LLC</h3>
-          </paper-card>
-        </paper-material>
-        <i class="fa fa-bars pull-right fa-2x" paper-drawer-toggle aria-hidden="true" style="position:absolute; top:28px;right:12px;color:#c0c0c0"></i>
-        <router-view></router-view>
-      </paper-header-panel>
-    </paper-drawer-panel>
-  </div>
+                    <img if.bind="fullmenu" width="100%" src=${currentStyles.sidebarImagePath} alt="Web Jam">
+
+                    <paper-item if.bind="widescreen" class="menu-toggle">
+                        <i class="fa fa-bars pull-left fa-1x ${currentStyles.menuToggleClass}" click.delegate="toggleMenu()"></i>
+                    </paper-item>
+
+                    <div class="nav-list">
+                        <paper-item if.bind="!authenticated" class="login">
+                            <a paper-drawer-toggle href="/login" class="nav-link">
+                                <span class="fa fa-sign-in"></span>
+                                <span if.bind="fullmenu" class="nav-item">Login</span>
+                            </a>
+                        </paper-item>
+
+                        <paper-item if.bind="authenticated" class="login">
+                            <a paper-drawer-toggle href="/dashboard" class="nav-link">
+                                <span class="fa fa-tachometer"></span>
+                                <span class="nav-item" if.bind="fullmenu">Dashboard</span>
+                            </a>
+                        </paper-item>
+
+                        <paper-item repeat.for="row of router.navigation"
+                                    class="${row.isActive ? 'active' : ''} menu-toggle">
+                            <a paper-drawer-toggle href.bind="row.href" class="nav-link">
+                                <span class="${row.settings}"></span>
+                                <span if.bind="fullmenu" class="nav-item">${row.title}</span>
+                            </a>
+                        </paper-item>
+
+                        <paper-item if.bind="authenticated" class="login">
+                            <a paper-drawer-toggle class="nav-link" click.delegate="logout()">
+                                <span class="fa fa-sign-out"></span>
+                            </a>
+                            <span if.bind="fullmenu">&nbsp;</span>
+                            <button if.bind="fullmenu" click.delegate="logout()" class="material-content-button">
+                                Logout
+                            </button>
+                        </paper-item>
+                    </div>
+
+                </div>
+            </paper-header-panel>
+
+            <paper-header-panel main class="main-panel">
+
+                <paper-material class="material-header ${currentStyles.headerClass}" elevation="0">
+
+                    <paper-card alt="Web Jam" image="${currentStyles.headerImagePath}"
+                                class="${currentStyles.headerImageClass} ${currentStyles.headerClass}"></paper-card>
+                    <paper-card class="${currentStyles.headerClass} header-text-card">
+                        <h3 class="header-text ${currentStyles.headerClass}">${currentStyles.headerText}</h3>
+                    </paper-card>
+
+                </paper-material>
+
+                <i class="fa fa-bars pull-right fa-2x mobile-menu-toggle" paper-drawer-toggle aria-hidden="true"></i>
+
+                <router-view></router-view>
+
+            </paper-header-panel>
+        </paper-drawer-panel>
+    </div>
 </template>
