@@ -55,7 +55,7 @@ describe('the App module', () => {
     app2.activate();
     app2.fullmenu = true;
     //console.log(app1);
-    app2.togglemenu();
+    app2.toggleMenu();
     expect(app2.fullmenu).toBe(false);
     expect(app2.drawerWidth).toBe('50px');
   });
@@ -63,7 +63,7 @@ describe('the App module', () => {
   it('should toggle menu to be icons with text', () => {
     app1.fullmenu = false;
     //console.log(app1);
-    app1.togglemenu();
+    app1.toggleMenu();
     expect(app1.fullmenu).toBe(true);
     expect(app1.drawerWidth).toBe('175px');
   });

@@ -10,7 +10,7 @@ System.import('isomorphic-fetch');
 
 @inject(Router, FetchConfig, AuthService, AppRouterConfig, HttpClient, AppState)
 export class App {
-  constructor(router, fetchConfig, auth, appRouterConfig, httpClient, appState){
+  constructor(router, fetchConfig, auth, appRouterConfig, httpClient, appState) {
     this.router = router;
     this.appRouterConfig = appRouterConfig;
     this.fetchConfig = fetchConfig;
@@ -18,28 +18,29 @@ export class App {
     this.httpClient = httpClient;
     this.appState = appState;
   }
-  email='';
-  password='';
+
+  email = '';
+  password = '';
   authenticated = false;
-  token='';
-  
+  token = '';
+
   @bindable
   drawerWidth = '175px';
-  
+
   @bindable
   fullmenu = true;
-  
-  get widescreen(){
+
+  get widescreen() {
     let iswidescreen = false;
     let currentscreenwidth = document.documentElement.clientWidth;
     /* istanbul ignore else */
-    if (currentscreenwidth > 766){
+    if (currentscreenwidth > 766) {
       iswidescreen = true;
     }
     return iswidescreen;
   }
-  
-  togglemenu(){
+
+  toggleMenu() {
     if (this.fullmenu) {
       this.fullmenu = false;
       this.drawerWidth = '50px';
@@ -48,22 +49,22 @@ export class App {
       this.drawerWidth = '175px';
     }
   }
-  
-  logout(){
+
+  logout() {
     this.auth.setToken('');
     this.authenticated = false;
     this.auth.logout('/');
   }
-  
+
   // getTokens(){
   //   return this.auth.getTokenPayload();
   // }
   //
-  
+
   activate() {
     this.appRouterConfig.configure();
     this.configHttpClient();
-    if (this.auth.isAuthenticated()){
+    if (this.auth.isAuthenticated()) {
       this.authenticated = true;
       this.appState.setAuth(true);
       this.appState.setRoles(['dashboard']);
@@ -71,18 +72,52 @@ export class App {
       this.authenticated = false;
     }
   }
-  
-  configHttpClient(){
+
+  configHttpClient() {
     this.httpClient.configure(httpConfig => {
       httpConfig
-      .withDefaults({
-        mode: 'cors',
-        credentials: 'same-origin',
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      .withInterceptor(this.auth.tokenInterceptor);
+        .withDefaults({
+          mode: 'cors',
+          credentials: 'same-origin',
+          headers: {
+            'Accept': 'application/json'
+          }
+        })
+        .withInterceptor(this.auth.tokenInterceptor);
     });
+  }
+
+  get currentRoute() {
+    if (this.router.currentInstruction) {
+      return this.router.currentInstruction.config.name;
+    }
+  }
+
+  get currentStyles() {
+    let result = {};
+
+    if (this.currentRoute === 'ohaf') {
+      result = {
+        headerImagePath: '../static/imgs/ohaf/charitylogo.png',
+        headerText: 'Our Hands and Feet',
+        headerClass: 'ohaf-header',
+        headerImageClass: 'ohaf-header-image',
+        sidebarClass: 'ohaf-sidebar',
+        menuToggleClass: 'ohaf-menu-toggle'
+      };
+    } else {
+      result = {
+        headerImagePath: '../static/imgs/webjamicon7.png',
+        headerText: 'Web Jam LLC',
+        headerClass: 'home-header',
+        headerImageClass: 'home-header-image',
+        sidebarClass: 'home-sidebar',
+        menuToggleClass: 'home-menu-toggle'
+      };
+    }
+
+    result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
+
+    return result;
   }
 }
