@@ -43,7 +43,7 @@ let configForDevelopment = {
   // aureliauth's standard.
   tokenName: 'id_token',
   // Once logged in, we want to redirect the user to the welcome view.
-  loginRedirect: '#/dashboard'
+  loginRedirect: '/dashboard'
 };
 
 let configForProduction = {
@@ -69,7 +69,7 @@ let configForProduction = {
   // aureliauth's standard.
   tokenName: 'id_token',
   // Once logged in, we want to redirect the user to the welcome view.
-  loginRedirect: '#/dashboard'
+  loginRedirect: '/dashboard'
 };
 let config;
 if (
