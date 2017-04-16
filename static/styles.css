@@ -400,7 +400,7 @@ paper-material.material-header x-scope paper-material-0 {
 .home-slideshow {
   width: 100% !important;
   height: 0 !important;
-  padding-bottom: 37%;
+  padding-bottom: 50%;
 }
 
 .splash {
@@ -575,7 +575,8 @@ div.au-stagger {
 }
 
 .header-text-card {
-    top: -30px;
+    width: 182px;
+    top: -16px;
     left: 5px;
     text-align: center;
 }
