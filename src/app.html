@@ -4,7 +4,8 @@
             <paper-header-panel drawer class="${currentStyles.sidebarClass}">
                 <div >
 
-                    <img if.bind="fullmenu" width="100%" src=${currentStyles.sidebarImagePath} alt="Web Jam">
+                    <paper-card if.bind="fullmenu" image=${currentStyles.sidebarImagePath} alt="Web Jam"></paper-card>
+                    <paper-card if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 50px"></paper-card>
 
                     <paper-item if.bind="widescreen" class="menu-toggle">
                         <i class="fa fa-bars pull-left fa-1x ${currentStyles.menuToggleClass}" click.delegate="toggleMenu()"></i>
