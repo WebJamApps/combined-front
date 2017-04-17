@@ -310,12 +310,12 @@ section.au-enter-active {
 }
 
 .material-header {
-    height: 88px;
-    margin-left: auto;
-    overflow-y: auto;
-    min-height: 88px;
-    background-color: #2a222a;
-    margin-bottom: auto;
+  height: 88px;
+  margin-left: auto;
+  overflow-y: auto;
+  min-height: 88px;
+  background-color: #2a222a;
+  margin-bottom: auto;
 }
 
 .material-header-content {
@@ -573,10 +573,10 @@ div.au-stagger {
 }
 
 .header-text-card {
-    width: 182px;
-    top: -16px;
-    left: 5px;
-    text-align: center;
+  width: 182px;
+  top: -16px;
+  left: 5px;
+  text-align: center;
 }
 
 .ohaf-sidebar {
