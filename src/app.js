@@ -41,6 +41,7 @@ export class App {
   }
 
   toggleMenu() {
+    console.debug(this.fullmenu);
     if (this.fullmenu) {
       this.fullmenu = false;
       this.drawerWidth = '50px';
