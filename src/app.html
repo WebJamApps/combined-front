@@ -4,7 +4,7 @@
             <paper-header-panel drawer class="${currentStyles.sidebarClass}">
                 <div >
 
-                    <paper-card if.bind="fullmenu" image=${currentStyles.sidebarImagePath} alt="Web Jam"></paper-card>
+                    <paper-card if.bind="fullmenu" image="${currentStyles.sidebarImagePath}" alt="Web Jam"></paper-card>
                     <paper-card if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 50px"></paper-card>
 
                     <paper-item if.bind="widescreen" class="menu-toggle">
@@ -53,9 +53,13 @@
                 <paper-material class="material-header ${currentStyles.headerClass}" elevation="0">
 
                     <paper-card alt="Web Jam" image="${currentStyles.headerImagePath}"
-                                class="${currentStyles.headerImageClass} ${currentStyles.headerClass}"></paper-card>
+                                class="${currentStyles.headerImageClass} ${currentStyles.headerClass}" style="bottom:5px"></paper-card>
                     <paper-card class="${currentStyles.headerClass} header-text-card">
-                        <h3 class="header-text ${currentStyles.headerClass}">${currentStyles.headerText}</h3>
+                        <h3 class="header-text ${currentStyles.headerClass}">
+                          ${currentStyles.headerText1}<br>
+                          ${currentStyles.headerText2}<br>
+                          ${currentStyles.headerText3}
+                        </h3>
                     </paper-card>
 
                 </paper-material>
