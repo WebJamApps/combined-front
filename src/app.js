@@ -100,7 +100,9 @@ export class App {
     if (this.currentRoute === 'ohaf') {
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',
-        headerText: 'Our Hands and Feet',
+        headerText1: 'Our',
+        headerText2: 'Hands And',
+        headerText3: 'Feet',
         headerClass: 'ohaf-header',
         headerImageClass: 'ohaf-header-image',
         sidebarClass: 'ohaf-sidebar',
