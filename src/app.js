@@ -41,6 +41,7 @@ export class App {
   }
 
   toggleMenu() {
+    console.debug(this.fullmenu);
     if (this.fullmenu) {
       this.fullmenu = false;
       this.drawerWidth = '50px';
@@ -99,7 +100,9 @@ export class App {
     if (this.currentRoute === 'ohaf') {
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',
-        headerText: 'Our Hands and Feet',
+        headerText1: 'Our',
+        headerText2: 'Hands And',
+        headerText3: 'Feet',
         headerClass: 'ohaf-header',
         headerImageClass: 'ohaf-header-image',
         sidebarClass: 'ohaf-sidebar',
@@ -108,7 +111,7 @@ export class App {
     } else {
       result = {
         headerImagePath: '../static/imgs/webjamicon7.png',
-        headerText: 'Web Jam LLC',
+        headerText1: 'Web Jam LLC',
         headerClass: 'home-header',
         headerImageClass: 'home-header-image',
         sidebarClass: 'home-sidebar',

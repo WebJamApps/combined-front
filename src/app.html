@@ -1,17 +1,23 @@
 <template>
+<style>
+paper-item:hover {
+  background-color: white;
+}
+</style>
     <div class="page-host">
         <paper-drawer-panel right-drawer drawer-width.bind="drawerWidth">
             <paper-header-panel drawer class="${currentStyles.sidebarClass}">
                 <div >
 
-                    <img if.bind="fullmenu" width="100%" src=${currentStyles.sidebarImagePath} alt="Web Jam">
-
-                    <paper-item if.bind="widescreen" class="menu-toggle">
-                        <i class="fa fa-bars pull-left fa-1x ${currentStyles.menuToggleClass}" click.delegate="toggleMenu()"></i>
-                    </paper-item>
-
+                    <paper-card if.bind="fullmenu" image="${currentStyles.sidebarImagePath}" alt="Web Jam"></paper-card>
+                    <paper-card if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 50px"></paper-card>
+  <!-- <paper-item if.bind="widescreen" class="menu-toggle"> -->
                     <div class="nav-list">
-                        <paper-item if.bind="!authenticated" class="login">
+                        <p if.bind="fullmenu" style="font-size:1px">&nbsp;</p>
+                      <paper-item if.bind="widescreen">
+                          <i class="fa fa-bars pull-left fa-1x" click.delegate="toggleMenu()" style="color:#0275d8"></i>
+                      </paper-item>
+                        <paper-item if.bind="!authenticated" class="login" style="padding-left:10px">
                             <a paper-drawer-toggle href="/login" class="nav-link">
                                 <span class="fa fa-sign-in"></span>
                                 <span if.bind="fullmenu" class="nav-item">Login</span>
@@ -53,8 +59,17 @@
 
                     <paper-card alt="Web Jam" image="${currentStyles.headerImagePath}"
                                 class="${currentStyles.headerImageClass} ${currentStyles.headerClass}"></paper-card>
-                    <paper-card class="${currentStyles.headerClass} header-text-card">
-                        <h3 class="header-text ${currentStyles.headerClass}">${currentStyles.headerText}</h3>
+                    <paper-card class="${currentStyles.headerClass} header-text-card" style="bottom:30px">
+                        <h3 if.bind="currentRoute !== 'ohaf'" class="header-text ${currentStyles.headerClass}">
+                          ${currentStyles.headerText1}
+                          <!-- <br>${currentStyles.headerText2}
+                          <br>${currentStyles.headerText3} -->
+                        </h3>
+                        <h3 if.bind="currentRoute == 'ohaf'" class="header-text ${currentStyles.headerClass}">
+                          ${currentStyles.headerText1}
+                          <br>${currentStyles.headerText2}
+                          <br>${currentStyles.headerText3}
+                        </h3>
                     </paper-card>
 
                 </paper-material>
