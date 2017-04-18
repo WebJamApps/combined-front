@@ -111,7 +111,7 @@ export class App {
     } else {
       result = {
         headerImagePath: '../static/imgs/webjamicon7.png',
-        headerText: 'Web Jam LLC',
+        headerText1: 'Web Jam LLC',
         headerClass: 'home-header',
         headerImageClass: 'home-header-image',
         sidebarClass: 'home-sidebar',
