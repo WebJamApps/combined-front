@@ -55,10 +55,15 @@
                     <paper-card alt="Web Jam" image="${currentStyles.headerImagePath}"
                                 class="${currentStyles.headerImageClass} ${currentStyles.headerClass}" style="top:2px"></paper-card>
                     <paper-card class="${currentStyles.headerClass} header-text-card" style="bottom:30px">
-                        <h3 class="header-text ${currentStyles.headerClass}">
+                        <h3 if.bind="currentRoute !== 'ohaf'" class="header-text ${currentStyles.headerClass}">
                           ${currentStyles.headerText1}
                           <!-- <br>${currentStyles.headerText2}
                           <br>${currentStyles.headerText3} -->
+                        </h3>
+                        <h3 if.bind="currentRoute == 'ohaf'" class="header-text ${currentStyles.headerClass}">
+                          ${currentStyles.headerText1}
+                          <br>${currentStyles.headerText2}
+                          <br>${currentStyles.headerText3}
                         </h3>
                     </paper-card>
 

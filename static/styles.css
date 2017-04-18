@@ -407,6 +407,12 @@ paper-material.material-content.x-scope.paper-material-0 {
   padding-bottom: 50%;
 }
 
+.music-slideshow {
+  width: 100% !important;
+  height: 0 !important;
+  padding-bottom: 30%;
+}
+
 .splash {
   text-align: center;
   margin: 10% 0 0;
@@ -573,7 +579,7 @@ div.au-stagger {
 }
 
 .header-text-card {
-  width: 182px;
+  /*width: 182px;*/
   /*top: -16px;*/
   left: 5px;
   text-align: center;
@@ -597,6 +603,7 @@ div.au-stagger {
 }
 .home-header {
   background-color: #2a222a;
+  margin: 0;
 }
 .home-header-image {
   width: 85px;
@@ -617,9 +624,9 @@ div.au-stagger {
 
 .mobile-menu-toggle {
   position: absolute;
-  top: 25px;
-  right: 12px;
-  color: #c0c0c0;
+  top: 33px;
+  right: 10px;
+  color: white;
 }
 
 .nav-list {
