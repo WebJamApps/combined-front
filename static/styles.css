@@ -15,6 +15,11 @@ h4 {
   font-family: 'PT Sans Caption';
 }
 
+h3.au-target.header-text.ohaf-header {
+  padding: 0;
+  margin: 5px;
+}
+
 p,
 a {
   font-family: 'Habibi';
@@ -351,6 +356,18 @@ paper-card.au-target.material-header.home-header.x-scope.paper-card-0 {
   top: -15px;
 }
 
+paper-card.au-target.header-text-card.x-scope.paper-card-0.ohaf-header {
+  top: 8px;
+}
+
+paper-card.au-target.x-scope.paper-card-0.ohaf-header-image.ohaf-header {
+  top: 18px;
+}
+
+paper-card.au-target.x-scope.paper-card-0.home-header-image.home-header {
+  top: 1px;
+}
+
 paper-item.x-scope.paper-item-0 {
   padding-left: 10px;
 }
@@ -396,6 +413,10 @@ paper-material.material-content.x-scope.paper-material-0 {
   padding: 8px;
 }
 
+paper-material.au-target.material-header.x-scope.paper-material-0.ohaf-header {
+  height: 104px;
+}
+
 .spaceUnderSlideShow {
   margin-top: auto;
 }
@@ -413,12 +434,13 @@ paper-material.material-content.x-scope.paper-material-0 {
   width: 100% !important;
   height: 0 !important;
   padding-bottom: 50%;
+  margin-top: -15px;
 }
 
 .music-slideshow {
   width: 100% !important;
   height: 0 !important;
-  padding-bottom: 30%;
+  padding-bottom: 38%;
 }
 
 .splash {
@@ -598,9 +620,12 @@ div.au-stagger {
 }
 .ohaf-header {
   background-color: #565656;
+  top: -14px;
 }
 .ohaf-header-image {
   width: 85px;
+  top: 10px;
+  left: 2px;
 }
 .ohaf-menu-toggle {
   color: white;
@@ -612,6 +637,7 @@ div.au-stagger {
 .home-header {
   background-color: #2a222a;
   margin: 0;
+  /*height: 90px;*/
 }
 .home-header-image {
   width: 85px;
@@ -631,7 +657,7 @@ div.au-stagger {
 }
 
 /*.menu-toggle-new {
-  min-height: 30px;
+min-height: 30px;
 }*/
 
 .mobile-menu-toggle {
@@ -657,6 +683,6 @@ div.au-stagger {
   margin-right: 0;
 }
 
-.login {
+/*.login {
   background-color: #c09580;
-}
+}*/
