@@ -21,7 +21,7 @@ module.exports = {
         //   "transform-es2015-literals",
         //   "transform-es2015-template-literals"
         // ],
-        "useBuiltIns": true
+        // "useBuiltIns": 'usage'
       }
     ]
   ]
