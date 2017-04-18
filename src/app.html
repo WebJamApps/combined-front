@@ -1,4 +1,9 @@
 <template>
+<style>
+paper-item:hover {
+  background-color: white;
+}
+</style>
     <div class="page-host">
         <paper-drawer-panel right-drawer drawer-width.bind="drawerWidth">
             <paper-header-panel drawer class="${currentStyles.sidebarClass}">
@@ -9,8 +14,8 @@
   <!-- <paper-item if.bind="widescreen" class="menu-toggle"> -->
                     <div class="nav-list">
                         <p if.bind="fullmenu" style="font-size:1px">&nbsp;</p>
-                      <paper-item>
-                          <i class="fa fa-bars pull-left fa-1x" click.delegate="toggleMenu()"></i>
+                      <paper-item if.bind="widescreen">
+                          <i class="fa fa-bars pull-left fa-1x" click.delegate="toggleMenu()" style="color:#0275d8"></i>
                       </paper-item>
                         <paper-item if.bind="!authenticated" class="login" style="padding-left:10px">
                             <a paper-drawer-toggle href="/login" class="nav-link">
@@ -53,7 +58,7 @@
                 <paper-material class="material-header ${currentStyles.headerClass}" elevation="0">
 
                     <paper-card alt="Web Jam" image="${currentStyles.headerImagePath}"
-                                class="${currentStyles.headerImageClass} ${currentStyles.headerClass}" style="top:2px"></paper-card>
+                                class="${currentStyles.headerImageClass} ${currentStyles.headerClass}"></paper-card>
                     <paper-card class="${currentStyles.headerClass} header-text-card" style="bottom:30px">
                         <h3 if.bind="currentRoute !== 'ohaf'" class="header-text ${currentStyles.headerClass}">
                           ${currentStyles.headerText1}
