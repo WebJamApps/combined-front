@@ -6,13 +6,13 @@
 
                     <paper-card if.bind="fullmenu" image="${currentStyles.sidebarImagePath}" alt="Web Jam"></paper-card>
                     <paper-card if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 50px"></paper-card>
-
-                    <paper-item if.bind="widescreen" class="menu-toggle">
-                        <i class="fa fa-bars pull-left fa-1x ${currentStyles.menuToggleClass}" click.delegate="toggleMenu()"></i>
-                    </paper-item>
-
+  <!-- <paper-item if.bind="widescreen" class="menu-toggle"> -->
                     <div class="nav-list">
-                        <paper-item if.bind="!authenticated" class="login">
+                        <p if.bind="fullmenu" style="font-size:1px">&nbsp;</p>
+                      <paper-item>
+                          <i class="fa fa-bars pull-left fa-1x" click.delegate="toggleMenu()"></i>
+                      </paper-item>
+                        <paper-item if.bind="!authenticated" class="login" style="padding-left:10px">
                             <a paper-drawer-toggle href="/login" class="nav-link">
                                 <span class="fa fa-sign-in"></span>
                                 <span if.bind="fullmenu" class="nav-item">Login</span>
