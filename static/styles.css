@@ -347,6 +347,14 @@ section.au-enter-active {
   text-align: center;
 }
 
+paper-card.au-target.material-header.home-header.x-scope.paper-card-0 {
+  top: -15px;
+}
+
+paper-item.x-scope.paper-item-0 {
+  padding-left: 10px;
+}
+
 .paper-drawer-panel-0 iron-selector.paper-drawer-panel > #drawer.paper-drawer-panel {
   background-color: #c0c0c0;
   width: 210px;
@@ -622,6 +630,10 @@ div.au-stagger {
   padding-right: 0;
 }
 
+/*.menu-toggle-new {
+  min-height: 30px;
+}*/
+
 .mobile-menu-toggle {
   position: absolute;
   top: 33px;
@@ -630,7 +642,7 @@ div.au-stagger {
 }
 
 .nav-list {
-  padding-top: 5px;
+  /*padding-top: 5px;*/
   margin: 0;
   padding-left: 0;
 }
