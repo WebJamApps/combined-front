@@ -1,18 +1,20 @@
-//import {PLATFORM} from 'aurelia-pal';
+import {PLATFORM} from 'aurelia-pal';
 import {inject, bindable} from 'aurelia-framework';
-import {Router} from 'aurelia-router';
-import {AppRouterConfig} from './app.router.config';
+import {AuthorizeStep} from 'aurelia-auth';
+import {UserAccess} from './classes/UserAccess.js';
+//import {Router} from 'aurelia-router';
+//import {AppRouterConfig} from './app.router.config';
 import {FetchConfig} from 'aurelia-auth';
 import {AuthService} from 'aurelia-auth';
 import {HttpClient} from 'aurelia-fetch-client';
 import {AppState} from './classes/AppState.js';
 System.import('isomorphic-fetch');
 
-@inject(Router, FetchConfig, AuthService, AppRouterConfig, HttpClient, AppState)
+@inject(FetchConfig, AuthService, HttpClient, AppState)
 export class App {
-  constructor(router, fetchConfig, auth, appRouterConfig, httpClient, appState) {
-    this.router = router;
-    this.appRouterConfig = appRouterConfig;
+  constructor(fetchConfig, auth, httpClient, appState) {
+    //this.router = router;
+    //this.appRouterConfig = appRouterConfig;
     this.fetchConfig = fetchConfig;
     this.auth = auth;
     this.httpClient = httpClient;
@@ -29,6 +31,27 @@ export class App {
 
   @bindable
   fullmenu = true;
+
+  configureRouter(config, router){
+    config.title = 'Web Jam LLC';
+    config.options.pushState = true;
+    config.options.root = '/';
+    config.addPipelineStep('authorize', AuthorizeStep);//Is the actually Authorization to get into the /dashboard
+    config.addPipelineStep('authorize', UserAccess);// provides access controls to prevent users from certain /dashboard child routes when not their userType (role)
+    config.map([
+      { route: 'dashboard', name: 'dashboard-router', moduleId: PLATFORM.moduleName('./dashboard-router'), nav: false, title: 'Dashboard', auth: true, settings: 'fa fa-tachometer'},
+      { route: 'login', name: 'login', moduleId: PLATFORM.moduleName('./login'), nav: false, title: 'Login', settings: 'fa fa-sign-in'},
+      { route: 'news', name: 'news', moduleId: PLATFORM.moduleName('./news'), nav: true, title: 'News', settings: 'fa fa-file-text-o' },
+      { route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./ohaf-home'), nav: true, title: 'OHAF', settings: 'fa fa-handshake-o' },
+      // { route: 'sc2rs', name: 'sc2rs', moduleId: './sc2rs-home', nav: true, title: 'SC2RS', settings: 'fa fa-star-o' },
+      // { route: 'library', name: 'library', moduleId: './library-home', nav: true, title: 'Library', settings: 'fa fa-book' },
+      { route: 'music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: true, title: 'Music', settings: 'fa fa-music' },
+      // { route: 'textadventure', name: 'textadventure', moduleId: './textadventure-home', nav: true, title: 'Text Adventure', settings: 'fa fa-shield' },
+      { route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: true, title: 'Web Jam LLC', settings: 'fa fa-home' }
+    ]);
+    config.fallbackRoute('/');
+    this.router = router;
+  }
 
   get widescreen() {
     let iswidescreen = false;
@@ -63,7 +86,7 @@ export class App {
   //
 
   activate() {
-    this.appRouterConfig.configure();
+    //this.appRouterConfig.configureRouter();
     this.configHttpClient();
     if (this.auth.isAuthenticated()) {
       this.authenticated = true;

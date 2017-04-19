@@ -1,4 +1,4 @@
-'use strict';
+
 const path = require('path');
 
 module.exports = function (config) {
@@ -44,7 +44,7 @@ module.exports = function (config) {
     coverageIstanbulReporter: {
       reports: [ 'html', 'lcovonly', 'text-summary' ],
       dir: path.resolve(__dirname, 'karma-coverage'),
-      fixWebpackSourcePaths: true,
+      fixWebpackSourcePaths: true
     },
 
     // Webpack please don't spam the console when running in karma!
@@ -70,7 +70,7 @@ module.exports = function (config) {
      * available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
      */
     browsers: [
-      'Chrome',
+      'Chrome'
     ],
 
     /*
@@ -78,5 +78,5 @@ module.exports = function (config) {
      * if true, Karma captures browsers, runs the tests and exits
      */
     singleRun: true
-  })
-}
+  });
+};
