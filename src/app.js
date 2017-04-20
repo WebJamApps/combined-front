@@ -91,7 +91,9 @@ export class App {
     if (this.auth.isAuthenticated()) {
       this.authenticated = true;
       this.appState.setAuth(true);
-      this.appState.setRoles(['dashboard']);
+      // if (this.appState.getRoles().length === 0){
+      //   this.appState.setRoles(['dashboard']);
+      // }
     } else {
       this.authenticated = false;
     }
