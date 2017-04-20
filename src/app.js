@@ -45,6 +45,8 @@ export class App {
       { route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./ohaf-home'), nav: true, title: 'OHAF', settings: 'fa fa-handshake-o' },
       // { route: 'sc2rs', name: 'sc2rs', moduleId: './sc2rs-home', nav: true, title: 'SC2RS', settings: 'fa fa-star-o' },
       { route: 'librarian', name: 'librarian', moduleId: PLATFORM.moduleName('./librarian'), nav: true, title: 'Librarian', settings: 'fa fa-book' },
+      { route: 'bookshelf', name: 'bookshelf', moduleId: PLATFORM.moduleName('./bookshelf'), nav: true, title: 'Bookshelf', settings: 'fa fa-book' },
+
       { route: 'music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: true, title: 'Music', settings: 'fa fa-music' },
       // { route: 'textadventure', name: 'textadventure', moduleId: './textadventure-home', nav: true, title: 'Text Adventure', settings: 'fa fa-shield' },
       { route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: true, title: 'Web Jam LLC', settings: 'fa fa-home' }
