@@ -1,0 +1,82 @@
+<template>
+  <div class="page-content">
+
+    <!-- <select value.bind="filterType">
+    <option value="">Filter by...</option>
+    <option repeat.for="filter of filterby" value.bind="filter">${filter}</option>
+  </select> -->
+  <paper-material elevation="0" style="z-index:10; position:relative">
+    <div style="width: 4.5in">
+      <h1 class="material-content-h1" style="margin-bottom: 10px">Bookshelf
+        <span style="font-size: 14px; float:right; margin-right: 132px; margin-top: 8px">
+          <div class="multiselect">
+            <div class="selectBox" click.trigger="showCheckboxes()">
+              <select>
+                <option>Filter by</option>
+              </select>
+              <div class="overSelect"></div>
+            </div>
+            <div id="checkboxes">
+              <label repeat.for="filter of filterby" for="filter">
+                <input type="checkbox" value.bind="filter" checked.bind="selectedFilter" change.delegate="filterPicked()"> ${filter}</label>
+              </div>
+            </div>
+          </span></h1>
+        </div>
+      </paper-material>
+
+      <paper-material elevation="0">
+        <div class="form-group" if.bind="keyword">
+          <input type="text" value.bind="filters[0].value" placeholder="Enter Keyword" class="form-control"/>
+        </div>
+
+        <div class="form-group" if.bind="mediaType">
+          <select id="type" class="form-control" value.bind="filters[1].value">
+            <option value="">Choose Media Type...</option>
+            <option repeat.for="type of mediaTypes" model.bind="type">${type}</option>
+          </select>
+        </div>
+
+        <div class="form-group" if.bind="siteLocation">
+          <select id="site" class="form-control" value.bind="filters[2].value">
+            <option value="">Choose Location...</option>
+            <option repeat.for="siteLocation of siteLocations" model.bind="siteLocation">${siteLocation}</option>
+          </select>
+        </div>
+      </paper-material>
+      <!-- cannot use aurelia table inside another polymer element, it breaks the data binding -->
+      <div class="search-table-outer" style="position:relative;overflow-x:visible">
+        <table aurelia-table="data.bind: books; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
+          <thead>
+            <tr>
+              <th aut-sort="key: title; default: asc">Title</th>
+              <th aut-sort="key: type">Type</th>
+              <th>Author</th>
+              <th>Pages</th>
+              <th>Year</th>
+              <th aut-sort="key: siteLocation">Site</th>
+              <!-- <th>Copies</th> -->
+              <th>Access</th>
+              <!-- <th>Comments</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="book of $displayData">
+              <td><a show.bind="book.url" href="${book.url}">
+                ${book.title}</a><a if.bind="!book.url" href="/#/dashboard/">${book.title}</a></td>
+                <td>${book.type}</td>
+                <td>${book.author}</td>
+                <td>${book.numberPages}</td>
+                <td>${book.dateOfPub}</td>
+                <td>${book.siteLocation}</td>
+                <!-- <td>${book.numberOfCopies}</td> -->
+                <td>${book.access}</td>
+                <!-- <td>${book.comments}</td> -->
+              </tr>
+            </tbody>
+          </table>
+          <!-- DO NOT DELETE the following "p" line; it is to slow down the rendering of the filter by box -->
+          <p style="color: white">selected filter: ${selectedFilter}</p>
+        </div>
+      </div>
+    </template>
