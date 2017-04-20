@@ -381,9 +381,9 @@ paper-item.x-scope.paper-item-0 {
   /* z-index: -1; */
 }
 
-.search-table-outer {
+/*.search-table-outer {
   overflow-x: auto;
-}
+}*/
 
 .aut-sort::after {
   font-family: FontAwesome;
@@ -683,9 +683,9 @@ min-height: 30px;
   margin-right: 0;
 }
 
-.search-table-outer {
+/*.search-table-outer {
   overflow-x: auto;
-}
+}*/
 
 .aut-sort::after {
   font-family: FontAwesome;
