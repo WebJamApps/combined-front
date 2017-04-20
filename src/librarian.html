@@ -1,9 +1,11 @@
 <template>
   <div class="page-content">
-    <h4 class="ohaf" style="margin:auto; padding-top:10px; text-align:center">Librarian</h4>
+    <h3 style="text-align:center; padding-bottom:20px">Librarian</h3>
+    
     <div class="books">
-      <h4 class="material-header-h4">Import Books from CSV</h4>
-      <paper-material class="material-content" elevation="3">
+    
+      <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
+          <h4 class="material-header-h4">Import Books from CSV</h4>
         <form>
           <input id="CSVFilePath" type="file" accept=".csv" files.bind="selectedFiles" style="padding-left: 100px" />
           <paper-button class="button-lib" raised click.trigger="createBooksFromCSV()">
@@ -12,8 +14,9 @@
         </paper-material>
         <p>&nbsp;</p>
         
-        <h4 class="material-header-h4">Export Books to CSV</h4>
-        <paper-material class="material-content" elevation="3">
+      
+        <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
+            <h4 class="material-header-h4">Export Books to CSV</h4>
           <form>
             <paper-button class="button-lib" raised click.trigger="makeCSVfile()">
               Export</paper-button>
@@ -21,8 +24,9 @@
           </paper-material>
           <p>&nbsp;</p>
           
-          <h4 class="material-header-h4">Add a Book</h4>
-          <paper-material class="material-content" elevation="3">
+        
+          <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
+              <h4 class="material-header-h4">Add a Book</h4>
             <form>
               <!-- input validation, must be 10 digits -->
               <paper-input  label="Title" value.two-way="newBook.title" required></paper-input>
