@@ -1,3 +1,4 @@
+
 require('aurelia-polyfills');
 require('aurelia-pal-browser').initialize();
 require('babel-polyfill');
