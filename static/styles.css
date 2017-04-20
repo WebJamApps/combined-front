@@ -771,7 +771,7 @@ div#drawer.style-scope.paper-drawer-panel.iron-selected {
 
 .button-lib {
   height: 0.35in;
-  width: 0.95in;
+  /*width: 0.95in;*/
   text-transform: none;
   margin: 20px 6cm 0;
   background-color: #c0c0c0;
