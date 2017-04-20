@@ -1,12 +1,12 @@
 <template>
   <div class="page-content">
-
+    
     <!-- <select value.bind="filterType">
     <option value="">Filter by...</option>
     <option repeat.for="filter of filterby" value.bind="filter">${filter}</option>
   </select> -->
-  <paper-material elevation="0" style="z-index:10; position:relative">
-    <div style="width: 4.5in">
+  <paper-material elevation="0" style="z-index:10; position:relative;">
+    <div style="width: 4.5in; margin:auto">
       <h1 class="material-content-h1" style="margin-bottom: 10px">Bookshelf
         <span style="font-size: 14px; float:right; margin-right: 132px; margin-top: 8px">
           <div class="multiselect">
@@ -24,19 +24,19 @@
           </span></h1>
         </div>
       </paper-material>
-
+      
       <paper-material elevation="0">
         <div class="form-group" if.bind="keyword" style="max-width: 4in; margin:auto; padding:5px">
           <input type="text" value.bind="filters[0].value" placeholder="Enter Keyword" class="form-control"/>
         </div>
-
+        
         <div class="form-group" if.bind="mediaType" style="max-width: 4in; margin:auto; padding:5px">
           <select id="type" class="form-control" value.bind="filters[1].value">
             <option value="">Choose Media Type...</option>
             <option repeat.for="type of mediaTypes" model.bind="type">${type}</option>
           </select>
         </div>
-
+        
         <div class="form-group" if.bind="siteLocation" style="max-width: 4in; margin:auto; padding:5px">
           <select id="site" class="form-control" value.bind="filters[2].value">
             <option value="">Choose Location...</option>
@@ -45,38 +45,42 @@
         </div>
       </paper-material>
       <!-- cannot use aurelia table inside another polymer element, it breaks the data binding -->
-      <div class="search-table-outer" style="position:relative;overflow-x:visible; overflow: scroll;">
-        <table aurelia-table="data.bind: books; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
-          <thead>
-            <tr>
-              <th style="padding:8px" aut-sort="key: title; default: asc">Title</th>
-              <th style="padding:8px" aut-sort="key: type">Type</th>
-              <th style="padding:8px" >Author</th>
-              <th style="padding:8px" >Pages</th>
-              <th style="padding:8px" >Year</th>
-              <th style="padding:8px" aut-sort="key: siteLocation">Location</th>
-              <!-- <th>Copies</th> -->
-              <th style="padding:8px">Access</th>
-              <!-- <th>Comments</th> -->
-            </tr>
-          </thead>
-          <tbody>
-            <tr repeat.for="book of $displayData">
-              <td style="padding:8px"><a style="font-size:11pt" show.bind="book.url" href="${book.url}">
-                ${book.title}</a><a style="font-size:11pt" if.bind="!book.url" href="/dashboard/">${book.title}</a></td>
-                <td style="padding:8px">${book.type}</td>
-                <td style="padding:8px">${book.author}</td>
-                <td style="padding:8px">${book.numberPages}</td>
-                <td style="padding:8px">${book.dateOfPub}</td>
-                <td style="padding:8px">${book.siteLocation}</td>
-                <!-- <td>${book.numberOfCopies}</td> -->
-                <td style="padding:8px">${book.access}</td>
-                <!-- <td>${book.comments}</td> -->
+    
+        <div class="search-table-outer" style="position:relative;overflow-x:visible;">
+        
+          <table aurelia-table="data.bind: books; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
+            <thead>
+              <tr>
+                <th style="padding:8px" aut-sort="key: title; default: asc">Title</th>
+                <th style="padding:8px" aut-sort="key: type">Type</th>
+                <th style="padding:8px" >Author</th>
+                <th style="padding:8px" >Pages</th>
+                <th style="padding:8px" >Year</th>
+                <th style="padding:8px" aut-sort="key: siteLocation">Location</th>
+                <!-- <th>Copies</th> -->
+                <th style="padding:8px">Access</th>
+                <!-- <th>Comments</th> -->
               </tr>
-            </tbody>
-          </table>
-          <!-- DO NOT DELETE the following "p" line; it is to slow down the rendering of the filter by box -->
-          <p style="color: white">selected filter: ${selectedFilter}</p>
+            </thead>
+            <tbody>
+              <tr repeat.for="book of $displayData">
+                <td style="padding:8px"><a style="font-size:11pt" show.bind="book.url" href="${book.url}">
+                  ${book.title}</a><a style="font-size:11pt" if.bind="!book.url" href="/dashboard/">${book.title}</a></td>
+                  <td style="padding:8px">${book.type}</td>
+                  <td style="padding:8px">${book.author}</td>
+                  <td style="padding:8px">${book.numberPages}</td>
+                  <td style="padding:8px">${book.dateOfPub}</td>
+                  <td style="padding:8px">${book.siteLocation}</td>
+                  <!-- <td>${book.numberOfCopies}</td> -->
+                  <td style="padding:8px">${book.access}</td>
+                  <!-- <td>${book.comments}</td> -->
+                </tr>
+              </tbody>
+            </table>
+      
+            <!-- DO NOT DELETE the following "p" line; it is to slow down the rendering of the filter by box -->
+            <p style="color: white">selected filter: ${selectedFilter}</p>
+          </div>
         </div>
-      </div>
+    
     </template>
