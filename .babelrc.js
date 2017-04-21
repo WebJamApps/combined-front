@@ -1,8 +1,12 @@
 module.exports = {
+ //  "env": {
+ //   "test": {
+ //     "plugins": [ "istanbul" ]
+ //   }
+ // },  
   "plugins": [
     "transform-decorators-legacy",
     "transform-class-properties"
-    // "istanbul"
   ],
   "presets": [
     [

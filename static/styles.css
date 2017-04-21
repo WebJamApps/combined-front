@@ -381,9 +381,9 @@ paper-item.x-scope.paper-item-0 {
   /* z-index: -1; */
 }
 
-.search-table-outer {
+/*.search-table-outer {
   overflow-x: auto;
-}
+}*/
 
 .aut-sort::after {
   font-family: FontAwesome;
@@ -423,11 +423,13 @@ paper-material.au-target.material-header.x-scope.paper-material-0.ohaf-header {
 
 .question {
   margin-bottom: 0;
+  margin-left: 10px;
 }
 
 .answer {
   margin-bottom: 1em;
   font-style: italic;
+  margin-left: 10px;
 }
 
 .home-slideshow {
@@ -683,6 +685,121 @@ min-height: 30px;
   margin-right: 0;
 }
 
-/*.login {
-  background-color: #c09580;
+/*.search-table-outer {
+  overflow-x: auto;
 }*/
+
+.aut-sort::after {
+  font-family: FontAwesome;
+  padding-left: 0.5em;
+  width: 1.28571429em;
+  display: inline-block;
+  text-align: center;
+}
+
+.aut-sortable::after {
+  content: "\f0dc";
+}
+
+.aut-asc::after {
+  content: "\f160";
+}
+
+.aut-desc::after {
+  content: "\f161";
+}
+
+.whiteicon {
+  color: white;
+}
+
+.td-filter {
+  border-collapse: collapse;
+  border: none;
+  text-align: left, top;
+  padding: 0;
+}
+
+.table-filter {
+  margin: 0;
+}
+
+.left-drawer {
+  background-color: #1b2a33;
+  z-index: 2147483647;
+}
+
+.main-content {
+  overflow-y: auto;
+}
+
+.multiselect {
+  width: 100px;
+}
+
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  width: 100%;
+  font-weight: bold;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#checkboxes {
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxes label {
+  display: block;
+}
+
+#checkboxes label:hover {
+  background-color: #1e90ff;
+}
+
+div#drawer.style-scope.paper-drawer-panel.iron-selected {
+  z-index: 2147483647;
+}
+
+.button-lib {
+  height: 0.35in;
+  /*width: 0.95in;*/
+  text-transform: none;
+  margin: 20px 6cm 0;
+  background-color: #c0c0c0;
+  border-width: thin;
+  border-style: outset;
+  border-color: #8c8c8c;
+}
+
+.button-checkout {
+  height: 0.35in;
+  width: 0.95in;
+  text-transform: none;
+  background-color: black;
+  border-width: thin;
+  border-style: outset;
+  border-color: #737373;
+  color: white;
+}
+
+.button-checkin {
+  height: 0.35in;
+  width: 0.95in;
+  text-transform: none;
+  background-color: #88bde6;
+  border-width: thin;
+  border-style: outset;
+  border-color: #2d8bd2;
+  color: black;
+}
