@@ -423,11 +423,13 @@ paper-material.au-target.material-header.x-scope.paper-material-0.ohaf-header {
 
 .question {
   margin-bottom: 0;
+  margin-left: 10px;
 }
 
 .answer {
   margin-bottom: 1em;
   font-style: italic;
+  margin-left: 10px;
 }
 
 .home-slideshow {
