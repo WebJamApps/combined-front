@@ -30,15 +30,27 @@ export class Librarian {
   }
 
   async activate(){
+    if (process.env.NODE_ENV !== 'production'){
+      this.backend = process.env.BackendUrl;
+    }
     await fetch;
-
+    //if (process.env.NODE_ENV !== 'production'){
     this.httpClient.configure(config => {
       config
       .useStandardConfiguration()
-      .withBaseUrl(process.env.BackendUrl);
-      // .withInterceptor(this.auth.tokenInterceptor);
+      .withBaseUrl(this.backend);
     });
   }
+
+  // async activate(){
+  //   await fetch;
+  //   this.httpClient.configure(config => {
+  //     config
+  //     .useStandardConfiguration()
+  //     .withBaseUrl(process.env.BackendUrl);
+  //     // .withInterceptor(this.auth.tokenInterceptor);
+  //   });
+  // }
 
   types = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audiobook', 'template'];
 
