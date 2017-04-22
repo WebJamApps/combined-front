@@ -34,22 +34,12 @@ export class Bookshelf {
       .useStandardConfiguration()
       .withBaseUrl(this.backend);
     });
+    
+    const res = await this.httpClient.fetch('/book/getall');
+    this.books =  await res.json();
+    this.populateTypes();
+    this.populateSites();
   }
-  
-  // async activate(){
-  //   await fetch;
-
-  //   this.httpClient.configure(config => {
-  //     config
-  //     .useStandardConfiguration()
-  //     .withBaseUrl(process.env.BackendUrl);
-  //   });
-  //   const res = await this.httpClient.fetch('/book/getall');
-  //   this.books =  await res.json();
-  //   this.populateTypes();
-  //   this.populateSites();
-  //   // this.getMediaTypes();
-  // }
   
   filterPicked(){
     let arrayLength = this.selectedFilter.length;
