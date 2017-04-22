@@ -7,4 +7,4 @@ dependencies:
     - yarn install
 general:
   artifacts:
-    - ./test/karma-coverage
+    - ./coverage
