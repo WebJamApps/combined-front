@@ -9,8 +9,8 @@ const srcContext = require.context(
   '../src',
   // recursive:
   true,
-  // test file regex:
-  /\.spec\.[tj]s$/igm
+  // src file regex:
+  /\.js$/i
 );
 
 const testContext = require.context(
@@ -19,7 +19,7 @@ const testContext = require.context(
   // recursive:
   true,
   // test file regex:
-  /\.spec\.[tj]s$/igm
+  /\.spec\.js$/i
 );
 
 function requireAllInContext(requireContext) {

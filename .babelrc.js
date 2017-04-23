@@ -1,9 +1,10 @@
 module.exports = {
- //  "env": {
- //   "test": {
- //     "plugins": [ "istanbul" ]
- //   }
- // },  
+  "env": {
+   "test": {
+     "sourceMap": "inline",
+     "plugins": [ "istanbul" ],
+   }
+ },
   "plugins": [
     "transform-decorators-legacy",
     "transform-class-properties"
@@ -30,6 +31,6 @@ module.exports = {
       }
     ]
   ]
-  
-  
+
+
 }

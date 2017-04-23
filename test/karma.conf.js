@@ -28,10 +28,10 @@ module.exports = function (config) {
      * available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
      */
     preprocessors: {
-      'test/karma-bundle.js': [ 'webpack' ]
+      'test/karma-bundle.js': [ 'webpack', 'sourcemap' ]
     },
 
-    webpack: require('../webpack.config')({ coverage: true }),
+    webpack: require('../webpack.config')(),
 
     /*
      * test results reporter to use
@@ -39,7 +39,7 @@ module.exports = function (config) {
      * possible values: 'dots', 'progress'
      * available reporters: https://npmjs.org/browse/keyword/karma-reporter
      */
-    reporters: [ 'mocha', 'progress', 'coverage-istanbul' ],
+    reporters: [ 'mocha', 'coverage-istanbul' ],
 
     coverageIstanbulReporter: {
       reports: [ 'html', 'lcovonly', 'text-summary' ],
