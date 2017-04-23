@@ -21,27 +21,6 @@
     "vulc": "rm -rf static/includes.html && vulcanize --inline-scripts --inline-css includes.html > static/includes.html",
     "prod": "npm run vulc && npm start -- build && npm start -- serve"
   },
-  "jest": {
-    "modulePaths": [
-      "<rootDir>/src",
-      "<rootDir>/node_modules"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json"
-    ],
-    "transform": {
-      "^.+\\.jsx?$": "babel7-jest"
-    },
-    "testRegex": "\\.test\\.(ts|js)x?$",
-    "setupFiles": [
-      "<rootDir>/test/jest-pretest.js"
-    ],
-    "testEnvironment": "node",
-    "moduleNameMapper": {
-      "aurelia-(.*)": "<rootDir>/node_modules/$1"
-    }
-  },
   "dependencies": {
     "au-table": "^0.1.12",
     "aurelia-auth": "^3.0.5",
