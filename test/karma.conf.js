@@ -39,7 +39,7 @@ module.exports = function (config) {
      * possible values: 'dots', 'progress'
      * available reporters: https://npmjs.org/browse/keyword/karma-reporter
      */
-    reporters: [ 'mocha', 'progress', 'coverage-istanbul' ],
+    reporters: [ 'mocha', 'coverage-istanbul' ],
 
     coverageIstanbulReporter: {
       reports: [ 'html', 'lcovonly', 'text-summary' ],
