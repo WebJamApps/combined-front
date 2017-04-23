@@ -8,3 +8,15 @@ dependencies:
 general:
   artifacts:
     - ./coverage
+
+deployment:
+  master:
+    branch: master
+    commands:
+      - curl -v -X DELETE https://circleci.com/api/v1.1/project/github/WebJamApps/web-jam-back/build-cache?circle-token=$TRIGGER_TOKEN
+      - curl -v -X POST https://circleci.com/api/v1.1/project/github/WebJamApps/web-jam-back/tree/master?circle-token=$TRIGGER_TOKEN
+  dev:
+    branch: dev
+    commands:
+      - curl -v -X DELETE https://circleci.com/api/v1.1/project/github/WebJamApps/web-jam-back/build-cache?circle-token=$TRIGGER_TOKEN
+      - curl -v -X POST https://circleci.com/api/v1.1/project/github/WebJamApps/web-jam-back/tree/dev?circle-token=$TRIGGER_TOKEN
