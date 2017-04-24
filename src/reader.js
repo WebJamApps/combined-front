@@ -33,9 +33,8 @@ export class Reader {
     } else {
       this.router.navigate('login');
     }
-    
-    this.user = {
-    };
+    this.backend = '';
+    this.user = {};
   }
   
   async activate(){
