@@ -2,24 +2,24 @@
 import {HttpMock} from './commons';
 import {Bookshelf} from '../../src/bookshelf';
 
-let book = {
-  'title': '',
-  'type': 'hardback',
-  'author': '',
-  'numberPages': 0,
-  'dateOfPub': 0,
-  'url': '',
-  'isbn': '',
-  'siteLocation': '',
-  'numberOfCopies': 1,
-  'access': '',
-  'comments': '',
-  'checkedOutBy': '',
-  'checkedOutByName': '',
-  '_id': '12345'
-};
+// let book = {
+//   'title': '',
+//   'type': 'hardback',
+//   'author': '',
+//   'numberPages': 0,
+//   'dateOfPub': 0,
+//   'url': '',
+//   'isbn': '',
+//   'siteLocation': '',
+//   'numberOfCopies': 1,
+//   'access': '',
+//   'comments': '',
+//   'checkedOutBy': '',
+//   'checkedOutByName': '',
+//   '_id': '12345'
+// };
 
-describe('the Dashboard Module', () => {
+describe('The Bookshelf Module', () => {
   let http;
   let shelf;
   beforeEach(() => {

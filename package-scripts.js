@@ -15,8 +15,8 @@ module.exports = {
           rimraf('test/karma-coverage'),
           'karma start test/karma.conf.js'
         ),
-        watch: 'karma start test/karma.conf.js --single-run=false',
-        debug: 'karma start test/karma.conf.js --single-run=false --debug'
+        watch: 'karma start test/karma.conf.js --single-run=false --auto-watch=true',
+        debug: 'karma start test/karma.conf.js --single-run=false --auto-watch=true --debug'
       },
       all: concurrent({
         browser: series.nps('test.karma', 'e2e'),
