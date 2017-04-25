@@ -30,6 +30,20 @@ paper-item:hover {
                                 <span class="nav-item" if.bind="fullmenu">Dashboard</span>
                             </a>
                         </paper-item>
+                        
+                        <paper-item if.bind="authenticated" class="login">
+                            <a paper-drawer-toggle href="/dashboard/reader" class="nav-link">
+                                <span class="fa fa-book"></span>
+                                <span class="nav-item" if.bind="fullmenu">Reader</span>
+                            </a>
+                        </paper-item>
+                        
+                        <paper-item if.bind="authenticated" class="login">
+                            <a paper-drawer-toggle href="/dashboard/librarian" class="nav-link">
+                                <span class="fa fa-book"></span>
+                                <span class="nav-item" if.bind="fullmenu">Librarian</span>
+                            </a>
+                        </paper-item>
 
                         <paper-item repeat.for="row of router.navigation"
                                     class="${row.isActive ? 'active' : ''} menu-toggle">

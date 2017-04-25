@@ -20,12 +20,23 @@ export class UserAccess {
     if (routingContext.config.auth){
       console.log('I am entering a route that requires auth');
       const tempRoles = this.appState.getRoles(); //TODO: Be sure that the roles have been set.
-      console.log(tempRoles);
-      console.log(routingContext.fragment);
+      console.log('These are my roles: ' + tempRoles);
+      console.log('The main route is: ' + routingContext.fragment);
+      
       if (routingContext.fragment === '/dashboard'){
         console.log('I am only trying to go to the main dashboard');
         return next();
       }
+      
+      console.log('The child route is: ' + routingContext.params.childRoute);
+      if (routingContext.params.childRoute === 'reader'){
+        return next();
+      }
+      
+      if (routingContext.params.childRoute === 'librarian'){
+        return next();
+      }
+      
       for (let i = 0; i < tempRoles.length; i++) {
         // in this case the user is only in one role at a time.
         if (routingContext.params.childRoute === tempRoles[i].toLowerCase()){
