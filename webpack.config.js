@@ -4,7 +4,7 @@ dotenv.config({path: '.env'});
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const { AureliaPlugin } = require('aurelia-webpack-plugin');
+const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plugin');
 const { optimize: { CommonsChunkPlugin }, ProvidePlugin } = require('webpack');
 const webpack = require('webpack');
 // config helpers:
@@ -85,6 +85,11 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
   },
   plugins: [
     new AureliaPlugin(),
+    new ModuleDependenciesPlugin({
+      'aurelia-auth': ['./auth-filter'],
+      'aurelia-polymer': ['./au-select-custom-attribute'],
+      'au-table': ['./au-table', './au-table-select', './au-table-sort']
+    }),
     new ProvidePlugin({
       'Promise': 'bluebird',
       '$': 'jquery',
