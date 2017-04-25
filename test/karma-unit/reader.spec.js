@@ -1,5 +1,5 @@
 
-import { Reader } from '../../src/reader.js';
+import { Reader } from '../../src/dashboard-child-routes/reader.js';
 import {AuthStub, RouterStub, HttpMock} from './commons';
 
 describe('the Dashboard Module', () => {
