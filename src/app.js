@@ -77,9 +77,12 @@ export class App {
   }
 
   logout() {
-    this.auth.setToken('');
+    this.appState.setAuth(false);
     this.authenticated = false;
-    this.auth.logout('/');
+    this.auth.logout('/')
+    .then(()=>{
+      console.log('Promise fulfilled, logged out');
+    });
   }
 
   // getTokens(){
@@ -87,17 +90,23 @@ export class App {
   // }
   //
 
-  activate() {
-    //this.appRouterConfig.configureRouter();
+  async activate() {
+    if (process.env.NODE_ENV !== 'production'){
+      this.backend = process.env.BackendUrl;
+    }
+    await fetch;
     this.configHttpClient();
+    
     if (this.auth.isAuthenticated()) {
-      this.authenticated = true;
-      this.appState.setAuth(true);
+      this.authenticated = true; //Logout element is reliant upon a local var;
+      if (this.appState.getUser()._id === undefined){
+        this.getUser();
+      }
       // if (this.appState.getRoles().length === 0){
       //   this.appState.setRoles(['dashboard']);
       // }
-    } else {
-      this.authenticated = false;
+    //}
+      //this.authenticated = false;
     }
   }
 
@@ -111,7 +120,19 @@ export class App {
             'Accept': 'application/json'
           }
         })
-        .withInterceptor(this.auth.tokenInterceptor);
+        .useStandardConfiguration()
+        .withBaseUrl(this.backend)
+        .withInterceptor(this.auth.tokenInterceptor); //Adds bearer token to every HTTP request.
+    });
+  }
+  
+  getUser(){
+    let uid = this.auth.getTokenPayload().sub;
+    this.httpClient.fetch('/user/' + uid)
+    .then(response => response.json())
+    .then(data => {
+      let user = data;
+      this.appState.setUser(user);
     });
   }
 

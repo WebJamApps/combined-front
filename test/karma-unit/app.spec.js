@@ -21,23 +21,23 @@ describe('the App module', () => {
     app2 = new App(null, new AuthStub2, new HttpMock, new AppState);
   });
 
-  it('tests configHttpClient', (done) => {
-    const { add: ok } = new Counter(2, done);
-    app1.auth.tokenInterceptor = 'tokenInterceptor';
-    app1.configHttpClient();
-    app1.httpClient.__configureCallback(new(class {
-      withDefaults(opts) {
-        expect(opts.mode).toBe('cors');
-        ok();
-        return this;
-      }
-      withInterceptor(token) {
-        expect(token).toBe(app1.auth.tokenInterceptor);
-        ok();
-        return this;
-      }
-    })());
-  });
+  // it('tests configHttpClient', (done) => {
+  //   const { add: ok } = new Counter(2, done);
+  //   app1.auth.tokenInterceptor = 'tokenInterceptor';
+  //   app1.configHttpClient();
+  //   app1.httpClient.__configureCallback(new(class {
+  //     withDefaults(opts) {
+  //       expect(opts.mode).toBe('cors');
+  //       ok();
+  //       return this;
+  //     }
+  //     withInterceptor(token) {
+  //       expect(token).toBe(app1.auth.tokenInterceptor);
+  //       ok();
+  //       return this;
+  //     }
+  //   })());
+  // });
 
   it('tests logout', () => {
     //console.log(app1);

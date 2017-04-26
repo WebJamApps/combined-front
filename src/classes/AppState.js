@@ -6,12 +6,12 @@ export class AppState {
   }
   
   getUser(){
-    console.log('appState');
+    console.log('appState getUser');
     console.log(this.user);
     return this.user;
   }
   setUser(input){
-    console.log('appState');
+    console.log('appState setUser');
     console.log(this.user);
     this.user = input;
   }
@@ -25,7 +25,13 @@ export class AppState {
   }
   
   getRoles(){
-    return (this.roles);
+    return new Promise((resolve, reject) =>{
+      if (this.roles !== []){
+        resolve(this.roles);
+      } else {
+        reject();
+      }
+    });
   }
   
   setRoles(input){
