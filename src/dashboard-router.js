@@ -5,11 +5,11 @@ export class DashboardRouter {
   configureRouter(config, router) {
     config.map([
       { route: '', name: 'dashboard', moduleId: PLATFORM.moduleName('./dashboard'), nav: false, title: 'Dashboard', auth: true},
-      { route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./dashboard-child-routes/ohaf-router'), nav: true, title: 'OHAF', auth: true},
-      { route: 'sc2rs', name: 'sc2rs', moduleId: PLATFORM.moduleName('./dashboard-child-routes/sc2rs-router'), nav: true, title: 'SC2RS', auth: true},
+      { route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./dashboard-child-routes/ohaf'), nav: true, title: 'OHAF', auth: true},
+      { route: 'sc2rs', name: 'sc2rs', moduleId: PLATFORM.moduleName('./dashboard-child-routes/sc2rs'), nav: true, title: 'SC2RS', auth: true},
       { route: 'reader', name: 'reader', moduleId: PLATFORM.moduleName('./dashboard-child-routes/reader'), nav: true, title: 'Reader', auth: true},
       { route: 'librarian', name: 'librarian', moduleId: PLATFORM.moduleName('./dashboard-child-routes/librarian'), nav: true, title: 'Librarian', auth: true},
-      { route: 'developer', name: 'developer', moduleId: PLATFORM.moduleName('./dashboard-child-routes/developer-router'), true: false, title: 'Developer', auth: true}
+      { route: 'developer', name: 'developer', moduleId: PLATFORM.moduleName('./dashboard-child-routes/developer'), true: false, title: 'Developer', auth: true}
     ]);
     this.router = router;
   }
