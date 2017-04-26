@@ -24,9 +24,9 @@ describe('The AppState module unit tests', () => {
     done();
   });
   
-  it('should set and get values for the roles', done => {
-    appState.setRoles(role);
-    expect(appState.getRoles()).toBe(role);
-    done();
-  });
+  // it('should set and get values for the roles', done => {
+  //   appState.setRoles(role);
+  //   expect(appState.getRoles()).toBe(role);
+  //   done();
+  // });
 });

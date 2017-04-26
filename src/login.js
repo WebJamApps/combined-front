@@ -26,9 +26,9 @@ export class Login {
     //http://stackoverflow.com/questions/37171766/aurelia-binding-back-to-view-model-on-button-click
     ret.then(data => {
       this.auth.setToken(data.token);
-      this.app.authenticated = this.auth.isAuthenticated();
-      this.appState.setAuth(true);
-      this.appState.setRoles(['dashboard']);
+      this.appState.setAuth(this.auth.isAuthenticated());
+      //this.appState.setAuth(true);
+      //this.appState.setRoles(['dashboard']);
       console.log('In login authenticate');
       console.log(this.appState.getRoles());
     }, undefined);

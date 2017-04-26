@@ -19,38 +19,41 @@ export class UserAccess {
     // if we need to authenticate / authorize, verify the logged in users roles here.
     if (routingContext.config.auth){
       console.log('I am entering a route that requires auth');
-      const tempRoles = this.appState.getRoles(); //TODO: Be sure that the roles have been set.
-      console.log('These are my roles: ' + tempRoles);
-      console.log('The main route is: ' + routingContext.fragment);
-      
-      if (routingContext.fragment === '/dashboard'){
-        console.log('I am only trying to go to the main dashboard');
-        return next();
-      }
-      
-      console.log('The child route is: ' + routingContext.params.childRoute);
-      if (routingContext.params.childRoute === 'reader'){
-        return next();
-      }
-      
-      if (routingContext.params.childRoute === 'librarian'){
-        return next();
-      }
-      
-      for (let i = 0; i < tempRoles.length; i++) {
-        // in this case the user is only in one role at a time.
-        if (routingContext.params.childRoute === tempRoles[i].toLowerCase()){
-          console.log('YAY! authorized.');
-          //routingContext.getAllInstructions();
+      let tempRoles = this.appState.getRoles();
+      tempRoles.then(()=>{
+        console.log('These are my roles: ' + tempRoles);
+        console.log('The main route is: ' + routingContext.fragment);
+        
+        if (routingContext.fragment === '/dashboard'){
+          console.log('I am only trying to go to the main dashboard');
           return next();
-          // } else if (tempRoles[i].toLowerCase() === 'dashboard' ){
-          //   //routingContext.getAllInstructions();
-          //return next();
-          // } else if (routingContext.params.childRoute === undefined) {
-          //   return next();
         }
-      }
-      return next.cancel();
+        
+        console.log('The child route is: ' + routingContext.params.childRoute);
+        if (routingContext.params.childRoute === 'reader'){
+          return next();
+        }
+        
+        if (routingContext.params.childRoute === 'librarian'){
+          return next();
+        }
+        
+        for (let i = 0; i < tempRoles.length; i++) {
+          // in this case the user is only in one role at a time.
+          if (routingContext.params.childRoute === tempRoles[i].toLowerCase()){
+            console.log('YAY! authorized.');
+            //routingContext.getAllInstructions();
+            return next();
+            // } else if (tempRoles[i].toLowerCase() === 'dashboard' ){
+            //   //routingContext.getAllInstructions();
+            //return next();
+            // } else if (routingContext.params.childRoute === undefined) {
+            //   return next();
+          }
+        }
+        return next.cancel();
+      });
+      //TODO: Write an err state. What happens when promise is rejected?
     }
     console.log('this route does not require auth, so let them go through');
     return next();
