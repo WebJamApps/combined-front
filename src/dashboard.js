@@ -19,7 +19,7 @@ export class Dashboard {
 
   //authenticated=false;
   //firstTimeInfo = false;
-  types=['Charity', 'Volunteer', 'Developer', 'Band', 'Venue'];
+  types=['Charity', 'Volunteer', 'Developer', 'Reader', 'Librarian'];
 
   async activate(){
     if (process.env.NODE_ENV !== 'production'){
@@ -44,27 +44,21 @@ export class Dashboard {
     .then(data => {
       let user = data;
       this.appState.setUser(user);
-      //console.log('In get user');
-      //console.log(this.appState.getUser());
-      //this.firstTimeInfo = this.configured();
+  
       if (user.userType === 'Charity'){
-        //this.user.userType = 1;
-        this.appState.setRoles(['ohaf']);
-        this.router.navigate('ohaf');
+        this.appState.setRoles(['charity']);
+        this.router.navigate('charity');
       } else if (user.userType === 'Volunteer'){
-        //this.user.userType = 2;
-        this.appState.setRoles(['ohaf']);
-        this.router.navigate('ohaf');
-      } else if (user.userType === 'Band'){
-        //this.user.userType = 2;
-        this.appState.setRoles(['sc2rs']);
-        this.router.navigate('sc2rs');
-      } else if (user.userType === 'Venue'){
-        //this.user.userType = 2;
-        this.appState.setRoles(['sc2rs']);
-        this.router.navigate('sc2rs');
+        this.appState.setRoles(['volunteer']);
+        this.router.navigate('volunteer');
+      } else if (user.userType === 'Reader'){
+        this.appState.setRoles(['reader']);
+        this.router.navigate('reader');
+      } else if (user.userType === 'Librarian'){
+        this.appState.setRoles(['librarian']);
+        this.router.navigate('volunteer');
       } else if (user.userType === 'Developer'){
-        this.appState.setRoles(['ohaf', 'sc2rs', 'developer']);
+        this.appState.setRoles(['charity', 'volunteer', 'developer', 'reader', 'librarian']);
         this.router.navigate('developer');
       }
     });
