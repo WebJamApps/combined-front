@@ -6,15 +6,14 @@ module.exports = {
    }
  },
   "plugins": [
-    "transform-decorators-legacy",
+    "transform-decorators",
     "transform-class-properties"
   ],
   "presets": [
     [
       "env", {
-        "targets": process.env.BABEL_TARGET === 'node' ? {
-          "node": ["7.9.0"]
-        } : {
+        "targets":
+        {
           "browsers": [
             "last 2 versions",
             "not ie <= 10"
@@ -27,7 +26,7 @@ module.exports = {
         //   "transform-es2015-literals",
         //   "transform-es2015-template-literals"
         // ],
-        "useBuiltIns": 'entry'
+        "useBuiltIns": 'usage'
       }
     ]
   ]
