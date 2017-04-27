@@ -35,7 +35,7 @@ describe('aurelia skeleton app', function() {
   //   expect(poWelcome.openAlertDialog()).toBe(true);
   // });
 
-  it('should navigate to users page', () => {
+  it('should navigate to News page', () => {
     poSkeleton.navigateTo('/news');
     expect(poSkeleton.getCurrentPageTitle()).toBe('News | Web Jam LLC');
   });
