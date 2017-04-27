@@ -69,18 +69,20 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
         use: cssRules
       },
       { test: /\.html$/i, loader: 'html-loader' },
-      { test: /\.js$/i, loader: 'babel-loader', exclude: nodeModulesDir },
-      { test: /\.json$/i, loader: 'json-loader' },
-      // use Bluebird as the global Promise implementation:
-      { test: /[\/\\]node_modules[\/\\]bluebird[\/\\].+\.js$/, loader: 'expose-loader?Promise' },
-      // exposes jQuery globally as $ and as jQuery:
-      { test: require.resolve('jquery'), loader: 'expose-loader?$!expose-loader?jQuery' },
-      // embed small images and fonts as Data Urls and larger ones as files:
-      { test: /\.(png|gif|jpg|cur)$/i, loader: 'url-loader', options: { limit: 8192 } },
-      { test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'url-loader', options: { limit: 10000, mimetype: 'application/font-woff2' } },
-      { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'url-loader', options: { limit: 10000, mimetype: 'application/font-woff' } },
-      // load these fonts normally, as files:
-      { test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'file-loader' }
+      { test: /\.js$/i, loader: 'babel-loader', exclude: nodeModulesDir,
+        options: coverage ? { sourceMap: 'inline', plugins: [ 'istanbul' ] } : {}
+      },
+    { test: /\.json$/i, loader: 'json-loader' },
+    // use Bluebird as the global Promise implementation:
+    { test: /[\/\\]node_modules[\/\\]bluebird[\/\\].+\.js$/, loader: 'expose-loader?Promise' },
+    // exposes jQuery globally as $ and as jQuery:
+    { test: require.resolve('jquery'), loader: 'expose-loader?$!expose-loader?jQuery' },
+    // embed small images and fonts as Data Urls and larger ones as files:
+    { test: /\.(png|gif|jpg|cur)$/i, loader: 'url-loader', options: { limit: 8192 } },
+    { test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'url-loader', options: { limit: 10000, mimetype: 'application/font-woff2' } },
+    { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'url-loader', options: { limit: 10000, mimetype: 'application/font-woff' } },
+    // load these fonts normally, as files:
+    { test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'file-loader' }
     ]
   },
   plugins: [
@@ -103,35 +105,35 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
         collapseWhitespace: true
       } : undefined,
       metadata: {
-        // available in index.ejs //
+      // available in index.ejs //
         title, server, baseUrl
       }
     }),
     new CopyWebpackPlugin(
       [{ from: 'static/favicon.ico', to: 'favicon.ico' },
-      { from: 'static/includes.html', to: 'includes.html' },
-      { from: 'static/imgs', to: 'static/imgs' }]
-    ),
+    { from: 'static/includes.html', to: 'includes.html' },
+    { from: 'static/imgs', to: 'static/imgs' }]
+  ),
     new webpack.EnvironmentPlugin(['NODE_ENV', 'AuthProductionBaseURL', 'PORT', 'BackendUrl', 'GoogleClientId']),
     new webpack.DefinePlugin({'process.env': Object.keys(process.env).reduce((o, k) => {
       o[k] = JSON.stringify(process.env[k]);
       return o;
     }, {})}
-  ),
-  // new HtmlWebpackPlugin({
-  //   filename: 'polymer.html',
-  //   template: 'bower_components/polymer/polymer.html'
-  // }),
-  // new HtmlWebpackPlugin({
-  //   filename: 'polymer-mini.html',
-  //   template: 'bower_components/polymer/polymer-mini.html'
-  // }),
-  // new HtmlWebpackPlugin({
-  //   filename: 'polymer-micro.html',
-  //   template: 'bower_components/polymer/polymer-micro.html'
-  // }),
+),
+// new HtmlWebpackPlugin({
+//   filename: 'polymer.html',
+//   template: 'bower_components/polymer/polymer.html'
+// }),
+// new HtmlWebpackPlugin({
+//   filename: 'polymer-mini.html',
+//   template: 'bower_components/polymer/polymer-mini.html'
+// }),
+// new HtmlWebpackPlugin({
+//   filename: 'polymer-micro.html',
+//   template: 'bower_components/polymer/polymer-micro.html'
+// }),
     new CopyWebpackPlugin([
-    { from: 'bower_components/webcomponentsjs/webcomponents.min.js', to: 'webcomponents.min.js' }
+  { from: 'bower_components/webcomponentsjs/webcomponents.min.js', to: 'webcomponents.min.js' }
     ]),
     ...when(extractCss, new ExtractTextPlugin({
       filename: production ? '[contenthash].css' : '[id].css',
@@ -141,8 +143,8 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       name: ['common']
     })),
     ...when(production, new CopyWebpackPlugin([
-    { from: 'static/favicon.ico', to: 'favicon.ico' }
-    // { from: 'static/includes.html', to: 'includes.html' }
+  { from: 'static/favicon.ico', to: 'favicon.ico' }
+  // { from: 'static/includes.html', to: 'includes.html' }
     ]))
   ]
 });

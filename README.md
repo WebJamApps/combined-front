@@ -1,7 +1,6 @@
 # combined-front
 [![CircleCI](https://circleci.com/gh/WebJamApps/combined-front.svg?style=svg)](https://circleci.com/gh/WebJamApps/combined-front)
 
-
 This is the front end for the following apps:
 <ui>
 <li><a href="http://www.ourhandsandfeet.org">ourhandsandfeet.org</a></li>

@@ -1,26 +1,26 @@
 //import {PageObjectWelcome} from './welcome.po.js';
-import {PageObjectSkeleton} from './skeleton.po.js';
+import {PageObjectSkeleton} from './skeleton.po';
 import {config} from '../protractor.conf';
 
 describe('aurelia skeleton app', function() {
   //let poWelcome;
   let poSkeleton;
-
-  beforeEach(() => {
+  
+  beforeEach(async () => {
     poSkeleton = new PageObjectSkeleton();
     //poWelcome = new PageObjectWelcome();
-
-    browser.loadAndWaitForAureliaPage(`http://localhost:${config.port}`);
+    
+    await browser.loadAndWaitForAureliaPage(`http://localhost:${config.port}`);
   });
-
-  it('should load the page and display the initial page title', () => {
-    expect(poSkeleton.getCurrentPageTitle()).toBe('Web Jam LLC | Web Jam LLC');
+  
+  it('should load the page and display the initial page title', async () => {
+    await expect(poSkeleton.getCurrentPageTitle()).toBe('Web Jam LLC | Web Jam LLC');
   });
-
+  
   // it('should display greeting', () => {
   //   expect(poWelcome.getGreeting()).toBe('Welcome to the Aurelia Navigation App!');
   // });
-
+  
   // it('should automatically write down the fullname', () => {
   //   poWelcome.setFirstname('John');
   //   poWelcome.setLastname('Doe');
@@ -34,9 +34,9 @@ describe('aurelia skeleton app', function() {
   // it('should show alert message when clicking submit button', () => {
   //   expect(poWelcome.openAlertDialog()).toBe(true);
   // });
-
-  it('should navigate to users page', () => {
-    poSkeleton.navigateTo('/news');
-    expect(poSkeleton.getCurrentPageTitle()).toBe('News | Web Jam LLC');
+  
+  it('should navigate to News page', async () => {
+    await poSkeleton.navigateTo('/news');
+    await expect(poSkeleton.getCurrentPageTitle()).toBe('News | Web Jam LLC');
   });
 });

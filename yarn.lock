@@ -324,7 +324,7 @@ aurelia-binding@^1.0.0, aurelia-binding@^1.0.9, aurelia-binding@^1.1.0:
     aurelia-pal "^1.0.0"
     aurelia-task-queue "^1.0.0"
 
-aurelia-bootstrapper@^2.1.1:
+aurelia-bootstrapper@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/aurelia-bootstrapper/-/aurelia-bootstrapper-2.1.1.tgz#4757ac17611b6096704961b55148f77b042b6ac5"
   dependencies:
@@ -356,11 +356,11 @@ aurelia-event-aggregator@^1.0.0:
   dependencies:
     aurelia-logging "^1.0.0"
 
-aurelia-fetch-client@^1.0.0-beta.1.2.5, aurelia-fetch-client@^1.1.2:
+aurelia-fetch-client@1.1.2, aurelia-fetch-client@^1.0.0-beta.1.2.5:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/aurelia-fetch-client/-/aurelia-fetch-client-1.1.2.tgz#123a04d8677e15a8feca0553bc8486515a15dd2a"
 
-aurelia-framework@^1.0.0, aurelia-framework@^1.1.2:
+aurelia-framework@1.1.2, aurelia-framework@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/aurelia-framework/-/aurelia-framework-1.1.2.tgz#54483ac535a88a3d1f4bac9f0ac4abd8cb19d448"
   dependencies:
@@ -374,7 +374,7 @@ aurelia-framework@^1.0.0, aurelia-framework@^1.1.2:
     aurelia-task-queue "^1.0.0"
     aurelia-templating "^1.0.0"
 
-aurelia-history-browser@^1.0.0:
+aurelia-history-browser@1.0.0, aurelia-history-browser@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/aurelia-history-browser/-/aurelia-history-browser-1.0.0.tgz#954e31cb5d9a18914502e02e544e83c0c152d07c"
   dependencies:
@@ -403,7 +403,7 @@ aurelia-loader-default@^1.0.0:
     aurelia-metadata "^1.0.0"
     aurelia-pal "^1.0.0"
 
-aurelia-loader-nodejs@^1.0.1:
+aurelia-loader-nodejs@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/aurelia-loader-nodejs/-/aurelia-loader-nodejs-1.0.1.tgz#51dbfcbcba6ef3a9a51e9a962d9461ada7b04d7b"
   dependencies:
@@ -414,7 +414,7 @@ aurelia-loader-nodejs@^1.0.1:
     aurelia-path "^1.1.1"
     debug "^2.3.2"
 
-aurelia-loader-webpack@^2.1.0:
+aurelia-loader-webpack@2.1.0, aurelia-loader-webpack@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/aurelia-loader-webpack/-/aurelia-loader-webpack-2.1.0.tgz#6d1c8d768eac07ed219771a64c7bb7d5902743cd"
   dependencies:
@@ -430,7 +430,7 @@ aurelia-loader@^1.0.0:
     aurelia-metadata "^1.0.0"
     aurelia-path "^1.0.0"
 
-aurelia-logging-console@^1.0.0:
+aurelia-logging-console@1.0.0, aurelia-logging-console@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/aurelia-logging-console/-/aurelia-logging-console-1.0.0.tgz#edf7507a97fc68b40513a17c677d70414101adb4"
   dependencies:
@@ -446,7 +446,7 @@ aurelia-metadata@^1.0.0, aurelia-metadata@^1.0.2:
   dependencies:
     aurelia-pal "^1.0.0"
 
-aurelia-pal-browser@^1.0.0, aurelia-pal-browser@^1.2.1:
+aurelia-pal-browser@1.2.1, aurelia-pal-browser@^1.0.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/aurelia-pal-browser/-/aurelia-pal-browser-1.2.1.tgz#426db535a6019940c49520f4c23a29b0789c4a75"
   dependencies:
@@ -467,7 +467,7 @@ aurelia-path@^1.0.0, aurelia-path@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/aurelia-path/-/aurelia-path-1.1.1.tgz#caa9d20bc8515a5f9f286d9a3b18d81b2c85b0dd"
 
-aurelia-polyfills@^1.0.0, aurelia-polyfills@^1.2.1:
+aurelia-polyfills@1.2.1, aurelia-polyfills@^1.0.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/aurelia-polyfills/-/aurelia-polyfills-1.2.1.tgz#c429385691f39cb0bf54862385995532d9725411"
   dependencies:
@@ -477,9 +477,9 @@ aurelia-polymer@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/aurelia-polymer/-/aurelia-polymer-1.0.0.tgz#a2e7d3d74499cc452a0a8befaaadbe707ddce3cd"
 
-aurelia-protractor-plugin@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/aurelia-protractor-plugin/-/aurelia-protractor-plugin-1.0.2.tgz#a1e20307078fa338ef138b000f5d52a3645f5d43"
+aurelia-protractor-plugin@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/aurelia-protractor-plugin/-/aurelia-protractor-plugin-1.0.3.tgz#af4e5c3096dfffb43c01d2bc4230a9c064f0c29e"
   dependencies:
     "@types/selenium-webdriver" "^2.53.33"
 
@@ -489,7 +489,7 @@ aurelia-route-recognizer@^1.0.0:
   dependencies:
     aurelia-path "^1.0.0"
 
-aurelia-router@^1.0.0-beta.1.2.3, aurelia-router@^1.0.1, aurelia-router@^1.3.0:
+aurelia-router@1.3.0, aurelia-router@^1.0.0-beta.1.2.3, aurelia-router@^1.0.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/aurelia-router/-/aurelia-router-1.3.0.tgz#55fc65fe010771ac7adf2ebb0c897a0b66592d72"
   dependencies:
@@ -506,7 +506,7 @@ aurelia-task-queue@^1.0.0, aurelia-task-queue@^1.1.0:
   dependencies:
     aurelia-pal "^1.0.0"
 
-aurelia-templating-binding@^1.0.0, aurelia-templating-binding@^1.3.0:
+aurelia-templating-binding@1.3.0, aurelia-templating-binding@^1.0.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/aurelia-templating-binding/-/aurelia-templating-binding-1.3.0.tgz#595c6f96404a62e5c072cacc0990daf17535075d"
   dependencies:
@@ -514,7 +514,7 @@ aurelia-templating-binding@^1.0.0, aurelia-templating-binding@^1.3.0:
     aurelia-logging "^1.0.0"
     aurelia-templating "^1.3.0"
 
-aurelia-templating-resources@^1.0.0, aurelia-templating-resources@^1.4.0:
+aurelia-templating-resources@1.4.0, aurelia-templating-resources@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/aurelia-templating-resources/-/aurelia-templating-resources-1.4.0.tgz#9c82e8dfb9f6b18af2fca77d986e9341b7409713"
   dependencies:
@@ -528,7 +528,7 @@ aurelia-templating-resources@^1.0.0, aurelia-templating-resources@^1.4.0:
     aurelia-task-queue "^1.0.0"
     aurelia-templating "^1.3.0"
 
-aurelia-templating-router@^1.0.0, aurelia-templating-router@^1.1.0:
+aurelia-templating-router@1.1.0, aurelia-templating-router@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/aurelia-templating-router/-/aurelia-templating-router-1.1.0.tgz#969219ffcd3578bec6c97c5adb471c7ad853d4db"
   dependencies:
@@ -541,7 +541,7 @@ aurelia-templating-router@^1.0.0, aurelia-templating-router@^1.1.0:
     aurelia-router "^1.0.1"
     aurelia-templating "^1.3.0"
 
-aurelia-templating@^1.0.0, aurelia-templating@^1.1.2, aurelia-templating@^1.3.0, aurelia-templating@^1.4.2:
+aurelia-templating@1.4.2, aurelia-templating@^1.0.0, aurelia-templating@^1.1.2, aurelia-templating@^1.3.0:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/aurelia-templating/-/aurelia-templating-1.4.2.tgz#479ce47705a095fd636e0975c9cb79cbee7ed7cb"
   dependencies:
@@ -554,7 +554,7 @@ aurelia-templating@^1.0.0, aurelia-templating@^1.1.2, aurelia-templating@^1.3.0,
     aurelia-path "^1.0.0"
     aurelia-task-queue "^1.1.0"
 
-aurelia-testing@^1.0.0-beta.3.0.1:
+aurelia-testing@1.0.0-beta.3.0.1:
   version "1.0.0-beta.3.0.1"
   resolved "https://registry.yarnpkg.com/aurelia-testing/-/aurelia-testing-1.0.0-beta.3.0.1.tgz#436d35755ce65bfb4b4913c049abdc2f7f658502"
   dependencies:
@@ -564,14 +564,14 @@ aurelia-testing@^1.0.0-beta.3.0.1:
     aurelia-pal "^1.0.0"
     aurelia-templating "^1.0.0"
 
-aurelia-tools@^1.0.0:
+aurelia-tools@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/aurelia-tools/-/aurelia-tools-1.0.0.tgz#c7d82c939ee4c46026ac2a05a99fc446732a31bc"
   dependencies:
     breeze-dag "^0.1.0"
     through2 "^2.0.0"
 
-aurelia-webpack-plugin@^2.0.0-rc.2:
+aurelia-webpack-plugin@2.0.0-rc.2:
   version "2.0.0-rc.2"
   resolved "https://registry.yarnpkg.com/aurelia-webpack-plugin/-/aurelia-webpack-plugin-2.0.0-rc.2.tgz#9177126106a2b8e14f85ad7321a12b5e8be69c4e"
   dependencies:
@@ -580,7 +580,7 @@ aurelia-webpack-plugin@^2.0.0-rc.2:
     html-loader "^0.4.4"
     minimatch "^3.0.3"
 
-autoprefixer@^6.0.0, autoprefixer@^6.3.1, autoprefixer@^6.7.7:
+autoprefixer@6.7.7, autoprefixer@^6.0.0, autoprefixer@^6.3.1:
   version "6.7.7"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-6.7.7.tgz#1dbd1c835658e35ce3f9984099db00585c782014"
   dependencies:
@@ -669,7 +669,7 @@ babel-core@^6.0.0, babel-core@^6.24.1:
     slash "^1.0.0"
     source-map "^0.5.0"
 
-babel-eslint@^7.1.1:
+babel-eslint@7.2.3:
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-7.2.3.tgz#b2fe2d80126470f5c19442dc757253a897710827"
   dependencies:
@@ -848,7 +848,15 @@ babel-plugin-check-es2015-constants@7.0.0-alpha.8:
   version "7.0.0-alpha.8"
   resolved "https://registry.yarnpkg.com/babel-plugin-check-es2015-constants/-/babel-plugin-check-es2015-constants-7.0.0-alpha.8.tgz#318ad0481c76b5c8c8f85693e8e4f625234f326b"
 
-babel-plugin-istanbul@^4.0.0, babel-plugin-istanbul@^4.1.1:
+babel-plugin-istanbul@4.1.2-candidate.0:
+  version "4.1.2-candidate.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-istanbul/-/babel-plugin-istanbul-4.1.2-candidate.0.tgz#0e25f89a977ff9ffb247b54626a584c86e371982"
+  dependencies:
+    find-up "^2.1.0"
+    istanbul-lib-instrument "^1.7.0"
+    test-exclude "^4.0.3"
+
+babel-plugin-istanbul@^4.0.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-istanbul/-/babel-plugin-istanbul-4.1.1.tgz#c12de0fc6fe42adfb16be56f1ad11e4a9782eca9"
   dependencies:
@@ -1310,13 +1318,13 @@ blocking-proxy@0.0.5:
   dependencies:
     minimist "^1.2.0"
 
+bluebird@3.5.0, bluebird@^3.3.0, bluebird@^3.4.7:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
+
 bluebird@^2.10.2:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-2.11.0.tgz#534b9033c022c9579c56ba3b3e5a5caafbb650e1"
-
-bluebird@^3.3.0, bluebird@^3.4.7, bluebird@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.6"
@@ -1347,7 +1355,7 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap@^3.3.7:
+bootstrap@3.3.7:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
 
@@ -1879,7 +1887,7 @@ content-type@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.2.tgz#b7d113aee7a8dd27bd21133c4dc2529df1721eed"
 
-convert-source-map@^1.1.0:
+convert-source-map@^1.1.0, convert-source-map@^1.3.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.5.0.tgz#9acd70851c6d5dfdd93d9282e5edf94a03ff46b5"
 
@@ -1891,7 +1899,7 @@ cookie@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
 
-copy-webpack-plugin@^4.0.1:
+copy-webpack-plugin@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-4.0.1.tgz#9728e383b94316050d0c7463958f2b85c0aa8200"
   dependencies:
@@ -1981,16 +1989,16 @@ create-hmac@^1.1.0, create-hmac@^1.1.2:
     create-hash "^1.1.0"
     inherits "^2.0.1"
 
-cross-env@^3.1.4:
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-3.2.4.tgz#9e0585f277864ed421ce756f81a980ff0d698aba"
+cross-env@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-4.0.0.tgz#16083862d08275a4628b0b243b121bedaa55dd80"
   dependencies:
     cross-spawn "^5.1.0"
     is-windows "^1.0.0"
 
-cross-env@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-4.0.0.tgz#16083862d08275a4628b0b243b121bedaa55dd80"
+cross-env@^3.1.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-3.2.4.tgz#9e0585f277864ed421ce756f81a980ff0d698aba"
   dependencies:
     cross-spawn "^5.1.0"
     is-windows "^1.0.0"
@@ -2032,7 +2040,7 @@ css-color-names@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
 
-css-loader@^0.28.0:
+css-loader@0.28.0:
   version "0.28.0"
   resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.28.0.tgz#417cfa9789f8cde59a30ccbf3e4da7a806889bad"
   dependencies:
@@ -2194,8 +2202,8 @@ dateformat@^1.0.6:
     meow "^3.3.0"
 
 debug@2, debug@^2.1.1, debug@^2.2.0, debug@^2.3.2, debug@^2.6.0:
-  version "2.6.4"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.4.tgz#7586a9b3c39741c0282ae33445c4e8ac74734fe0"
+  version "2.6.5"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.5.tgz#7a76247781acd4ef2a85f0fb8abf763cd1af249e"
   dependencies:
     ms "0.7.3"
 
@@ -2625,7 +2633,7 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint@^3.15.0:
+eslint@^3.19.0:
   version "3.19.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.19.0.tgz#c8fc6201c7f40dd08941b87c085767386a679acc"
   dependencies:
@@ -2813,7 +2821,7 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
-expose-loader@^0.7.3:
+expose-loader@0.7.3:
   version "0.7.3"
   resolved "https://registry.yarnpkg.com/expose-loader/-/expose-loader-0.7.3.tgz#35fbd3659789e4faa81f59de8b7e9fc39e466d51"
 
@@ -2860,7 +2868,7 @@ extglob@^0.3.1:
   dependencies:
     is-extglob "^1.0.0"
 
-extract-text-webpack-plugin@^2.1.0:
+extract-text-webpack-plugin@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/extract-text-webpack-plugin/-/extract-text-webpack-plugin-2.1.0.tgz#69315b885f876dbf96d3819f6a9f1cca7aebf159"
   dependencies:
@@ -2919,7 +2927,7 @@ file-entry-cache@^2.0.0:
     flat-cache "^1.2.1"
     object-assign "^4.0.1"
 
-file-loader@^0.11.1:
+file-loader@0.11.1:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-0.11.1.tgz#6b328ee1234a729e4e47d36375dd6d35c0e1db84"
   dependencies:
@@ -3000,7 +3008,7 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-font-awesome@^4.7.0:
+font-awesome@4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
 
@@ -3406,7 +3414,7 @@ html-tags@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/html-tags/-/html-tags-1.1.1.tgz#869f43859f12d9bdc3892419e494a628aa1b204e"
 
-html-webpack-plugin@^2.28.0:
+html-webpack-plugin@2.28.0:
   version "2.28.0"
   resolved "https://registry.yarnpkg.com/html-webpack-plugin/-/html-webpack-plugin-2.28.0.tgz#2e7863b57e5fd48fe263303e2ffc934c3064d009"
   dependencies:
@@ -3794,7 +3802,7 @@ isobject@^2.0.0:
   dependencies:
     isarray "1.0.0"
 
-isomorphic-fetch@^2.2.1:
+isomorphic-fetch@2.2.1, isomorphic-fetch@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
   dependencies:
@@ -3821,6 +3829,15 @@ istanbul-api@^1.1.0-alpha.1, istanbul-api@^1.1.7:
     mkdirp "^0.5.1"
     once "^1.4.0"
 
+istanbul-instrumenter-loader@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/istanbul-instrumenter-loader/-/istanbul-instrumenter-loader-2.0.0.tgz#e5492900ab0bba835efa8024cb00be9b3eea2700"
+  dependencies:
+    convert-source-map "^1.3.0"
+    istanbul-lib-instrument "^1.1.3"
+    loader-utils "^0.2.16"
+    object-assign "^4.1.0"
+
 istanbul-lib-coverage@^1.0.0, istanbul-lib-coverage@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/istanbul-lib-coverage/-/istanbul-lib-coverage-1.0.2.tgz#87a0c015b6910651cb3b184814dfb339337e25e1"
@@ -3831,7 +3848,7 @@ istanbul-lib-hook@^1.0.5:
   dependencies:
     append-transform "^0.4.0"
 
-istanbul-lib-instrument@^1.1.1, istanbul-lib-instrument@^1.6.2, istanbul-lib-instrument@^1.7.0:
+istanbul-lib-instrument@^1.1.1, istanbul-lib-instrument@^1.1.3, istanbul-lib-instrument@^1.6.2, istanbul-lib-instrument@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/istanbul-lib-instrument/-/istanbul-lib-instrument-1.7.0.tgz#b8e0dc25709bb44e17336ab47b7bb5c97c23f659"
   dependencies:
@@ -3890,9 +3907,9 @@ items@2.x.x:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/items/-/items-2.1.1.tgz#8bd16d9c83b19529de5aea321acaada78364a198"
 
-jasmine-core@^2.6.0, jasmine-core@~2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.6.0.tgz#95e80740cc4d2c16741750e8b79e53c7ee15056a"
+jasmine-core@2.6.1, jasmine-core@~2.6.0:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.6.1.tgz#66a61cddb699958e3613edef346c996f6311fc3b"
 
 jasmine@^2.5.3:
   version "2.6.0"
@@ -3943,8 +3960,8 @@ jest-cli@^19.0.2:
     yargs "^6.3.0"
 
 jest-config@^19.0.2:
-  version "19.0.2"
-  resolved "https://registry.yarnpkg.com/jest-config/-/jest-config-19.0.2.tgz#1b9bd2db0ddd16df61c2b10a54009e1768da6411"
+  version "19.0.3"
+  resolved "https://registry.yarnpkg.com/jest-config/-/jest-config-19.0.3.tgz#829c6356c6e7e8abdd5657580707a5922b9fc90d"
   dependencies:
     chalk "^1.1.1"
     jest-environment-jsdom "^19.0.2"
@@ -4102,7 +4119,7 @@ jest-validate@^19.0.2:
     leven "^2.0.0"
     pretty-format "^19.0.0"
 
-jest@^19.0.2:
+jest@19.0.2:
   version "19.0.2"
   resolved "https://registry.yarnpkg.com/jest/-/jest-19.0.2.tgz#b794faaf8ff461e7388f28beef559a54f20b2c10"
   dependencies:
@@ -4128,7 +4145,7 @@ joi@^9.2.0:
     moment "2.x.x"
     topo "2.x.x"
 
-jquery@^3.2.1:
+jquery@3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
@@ -4258,14 +4275,14 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.3.6"
 
-karma-chrome-launcher@^2.0.0:
+karma-chrome-launcher@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/karma-chrome-launcher/-/karma-chrome-launcher-2.0.0.tgz#c2790c5a32b15577d0fff5a4d5a2703b3b439c25"
   dependencies:
     fs-access "^1.0.0"
     which "^1.2.1"
 
-karma-coverage-istanbul-reporter@^1.2.0:
+karma-coverage-istanbul-reporter@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/karma-coverage-istanbul-reporter/-/karma-coverage-istanbul-reporter-1.2.0.tgz#f5ba3c5613c1b78721dff61a7765f5709e0e33cd"
   dependencies:
@@ -4281,23 +4298,17 @@ karma-coverage@^1.1.1:
     minimatch "^3.0.0"
     source-map "^0.5.1"
 
-karma-jasmine@^1.0.2:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/karma-jasmine/-/karma-jasmine-1.1.0.tgz#22e4c06bf9a182e5294d1f705e3733811b810acf"
+karma-jasmine@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/karma-jasmine/-/karma-jasmine-1.0.2.tgz#c0b3ab327bf207db60e17fa27db37cfdef5d8e6c"
 
-karma-mocha-reporter@^2.2.0:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/karma-mocha-reporter/-/karma-mocha-reporter-2.2.3.tgz#04fdda45a1d9697a73871c7472223c581701ab20"
+karma-mocha-reporter@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/karma-mocha-reporter/-/karma-mocha-reporter-2.2.0.tgz#20367b93f6651cd2c0d06b10d4eea3b81181fb4e"
   dependencies:
     chalk "1.1.3"
 
-karma-sourcemap-loader@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/karma-sourcemap-loader/-/karma-sourcemap-loader-0.3.7.tgz#91322c77f8f13d46fed062b042e1009d4c4505d8"
-  dependencies:
-    graceful-fs "^4.1.2"
-
-karma-webpack@^2.0.3:
+karma-webpack@2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/karma-webpack/-/karma-webpack-2.0.3.tgz#39cebf5ca2580139b27f9ae69b78816b9c82fae6"
   dependencies:
@@ -5508,7 +5519,7 @@ progress@^1.1.8:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/progress/-/progress-1.1.8.tgz#e260c78f6161cdd9b0e56cc3e0a85de17c7a57be"
 
-protractor@^5.1.1:
+protractor@5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/protractor/-/protractor-5.1.1.tgz#10c4e336571b28875b8acc3ae3e4e1e40ef7e986"
   dependencies:
@@ -6469,7 +6480,7 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-style-loader@^0.16.1:
+style-loader@0.16.1:
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-0.16.1.tgz#50e325258d4e78421dd9680636b41e8661595d10"
   dependencies:
@@ -6852,7 +6863,7 @@ upper-case@^1.1.1:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/upper-case/-/upper-case-1.1.3.tgz#f6b4501c2ec4cdd26ba78be7222961de77621598"
 
-url-loader@^0.5.8:
+url-loader@0.5.8:
   version "0.5.8"
   resolved "https://registry.yarnpkg.com/url-loader/-/url-loader-0.5.8.tgz#b9183b1801e0f847718673673040bc9dc1c715c5"
   dependencies:
@@ -6964,7 +6975,7 @@ vulcanize@^1.15.4:
     nopt "^3.0.1"
     path-posix "^1.0.0"
 
-wait-on@^2.0.2:
+wait-on@2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/wait-on/-/wait-on-2.0.2.tgz#0a84fd07024c6fc268cb0eabe585be217aaf2baa"
   dependencies:
@@ -7038,7 +7049,7 @@ webpack-dev-middleware@^1.0.11, webpack-dev-middleware@^1.10.2:
     path-is-absolute "^1.0.0"
     range-parser "^1.0.3"
 
-webpack-dev-server@^2.4.5:
+webpack-dev-server@2.4.5:
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-2.4.5.tgz#31384ce81136be1080b4b4cde0eb9b90e54ee6cf"
   dependencies:
