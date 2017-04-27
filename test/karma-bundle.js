@@ -1,4 +1,3 @@
-
 require('aurelia-polyfills');
 require('aurelia-pal-browser').initialize();
 require('babel-polyfill');
@@ -9,8 +8,8 @@ const srcContext = require.context(
   '../src',
   // recursive:
   true,
-  // src file regex:
-  /\.js$/i
+  // tests in /src folder regex:
+  /\.spec\.[tj]s$/igm
 );
 
 const testContext = require.context(
@@ -19,7 +18,8 @@ const testContext = require.context(
   // recursive:
   true,
   // test file regex:
-  /\.spec\.js$/i
+  // tests in ./karma-unit folder regex:
+  /\.spec\.[tj]s$/igm
 );
 
 function requireAllInContext(requireContext) {
