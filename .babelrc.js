@@ -1,10 +1,10 @@
 module.exports = {
   "env": {
-   "test": {
-     "sourceMap": "inline",
-     "plugins": [ "istanbul" ],
-   }
- },
+    "test": {
+      "sourceMap": "inline",
+      "plugins": [ "istanbul" ],
+    }
+  },
   "plugins": [
     "transform-decorators",
     "transform-class-properties"
@@ -12,8 +12,9 @@ module.exports = {
   "presets": [
     [
       "env", {
-        "targets":
-        {
+        "targets": process.env.BABEL_TARGET === 'node' ? {
+          "node": process.env.IN_PROTRACTOR ? '6' : 'current'
+        } : {
           "browsers": [
             "last 2 versions",
             "not ie <= 10"
@@ -26,10 +27,10 @@ module.exports = {
         //   "transform-es2015-literals",
         //   "transform-es2015-template-literals"
         // ],
-        "useBuiltIns": 'usage'
+        "useBuiltIns": 'entry'
       }
     ]
   ]
-
-
+  
+  
 }
