@@ -1,4 +1,8 @@
 ---
+prepare:
+  fetch:
+  - url: "https://raw.githubusercontent.com/aurelia/tools/master/.eslintrc.json"
+    path: "node_modules/aurelia-tools/.eslintrc.json"
 engines:
   duplication:
     enabled: true
