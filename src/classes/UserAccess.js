@@ -9,7 +9,7 @@ export class UserAccess {
 
   run(routingContext, next) {
     // if we need to authenticate / authorize, verify the logged in users roles here.
-    this.appState.getRoles().then((userRoles)=>{
+    return this.appState.getRoles().then((userRoles)=>{
       if (routingContext.config.auth){
         console.log('I am entering a route that requires auth');
         console.log('These are my roles: ' + userRoles);
