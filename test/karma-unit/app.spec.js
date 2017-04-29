@@ -1,5 +1,5 @@
 
-const Counter = require('assertions-counter');
+// const Counter = require('assertions-counter');
 import {App} from '../../src/app';
 import {AppState} from '../../src/classes/AppState.js';
 import {AuthStub, RouterStub, HttpMock} from './commons';

@@ -20,7 +20,7 @@ module.exports = {
         debug: 'karma start test/karma.conf.js --single-run=false --auto-watch=true --debug'
       },
       lint: {
-        default: 'eslint src',
+        default: 'eslint .',
         fix: 'eslint --fix'
       },
       all: concurrent({
