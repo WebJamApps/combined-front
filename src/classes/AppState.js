@@ -4,36 +4,32 @@ export class AppState {
     this.is_auth = false;
     this.roles = [];
   }
-  
-  getUser(){
+
+  getUser() {
     console.log('appState getUser');
     console.log(this.user);
     return this.user;
   }
-  setUser(input){
+  setUser(input) {
     console.log('appState setUser');
     console.log(this.user);
     this.user = input;
   }
-  
-  getAuth(){
+
+  getAuth() {
     return (this.is_auth);
   }
-  
-  setAuth(input){
+
+  setAuth(input) {
     this.is_auth = input;
   }
-  
-  getRoles(){
-    return new Promise((resolve, reject) =>{
-      if (this.roles !== []){
-        resolve(this.roles);
-      } else {
-        reject();
-      }
+
+  getRoles() {
+    return new Promise((resolve, reject) => {
+      resolve(this.roles);
     });
   }
-  
+
   setRoles(input){
     this.roles = input;
   }
