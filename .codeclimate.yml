@@ -11,6 +11,10 @@ engines:
       - javascript
   eslint:
     enabled: true
+  stylelint:
+    enabled: true
+  htmlhint:
+    enabled: true
   fixme:
     enabled: true
 ratings:
@@ -19,3 +23,4 @@ ratings:
   - "**.jsx"
 exclude_paths:
 - test/
+- static/includes.html
