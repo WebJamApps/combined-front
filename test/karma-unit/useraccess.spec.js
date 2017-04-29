@@ -2,8 +2,6 @@
 
 import {AppState} from '../../src/classes/AppState.js';
 import {UserAccess} from '../../src/classes/UserAccess.js';
-import {ConfigStub} from './commons';
-
 
 describe('The UserAccess module unit tests', () => {
   let appState;
@@ -52,5 +50,4 @@ describe('The UserAccess module unit tests', () => {
     routingContext.params = {childRoute: 'bar'};
     userAccess.run(routingContext, next);
   });
-
 });
