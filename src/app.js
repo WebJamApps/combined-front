@@ -96,7 +96,7 @@ export class App {
     }
     await fetch;
     this.configHttpClient();
-    
+
     if (this.auth.isAuthenticated()) {
       this.authenticated = true; //Logout element is reliant upon a local var;
       if (this.appState.getUser()._id === undefined){
@@ -107,6 +107,13 @@ export class App {
       // }
     //}
       //this.authenticated = false;
+    }
+  }
+
+  close() {
+    if (!this.widescreen) {
+      let drawer = document.getElementById('drawerPanel');
+      drawer.closeDrawer();
     }
   }
 
@@ -125,7 +132,7 @@ export class App {
         .withInterceptor(this.auth.tokenInterceptor); //Adds bearer token to every HTTP request.
     });
   }
-  
+
   getUser(){
     let uid = this.auth.getTokenPayload().sub;
     this.httpClient.fetch('/user/' + uid)
