@@ -5,7 +5,7 @@ paper-item:hover {
 }
 </style>
     <div class="page-host">
-        <paper-drawer-panel right-drawer drawer-width.bind="drawerWidth">
+        <paper-drawer-panel id="drawerPanel" right-drawer drawer-width.bind="drawerWidth">
             <paper-header-panel drawer class="${currentStyles.sidebarClass}">
                 <div >
 
@@ -18,7 +18,7 @@ paper-item:hover {
                           <i class="fa fa-bars pull-left fa-1x" click.delegate="toggleMenu()" style="color:#0275d8"></i>
                       </paper-item>
                         <paper-item if.bind="!authenticated" class="login" style="padding-left:10px">
-                            <a paper-drawer-toggle href="/login" class="nav-link">
+                            <a paper-drawer-toggle href="/login" class="nav-link" click.delegate="close()">
                                 <span class="fa fa-sign-in"></span>
                                 <span if.bind="fullmenu" class="nav-item">Login</span>
                             </a>
@@ -30,16 +30,16 @@ paper-item:hover {
                                 <span class="nav-item" if.bind="fullmenu">Dashboard</span>
                             </a>
                         </paper-item> -->
-                        
+
                         <paper-item if.bind="authenticated" class="login">
-                            <a paper-drawer-toggle href="/dashboard/reader" class="nav-link">
+                            <a paper-drawer-toggle href="/dashboard/reader" class="nav-link" click.delegate="close()">
                                 <span class="fa fa-book"></span>
                                 <span class="nav-item" if.bind="fullmenu">Reader</span>
                             </a>
                         </paper-item>
-                        
+
                         <paper-item if.bind="authenticated" class="login">
-                            <a paper-drawer-toggle href="/dashboard/librarian" class="nav-link">
+                            <a paper-drawer-toggle href="/dashboard/librarian" class="nav-link" click.delegate="close()">
                                 <span class="fa fa-book"></span>
                                 <span class="nav-item" if.bind="fullmenu">Librarian</span>
                             </a>
@@ -47,7 +47,7 @@ paper-item:hover {
 
                         <paper-item repeat.for="row of router.navigation"
                                     class="${row.isActive ? 'active' : ''} menu-toggle">
-                            <a paper-drawer-toggle href.bind="row.href" class="nav-link">
+                            <a paper-drawer-toggle href.bind="row.href" class="nav-link" click.delegate="close()">
                                 <span class="${row.settings}"></span>
                                 <span if.bind="fullmenu" class="nav-item">${row.title}</span>
                             </a>

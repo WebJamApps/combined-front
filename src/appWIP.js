@@ -96,24 +96,18 @@ export class App {
     }
     await fetch;
     this.configHttpClient();
-
+    
+    //Once our app loads, we want to save information to our appState object.
     if (this.auth.isAuthenticated()) {
       this.authenticated = true; //Logout element is reliant upon a local var;
-      if (this.appState.getUser()._id === undefined){
-        this.getUser();
-      }
+      this.appState.setAuth(true); //Set our appState to true;
+      let uid = this.auth.getTokenPayload().sub;
+      this.appState.setUid(uid);
       // if (this.appState.getRoles().length === 0){
       //   this.appState.setRoles(['dashboard']);
       // }
     //}
       //this.authenticated = false;
-    }
-  }
-
-  close() {
-    if (!this.widescreen) {
-      let drawer = document.getElementById('drawerPanel');
-      drawer.closeDrawer();
     }
   }
 
@@ -132,14 +126,18 @@ export class App {
         .withInterceptor(this.auth.tokenInterceptor); //Adds bearer token to every HTTP request.
     });
   }
-
-  getUser(){
+  
+  
+  //TODO: Move this stuff into appState
+  async getUser(){
+    let self = this;
     let uid = this.auth.getTokenPayload().sub;
-    this.httpClient.fetch('/user/' + uid)
+    this.httpClient.fetch('/user/' + uid) //Get user info using the uid from the token;
     .then(response => response.json())
     .then(data => {
       let user = data;
-      this.appState.setUser(user);
+      self.appState.setUser(user);
+      return;
     });
   }
 
