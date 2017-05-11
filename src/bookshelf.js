@@ -22,7 +22,7 @@ export class Bookshelf {
   keyword = false;
   mediaType = false;
   siteLocation = false;
-  
+
   async activate(){
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
@@ -34,13 +34,13 @@ export class Bookshelf {
       .useStandardConfiguration()
       .withBaseUrl(this.backend);
     });
-    
+
     const res = await this.httpClient.fetch('/book/getall');
     this.books =  await res.json();
     this.populateTypes();
     this.populateSites();
   }
-  
+
   filterPicked(){
     let arrayLength = this.selectedFilter.length;
     this.keyword = false;
@@ -68,13 +68,13 @@ export class Bookshelf {
       }
     }
   }
-  
+
   filters = [
     {value: '', keys: ['title', 'type', 'author', 'numberPages', 'dateOfPub', 'siteLocation', 'access']},
     {value: '', keys: ['type']},
     {value: '', keys: ['siteLocation']}
   ];
-  
+
   populateTypes(){
     this.mediaTypes.push('');
     for (let next of this.books){
@@ -85,7 +85,7 @@ export class Bookshelf {
       }
     }
   }
-  
+
   populateSites(){
     this.siteLocations.push('');
     for (let next of this.books){
@@ -96,20 +96,18 @@ export class Bookshelf {
       }
     }
   }
-  
+
   setFilter(filterType){
     this.filterType = this.filterby[this.filterType - 1];
   }
-  
+
   showCheckboxes(){
-    const checkboxes = document.getElementById('checkboxes');
+    const checkboxes = document.getElementById('checkboxes-iron');
     if (!this.expanded) {
-      checkboxes.style.display = 'block';
-      this.expanded = true;
+      checkboxes.opened = true;
     } else {
-      checkboxes.style.display = 'none';
-      this.expanded = false;
+      checkboxes.opened = false;
     }
   }
-  
+
 }
