@@ -4,95 +4,107 @@ paper-item:hover {
   background-color: white;
 }
 </style>
-    <div class="page-host">
-        <paper-drawer-panel id="drawerPanel" right-drawer drawer-width.bind="drawerWidth">
-            <paper-header-panel drawer class="${currentStyles.sidebarClass}">
-                <div >
+<div class="page-host">
+  <paper-drawer-panel id="drawerPanel" right-drawer drawer-width.bind="drawerWidth">
+    <paper-header-panel drawer class="${currentStyles.sidebarClass}">
+      <div>
+        <paper-card if.bind="fullmenu" image="${currentStyles.sidebarImagePath}" alt="Web Jam"></paper-card>
+        <paper-card if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 50px"></paper-card>
+        <!-- <paper-item if.bind="widescreen" class="menu-toggle"> -->
+        <div class="nav-list">
+          <p if.bind="fullmenu" style="font-size:1px">&nbsp;</p>
+          <paper-item if.bind="widescreen">
+            <i class="fa fa-bars pull-left fa-1x" click.delegate="toggleMenu()" style="color:#0275d8"></i>
+          </paper-item>
+          <paper-item if.bind="!authenticated" class="login" style="padding-left:10px">
+            <a paper-drawer-toggle href="/login" class="nav-link" click.delegate="close()">
+              <span class="fa fa-sign-in"></span>
+              <span if.bind="fullmenu" class="nav-item">Login</span>
+            </a>
+          </paper-item>
+          
+          <!-- <paper-item if.bind="authenticated" class="login">
+          <a paper-drawer-toggle href="/dashboard" class="nav-link">
+          <span class="fa fa-tachometer"></span>
+          <span class="nav-item" if.bind="fullmenu">Dashboard</span>
+        </a>
+      </paper-item> -->
+      <paper-item if.bind="authenticated" class="login">
+        <a paper-drawer-toggle href="/bookshelf" class="nav-link" click.delegate="close()">
+          <span class="fa fa-book"></span>
+          <span class="nav-item" if.bind="fullmenu">Bookshelf</span>
+        </a>
+      </paper-item>
+      
+      <paper-item if.bind="authenticated" class="login">
+        <a paper-drawer-toggle href="/dashboard/reader" class="nav-link" click.delegate="close()">
+          <span class="fa fa-book"></span>
+          <span class="nav-item" if.bind="fullmenu">Reader</span>
+        </a>
+      </paper-item>
+      
+      <paper-item if.bind="authenticated" class="login">
+        <a paper-drawer-toggle href="/dashboard/librarian" class="nav-link" click.delegate="close()">
+          <span class="fa fa-book"></span>
+          <span class="nav-item" if.bind="fullmenu">Librarian</span>
+        </a>
+      </paper-item>
+      
+      <paper-item repeat.for="row of router.navigation"
+      class="${row.isActive ? 'active' : ''} menu-toggle">
+      <a paper-drawer-toggle href.bind="row.href" class="nav-link" click.delegate="close()">
+        <span class="${row.settings}"></span>
+        <span if.bind="fullmenu" class="nav-item">${row.title}</span>
+      </a>
+    </paper-item>
+    
+    <paper-item class="login">
+      <a paper-drawer-toggle href="/music/pub" class="nav-link" click.delegate="close()">
+        <span class="fa fa-music"></span>
+        <span class="nav-item" if.bind="fullmenu">Pub Songs</span>
+      </a>
+    </paper-item>
+    
+    <paper-item if.bind="authenticated" class="login">
+      <a paper-drawer-toggle class="nav-link" click.delegate="logout()">
+        <span class="fa fa-sign-out"></span>
+      </a>
+      <span if.bind="fullmenu">&nbsp;</span>
+      <button if.bind="fullmenu" click.delegate="logout()" class="material-content-button">
+        Logout
+      </button>
+    </paper-item>
+  </div>
+  
+</div>
+</paper-header-panel>
 
-                    <paper-card if.bind="fullmenu" image="${currentStyles.sidebarImagePath}" alt="Web Jam"></paper-card>
-                    <paper-card if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 50px"></paper-card>
-  <!-- <paper-item if.bind="widescreen" class="menu-toggle"> -->
-                    <div class="nav-list">
-                        <p if.bind="fullmenu" style="font-size:1px">&nbsp;</p>
-                      <paper-item if.bind="widescreen">
-                          <i class="fa fa-bars pull-left fa-1x" click.delegate="toggleMenu()" style="color:#0275d8"></i>
-                      </paper-item>
-                        <paper-item if.bind="!authenticated" class="login" style="padding-left:10px">
-                            <a paper-drawer-toggle href="/login" class="nav-link" click.delegate="close()">
-                                <span class="fa fa-sign-in"></span>
-                                <span if.bind="fullmenu" class="nav-item">Login</span>
-                            </a>
-                        </paper-item>
-
-                        <!-- <paper-item if.bind="authenticated" class="login">
-                            <a paper-drawer-toggle href="/dashboard" class="nav-link">
-                                <span class="fa fa-tachometer"></span>
-                                <span class="nav-item" if.bind="fullmenu">Dashboard</span>
-                            </a>
-                        </paper-item> -->
-
-                        <paper-item if.bind="authenticated" class="login">
-                            <a paper-drawer-toggle href="/dashboard/reader" class="nav-link" click.delegate="close()">
-                                <span class="fa fa-book"></span>
-                                <span class="nav-item" if.bind="fullmenu">Reader</span>
-                            </a>
-                        </paper-item>
-
-                        <paper-item if.bind="authenticated" class="login">
-                            <a paper-drawer-toggle href="/dashboard/librarian" class="nav-link" click.delegate="close()">
-                                <span class="fa fa-book"></span>
-                                <span class="nav-item" if.bind="fullmenu">Librarian</span>
-                            </a>
-                        </paper-item>
-
-                        <paper-item repeat.for="row of router.navigation"
-                                    class="${row.isActive ? 'active' : ''} menu-toggle">
-                            <a paper-drawer-toggle href.bind="row.href" class="nav-link" click.delegate="close()">
-                                <span class="${row.settings}"></span>
-                                <span if.bind="fullmenu" class="nav-item">${row.title}</span>
-                            </a>
-                        </paper-item>
-
-                        <paper-item if.bind="authenticated" class="login">
-                            <a paper-drawer-toggle class="nav-link" click.delegate="logout()">
-                                <span class="fa fa-sign-out"></span>
-                            </a>
-                            <span if.bind="fullmenu">&nbsp;</span>
-                            <button if.bind="fullmenu" click.delegate="logout()" class="material-content-button">
-                                Logout
-                            </button>
-                        </paper-item>
-                    </div>
-
-                </div>
-            </paper-header-panel>
-
-            <paper-header-panel main class="main-panel">
-
-                <paper-material class="material-header ${currentStyles.headerClass}" elevation="0">
-
-                    <paper-card alt="Web Jam" image="${currentStyles.headerImagePath}"
-                                class="${currentStyles.headerImageClass} ${currentStyles.headerClass}"></paper-card>
-                    <paper-card class="${currentStyles.headerClass} header-text-card" style="bottom:30px">
-                        <h3 if.bind="currentRoute !== 'ohaf'" class="header-text ${currentStyles.headerClass}">
-                          ${currentStyles.headerText1}
-                          <!-- <br>${currentStyles.headerText2}
-                          <br>${currentStyles.headerText3} -->
-                        </h3>
-                        <h3 if.bind="currentRoute == 'ohaf'" class="header-text ${currentStyles.headerClass}">
-                          ${currentStyles.headerText1}
-                          <br>${currentStyles.headerText2}
-                          <br>${currentStyles.headerText3}
-                        </h3>
-                    </paper-card>
-
-                </paper-material>
-
-                <i class="fa fa-bars pull-right fa-2x mobile-menu-toggle" paper-drawer-toggle aria-hidden="true"></i>
-
-                <router-view></router-view>
-
-            </paper-header-panel>
-        </paper-drawer-panel>
-    </div>
+<paper-header-panel main class="main-panel">
+  
+  <paper-material class="material-header ${currentStyles.headerClass}" elevation="0">
+    
+    <paper-card alt="Web Jam" image="${currentStyles.headerImagePath}"
+    class="${currentStyles.headerImageClass} ${currentStyles.headerClass}"></paper-card>
+    <paper-card class="${currentStyles.headerClass} header-text-card" style="bottom:30px">
+      <h3 if.bind="currentRoute !== 'ohaf'" class="header-text ${currentStyles.headerClass}">
+        ${currentStyles.headerText1}
+        <!-- <br>${currentStyles.headerText2}
+        <br>${currentStyles.headerText3} -->
+      </h3>
+      <h3 if.bind="currentRoute == 'ohaf'" class="header-text ${currentStyles.headerClass}">
+        ${currentStyles.headerText1}
+        <br>${currentStyles.headerText2}
+        <br>${currentStyles.headerText3}
+      </h3>
+    </paper-card>
+    
+  </paper-material>
+  
+  <i class="fa fa-bars pull-right fa-2x mobile-menu-toggle" paper-drawer-toggle aria-hidden="true"></i>
+  
+  <router-view></router-view>
+  
+</paper-header-panel>
+</paper-drawer-panel>
+</div>
 </template>
