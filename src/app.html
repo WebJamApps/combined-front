@@ -58,10 +58,31 @@ paper-item:hover {
       </a>
     </paper-item>
     
-    <paper-item class="login">
-      <a paper-drawer-toggle href="/music/pub" class="nav-link" click.delegate="close()">
+    <paper-item class="login" if.bind="Menu == 'wj' || Menu =='ohaf'">
+      <a paper-drawer-toggle href="/ohaf" class="nav-link" click.delegate="close()">
+        <span class="fa fa-handshake-o"></span>
+        <span class="nav-item" if.bind="fullmenu">OHAF</span>
+      </a>
+    </paper-item>
+    
+    <paper-item class="login" if.bind="Menu == 'wj' || Menu =='music'">
+      <a paper-drawer-toggle href="/music" class="nav-link" click.delegate="close()">
         <span class="fa fa-music"></span>
+        <span class="nav-item" if.bind="fullmenu">Music</span>
+      </a>
+    </paper-item>
+    
+    <paper-item class="login" if.bind="Menu =='music'">
+      <a paper-drawer-toggle href="/music/pub" class="nav-link" click.delegate="close()">
+        <span class="fa fa-beer"></span>
         <span class="nav-item" if.bind="fullmenu">Pub Songs</span>
+      </a>
+    </paper-item>
+    
+    <paper-item class="login">
+      <a paper-drawer-toggle href="/" class="nav-link" click.delegate="close()">
+        <span class="fa fa-home"></span>
+        <span class="nav-item" if.bind="fullmenu">Web Jam LLC</span>
       </a>
     </paper-item>
     
