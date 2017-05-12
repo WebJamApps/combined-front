@@ -54,13 +54,13 @@ describe('The Bookshelf Module', () => {
   });
 
   it('call showCheckboxes', done => {
-    document.body.innerHTML = "<div id='checkboxes'></div>";
+    document.body.innerHTML = '<iron-dropdown id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="margin-top:25px;">';
     shelf.showCheckboxes();
     done();
   });
 
   it('call showCheckboxes', done => {
-    document.body.innerHTML = "<div id='checkboxes'></div>";
+    document.body.innerHTML = '<iron-dropdown id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="margin-top:25px;">';
     shelf.expanded = true;
     shelf.showCheckboxes();
     done();

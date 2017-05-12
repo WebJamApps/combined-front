@@ -105,8 +105,10 @@ export class Bookshelf {
     const checkboxes = document.getElementById('checkboxes-iron');
     if (!this.expanded) {
       checkboxes.opened = true;
+      this.expanded = true;
     } else {
       checkboxes.opened = false;
+      this.expanded = false;
     }
   }
 
