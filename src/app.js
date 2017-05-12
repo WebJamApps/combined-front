@@ -45,6 +45,7 @@ export class App {
       { route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./ohaf-home'), nav: false, title: 'OHAF', settings: 'fa fa-handshake-o' },
       // { route: 'sc2rs', name: 'sc2rs', moduleId: './sc2rs-home', nav: true, title: 'SC2RS', settings: 'fa fa-star-o' },
       //      { route: 'librarian', name: 'librarian', moduleId: PLATFORM.moduleName('./librarian'), nav: true, title: 'Librarian', settings: 'fa fa-book' },
+      { route: 'library', name: 'library', moduleId: PLATFORM.moduleName('./library'), nav: false, title: 'Library', settings: 'fa fa-book' },
       { route: 'bookshelf', name: 'bookshelf', moduleId: PLATFORM.moduleName('./bookshelf'), nav: false, title: 'Bookshelf', settings: 'fa fa-book' },
       //  { route: 'reader', name: 'reader', moduleId: PLATFORM.moduleName('./reader'), nav: true, title: 'Reader', settings: 'fa fa-file-pdf-o' },
       { route: 'music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: false, title: 'Music', settings: 'fa fa-music' },
@@ -177,6 +178,9 @@ export class App {
       };
       if (this.currentRoute === 'music-router') {
         this.Menu = 'music';
+        //console.log(this.Menu);
+      } else if (this.currentRoute === 'library' || this.currentRoute === 'bookshelf' || this.currentRoute === 'dashboard-router') {
+        this.Menu = 'library';
         //console.log(this.Menu);
       } else {
         this.Menu = 'wj';
