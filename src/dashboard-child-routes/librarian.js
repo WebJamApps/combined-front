@@ -54,7 +54,7 @@ export class Librarian {
 
   types = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audiobook', 'template'];
 
-  accessArray = ['GE Internal', 'Public'];
+  accessArray = ['Private', 'Public'];
   newBook = null;
   CSVFilePath = {files: ['']};
   fileList = '';

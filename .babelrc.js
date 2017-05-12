@@ -1,19 +1,19 @@
 module.exports = {
-  "env": {
-   "test": {
-     "sourceMap": "inline",
-     "plugins": [ "istanbul" ],
-   }
- },
+  // "env": {
+  //   "test": {
+  //     "sourceMap": "inline",
+  //     "plugins": [ "istanbul" ],
+  //   }
+  // },
   "plugins": [
-    "transform-decorators-legacy",
+    "transform-decorators",
     "transform-class-properties"
   ],
   "presets": [
     [
       "env", {
         "targets": process.env.BABEL_TARGET === 'node' ? {
-          "node": ["7.9.0"]
+          "node": process.env.IN_PROTRACTOR ? '6' : 'current'
         } : {
           "browsers": [
             "last 2 versions",
@@ -31,6 +31,6 @@ module.exports = {
       }
     ]
   ]
-
-
+  
+  
 }

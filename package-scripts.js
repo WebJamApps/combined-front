@@ -8,6 +8,7 @@ module.exports = {
       default: 'nps test.jest',
       jest: {
         default: crossEnv('BABEL_TARGET=node jest'),
+        accept: crossEnv('BABEL_TARGET=node jest -u'),
         watch: crossEnv('BABEL_TARGET=node jest --watch')
       },
       karma: {
@@ -15,12 +16,17 @@ module.exports = {
           rimraf('test/karma-coverage'),
           'karma start test/karma.conf.js'
         ),
-        watch: 'karma start test/karma.conf.js --single-run=false',
-        debug: 'karma start test/karma.conf.js --single-run=false --debug'
+        watch: 'karma start test/karma.conf.js --single-run=false --auto-watch=true',
+        debug: 'karma start test/karma.conf.js --single-run=false --auto-watch=true --debug'
+      },
+      lint: {
+        default: 'eslint .',
+        fix: 'eslint --fix'
       },
       all: concurrent({
         browser: series.nps('test.karma', 'e2e'),
-        jest: 'nps test.jest'
+        jest: 'nps test.jest',
+        lint: 'nps test.lint'
       })
     },
     e2e: {

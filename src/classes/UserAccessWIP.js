@@ -41,6 +41,8 @@ export class UserAccess {
       }
       console.log('this route does not require auth, so let them go through');
       return next();
+    }).error(()=>{
+      //TODO: Do things when roles are not returned properly.
     });
   }
 }

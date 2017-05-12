@@ -11,9 +11,11 @@ export class AppState {
     return this.user;
   }
   setUser(input) {
-    console.log('appState setUser');
+    console.log('appState currently contains');
     console.log(this.user);
     this.user = input;
+    console.log('and appState now contains');
+    console.log(this.user);
   }
 
   getAuth() {
@@ -26,7 +28,11 @@ export class AppState {
 
   getRoles() {
     return new Promise((resolve, reject) => {
-      resolve(this.roles);
+      if (this.roles !== []){
+        resolve(this.roles);
+      } else {
+        reject();
+      }
     });
   }
 

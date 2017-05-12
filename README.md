@@ -1,11 +1,13 @@
 # combined-front
 [![CircleCI](https://circleci.com/gh/WebJamApps/combined-front.svg?style=svg)](https://circleci.com/gh/WebJamApps/combined-front)
-
+[![Code Climate](https://codeclimate.com/github/WebJamApps/combined-front/badges/gpa.svg)](https://codeclimate.com/github/WebJamApps/combined-front)
+[![Test Coverage](https://codeclimate.com/github/WebJamApps/combined-front/badges/coverage.svg)](https://codeclimate.com/github/WebJamApps/combined-front/coverage)
+[![Issue Count](https://codeclimate.com/github/WebJamApps/combined-front/badges/issue_count.svg)](https://codeclimate.com/github/WebJamApps/combined-front/issues)
+[![Known Vulnerabilities](https://snyk.io/test/github/webjamapps/combined-front/badge.svg)](https://snyk.io/test/github/webjamapps/combined-front)
 
 This is the front end for the following apps:
 <ui>
 <li><a href="http://www.ourhandsandfeet.org">ourhandsandfeet.org</a></li>
-<li><a href="http://www.sc2rs.com">sc2rs.com</a></li>
 <li><a href="https://www.web-jam.com">web-jam.com</a></li>
 <li><a href="https://www.web-jam.com/music">joshandmariamusic.com</a></li>
 </ul>
@@ -15,9 +17,9 @@ This is the front end for the following apps:
 Clone this repository into a directory of your choice from the terminal using <b>git clone [url of this repository]</b><br>
 Install and use the version of nodejs currently listing in our package.json<br>
 Create a <b>.env</b> file at the project root and request the contents from <b>@JoshuaVSherman</b>.<br>You will not be able to build without this file, so there is no need to try installing anything until you have this in place.<br>
-From the same directory, run 
+From the same directory, run
 <br><b>npm install -g yarn</b>
-<br><b>npm run cleaninstall</b><br>
+<br><b>yarn install</b><br>
 
 Run <b>npm start</b> to start the webpack development server.<br>
 Install the <b>Aurelia Inspector</b> Chrome extension to allow debugging of the font end code.

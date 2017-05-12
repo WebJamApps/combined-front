@@ -1,0 +1,30 @@
+---
+prepare:
+  fetch:
+  - url: https://raw.githubusercontent.com/aurelia/tools/master/.eslintrc.json
+    path: node_modules/aurelia-tools/.eslintrc.json
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+  eslint:
+    enabled: true
+  stylelint:
+    enabled: true
+  htmlhint:
+    enabled: true
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "**.js"
+  - "**.jsx"
+exclude_paths:
+- test/
+- static/includes.html
+- node_modules/
+- coverage/
+- dist/
+- bower_components/

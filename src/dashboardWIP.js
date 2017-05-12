@@ -36,6 +36,9 @@ export class Dashboard {
     this.getUser();
   }
 
+
+  //TODO: Move this role logic into appstate as well
+  //Don't want to leave a bunch of user related logic all over the app
   getUser(){
     this.authenticated = this.auth.isAuthenticated();
     let uid = this.auth.getTokenPayload().sub;

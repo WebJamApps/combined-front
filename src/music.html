@@ -1,6 +1,6 @@
 <template>
   <div class="page-content">
-    
+
     <polymer-slideshow class="music-slideshow">
       <!-- The dimensions of the images are 950x300 -->
       <polymer-slide>
@@ -15,8 +15,8 @@
   </polymer-slideshow>
 
   <paper-material class="material-content" elevation="2">
-    <p style="margin-top:40px;">Josh and Maria were married in July of 2012 and have been singing together 
-      for even longer. Whether it is at church, at the Rescue Mission, in a public venue or in the 
+    <p style="margin-top:40px;">Josh and Maria were married in July of 2012 and have been singing together
+      for even longer. Whether it is at church, at the Rescue Mission, in a public venue or in the
       great outdoors, this couple will knock your socks off. Follow us on
       <span style="color: #3366ff;">
         <a style="color: #3366ff;" title="Find us on Facebook" href="https://www.facebook.com/pages/Josh-Sherman-Band/125614520857570" target="_blank">
@@ -26,11 +26,11 @@
       to keep up with our latest adventures!
     </p>
     <section id="main" style="text-align: center">
-      <a href="/music#joshbio">
+      <a click.delegate="jump('joshbio')">
       <img src="/static/imgs/josh01thumb.jpg" alt="Josh image" width="96">
       </a>
       <p>Josh Sherman – master guitarist and vocalist extraordinaire</p>
-      <a href="/music#mariabio">
+      <a click.delegate="jump('mariabio')">
       <img src="/static/imgs/maria01thumb.jpg" alt="Maria image" width="96" align="center">
       </a>
       <p>Maria Sherman – primo soprano and best roadie ever</p>
@@ -38,7 +38,7 @@
     <section style="margin-left:0;text-align:center;margin-top:40px">
       <h3 style="text-align:center; margin-bottom:30px">Who are these classy people?</h3>
       <h4>Josh Sherman</h4>
-      <a name="joshbio">
+      <a id="joshbio">
         <img class="alignnone size-full wp-image-49" src="/static/imgs/josh01.jpg" alt="josh01" width="288" height="201">
       </a>
       <p style="text-align:left;">
@@ -54,10 +54,10 @@
         shop. Josh started singing with Maria in the fall of 2011. They fell in love and were married
         in July of 2012. Vive l’amore!</p>
         <blockquote style="font-style: italic;text-align:left; margin-top:5px; font-size:9pt">
-          <p>And whenever the harmful spirit from God was upon Saul, David took the lyre 
-            and played it with his hand. So Saul was refreshed and was well, and the harmful spirit 
+          <p>And whenever the harmful spirit from God was upon Saul, David took the lyre
+            and played it with his hand. So Saul was refreshed and was well, and the harmful spirit
             departed from him. <strong>1 Samuel 16:23</strong></p></blockquote>
-            
+
             <aside style="text-align:left; margin:auto; width:3in">
               <p>Instruments that Josh plays:</p>
               <ol>    <li>Lead vocals</li>
@@ -69,12 +69,12 @@
                 <li>Air guitar</li>
               </ol>
             </aside>
-            
-            
+
+
             <hr>
             <article>
               <h4>Maria Sherman</h4>
-              <p><a name="mariabio">
+              <p><a id="mariabio">
                 <img class="alignnone size-medium wp-image-50" src="/static/imgs/maria01.jpg" alt="maria01" width="291" height="201">
               </a></p>
               <p style="text-align:left">Maria started her singing career at the age of 4 when she performed at the JaMar Rec
@@ -103,20 +103,25 @@
                     <li>Saxophone</li>
                     <li>Egg shacker</li>
                     <li>Triangle</li>
-                    <li>Tri-tom</li>  
+                    <li>Tri-tom</li>
                   </ol>
                 </aside>
               </article>
             </section>
           </paper-material>
+
           <paper-material class="footer" elevation="4" style="padding:8px; background-color: #2a222a">
-            <div class="paper-card-img">
-              <a href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
-              <a href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-3x" aria-hidden="true"></i></a>
-              <span style="color:white; font-size: 9pt; padding-left:18px;">Powered by 
-                           <a style="color:white; font-size:8pt;" href="https://www.web-jam.com">Web Jam LLC</a>
+            <div class="paper-card-img"><span>&nbsp;&nbsp;</span>
+              <a target="_blank" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+              <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>
+              <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+              <span>&nbsp;&nbsp;</span><a target="_blank" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
+                    <span>&nbsp;&nbsp;</span><a target="_blank" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>
+              <span style="color:white; font-size: 9pt; padding-left:18px;">Powered by
+                           <a target="_blank" style="color:white; font-size:9pt;font-weight: bold;" href="https://www.web-jam.com">Web Jam LLC</a>
                          </span>
             </div>
           </paper-material>
+
         </div>
       </template>
