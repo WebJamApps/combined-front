@@ -1,10 +1,11 @@
 <template>
   <div class="page-content">
-    
+
     <!-- <select value.bind="filterType">
     <option value="">Filter by...</option>
     <option repeat.for="filter of filterby" value.bind="filter">${filter}</option>
   </select> -->
+
   <paper-material elevation="0" style="z-index:10; position:relative;">
     <div style="width: 4.5in; margin:auto">
       <h1 class="material-content-h1" style="margin-bottom: 10px">Bookshelf
@@ -16,27 +17,31 @@
               </select>
               <div class="overSelect"></div>
             </div>
-            <div id="checkboxes">
-              <label repeat.for="filter of filterby" for="filter">
-                <input type="checkbox" value.bind="filter" checked.bind="selectedFilter" change.delegate="filterPicked()"> ${filter}</label>
+            <iron-dropdown id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
+              <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 250px; max-height: 362px;overflow:auto;border:1px #dadada solid">
+                <label repeat.for="filter of filterby" for="filter" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
+                  <input type="checkbox" value.bind="filter" checked.bind="selectedFilter" change.delegate="filterPicked()"> ${filter}
+                </label>
               </div>
+
+            </iron-dropdown>
             </div>
           </span></h1>
         </div>
       </paper-material>
-      
+
       <paper-material elevation="0">
         <div class="form-group" if.bind="keyword" style="max-width: 4in; margin:auto; padding:5px">
           <input type="text" value.bind="filters[0].value" placeholder="Enter Keyword" class="form-control"/>
         </div>
-        
+
         <div class="form-group" if.bind="mediaType" style="max-width: 4in; margin:auto; padding:5px">
           <select id="type" class="form-control" value.bind="filters[1].value">
             <option value="">Choose Media Type...</option>
             <option repeat.for="type of mediaTypes" model.bind="type">${type}</option>
           </select>
         </div>
-        
+
         <div class="form-group" if.bind="siteLocation" style="max-width: 4in; margin:auto; padding:5px">
           <select id="site" class="form-control" value.bind="filters[2].value">
             <option value="">Choose Location...</option>
@@ -45,9 +50,9 @@
         </div>
       </paper-material>
       <!-- cannot use aurelia table inside another polymer element, it breaks the data binding -->
-    
+
         <div class="search-table-outer" style="position:relative;overflow-x:visible;">
-        
+
           <table aurelia-table="data.bind: books; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
             <thead>
               <tr>
@@ -77,10 +82,10 @@
                 </tr>
               </tbody>
             </table>
-      
+
             <!-- DO NOT DELETE the following "p" line; it is to slow down the rendering of the filter by box -->
             <p style="color: white">selected filter: ${selectedFilter}</p>
           </div>
         </div>
-    
+
     </template>

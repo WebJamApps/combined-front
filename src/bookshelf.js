@@ -102,12 +102,12 @@ export class Bookshelf {
   }
 
   showCheckboxes(){
-    const checkboxes = document.getElementById('checkboxes');
+    const checkboxes = document.getElementById('checkboxes-iron');
     if (!this.expanded) {
-      checkboxes.style.display = 'block';
+      checkboxes.opened = true;
       this.expanded = true;
     } else {
-      checkboxes.style.display = 'none';
+      checkboxes.opened = false;
       this.expanded = false;
     }
   }
