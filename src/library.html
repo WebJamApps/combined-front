@@ -1,0 +1,67 @@
+<template>
+  <div class="page-content">
+    <div style="float: right; width: 600px; margin-top: 25px" if.bind = "widescreen">
+      <paper-material class="material-content" elevation="0">
+        <polymer-slideshow class="home-slideshow">
+          <polymer-slide>
+            <paper-card class="slideshowimage" image="../static/imgs/library/books1.jpg"></paper-card>
+          </polymer-slide>
+          <polymer-slide>
+            <paper-card class="slideshowimage" image="../static/imgs/library/books2.jpg"></paper-card>
+          </polymer-slide>
+          <polymer-slide>
+            <paper-card class="slideshowimage" image="../static/imgs/library/books3.jpg"></paper-card>
+          </polymer-slide>
+        </polymer-slideshow>
+        <p class="material-content-p" style="font-style: italic; font-size: 9pt; margin-top:40px">A library is the delivery room for the birth of ideas, a place where history comes to life.<br>  --Norman Cousins</p>
+      </paper-material>
+    </div>
+    
+    <div style="width: 750px" if.bind = "widescreen">
+      <paper-material class="material-content" elevation="0">
+        <h1 class="material-content-h1" style="text-align:left; padding-left:10px">About the library</h1>
+        <p class="material-content-p" style="text-align:left; padding-left:10px">Your place to go for links to books, videos, work instructions, product documentation, etc.</p>
+        <ul>
+          <li>Click the Bookshelf and select a filter to quickly find what you are looking for.</li>
+          <li>Login is only needed to check out a physical book in Salem, Virginia.</li>
+        </ul>
+        <h1 class="material-content-h1" style="text-align:left; padding-left:10px; margin-top:30px">FAQs</h1>
+        <p style="text-align:left; padding-left:18px">Q: How do I get something added to the Bookshelf?<br>
+          <span style="font-style: italic;">A: Contact the librarians.</span></p>
+          <p style="text-align:left; padding-left:18px">Q: How do I contact the librarians?<br>
+            <span style="font-style: italic;">A: Email the librarians at <a style="text-decoration: underline;" href="mailto:web.jam.adm@gmail.com.com"><strong>web.jam.adm@gmail.com</strong></a>
+            </span></p>
+          </paper-material>
+        </div>
+        
+        <div if.bind = "!widescreen" style="margin-top:8px">
+          <paper-material class="material-content" elevation="0">
+            <polymer-slideshow class="home-slideshow">
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/library/books1.jpg"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/library/books2.jpg"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/library/books3.jpg"></paper-card>
+              </polymer-slide>
+            </polymer-slideshow>
+            <p class="material-content-p" style="font-style: italic; margin-top:10%">A library is the delivery room for the birth of ideas, a place where history comes to life.  --Norman Cousins</p>
+            
+            <h1 class="material-content-h1">About the library</h1>
+            <p class="material-content-p">Your place to go for links to books, videos, work instructions, product documentation, etc.</p>
+            <ul>
+              <li>Click the Bookshelf and select a filter to quickly find what you are looking for.</li>
+              <li>Login is only needed to check out a physical book in Salem, Virginia</li>
+            </ul>
+            <h1 class="material-content-h1">FAQs</h1>
+            <p>Q: How do I get something added to the Bookshelf?<br>
+              <span style="font-style: italic;">A: Contact the librarians.</span></p>
+              <p>Q: How do I contact the librarians?<br>
+                <span style="font-style: italic;">A: Email the librarians at <a style="text-decoration: underline;" href="mailto:web.jam.adm@gmail.com"><strong>web.jam.adm@gmail.com</strong></a>
+                </span></p>
+              </paper-material>
+            </div>
+          </div>
+        </template>
