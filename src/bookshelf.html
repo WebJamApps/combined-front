@@ -51,7 +51,7 @@
       </paper-material>
       <!-- cannot use aurelia table inside another polymer element, it breaks the data binding -->
 
-        <div class="search-table-outer" style="position:relative;overflow-x:visible;">
+        <div class="search-table-outer" style="position:relative;overflow-x:auto;">
 
           <table aurelia-table="data.bind: books; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
             <thead>
