@@ -4,23 +4,14 @@
 
 //@inject(Router)
 export class Home {
-  
+
   //constructor(router) {
     //this.router = router;
   //}
-  
-  
+
+
   get widescreen(){
-    let iswidescreen = false;
-    let currentscreenwidth = document.documentElement.clientWidth;
-    /* istanbul ignore else */
-    if (currentscreenwidth > 1300){
-      iswidescreen = true;
-      //this.columnWidth = '450px';
-    } //else {
-      //this.columnWidth = 'auto';
-    //}
-    return iswidescreen;
+    return document.documentElement.clientWidth > 1300;
   }
   // attached() {
   //     document.title = this.router.currentInstruction.config.title;
