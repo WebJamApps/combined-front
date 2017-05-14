@@ -38,8 +38,8 @@ export class Volunteer {
       let user = data;
       this.appState.setUser(user);
       
-      if (user.userType === 'Charity'){
-        this.appState.setRoles(['charity']);
+      if (user.userType === 'Volunteer'){
+        this.appState.setRoles(['volunteer']);
       } else if (user.userType === 'Developer'){
         this.appState.setRoles(['charity', 'volunteer', 'developer', 'reader', 'librarian']);
       } else {

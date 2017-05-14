@@ -37,10 +37,7 @@ export class Developer {
     .then(data => {
       let user = data;
       this.appState.setUser(user);
-      
-      if (user.userType === 'Charity'){
-        this.appState.setRoles(['charity']);
-      } else if (user.userType === 'Developer'){
+      if (user.userType === 'Developer'){
         this.appState.setRoles(['charity', 'volunteer', 'developer', 'reader', 'librarian']);
       } else {
         this.router.navigate('/');
