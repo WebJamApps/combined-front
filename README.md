@@ -26,7 +26,7 @@ Install the <b>Aurelia Inspector</b> Chrome extension to allow debugging of the 
 
 Now, open your browser and go to <b>localhost:9000</b>
 
-The homepage should be display correctly.
+The homepage should display correctly.
 
 <b><i>Note</b></i>: you will not be able to use the "Login" feature of the website unless you also run the back end server.
 
