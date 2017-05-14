@@ -1,8 +1,7 @@
 
 // const Counter = require('assertions-counter');
 import {App} from '../../src/app';
-import {AppState} from '../../src/classes/AppState.js';
-import {AuthStub, RouterStub, HttpMock} from './commons';
+import {AuthStub, HttpMock} from './commons';
 
 class AuthStub2 extends AuthStub {
   isAuthenticated() {
@@ -16,9 +15,9 @@ describe('the App module', () => {
   let app2;
 
   beforeEach(() => {
-    app1 = new App(null, new AuthStub, new HttpMock, new AppState);
+    app1 = new App(new AuthStub, new HttpMock);
     app1.auth.setToken('No token');
-    app2 = new App(null, new AuthStub2, new HttpMock, new AppState);
+    app2 = new App(new AuthStub2, new HttpMock);
   });
 
   // it('tests configHttpClient', (done) => {
@@ -41,14 +40,15 @@ describe('the App module', () => {
 
   it('tests logout', () => {
     //console.log(app1);
-    app1.activate();
-    app1.logout();
-    expect(app1.authenticated).toBe(false);
+    app1.activate().then(() => {
+      app1.logout();
+      expect(app1.authenticated).toBe(false);
+    });
   });
 
   it('should get widescreen', () => {
     //console.log(app1);
-    const app3 = new App(null, null, new AuthStub, new RouterStub, new HttpMock, new AppState);
+    const app3 = new App(new AuthStub, new HttpMock);
     expect(app3.widescreen).toBe(true);
   });
 

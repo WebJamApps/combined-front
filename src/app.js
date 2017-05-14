@@ -4,34 +4,31 @@ import {AuthorizeStep} from 'aurelia-auth';
 import {UserAccess} from './classes/UserAccess.js';
 //import {Router} from 'aurelia-router';
 //import {AppRouterConfig} from './app.router.config';
-import {FetchConfig} from 'aurelia-auth';
 import {AuthService} from 'aurelia-auth';
 import {HttpClient} from 'aurelia-fetch-client';
 import {AppState} from './classes/AppState.js';
 System.import('isomorphic-fetch');
 
-@inject(FetchConfig, AuthService, HttpClient, AppState)
+@inject(AuthService, HttpClient)
 export class App {
-  constructor(fetchConfig, auth, httpClient, appState) {
+  constructor(auth, httpClient) {
     //this.router = router;
     //this.appRouterConfig = appRouterConfig;
-    this.fetchConfig = fetchConfig;
     this.auth = auth;
     this.httpClient = httpClient;
-    this.appState = appState;
   }
-  
+
   email = '';
   password = '';
   authenticated = false;
   token = '';
-  
+
   @bindable
   drawerWidth = '175px';
-  
+
   @bindable
   fullmenu = true;
-  
+
   configureRouter(config, router){
     config.title = 'Web Jam LLC';
     config.options.pushState = true;
@@ -55,7 +52,7 @@ export class App {
     config.fallbackRoute('/');
     this.router = router;
   }
-  
+
   get widescreen() {
     let iswidescreen = false;
     let currentscreenwidth = document.documentElement.clientWidth;
@@ -65,7 +62,7 @@ export class App {
     }
     return iswidescreen;
   }
-  
+
   toggleMenu() {
     console.debug(this.fullmenu);
     if (this.fullmenu) {
@@ -76,32 +73,34 @@ export class App {
       this.drawerWidth = '175px';
     }
   }
-  
+
   logout() {
     this.appState.setAuth(false);
+    this.appState.setUser({});
     this.authenticated = false;
     this.auth.logout('/')
     .then(()=>{
       console.log('Promise fulfilled, logged out');
     });
   }
-  
+
   // getTokens(){
   //   return this.auth.getTokenPayload();
   // }
   //
-  
+
   async activate() {
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
     }
     await fetch;
     this.configHttpClient();
-    
+    this.appState = new AppState(this.httpClient);
     if (this.auth.isAuthenticated()) {
       this.authenticated = true; //Logout element is reliant upon a local var;
-      if (this.appState.getUser()._id === undefined){
-        this.getUser();
+      if (this.appState.getUserID() === undefined){
+        let uid = this.auth.getTokenPayload().sub;
+        this.appState.getUser(uid);
       }
       // if (this.appState.getRoles().length === 0){
       //   this.appState.setRoles(['dashboard']);
@@ -110,14 +109,14 @@ export class App {
       //this.authenticated = false;
     }
   }
-  
+
   close() {
     if (!this.widescreen) {
       let drawer = document.getElementById('drawerPanel');
       drawer.closeDrawer();
     }
   }
-  
+
   configHttpClient() {
     this.httpClient.configure(httpConfig => {
       httpConfig
@@ -133,26 +132,16 @@ export class App {
       .withInterceptor(this.auth.tokenInterceptor); //Adds bearer token to every HTTP request.
     });
   }
-  
-  getUser(){
-    let uid = this.auth.getTokenPayload().sub;
-    this.httpClient.fetch('/user/' + uid)
-    .then(response => response.json())
-    .then(data => {
-      let user = data;
-      this.appState.setUser(user);
-    });
-  }
-  
+
   get currentRoute() {
     if (this.router.currentInstruction) {
       return this.router.currentInstruction.config.name;
     }
   }
-  
+
   get currentStyles() {
     let result = {};
-    
+
     if (this.currentRoute === 'ohaf') {
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',
@@ -187,9 +176,9 @@ export class App {
         //console.log(this.Menu);
       }
     }
-    
+
     result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
-    
+
     return result;
   }
 }
