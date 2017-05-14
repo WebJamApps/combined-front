@@ -70,7 +70,7 @@
             <tbody>
               <tr repeat.for="book of $displayData">
                 <td style="padding:8px"><a style="font-size:11pt" show.bind="book.url" href="${book.url}">
-                  ${book.title}</a><a style="font-size:11pt" if.bind="!book.url" href="/dashboard/reader/">${book.title}</a></td>
+                  ${book.title}</a><a style="font-size:11pt" if.bind="!book.url" href="/dashboard/reader">${book.title}</a></td>
                   <td style="padding:8px">${book.type}</td>
                   <td style="padding:8px">${book.author}</td>
                   <td style="padding:8px">${book.numberPages}</td>
