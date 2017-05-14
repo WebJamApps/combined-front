@@ -1,21 +1,24 @@
 // this are unit tests for the AppState
 
 import {AppState} from '../../src/classes/AppState.js';
+import {HttpMock} from './commons';
 
 describe('The AppState module unit tests', () => {
   let appState;
   let auth = '12345678agdgfhjajsagj';
   let roles = ['developer', 'Volunteer'];
-  let user = 'John Doe';
+  let user = {'userName': 'John Doe', '_id': 'foo'};
 
   beforeEach(() => {
-    appState = new AppState();
+    appState = new AppState(new HttpMock);
   });
 
   it('should set and then get the corresponding value of the user', done => {
     appState.setUser(user);
-    expect(appState.getUser()).toBe(user);
-    done();
+    appState.getUser('foo').then((returnedUser) => {
+      expect(returnedUser).toEqual(user);
+      done();
+    });
   });
 
   it('should set and get the value for the auth', done => {

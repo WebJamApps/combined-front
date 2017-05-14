@@ -1,15 +1,33 @@
 export class AppState {
-  constructor(){
+  constructor(httpClient) {
+    this.httpClient = httpClient;
     this.user = {};
     this.is_auth = false;
     this.roles = [];
   }
 
-  getUser() {
-    console.log('appState getUser');
-    console.log(this.user);
-    return this.user;
+  getUserID() {
+    return this.user._id;
   }
+
+  getUser(uid) {
+    console.log('appState getUser');
+    if (this.getUserID() !== undefined) {
+      console.log('appState returning already set user');
+      return new Promise((resolve) => {
+        resolve(this.user);
+      });
+    }
+    console.log('appState getting new user');
+    return this.httpClient.fetch('/user/' + uid)
+    .then(response => response.json())
+    .then(data => {
+      let user = data;
+      this.setUser(user);
+      return this.user;
+    });
+  }
+
   setUser(input) {
     console.log('appState setUser');
     console.log(this.user);
@@ -25,7 +43,7 @@ export class AppState {
   }
 
   getRoles() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       resolve(this.roles);
     });
   }
