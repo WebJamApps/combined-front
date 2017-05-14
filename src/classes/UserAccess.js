@@ -28,6 +28,18 @@ export class UserAccess {
         if (routingContext.params.childRoute === 'librarian'){
           return next();
         }
+        
+        if (routingContext.params.childRoute === 'charity'){
+          return next();
+        }
+        
+        if (routingContext.params.childRoute === 'volunteer'){
+          return next();
+        }
+        
+        if (routingContext.params.childRoute === 'developer'){
+          return next();
+        }
 
         for (let i = 0; i < userRoles.length; i++) {
           // in this case the user is only in one role at a time.
