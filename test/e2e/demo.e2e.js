@@ -14,7 +14,7 @@ describe('aurelia skeleton app', function() {
   });
   
   it('should load the page and display the initial page title', async () => {
-    await expect(poSkeleton.getCurrentPageTitle()).toBe('Web Jam LLC | Web Jam LLC');
+    await expect(poSkeleton.getCurrentPageTitle()).toBe('Web Jam LLC');
   });
   
   // it('should display greeting', () => {
@@ -35,8 +35,8 @@ describe('aurelia skeleton app', function() {
   //   expect(poWelcome.openAlertDialog()).toBe(true);
   // });
   
-  it('should navigate to News page', async () => {
-    await poSkeleton.navigateTo('/news');
-    await expect(poSkeleton.getCurrentPageTitle()).toBe('News | Web Jam LLC');
+  it('should navigate to Music page', async () => {
+    await poSkeleton.navigateTo('/music');
+    await expect(poSkeleton.getCurrentPageTitle()).toBe('Music | Web Jam LLC');
   });
 });
