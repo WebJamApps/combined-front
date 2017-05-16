@@ -27,7 +27,7 @@ export class Reader {
       'checkedOutBy': '',
       'checkedOutByName': ''
     };
-    //console.log(this.auth.isAuthenticated);
+
     if (process.env.AuthIsON !== 'false' && this.auth.isAuthenticated()){
       this.uid = this.auth.getTokenPayload().sub;
     } else {
@@ -42,20 +42,11 @@ export class Reader {
       this.backend = process.env.BackendUrl;
     }
     await fetch;
-    //if (process.env.NODE_ENV !== 'production'){
     this.httpClient.configure(config => {
       config
       .useStandardConfiguration()
       .withBaseUrl(this.backend);
     });
-  
-  // async activate(){
-  //   await fetch;
-  //   this.httpClient.configure(config => {
-  //     config
-  //     .useStandardConfiguration()
-  //     .withBaseUrl(process.env.BackendUrl);
-  //   });
     
     const res = await this.httpClient.fetch('/book/getall');
     this.books =  await res.json();

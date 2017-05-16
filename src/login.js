@@ -20,15 +20,9 @@ export class Login {
   authenticate(name){
     console.log('in auth');
     let ret = this.auth.authenticate(name, false, null);
-    //TODO listen for google to repsond if not already logged in
-    //https://developers.google.com/identity/sign-in/web/listeners
-    //http://stackoverflow.com/questions/38876670/aurelia-click-attribute-that-requires-event-target-to-be-same-as-element
-    //http://stackoverflow.com/questions/37171766/aurelia-binding-back-to-view-model-on-button-click
     ret.then(data => {
       this.auth.setToken(data.token);
       this.appState.setAuth(this.auth.isAuthenticated());
-      //this.appState.setAuth(true);
-      //this.appState.setRoles(['dashboard']);
       console.log('In login authenticate');
       console.log(this.appState.getRoles());
     }, undefined);
