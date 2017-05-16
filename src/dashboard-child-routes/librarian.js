@@ -32,6 +32,8 @@ export class Librarian {
   async activate(){
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
+    } else {
+      this.backend = '';
     }
     await fetch;
     //if (process.env.NODE_ENV !== 'production'){
