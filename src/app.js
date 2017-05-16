@@ -2,8 +2,6 @@ import {PLATFORM} from 'aurelia-pal';
 import {inject, bindable} from 'aurelia-framework';
 import {AuthorizeStep} from 'aurelia-auth';
 import {UserAccess} from './classes/UserAccess.js';
-//import {Router} from 'aurelia-router';
-//import {AppRouterConfig} from './app.router.config';
 import {AuthService} from 'aurelia-auth';
 import {HttpClient} from 'aurelia-fetch-client';
 import {AppState} from './classes/AppState.js';
@@ -12,8 +10,6 @@ System.import('isomorphic-fetch');
 @inject(AuthService, HttpClient)
 export class App {
   constructor(auth, httpClient) {
-    //this.router = router;
-    //this.appRouterConfig = appRouterConfig;
     this.auth = auth;
     this.httpClient = httpClient;
   }
