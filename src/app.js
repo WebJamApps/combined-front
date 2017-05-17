@@ -13,18 +13,32 @@ export class App {
     this.auth = auth;
     this.httpClient = httpClient;
   }
-
+  
   email = '';
   password = '';
   authenticated = false;
   token = '';
-
+  
   @bindable
   drawerWidth = '175px';
-
+  
   @bindable
   fullmenu = true;
-
+  
+  async activate() {
+    await fetch;
+    this.configHttpClient();
+    this.appState = new AppState(this.httpClient);
+    if (this.auth.isAuthenticated()) {
+      this.authenticated = true; //Logout element is reliant upon a local var;
+      /* istanbul ignore else */
+      if (this.appState.getUserID() === undefined){
+        let uid = this.auth.getTokenPayload().sub;
+        this.appState.getUser(uid);
+      }
+    }
+  }
+  
   configureRouter(config, router){
     config.title = 'Web Jam LLC';
     config.options.pushState = true;
@@ -48,17 +62,18 @@ export class App {
     config.fallbackRoute('/');
     this.router = router;
   }
-
+  
   get widescreen() {
-    let iswidescreen = false;
-    let currentscreenwidth = document.documentElement.clientWidth;
-    /* istanbul ignore else */
-    if (currentscreenwidth > 766) {
-      iswidescreen = true;
-    }
-    return iswidescreen;
+    return document.documentElement.clientWidth > 766;
+    // let iswidescreen = false;
+    // let currentscreenwidth = document.documentElement.clientWidth;
+    // /* istanbul ignore else */
+    // if (currentscreenwidth > 766) {
+    //   iswidescreen = true;
+    // }
+    // return iswidescreen;
   }
-
+  
   toggleMenu() {
     console.debug(this.fullmenu);
     if (this.fullmenu) {
@@ -69,7 +84,7 @@ export class App {
       this.drawerWidth = '175px';
     }
   }
-
+  
   logout() {
     this.appState.setAuth(false);
     this.appState.setUser({});
@@ -79,41 +94,20 @@ export class App {
       console.log('Promise fulfilled, logged out');
     });
   }
-
-  // getTokens(){
-  //   return this.auth.getTokenPayload();
-  // }
-  //
-
-  async activate() {
+  
+  close() {
+    // if (!this.widescreen) {
+    let drawer = document.getElementById('drawerPanel');
+    drawer.closeDrawer();
+    // }
+  }
+  
+  configHttpClient() {
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
+    } else {
+      this.backend = '';
     }
-    await fetch;
-    this.configHttpClient();
-    this.appState = new AppState(this.httpClient);
-    if (this.auth.isAuthenticated()) {
-      this.authenticated = true; //Logout element is reliant upon a local var;
-      if (this.appState.getUserID() === undefined){
-        let uid = this.auth.getTokenPayload().sub;
-        this.appState.getUser(uid);
-      }
-      // if (this.appState.getRoles().length === 0){
-      //   this.appState.setRoles(['dashboard']);
-      // }
-      //}
-      //this.authenticated = false;
-    }
-  }
-
-  close() {
-    if (!this.widescreen) {
-      let drawer = document.getElementById('drawerPanel');
-      drawer.closeDrawer();
-    }
-  }
-
-  configHttpClient() {
     this.httpClient.configure(httpConfig => {
       httpConfig
       .withDefaults({
@@ -128,16 +122,15 @@ export class App {
       .withInterceptor(this.auth.tokenInterceptor); //Adds bearer token to every HTTP request.
     });
   }
-
+  
   get currentRoute() {
     if (this.router.currentInstruction) {
       return this.router.currentInstruction.config.name;
     }
   }
-
+  
   get currentStyles() {
     let result = {};
-
     if (this.currentRoute === 'ohaf') {
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',
@@ -150,9 +143,7 @@ export class App {
         menuToggleClass: 'ohaf-menu-toggle'
       };
       this.Menu = 'ohaf';
-      //console.log(this.Menu);
     } else {
-      //console.log(this.currentRoute);
       result = {
         headerImagePath: '../static/imgs/webjamicon7.png',
         headerText1: 'Web Jam LLC',
@@ -172,9 +163,7 @@ export class App {
         //console.log(this.Menu);
       }
     }
-
     result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
-
     return result;
   }
 }

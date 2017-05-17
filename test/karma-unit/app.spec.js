@@ -2,7 +2,7 @@
 import {App} from '../../src/app';
 import {AuthStub, HttpMock} from './commons';
 //import {RouterStub} from './commons';
-//const Counter = require('assertions-counter');
+const Counter = require('assertions-counter');
 
 class AuthStub2 extends AuthStub {
   isAuthenticated() {
@@ -11,26 +11,9 @@ class AuthStub2 extends AuthStub {
   }
 }
 
-// class HttpStub {
-//   fetch(fn) {
-//     var response = this.itemStub;
-//     this.__fetchCallback = fn;
-//     return new Promise((resolve) => {
-//       resolve({ json: () => response });
-//     });
-//   }
-//   configure(fn) {
-//     this.__configureCallback = fn;
-//     return this.__configureReturns;
-//   }
-// }
-
 describe('the App module', () => {
   let app1;
   let app2;
-  
-  //var sut;
-  //   var mockedRouter;
   
   beforeEach(() => {
     app1 = new App(new AuthStub, new HttpMock);
@@ -38,36 +21,77 @@ describe('the App module', () => {
     app2 = new App(new AuthStub2, new HttpMock);
   });
   
-  // it('tests configHttpClient', (done) => {
-  //   const { add: ok } = new Counter(2, done);
-  //   app1.auth.tokenInterceptor = 'tokenInterceptor';
-  //   app1.configHttpClient();
-  //   app1.httpClient.__configureCallback(new(class {
-  //     withDefaults(opts) {
-  //       expect(opts.mode).toBe('cors');
-  //       ok();
-  //       return this;
-  //     }
-  //     withInterceptor(token) {
-  //       expect(token).toBe(app1.auth.tokenInterceptor);
-  //       ok();
-  //       return this;
-  //     }
-  //   })());
-  // });
-  
-  it('configures the router', done => {
-    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
-    let routerStub = {};
-    app1.configureRouter(configStub, routerStub);
-    done();
+  it('tests configHttpClient', (done) => {
+    const { add: ok } = new Counter(4, done);
+    app1.auth.tokenInterceptor = 'tokenInterceptor';
+    app1.configHttpClient();
+    app1.httpClient.__configureCallback(new(class {
+      withDefaults(opts) {
+        expect(opts.mode).toBe('cors');
+        ok();
+        return this;
+      }
+      useStandardConfiguration() {
+        ok();
+        return this;
+      }
+      withBaseUrl() {
+        ok();
+        return this;
+      }
+      withInterceptor(token) {
+        expect(token).toBe(app1.auth.tokenInterceptor);
+        ok();
+        return this;
+      }
+    })());
   });
+  
+  // it('configures the router and gets the current route', done => {
+  //   let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+  //   let routerStub = {};
+  //   app1.configureRouter(configStub, routerStub);
+  //   //.then(() => {
+  //   //let route = app1.currentRoute;
+  //   //expect(route).toBe(defined);
+  //   //});
+  //   done();
+  // });
   
   it('tests logout', done => {
     //console.log(app1);
     app1.activate().then(() => {
       app1.logout();
       expect(app1.authenticated).toBe(false);
+    });
+    done();
+  });
+  
+  it('gets the current route', done => {
+    //console.log(app1);
+    app1.activate().then(() => {
+      let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+      let routerStub = {};
+      app1.configureRouter(configStub, routerStub);
+      let route = app1.currentRoute;
+      expect(route).toBe(defined);
+    });
+    done();
+  });
+  
+  it('gets the current styles', done => {
+    app1.activate().then(() => {
+      let styles = app1.currentStyles;
+      expect(styles).toBe(defined);
+    });
+    done();
+  });
+  
+  it('closes the menu on cellphone display', done => {
+    //console.log(app1);
+    app1.activate().then(() => {
+      app1.close();
+      //expect(app1.authenticated).toBe(false);
     });
     done();
   });
