@@ -14,16 +14,17 @@ export class Dashboard {
     this.httpClient = httpClient;
     this.router = router;
     this.appState = appState;
-    this.backend = '';
   }
-
+  
   //authenticated=false;
   //firstTimeInfo = false;
   types=['Charity', 'Volunteer', 'Developer', 'Reader', 'Librarian'];
-
+  
   async activate(){
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
+    } else {
+      this.backend = '';
     }
     await fetch;
     //if (process.env.NODE_ENV !== 'production'){
@@ -35,7 +36,7 @@ export class Dashboard {
     //}
     this.getUser();
   }
-
+  
   getUser(){
     this.authenticated = this.auth.isAuthenticated();
     let uid = this.auth.getTokenPayload().sub;
@@ -44,7 +45,7 @@ export class Dashboard {
     .then(data => {
       let user = data;
       this.appState.setUser(user);
-  
+      
       if (user.userType === 'Charity'){
         this.appState.setRoles(['charity']);
         this.router.navigate('charity');
@@ -63,7 +64,7 @@ export class Dashboard {
       }
     });
   }
-
+  
   updateUser(){
     let uid = this.auth.getTokenPayload().sub;
     //let tempUserType = this.user.userType;
