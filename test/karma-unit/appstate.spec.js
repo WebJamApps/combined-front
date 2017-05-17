@@ -8,6 +8,7 @@ describe('The AppState module unit tests', () => {
   let auth = '12345678agdgfhjajsagj';
   let roles = ['developer', 'Volunteer'];
   let user = {'userName': 'John Doe', '_id': 'foo'};
+  let userDeveloper = {'userName': 'John Doe', '_id': 'foo', 'userType': 'Developer'};
 
   beforeEach(() => {
     appState = new AppState(new HttpMock);
@@ -22,6 +23,13 @@ describe('The AppState module unit tests', () => {
   });
 
   it('should set and get the value for the auth', done => {
+    appState.setUser(userDeveloper);
+    appState.checkUserRole();
+    //expect(appState.getAuth()).toBe(auth);
+    done();
+  });
+  
+  it('should set all the roles for the developer', done => {
     appState.setAuth(auth);
     expect(appState.getAuth()).toBe(auth);
     done();

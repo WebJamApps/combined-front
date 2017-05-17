@@ -18,7 +18,7 @@ export class Dashboard {
     await this.app.appState.getUser(uid);
     console.log('this is the user ' + this.app.appState.user.name);
     this.userType = this.app.appState.user.userType;
-    this.checkUserRole();
+    this.childRoute();
   }
   
   configHttpClient(){
@@ -34,21 +34,21 @@ export class Dashboard {
     });
   }
   
-  checkUserRole(){
+  childRoute(){
     if (this.userType === 'Charity'){
-      this.app.appState.setRoles(['charity']);
+      //this.app.appState.setRoles(['charity']);
       this.app.router.navigate('dashboard/charity');
     } else if (this.userType === 'Volunteer'){
-      this.app.appState.setRoles(['volunteer']);
+      //this.app.appState.setRoles(['volunteer']);
       this.app.router.navigate('dashboard/volunteer');
     } else if (this.userType === 'Reader'){
-      this.app.appState.setRoles(['reader']);
+      //this.app.appState.setRoles(['reader']);
       this.app.router.navigate('dashboard/reader');
     } else if (this.userType === 'Librarian'){
-      this.app.appState.setRoles(['librarian']);
+      //this.app.appState.setRoles(['librarian']);
       this.app.router.navigate('dashboard/volunteer');
     } else if (this.userType === 'Developer'){
-      this.app.appState.setRoles(['charity', 'volunteer', 'developer', 'reader', 'librarian']);
+      //this.app.appState.setRoles(['charity', 'volunteer', 'developer', 'reader', 'librarian']);
       this.app.router.navigate('dashboard/developer');
     }
   }

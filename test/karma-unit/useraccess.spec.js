@@ -31,25 +31,25 @@ describe('The UserAccess module unit tests', () => {
     userAccess.run(routingContext, next);
   });
 
-  it('should require auth, but requested librarian, so do not check role', done => {
-    next = function() {
-      done();
-    };
-    routingContext.config = {auth: true};
-    routingContext.fragment = '/dashboard/librarian';
-    routingContext.params = {childRoute: 'librarian'};
-    userAccess.run(routingContext, next);
-  });
+  // it('should require auth, but requested librarian, so do not check role', done => {
+  //   next = function() {
+  //     done();
+  //   };
+  //   routingContext.config = {auth: true};
+  //   routingContext.fragment = '/dashboard/librarian';
+  //   routingContext.params = {childRoute: 'librarian'};
+  //   userAccess.run(routingContext, next);
+  // });
 
-  it('should require auth, but requested reader, so do not check role', done => {
-    next = function() {
-      done();
-    };
-    routingContext.config = {auth: true};
-    routingContext.fragment = '/dashboard/reader';
-    routingContext.params = {childRoute: 'reader'};
-    userAccess.run(routingContext, next);
-  });
+  // it('should require auth, but requested reader, so do not check role', done => {
+  //   next = function() {
+  //     done();
+  //   };
+  //   routingContext.config = {auth: true};
+  //   routingContext.fragment = '/dashboard/reader';
+  //   routingContext.params = {childRoute: 'reader'};
+  //   userAccess.run(routingContext, next);
+  // });
 
   it('should require auth and check roles and be authorized', done => {
     next = function() {
