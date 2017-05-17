@@ -1,8 +1,9 @@
 
 import { Reader } from '../../src/dashboard-child-routes/reader.js';
 import {AuthStub, RouterStub, HttpMock} from './commons';
+const Counter = require('assertions-counter');
 
-describe('the Dashboard Module', () => {
+describe('the Reader Module', () => {
   let auth;
   let http;
   let token = 'mhioj23yr675843ho12yv9852vbbjeywouitryhrcyqo7t89vu';
@@ -45,10 +46,27 @@ describe('the Dashboard Module', () => {
     reader.checkInBook(book);
     done();
   });
-
-  it('set process.env.AuthIsON to false', done => {
-    process.env.AuthIsON = false;
-    reader = new Reader(auth, http, app, new RouterStub());
-    done();
+  
+  it('tests configHttpClient', (done) => {
+    const { add: ok } = new Counter(2, done);
+    reader.activate().then(() => {
+      reader.httpClient.__configureCallback(new(class {
+        withBaseUrl(opts) {
+          expect(opts).toBe(process.env.BackendUrl);
+          ok();
+          return this;
+        }
+        useStandardConfiguration() {
+          ok();
+          return this;
+        }
+      })());
+    });
   });
+
+  // it('set process.env.AuthIsON to false', done => {
+  //   process.env.AuthIsON = false;
+  //   reader = new Reader(auth, http, app, new RouterStub());
+  //   done();
+  // });
 });
