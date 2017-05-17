@@ -1,12 +1,12 @@
 import {Home} from '../../src/home';
 
-describe('the Dashboard Module', () => {
+describe('the Home Module', () => {
   let home;
   beforeEach(() => {
     home = new Home();
   });
 
-  it('that widescreen is boolean', done => {
+  it('checks that widescreen is boolean', done => {
     expect(typeof home.widescreen).toBe('boolean');
     done();
   });

@@ -39,4 +39,19 @@ describe('aurelia skeleton app', function() {
     await poSkeleton.navigateTo('/music');
     await expect(poSkeleton.getCurrentPageTitle()).toBe('Music | Web Jam LLC');
   });
+  
+  it('should navigate to OHAF page', async () => {
+    await poSkeleton.navigateTo('/ohaf');
+    await expect(poSkeleton.getCurrentPageTitle()).toBe('OHAF');
+  });
+  
+  it('should navigate to Library page', async () => {
+    await poSkeleton.navigateTo('/library');
+    await expect(poSkeleton.getCurrentPageTitle()).toBe('Library | Web Jam LLC');
+  });
+  
+  it('should navigate to Login page', async () => {
+    await poSkeleton.navigateTo('/login');
+    await expect(poSkeleton.getCurrentPageTitle()).toBe('Login | Web Jam LLC');
+  });
 });
