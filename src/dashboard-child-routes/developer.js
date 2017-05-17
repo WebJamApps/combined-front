@@ -22,15 +22,11 @@ export class Developer {
     await this.app.appState.getUser(uid);
     console.log('this is the user ' + this.app.appState.user.name);
     this.userType = this.app.appState.user.userType;
-    this.checkUserRole();
+    this.doubleCheckUserRole();
   }
   
-  checkUserRole(){
-    // if (this.userType === 'Charity'){
-    //   this.app.appState.setRoles(['charity']);
-    if (this.userType === 'Developer'){
-      this.app.appState.setRoles(['charity', 'volunteer', 'developer', 'reader', 'librarian']);
-    } else {
+  doubleCheckUserRole(){
+    if (this.userType !== 'Developer'){
       this.app.router.navigate('/');
     }
   }

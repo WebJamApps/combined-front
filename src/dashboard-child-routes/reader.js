@@ -5,7 +5,6 @@ import {AuthService} from 'aurelia-auth';
 import {HttpClient, json} from 'aurelia-fetch-client';
 import {Router} from 'aurelia-router';
 @inject(AuthService, HttpClient, App, Router)
-
 export class Reader {
   constructor(auth, httpClient, app, router){
     this.app = app;
@@ -27,13 +26,6 @@ export class Reader {
       'checkedOutBy': '',
       'checkedOutByName': ''
     };
-    
-    // if (process.env.AuthIsON !== 'false' && this.auth.isAuthenticated()){
-    //
-    // } else {
-    //   this.router.navigate('login');
-    // }
-    // this.backend = '';
     this.user = {};
   }
   
@@ -50,14 +42,12 @@ export class Reader {
       .useStandardConfiguration()
       .withBaseUrl(this.backend);
     });
-    
     const res = await this.httpClient.fetch('/book/getall');
     this.books =  await res.json();
     //TODO get the user elsewhere
     //if (process.env.AuthIsON !== 'false' && this.auth.isAuthenticated()){
     const res1 = await this.httpClient.fetch('/user/' + this.uid);
     this.user =  await res1.json();
-    //}
   }
   
   checkOutBook(book){
