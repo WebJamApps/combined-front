@@ -26,7 +26,7 @@ export class App {
   fullmenu = true;
   
   async activate() {
-    await fetch;
+    //await fetch;
     this.configHttpClient();
     this.appState = new AppState(this.httpClient);
     if (this.auth.isAuthenticated()) {
@@ -34,7 +34,7 @@ export class App {
       /* istanbul ignore else */
       if (this.appState.getUserID() === undefined){
         let uid = this.auth.getTokenPayload().sub;
-        this.appState.getUser(uid);
+        await this.appState.getUser(uid);
       }
     }
   }

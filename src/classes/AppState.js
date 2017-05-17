@@ -10,7 +10,7 @@ export class AppState {
     return this.user._id;
   }
 
-  getUser(uid) {
+  async getUser(uid) {
     console.log('appState getUser');
     if (this.getUserID() !== undefined) {
       console.log('appState returning already set user');
@@ -18,6 +18,7 @@ export class AppState {
         resolve(this.user);
       });
     }
+    await fetch;
     console.log('appState getting new user');
     return this.httpClient.fetch('/user/' + uid)
     .then(response => response.json())
