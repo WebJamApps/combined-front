@@ -15,11 +15,11 @@ class AppStub {
 }
 
 describe('the Login module', () => {
-  var sut;
-  var app1;
-  var auth;
-  var router;
-  var appState;
+  let sut;
+  let app1;
+  let auth;
+  let router;
+  let appState;
   
   beforeEach(() => {
     app1 = new AppStub();

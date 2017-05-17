@@ -1,5 +1,3 @@
-// this are unit tests for the UserAccess class
-
 import {AppState} from '../../src/classes/AppState.js';
 import {UserAccess} from '../../src/classes/UserAccess.js';
 
