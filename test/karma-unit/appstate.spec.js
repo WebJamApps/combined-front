@@ -3,12 +3,18 @@
 import {AppState} from '../../src/classes/AppState.js';
 import {HttpMock} from './commons';
 
+function testAsync(runAsync) {
+  return (done) => {
+    runAsync().then(done, e => { fail(e); done(); });
+  };
+}
+
 describe('The AppState module unit tests', () => {
   let appState;
   //let auth = '12345678agdgfhjajsagj';
   let roles = ['developer', 'Volunteer'];
   let user = {'userName': 'John Doe', '_id': 'foo'};
-  //let userDeveloper = {'userName': 'John Doe', '_id': 'foo', 'userType': 'Developer'};
+  let userDeveloper = {'userName': 'John Doe', '_id': 'foo', 'userType': 'Developer'};
 
   beforeEach(() => {
     appState = new AppState(new HttpMock);
@@ -22,18 +28,13 @@ describe('The AppState module unit tests', () => {
     });
   });
 
-  // it('should set and get the value for the auth', done => {
-  //   appState.setUser(userDeveloper);
-  //   appState.checkUserRole();
-  //   expect(appState.getAuth()).toBe(auth);
-  //   done();
-  // });
-
-  // it('should set all the roles for the developer', done => {
-  //   appState.setAuth(auth);
-  //   expect(appState.getAuth()).toBe(auth);
-  //   done();
-  // });
+  it('should set all the roles for the developer', testAsync(async function() {
+    await appState.setUser(userDeveloper);
+    await appState.checkUserRole();
+    let devroles = await appState.getRoles();
+    expect(devroles).toContain('developer');
+    //done();
+  }));
 
   it('should set and get values for the roles', done => {
     appState.setRoles(roles);

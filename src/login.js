@@ -12,19 +12,19 @@ export class Login {
     this.router = router;
     this.appState = appState;
   }
-  
+
   attached() {
     this.title = this.router.currentInstruction.config.title;
   }
-  
+
   authenticate(name){
     console.log('in auth');
     let ret = this.auth.authenticate(name, false, null);
     ret.then(data => {
       this.auth.setToken(data.token);
-      this.appState.setAuth(this.auth.isAuthenticated());
+      //this.appState.setAuth(this.auth.isAuthenticated());
       console.log('In login authenticate');
-      console.log(this.appState.getRoles());
+      //console.log(this.appState.getRoles());
     }, undefined);
     return ret;
   }
