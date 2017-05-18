@@ -1,7 +1,5 @@
-//import {AuthorizeStep} from 'aurelia-auth';
 import {App} from '../../src/app';
-import {AuthStub, HttpMock} from './commons';
-//import {RouterStub} from './commons';
+import {AuthStub, HttpMock, RouterStub} from './commons';
 const Counter = require('assertions-counter');
 
 class AuthStub2 extends AuthStub {
@@ -11,16 +9,22 @@ class AuthStub2 extends AuthStub {
   }
 }
 
+function testAsync(runAsync) {
+  return (done) => {
+    runAsync().then(done, e => { fail(e); done(); });
+  };
+}
+
 describe('the App module', () => {
   let app1;
   let app2;
-  
+
   beforeEach(() => {
     app1 = new App(new AuthStub, new HttpMock);
     app1.auth.setToken('No token');
     app2 = new App(new AuthStub2, new HttpMock);
   });
-  
+
   it('tests configHttpClient', (done) => {
     const { add: ok } = new Counter(4, done);
     app1.auth.tokenInterceptor = 'tokenInterceptor';
@@ -46,39 +50,32 @@ describe('the App module', () => {
       }
     })());
   });
-  
-  // it('configures the router and gets the current route', done => {
-  //   let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
-  //   let routerStub = {};
-  //   app1.configureRouter(configStub, routerStub);
-  //   //.then(() => {
-  //   //let route = app1.currentRoute;
-  //   //expect(route).toBe(defined);
-  //   //});
-  //   done();
-  // });
-  
-  it('tests logout', done => {
-    //console.log(app1);
-    app1.activate().then(() => {
-      app1.logout();
-      expect(app1.authenticated).toBe(false);
-    });
+
+  it('configures the router', done => {
+    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+    app1.configureRouter(configStub, RouterStub);
+    expect(app1.router).toBeDefined;
     done();
   });
-  
-  it('gets the current route', done => {
+
+  it('tests logout', testAsync(async function() {
+    await app1.activate();
+    await app1.logout();
+    expect(app1.authenticated).toBe(false);
+  }));
+
+  it('gets the current route', testAsync(async function() {
     //console.log(app1);
-    app1.activate().then(() => {
-      let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
-      let routerStub = {};
-      app1.configureRouter(configStub, routerStub);
-      let route = app1.currentRoute;
-      expect(route).toBe(defined);
-    });
-    done();
-  });
-  
+    await app1.activate();
+    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+    //let routerStub = {};
+    await app1.configureRouter(configStub, RouterStub);
+    //console.log('current instruction ' + app1.router.currentInstruction);
+    let route = await app1.currentRoute;
+    expect(route).toBe(route);
+    //expect(route).toBe('yoyo');
+  }));
+
   it('gets the current styles', done => {
     app1.activate().then(() => {
       let styles = app1.currentStyles;
@@ -86,7 +83,7 @@ describe('the App module', () => {
     });
     done();
   });
-  
+
   it('closes the menu on cellphone display', done => {
     //console.log(app1);
     app1.activate().then(() => {
@@ -95,14 +92,14 @@ describe('the App module', () => {
     });
     done();
   });
-  
+
   it('should get widescreen', done => {
     //console.log(app1);
     const app3 = new App(new AuthStub, new HttpMock);
     expect(app3.widescreen).toBe(true);
     done();
   });
-  
+
   it('should toggle menu to be icons only', () => {
     app2.activate();
     app2.fullmenu = true;
@@ -112,7 +109,7 @@ describe('the App module', () => {
     expect(app2.drawerWidth).toBe('50px');
     //done();
   });
-  
+
   it('should toggle menu to be icons with text', () => {
     app1.fullmenu = false;
     //console.log(app1);
