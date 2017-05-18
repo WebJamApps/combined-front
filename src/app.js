@@ -31,10 +31,10 @@ export class App {
     if (this.auth.isAuthenticated()) {
       this.authenticated = true; //Logout element is reliant upon a local var;
       /* istanbul ignore else */
-      if (this.appState.getUserID() === undefined){
-        let uid = this.auth.getTokenPayload().sub;
-        await this.appState.getUser(uid);
-      }
+      //if (this.appState.getUserID() === undefined){
+      let uid = this.auth.getTokenPayload().sub;
+      this.user = await this.appState.getUser(uid);
+      //}
     }
   }
 
