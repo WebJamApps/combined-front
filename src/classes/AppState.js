@@ -24,8 +24,17 @@ export class AppState {
     .then(data => {
       let user = data;
       this.setUser(user);
-      return this.user;
+      this.checkUserRole();
     });
+  }
+
+  checkUserRole(){
+    if (this.user.userType !== 'Developer'){
+      this.setRoles([toLowerCase(this.user.userType)]);
+    } else {
+      this.setRoles(['charity', 'volunteer', 'developer', 'reader', 'librarian']);
+      //this.app.router.navigate('dashboard/developer');
+    }
   }
 
   setUser(input) {
@@ -50,5 +59,6 @@ export class AppState {
 
   setRoles(input){
     this.roles = input;
+    console.log('user roles are ' + this.roles);
   }
 }

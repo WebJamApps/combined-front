@@ -26,15 +26,16 @@ export class App {
   fullmenu = true;
   
   async activate() {
-    await fetch;
+    //await fetch;
     this.configHttpClient();
     this.appState = new AppState(this.httpClient);
+    this.userAccess = new UserAccess(this.appState);
     if (this.auth.isAuthenticated()) {
       this.authenticated = true; //Logout element is reliant upon a local var;
       /* istanbul ignore else */
       if (this.appState.getUserID() === undefined){
         let uid = this.auth.getTokenPayload().sub;
-        this.appState.getUser(uid);
+        await this.appState.getUser(uid);
       }
     }
   }
@@ -44,7 +45,7 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.addPipelineStep('authorize', AuthorizeStep);//Is the actually Authorization to get into the /dashboard
-    config.addPipelineStep('authorize', UserAccess);// provides access controls to prevent users from certain /dashboard child routes when not their userType (role)
+    config.addPipelineStep('authorize', this.userAccess);// provides access controls to prevent users from certain /dashboard child routes when not their userType (role)
     config.map([
       { route: 'dashboard', name: 'dashboard-router', moduleId: PLATFORM.moduleName('./dashboard-router'), nav: false, title: 'Dashboard', auth: true, settings: 'fa fa-tachometer'},
       { route: 'login', name: 'login', moduleId: PLATFORM.moduleName('./login'), nav: false, title: 'Login', settings: 'fa fa-sign-in'},

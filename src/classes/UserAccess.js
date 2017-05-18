@@ -1,7 +1,3 @@
-import {inject} from 'aurelia-framework';
-import {AppState} from '../classes/AppState.js';
-
-@inject(AppState)
 export class UserAccess {
   constructor(appState){
     this.appState = appState;
@@ -21,25 +17,25 @@ export class UserAccess {
         }
 
         console.log('The child route is: ' + routingContext.params.childRoute);
-        if (routingContext.params.childRoute === 'reader'){
-          return next();
-        }
-
-        if (routingContext.params.childRoute === 'librarian'){
-          return next();
-        }
-        
-        if (routingContext.params.childRoute === 'charity'){
-          return next();
-        }
-        
-        if (routingContext.params.childRoute === 'volunteer'){
-          return next();
-        }
-        
-        if (routingContext.params.childRoute === 'developer'){
-          return next();
-        }
+        // if (routingContext.params.childRoute === 'reader'){
+        //   return next();
+        // }
+        //
+        // if (routingContext.params.childRoute === 'librarian'){
+        //   return next();
+        // }
+        //
+        // if (routingContext.params.childRoute === 'charity'){
+        //   return next();
+        // }
+        //
+        // if (routingContext.params.childRoute === 'volunteer'){
+        //   return next();
+        // }
+        //
+        // if (routingContext.params.childRoute === 'developer'){
+        //   return next();
+        // }
 
         for (let i = 0; i < userRoles.length; i++) {
           // in this case the user is only in one role at a time.

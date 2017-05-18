@@ -30,7 +30,7 @@ class HttpStub extends HttpMock {
 
 class HttpStub2 {
   fetch(fn) {
-    var response = this.itemStub;
+    let response = this.itemStub;
     this.__fetchCallback = fn;
     return new Promise((resolve) => {
       resolve({ json: () => response });
