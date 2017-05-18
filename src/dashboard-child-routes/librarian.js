@@ -26,13 +26,13 @@ export class Librarian {
     };
     this.books = {};
   }
-  
+
   types = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audiobook', 'template'];
   accessArray = ['Private', 'Public'];
   newBook = null;
   CSVFilePath = {files: ['']};
   fileList = '';
-  
+
   async activate(){
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
@@ -46,7 +46,7 @@ export class Librarian {
       .withBaseUrl(this.backend);
     });
   }
-  
+
   createBook(){
     if (this.newBook.type !== 0){
       this.newBook.type = this.types[this.newBook.type - 1];
@@ -66,24 +66,24 @@ export class Librarian {
       this.router.navigate('/bookshelf');
     });
   }
-  
+
   createBooksFromCSV(){
     let jsonObj;
     const httpClient = this.httpClient;
     const router = this.router;
-    
+
     function loaded (evt) {
       const fileString = evt.target.result;
       jsonObj = csvjson.toObject(fileString);
       makeLotaBooks(jsonObj);
     }
-    
+
     function errorHandler(evt) {
       //TODO no file attached
       //TODO wrong file type attached
       alert('The file could not be read');
     }
-    
+
     function makeLotaBooks (jsonObject) {
       httpClient.fetch('/book/create', {
         method: 'post',
@@ -98,7 +98,7 @@ export class Librarian {
         router.navigate('/bookshelf');
       });
     }
-    
+
     // if (CSVFilePath.files[0] !== null){
     // TODO: Parse all csv files
     // TODO: add check for browser support of FileReader
@@ -107,7 +107,7 @@ export class Librarian {
     this.reader.onerror = errorHandler;
     this.reader.readAsText(CSVFilePath.files[0]);
   }
-  
+
   makeCSVfile(){
     this.httpClient.fetch('/book/getall')
     .then(response=>response.json())

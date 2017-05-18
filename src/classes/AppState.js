@@ -5,12 +5,12 @@ export class AppState {
     this.is_auth = false;
     this.roles = [];
   }
-  
+
   getUserID() {
     return this.user._id;
   }
-  
-  async getUser(uid) {
+
+  getUser(uid) {
     console.log('appState getUser');
     if (this.getUserID() !== undefined) {
       console.log('appState returning already set user');
@@ -18,7 +18,6 @@ export class AppState {
         resolve(this.user);
       });
     }
-    await fetch;
     console.log('appState getting new user');
     return this.httpClient.fetch('/user/' + uid)
     .then(response => response.json())
@@ -26,10 +25,9 @@ export class AppState {
       let user = data;
       this.setUser(user);
       this.checkUserRole();
-      //return this.user;
     });
   }
-  
+
   checkUserRole(){
     if (this.user.userType !== 'Developer'){
       this.setRoles([toLowerCase(this.user.userType)]);
@@ -38,27 +36,27 @@ export class AppState {
       //this.app.router.navigate('dashboard/developer');
     }
   }
-  
+
   setUser(input) {
     console.log('appState setUser');
     console.log(this.user);
     this.user = input;
   }
-  
+
   getAuth() {
     return (this.is_auth);
   }
-  
+
   setAuth(input) {
     this.is_auth = input;
   }
-  
+
   getRoles() {
     return new Promise((resolve) => {
       resolve(this.roles);
     });
   }
-  
+
   setRoles(input){
     this.roles = input;
     console.log('user roles are ' + this.roles);
