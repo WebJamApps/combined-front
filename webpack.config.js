@@ -48,6 +48,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     historyApiFallback: true,
     port: parseInt(process.env.PORT, 10)
   },
+  devtool: (process.env.NODE_ENV !== 'production') ? 'inline-source-map' : false,
   // server: {port: parseInt(process.env.PORT, 10)},
   module: {
     rules: [
