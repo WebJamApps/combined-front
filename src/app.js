@@ -13,18 +13,18 @@ export class App {
     this.auth = auth;
     this.httpClient = httpClient;
   }
-  
+
   email = '';
   password = '';
   authenticated = false;
   token = '';
-  
+
   @bindable
   drawerWidth = '175px';
-  
+
   @bindable
   fullmenu = true;
-  
+
   async activate() {
     //await fetch;
     this.configHttpClient();
@@ -39,7 +39,7 @@ export class App {
       }
     }
   }
-  
+
   configureRouter(config, router){
     config.title = 'Web Jam LLC';
     config.options.pushState = true;
@@ -63,7 +63,7 @@ export class App {
     config.fallbackRoute('/');
     this.router = router;
   }
-  
+
   get widescreen() {
     return document.documentElement.clientWidth > 766;
     // let iswidescreen = false;
@@ -74,7 +74,7 @@ export class App {
     // }
     // return iswidescreen;
   }
-  
+
   toggleMenu() {
     console.debug(this.fullmenu);
     if (this.fullmenu) {
@@ -85,9 +85,9 @@ export class App {
       this.drawerWidth = '175px';
     }
   }
-  
+
   logout() {
-    this.appState.setAuth(false);
+    //this.appState.setAuth(false);
     this.appState.setUser({});
     this.authenticated = false;
     this.auth.logout('/')
@@ -95,14 +95,14 @@ export class App {
       console.log('Promise fulfilled, logged out');
     });
   }
-  
+
   close() {
     // if (!this.widescreen) {
     let drawer = document.getElementById('drawerPanel');
     drawer.closeDrawer();
     // }
   }
-  
+
   configHttpClient() {
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
@@ -123,13 +123,13 @@ export class App {
       .withInterceptor(this.auth.tokenInterceptor); //Adds bearer token to every HTTP request.
     });
   }
-  
+
   get currentRoute() {
     if (this.router.currentInstruction) {
       return this.router.currentInstruction.config.name;
     }
   }
-  
+
   get currentStyles() {
     let result = {};
     if (this.currentRoute === 'ohaf') {

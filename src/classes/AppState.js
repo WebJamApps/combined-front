@@ -43,13 +43,13 @@ export class AppState {
     this.user = input;
   }
 
-  getAuth() {
-    return (this.is_auth);
-  }
+  // getAuth() {
+  //   return (this.is_auth);
+  // }
 
-  setAuth(input) {
-    this.is_auth = input;
-  }
+  // setAuth(input) {
+  //   this.is_auth = input;
+  // }
 
   getRoles() {
     return new Promise((resolve) => {
