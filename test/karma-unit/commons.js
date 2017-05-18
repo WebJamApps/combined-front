@@ -1,30 +1,23 @@
 class RouterStub {
-
-  currentInstruction = { config: { title: 'Howdy is cool' } }
-
+  currentInstruction = { config: { title: 'Howdy is cool', name: 'yoyo' } }
   configure(handler) {
     if (handler) {
       handler(this);
     }
   }
-
   getRoute() {
     return this.router.currentInstruction.config.title; //name of the route
   }
-
   addPipelineStep(param1, AuthorizeStep) {
     //do nothing
   }
-
   options() {
     //do nothing
   }
-
   map(routes) {
     this.routes = routes;
     return this.routes instanceof Array ? this.routes : [this.routes];
   }
-
   navigate(route) {
     return route;
   }
@@ -76,7 +69,6 @@ class AppStateStub {
     this.is_auth = false;
     this.roles = [];
   }
-
   getUser() {
     // this.user = {name: 'Iddris Elba', userType: 'Volunteer'};
     return this.user;
@@ -84,19 +76,9 @@ class AppStateStub {
   setUser(input) {
     this.user = input;
   }
-
-  // getAuth() {
-  //   return (this.is_auth);
-  // }
-
-  // setAuth(input) {
-  //   this.is_auth = input;
-  // }
-
   getRoles() {
     return (this.roles);
   }
-
   setRoles(input) {
     this.roles = input;
   }

@@ -30,7 +30,8 @@ export class AppState {
 
   checkUserRole(){
     if (this.user.userType !== 'Developer'){
-      this.setRoles([toLowerCase(this.user.userType)]);
+      let thisuserrole = this.user.userType;
+      this.setRoles([thisuserrole.toLowerCase()]);
     } else {
       this.setRoles(['charity', 'volunteer', 'developer', 'reader', 'librarian']);
       //this.app.router.navigate('dashboard/developer');

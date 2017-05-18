@@ -1,3 +1,4 @@
+System.import('isomorphic-fetch');
 import {PLATFORM} from 'aurelia-pal';
 import {inject, bindable} from 'aurelia-framework';
 import {AuthorizeStep} from 'aurelia-auth';
@@ -5,8 +6,6 @@ import {UserAccess} from './classes/UserAccess.js';
 import {AuthService} from 'aurelia-auth';
 import {HttpClient} from 'aurelia-fetch-client';
 import {AppState} from './classes/AppState.js';
-System.import('isomorphic-fetch');
-
 @inject(AuthService, HttpClient)
 export class App {
   constructor(auth, httpClient) {
@@ -26,7 +25,6 @@ export class App {
   fullmenu = true;
 
   async activate() {
-    //await fetch;
     this.configHttpClient();
     this.appState = new AppState(this.httpClient);
     this.userAccess = new UserAccess(this.appState);
@@ -66,13 +64,6 @@ export class App {
 
   get widescreen() {
     return document.documentElement.clientWidth > 766;
-    // let iswidescreen = false;
-    // let currentscreenwidth = document.documentElement.clientWidth;
-    // /* istanbul ignore else */
-    // if (currentscreenwidth > 766) {
-    //   iswidescreen = true;
-    // }
-    // return iswidescreen;
   }
 
   toggleMenu() {
@@ -87,7 +78,6 @@ export class App {
   }
 
   logout() {
-    //this.appState.setAuth(false);
     this.appState.setUser({});
     this.authenticated = false;
     this.auth.logout('/')
@@ -97,10 +87,8 @@ export class App {
   }
 
   close() {
-    // if (!this.widescreen) {
     let drawer = document.getElementById('drawerPanel');
     drawer.closeDrawer();
-    // }
   }
 
   configHttpClient() {
@@ -155,13 +143,10 @@ export class App {
       };
       if (this.currentRoute === 'music-router') {
         this.Menu = 'music';
-        //console.log(this.Menu);
       } else if (this.currentRoute === 'library' || this.currentRoute === 'bookshelf' || this.currentRoute === 'dashboard-router') {
         this.Menu = 'library';
-        //console.log(this.Menu);
       } else {
         this.Menu = 'wj';
-        //console.log(this.Menu);
       }
     }
     result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
