@@ -3,14 +3,12 @@ import {inject} from 'aurelia-framework';
 import {App} from '../app';
 import {AuthService} from 'aurelia-auth';
 import {HttpClient, json} from 'aurelia-fetch-client';
-import {Router} from 'aurelia-router';
-@inject(AuthService, HttpClient, App, Router)
+@inject(AuthService, HttpClient, App)
 export class Reader {
-  constructor(auth, httpClient, app, router){
+  constructor(auth, httpClient, app){
     this.app = app;
     this.auth = auth;
     this.httpClient = httpClient;
-    this.router = router;
     this.book = {
       'title': '',
       'type': 'hardback',
@@ -26,30 +24,31 @@ export class Reader {
       'checkedOutBy': '',
       'checkedOutByName': ''
     };
-    this.user = {};
   }
-  
+
   async activate(){
+    this.configHttpClient();
+    await fetch;
+    const res = await this.httpClient.fetch('/book/getall');
+    this.books = await res.json();
+    this.uid = this.auth.getTokenPayload().sub;
+    this.user = await this.app.appState.getUser(this.uid);
+    //console.log('Inside the Reader module, this is the user ' + this.user.name);
+  }
+
+  configHttpClient(){
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
     } else {
       this.backend = '';
     }
-    this.uid = this.auth.getTokenPayload().sub;
-    await fetch;
     this.httpClient.configure(config => {
       config
       .useStandardConfiguration()
       .withBaseUrl(this.backend);
     });
-    const res = await this.httpClient.fetch('/book/getall');
-    this.books =  await res.json();
-    //TODO get the user elsewhere
-    //if (process.env.AuthIsON !== 'false' && this.auth.isAuthenticated()){
-    const res1 = await this.httpClient.fetch('/user/' + this.uid);
-    this.user =  await res1.json();
   }
-  
+
   checkOutBook(book){
     this.book = book;
     //TODO fetch this.book by book ID from the database, and if this.book
@@ -68,7 +67,7 @@ export class Reader {
       this.activate();
     });
   }
-  
+
   checkInBook(book){
     this.book = book;
     this.book.checkedOutBy = '';
