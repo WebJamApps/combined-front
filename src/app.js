@@ -34,6 +34,8 @@ export class App {
       //if (this.appState.getUserID() === undefined){
       let uid = this.auth.getTokenPayload().sub;
       this.user = await this.appState.getUser(uid);
+      //TODO figure out why I can't get the user here!
+      console.log('the user from app ' + this.user);
       //}
     }
   }
@@ -143,8 +145,10 @@ export class App {
       };
       if (this.currentRoute === 'music-router') {
         this.Menu = 'music';
-      } else if (this.currentRoute === 'library' || this.currentRoute === 'bookshelf' || this.currentRoute === 'dashboard-router') {
+      } else if (this.currentRoute === 'library') {
         this.Menu = 'library';
+      } else if (this.currentRoute === 'dashboard-router'){
+        this.Menu = 'dashboard';
       } else {
         this.Menu = 'wj';
       }
