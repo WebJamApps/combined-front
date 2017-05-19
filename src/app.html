@@ -41,43 +41,37 @@ paper-item:hover {
             <span class="nav-item" if.bind="fullmenu">OHAF</span>
           </a>
         </paper-item>
-        <paper-item class="login" if.bind="Menu == 'library' || Menu == 'wj'">
+        <paper-item class="login" if.bind="Menu == 'reader' || Menu == 'librarian' || Menu == 'wj' || Menu == 'dashboard' || Menu == 'developer'">
           <a paper-drawer-toggle href="/library" class="nav-link" click.delegate="close()">
             <span class="fa fa-book"></span>
             <span class="nav-item" if.bind="fullmenu">Library</span>
           </a>
         </paper-item>
-        <paper-item class="login" if.bind="Menu == 'dashboard'">
-          <a paper-drawer-toggle href="/library" class="nav-link" click.delegate="close()">
-            <span class="fa fa-book"></span>
-            <span class="nav-item" if.bind="fullmenu">Library</span>
-          </a>
-        </paper-item>
-        <paper-item if.bind="Menu =='dashboard'" class="login">
+        <paper-item if.bind="Menu =='developer' || Menu =='reader' || Menu =='librarian'" class="login">
           <a paper-drawer-toggle href="/bookshelf" class="nav-link" click.delegate="close()">
             <span class="fa fa-book"></span>
             <span class="nav-item" if.bind="fullmenu">Bookshelf</span>
           </a>
         </paper-item>
-        <paper-item if.bind="Menu =='dashboard'" class="login">
+        <paper-item if.bind="Menu =='developer'" class="login">
           <a paper-drawer-toggle href="/dashboard/reader" class="nav-link" click.delegate="close()">
             <span class="fa fa-book"></span>
             <span class="nav-item" if.bind="fullmenu">Reader</span>
           </a>
         </paper-item>
-        <paper-item if.bind="Menu =='dashboard'" class="login">
+        <paper-item if.bind="Menu =='developer'" class="login">
           <a paper-drawer-toggle href="/dashboard/librarian" class="nav-link" click.delegate="close()">
             <span class="fa fa-book"></span>
             <span class="nav-item" if.bind="fullmenu">Librarian</span>
           </a>
         </paper-item>
-        <paper-item if.bind="Menu =='dashboard'" class="login">
+        <paper-item if.bind="Menu =='developer'" class="login">
           <a paper-drawer-toggle href="/dashboard/charity" class="nav-link" click.delegate="close()">
             <span class="fa fa-book"></span>
             <span class="nav-item" if.bind="fullmenu">Charity</span>
           </a>
         </paper-item>
-        <paper-item if.bind="Menu =='dashboard'" class="login">
+        <paper-item if.bind="Menu =='developer'" class="login">
           <a paper-drawer-toggle href="/dashboard/volunteer" class="nav-link" click.delegate="close()">
             <span class="fa fa-book"></span>
             <span class="nav-item" if.bind="fullmenu">Volunteer</span>
