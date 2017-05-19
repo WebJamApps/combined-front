@@ -120,9 +120,25 @@ export class App {
     }
   }
 
+  get currentRouteFrag() {
+    if (this.router.currentInstruction) {
+      return this.router.currentInstruction.fragment;
+    }
+  }
+
+  // get routeName() {
+  //   if (this.router.currentInstruction) {
+  //     return this.router.currentInstruction.config.name;
+  //   }
+  // }
+
   get currentStyles() {
+    //let routeName = '';
+    // if (this.router.currentInstruction) {
+    //   routeName = this.router.currentInstruction.config.name;
+    // }
     let result = {};
-    if (this.currentRoute === 'ohaf') {
+    if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') {
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',
         headerText1: 'Our',
@@ -143,12 +159,24 @@ export class App {
         sidebarClass: 'home-sidebar',
         menuToggleClass: 'home-menu-toggle'
       };
+      //console.log('route')
+      console.log(this.currentRouteFrag);
       if (this.currentRoute === 'music-router') {
         this.Menu = 'music';
-      } else if (this.currentRoute === 'library') {
-        this.Menu = 'library';
-      } else if (this.currentRoute === 'dashboard-router'){
+      // } else if (this.currentRoute === 'library') {
+      //   this.Menu = 'library';
+      } else if (this.currentRouteFrag === '/dashboard'){
         this.Menu = 'dashboard';
+      } else if (this.currentRouteFrag === '/dashboard/developer'){
+        this.Menu = 'developer';
+      } else if (this.currentRouteFrag === '/dashboard/reader'){
+        this.Menu = 'reader';
+      } else if (this.currentRouteFrag === '/dashboard/librarian'){
+        this.Menu = 'librarian';
+      } else if (this.currentRouteFrag === '/dashboard/charity'){
+        this.Menu = 'charity';
+      } else if (this.currentRouteFrag === '/dashboard/volunteer'){
+        this.Menu = 'volunteer';
       } else {
         this.Menu = 'wj';
       }

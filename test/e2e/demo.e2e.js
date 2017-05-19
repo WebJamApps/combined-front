@@ -5,22 +5,22 @@ import {config} from '../protractor.conf';
 describe('aurelia skeleton app', function() {
   //let poWelcome;
   let poSkeleton;
-  
+
   beforeEach(async () => {
     poSkeleton = new PageObjectSkeleton();
     //poWelcome = new PageObjectWelcome();
-    
+
     await browser.loadAndWaitForAureliaPage(`http://localhost:${config.port}`);
   });
-  
+
   it('should load the page and display the initial page title', async () => {
     await expect(poSkeleton.getCurrentPageTitle()).toBe('Web Jam LLC');
   });
-  
+
   // it('should display greeting', () => {
   //   expect(poWelcome.getGreeting()).toBe('Welcome to the Aurelia Navigation App!');
   // });
-  
+
   // it('should automatically write down the fullname', () => {
   //   poWelcome.setFirstname('John');
   //   poWelcome.setLastname('Doe');
@@ -34,22 +34,22 @@ describe('aurelia skeleton app', function() {
   // it('should show alert message when clicking submit button', () => {
   //   expect(poWelcome.openAlertDialog()).toBe(true);
   // });
-  
+
   it('should navigate to Music page', async () => {
     await poSkeleton.navigateTo('/music');
     await expect(poSkeleton.getCurrentPageTitle()).toBe('Music | Web Jam LLC');
   });
-  
+
   it('should navigate to OHAF page', async () => {
     await poSkeleton.navigateTo('/ohaf');
-    await expect(poSkeleton.getCurrentPageTitle()).toBe('OHAF');
+    await expect(poSkeleton.getCurrentPageTitle()).toBe('OHAF | Web Jam LLC');
   });
-  
+
   it('should navigate to Library page', async () => {
     await poSkeleton.navigateTo('/library');
     await expect(poSkeleton.getCurrentPageTitle()).toBe('Library | Web Jam LLC');
   });
-  
+
   it('should navigate to Login page', async () => {
     await poSkeleton.navigateTo('/login');
     await expect(poSkeleton.getCurrentPageTitle()).toBe('Login | Web Jam LLC');
