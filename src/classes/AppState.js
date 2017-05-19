@@ -1,36 +1,68 @@
 export class AppState {
-  constructor(){
+  constructor(httpClient) {
+    this.httpClient = httpClient;
     this.user = {};
     this.is_auth = false;
     this.roles = [];
   }
 
-  getUser() {
-    console.log('appState getUser');
-    console.log(this.user);
-    return this.user;
+  getUserID() {
+    return this.user._id;
   }
+
+  getUser(uid) {
+    console.log('appState getUser');
+    if (this.getUserID() !== undefined) {
+      console.log('appState returning already set user');
+      return new Promise((resolve) => {
+        resolve(this.user);
+      });
+    }
+    console.log('appState getting new user');
+    return this.httpClient.fetch('/user/' + uid)
+    .then(response => response.json())
+    .then(data => {
+      let user = data;
+      this.setUser(user);
+      //check only if this is not a new user
+      if (this.user.userType){
+        this.checkUserRole();
+      }
+    });
+  }
+
+  checkUserRole(){
+    if (this.user.userType !== 'Developer'){
+      let thisuserrole = this.user.userType;
+      this.setRoles([thisuserrole.toLowerCase()]);
+    } else {
+      this.setRoles(['charity', 'volunteer', 'developer', 'reader', 'librarian']);
+      //this.app.router.navigate('dashboard/developer');
+    }
+  }
+
   setUser(input) {
     console.log('appState setUser');
     console.log(this.user);
     this.user = input;
   }
 
-  getAuth() {
-    return (this.is_auth);
-  }
+  // getAuth() {
+  //   return (this.is_auth);
+  // }
 
-  setAuth(input) {
-    this.is_auth = input;
-  }
+  // setAuth(input) {
+  //   this.is_auth = input;
+  // }
 
   getRoles() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       resolve(this.roles);
     });
   }
 
   setRoles(input){
     this.roles = input;
+    console.log('user roles are ' + this.roles);
   }
 }

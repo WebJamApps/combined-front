@@ -15,7 +15,8 @@
   },
   "scripts": {
     "start": "nps",
-    "test": "cross-env NODE_ENV=test nps test.lint && nps test.karma && nps e2e",
+    "test": "npm run test:karma && nps e2e",
+    "test:karma": "cross-env NODE_ENV=test nps test.lint && nps test.karma",
     "test:debug": "cross-env NODE_ENV=test nps test.karma.debug",
     "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && npm i -g yarn && yarn cache clean && yarn install",
     "postinstall": "yarn global add bower && bower install && npm run vulc && npm start -- build",
@@ -79,10 +80,10 @@
     "webpack": "^2.5.1"
   },
   "devDependencies": {
+    "assertions-counter": "^0.0.1",
+    "aurelia-protractor-plugin": "1.0.3",
     "aurelia-testing": "1.0.0-beta.3.0.1",
     "aurelia-tools": "1.0.0",
-    "aurelia-protractor-plugin": "1.0.3",
-    "assertions-counter": "^0.0.1",
     "babel-eslint": "7.2.3",
     "babel-plugin-istanbul": "4.1.3",
     "eslint": "^3.19.0",
@@ -96,6 +97,7 @@
     "karma-coverage-istanbul-reporter": "1.2.0",
     "karma-jasmine": "^1.1.0",
     "karma-mocha-reporter": "^2.2.3",
+    "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "2.0.3",
     "protractor": "5.1.1",
     "stylelint": "^7.8.0",

@@ -1,82 +1,75 @@
-
 import {inject} from 'aurelia-framework';
 import {App} from './app';
-import {Router} from 'aurelia-router';
 import {AuthService} from 'aurelia-auth';
 import {HttpClient, json} from 'aurelia-fetch-client';
-import {AppState} from './classes/AppState.js';
-
-@inject(AuthService, HttpClient, App, Router, AppState)
+@inject(AuthService, HttpClient, App)
 export class Dashboard {
-  constructor(auth, httpClient, app, router, appState){
+  constructor(auth, httpClient, app){
     this.app = app;
     this.auth = auth;
     this.httpClient = httpClient;
-    this.router = router;
-    this.appState = appState;
-    this.backend = '';
+    this.user = {};
   }
 
-  //authenticated=false;
-  //firstTimeInfo = false;
   types=['Charity', 'Volunteer', 'Developer', 'Reader', 'Librarian'];
 
-  async activate(){
+  async activate() {
+    this.configHttpClient();
+    let uid = this.auth.getTokenPayload().sub;
+    await this.app.appState.getUser(uid);
+    this.user.name = this.app.appState.user.name;
+    console.log('this is the user ' + this.user.name);
+    this.user.userType = this.app.appState.user.userType;
+    this.childRoute();
+  }
+
+  configHttpClient(){
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
+    } else {
+      this.backend = '';
     }
-    await fetch;
-    //if (process.env.NODE_ENV !== 'production'){
     this.httpClient.configure(config => {
       config
       .useStandardConfiguration()
       .withBaseUrl(this.backend);
     });
-    //}
-    this.getUser();
   }
 
-  getUser(){
-    this.authenticated = this.auth.isAuthenticated();
-    let uid = this.auth.getTokenPayload().sub;
-    this.httpClient.fetch('/user/' + uid)
-    .then(response => response.json())
-    .then(data => {
-      let user = data;
-      this.appState.setUser(user);
-  
-      if (user.userType === 'Charity'){
-        this.appState.setRoles(['charity']);
-        this.router.navigate('charity');
-      } else if (user.userType === 'Volunteer'){
-        this.appState.setRoles(['volunteer']);
-        this.router.navigate('volunteer');
-      } else if (user.userType === 'Reader'){
-        this.appState.setRoles(['reader']);
-        this.router.navigate('reader');
-      } else if (user.userType === 'Librarian'){
-        this.appState.setRoles(['librarian']);
-        this.router.navigate('volunteer');
-      } else if (user.userType === 'Developer'){
-        this.appState.setRoles(['charity', 'volunteer', 'developer', 'reader', 'librarian']);
-        this.router.navigate('developer');
-      }
-    });
+  childRoute(){
+    if (this.user.userType === 'Charity'){
+      //this.app.appState.setRoles(['charity']);
+      this.app.router.navigate('dashboard/charity');
+    } else if (this.user.userType === 'Volunteer'){
+      //this.app.appState.setRoles(['volunteer']);
+      this.app.router.navigate('dashboard/volunteer');
+    } else if (this.user.userType === 'Reader'){
+      //this.app.appState.setRoles(['reader']);
+      this.app.router.navigate('dashboard/reader');
+    } else if (this.user.userType === 'Librarian'){
+      //this.app.appState.setRoles(['librarian']);
+      this.app.router.navigate('dashboard/librarian');
+    } else if (this.user.userType === 'Developer'){
+      //this.app.appState.setRoles(['charity', 'volunteer', 'developer', 'reader', 'librarian']);
+      this.app.router.navigate('dashboard/developer');
+    }
   }
 
-  updateUser(){
+  async updateUser(){
     let uid = this.auth.getTokenPayload().sub;
-    //let tempUserType = this.user.userType;
-    let user = this.appState.getUser();
-    user.userType = this.types[this.user.userType - 1];
+    //await this.app.appState.getUser(uid);
+    //let user = this.app.appState.user;
+    await fetch;
+    this.user.userType = this.types[this.user.userType - 1];
     this.httpClient.fetch('/user/' + uid, {
       method: 'put',
-      body: json(user)
+      body: json(this.user)
     })
     .then(response=>response.json())
     .then(data=> {
-      //this.user.userType = tempUserType;
-      this.getUser();
+      this.app.appState.setUser(this.user);
+      this.app.appState.checkUserRole();
+      this.childRoute();
     });
   }
 }

@@ -1,19 +1,19 @@
 import {OhafHome} from '../../src/ohaf-home';
-import {RouterStub} from './commons';
+//import {RouterStub} from './commons';
 
-describe('the Dashboard Module', () => {
+describe('the OhafHome Module', () => {
   let ohaf;
   beforeEach(() => {
-    ohaf = new OhafHome(new RouterStub());
+    ohaf = new OhafHome();
   });
 
-  it('get widescreen', done => {
+  it('gets widescreen', done => {
     ohaf.widescreen;
     done();
   });
 
-  it('attached', done => {
-    ohaf.attached();
-    done();
-  });
+  // it('attached', done => {
+  //   ohaf.attached();
+  //   done();
+  // });
 });

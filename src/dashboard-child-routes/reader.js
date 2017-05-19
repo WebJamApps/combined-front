@@ -5,7 +5,6 @@ import {AuthService} from 'aurelia-auth';
 import {HttpClient, json} from 'aurelia-fetch-client';
 import {Router} from 'aurelia-router';
 @inject(AuthService, HttpClient, App, Router)
-
 export class Reader {
   constructor(auth, httpClient, app, router){
     this.app = app;
@@ -27,43 +26,28 @@ export class Reader {
       'checkedOutBy': '',
       'checkedOutByName': ''
     };
-    //console.log(this.auth.isAuthenticated);
-    if (process.env.AuthIsON !== 'false' && this.auth.isAuthenticated()){
-      this.uid = this.auth.getTokenPayload().sub;
-    } else {
-      this.router.navigate('login');
-    }
-    this.backend = '';
     this.user = {};
   }
   
   async activate(){
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
+    } else {
+      this.backend = '';
     }
+    this.uid = this.auth.getTokenPayload().sub;
     await fetch;
-    //if (process.env.NODE_ENV !== 'production'){
     this.httpClient.configure(config => {
       config
       .useStandardConfiguration()
       .withBaseUrl(this.backend);
     });
-  
-  // async activate(){
-  //   await fetch;
-  //   this.httpClient.configure(config => {
-  //     config
-  //     .useStandardConfiguration()
-  //     .withBaseUrl(process.env.BackendUrl);
-  //   });
-    
     const res = await this.httpClient.fetch('/book/getall');
     this.books =  await res.json();
     //TODO get the user elsewhere
-    if (process.env.AuthIsON !== 'false' && this.auth.isAuthenticated()){
-      const res1 = await this.httpClient.fetch('/user/' + this.uid);
-      this.user =  await res1.json();
-    }
+    //if (process.env.AuthIsON !== 'false' && this.auth.isAuthenticated()){
+    const res1 = await this.httpClient.fetch('/user/' + this.uid);
+    this.user =  await res1.json();
   }
   
   checkOutBook(book){

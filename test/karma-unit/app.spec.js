@@ -1,8 +1,6 @@
-
-// const Counter = require('assertions-counter');
 import {App} from '../../src/app';
-import {AppState} from '../../src/classes/AppState.js';
-import {AuthStub, RouterStub, HttpMock} from './commons';
+import {AuthStub, HttpMock, RouterStub} from './commons';
+const Counter = require('assertions-counter');
 
 class AuthStub2 extends AuthStub {
   isAuthenticated() {
@@ -11,45 +9,95 @@ class AuthStub2 extends AuthStub {
   }
 }
 
+function testAsync(runAsync) {
+  return (done) => {
+    runAsync().then(done, e => { fail(e); done(); });
+  };
+}
+
 describe('the App module', () => {
   let app1;
   let app2;
 
   beforeEach(() => {
-    app1 = new App(null, new AuthStub, new HttpMock, new AppState);
+    app1 = new App(new AuthStub, new HttpMock);
     app1.auth.setToken('No token');
-    app2 = new App(null, new AuthStub2, new HttpMock, new AppState);
+    app2 = new App(new AuthStub2, new HttpMock);
   });
 
-  // it('tests configHttpClient', (done) => {
-  //   const { add: ok } = new Counter(2, done);
-  //   app1.auth.tokenInterceptor = 'tokenInterceptor';
-  //   app1.configHttpClient();
-  //   app1.httpClient.__configureCallback(new(class {
-  //     withDefaults(opts) {
-  //       expect(opts.mode).toBe('cors');
-  //       ok();
-  //       return this;
-  //     }
-  //     withInterceptor(token) {
-  //       expect(token).toBe(app1.auth.tokenInterceptor);
-  //       ok();
-  //       return this;
-  //     }
-  //   })());
-  // });
+  it('tests configHttpClient', (done) => {
+    const { add: ok } = new Counter(4, done);
+    app1.auth.tokenInterceptor = 'tokenInterceptor';
+    app1.configHttpClient();
+    app1.httpClient.__configureCallback(new(class {
+      withDefaults(opts) {
+        expect(opts.mode).toBe('cors');
+        ok();
+        return this;
+      }
+      useStandardConfiguration() {
+        ok();
+        return this;
+      }
+      withBaseUrl() {
+        ok();
+        return this;
+      }
+      withInterceptor(token) {
+        expect(token).toBe(app1.auth.tokenInterceptor);
+        ok();
+        return this;
+      }
+    })());
+  });
 
-  it('tests logout', () => {
-    //console.log(app1);
-    app1.activate();
-    app1.logout();
+  it('configures the router', done => {
+    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+    app1.configureRouter(configStub, RouterStub);
+    expect(app1.router).toBeDefined;
+    done();
+  });
+
+  it('tests logout', testAsync(async function() {
+    await app1.activate();
+    await app1.logout();
     expect(app1.authenticated).toBe(false);
+  }));
+
+  it('gets the current route', testAsync(async function() {
+    //console.log(app1);
+    await app1.activate();
+    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+    //let routerStub = {};
+    await app1.configureRouter(configStub, RouterStub);
+    //console.log('current instruction ' + app1.router.currentInstruction);
+    let route = await app1.currentRoute;
+    expect(route).toBe(route);
+    //expect(route).toBe('yoyo');
+  }));
+
+  it('gets the current styles', done => {
+    app1.activate().then(() => {
+      let styles = app1.currentStyles;
+      expect(styles).toBe(defined);
+    });
+    done();
   });
 
-  it('should get widescreen', () => {
+  it('closes the menu on cellphone display', done => {
     //console.log(app1);
-    const app3 = new App(null, null, new AuthStub, new RouterStub, new HttpMock, new AppState);
+    app1.activate().then(() => {
+      app1.close();
+      //expect(app1.authenticated).toBe(false);
+    });
+    done();
+  });
+
+  it('should get widescreen', done => {
+    //console.log(app1);
+    const app3 = new App(new AuthStub, new HttpMock);
     expect(app3.widescreen).toBe(true);
+    done();
   });
 
   it('should toggle menu to be icons only', () => {
@@ -59,6 +107,7 @@ describe('the App module', () => {
     app2.toggleMenu();
     expect(app2.fullmenu).toBe(false);
     expect(app2.drawerWidth).toBe('50px');
+    //done();
   });
 
   it('should toggle menu to be icons with text', () => {
@@ -68,4 +117,5 @@ describe('the App module', () => {
     expect(app1.fullmenu).toBe(true);
     expect(app1.drawerWidth).toBe('175px');
   });
+  // done();
 });

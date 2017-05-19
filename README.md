@@ -8,8 +8,9 @@
 This is the front end for the following apps:
 <ui>
 <li><a href="http://www.ourhandsandfeet.org">ourhandsandfeet.org</a></li>
-<li><a href="https://www.web-jam.com">web-jam.com</a></li>
+<li><a href="https://www.web-jam.com">Web Jam LLC</a></li>
 <li><a href="https://www.web-jam.com/music">joshandmariamusic.com</a></li>
+<li><a href="https://www.web-jam.com/library">Web Jam Library</a></li>
 </ul>
 
 <br> Here are the steps to get the development version running. First, read our <a href="https://docs.google.com/document/d/1_QDDbqmBrJuGqBoib59fmgYtls03dAXXuLqRR5roPO4/edit">Getting Started for Developers</a> gdoc to make sure you have all of the necessary prerequisites installed, including the correct version of NodeJS that matches the version specified in our package.json.
@@ -26,7 +27,7 @@ Install the <b>Aurelia Inspector</b> Chrome extension to allow debugging of the 
 
 Now, open your browser and go to <b>localhost:9000</b>
 
-The homepage should be display correctly.
+The homepage should display correctly.
 
 <b><i>Note</b></i>: you will not be able to use the "Login" feature of the website unless you also run the back end server.
 

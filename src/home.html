@@ -1,34 +1,34 @@
 <template>
   <div class="page-content">
-    <div style="float: right; width: 800px; margin:auto;" if.bind = "widescreen">
-    <paper-material elevation="0">
-      <polymer-slideshow style="margin-top:1px">
-      <polymer-slide>
-        <paper-card class="slideshowimage" image="../static/imgs/banner1.jpg"></paper-card>
-      </polymer-slide>
-    </polymer-slideshow>
-  </paper-material>
-</div>
-
-  <div if.bind = "!widescreen">
-  <paper-material elevation="0">
-    <polymer-slideshow style="margin-top:1px">
-    <polymer-slide>
-      <paper-card class="slideshowimage" image="../static/imgs/banner1.jpg"></paper-card>
-    </polymer-slide>
-  </polymer-slideshow>
-</paper-material>
-</div>
-      <!-- The dimensions of the images are 950x300 -->
-
-      <!-- <polymer-slide>
-      <paper-card class="slideshowimage" image="../static/imgs/slideshow2.png"></paper-card>
-    </polymer-slide>
-    <polymer-slide>
-    <paper-card class="slideshowimage" image="../static/imgs/slideshow3.png"></paper-card>
+    <div style="float: right; width: 800px; margin:auto;padding-left:10px" if.bind = "widescreen">
+      <paper-material elevation="0">
+        <polymer-slideshow style="margin-top:1px">
+          <polymer-slide>
+            <paper-card class="slideshowimage" image="../static/imgs/banner1.jpg"></paper-card>
+          </polymer-slide>
+        </polymer-slideshow>
+      </paper-material>
+    </div>
+    
+    <div if.bind = "!widescreen">
+      <paper-material elevation="0">
+        <polymer-slideshow style="margin-top:1px">
+          <polymer-slide>
+            <paper-card class="slideshowimage" image="../static/imgs/banner1.jpg"></paper-card>
+          </polymer-slide>
+        </polymer-slideshow>
+      </paper-material>
+    </div>
+    <!-- The dimensions of the images are 950x300 -->
+    
+    <!-- <polymer-slide>
+    <paper-card class="slideshowimage" image="../static/imgs/slideshow2.png"></paper-card>
   </polymer-slide>
   <polymer-slide>
-  <paper-card class="slideshowimage" image="../static/imgs/slideshow4.png"></paper-card>
+  <paper-card class="slideshowimage" image="../static/imgs/slideshow3.png"></paper-card>
+</polymer-slide>
+<polymer-slide>
+<paper-card class="slideshowimage" image="../static/imgs/slideshow4.png"></paper-card>
 </polymer-slide>
 <polymer-slide>
 <paper-card class="slideshowimage" image="../static/imgs/slideshow5.png"></paper-card>
@@ -63,40 +63,67 @@
 <!-- <h1 class="material-content-h1">About Web Jam LLC</h1> -->
 <div>
   <paper-material class="material-content" elevation="0">
-<p if.bind = "!widescreen" style="margin-top:16%">Web Jam LLC helps businesses bring their websites into the 21st century! Let us
-  help make your website mobile friendly for a fast pace new world.</p>
-  <p if.bind = "widescreen" style="margin-top:54px; margin-bottom:60px; margin-right:15px; width:640px">Web Jam LLC helps businesses bring their websites into the 21st century! Let us
-    help make your website mobile friendly for a fast pace new world.</p>
-  <!-- <p class="material-content-p">Web Jam LLC was started in the January of 2017. It grew out of a desire to give back to the community and a need to find appropriate opportunities to
-  give of time and talents. Web Jam LLC is still under development by a diverse team of dedicated programmers using cutting edge web technologies. Keep checking back to see what new
-  features we have created! If you are interested in joining us in creating this awesome app, please contact us at
-  <a style="text-decoration: underline;" href="mailto:Web Jam LLCmain@gmail.com"><strong>Web Jam LLCMain@gmail.com</strong></a>; we are always on the lookout for talented
-  individuals. If you have more money than time to give, we also accept contributions!</p> -->
+    <p if.bind = "!widescreen" style="margin-top:16%">Web Jam LLC helps businesses bring their websites into the 21st century! Let us
+      help make your website mobile-friendly for a fast pace new world.</p>
+      <p if.bind = "widescreen" style="margin-top:54px; margin-bottom:60px; margin-right:15px; width:640px">Web Jam LLC helps businesses bring their websites into the 21st century! Let us
+        help make your website mobile-friendly for a fast pace new world.</p>
+        <!-- <p class="material-content-p">Web Jam LLC was started in the January of 2017. It grew out of a desire to give back to the community and a need to find appropriate opportunities to
+        give of time and talents. Web Jam LLC is still under development by a diverse team of dedicated programmers using cutting edge web technologies. Keep checking back to see what new
+        features we have created! If you are interested in joining us in creating this awesome app, please contact us at
+        <a style="text-decoration: underline;" href="mailto:Web Jam LLCmain@gmail.com"><strong>Web Jam LLCMain@gmail.com</strong></a>; we are always on the lookout for talented
+        individuals. If you have more money than time to give, we also accept contributions!</p> -->
+        
+        <h3>FAQs</h3>
+        <p style="font-size:18px"><b><i>Q:</i></b> How can I contact you?</p>
+        <p style="font-size:18px"><b><i>A:</i></b> Email Josh & Maria Sherman at
+          <a style="text-decoration: underline;font-size:18px" href="mailto:web.jam.adm@gmail.com"><strong>web.jam.adm@gmail.com</strong></a>
+          <br>or call <a href="tel:5404948035" style="text-decoration: underline;font-size:18px"><strong>540-494-8035</strong></a>
+        </p><br>
+        <p style="font-size:18px"><b><i>Q:</i></b> What does Web Jam LLC do?</p>
+        <p style="font-size:18px"><b><i>A:</i></b> We provide mobile-friendly web technologies and services.</p><br>
+        <p style="font-size:18px"><b><i>Q:</i></b> What is your mission statement?</p>
+        <p style="font-size:18px"><b><i>A:</i></b> To assist small businesses by refactoring their existing websites to be mobile-friendly,
+          <br>and then empowering owners to make updates to their own sites.</p>
+        </paper-material>
+        <paper-material class="material-content" elevation="1">
+          <h3 style="text-align:center; margin-top:40px">Our Current Projects</h3>
+          
+          <paper-material elevation="2" style="padding:10px">
+            <h4 style="text-align:center"><strong>Our Hands and Feet</strong></h4>
+            <p style="text-align:center">This app connects volunteers with charity opportunities.</p>
+            <div class="paper-card-img"><paper-card image="../static/imgs/OHAF1.png"></paper-card><br>
+              <a href="http://www.ourhandsandfeet.org" target="_blank" style="text-decoration:underline; text-align:center">ourhandsandfeet.org</a>
+            </div>
+          </paper-material>
+          
+          <paper-material elevation="2" style="padding:10px">
+            <h4 style="text-align:center"><strong>Streetcorner to Rockstar</strong></h4>
+            <p style="text-align:center">This app connects bands with performance opportunities.</p>
+            <div class="paper-card-img"><paper-card image="../static/imgs/sc2rs.png"></paper-card><br>
+              <a href="http://www.sc2rs.com" target="_blank" style="text-decoration:underline; text-align:center">sc2rs.com</a><br>
+            </div>
+          </paper-material>
+          
+          <paper-material elevation="2" style="padding:10px">
+            <h4 style="text-align:center"><strong>Apperson Automotive</strong></h4>
+            <div class="paper-card-img"><paper-card image="../static/imgs/AppersonAutomotive.png"></paper-card><br>
+              <a href="http://www.appersonautomotive.com" target="_blank" style="text-decoration:underline; text-align:center">appersonautomotive.com</a><br>
+            </div>
+          </paper-material>
 
-<h3>FAQs</h3>
-  <p style="font-size:18px"><b><i>Q:</i></b> How can I contact you?</p>
-  <p style="font-size:18px"><b><i>A:</i></b> Email Josh & Maria Sherman at
-    <a style="text-decoration: underline;font-size:18px" href="mailto:web.jam.adm@gmail.com"><strong>web.jam.adm@gmail.com</strong></a>
-    <br>or call <a href="tel:5404948035" style="text-decoration: underline;font-size:18px"><strong>540-494-8035</strong></a>
-  </p><br>
-  <p style="font-size:18px"><b><i>Q:</i></b> What does Web Jam LLC do?</p>
-  <p style="font-size:18px"><b><i>A:</i></b> We provide mobile friendly web technologies and services.</p><br>
-  <p style="font-size:18px"><b><i>Q:</i></b> What is your mission statement?</p>
-  <p style="font-size:18px"><b><i>A:</i></b> To assist small businesses by refactoring their existing websites to be mobile friendly,
-    <br>and then empowering owners to make updates to their own sites.</p>
-</paper-material>
-<paper-material class="footer" elevation="4" style="padding:8px; background-color: #2a222a">
-  <div class="paper-card-img"><span>&nbsp;&nbsp;</span>
-    <a target="_blank" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
-    <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>
-    <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
-    <span>&nbsp;&nbsp;</span><a target="_blank" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
-          <span>&nbsp;&nbsp;</span><a target="_blank" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>
-    <span style="color:white; font-size: 9pt; padding-left:18px;">Powered by
-                 <a target="_blank" style="color:white; font-size:9pt;font-weight: bold;" href="https://www.web-jam.com">Web Jam LLC</a>
-               </span>
-  </div>
-</paper-material>
-</div>
-</div>
-</template>
+        </paper-material>
+        <paper-material class="footer" elevation="4" style="padding:8px; background-color: #2a222a">
+          <div class="paper-card-img"><span>&nbsp;&nbsp;</span>
+            <a target="_blank" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+            <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>
+            <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+            <span>&nbsp;&nbsp;</span><a target="_blank" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
+            <span>&nbsp;&nbsp;</span><a target="_blank" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>
+            <span style="color:white; font-size: 9pt; padding-left:18px;">Powered by
+              <a target="_blank" style="color:white; font-size:9pt;font-weight: bold;" href="https://www.web-jam.com">Web Jam LLC</a>
+            </span>
+          </div>
+        </paper-material>
+      </div>
+    </div>
+  </template>
