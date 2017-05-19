@@ -41,7 +41,7 @@ paper-item:hover {
             <span class="nav-item" if.bind="fullmenu">OHAF</span>
           </a>
         </paper-item>
-        <paper-item class="login" if.bind="Menu == 'reader' || Menu == 'librarian' || Menu == 'wj' || Menu == 'dashboard' || Menu == 'developer'">
+        <paper-item class="login" if.bind="Menu == 'wj' || Menu == 'dashboard'">
           <a paper-drawer-toggle href="/library" class="nav-link" click.delegate="close()">
             <span class="fa fa-book"></span>
             <span class="nav-item" if.bind="fullmenu">Library</span>
@@ -67,13 +67,13 @@ paper-item:hover {
         </paper-item>
         <paper-item if.bind="Menu =='developer'" class="login">
           <a paper-drawer-toggle href="/dashboard/charity" class="nav-link" click.delegate="close()">
-            <span class="fa fa-book"></span>
+            <span class="fa fa-handshake-o"></span>
             <span class="nav-item" if.bind="fullmenu">Charity</span>
           </a>
         </paper-item>
         <paper-item if.bind="Menu =='developer'" class="login">
           <a paper-drawer-toggle href="/dashboard/volunteer" class="nav-link" click.delegate="close()">
-            <span class="fa fa-book"></span>
+            <span class="fa fa-handshake-o"></span>
             <span class="nav-item" if.bind="fullmenu">Volunteer</span>
           </a>
         </paper-item>
