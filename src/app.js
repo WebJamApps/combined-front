@@ -30,13 +30,8 @@ export class App {
     this.userAccess = new UserAccess(this.appState);
     if (this.auth.isAuthenticated()) {
       this.authenticated = true; //Logout element is reliant upon a local var;
-      /* istanbul ignore else */
-      //if (this.appState.getUserID() === undefined){
       let uid = this.auth.getTokenPayload().sub;
       this.user = await this.appState.getUser(uid);
-      //TODO figure out why I can't get the user here!
-      console.log('the user from app ' + this.user);
-      //}
     }
   }
 
@@ -69,7 +64,7 @@ export class App {
   }
 
   toggleMenu() {
-    console.debug(this.fullmenu);
+    //console.debug(this.fullmenu);
     if (this.fullmenu) {
       this.fullmenu = false;
       this.drawerWidth = '50px';
@@ -160,7 +155,7 @@ export class App {
         menuToggleClass: 'home-menu-toggle'
       };
       //console.log('route')
-      console.log(this.currentRouteFrag);
+      //console.log(this.currentRouteFrag);
       if (this.currentRoute === 'music-router') {
         this.Menu = 'music';
       // } else if (this.currentRoute === 'library') {
