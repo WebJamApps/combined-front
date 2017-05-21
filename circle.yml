@@ -7,6 +7,7 @@ dependencies:
     - npm install -g yarn codeclimate-test-reporter
   override:
     - yarn install
+    - npm run postinstall:backend
 
 general:
   artifacts:

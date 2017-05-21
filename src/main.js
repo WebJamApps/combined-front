@@ -13,6 +13,9 @@ export async function configure(aurelia) {
   .standardConfiguration()
   .developmentLogging();
   aurelia.use.plugin(PLATFORM.moduleName('au-table'));
+  aurelia.use.plugin(PLATFORM.moduleName('aurelia-view-manager'));
+  aurelia.use.plugin(PLATFORM.moduleName('aurelia-form'));
+  //aurelia.use.plugin(PLATFORM.moduleName('aurelia-form-validation'));
   //aurelia.use.plugin(PLATFORM.moduleName('au-table/au-table'));
   //aurelia.use.plugin(PLATFORM.moduleName('au-table/au-table-select'));
   //aurelia.use.plugin(PLATFORM.moduleName('au-table/au-table-sort'));
@@ -23,18 +26,18 @@ export async function configure(aurelia) {
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-auth'), (baseConfig)=>{
     baseConfig.configure(config);
   });
-  
+
   // Uncomment the line below to enable animation.
   // aurelia.use.plugin(PLATFORM.moduleName('aurelia-animator-css'));
   // if the css animator is enabled, add swap-order="after" to all router-view elements
-  
+
   // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
   // aurelia.use.plugin(PLATFORM.moduleName('aurelia-html-import-template-loader'));
-  
+
   document.addEventListener('WebComponentsReady', function() {
     aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));
   });
-  
+
   // await aurelia.start();
   // await aurelia.setRoot(PLATFORM.moduleName('app'));
 }
