@@ -34,10 +34,10 @@ export class Librarian {
   fileList = '';
 
   async activate(){
+    this.backend = '';
+    /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
-    } else {
-      this.backend = '';
     }
     await fetch;
     this.httpClient.configure(config => {

@@ -33,14 +33,13 @@ export class Reader {
     this.books = await res.json();
     this.uid = this.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
-    //console.log('Inside the Reader module, this is the user ' + this.user.name);
   }
 
   configHttpClient(){
+    this.backend = '';
+    /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
-    } else {
-      this.backend = '';
     }
     this.httpClient.configure(config => {
       config
