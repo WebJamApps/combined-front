@@ -21,10 +21,10 @@ export class Dashboard {
   }
 
   configHttpClient(){
+    this.backend = '';
+    /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
-    } else {
-      this.backend = '';
     }
     this.httpClient.configure(config => {
       config
