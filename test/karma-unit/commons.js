@@ -1,5 +1,7 @@
 class RouterStub {
-  currentInstruction = { config: { title: 'Howdy is cool', name: 'yoyo' } }
+  currentInstruction = {
+    config: { title: 'Howdy is cool', name: 'yoyo' },
+    fragment: {} }
   configure(handler) {
     if (handler) {
       handler(this);
@@ -75,6 +77,9 @@ class AppStateStub {
   }
   setUser(input) {
     this.user = input;
+  }
+  checkUserRole() {
+    return this.roles;
   }
   getRoles() {
     return (this.roles);
