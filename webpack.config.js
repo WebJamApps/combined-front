@@ -91,8 +91,8 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     new ModuleDependenciesPlugin({
       'aurelia-auth': ['./auth-filter'],
       'aurelia-polymer': ['./au-select-custom-attribute'],
-      'au-table': ['./au-table', './au-table-select', './au-table-sort'],
-      'aurelia-form': [
+      'au-table': ['./au-table', './au-table-select', './au-table-sort', './au-table-pagination'],
+      'aurelia-form': [ './aurelia-form', './metadata',
         './attribute/prefixed',
         './component/aurelia-form',
         './component/form-association',
@@ -123,7 +123,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
         './component/view/bootstrap/form-radio.html',
         './component/view/bootstrap/form-textarea.html',
         './decorator'
-      ]
+      ],  'aurelia-form-validation': ['./aurelia-form-validation', './ValidationRenderer', './ValidationController']
     }),
     new ProvidePlugin({
       'Promise': 'bluebird',

@@ -14,15 +14,10 @@ export async function configure(aurelia) {
   .developmentLogging();
   aurelia.use.plugin(PLATFORM.moduleName('au-table'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-view-manager'));
+  //aurelia.use.plugin(PLATFORM.moduleName('aurelia-config'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-form'));
   //aurelia.use.plugin(PLATFORM.moduleName('aurelia-form-validation'));
-  //aurelia.use.plugin(PLATFORM.moduleName('au-table/au-table'));
-  //aurelia.use.plugin(PLATFORM.moduleName('au-table/au-table-select'));
-  //aurelia.use.plugin(PLATFORM.moduleName('au-table/au-table-sort'));
-  //aurelia.use.plugin(PLATFORM.moduleName('au-table/dist/amd/au-table-pagination'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-polymer'));
-  //aurelia.use.plugin(PLATFORM.moduleName('aurelia-polymer/au-select-custom-attribute'));
-  //aurelia.use.plugin(PLATFORM.moduleName('aurelia-auth/auth-filter'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-auth'), (baseConfig)=>{
     baseConfig.configure(config);
   });
