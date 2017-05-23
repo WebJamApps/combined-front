@@ -21,7 +21,9 @@
     "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && npm i -g yarn && yarn cache clean && yarn install",
     "postinstall:backend": "yarn global add bower && bower install && npm run vulc && npm start -- build",
     "vulc": "rm -rf static/includes.html && vulcanize --inline-scripts --inline-css includes.html > static/includes.html",
-    "prod": "npm run vulc && npm start -- build && npm start -- serve"
+    "prod": "npm run vulc && npm start -- build && npm start -- serve",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "au-table": "^0.1.12",
@@ -80,7 +82,8 @@
     "url-loader": "0.5.8",
     "vulcanize": "^1.15.4",
     "wait-on": "2.0.2",
-    "webpack": "^2.5.1"
+    "webpack": "^2.5.1",
+    "snyk": "^1.30.1"
   },
   "devDependencies": {
     "assertions-counter": "^0.0.1",
@@ -106,5 +109,6 @@
     "stylelint": "^7.8.0",
     "stylelint-config-standard": "^16.0.0",
     "webpack-dev-server": "2.4.5"
-  }
+  },
+  "snyk": true
 }
