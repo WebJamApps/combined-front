@@ -64,4 +64,10 @@ describe('the Reader Module', () => {
     reader.checkInBook(book);
     done();
   });
+
+  it('check out a specific book', done => {
+    reader.user = {name: 'Froyo'};
+    reader.checkOutBook(book);
+    done();
+  });
 });
