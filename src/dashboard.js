@@ -8,6 +8,16 @@ export class Dashboard {
     this.app = app;
     this.auth = auth;
     this.httpClient = httpClient;
+    this.validator = {
+      validatorName: 'my-custom-validator',
+      validatorType: 'validator',
+      validate: function(value) {console.log('I am validating');}
+    };
+    this.form = new Polymer.IronMeta({
+      type: this.validator.validatorType,
+      key: this.validator.validatorName,
+      value: this.validator
+    });
   }
 
   types=['Charity', 'Volunteer', 'Developer', 'Reader', 'Librarian'];
