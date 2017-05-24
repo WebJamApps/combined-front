@@ -20,9 +20,9 @@ describe('the App module', () => {
   let app2;
 
   beforeEach(() => {
-    app1 = new App(new AuthStub, new HttpMock);
+    app1 = new App(new AuthStub(), new HttpMock());
     app1.auth.setToken('No token');
-    app2 = new App(new AuthStub2, new HttpMock);
+    app2 = new App(new AuthStub2(), new HttpMock());
   });
 
   it('tests configHttpClient', (done) => {
@@ -76,11 +76,82 @@ describe('the App module', () => {
     //expect(route).toBe('yoyo');
   }));
 
-  it('gets the current styles', done => {
-    app1.activate().then(() => {
-      let styles = app1.currentStyles;
-      expect(styles).toBe(defined);
-    });
+  it('gets the current fragment', done => {
+    app1.router = new RouterStub();
+    let frag = app1.currentRouteFrag;
+    app1.currentRoute;
+    expect(typeof frag).toBe('object');
+    done();
+  });
+
+  it('gets the current styles with ohaf route', done => {
+    let routre = new RouterStub();
+    routre.currentInstruction.config.name = 'ohaf';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with dashboard route', done => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles dashboard/volunteer route', done => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/volunteer';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with dashboard/charity route', done => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/charity';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with dashboard/reader route', done => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/reader';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with dashboard/librarian route', done => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/librarian';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+  it('gets the current styles with dashboard/developer route', done => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/developer';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with music-router route', done => {
+    let routre = new RouterStub();
+    routre.currentInstruction.config.name = 'music-router';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles when route is null', done => {
+    let routre = new RouterStub();
+    routre.currentInstruction.config.name = '';
+    app1.router = routre;
+    app1.currentStyles;
     done();
   });
 

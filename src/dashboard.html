@@ -1,28 +1,23 @@
 <template>
   <div class="page-content">
     <paper-material class="material-content" elevation="0">
-      <h4 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Welcome ${user.name} to the Dashboard</strong></h4>
-      <!-- This form only displays if the user does not have a userType selected> -->
+      <h4 class="dashboardTitle"><strong>Welcome ${user.name} to the Dashboard</strong></h4>
+      <!-- This form only displays if the user does not have a userType defined> -->
       <form>
-        <p>Since you are a new user, please provide the following information.</p>
+        <p>Since you are a new user, please provide the following information:</p>
         <!-- input validation, must be 10 digits -->
-        <paper-input style="margin-left: 0.5cm; width:180px" label="10 Digit Phone Number" value.two-way="user.userPhone" required></paper-input>
-        <!-- <paper-dropdown-menu style="margin-left: 0.5cm; width:180px" label="Account Type" (iron-select)="genreChange($event.detail.item.value, 0)"> -->
-        <paper-dropdown-menu style="margin-left: 0.5cm; width:180px" label="Account Type">
-          <paper-listbox  required  class="dropdown-content" selected.two-way="user.userType">
+        <paper-input validator="my-custom-validator" class="newUserForm" label="10 Digit Phone Number" value.two-way="user.userPhone" required></paper-input>
+        <paper-dropdown-menu class="newUserForm" label="Account Type">
+          <paper-listbox required class="dropdown-content" selected.two-way="user.userType">
             <paper-item value=""></paper-item>
             <template is="dom-repeat" items.two-way="types">
               <paper-item model="{{item}}">{{item}}</paper-item>
             </template>
-            <!-- Charity or Volunteer -->
-            <!-- <paper-item  repeat.for="type of types" value.bind="type">${type}</paper-item> -->
           </paper-listbox>
         </paper-dropdown-menu>
-        <!-- <br>
-        selected product: ${user.type} -->
-        <paper-input style="margin-left: 0.5cm; width:180px" label="City" value.two-way="user.userCity" required></paper-input>
-        <paper-input style="margin-left: 0.5cm; width:180px" label="Zip Code" value.two-way="user.userZip" required></paper-input>
-        <paper-button style="margin:20px 3.5cm 0" raised click.trigger="updateUser()">Update</paper-button>
+        <paper-input class="newUserForm" label="City" value.two-way="user.userCity" required></paper-input>
+        <paper-input class="newUserForm" label="Zip Code" value.two-way="user.userZip" required></paper-input>
+        <paper-button class="updateButton" raised click.trigger="updateUser()">Update</paper-button>
       </form>
     </paper-material>
   </div>

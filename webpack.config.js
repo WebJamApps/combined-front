@@ -91,8 +91,26 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     new ModuleDependenciesPlugin({
       'aurelia-auth': ['./auth-filter'],
       'aurelia-polymer': ['./au-select-custom-attribute'],
-      'au-table': ['./au-table', './au-table-select', './au-table-sort'],
-      'aurelia-form': [
+      'aurelia-config': ['./aurelia-config'],
+      'au-table': ['./au-table', './au-table-select', './au-table-sort', './au-table-pagination'],
+      'aurelia-validation': [
+        './aurelia-validation',
+        './controller-validate-result',
+        './get-target-dom-element',
+        './property-info',
+        './validate-binding-behavior-base',
+        './validate-binding-behavior',
+        './validate-instruction',
+        './validate-result',
+        './validate-trigger',
+        './validation-controller-factory',
+        './validation-controller',
+        './validation-errors-custom-attribute',
+        './validation-renderer-custom-attribute',
+        './validation-renderer',
+        './validator'
+      ],
+      'aurelia-form': [ './aurelia-form', './metadata',
         './attribute/prefixed',
         './component/aurelia-form',
         './component/form-association',
@@ -123,7 +141,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
         './component/view/bootstrap/form-radio.html',
         './component/view/bootstrap/form-textarea.html',
         './decorator'
-      ]
+      ],  'aurelia-form-validation': ['./aurelia-form-validation', './ValidationRenderer', './ValidationController']
     }),
     new ProvidePlugin({
       'Promise': 'bluebird',

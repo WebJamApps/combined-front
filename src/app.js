@@ -35,6 +35,27 @@ export class App {
     }
   }
 
+  configHttpClient() {
+    this.backend = '';
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production'){
+      this.backend = process.env.BackendUrl;
+    }
+    this.httpClient.configure(httpConfig => {
+      httpConfig
+      .withDefaults({
+        mode: 'cors',
+        credentials: 'same-origin',
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .useStandardConfiguration()
+      .withBaseUrl(this.backend)
+      .withInterceptor(this.auth.tokenInterceptor); //Adds bearer token to every HTTP request.
+    });
+  }
+
   configureRouter(config, router){
     config.title = 'Web Jam LLC';
     config.options.pushState = true;
@@ -88,27 +109,6 @@ export class App {
     drawer.closeDrawer();
   }
 
-  configHttpClient() {
-    if (process.env.NODE_ENV !== 'production'){
-      this.backend = process.env.BackendUrl;
-    } else {
-      this.backend = '';
-    }
-    this.httpClient.configure(httpConfig => {
-      httpConfig
-      .withDefaults({
-        mode: 'cors',
-        credentials: 'same-origin',
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      .useStandardConfiguration()
-      .withBaseUrl(this.backend)
-      .withInterceptor(this.auth.tokenInterceptor); //Adds bearer token to every HTTP request.
-    });
-  }
-
   get currentRoute() {
     if (this.router.currentInstruction) {
       return this.router.currentInstruction.config.name;
@@ -116,22 +116,13 @@ export class App {
   }
 
   get currentRouteFrag() {
+    /* istanbul ignore else */
     if (this.router.currentInstruction) {
       return this.router.currentInstruction.fragment;
     }
   }
 
-  // get routeName() {
-  //   if (this.router.currentInstruction) {
-  //     return this.router.currentInstruction.config.name;
-  //   }
-  // }
-
   get currentStyles() {
-    //let routeName = '';
-    // if (this.router.currentInstruction) {
-    //   routeName = this.router.currentInstruction.config.name;
-    // }
     let result = {};
     if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') {
       result = {
@@ -158,8 +149,8 @@ export class App {
       //console.log(this.currentRouteFrag);
       if (this.currentRoute === 'music-router') {
         this.Menu = 'music';
-      // } else if (this.currentRoute === 'library') {
-      //   this.Menu = 'library';
+        // } else if (this.currentRoute === 'library') {
+        //   this.Menu = 'library';
       } else if (this.currentRouteFrag === '/dashboard'){
         this.Menu = 'dashboard';
       } else if (this.currentRouteFrag === '/dashboard/developer'){
