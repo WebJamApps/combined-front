@@ -6,18 +6,24 @@
       <form>
         <p>Since you are a new user, please provide the following information:</p>
         <!-- input validation, must be 10 digits -->
-        <paper-input class="newUserForm" label="10 Digit Phone Number" value.two-way="user.userPhone" required></paper-input>
-        <paper-dropdown-menu class="newUserForm" label="Account Type">
+        <paper-input style="margin:auto" class="newUserForm" label="10 Digit Phone Number" value.two-way="user.userPhone" required></paper-input>
+        <div class="form-group" style="max-width: 2in; margin:auto; padding:5px">
+          <select id="type" class="form-control" value.bind="selectedValue" change.delegate="DropdownChanged(selectedValue)">
+            <option value="">Choose User Type...</option>
+            <option repeat.for="type of userTypes" model.bind="type">${type}</option>
+          </select>
+        </div>
+        <!-- <paper-dropdown-menu class="newUserForm" label="Account Type">
           <paper-listbox required class="dropdown-content" selected.two-way="user.userType">
             <paper-item value=""></paper-item>
             <template is="dom-repeat" items.two-way="types">
               <paper-item model="{{item}}">{{item}}</paper-item>
             </template>
           </paper-listbox>
-        </paper-dropdown-menu>
-        <paper-input class="newUserForm" label="City" value.two-way="user.userCity" required></paper-input>
-        <paper-input class="newUserForm" label="Zip Code" value.two-way="user.userZip" required></paper-input>
-        <paper-button class="updateButton" raised click.trigger="updateUser()">Update</paper-button>
+        </paper-dropdown-menu> -->
+        <!-- <paper-input class="newUserForm" label="City" value.two-way="user.userCity" required></paper-input>
+        <paper-input class="newUserForm" label="Zip Code" value.two-way="user.userZip" required></paper-input> -->
+        <paper-button id="newUserButton" class="updateButton" raised click.trigger="updateUser()" style="display:none;">Update</paper-button>
       </form>
     </paper-material>
   </div>
