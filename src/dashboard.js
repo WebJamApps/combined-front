@@ -72,7 +72,7 @@ export class Dashboard {
   async updateUser(){
     let uid = this.auth.getTokenPayload().sub;
     await fetch;
-    this.user.userType = this.types[this.user.userType - 1];
+    this.user.userType = this.selectedValue;
     this.httpClient.fetch('/user/' + uid, {
       method: 'put',
       body: json(this.user)
