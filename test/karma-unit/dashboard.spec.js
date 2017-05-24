@@ -3,12 +3,11 @@ import {App} from '../../src/app';
 import {StageComponent} from 'aurelia-testing';
 const Counter = require('assertions-counter');
 import {AuthStub, HttpMock, AppStateStub, RouterStub} from './commons';
-import { Validator} from 'aurelia-validation';
+import {Validator} from 'aurelia-validation';
 
-class VCMock{
-  createForCurrentScope(){
-    this.registerInstance;
-    this.validateTrigger;
+class VCMock {
+  createForCurrentScope(validator) {
+    return {validateTrigger: null};
   }
 }
 
