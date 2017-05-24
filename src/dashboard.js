@@ -18,9 +18,10 @@ export class Dashboard {
     //   key: this.validator.validatorName,
     //   value: this.validator
     // });
+    //console.log('options for user roles: ' + JSON.parse(process.env.userRoles).roles);
   }
-
-  types=['Charity', 'Volunteer', 'Developer', 'Reader', 'Librarian'];
+  selectedValue;
+  userTypes=JSON.parse(process.env.userRoles).roles;
 
   async activate() {
     this.configHttpClient();
@@ -28,6 +29,17 @@ export class Dashboard {
     this.user = await this.app.appState.getUser(uid);
     console.log('this is the user ' + this.user.name);
     this.childRoute();
+  }
+
+  DropdownChanged(changedVal) {
+    //alert(changedVal);
+    let nub = document.getElementById('newUserButton');
+    console.log(nub);
+    if (this.selectedValue !== ''){
+      nub.style.display = 'block';
+    } else {
+      nub.style.display = 'none';
+    }
   }
 
   configHttpClient(){
