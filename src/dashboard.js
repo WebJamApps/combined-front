@@ -49,7 +49,8 @@ export class Dashboard {
     this.app = app;
     this.auth = auth;
     this.httpClient = httpClient;
-    this.validator = new FormValidator(validator, this.updateCanSubmit); //if the form is valid then set to true. you cannot set callback which is null. the earlier argument is a function that return null. I changed it to this callback.
+    //TODO you cannot set callback which is null. the earlier argument is a function that return null.
+    this.validator = new FormValidator(validator, results => this.updateCanSubmit(results)); //if the form is valid then set to true.
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;  //the button on the form
