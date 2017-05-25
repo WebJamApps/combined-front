@@ -153,7 +153,6 @@ describe('the Dashboard Module', () => {
     //   app = new App(AuthStub, HttpMock);
     //   app.router = new RouterStub();
     //   dashboard = new Dashboard(auth, http, app);
-    //   dashboard.selectedValue = 'Charity';
     //   dashboard.dropdownChanged();
     //   setTimeout(function() {
     //     //expect(http.status).toBe(200);
