@@ -49,14 +49,13 @@ export class Dashboard {
     this.app = app;
     this.auth = auth;
     this.httpClient = httpClient;
-    //TODO you cannot set callback which is null. the earlier argument is a function that return null.
+    //TODO you cannot set callback which is null. this argument is a function that return null.
     this.validator = new FormValidator(validator, results => this.updateCanSubmit(results)); //if the form is valid then set to true.
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;  //the button on the form
   }
 
-  selectedValue;
   userTypes=JSON.parse(process.env.userRoles).roles;
 
   async activate() {
@@ -119,7 +118,7 @@ export class Dashboard {
 
   setupValidation() {
     ValidationRules
-    .ensure('userPhone').required().minLength(10).withMessage('phone number must be at least 10 digits long.')
+    .ensure('userPhone').matches(/[2-9]\d{9}/).maxLength(10).withMessage('10 digits')
     .ensure('userType').required().minLength(5).withMessage('select a user type')
     .on(this.user);
   }
@@ -131,7 +130,6 @@ export class Dashboard {
   async updateUser(){
     let uid = this.auth.getTokenPayload().sub;
     await fetch;
-    //this.user.userType = this.selectedValue;
     this.httpClient.fetch('/user/' + uid, {
       method: 'put',
       body: json(this.user)
