@@ -141,7 +141,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
         './component/view/bootstrap/form-radio.html',
         './component/view/bootstrap/form-textarea.html',
         './decorator'
-      ],  'aurelia-form-validation': ['./aurelia-form-validation', './ValidationRenderer', './ValidationController']
+      ]
     }),
     new ProvidePlugin({
       'Promise': 'bluebird',
