@@ -17,9 +17,9 @@ export class UserAccess {
         }
 
         console.log('The child route is: ' + routingContext.params.childRoute);
-        // if (routingContext.params.childRoute === 'reader'){
-        //   return next();
-        // }
+        if (routingContext.params.childRoute === 'user-account'){
+          return next();
+        }
         //
         // if (routingContext.params.childRoute === 'librarian'){
         //   return next();
