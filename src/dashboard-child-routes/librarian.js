@@ -3,12 +3,13 @@ import {HttpClient, json} from 'aurelia-fetch-client';
 import {Router} from 'aurelia-router';
 const csvjson = require('csvjson');
 const filesaver = require('file-saver');
-@inject(HttpClient, Router, FileReader)
+@inject(HttpClient, Router, FileReader, filesaver)
 export class Librarian {
-  constructor(httpClient, router, reader){
+  constructor(httpClient, router, reader, saver){
     this.httpClient = httpClient;
     this.router = router;
     this.reader = reader;
+    this.filesaver = saver;
     this.newBook = {
       'title': '',
       'type': 'hardback',
@@ -118,7 +119,7 @@ export class Librarian {
       this.books = JSON.stringify(data);
       this.books = csvjson.toCSV(data, options);
       const file = new File([this.books], 'books_export.csv', {type: 'text/plain;charset=utf-8'});
-      filesaver.saveAs(file);
+      this.filesaver.saveAs(file);
     });
   }
 }

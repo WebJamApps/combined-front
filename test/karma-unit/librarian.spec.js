@@ -4,13 +4,15 @@ import './setup';
 //import {Router} from 'aurelia-router';
 import {csvFixture} from './librarian.spec.fixtures';
 import csvjson from 'csvjson';
-//import filesaver from 'file-saver';
+// import filesaver from 'file-saver';
 const Counter = require('assertions-counter');
 
 class HttpStub {
+  status = 500
   fetch(fn) {
     let response = this.itemStub;
     this.__fetchCallback = fn;
+    this.status = 200;
     return new Promise((resolve) => {
       resolve({ json: () => response });
     });
@@ -77,6 +79,7 @@ describe('the librarian module', () => {
   let librarian5;
   //let librarian6;
   let http;
+  let http2;
   let router;
   let fileReaderStub;
   //let fileSaverStub;
@@ -85,9 +88,9 @@ describe('the librarian module', () => {
     http = new HttpMock();
     router = new RouterMock();
     fileReaderStub = {};
-    //fileSaverStub = {};
-    librarian = new Librarian(http, router, fileReaderStub);
-    librarian5 = new Librarian(new HttpStub(), router, fileReaderStub);
+    http2 = new HttpStub();
+    librarian = new Librarian(http, router, fileReaderStub, {});
+    librarian5 = new Librarian(http2, router, fileReaderStub, {});
     //librarian6 = new LibrarianMock(new HttpStub(), router, fileReaderStub);
     // add the new book csv from the fixtures object and use it as main data.
     librarian.CSVFilePath = {files: [csvFixture.string]};
@@ -97,27 +100,27 @@ describe('the librarian module', () => {
     expect(object instanceof Array).toBeTruthy();
     done();
   });
-  
+
   it('should confirm 200 https status after createBook is run', done => {
     librarian.createBook();
     expect(http.status).toBe(200);
     done();
   });
-  
+
   it('should log a new book type when book is undefined', done => {
     librarian.newBook.type = 0;
     librarian.createBook();
     expect(http.status).toBe(200);
     done();
   });
-  
+
   it('should default to Public access when book access is undefined', done => {
     librarian.newBook.access = 0;
     librarian.createBook();
     expect(http.status).toBe(200);
     done();
   });
-  
+
   // trying another option for testing the createBooksFromCSV();
   it('should confirm a http status change', done => {
     window.CSVFilePath = {files: [new Blob([csvFixture.string])] };
@@ -134,10 +137,10 @@ describe('the librarian module', () => {
     }, 10);
     done();
   });
-  
+
   //TODO it should wait 2 seconds and then redirect to the bookshelf
   //expect this.router.currentInstruction.config.name toBe 'bookshelf'
-  
+
   it('should raise a file reader error', done => {
     window.CSVFilePath = {files: [new Blob()] };
     let reader = new FileReader();
@@ -153,7 +156,7 @@ describe('the librarian module', () => {
     }, 10);
     done();
   });
-  
+
   it('should convert from csv and then post that array of books', (done) => {
     fileReaderStub.readAsText = () => {};
     librarian.createBooksFromCSV();
@@ -169,7 +172,7 @@ describe('the librarian module', () => {
     };
     fileReaderStub.onload({ target: { result: csvFixture.string } });
   });
-  
+
   it('tests configHttpClient', (done) => {
     const { add: ok } = new Counter(2, done);
     librarian5.activate().then(() => {
@@ -186,7 +189,7 @@ describe('the librarian module', () => {
       })());
     });
   });
-  
+
   //TODO it runs activate when node env is production
   //expect this.backend toBe ''
   // it('runs activate when node env is production', (done) => {
@@ -202,7 +205,7 @@ describe('the librarian module', () => {
   it('should make a .csv file', done => {
     //TODO mock the filesaver
     librarian5.makeCSVfile();
-    expect(http.status).toBe(500);
+    expect(http2.status).toBe(200);
     done();
   });
 });

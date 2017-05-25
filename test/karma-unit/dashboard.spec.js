@@ -11,6 +11,12 @@ class VCMock {
   }
 }
 
+class ValidatorMock extends Validator {
+  validateObject(obj, rules) {
+    return Promise.resolve([{name: 'john', valid: true}]);
+  }
+}
+
 class AuthServiceMock extends AuthStub {
   authenticate() {
     this.authenticated = true;
@@ -34,7 +40,7 @@ describe('the Dashboard Module', () => {
       app = new App(AuthStub, HttpMock);
       auth = new AuthServiceMock();
       vc = new VCMock();
-      val = new Validator();
+      val = new ValidatorMock();
       http = new HttpMock();
       dashboard = new Dashboard(auth, http, app, vc, val);
       dashboard2 = new Dashboard(auth, new HttpMock, app, vc, val);
@@ -186,6 +192,13 @@ describe('the Dashboard Module', () => {
           return this;
         }
       })());
+    });
+
+    it('should validate', done => {
+      dashboard.user = {name: 'Ray Smith', userType: 'Reader'};
+      document.body.innerHTML = '<div id=\'newUserButton\'></div>';
+      dashboard.validate();
+      done();
     });
   });
 
