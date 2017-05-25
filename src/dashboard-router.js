@@ -10,7 +10,8 @@ export class DashboardRouter {
     //  { route: 'sc2rs', name: 'sc2rs', moduleId: PLATFORM.moduleName('./dashboard-child-routes/sc2rs'), nav: true, title: 'SC2RS', auth: true},
       { route: 'reader', name: 'reader', moduleId: PLATFORM.moduleName('./dashboard-child-routes/reader'), nav: true, title: 'Reader', auth: true},
       { route: 'librarian', name: 'librarian', moduleId: PLATFORM.moduleName('./dashboard-child-routes/librarian'), nav: true, title: 'Librarian', auth: true},
-      { route: 'developer', name: 'developer', moduleId: PLATFORM.moduleName('./dashboard-child-routes/developer'), true: false, title: 'Developer', auth: true}
+      { route: 'developer', name: 'developer', moduleId: PLATFORM.moduleName('./dashboard-child-routes/developer'), true: false, title: 'Developer', auth: true},
+      { route: 'user-account', name: 'user-account', moduleId: PLATFORM.moduleName('./dashboard-child-routes/user-account'), true: false, title: 'User Account', auth: true}
     ]);
     this.router = router;
   }
