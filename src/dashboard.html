@@ -8,6 +8,7 @@
         <div class="form-group" style="max-width: 2in; margin:auto; padding:5px">
           <label style="margin-top:10px">10 Digit Phone # (optional)</label>
         <input type="text" style="max-width: 1.25in; margin:auto; padding:5px" class="newUserForm" value.bind="user.userPhone & validate" required>
+
           <select id="type" class="form-control" value.bind="user.userType & validate" change.delegate="dropdownChanged()" style="margin-top:20px">
             <option value="">Choose User Type...</option>
             <option repeat.for="type of userTypes" model.bind="type">${type}</option>
@@ -24,6 +25,10 @@
         <paper-input class="newUserForm" label="Zip Code" value.two-way="user.userZip" required></paper-input> -->
         <paper-button id="newUserButton" class="updateButton" raised click.trigger="updateUser()" style="display:none;">Submit</paper-button>
       </form>
+      <p>At this time, we are using a univeral account setup for all of our apps (<a href="/ohaf">OHAF</a>, <a href="/library">Library</a>, and <a href="/sc2rs">SC2RS</a>). The above <i>User Type</i> drop-down relates to the particular app you are most interested in using.
+         After you select a particular User Type, you will only be presented with a specialized dashboard with functionality for this role.
+         If you wish to change your role, you will need to navigate to the <a href="/dashboard/user-account">User Account</a> page, delete your user, and then log back into the app.
+         The ability to sign up for mutiple apps and have more than one user role is coming soon!</p>
     </paper-material>
   </div>
 </template>
