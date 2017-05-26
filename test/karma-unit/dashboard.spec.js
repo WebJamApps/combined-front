@@ -3,6 +3,27 @@ import {App} from '../../src/app';
 import {StageComponent} from 'aurelia-testing';
 const Counter = require('assertions-counter');
 import {AuthStub, HttpMock, AppStateStub, RouterStub} from './commons';
+import {Validator} from 'aurelia-validation';
+
+class VCMock {
+  createForCurrentScope(validator) {
+    return {validateTrigger: null};
+  }
+}
+
+class ValidatorMock extends Validator {
+  constructor(a, b) {
+    super();
+    this.a = a;
+    this.b = b;
+  }
+  validateObject(obj, rules) {
+    return Promise.resolve([{name: 'john', valid: true}]);
+  }
+  validateProperty(prop, val, rules) {
+    return Promise.resolve({});
+  }
+}
 
 class AuthServiceMock extends AuthStub {
   authenticate() {
@@ -20,14 +41,17 @@ describe('the Dashboard Module', () => {
     let http;
     let token = 'mhioj23yr675843ho12yv9852vbbjeywouitryhrcyqo7t89vu';
     let app;
+    let vc;
+    let val;
     let appState;
     beforeEach(() => {
       app = new App(AuthStub, HttpMock);
       auth = new AuthServiceMock();
+      vc = new VCMock();
+      val = new ValidatorMock();
       http = new HttpMock();
-      dashboard = new Dashboard(auth, http, app);
-      dashboard2 = new Dashboard(auth, new HttpMock, app);
-      // process.env.NODE_ENV = 'development';
+      dashboard = new Dashboard(auth, http, app, vc, val);
+      dashboard2 = new Dashboard(auth, new HttpMock, app, vc, val);
       auth.setToken(token);
     });
 
@@ -55,21 +79,6 @@ describe('the Dashboard Module', () => {
       done();
     });
 
-    // it('should expect change in http status after getUser call', done => {
-    //   dashboard.getUser();
-    //   expect(http.status).toBe(200);
-    //   done();
-    // });
-
-    //TODO: Get this to work!! process.env.NODE_ENV is not recognized
-    // it('should set backend to a blank string if NODE_ENV is production', done => {
-    //   http = new HttpMock({name: 'Iddris Elba', userType: 'Volunteer'});
-    //   auth = new AuthServiceMock();
-    //   process.env.NODE_ENV = 'production';
-    //   dashboard = new Dashboard(auth, http, null, new RouterMock, new AppStateMock);
-    //   expect(dashboard.backend).toBe('');
-    // });
-
     it('should expect change in http status after Volunteer activate call', done => {
       http = new HttpMock({name: 'Iddris Elba', userType: 'Volunteer'});
       auth = new AuthServiceMock();
@@ -78,7 +87,7 @@ describe('the Dashboard Module', () => {
       appState.setUser({name: 'Iddris Elba', userType: 'Volunteer'});
       app.appState = appState;
       app.router = new RouterStub();
-      dashboard = new Dashboard(auth, http, app);
+      dashboard = new Dashboard(auth, http, app, vc, val);
       auth.setToken(token);
       dashboard.activate();
       setTimeout(function() {
@@ -95,7 +104,7 @@ describe('the Dashboard Module', () => {
       appState.setUser({name: 'Iddris Elba', userType: 'Developer'});
       app.appState = appState;
       app.router = new RouterStub();
-      dashboard = new Dashboard(auth, http, app);
+      dashboard = new Dashboard(auth, http, app, vc, val);
       auth.setToken(token);
       dashboard.activate();
       setTimeout(function() {
@@ -109,7 +118,7 @@ describe('the Dashboard Module', () => {
       auth = new AuthServiceMock();
       app = new App(AuthStub, HttpMock);
       app.router = new RouterStub();
-      dashboard = new Dashboard(auth, http, app);
+      dashboard = new Dashboard(auth, http, app, vc, val);
       dashboard.user = {name: 'Ray Smith', userType: 'Librarian'};
       dashboard.childRoute();
       setTimeout(function() {
@@ -123,7 +132,7 @@ describe('the Dashboard Module', () => {
       auth = new AuthServiceMock();
       app = new App(AuthStub, HttpMock);
       app.router = new RouterStub();
-      dashboard = new Dashboard(auth, http, app);
+      dashboard = new Dashboard(auth, http, app, vc, val);
       dashboard.user = {name: 'Ray Smith', userType: 'Charity'};
       dashboard.childRoute();
       setTimeout(function() {
@@ -137,7 +146,7 @@ describe('the Dashboard Module', () => {
       auth = new AuthServiceMock();
       app = new App(AuthStub, HttpMock);
       app.router = new RouterStub();
-      dashboard = new Dashboard(auth, http, app);
+      dashboard = new Dashboard(auth, http, app, vc, val);
       dashboard.user = {name: 'Ray Smith', userType: 'Reader'};
       dashboard.childRoute();
       setTimeout(function() {
@@ -145,6 +154,19 @@ describe('the Dashboard Module', () => {
         done();
       }, 10);
     });
+
+    // it('should detect a change in a dropdown form', done => {
+    //   http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
+    //   auth = new AuthServiceMock();
+    //   app = new App(AuthStub, HttpMock);
+    //   app.router = new RouterStub();
+    //   dashboard = new Dashboard(auth, http, app);
+    //   dashboard.dropdownChanged();
+    //   setTimeout(function() {
+    //     //expect(http.status).toBe(200);
+    //     done();
+    //   }, 10);
+    // });
 
     it('should confirm 200 http status after updateUser call', done => {
       http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
@@ -154,9 +176,8 @@ describe('the Dashboard Module', () => {
       appState.setUser({name: 'John Fitzgerald', userType: 'Developer'});
       app.appState = appState;
       app.router = new RouterStub();
-      dashboard = new Dashboard(auth, http, app);
+      dashboard = new Dashboard(auth, http, app, vc, val);
       dashboard.user = {name: 'John Fitzgerald', userType: 'Developer'};
-      //dashboard.getUser();
       setTimeout(function() {
         dashboard.updateUser();
         //expect(http.status).toBe(200);
@@ -179,20 +200,27 @@ describe('the Dashboard Module', () => {
         }
       })());
     });
-    // });
 
-    // it('should confirm route by returning the currently navigated route', done => {
-    //   expect(dashboard.router.navigate(dashboard.types[0])).toBe('Charity');
-    //   expect(dashboard.router.navigate(dashboard.types[1])).toBe('Volunteer');
-    //   done();
-    // });
+    it('should validate', done => {
+      dashboard.user = {name: 'Ray Smith', userType: 'Reader'};
+      document.body.innerHTML = '<div id=\'newUserButton\'></div>';
+      dashboard.validate();
+      dashboard.dropdownChanged();
+      dashboard.canSubmit = true;
+      dashboard.dropdownChanged();
+      done();
+    });
 
-    // afterEach(() => {
-    //   delete process.env.NODE_ENV;
-    // });
+    it('should validate property', done => {
+      dashboard.validator.validateProperty({}, 'school', 'schoolRules');
+      done();
+    });
+
+    it('should check if rule exists in validator', done => {
+    //   dashboard.validator.ruleExists({}, 'schoolRules');
+      done();
+    });
   });
-
-  //TODO: Mock environment for being production, test it, and run activate function
 
   describe('Staging Dashboard', () => {
     beforeEach(() => {

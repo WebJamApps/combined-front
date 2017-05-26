@@ -141,7 +141,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
         './component/view/bootstrap/form-radio.html',
         './component/view/bootstrap/form-textarea.html',
         './decorator'
-      ],  'aurelia-form-validation': ['./aurelia-form-validation', './ValidationRenderer', './ValidationController']
+      ]
     }),
     new ProvidePlugin({
       'Promise': 'bluebird',
@@ -165,7 +165,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     { from: 'static/includes.html', to: 'includes.html' },
     { from: 'static/imgs', to: 'static/imgs' }]
   ),
-    new webpack.EnvironmentPlugin(['NODE_ENV', 'AuthProductionBaseURL', 'PORT', 'BackendUrl', 'GoogleClientId']),
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'AuthProductionBaseURL', 'PORT', 'BackendUrl', 'GoogleClientId', 'userRoles']),
     new webpack.DefinePlugin({'process.env': Object.keys(process.env).reduce((o, k) => {
       o[k] = JSON.stringify(process.env[k]);
       return o;

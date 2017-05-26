@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.7.0
+version: v1.7.1
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   'npm:shelljs:20140723':
@@ -11,6 +11,8 @@ patch:
   'npm:marked:20170112':
     - aurelia-form-validation > aurelia-validation > typedoc > marked:
         patched: '2017-05-23T13:20:39.729Z'
+    - aurelia-validation > typedoc > marked:
+        patched: '2017-05-24T11:10:44.677Z'
   'npm:ms:20170412':
     - pushstate-server > compression > debug > ms:
         patched: '2017-05-23T13:20:39.729Z'
