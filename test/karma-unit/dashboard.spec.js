@@ -12,8 +12,16 @@ class VCMock {
 }
 
 class ValidatorMock extends Validator {
+  constructor(a, b) {
+    super();
+    this.a = a;
+    this.b = b;
+  }
   validateObject(obj, rules) {
     return Promise.resolve([{name: 'john', valid: true}]);
+  }
+  validateProperty(prop, val, rules) {
+    return Promise.resolve({});
   }
 }
 
@@ -197,6 +205,19 @@ describe('the Dashboard Module', () => {
       dashboard.user = {name: 'Ray Smith', userType: 'Reader'};
       document.body.innerHTML = '<div id=\'newUserButton\'></div>';
       dashboard.validate();
+      dashboard.dropdownChanged();
+      dashboard.canSubmit = true;
+      dashboard.dropdownChanged();
+      done();
+    });
+
+    it('should validate property', done => {
+      dashboard.validator.validateProperty({}, 'school', 'schoolRules');
+      done();
+    });
+
+    it('should check if rule exists in validator', done => {
+    //   dashboard.validator.ruleExists({}, 'schoolRules');
       done();
     });
   });

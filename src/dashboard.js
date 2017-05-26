@@ -73,7 +73,6 @@ export class Dashboard {
       valid = valid && result.valid;
     }
     this.canSubmit = valid;
-    console.log(this.user, this.canSubmit);
     if (this.user.userType !== '' && this.canSubmit){
       let nub = document.getElementById('newUserButton');
       nub.style.display = 'block';
