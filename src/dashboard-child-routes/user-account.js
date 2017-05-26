@@ -18,39 +18,17 @@ export class UserAccount {
     console.log('this is the user ' + this.user.name);
   }
 
-  // configHttpClient(){
-  //   this.backend = '';
-  //   /* istanbul ignore else */
-  //   if (process.env.NODE_ENV !== 'production'){
-  //     this.backend = process.env.BackendUrl;
-  //   }
-  //   this.httpClient.configure(config => {
-  //     config
-  //     .useStandardConfiguration()
-  //     .withBaseUrl(this.backend);
-  //   });
-  // }
-
   async deleteUser(){
     let uid = this.auth.getTokenPayload().sub;
     await fetch;
     this.app.httpClient.fetch('/user/' + uid, {
       method: 'delete'
     })
-    .then(response=>response.json())
+    //.then(response=>response.json())
     .then(data=> {
       //console.log(data);
       this.app.logout();
     });
   }
-
-  // logout() {
-  //   this.app.appState.setUser({});
-  //   this.app.authenticated = false;
-  //   this.auth.logout('/')
-  //   .then(()=>{
-  //     console.log('Promise fulfilled, logged out');
-  //   });
-  // }
 
 }
