@@ -51,7 +51,7 @@
     "aurelia-view-manager": "^0.1.1",
     "aurelia-webpack-plugin": "2.0.0-rc.2",
     "autoprefixer": "7.0.0",
-    "babel-core": "next",
+    "babel-core": "7.0.0-alpha.9",
     "babel-loader": "^7.0.0",
     "babel-plugin-transform-class-properties": "next",
     "babel-plugin-transform-decorators": "next",
