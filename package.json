@@ -60,7 +60,7 @@
     "babel-register": "next",
     "babel7-jest": "github:niieani/babel7-jest",
     "bluebird": "3.5.0",
-    "bootstrap": "3.3.7",
+    "bootstrap": "^3.3.7",
     "bower": "^1.8.0",
     "copy-webpack-plugin": "4.0.1",
     "cross-env": "4.0.0",
