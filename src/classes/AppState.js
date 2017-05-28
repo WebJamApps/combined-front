@@ -20,8 +20,8 @@ export class AppState {
     }
     console.log('appState getting new user');
     return this.httpClient.fetch('/user/' + uid)
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       let user = data;
       this.setUser(user);
       //check only if this is not a new user

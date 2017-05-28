@@ -41,7 +41,7 @@ export class Reader {
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
     }
-    this.httpClient.configure(config => {
+    this.httpClient.configure((config) => {
       config
       .useStandardConfiguration()
       .withBaseUrl(this.backend);
@@ -60,8 +60,8 @@ export class Reader {
       method: 'put',
       body: json(this.book)
     })
-    .then(response=>response.json())
-    .then(data=> {
+    .then((response) => response.json())
+    .then((data) => {
       //fetch a new list of all books
       this.activate();
     });
@@ -75,8 +75,8 @@ export class Reader {
       method: 'put',
       body: json(this.book)
     })
-    .then(response=>response.json())
-    .then(data=> {
+    .then((response) => response.json())
+    .then((data) => {
       //fetch a fresh new list of all books
       this.activate();
     });

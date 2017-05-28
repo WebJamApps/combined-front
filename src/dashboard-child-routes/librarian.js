@@ -41,7 +41,7 @@ export class Librarian {
       this.backend = process.env.BackendUrl;
     }
     await fetch;
-    this.httpClient.configure(config => {
+    this.httpClient.configure((config) => {
       config
       .useStandardConfiguration()
       .withBaseUrl(this.backend);
@@ -63,7 +63,7 @@ export class Librarian {
       method: 'post',
       body: json(this.newBook)
     })
-    .then(data=>{
+    .then((data) => {
       this.router.navigate('/bookshelf');
     });
   }
@@ -90,8 +90,8 @@ export class Librarian {
         method: 'post',
         body: json(jsonObject)
       })
-      .then(response=>response.json())
-      .then(data=>{
+      .then((response) => response.json())
+      .then((data) => {
         setTimeout(function () {
           if (newState === -1) {
           }
@@ -111,8 +111,8 @@ export class Librarian {
 
   makeCSVfile(){
     this.httpClient.fetch('/book/getall')
-    .then(response=>response.json())
-    .then(data=>{
+    .then((response) => response.json())
+    .then((data) => {
       const options = {
         headers: 'key'
       };

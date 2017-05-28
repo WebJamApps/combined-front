@@ -30,7 +30,7 @@ export class Bookshelf {
     }
     await fetch;
     //if (process.env.NODE_ENV !== 'production'){
-    this.httpClient.configure(config => {
+    this.httpClient.configure((config) => {
       config
       .useStandardConfiguration()
       .withBaseUrl(this.backend);

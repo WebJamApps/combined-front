@@ -20,7 +20,7 @@ export class Login {
   authenticate(name){
     console.log('in auth');
     let ret = this.auth.authenticate(name, false, null);
-    ret.then(data => {
+    ret.then((data) => {
       this.auth.setToken(data.token);
       //this.appState.setAuth(this.auth.isAuthenticated());
       console.log('In login authenticate');

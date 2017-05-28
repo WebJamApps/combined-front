@@ -43,20 +43,20 @@ class AuthStub {
   }
   logout(data) {
     const response = 'user logged out';
-    return new Promise((resolve)=>{
-      resolve({json: ()=>response});
+    return new Promise((resolve) => {
+      resolve({json: () => response});
     });
   }
   getMe() {
     const response = 'This is user data';
-    return new Promise((resolve)=>{
-      resolve({json: ()=>response});
+    return new Promise((resolve) => {
+      resolve({json: () => response});
     });
   }
   getTokenPayload() {
     const response = this.token;
-    return new Promise((resolve)=>{
-      resolve({json: ()=>response});
+    return new Promise((resolve) => {
+      resolve({json: () => response});
     });
   }
   isAuthenticated() {

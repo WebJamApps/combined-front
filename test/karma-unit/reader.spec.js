@@ -34,7 +34,7 @@ describe('the Reader Module', () => {
     auth.setToken(token);
   });
 
-  it('activate reader', done =>{
+  it('activate reader', (done) => {
     reader.activate();
     done();
   });
@@ -60,12 +60,12 @@ describe('the Reader Module', () => {
   //   done();
   // });
 
-  it('check in a specific book', done => {
+  it('check in a specific book', (done) => {
     reader.checkInBook(book);
     done();
   });
 
-  it('check out a specific book', done => {
+  it('check out a specific book', (done) => {
     reader.user = {name: 'Froyo'};
     reader.checkOutBook(book);
     done();

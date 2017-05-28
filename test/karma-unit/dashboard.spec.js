@@ -55,8 +55,8 @@ describe('the Dashboard Module', () => {
       auth.setToken(token);
     });
 
-    it('should authenticate and return feedback', done =>{
-      dashboard.auth.authenticate().then(data => {
+    it('should authenticate and return feedback', (done) => {
+      dashboard.auth.authenticate().then((data) => {
         expect(data).toContain('authenticated');
       }).catch((e) => {
         expect(e).toThrow();
@@ -64,22 +64,22 @@ describe('the Dashboard Module', () => {
       done();
     });
 
-    it('should check if the user is authenticated', done => {
+    it('should check if the user is authenticated', (done) => {
       expect(dashboard.auth.isAuthenticated()).toBeTruthy();
       done();
     });
 
-    it('should fetch some json data after api call', done => {
-      dashboard.httpClient.fetch('/some/data').then(data => {
+    it('should fetch some json data after api call', (done) => {
+      dashboard.httpClient.fetch('/some/data').then((data) => {
         expect(data).toBeDefined(); // check if the data is defined.
-      }, o => {
+      }, (o) => {
         // else catch the reject.
         expect(o).toBeUndefined();
       });
       done();
     });
 
-    it('should expect change in http status after Volunteer activate call', done => {
+    it('should expect change in http status after Volunteer activate call', (done) => {
       http = new HttpMock({name: 'Iddris Elba', userType: 'Volunteer'});
       auth = new AuthServiceMock();
       app = new App(AuthStub, HttpMock);
@@ -96,7 +96,7 @@ describe('the Dashboard Module', () => {
       }, 10);
     });
 
-    it('should expect change in http status after Developer activate call', done => {
+    it('should expect change in http status after Developer activate call', (done) => {
       http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
       auth = new AuthServiceMock();
       app = new App(AuthStub, HttpMock);
@@ -113,7 +113,7 @@ describe('the Dashboard Module', () => {
       }, 10);
     });
 
-    it('should route a child in the librarian route', done => {
+    it('should route a child in the librarian route', (done) => {
       http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
       auth = new AuthServiceMock();
       app = new App(AuthStub, HttpMock);
@@ -127,7 +127,7 @@ describe('the Dashboard Module', () => {
       }, 10);
     });
 
-    it('should route a child in the charity route', done => {
+    it('should route a child in the charity route', (done) => {
       http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
       auth = new AuthServiceMock();
       app = new App(AuthStub, HttpMock);
@@ -141,7 +141,7 @@ describe('the Dashboard Module', () => {
       }, 10);
     });
 
-    it('should route a child in the reader route', done => {
+    it('should route a child in the reader route', (done) => {
       http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
       auth = new AuthServiceMock();
       app = new App(AuthStub, HttpMock);
@@ -168,7 +168,7 @@ describe('the Dashboard Module', () => {
     //   }, 10);
     // });
 
-    it('should confirm 200 http status after updateUser call', done => {
+    it('should confirm 200 http status after updateUser call', (done) => {
       http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
       auth = new AuthServiceMock();
       app = new App(AuthStub, HttpMock);
@@ -201,7 +201,7 @@ describe('the Dashboard Module', () => {
       })());
     });
 
-    it('should validate', done => {
+    it('should validate', (done) => {
       dashboard.user = {name: 'Ray Smith', userType: 'Reader'};
       document.body.innerHTML = '<div id=\'newUserButton\'></div>';
       dashboard.validate();
@@ -211,12 +211,12 @@ describe('the Dashboard Module', () => {
       done();
     });
 
-    it('should validate property', done => {
+    it('should validate property', (done) => {
       dashboard.validator.validateProperty({}, 'school', 'schoolRules');
       done();
     });
 
-    it('should check if rule exists in validator', done => {
+    it('should check if rule exists in validator', (done) => {
     //   dashboard.validator.ruleExists({}, 'schoolRules');
       done();
     });
@@ -229,7 +229,7 @@ describe('the Dashboard Module', () => {
       .inView('<dashboard></dashboard>')
       .boundTo({user: {name: 'John Fitzgerald'}});
     });
-    it('staging the dashboard', done => {
+    it('staging the dashboard', (done) => {
       done();
     });
   });

@@ -56,7 +56,7 @@ describe('The Bookshelf Module', () => {
     bookshelf2 = new Bookshelf(http2);
   });
   
-  it('should activate', done =>{
+  it('should activate', (done) => {
     shelf.activate();
     done();
   });
@@ -86,32 +86,32 @@ describe('The Bookshelf Module', () => {
     });
   });
   
-  it('should check if the user is authenticated', done => {
+  it('should check if the user is authenticated', (done) => {
     shelf.selectedFilter = [1, 2, 3, 4];
     shelf.filterPicked();
     done();
   });
   
-  it('should select filtered picks', done => {
+  it('should select filtered picks', (done) => {
     shelf.selectedFilter = [1, 'media type', 'keyword', 'location'];
     shelf.filterPicked();
     done();
   });
   
-  it('call showCheckboxes', done => {
+  it('call showCheckboxes', (done) => {
     document.body.innerHTML = '<iron-dropdown id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="margin-top:25px;">';
     shelf.showCheckboxes();
     done();
   });
   
-  it('call showCheckboxes', done => {
+  it('call showCheckboxes', (done) => {
     document.body.innerHTML = '<iron-dropdown id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="margin-top:25px;">';
     shelf.expanded = true;
     shelf.showCheckboxes();
     done();
   });
   
-  it('should expect change in http status after getUser call', done => {
+  it('should expect change in http status after getUser call', (done) => {
     shelf.setFilter(2);
     done();
   });

@@ -19,7 +19,7 @@ export async function configure(aurelia) {
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-form'));
   //aurelia.use.plugin(PLATFORM.moduleName('aurelia-form-validation'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-polymer'));
-  aurelia.use.plugin(PLATFORM.moduleName('aurelia-auth'), (baseConfig)=>{
+  aurelia.use.plugin(PLATFORM.moduleName('aurelia-auth'), (baseConfig) => {
     baseConfig.configure(config);
   });
 

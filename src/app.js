@@ -41,7 +41,7 @@ export class App {
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
     }
-    this.httpClient.configure(httpConfig => {
+    this.httpClient.configure((httpConfig) => {
       httpConfig
       .withDefaults({
         mode: 'cors',
@@ -99,7 +99,7 @@ export class App {
     this.appState.setUser({});
     this.authenticated = false;
     this.auth.logout('/')
-    .then(()=>{
+    .then(() => {
       console.log('Promise fulfilled, logged out');
     });
   }
