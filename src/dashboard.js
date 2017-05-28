@@ -27,7 +27,7 @@ class FormValidator {
   * TodoPage.canSave.
   */
   validateObject(object, rules) {
-    return this.validator.validateObject(object, rules).then(results => {
+    return this.validator.validateObject(object, rules).then((results) => {
       this.cb(results);
       return results;
     });
@@ -50,7 +50,7 @@ export class Dashboard {
     this.auth = auth;
     this.httpClient = httpClient;
     //TODO you cannot set callback which is null. this argument is a function that return null.
-    this.validator = new FormValidator(validator, results => this.updateCanSubmit(results)); //if the form is valid then set to true.
+    this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;  //the button on the form
@@ -94,7 +94,7 @@ export class Dashboard {
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
     }
-    this.httpClient.configure(config => {
+    this.httpClient.configure((config) => {
       config
       .useStandardConfiguration()
       .withBaseUrl(this.backend);
@@ -133,8 +133,8 @@ export class Dashboard {
       method: 'put',
       body: json(this.user)
     })
-    .then(response=>response.json())
-    .then(data=> {
+    .then((response) => response.json())
+    .then((data) => {
       this.app.appState.setUser(this.user);
       this.app.appState.checkUserRole();
       this.childRoute();

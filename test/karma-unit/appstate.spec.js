@@ -5,7 +5,7 @@ import {HttpMock} from './commons';
 
 function testAsync(runAsync) {
   return (done) => {
-    runAsync().then(done, e => { fail(e); done(); });
+    runAsync().then(done, (e) => { fail(e); done(); });
   };
 }
 
@@ -20,7 +20,7 @@ describe('The AppState module unit tests', () => {
     appState = new AppState(new HttpMock);
   });
 
-  it('should set and then get the corresponding value of the user', done => {
+  it('should set and then get the corresponding value of the user', (done) => {
     appState.setUser(user);
     appState.getUser('foo').then((returnedUser) => {
       expect(returnedUser).toEqual(user);
@@ -36,7 +36,7 @@ describe('The AppState module unit tests', () => {
     //done();
   }));
 
-  it('should set and get values for the roles', done => {
+  it('should set and get values for the roles', (done) => {
     appState.setRoles(roles);
     let returnedRoles = appState.getRoles();
     returnedRoles.then((userRoles) => {

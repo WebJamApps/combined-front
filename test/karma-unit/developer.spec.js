@@ -8,7 +8,7 @@ describe('the Developer Module', () => {
     developer = new Developer(AuthStub, App);
   });
 
-  it('activates', done => {
+  it('activates', (done) => {
     developer.activate();
     done();
   });

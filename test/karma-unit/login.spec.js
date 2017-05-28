@@ -29,7 +29,7 @@ describe('the Login module', () => {
     sut = new Login(auth, app1, router, appState);
   });
   
-  it('should expect authentication to function as rewritten.', done => {
+  it('should expect authentication to function as rewritten.', (done) => {
     sut.authenticate('google').then((data) => {
       //console.log(data); // disable this if you want to.
       done();
@@ -45,7 +45,7 @@ describe('the Login module', () => {
   //   }, 5);
   // });
   //
-  it('should be attached to router', done => {
+  it('should be attached to router', (done) => {
     sut.attached();
     console.log(sut.title);
     expect(sut.title).toBe('Howdy is cool');
