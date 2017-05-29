@@ -7,7 +7,7 @@ export class OhafHome {
   // }
 
   get widescreen() {
-    return document.documentElement.clientWidth > 980;
+    return document.documentElement.clientWidth > 1100;
   }
   // attached() {
   //   document.title = this.router.currentInstruction.config.title;
