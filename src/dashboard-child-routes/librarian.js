@@ -80,8 +80,6 @@ export class Librarian {
     }
 
     function errorHandler(evt) {
-      //TODO no file attached
-      //TODO wrong file type attached
       alert('The file could not be read');
     }
 
@@ -100,10 +98,6 @@ export class Librarian {
       });
     }
 
-    // if (CSVFilePath.files[0] !== null){
-    // TODO: Parse all csv files
-    // TODO: add check for browser support of FileReader
-    //TODO: do not run file reader if no csv file in the form
     this.reader.onload = loaded;
     this.reader.onerror = errorHandler;
     this.reader.readAsText(CSVFilePath.files[0]);
