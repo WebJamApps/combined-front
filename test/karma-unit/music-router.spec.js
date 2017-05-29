@@ -14,12 +14,12 @@ describe('the Dashboard Module', () => {
     msRouter = new MusicRouter();
   });
 
-  it('confirm heading', done => {
+  it('confirm heading', (done) => {
     expect(msRouter.heading).toBe('Music Router');
     done();
   });
 
-  it('configureRouter', done => {
+  it('configureRouter', (done) => {
     msRouter.configureRouter(config, 'router');
     done();
   });

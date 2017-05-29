@@ -41,7 +41,7 @@ export class Reader {
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
     }
-    this.httpClient.configure(config => {
+    this.httpClient.configure((config) => {
       config
       .useStandardConfiguration()
       .withBaseUrl(this.backend);
@@ -50,18 +50,14 @@ export class Reader {
 
   checkOutBook(book){
     this.book = book;
-    //TODO fetch this.book by book ID from the database, and if this.book
-    //still has either a '' or a bull for .checkoutOutBy then assign it to
-    //this.uid and this.user.name, else just run activate to refresh the book
-    //table so that this.user can see that someone else has checked out the book
     this.book.checkedOutBy = this.uid;
     this.book.checkedOutByName = this.user.name;
     this.httpClient.fetch('/book/update/' + this.book._id, {
       method: 'put',
       body: json(this.book)
     })
-    .then(response=>response.json())
-    .then(data=> {
+    .then((response) => response.json())
+    .then((data) => {
       //fetch a new list of all books
       this.activate();
     });
@@ -75,8 +71,8 @@ export class Reader {
       method: 'put',
       body: json(this.book)
     })
-    .then(response=>response.json())
-    .then(data=> {
+    .then((response) => response.json())
+    .then((data) => {
       //fetch a fresh new list of all books
       this.activate();
     });

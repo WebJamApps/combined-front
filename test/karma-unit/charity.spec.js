@@ -8,7 +8,7 @@ describe('the Charity Module', () => {
     charity = new Charity(AuthStub, App);
   });
 
-  it('activates', done => {
+  it('activates', (done) => {
     charity.activate();
     done();
   });

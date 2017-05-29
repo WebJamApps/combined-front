@@ -25,7 +25,7 @@ export class UserAccount {
       method: 'delete'
     })
     //.then(response=>response.json())
-    .then(data=> {
+    .then((data) => {
       //console.log(data);
       this.app.logout();
     });

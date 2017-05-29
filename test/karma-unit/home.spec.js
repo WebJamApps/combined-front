@@ -6,7 +6,7 @@ describe('the Home Module', () => {
     home = new Home();
   });
 
-  it('checks that widescreen is boolean', done => {
+  it('checks that widescreen is boolean', (done) => {
     expect(typeof home.widescreen).toBe('boolean');
     done();
   });

@@ -8,7 +8,7 @@ describe('the Volunteer Module', () => {
     volunteer = new Volunteer(AuthStub, App);
   });
 
-  it('activates', done => {
+  it('activates', (done) => {
     volunteer.activate();
     done();
   });

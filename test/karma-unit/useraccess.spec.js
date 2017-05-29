@@ -14,7 +14,7 @@ describe('The UserAccess module unit tests', () => {
     userAccess = new UserAccess(appState);
   });
 
-  it('should not require authentication', done => {
+  it('should not require authentication', (done) => {
     next = function() {
       done();
     };
@@ -22,7 +22,7 @@ describe('The UserAccess module unit tests', () => {
     userAccess.run(routingContext, next);
   });
 
-  it('should require auth, but requested dashboard, so do not check role', done => {
+  it('should require auth, but requested dashboard, so do not check role', (done) => {
     next = function() {
       done();
     };
@@ -51,7 +51,7 @@ describe('The UserAccess module unit tests', () => {
   //   userAccess.run(routingContext, next);
   // });
 
-  it('should require auth and check roles and be authorized', done => {
+  it('should require auth and check roles and be authorized', (done) => {
     next = function() {
       done();
     };
@@ -61,7 +61,7 @@ describe('The UserAccess module unit tests', () => {
     userAccess.run(routingContext, next);
   });
 
-  it('should require auth and cancel because not authorized', done => {
+  it('should require auth and cancel because not authorized', (done) => {
     next = {cancel: function() { done(); }};
     routingContext.config = {auth: true};
     routingContext.fragment = '/dashboard/bar';

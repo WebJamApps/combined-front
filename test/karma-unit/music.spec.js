@@ -7,7 +7,7 @@ describe('the Music module', () => {
     music1 = new Music();
   });
 
-  it('has jump links', done => {
+  it('has jump links', (done) => {
     document.body.innerHTML = '<div id=\'joshbio\'></div>';
     music1.jump('joshbio');
     //   //expect(music1.jump('joshbio')).toBe(defined);

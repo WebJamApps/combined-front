@@ -24,7 +24,7 @@ describe('the Library module', () => {
     lib1 = new Library();
   });
 
-  it('checks that widescreen is boolean', done => {
+  it('checks that widescreen is boolean', (done) => {
     expect(typeof lib1.widescreen).toBe('boolean');
     done();
   });
