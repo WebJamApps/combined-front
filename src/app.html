@@ -88,16 +88,16 @@ paper-item:hover {
             <span class="nav-item" if.bind="fullmenu">Pub Songs</span>
           </a>
         </paper-item>
-        <paper-item class="login">
-          <a paper-drawer-toggle href="/" class="nav-link" click.delegate="close()">
-            <span class="fa fa-home"></span>
-            <span class="nav-item" if.bind="fullmenu">Web Jam LLC</span>
-          </a>
-        </paper-item>
         <paper-item if.bind="authenticated" class="login" style="padding-left:10px">
           <a paper-drawer-toggle href="/dashboard/user-account" class="nav-link" click.delegate="close()">
             <span class="fa fa-user"></span>
             <span if.bind="fullmenu" class="nav-item">User Account</span>
+          </a>
+        </paper-item>
+        <paper-item class="login">
+          <a paper-drawer-toggle href="/" class="nav-link" click.delegate="close()">
+            <span class="fa fa-home"></span>
+            <span class="nav-item" if.bind="fullmenu">Web Jam LLC</span>
           </a>
         </paper-item>
         <paper-item if.bind="authenticated" class="login">
