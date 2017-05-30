@@ -4,7 +4,7 @@ import {AuthService} from 'aurelia-auth';
 //import {HttpClient} from 'aurelia-fetch-client';
 @inject(AuthService, App)
 export class UserAccount {
-  constructor(auth, app, httpClient){
+  constructor(auth, app){
     this.app = app;
     this.auth = auth;
     //this.httpClient = httpClient;
