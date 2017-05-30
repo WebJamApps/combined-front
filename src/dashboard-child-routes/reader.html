@@ -19,12 +19,12 @@
           </thead>
           <tbody>
             <tr repeat.for="book of $displayData">
-              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'"><paper-button class="button-checkout" raised click.delegate="checkOutBook(book)"
+              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'"><button class="button-checkout" raised click.delegate="checkOutBook(book)"
                 if.bind = "book.checkedOutBy == ''">
-                Checkout</paper-button>
-                <paper-button class="button-checkin" raised click.delegate="checkInBook(book)"
+                Checkout</button>
+                <button class="button-checkin" raised click.delegate="checkInBook(book)"
                 if.bind = "uid==book.checkedOutBy">
-                Checkin</paper-button>
+                Checkin</button>
                 <span if.bind = "uid!==book.checkedOutBy">
                   <span if.bind = "book.checkedOutBy!==''">Checked out by ${book.checkedOutByName}
                   </span></span>
