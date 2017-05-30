@@ -118,6 +118,8 @@ export class Dashboard {
     ValidationRules
     .ensure('userPhone').matches(/[2-9]\d{9}/).maxLength(10).withMessage('10 digits')
     .ensure('userType').required().minLength(5).withMessage('select a user type')
+    .ensure('userZip').required().matches(/\d{5}/).maxLength(5).withMessage('5-digit zipcode')
+    .ensure('userCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
     .on(this.user);
   }
 
