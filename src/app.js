@@ -163,6 +163,8 @@ export class App {
         this.Menu = 'charity';
       } else if (this.currentRouteFrag === '/dashboard/volunteer'){
         this.Menu = 'volunteer';
+      } else if (this.currentRouteFrag === '/dashboard/user-account'){
+        this.Menu = 'user-account';
       } else {
         this.Menu = 'wj';
       }

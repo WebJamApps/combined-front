@@ -27,6 +27,12 @@ paper-item:hover {
               <span if.bind="fullmenu" class="nav-item">Dashboard</span>
             </a>
           </paper-item>
+          <paper-item if.bind="authenticated" class="login" style="padding-left:10px">
+            <a paper-drawer-toggle href="/dashboard/user-account" class="nav-link" click.delegate="close()">
+              <span class="fa fa-user"></span>
+              <span if.bind="fullmenu" class="nav-item">User Account</span>
+            </a>
+          </paper-item>
           <paper-item repeat.for="row of router.navigation"
           class="${row.isActive ? 'active' : ''} menu-toggle">
           <a paper-drawer-toggle href.bind="row.href" class="nav-link" click.delegate="close()">
@@ -86,12 +92,6 @@ paper-item:hover {
           <a paper-drawer-toggle href="/music/pub" class="nav-link" click.delegate="close()">
             <span class="fa fa-beer"></span>
             <span class="nav-item" if.bind="fullmenu">Pub Songs</span>
-          </a>
-        </paper-item>
-        <paper-item if.bind="authenticated" class="login" style="padding-left:10px">
-          <a paper-drawer-toggle href="/dashboard/user-account" class="nav-link" click.delegate="close()">
-            <span class="fa fa-user"></span>
-            <span if.bind="fullmenu" class="nav-item">User Account</span>
           </a>
         </paper-item>
         <paper-item class="login">
