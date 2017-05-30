@@ -1,7 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {App} from './app';
-import {AuthService} from 'aurelia-auth';
-import {HttpClient, json} from 'aurelia-fetch-client';
+//import {AuthService} from 'aurelia-auth';
+import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 //import { ValidationControllerFactory, ValidationRules, Validator } from 'aurelia-validation';
 class FormValidator {
@@ -41,14 +41,14 @@ class FormValidator {
   }
 }
 
-@inject(AuthService, HttpClient, App, ValidationControllerFactory, Validator)
+@inject(App, ValidationControllerFactory, Validator)
 export class Dashboard {
   controller = null;
   validator = null;
-  constructor(auth, httpClient, app, controllerFactory, validator){
+  constructor(app, controllerFactory, validator){
     this.app = app;
-    this.auth = auth;
-    this.httpClient = httpClient;
+    //this.auth = auth;
+    //this.httpClient = httpClient;
     this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
@@ -58,10 +58,10 @@ export class Dashboard {
   userTypes=JSON.parse(process.env.userRoles).roles;
 
   async activate() {
-    this.configHttpClient();
-    let uid = this.auth.getTokenPayload().sub;
-    this.user = await this.app.appState.getUser(uid);
-    console.log('this is the user ' + this.user.name);
+    //this.configHttpClient();
+    this.uid = this.app.auth.getTokenPayload().sub;
+    this.user = await this.app.appState.getUser(this.uid);
+    //console.log('this is the user ' + this.user.name);
     this.childRoute();
     this.setupValidation();
   }
@@ -87,18 +87,18 @@ export class Dashboard {
     }
   }
 
-  configHttpClient(){
-    this.backend = '';
-    /* istanbul ignore else */
-    if (process.env.NODE_ENV !== 'production'){
-      this.backend = process.env.BackendUrl;
-    }
-    this.httpClient.configure((config) => {
-      config
-      .useStandardConfiguration()
-      .withBaseUrl(this.backend);
-    });
-  }
+  // configHttpClient(){
+  //   this.backend = '';
+  //   /* istanbul ignore else */
+  //   if (process.env.NODE_ENV !== 'production'){
+  //     this.backend = process.env.BackendUrl;
+  //   }
+  //   this.httpClient.configure((config) => {
+  //     config
+  //     .useStandardConfiguration()
+  //     .withBaseUrl(this.backend);
+  //   });
+  // }
 
   childRoute(){
     if (this.user.userType === 'Charity'){
@@ -126,9 +126,9 @@ export class Dashboard {
   }
 
   async updateUser(){
-    let uid = this.auth.getTokenPayload().sub;
+    //let uid = this.app.auth.getTokenPayload().sub;
     await fetch;
-    this.httpClient.fetch('/user/' + uid, {
+    this.app.httpClient.fetch('/user/' + this.uid, {
       method: 'put',
       body: json(this.user)
     })
