@@ -1,58 +1,10 @@
 <template>
   <div class="page-content">
     <paper-material class="material-content" elevation="0">
-    <h4 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Volunteer Dashboard</strong></h4>
-    <!-- <p style="text-align:center"><strong>Manage your volunteering here.</strong></p> -->
-  </paper-material>
-  <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
-      <h4 class="material-header-h4">Set Your Volunteer Preferences</h4>
-    <form>
-
-      <paper-dropdown-menu label="Cause(s) to support">
-        <paper-listbox required selected.two-way="tempCause" class="dropdown-content">
-          <paper-item value=""></paper-item>
-          <template is="dom-repeat" items.two-way="causes">
-            <paper-item model="{{item}}">{{item}}</paper-item>
-          </template>
-        </paper-listbox>
-      </paper-dropdown-menu>
-
-      <paper-dropdown-menu label="Your talents">
-        <paper-listbox required selected.two-way="tempTalent" class="dropdown-content">
-          <paper-item value=""></paper-item>
-          <template is="dom-repeat" items.two-way="talents">
-            <paper-item model="{{item}}">{{item}}</paper-item>
-          </template>
-        </paper-listbox>
-      </paper-dropdown-menu>
-
-      <paper-dropdown-menu label="Work preferences">
-        <paper-listbox required selected.two-way="tempWork" class="dropdown-content">
-          <paper-item value=""></paper-item>
-          <template is="dom-repeat" items.two-way="work">
-            <paper-item model="{{item}}">{{item}}</paper-item>
-          </template>
-        </paper-listbox>
-      </paper-dropdown-menu>
-
-      <paper-input  value.two-way="volunteer.volTravelDistMiles" label="Furthest distance willing to travel (miles)" ></paper-input>
-      <!-- <paper-input type="number" label="Number of Pages" value.two-way="newBook.numberPages"></paper-input>
-      <paper-input type="number" label="Year of Publication"  value.two-way="newBook.dateOfPub"></paper-input>
-      <paper-input value.two-way="newBook.url" label="URL (if pdf or webpage)" ></paper-input>
-      <paper-input  value.two-way="newBook.isbn" label="Catalog Number" ></paper-input>
-      <paper-input  value.two-way="newBook.siteLocation" label="Site Location (if physical book)" ></paper-input>
-      <paper-dropdown-menu  label="Access">
-        <paper-listbox  required  selected.two-way="newBook.access" class="dropdown-content">
-          <paper-item value=""></paper-item>
-          <template is="dom-repeat" items.two-way="accessArray">
-            <paper-item model="{{item}}">{{item}}</paper-item>
-          </template>
-        </paper-listbox>
-      </paper-dropdown-menu>
-      <paper-input  value.two-way="newBook.comments" label="Comments" ></paper-input> -->
-      <button class="button-lib" raised click.trigger="createVolunteer()">
-        Submit</button>
-      </form>
+      <h4 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Volunteer Dashboard</strong></h4>
+      <p style="text-align:center">
+        Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences. Manage your volunteering here.
+      </p>
     </paper-material>
   </div>
 </template>
