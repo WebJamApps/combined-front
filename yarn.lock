@@ -159,8 +159,8 @@ after@0.8.2:
   resolved "https://registry.yarnpkg.com/after/-/after-0.8.2.tgz#fedb394f9f0e02aa9768e702bda23b505fae7e1f"
 
 agent-base@2:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-2.1.0.tgz#193455e4347bca6b05847cb81e939bb325446da8"
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-2.1.1.tgz#d6de10d5af6132d5bd692427d46fc538539094c7"
   dependencies:
     extend "~3.0.0"
     semver "~5.0.1"
@@ -1492,10 +1492,6 @@ babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.23.0, babel-types@^6.24
     esutils "^2.0.2"
     lodash "^4.2.0"
     to-fast-properties "^1.0.1"
-
-"babel7-jest@github:niieani/babel7-jest":
-  version "0.0.1"
-  resolved "https://codeload.github.com/niieani/babel7-jest/tar.gz/c92f639bd11c1a3ee399897cdfa71f4d542cd9a8"
 
 babylon@7.0.0-beta.10:
   version "7.0.0-beta.10"
@@ -5333,8 +5329,8 @@ node-notifier@^5.0.1:
     which "^1.2.12"
 
 node-pre-gyp@^0.6.29:
-  version "0.6.34"
-  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.34.tgz#94ad1c798a11d7fc67381b50d47f8cc18d9799f7"
+  version "0.6.35"
+  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.35.tgz#1c161fc9fbf1f3ffecd751959f0fdbd12a56c4ab"
   dependencies:
     mkdirp "^0.5.1"
     nopt "^4.0.1"
