@@ -13,6 +13,7 @@ export class UserAccount {
   async activate() {
     //this.configHttpClient();
     let uid = this.auth.getTokenPayload().sub;
+    // this.app.appState is not defined. there is no such method on the app. I'm not certain but I think you wanted to use the appState module itself.
     await this.app.appState.getUser(uid);
     this.user = this.app.appState.user;
     console.log('this is the user ' + this.user.name);
