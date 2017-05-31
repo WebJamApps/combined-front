@@ -7,11 +7,9 @@ export class UserAccount {
   }
 
   async activate() {
-    //this.configHttpClient();
     this.uid = this.app.auth.getTokenPayload().sub;
     await this.app.appState.getUser(this.uid);
     this.user = this.app.appState.user;
-    console.log('this is the user ' + this.user.name);
   }
 
   async deleteUser(){
