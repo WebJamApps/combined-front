@@ -1,27 +1,23 @@
 import {inject} from 'aurelia-framework';
 import {App} from '../app';
-import {AuthService} from 'aurelia-auth';
-//import {HttpClient} from 'aurelia-fetch-client';
-@inject(AuthService, App)
+@inject(App)
 export class UserAccount {
-  constructor(auth, app){
+  constructor(app){
     this.app = app;
-    this.auth = auth;
-    //this.httpClient = httpClient;
   }
 
   async activate() {
     //this.configHttpClient();
-    let uid = this.auth.getTokenPayload().sub;
-    await this.app.appState.getUser(uid);
+    this.uid = this.app.auth.getTokenPayload().sub;
+    await this.app.appState.getUser(this.uid);
     this.user = this.app.appState.user;
     console.log('this is the user ' + this.user.name);
   }
 
   async deleteUser(){
-    let uid = this.auth.getTokenPayload().sub;
+    //let uid = this.auth.getTokenPayload().sub;
     await fetch;
-    this.app.httpClient.fetch('/user/' + uid, {
+    this.app.httpClient.fetch('/user/' + this.uid, {
       method: 'delete'
     })
     //.then(response=>response.json())
