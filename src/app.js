@@ -153,6 +153,8 @@ export class App {
         //   this.Menu = 'library';
       } else if (this.currentRouteFrag === '/dashboard'){
         this.Menu = 'dashboard';
+      } else if (this.currentRouteFrag === '/bookshelf'){
+        this.Menu = 'dashboard';
       } else if (this.currentRouteFrag === '/dashboard/developer'){
         this.Menu = 'developer';
       } else if (this.currentRouteFrag === '/dashboard/reader'){
