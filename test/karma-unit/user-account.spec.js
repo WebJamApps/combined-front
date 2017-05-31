@@ -1,10 +1,10 @@
 import {UserAccount} from '../../src/dashboard-child-routes/user-account';
-import {AuthStub, HttpMock} from './commons';
+//import {AuthStub, HttpMock} from './commons';
 import {App} from '../../src/app';
 describe('the UserAccount Module', () => {
   let ua;
   beforeEach(() => {
-    ua = new UserAccount(new AuthStub(), new App(), new HttpMock());
+    ua = new UserAccount(new App());
   });
 
   it('should activate user account', (done) => {
