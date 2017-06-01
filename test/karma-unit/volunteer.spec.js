@@ -11,10 +11,4 @@
 //     //volunteer = new Volunteer(app);
 //   });
 //
-//   it('activates', (done) => {
-//     // volunteer.tempCause = 'tempCause';
-//     // volunteer.tempTalent = 'tempTalent';
-//     // volunteer.createVolunteer();
-//     done();
-//   });
 // });
