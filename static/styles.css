@@ -10,7 +10,6 @@ form {
 
 h1,
 h2,
-h3,
 h4 {
   font-family: 'PT Sans Caption';
 }
@@ -18,6 +17,11 @@ h4 {
 h3.au-target.header-text.ohaf-header {
   padding: 0;
   margin: 5px;
+}
+
+h3 {
+  font-family: 'PT Sans Caption';
+  font-weight: bold;
 }
 
 p,

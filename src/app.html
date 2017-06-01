@@ -47,6 +47,12 @@ paper-item:hover {
           </a>
         </paper-item>
         <paper-item class="login" if.bind="Menu == 'wj'">
+          <a paper-drawer-toggle href="/sc2rs" class="nav-link" click.delegate="close()">
+            <span class="fa fa-microphone"></span>
+            <span class="nav-item" if.bind="fullmenu">SC2RS</span>
+          </a>
+        </paper-item>
+        <paper-item class="login" if.bind="Menu == 'wj'">
           <a paper-drawer-toggle href="/library" class="nav-link" click.delegate="close()">
             <span class="fa fa-book"></span>
             <span class="nav-item" if.bind="fullmenu">Library</span>
