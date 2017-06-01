@@ -71,7 +71,7 @@ export class Reader {
     this.book = await res.json();
     console.log('I only want to check it out if it is available?');
     console.log(this.book);
-    if (this.book.checkedOutBy === '' || this.book.checkOutBy === undefined){
+    if (this.book.checkedOutBy === '' || this.book.checkedOutBy === undefined){
       this.book.checkedOutBy = this.uid;
       console.log('user id of checkout by: ' + this.book.checkedOutBy);
       this.book.checkedOutByName = this.user.name;
