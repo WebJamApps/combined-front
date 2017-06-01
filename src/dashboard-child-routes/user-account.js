@@ -27,7 +27,7 @@ export class UserAccount {
     if (this.tempTalent !== '') {
       this.user.volTalents = [this.talents[this.tempTalent - 1], 'second talent'];
     }
-    if (this.tempCause !== '') {
+    if (this.tempWork !== '') {
       this.user.volWorkPrefs = [this.work[this.tempWork - 1], 'second work'];
     }
     await fetch;

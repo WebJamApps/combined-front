@@ -45,6 +45,11 @@ describe('aurelia skeleton app', function() {
     await expect(poSkeleton.getCurrentPageTitle()).toBe('OHAF | Web Jam LLC');
   });
 
+  it('should navigate to SC2RS page', async () => {
+    await poSkeleton.navigateTo('/sc2rs');
+    await expect(poSkeleton.getCurrentPageTitle()).toBe('SC2RS | Web Jam LLC');
+  });
+
   it('should navigate to Library page', async () => {
     await poSkeleton.navigateTo('/library');
     await expect(poSkeleton.getCurrentPageTitle()).toBe('Library | Web Jam LLC');
