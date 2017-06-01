@@ -54,7 +54,7 @@ export class Bookshelf {
         console.log('you unchecked the keyword filter');
         this.filters[0].value = '';
         this.keyword = false;
-        this.activate();
+        //this.activate();
       }
       if (this.selectedFilter.includes('media type')) {
         this.mediaType = true;

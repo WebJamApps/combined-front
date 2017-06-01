@@ -11,14 +11,23 @@
     <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto" if.bind="role === 'Volunteer' || role === 'Developer'">
       <h4 class="material-header-h4">Set Your Volunteering Preferences</h4>
       <form>
-        <paper-dropdown-menu label="Cause(s) to support">
-          <paper-listbox required selected.two-way="tempCause" class="dropdown-content">
-            <paper-item value=""></paper-item>
-            <template is="dom-repeat" items.two-way="causes">
-              <paper-item model="{{item}}">{{item}}</paper-item>
-            </template>
-          </paper-listbox>
-        </paper-dropdown-menu>
+
+        <div class="multiselect" style="width:160px">
+          <div class="selectBox" click.delegate="showCheckboxes()">
+            <select>
+              <option style="font-weight:normal">Cause(s) to support</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <iron-dropdown id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
+            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 250px; max-height: 362px;overflow:auto;border:1px #dadada solid">
+              <label repeat.for="cause of causes" for="cause" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
+                <input type="checkbox" value.bind="cause" checked.bind="selectedCause" change.delegate="causePicked()"> ${cause}
+              </label>
+            </div>
+          </iron-dropdown>
+        </div>
+
         <paper-dropdown-menu label="Your talents">
           <paper-listbox required selected.two-way="tempTalent" class="dropdown-content">
             <paper-item value=""></paper-item>
