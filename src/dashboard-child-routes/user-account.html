@@ -44,28 +44,37 @@
           </iron-dropdown>
         </div>
 
-        <paper-dropdown-menu label="Your talents">
-          <paper-listbox required selected.two-way="tempTalent" class="dropdown-content">
-            <paper-item value=""></paper-item>
-            <template is="dom-repeat" items.two-way="talents">
-              <paper-item model="{{item}}">{{item}}</paper-item>
-            </template>
-          </paper-listbox>
-        </paper-dropdown-menu>
-        <paper-dropdown-menu label="Work preferences">
+        <div class="multiselect" style="width:160px; margin-top:30px">
+          <div class="selectBox" click.delegate="showCheckboxes('work')">
+            <select>
+              <option style="font-weight:normal">Can work doing...</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <iron-dropdown id="work" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
+            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 250px; max-height: 362px;overflow:auto;border:1px #dadada solid">
+              <label repeat.for="work of works" for="work" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
+                <input type="checkbox" value.bind="work" checked.bind="selectedWork" change.delegate="workPicked()"> ${work}
+              </label>
+            </div>
+          </iron-dropdown>
+        </div>
+
+        <!-- <paper-dropdown-menu label="Work preferences">
           <paper-listbox required selected.two-way="tempWork" class="dropdown-content">
             <paper-item value=""></paper-item>
             <template is="dom-repeat" items.two-way="work">
               <paper-item model="{{item}}">{{item}}</paper-item>
             </template>
           </paper-listbox>
-        </paper-dropdown-menu>
-        <paper-input  value.two-way="user.volTravelDistMiles" label="Furthest distance willing to travel (miles)" ></paper-input>
+        </paper-dropdown-menu> -->
+
+        <paper-input style="margin-top:25px" value.two-way="user.volTravelDistMiles" label="Furthest distance willing to travel (miles)" ></paper-input>
         <button class="button-lib" raised click.trigger="setupVolunteer()">
           Submit</button>
         </form>
       </paper-material>
-      <paper-material class="footer" elevation="4" style="padding:8px; background-color: #2a222a; margin-top:20px">
+      <paper-material class="footer" elevation="4" style="padding:8px; background-color: #2a222a; margin-top:10px">
         <div class="paper-card-img"><span>&nbsp;&nbsp;</span>
           <a target="_blank" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
           <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>
