@@ -21,18 +21,6 @@ paper-item:hover {
               <span if.bind="fullmenu" class="nav-item">Login</span>
             </a>
           </paper-item>
-          <paper-item if.bind="authenticated" class="login" style="padding-left:10px">
-            <a paper-drawer-toggle href="/dashboard" class="nav-link" click.delegate="close()">
-              <span class="fa fa-tachometer"></span>
-              <span if.bind="fullmenu" class="nav-item">Dashboard</span>
-            </a>
-          </paper-item>
-          <paper-item if.bind="authenticated" class="login" style="padding-left:10px">
-            <a paper-drawer-toggle href="/dashboard/user-account" class="nav-link" click.delegate="close()">
-              <span class="fa fa-user"></span>
-              <span if.bind="fullmenu" class="nav-item">User Account</span>
-            </a>
-          </paper-item>
           <paper-item repeat.for="row of router.navigation"
           class="${row.isActive ? 'active' : ''} menu-toggle">
           <a paper-drawer-toggle href.bind="row.href" class="nav-link" click.delegate="close()">
@@ -52,16 +40,28 @@ paper-item:hover {
             <span class="nav-item" if.bind="fullmenu">SC2RS</span>
           </a>
         </paper-item>
-        <paper-item class="login" if.bind="Menu == 'wj'">
+        <paper-item class="login" if.bind="Menu=='wj' || Menu=='library' || Menu=='reader' || Menu=='librarian' || Menu=='bookshelf'">
           <a paper-drawer-toggle href="/library" class="nav-link" click.delegate="close()">
             <span class="fa fa-book"></span>
             <span class="nav-item" if.bind="fullmenu">Library</span>
           </a>
         </paper-item>
-        <paper-item if.bind="Menu=='bookshelf' || Menu=='reader' || Menu=='librarian' || Menu=='developer'" class="login">
+        <paper-item if.bind="Menu=='bookshelf' || Menu=='reader' || Menu=='librarian' || Menu=='developer' || Menu=='library'" class="login">
           <a paper-drawer-toggle href="/bookshelf" class="nav-link" click.delegate="close()">
             <span class="fa fa-book"></span>
             <span class="nav-item" if.bind="fullmenu">Bookshelf</span>
+          </a>
+        </paper-item>
+        <paper-item if.bind="authenticated" class="login" style="padding-left:10px">
+          <a paper-drawer-toggle href="/dashboard" class="nav-link" click.delegate="close()">
+            <span class="fa fa-tachometer"></span>
+            <span if.bind="fullmenu" class="nav-item">Dashboard</span>
+          </a>
+        </paper-item>
+        <paper-item if.bind="authenticated" class="login" style="padding-left:10px">
+          <a paper-drawer-toggle href="/dashboard/user-account" class="nav-link" click.delegate="close()">
+            <span class="fa fa-user"></span>
+            <span if.bind="fullmenu" class="nav-item">User Account</span>
           </a>
         </paper-item>
         <paper-item if.bind="Menu =='developer'" class="login">
