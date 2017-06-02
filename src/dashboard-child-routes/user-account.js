@@ -7,7 +7,7 @@ export class UserAccount {
     this.app = app;
   }
 
-  causes = ['Christian', 'Environmental', 'Hungar', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly', 'other'];
+  causes = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly', 'other'];
   talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'communication', 'listening', 'other'];
   works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'other'];
   selectedCause = [];
