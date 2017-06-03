@@ -1,24 +1,15 @@
-// import {inject} from 'aurelia-framework';
-// import {App} from '../app';
-// import {AuthService} from 'aurelia-auth';
-// @inject(AuthService, App)
+import {inject} from 'aurelia-framework';
+import {App} from '../app';
+//import {json} from 'aurelia-fetch-client';
+@inject(App)
 export class Volunteer {
-  // constructor(auth, app){
-  //   this.app = app;
-  //   this.auth = auth;
-  // }
-
-  activate() {
-  //   let uid = this.auth.getTokenPayload().sub;
-  //   await this.app.appState.getUser(uid);
-  //   console.log('this is the user ' + this.app.appState.user.name);
-  //   this.userType = this.app.appState.user.userType;
-  //   this.doubleCheckUserRole();
+  constructor(app){
+    this.app = app;
   }
 
-  // doubleCheckUserRole(){
-  //   if (this.userType !== 'Developer' && this.userType !== 'Volunteer'){
-  //     this.app.router.navigate('/');
-  //   }
-  // }
+  async activate() {
+    this.uid = this.app.auth.getTokenPayload().sub;
+    this.user = await this.app.appState.getUser(this.uid);
+  }
+
 }
