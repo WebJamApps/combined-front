@@ -71,9 +71,12 @@ class AppStateStub {
     this.is_auth = false;
     this.roles = [];
   }
-  getUser() {
-    // this.user = {name: 'Iddris Elba', userType: 'Volunteer'};
-    return this.user;
+  getUser(uid) {
+    this.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333' };
+    return Promise.resolve({
+      //Headers: this.headers,
+      json: () => Promise.resolve(this.user)
+    });
   }
   setUser(input) {
     this.user = input;
@@ -93,7 +96,7 @@ class HttpMock {
   // this one catches the ajax and then resolves a custom json data.
   // real api calls will have more methods.
   constructor(data) {
-    this.user = data || {name: 'John Fitzgerald', userType: 'Charity'};
+    this.user = data || {name: 'John Fitzgerald', userType: 'Charity', _id: '3333333'};
   }
   status = 500;
   headers = {accept: 'application/json', method: '', url: ''}

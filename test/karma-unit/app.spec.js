@@ -92,9 +92,33 @@ describe('the App module', () => {
     done();
   });
 
+  it('gets the current styles with library route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.config.name = 'library';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
   it('gets the current styles with dashboard route', (done) => {
     let routre = new RouterStub();
     routre.currentInstruction.fragment = '/dashboard';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with bookshelf route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/bookshelf';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with user-account route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/user-account';
     app1.router = routre;
     app1.currentStyles;
     done();

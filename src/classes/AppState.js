@@ -25,6 +25,7 @@ export class AppState {
       let user = data;
       this.setUser(user);
       //check only if this is not a new user
+      /* istanbul ignore else */
       if (this.user.userType){
         this.checkUserRole();
       }
