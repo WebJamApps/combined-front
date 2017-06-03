@@ -16,8 +16,8 @@ export class UserAccount {
 
   async activate() {
     this.uid = this.app.auth.getTokenPayload().sub;
-    await this.app.appState.getUser(this.uid);
-    this.user = this.app.appState.user;
+    this.user = await this.app.appState.getUser(this.uid);
+    //this.app.appState.user;
     this.role = this.user.userType;
     this.causes.sort();
     this.talents.sort();
