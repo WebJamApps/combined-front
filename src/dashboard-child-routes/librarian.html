@@ -1,30 +1,30 @@
 <template>
   <div class="page-content">
     <h3 style="text-align:center; padding-bottom:20px">Librarian</h3>
-    
+
     <div class="books">
-    
+
       <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
           <h4 class="material-header-h4">Import Books from CSV</h4>
         <form>
           <input id="CSVFilePath" type="file" accept=".csv" files.bind="selectedFiles" style="padding-left: 100px" />
-          <paper-button class="button-lib" raised click.trigger="createBooksFromCSV()">
-            Import</paper-button>
+          <button class="button-lib" raised click.trigger="createBooksFromCSV()">
+            Import</button>
           </form>
         </paper-material>
         <p>&nbsp;</p>
-        
-      
+
+
         <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
             <h4 class="material-header-h4">Export Books to CSV</h4>
           <form>
-            <paper-button class="button-lib" raised click.trigger="makeCSVfile()">
-              Export</paper-button>
+            <button class="button-lib" raised click.trigger="makeCSVfile()">
+              Export</button>
             </form>
           </paper-material>
           <p>&nbsp;</p>
-          
-        
+
+
           <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
               <h4 class="material-header-h4">Add a Book</h4>
             <form>
@@ -57,12 +57,12 @@
                 </paper-listbox>
               </paper-dropdown-menu>
               <paper-input  value.two-way="newBook.comments" label="Comments" ></paper-input>
-              <paper-button class="button-lib" raised click.trigger="createBook()">
-                Submit</paper-button>
+              <button class="button-lib" raised click.trigger="createBook()">
+                Submit</button>
               </form>
             </paper-material>
           </div>
           <p>&nbsp;</p>
-          
+
         </div>
       </template>

@@ -3,13 +3,18 @@ import {AuthStub, HttpMock} from './commons';
 import {App} from '../../src/app';
 describe('the UserAccount Module', () => {
   let ua;
+  let app = new App(new AuthStub(), new HttpMock());
   beforeEach(() => {
-    ua = new UserAccount(AuthStub, App, HttpMock);
+    ua = new UserAccount(app);
   });
 
-  it('checks deletes the user', (done) => {
+  it('should activate user account', (done) => {
+    ua.activate();
+    done();
+  });
+
+  it('deletes the user', (done) => {
     ua.deleteUser();
-    //expect(typeof home.widescreen).toBe('boolean');
     done();
   });
 });

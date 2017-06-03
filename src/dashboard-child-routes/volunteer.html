@@ -1,8 +1,31 @@
 <template>
   <div class="page-content">
     <paper-material class="material-content" elevation="0">
-    <h4 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Volunteer Dashboard</strong></h4>
-    <p>Manage your volunteering here.</p>
-  </paper-material>
+      <h4 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Volunteer Dashboard</strong></h4>
+      <p style="text-align:center; font-weight:bold">
+        Manage your Volunteering Here
+      </p>
+      <paper-material elevation="2" style="margin:auto; padding:10px; margin-top:20px; max-width:600px">
+      <p style="font-weight:bold; text-align:center">Your Volunteering Preferences</p>
+      <ui>
+        <li>
+          Causes you are most interested in supporting: ${user.volCauses}
+          <span if.bind="user.volCauses.length === 0">not specified</span>
+        </li>
+        <li>
+          Talents you are most interested in using: ${user.volTalents}
+          <span if.bind="user.volTalents.length === 0">not specified</span>
+        </li>
+          <li>
+            Work you are willing to perform: ${user.volWorkPrefs}
+            <span if.bind="user.volWorkPrefs.length === 0">not specified</span>
+          </li>
+          <li>Distance away you are willing to travel: <span if.bind="user.volTravelDistMiles">${user.volTravelDistMiles} miles</span>
+            <span if.bind="!user.volTravelDistMiles">not specified</span>
+          </li>
+      </ui>
+      <p style="margin-top:10px">Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences.</p>
+    </paper-material>
+    </paper-material>
   </div>
 </template>
