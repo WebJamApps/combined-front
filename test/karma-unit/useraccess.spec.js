@@ -3,7 +3,7 @@ import {UserAccess} from '../../src/classes/UserAccess.js';
 
 describe('The UserAccess module unit tests', () => {
   let appState;
-  let routingContext = {};
+  let routingContext = {'params': {'childRoute': 'user-account'}};
   let roles = ['foo'];
   let userAccess;
   let next;
@@ -28,6 +28,15 @@ describe('The UserAccess module unit tests', () => {
     };
     routingContext.config = {auth: true};
     routingContext.fragment = '/dashboard';
+    userAccess.run(routingContext, next);
+  });
+
+  it('should require auth, but when child route is user-account do not check role', (done) => {
+    next = function() {
+      done();
+    };
+    routingContext.config = {auth: true};
+    routingContext.params.childRoute = 'user-account';
     userAccess.run(routingContext, next);
   });
 
