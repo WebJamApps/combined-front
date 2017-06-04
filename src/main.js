@@ -13,10 +13,10 @@ export async function configure(aurelia) {
   .standardConfiguration()
   .developmentLogging();
   aurelia.use.plugin(PLATFORM.moduleName('au-table'));
-  aurelia.use.plugin(PLATFORM.moduleName('aurelia-view-manager'));
+  //aurelia.use.plugin(PLATFORM.moduleName('aurelia-view-manager'));
   //aurelia.use.plugin(PLATFORM.moduleName('aurelia-config'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-validation'));
-  aurelia.use.plugin(PLATFORM.moduleName('aurelia-form'));
+  //aurelia.use.plugin(PLATFORM.moduleName('aurelia-form'));
   //aurelia.use.plugin(PLATFORM.moduleName('aurelia-form-validation'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-polymer'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-auth'), (baseConfig) => {
