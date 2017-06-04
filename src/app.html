@@ -100,6 +100,12 @@ paper-item:hover {
             <span class="nav-item" if.bind="fullmenu">Pub Songs</span>
           </a>
         </paper-item>
+        <paper-item class="login" if.bind="Menu =='music'">
+          <a paper-drawer-toggle href="/music/buymusic" class="nav-link" click.delegate="close()">
+            <span class="fa fa-money"></span>
+            <span class="nav-item" if.bind="fullmenu">Buy Music</span>
+          </a>
+        </paper-item>
         <paper-item class="login">
           <a paper-drawer-toggle href="/" class="nav-link" click.delegate="close()">
             <span class="fa fa-home"></span>
