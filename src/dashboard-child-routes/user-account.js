@@ -8,8 +8,8 @@ export class UserAccount {
   }
 
   causes = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly', 'other'];
-  talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'communication', 'listening', 'other'];
-  works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'other'];
+  talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening', 'other'];
+  works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'other'];
   selectedCause = [];
   selectedTalent = [];
   selectedWork = [];
