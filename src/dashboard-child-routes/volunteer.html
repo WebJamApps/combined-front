@@ -10,14 +10,17 @@
       <ui>
         <li>
           Causes you are most interested in supporting: ${user.volCauses}
+          <span if.bind="user.volCauseOther"><br>${user.volCauseOther}</span>
           <span if.bind="user.volCauses.length === 0">not specified</span>
         </li>
         <li>
           Talents you are most interested in using: ${user.volTalents}
+          <span if.bind="user.volTalentOther"><br>${user.volTalentOther}</span>
           <span if.bind="user.volTalents.length === 0">not specified</span>
         </li>
           <li>
             Work you are willing to perform: ${user.volWorkPrefs}
+            <span if.bind="user.volWorkOther"><br>${user.volWorkOther}</span>
             <span if.bind="user.volWorkPrefs.length === 0">not specified</span>
           </li>
           <li>Distance away you are willing to travel: <span if.bind="user.volTravelDistMiles">${user.volTravelDistMiles} miles</span>

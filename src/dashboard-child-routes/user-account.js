@@ -54,6 +54,25 @@ export class UserAccount {
     if (this.user.userType === 'Charity'){
       this.role = 'Charity Manager';
     }
+    if (this.selectedWorks.includes('other')){
+      console.log('other was selected, we will display an additional form field now');
+      this.workOther = true;
+    } else {
+      this.workOther = false;
+    }
+
+    if (this.selectedTalents.includes('other')){
+      console.log('other was selected, we will display an additional form field now');
+      this.talentOther = true;
+    } else {
+      this.talentOther = false;
+    }
+    if (this.selectedCauses.includes('other')){
+      console.log('other was selected, we will display an additional form field now');
+      this.causeOther = true;
+    } else {
+      this.causeOther = false;
+    }
   }
 
   async setupVolunteer(){
@@ -91,6 +110,8 @@ export class UserAccount {
       if (this.selectedCauses.includes('other')){
         console.log('other was selected, we will display an additional form field now');
         this.causeOther = true;
+      } else {
+        this.causeOther = false;
       }
     }
   }
@@ -106,6 +127,8 @@ export class UserAccount {
       if (this.selectedTalents.includes('other')){
         console.log('other was selected, we will display an additional form field now');
         this.talentOther = true;
+      } else {
+        this.talentOther = false;
       }
     }
   }
@@ -121,6 +144,8 @@ export class UserAccount {
       if (this.selectedWorks.includes('other')){
         console.log('other was selected, we will display an additional form field now');
         this.workOther = true;
+      } else {
+        this.workOther = false;
       }
     }
   }
