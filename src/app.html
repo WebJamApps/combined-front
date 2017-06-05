@@ -95,6 +95,12 @@ paper-item:hover {
           </a>
         </paper-item>
         <paper-item class="login" if.bind="Menu =='music'">
+          <a paper-drawer-toggle href="/music/mission" class="nav-link" click.delegate="close()">
+            <span class="fa fa-crosshairs"></span>
+            <span class="nav-item" if.bind="fullmenu">Mission Music</span>
+          </a>
+        </paper-item>
+        <paper-item class="login" if.bind="Menu =='music'">
           <a paper-drawer-toggle href="/music/pub" class="nav-link" click.delegate="close()">
             <span class="fa fa-beer"></span>
             <span class="nav-item" if.bind="fullmenu">Pub Songs</span>
