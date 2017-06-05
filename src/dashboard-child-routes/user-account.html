@@ -2,17 +2,12 @@
   <div class="page-content">
     <paper-material class="material-content" elevation="0">
       <h4 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>${user.name}'s User Account</strong></h4>
-      <!-- <p style="margin:auto; text-align:center">Manage your user account here.</p> -->
       <p style="margin:auto; text-align:center; padding-bottom:20px">Your primary role is ${role}</p>
-      <!-- <div class="form-group" style="margin-left:0;margin-right:0; padding:5px"> -->
-        <button style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">Delete User</button>
-      <!-- </div> -->
     </paper-material>
     <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto" if.bind="role === 'Volunteer' || role === 'Developer'">
       <h4 class="material-header-h4">Set Your Volunteering Preferences</h4>
       <form>
-
-        <div class="multiselect" style="width:170px; margin-top:30px">
+        <div class="multiselect" style="width:170px; margin-top:40px">
           <div class="selectBox" click.delegate="showCheckboxes('causes')">
             <select>
               <option style="font-weight:normal">Cause(s) to support</option>
@@ -27,8 +22,8 @@
             </div>
           </iron-dropdown>
         </div>
-
-        <div class="multiselect" style="width:170px; margin-top:30px">
+        <paper-input if.bind="causeOther" value.two-way="user.volCauseOther" label="Other cause"></paper-input>
+        <div class="multiselect" style="width:170px; margin-top:50px">
           <div class="selectBox" click.delegate="showCheckboxes('talents')">
             <select>
               <option style="font-weight:normal">Your talent(s)</option>
@@ -43,8 +38,8 @@
             </div>
           </iron-dropdown>
         </div>
-
-        <div class="multiselect" style="width:170px; margin-top:30px">
+        <paper-input if.bind="talentOther" value.two-way="user.volTalentOther" label="Other talent" ></paper-input>
+        <div class="multiselect" style="width:170px; margin-top:50px">
           <div class="selectBox" click.delegate="showCheckboxes('work')">
             <select>
               <option style="font-weight:normal">Can work doing...</option>
@@ -59,32 +54,30 @@
             </div>
           </iron-dropdown>
         </div>
-
-        <!-- <paper-dropdown-menu label="Work preferences">
-          <paper-listbox required selected.two-way="tempWork" class="dropdown-content">
-            <paper-item value=""></paper-item>
-            <template is="dom-repeat" items.two-way="work">
-              <paper-item model="{{item}}">{{item}}</paper-item>
-            </template>
-          </paper-listbox>
-        </paper-dropdown-menu> -->
-
+        <paper-input if.bind="workOther" value.two-way="user.volWorkOther" label="Other work" ></paper-input>
         <paper-input style="margin-top:25px" value.two-way="user.volTravelDistMiles" label="Furthest distance willing to travel (miles)" ></paper-input>
         <button class="button-lib" raised click.trigger="setupVolunteer()">
           Submit</button>
         </form>
       </paper-material>
-      <paper-material class="footer" elevation="4" style="padding:8px; background-color: #2a222a; margin-top:10px">
-        <div class="paper-card-img"><span>&nbsp;&nbsp;</span>
-          <a target="_blank" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
-          <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>
-          <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
-          <span>&nbsp;&nbsp;</span><a target="_blank" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
-          <span>&nbsp;&nbsp;</span><a target="_blank" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>
-          <span style="color:white; font-size: 9pt; padding-left:18px;">Powered by
-            <a target="_blank" style="color:white; font-size:9pt;font-weight: bold;" href="https://www.web-jam.com">Web Jam LLC</a>
-          </span>
-        </div>
-      </paper-material>
-    </div>
-  </template>
+      <p> </p>
+      <paper-material elevation="2" style="padding:20px; width:300px; margin:auto">
+        <p style="text-align:center; font-weight:bold">Delete your user</p>
+          <button style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">
+            Delete User
+          </button>
+        </paper-material>
+        <paper-material class="footer" elevation="4" style="padding:8px; background-color: #2a222a; margin-top:10px">
+          <div class="paper-card-img"><span>&nbsp;&nbsp;</span>
+            <a target="_blank" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+            <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>
+            <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+            <span>&nbsp;&nbsp;</span><a target="_blank" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
+            <span>&nbsp;&nbsp;</span><a target="_blank" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>
+            <span style="color:white; font-size: 9pt; padding-left:18px;">Powered by
+              <a target="_blank" style="color:white; font-size:9pt;font-weight: bold;" href="https://www.web-jam.com">Web Jam LLC</a>
+            </span>
+          </div>
+        </paper-material>
+      </div>
+    </template>
