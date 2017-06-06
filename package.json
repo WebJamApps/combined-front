@@ -22,7 +22,8 @@
     "postinstall:backend": "yarn global add bower && bower install && npm run vulc && npm start -- build",
     "vulc": "rm -rf static/includes.html && polymer-bundler --inline-scripts --inline-css includes.html > static/includes.html",
     "prod": "npm run vulc && npm start -- build && npm start -- serve",
-    "snyk-protect": "snyk protect"
+    "snyk-protect": "snyk protect",
+    "eslint-fix": "./node_modules/eslint/bin/eslint.js --fix ."
   },
   "dependencies": {
     "au-table": "^0.1.12",

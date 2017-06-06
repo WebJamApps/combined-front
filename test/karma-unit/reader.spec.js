@@ -28,7 +28,7 @@ describe('the Reader Module', () => {
   };
   beforeEach(() => {
     auth = new AuthStub();
-    auth.setToken({sub:"aowifjawifhiawofjo"});
+    auth.setToken({sub: 'aowifjawifhiawofjo'});
     app = new App(auth, new HttpMock());
     app.activate();
     //auth = new AuthStub();
@@ -44,7 +44,7 @@ describe('the Reader Module', () => {
   });
 
 
-  it('check out a particular book', done => {
+  it('check out a particular book', (done) => {
     reader.checkOutBook(book);
     done();
   });
@@ -60,8 +60,8 @@ describe('the Reader Module', () => {
     done();
   });
 
-  it('check out a book already taken', done => {
-    reader.activate().then(()=>{
+  it('check out a book already taken', (done) => {
+    reader.activate().then(() => {
       reader.checkOutBook(book);
       reader.checkOutBook(book);
       done();
