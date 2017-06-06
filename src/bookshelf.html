@@ -50,23 +50,22 @@
               <th style="padding:8px" >Pages</th>
               <th style="padding:8px" >Year</th>
               <th style="padding:8px" aut-sort="key: siteLocation">Location</th>
-              <!-- <th>Copies</th> -->
               <th style="padding:8px">Access</th>
-              <!-- <th>Comments</th> -->
             </tr>
           </thead>
           <tbody>
             <tr repeat.for="book of $displayData">
-              <td style="padding:8px"><a style="font-size:11pt" show.bind="book.url" href="${book.url}">
-                ${book.title}</a><a style="font-size:11pt" if.bind="!book.url" href="/dashboard/reader">${book.title}</a></td>
+              <td style="padding:8px">
+                <a style="font-size:11pt" show.bind="book.url" href="${book.url}" target="_blank">
+                  ${book.title}
+                </a>
+                <a style="font-size:11pt" if.bind="!book.url" href="/dashboard/reader">${book.title}</a></td>
                 <td style="padding:8px">${book.type}</td>
                 <td style="padding:8px">${book.author}</td>
                 <td style="padding:8px">${book.numberPages}</td>
                 <td style="padding:8px">${book.dateOfPub}</td>
                 <td style="padding:8px">${book.siteLocation}</td>
-                <!-- <td>${book.numberOfCopies}</td> -->
                 <td style="padding:8px">${book.access}</td>
-                <!-- <td>${book.comments}</td> -->
               </tr>
             </tbody>
           </table>
