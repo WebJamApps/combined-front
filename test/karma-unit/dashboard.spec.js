@@ -2,7 +2,7 @@ import {Dashboard} from '../../src/dashboard';
 import {App} from '../../src/app';
 import {StageComponent} from 'aurelia-testing';
 //const Counter = require('assertions-counter');
-import {AuthStub, HttpMock} from './commons';
+import {AuthStub, HttpMock, AppStateStub} from './commons';
 import {Validator} from 'aurelia-validation';
 
 class VCMock {
@@ -25,36 +25,38 @@ class ValidatorMock extends Validator {
   }
 }
 
-class AuthServiceMock extends AuthStub {
-  authenticate() {
-    this.authenticated = true;
-    return Promise.resolve('user is authenticated');
-  }
-}
-
 describe('the Dashboard Module', () => {
   let dashboard;
   //let dashboard2;
 
   describe('Dashboard DI', () => {
     let auth;
-    //let http;
-    let token = 'mhioj23yr675843ho12yv9852vbbjeywouitryhrcyqo7t89vu';
+    let http;
+    //let token = 'mhioj23yr675843ho12yv9852vbbjeywouitryhrcyqo7t89vu';
     let app;
     let vc;
     let val;
     //let appState;
     beforeEach(() => {
-      app = new App(AuthStub, HttpMock);
-      auth = new AuthServiceMock();
+      auth = new AuthStub();
+      auth.setToken({sub: 'aowifjawifhiawofjo'});
+      app = new App(auth, new HttpMock());
+      app.activate();
       vc = new VCMock();
       val = new ValidatorMock();
       //http = new HttpMock();
       dashboard = new Dashboard(app, vc, val);
       //dashboard2 = new Dashboard(app, vc, val);
-      auth.setToken(token);
+      //auth.setToken(token);
     });
-
+    it('activate dashboard', (done) => {
+      dashboard.app.appState = new AppStateStub();
+      dashboard.activate();
+      setTimeout(function() {
+        //expect(http.status).toBe(200);
+        done();
+      }, 10);
+    });
     // it('should authenticate and return feedback', (done) => {
     //   dashboard.app.auth.authenticate().then((data) => {
     //     expect(data).toContain('authenticated');
@@ -79,22 +81,22 @@ describe('the Dashboard Module', () => {
     //   done();
     // });
 
-    // it('should expect change in http status after Volunteer activate call', (done) => {
-    //   http = new HttpMock({name: 'Iddris Elba', userType: 'Volunteer'});
-    //   auth = new AuthServiceMock();
-    //   app = new App(AuthStub, HttpMock);
-    //   appState = new AppStateStub();
-    //   appState.setUser({name: 'Iddris Elba', userType: 'Volunteer'});
-    //   app.appState = appState;
-    //   app.router = new RouterStub();
-    //   dashboard = new Dashboard(app, vc, val);
-    //   auth.setToken(token);
-    //   dashboard.activate();
-    //   setTimeout(function() {
-    //     //expect(http.status).toBe(200);
-    //     done();
-    //   }, 10);
-    // });
+    it('should expect change in http status after Volunteer activate call', (done) => {
+      http = new HttpMock({name: 'Iddris Elba', userType: 'Volunteer'});
+      //auth = new AuthServiceMock();
+      app = new App(auth, http);
+      //appState = new AppStateStub();
+      //appState.setUser({name: 'Iddris Elba', userType: 'Volunteer'});
+      //app.appState = appState;
+      //app.router = new RouterStub();
+      dashboard = new Dashboard(app, vc, val);
+      dashboard.app.appState = new AppStateStub();
+      dashboard.activate();
+      setTimeout(function() {
+        //expect(http.status).toBe(200);
+        done();
+      }, 10);
+    });
 
     // it('should expect change in http status after Developer activate call', (done) => {
     //   http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
@@ -143,7 +145,7 @@ describe('the Dashboard Module', () => {
 
     // it('should route a child in the reader route', (done) => {
     //   http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
-    //   auth = new AuthServiceMock();
+    //   //auth = new AuthServiceMock();
     //   app = new App(AuthStub, HttpMock);
     //   app.router = new RouterStub();
     //   dashboard = new Dashboard(app, vc, val);
@@ -217,7 +219,7 @@ describe('the Dashboard Module', () => {
     });
 
     it('should check if rule exists in validator', (done) => {
-    //   dashboard.validator.ruleExists({}, 'schoolRules');
+      //   dashboard.validator.ruleExists({}, 'schoolRules');
       done();
     });
   });
