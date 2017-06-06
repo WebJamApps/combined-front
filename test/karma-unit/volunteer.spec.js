@@ -8,7 +8,7 @@ describe('the Volunteer Module', () => {
   let auth;
   beforeEach(() => {
     auth = new AuthStub();
-    auth.setToken({sub:"aowifjawifhiawofjo"});
+    auth.setToken({sub: 'aowifjawifhiawofjo'});
     app = new App(auth, new HttpMock());
     app.appstate = new AppStateStub();
     app.appstate.user = {_id: '23334', name: 'billy', email: 'billy@billy.com'};

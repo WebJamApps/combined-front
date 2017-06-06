@@ -7,7 +7,7 @@ describe('the UserAccount Module', () => {
   let auth;
   beforeEach(() => {
     auth = new AuthStub();
-    auth.setToken({sub:"aowifjawifhiawofjo"});
+    auth.setToken({sub: 'aowifjawifhiawofjo'});
     app = new App(auth, new HttpMock());
     app.activate();
     ua = new UserAccount(app);
@@ -15,28 +15,27 @@ describe('the UserAccount Module', () => {
 
   it('should activate user account', (done) => {
     ua.app.appState = new AppStateStub();
-    ua.activate().then(()=>{
-
+    ua.activate().then(() => {
       done();
     });
   });
 
-  it('should activate user account with preselected attributes', (done)=>{
+  it('should activate user account with preselected attributes', (done) => {
     ua.app.appState = new AppStateStub();
-    ua.app.auth.setToken({sub:"1"});
-    ua.activate().then(()=>{
+    ua.app.auth.setToken({sub: '1'});
+    ua.activate().then(() => {
       done();
     });
   });
 
-  it("setup volunteer", (done)=>{
+  it('setup volunteer', (done) => {
     ua.app.appState = new AppStateStub();
-    ua.setupVolunteer().then(()=>{
+    ua.setupVolunteer().then(() => {
       done();
     });
   });
 
-  it('checkboxes expanded', (done)=>{
+  it('checkboxes expanded', (done) => {
     document.body.innerHTML = '  <iron-dropdown id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></iron-dropdown>';
     ua.expanded = true;
     ua.showCheckboxes('types');
@@ -44,7 +43,7 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  it('checkboxes closed', (done)=>{
+  it('checkboxes closed', (done) => {
     document.body.innerHTML = '  <iron-dropdown id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></iron-dropdown>';
     ua.expanded = false;
     ua.showCheckboxes('types');
@@ -52,52 +51,52 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  it("causePicked without attributes", (done)=>{
+  it('causePicked without attributes', (done) => {
     ua.app.appState = new AppStateStub();
-    ua.activate().then(()=>{
+    ua.activate().then(() => {
       ua.causePicked();
       done();
     });
   });
 
-  it("causePicked with attributes", (done)=>{
+  it('causePicked with attributes', (done) => {
     ua.app.appState = new AppStateStub();
-    ua.app.auth.setToken({sub:"1"});
-    ua.activate().then(()=>{
+    ua.app.auth.setToken({sub: '1'});
+    ua.activate().then(() => {
       ua.causePicked();
       done();
     });
   });
 
-  it("talentPicked without attributes", (done)=>{
+  it('talentPicked without attributes', (done) => {
     ua.app.appState = new AppStateStub();
-    ua.activate().then(()=>{
+    ua.activate().then(() => {
       ua.talentPicked();
       done();
     });
   });
 
-  it("talentPicked with attributes", (done)=>{
+  it('talentPicked with attributes', (done) => {
     ua.app.appState = new AppStateStub();
-    ua.app.auth.setToken({sub:"1"});
-    ua.activate().then(()=>{
+    ua.app.auth.setToken({sub: '1'});
+    ua.activate().then(() => {
       ua.talentPicked();
       done();
     });
   });
 
-  it("workPicked without attributes", (done)=>{
+  it('workPicked without attributes', (done) => {
     ua.app.appState = new AppStateStub();
-    ua.activate().then(()=>{
+    ua.activate().then(() => {
       ua.workPicked();
       done();
     });
   });
 
-  it("workPicked with attributes", (done)=>{
+  it('workPicked with attributes', (done) => {
     ua.app.appState = new AppStateStub();
-    ua.app.auth.setToken({sub:"1"});
-    ua.activate().then(()=>{
+    ua.app.auth.setToken({sub: '1'});
+    ua.activate().then(() => {
       ua.workPicked();
       done();
     });
