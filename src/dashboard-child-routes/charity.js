@@ -24,7 +24,7 @@ export class Charity {
 
   async activate(){
     let uid = this.app.auth.getTokenPayload().sub;
-    this.user  =await this.app.appState.getUser(uid);
+    this.user = await this.app.appState.getUser(uid);
 
     this.types.sort();
     this.states.sort();
