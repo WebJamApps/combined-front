@@ -13,6 +13,8 @@ patch:
         patched: '2017-05-23T13:20:39.729Z'
     - aurelia-validation > typedoc > marked:
         patched: '2017-05-24T11:10:44.677Z'
+    - aurelia-validation > typedoc > marked:
+        patched: '2017-06-06T19:59:59.148Z'
   'npm:ms:20170412':
     - pushstate-server > compression > debug > ms:
         patched: '2017-05-23T13:20:39.729Z'
@@ -28,3 +30,17 @@ patch:
         patched: '2017-05-23T13:20:39.729Z'
     - pushstate-server > serve-static > send > ms:
         patched: '2017-05-23T13:20:39.729Z'
+    - pushstate-server > compression > debug > ms:
+        patched: '2017-06-06T19:59:59.148Z'
+    - pushstate-server > connect-static-file > send > debug > ms:
+        patched: '2017-06-06T19:59:59.148Z'
+    - pushstate-server > connect-static-file > send > ms:
+        patched: '2017-06-06T19:59:59.148Z'
+    - pushstate-server > connect > debug > ms:
+        patched: '2017-06-06T19:59:59.148Z'
+    - pushstate-server > connect > finalhandler > debug > ms:
+        patched: '2017-06-06T19:59:59.148Z'
+    - pushstate-server > serve-static > send > debug > ms:
+        patched: '2017-06-06T19:59:59.148Z'
+    - pushstate-server > serve-static > send > ms:
+        patched: '2017-06-06T19:59:59.148Z'
