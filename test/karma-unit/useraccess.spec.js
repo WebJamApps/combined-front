@@ -36,6 +36,7 @@ describe('The UserAccess module unit tests', () => {
       done();
     };
     routingContext.config = {auth: true};
+    routingContext.fragment = '';
     routingContext.params.childRoute = 'user-account';
     userAccess.run(routingContext, next);
   });
