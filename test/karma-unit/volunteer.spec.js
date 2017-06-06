@@ -5,8 +5,11 @@ import {AuthStub, HttpMock, AppStateStub} from './commons';
 describe('the Volunteer Module', () => {
   let volunteer;
   let app;
+  let auth;
   beforeEach(() => {
-    app = new App(new AuthStub(), new HttpMock());
+    auth = new AuthStub();
+    auth.setToken({sub:"aowifjawifhiawofjo"});
+    app = new App(auth, new HttpMock());
     app.appstate = new AppStateStub();
     app.appstate.user = {_id: '23334', name: 'billy', email: 'billy@billy.com'};
     volunteer = new Volunteer(app);

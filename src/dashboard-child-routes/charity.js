@@ -24,8 +24,7 @@ export class Charity {
 
   async activate(){
     let uid = this.app.auth.getTokenPayload().sub;
-    await this.app.appState.getUser(uid);
-    this.user = this.app.appState.user;
+    this.user  =await this.app.appState.getUser(uid);
 
     this.types.sort();
     this.states.sort();
@@ -48,9 +47,6 @@ export class Charity {
       return;
     }
     this.newCharity.charityType = this.selectedType;
-    for (let i = 0; i < this.selectedType.length; i++) {
-      console.log(this.selectedType);
-    }
   }
 
   createCharity(){

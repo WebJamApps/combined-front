@@ -100,10 +100,6 @@ export class UserAccount {
   }
 
   causePicked(){
-    if (this.selectedCauses.length === 0){
-      this.user.volCauses = [];
-      return;
-    }
     this.user.volCauses = this.selectedCauses;
     for (let i = 0; i < this.selectedCauses.length; i++) {
       console.log(this.selectedCauses);
@@ -117,10 +113,6 @@ export class UserAccount {
   }
 
   talentPicked(){
-    if (this.selectedTalents.length === 0){
-      this.user.volTalents = [];
-      return;
-    }
     this.user.volTalents = this.selectedTalents;
     for (let i = 0; i < this.selectedTalents.length; i++) {
       console.log(this.selectedTalents);
@@ -134,10 +126,6 @@ export class UserAccount {
   }
 
   workPicked(){
-    if (this.selectedWorks.length === 0){
-      this.user.volWorkPrefs = [];
-      return;
-    }
     this.user.volWorkPrefs = this.selectedWorks;
     for (let i = 0; i < this.selectedWorks.length; i++) {
       console.log(this.selectedWorks);
