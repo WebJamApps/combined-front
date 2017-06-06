@@ -55,9 +55,7 @@ class AuthStub {
   }
   getTokenPayload() {
     const response = this.token;
-    return new Promise((resolve) => {
-      resolve({json: () => response});
-    });
+    return response;
   }
   isAuthenticated() {
     this.authenticated = true;
@@ -72,10 +70,17 @@ class AppStateStub {
     this.roles = [];
   }
   getUser(uid) {
-    this.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333' };
-    return Promise.resolve({
-      //Headers: this.headers,
-      json: () => Promise.resolve(this.user)
+    if(uid == 1){
+      this.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents:["childcare", "other"], volCauses:["Environmental", "other"], volWorkPrefs:["counseling", "other"], volCauseOther:"", volTalentOther:"", volWorkOther:""};
+    }else{
+      this.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents:[], volCauses:[], volWorkPrefs:[], volCauseOther:"", volTalentOther:"", volWorkOther:""};
+    }
+    // return Promise.resolve({
+    //   //Headers: this.headers,
+    //   resolve(this.user)
+    // });
+    return new Promise((resolve) => {
+      resolve(this.user);
     });
   }
   setUser(input) {
@@ -96,7 +101,7 @@ class HttpMock {
   // this one catches the ajax and then resolves a custom json data.
   // real api calls will have more methods.
   constructor(data) {
-    this.user = data || {name: 'John Fitzgerald', userType: 'Charity', _id: '3333333'};
+    this.user = data || {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents:[], volCauses:[], volWorkPrefs:[], volCauseOther:"", volTalentOther:"", volWorkOther:""};
   }
   status = 500;
   headers = {accept: 'application/json', method: '', url: ''}
@@ -117,5 +122,6 @@ class HttpMock {
     });
   }
 }
+
 
 export {RouterStub, ConfigStub, AuthStub, AppStateStub, HttpMock};

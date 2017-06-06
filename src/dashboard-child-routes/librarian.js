@@ -91,8 +91,7 @@ export class Librarian {
       .then((response) => response.json())
       .then((data) => {
         setTimeout(function () {
-          if (newState === -1) {
-          }
+        
         }, 2000);
         router.navigate('/bookshelf');
       });
