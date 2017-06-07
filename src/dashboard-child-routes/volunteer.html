@@ -6,29 +6,55 @@
         Manage your Volunteering Here
       </p>
       <paper-material elevation="2" style="margin:auto; padding:10px; margin-top:20px; max-width:600px">
-      <p style="font-weight:bold; text-align:center">Your Volunteering Preferences</p>
-      <ui>
+        <p style="font-weight:bold; text-align:center">Your Volunteering Preferences</p>
+        <div class="search-table-outer" style="position:relative;overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th style="padding:8px; width:170px">Causes to Support</th>
+                <th style="padding:8px">Talents to Use</th>
+                <th style="padding:8px">Work to Perform</th>
+                <th style="padding:8px; width:94px">Max Travel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr valign="top">
+                <td id="causes" style="padding:8px">
+                </td>
+                <td id="talents" style="padding:8px">
+                </td>
+                <td id="works" style="padding:8px">
+                </td>
+                <td style="padding:8px">
+                  <p style="font-size:10pt; margin-bottom:10px" if.bind="user.volTravelDistMiles">${user.volTravelDistMiles} miles</p>
+                  <p style="font-size:10pt; margin-bottom:10px" if.bind="!user.volTravelDistMiles">not specified</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- <ui>
         <li>
-          Causes you are most interested in supporting: ${user.volCauses}
-          <span if.bind="user.volCauseOther"><br>${user.volCauseOther}</span>
-          <span if.bind="user.volCauses.length === 0">not specified</span>
-        </li>
-        <li>
-          Talents you are most interested in using: ${user.volTalents}
-          <span if.bind="user.volTalentOther"><br>${user.volTalentOther}</span>
-          <span if.bind="user.volTalents.length === 0">not specified</span>
-        </li>
-          <li>
-            Work you are willing to perform: ${user.volWorkPrefs}
-            <span if.bind="user.volWorkOther"><br>${user.volWorkOther}</span>
-            <span if.bind="user.volWorkPrefs.length === 0">not specified</span>
-          </li>
-          <li>Distance away you are willing to travel: <span if.bind="user.volTravelDistMiles">${user.volTravelDistMiles} miles</span>
-            <span if.bind="!user.volTravelDistMiles">not specified</span>
-          </li>
-      </ui>
-      <p style="margin-top:10px">Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences.</p>
-    </paper-material>
-    </paper-material>
-  </div>
+        Causes you are most interested in supporting: ${user.volCauses}
+        <span if.bind="user.volCauseOther"><br>${user.volCauseOther}</span>
+        <span if.bind="user.volCauses.length === 0">not specified</span>
+      </li>
+      <li>
+      Talents you are most interested in using: ${user.volTalents}
+      <span if.bind="user.volTalentOther"><br>${user.volTalentOther}</span>
+      <span if.bind="user.volTalents.length === 0">not specified</span>
+    </li>
+    <li>
+    Work you are willing to perform: ${user.volWorkPrefs}
+    <span if.bind="user.volWorkOther"><br>${user.volWorkOther}</span>
+    <span if.bind="user.volWorkPrefs.length === 0">not specified</span>
+  </li>
+  <li>Distance away you are willing to travel: <span if.bind="user.volTravelDistMiles">${user.volTravelDistMiles} miles</span>
+  <span if.bind="!user.volTravelDistMiles">not specified</span>
+</li>
+</ui> -->
+<p style="margin-top:10px; text-align:center">Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences.</p>
+</paper-material>
+</paper-material>
+</div>
 </template>
