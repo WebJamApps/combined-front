@@ -13,13 +13,10 @@ export class UserAccount {
   causes = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
   talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
   works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
-  //selectedCauses = [];
 
   async activate() {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
-    //const tempCause = this.user.volCauses;
-
     this.role = this.user.userType;
     this.causes.sort();
     this.causes.push('other');
@@ -30,7 +27,7 @@ export class UserAccount {
         this.selectedCauses.push('');
       }
     }
-    console.log('the selected causes are: ' + this.selectedCauses);
+    //console.log('the selected causes are: ' + this.selectedCauses);
     this.talents.sort();
     this.talents.push('other');
     for (let i = 0; i < this.talents.length; i++) {
@@ -40,7 +37,7 @@ export class UserAccount {
         this.selectedTalents.push('');
       }
     }
-    console.log('the selected talents are: ' + this.selectedTalents);
+    //console.log('the selected talents are: ' + this.selectedTalents);
     this.works.sort();
     this.works.push('other');
     for (let i = 0; i < this.works.length; i++) {
@@ -50,25 +47,25 @@ export class UserAccount {
         this.selectedWorks.push('');
       }
     }
-    console.log('the selected talents are: ' + this.selectedTalents);
+    //console.log('the selected talents are: ' + this.selectedTalents);
     if (this.user.userType === 'Charity'){
       this.role = 'Charity Manager';
     }
     if (this.selectedWorks.includes('other')){
-      console.log('other was selected, we will display an additional form field now');
+      //console.log('other was selected, we will display an additional form field now');
       this.workOther = true;
     } else {
       this.workOther = false;
     }
 
     if (this.selectedTalents.includes('other')){
-      console.log('other was selected, we will display an additional form field now');
+      //console.log('other was selected, we will display an additional form field now');
       this.talentOther = true;
     } else {
       this.talentOther = false;
     }
     if (this.selectedCauses.includes('other')){
-      console.log('other was selected, we will display an additional form field now');
+      //console.log('other was selected, we will display an additional form field now');
       this.causeOther = true;
     } else {
       this.causeOther = false;
@@ -102,12 +99,13 @@ export class UserAccount {
   causePicked(){
     this.user.volCauses = this.selectedCauses;
     for (let i = 0; i < this.selectedCauses.length; i++) {
-      console.log(this.selectedCauses);
+      //console.log(this.selectedCauses);
       if (this.selectedCauses.includes('other')){
-        console.log('other was selected, we will display an additional form field now');
+        //console.log('other was selected, we will display an additional form field now');
         this.causeOther = true;
       } else {
         this.causeOther = false;
+        this.user.volCauseOther = '';
       }
     }
   }
@@ -115,12 +113,13 @@ export class UserAccount {
   talentPicked(){
     this.user.volTalents = this.selectedTalents;
     for (let i = 0; i < this.selectedTalents.length; i++) {
-      console.log(this.selectedTalents);
+      //console.log(this.selectedTalents);
       if (this.selectedTalents.includes('other')){
-        console.log('other was selected, we will display an additional form field now');
+        //console.log('other was selected, we will display an additional form field now');
         this.talentOther = true;
       } else {
         this.talentOther = false;
+        this.user.volTalentOther = '';
       }
     }
   }
@@ -128,12 +127,13 @@ export class UserAccount {
   workPicked(){
     this.user.volWorkPrefs = this.selectedWorks;
     for (let i = 0; i < this.selectedWorks.length; i++) {
-      console.log(this.selectedWorks);
+      //console.log(this.selectedWorks);
       if (this.selectedWorks.includes('other')){
-        console.log('other was selected, we will display an additional form field now');
+        //console.log('other was selected, we will display an additional form field now');
         this.workOther = true;
       } else {
         this.workOther = false;
+        this.user.volWorkOther = '';
       }
     }
   }
@@ -144,7 +144,7 @@ export class UserAccount {
       method: 'delete'
     })
     .then((data) => {
-      console.log('user has been deleted');
+      //console.log('user has been deleted');
       this.app.logout();
     });
   }
