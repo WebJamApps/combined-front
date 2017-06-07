@@ -6,6 +6,9 @@ ignore:
     - aurelia-form-validation > aurelia-validation > typedoc > shelljs:
         reason: None given
         expires: '2017-06-22T13:20:39.668Z'
+    - aurelia-validation > typedoc > shelljs:
+        reason: None given
+        expires: '2017-07-07T10:34:15.083Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:marked:20170112':
@@ -15,6 +18,8 @@ patch:
         patched: '2017-05-24T11:10:44.677Z'
     - aurelia-validation > typedoc > marked:
         patched: '2017-06-06T19:59:59.148Z'
+    - aurelia-validation > typedoc > marked:
+        patched: '2017-06-07T10:34:15.088Z'
   'npm:ms:20170412':
     - pushstate-server > compression > debug > ms:
         patched: '2017-05-23T13:20:39.729Z'
@@ -44,3 +49,17 @@ patch:
         patched: '2017-06-06T19:59:59.148Z'
     - pushstate-server > serve-static > send > ms:
         patched: '2017-06-06T19:59:59.148Z'
+    - pushstate-server > compression > debug > ms:
+        patched: '2017-06-07T10:34:15.088Z'
+    - pushstate-server > connect-static-file > send > debug > ms:
+        patched: '2017-06-07T10:34:15.088Z'
+    - pushstate-server > connect-static-file > send > ms:
+        patched: '2017-06-07T10:34:15.088Z'
+    - pushstate-server > connect > debug > ms:
+        patched: '2017-06-07T10:34:15.088Z'
+    - pushstate-server > connect > finalhandler > debug > ms:
+        patched: '2017-06-07T10:34:15.088Z'
+    - pushstate-server > serve-static > send > debug > ms:
+        patched: '2017-06-07T10:34:15.088Z'
+    - pushstate-server > serve-static > send > ms:
+        patched: '2017-06-07T10:34:15.088Z'
