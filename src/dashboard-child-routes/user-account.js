@@ -98,44 +98,44 @@ export class UserAccount {
 
   causePicked(){
     this.user.volCauses = this.selectedCauses;
-    for (let i = 0; i < this.selectedCauses.length; i++) {
-      //console.log(this.selectedCauses);
-      if (this.selectedCauses.includes('other')){
-        //console.log('other was selected, we will display an additional form field now');
-        this.causeOther = true;
-      } else {
-        this.causeOther = false;
-        this.user.volCauseOther = '';
-      }
+    //for (let i = 0; i < this.selectedCauses.length; i++) {
+    //console.log(this.selectedCauses);
+    if (this.selectedCauses.includes('other')){
+      //console.log('other was selected, we will display an additional form field now');
+      this.causeOther = true;
+    } else {
+      this.causeOther = false;
+      this.user.volCauseOther = '';
     }
+    //}
   }
 
   talentPicked(){
     this.user.volTalents = this.selectedTalents;
-    for (let i = 0; i < this.selectedTalents.length; i++) {
-      //console.log(this.selectedTalents);
-      if (this.selectedTalents.includes('other')){
-        //console.log('other was selected, we will display an additional form field now');
-        this.talentOther = true;
-      } else {
-        this.talentOther = false;
-        this.user.volTalentOther = '';
-      }
+    //for (let i = 0; i < this.selectedTalents.length; i++) {
+    //console.log(this.selectedTalents);
+    if (this.selectedTalents.includes('other')){
+      //console.log('other was selected, we will display an additional form field now');
+      this.talentOther = true;
+    } else {
+      this.talentOther = false;
+      this.user.volTalentOther = '';
     }
+    //  }
   }
 
   workPicked(){
     this.user.volWorkPrefs = this.selectedWorks;
-    for (let i = 0; i < this.selectedWorks.length; i++) {
-      //console.log(this.selectedWorks);
-      if (this.selectedWorks.includes('other')){
-        //console.log('other was selected, we will display an additional form field now');
-        this.workOther = true;
-      } else {
-        this.workOther = false;
-        this.user.volWorkOther = '';
-      }
+    //for (let i = 0; i < this.selectedWorks.length; i++) {
+    //console.log(this.selectedWorks);
+    if (this.selectedWorks.includes('other')){
+      //console.log('other was selected, we will display an additional form field now');
+      this.workOther = true;
+    } else {
+      this.workOther = false;
+      this.user.volWorkOther = '';
     }
+    //  }
   }
 
   async deleteUser(){

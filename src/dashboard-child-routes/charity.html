@@ -1,45 +1,50 @@
 <template>
   <div class="page-content">
     <paper-material class="material-content" elevation="0">
-    <h3 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Charity Dashboard</strong></h3>
-    <paper-material class="material-content" elevation="3" style="max-width:10in; margin:auto">
-      <h4 class="material-header-h4">Create a new charity</h4>
-      <form>
-        <paper-input label="Charity name" value.two-way="newCharity.charityName" requried></paper-input>
-        <paper-input label="City" value.two-way="newCharity.charityCity" requried></paper-input>
-
-        <paper-dropdown-menu  label="State/Territory">
-          <paper-listbox  required  selected.two-way="newCharity.charityState" class="dropdown-content">
-            <paper-item value=""></paper-item>
-            <template is="dom-repeat" items.two-way="states">
-              <paper-item model="{{item}}">{{item}}</paper-item>
-            </template>
-          </paper-listbox>
-        </paper-dropdown-menu>
-
-        <paper-input type="number" label="Zip Code" value.two-way="newCharity.charityZipCode" requried></paper-input>
-        <paper-input type="number" label="Phone Number" value.two-way="newCharity.charityPhoneNumber" requried></paper-input>
-        <paper-input label="Email" value.two-way="newCharity.charityEmail"></paper-input>
-
-        <div class="multiselect" style="width:160px; margin-top:30px">
-          <div class="selectBox" click.delegate="showCheckboxes('types')">
-            <select>
-              <option style="font-weight:normal">Type of Charity</option>
-            </select>
-            <div class="overSelect"></div>
-          </div>
-          <iron-dropdown id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
-            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 250px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-              <label repeat.for="type of types" for="type" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
-                <input type="checkbox" value.bind="type" checked.bind="selectedType" change.delegate="typePicked()"> ${type}
-              </label>
+      <h3 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Charity Dashboard</strong></h3>
+      <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
+        <h4 class="material-header-h4">Create a new charity</h4>
+        <form>
+          <div class="multiselect" style="width:200px; margin-top:30px">
+            <div class="selectBox" click.delegate="showCheckboxes('types')">
+              <select>
+                <option style="font-weight:normal">Type of Charity (required)</option>
+              </select>
+              <div class="overSelect"></div>
             </div>
-          </iron-dropdown>
-        </div>
-
-        <paper-button class="button-lib" raised click.trigger="createCharity()">Submit</paper-button>
-      </form>
+            <iron-dropdown id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
+              <div class="dropdown-content" style="width:150px;background-color:white;box-sizing: border-box; max-width: 250px; max-height: 362px;overflow:auto;border:1px #dadada solid">
+                <label repeat.for="type of types" for="type" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
+                  <input type="checkbox" value.bind="type" checked.bind="newCharity.charityTypes" change.delegate="typePicked()"> ${type}
+                </label>
+              </div>
+            </iron-dropdown>
+          </div>
+          <paper-input if.bind="typeOther" value.two-way="newCharity.charityTypeOther" label="Other charity type"></paper-input>
+          <paper-input style="margin-top:20px" label="Charity name" value.two-way="newCharity.charityName & validate"></paper-input>
+          <paper-input style="margin-top:20px" label="City" value.two-way="newCharity.charityCity & validate"></paper-input>
+          <paper-dropdown-menu  style="margin-top:20px" label="State/Territory">
+            <paper-listbox  required  selected.two-way="newCharity.charityState" class="dropdown-content">
+              <paper-item value=""></paper-item>
+              <template is="dom-repeat" items.two-way="states">
+                <paper-item model="{{item}}">{{item}}</paper-item>
+              </template>
+            </paper-listbox>
+          </paper-dropdown-menu>
+          <paper-input style="margin-top:20px" type="number" label="Zip Code" value.two-way="newCharity.charityZipCode & validate"></paper-input>
+          <paper-input style="margin-top:20px" type="number" label="Phone Number" value.two-way="newCharity.charityPhoneNumber & validate"></paper-input>
+          <!-- <paper-input style="margin-top:20px" label="Email" value.two-way="newCharity.charityEmail"></paper-input> -->
+          <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
+            <ul if.bind="controller.errors">
+              <li repeat.for="error of controller.errors" style="margin-left:-24px; color:red">
+                ${error.message}
+              </li>
+            </ul>
+          </div>
+          <button id="newCharityButton" class="updateButton" raised click.trigger="createCharity()" style="display:none;margin-bottom:40px">Submit</button>
+          <!-- <paper-button class="button-lib" raised click.trigger="createCharity()">Submit</paper-button> -->
+        </form>
+      </paper-material>
     </paper-material>
-  </paper-material>
   </div>
 </template>
