@@ -24,7 +24,6 @@
     "prod": "npm run vulc && npm start -- build && npm start -- serve",
     "snyk-protect": "snyk protect",
     "eslint-fix": "./node_modules/eslint/bin/eslint.js --fix .",
-    "prepare": "npm run snyk-protect",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules"
   },
   "dependencies": {
