@@ -91,7 +91,7 @@ export class Librarian {
       .then((response) => response.json())
       .then((data) => {
         setTimeout(function () {
-        
+
         }, 2000);
         router.navigate('/bookshelf');
       });
@@ -107,6 +107,7 @@ export class Librarian {
     .then((response) => response.json())
     .then((data) => {
       const options = {
+        //delimiter: '/\t+/',
         headers: 'key'
       };
       this.books = JSON.stringify(data);
@@ -115,4 +116,5 @@ export class Librarian {
       this.filesaver.saveAs(file);
     });
   }
+
 }
