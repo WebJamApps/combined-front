@@ -16,7 +16,12 @@ class ValidatorMock extends Validator {
     this.b = b;
   }
   validateObject(obj, rules) {
-    return Promise.resolve([{name: 'john', valid: true}]);
+    console.log('obj');
+    console.log(obj);
+    if (obj.charityTypes.indexOf('True') > -1){
+      return Promise.resolve([{rule: Object, object: Object, propertyName: 'charityPhoneNumber', valid: true, message: 'Charity Phone Number is correct'}]);
+    }
+    return Promise.resolve([{rule: Object, object: Object, propertyName: 'charityPhoneNumber', valid: false, message: 'Charity Phone Number is not correct'}]);
   }
   validateProperty(prop, val, rules) {
     return Promise.resolve({});
@@ -110,8 +115,16 @@ describe('the Charity Module', () => {
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.newCharity.charityTypes = ['Christian', 'other'];
     charity.canSubmit = false;
-    let results = [{ValidateResult: {rule: Object, object: Object, propertyName: 'charityPhoneNumber', valid: false, message: 'Charity Phone Number is not correct'}}];
-    charity.validate(results);
+    charity.validate();
+    //expect(charity.newCharity.charityType.length).toBe(0);
+    done();
+  });
+
+  it('allows submit when validationResults are true', (done) => {
+    document.body.innerHTML = '<button id="newCharityButton">';
+    charity.newCharity.charityTypes = ['True'];
+    charity.validType = true;
+    charity.validate();
     //expect(charity.newCharity.charityType.length).toBe(0);
     done();
   });
