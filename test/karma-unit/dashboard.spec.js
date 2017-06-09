@@ -82,6 +82,15 @@ describe('the Dashboard Module', () => {
       done();
     });
 
+    it('should not route a user if they do not have any user type defined', (done) => {
+      // let userTypes = [''];
+      // for (let i of userTypes) {
+      dashboard.user = {userType: ''};
+      dashboard.childRoute();
+      //}
+      done();
+    });
+
     it('should confirm 200 http status after updateUser call', (done) => {
       http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
       app = new App(auth, http);
