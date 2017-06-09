@@ -11,7 +11,7 @@ export class Home {
 
 
   get widescreen(){
-    return document.documentElement.clientWidth > 1300;
+    return document.documentElement.clientWidth > 1340;
   }
   // attached() {
   //     document.title = this.router.currentInstruction.config.title;

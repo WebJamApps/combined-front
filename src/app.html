@@ -10,7 +10,6 @@ paper-item:hover {
       <div>
         <paper-card if.bind="fullmenu" image="${currentStyles.sidebarImagePath}" alt="Web Jam"></paper-card>
         <paper-card if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 50px"></paper-card>
-        <!-- <paper-item if.bind="widescreen" class="menu-toggle"> -->
         <div class="nav-list">
           <p if.bind="fullmenu" style="font-size:1px">&nbsp;</p>
           <paper-item if.bind="widescreen">
@@ -20,12 +19,6 @@ paper-item:hover {
             <a paper-drawer-toggle href="/login" class="nav-link" click.delegate="close()">
               <span class="fa fa-sign-in"></span>
               <span if.bind="fullmenu" class="nav-item">Login</span>
-            </a>
-          </paper-item>
-          <paper-item if.bind="authenticated" class="login" style="padding-left:10px">
-            <a paper-drawer-toggle href="/dashboard" class="nav-link" click.delegate="close()">
-              <span class="fa fa-tachometer"></span>
-              <span if.bind="fullmenu" class="nav-item">Dashboard</span>
             </a>
           </paper-item>
           <paper-item repeat.for="row of router.navigation"
@@ -41,16 +34,34 @@ paper-item:hover {
             <span class="nav-item" if.bind="fullmenu">OHAF</span>
           </a>
         </paper-item>
-        <paper-item class="login" if.bind="Menu == 'reader' || Menu == 'librarian' || Menu == 'wj' || Menu == 'dashboard' || Menu == 'developer'">
+        <paper-item class="login" if.bind="Menu == 'wj'">
+          <a paper-drawer-toggle href="/sc2rs" class="nav-link" click.delegate="close()">
+            <span class="fa fa-microphone"></span>
+            <span class="nav-item" if.bind="fullmenu">SC2RS</span>
+          </a>
+        </paper-item>
+        <paper-item class="login" if.bind="Menu=='wj' || Menu=='library' || Menu=='reader' || Menu=='librarian' || Menu=='bookshelf'">
           <a paper-drawer-toggle href="/library" class="nav-link" click.delegate="close()">
             <span class="fa fa-book"></span>
             <span class="nav-item" if.bind="fullmenu">Library</span>
           </a>
         </paper-item>
-        <paper-item if.bind="Menu =='developer' || Menu =='reader' || Menu =='librarian'" class="login">
+        <paper-item if.bind="Menu=='bookshelf' || Menu=='reader' || Menu=='librarian' || Menu=='developer' || Menu=='library'" class="login">
           <a paper-drawer-toggle href="/bookshelf" class="nav-link" click.delegate="close()">
             <span class="fa fa-book"></span>
             <span class="nav-item" if.bind="fullmenu">Bookshelf</span>
+          </a>
+        </paper-item>
+        <paper-item if.bind="authenticated" class="login" style="padding-left:10px">
+          <a paper-drawer-toggle href="/dashboard" class="nav-link" click.delegate="close()">
+            <span class="fa fa-tachometer"></span>
+            <span if.bind="fullmenu" class="nav-item">Dashboard</span>
+          </a>
+        </paper-item>
+        <paper-item if.bind="authenticated" class="login" style="padding-left:10px">
+          <a paper-drawer-toggle href="/dashboard/user-account" class="nav-link" click.delegate="close()">
+            <span class="fa fa-user"></span>
+            <span if.bind="fullmenu" class="nav-item">User Account</span>
           </a>
         </paper-item>
         <paper-item if.bind="Menu =='developer'" class="login">
@@ -67,13 +78,13 @@ paper-item:hover {
         </paper-item>
         <paper-item if.bind="Menu =='developer'" class="login">
           <a paper-drawer-toggle href="/dashboard/charity" class="nav-link" click.delegate="close()">
-            <span class="fa fa-book"></span>
+            <span class="fa fa-handshake-o"></span>
             <span class="nav-item" if.bind="fullmenu">Charity</span>
           </a>
         </paper-item>
         <paper-item if.bind="Menu =='developer'" class="login">
           <a paper-drawer-toggle href="/dashboard/volunteer" class="nav-link" click.delegate="close()">
-            <span class="fa fa-book"></span>
+            <span class="fa fa-handshake-o"></span>
             <span class="nav-item" if.bind="fullmenu">Volunteer</span>
           </a>
         </paper-item>
@@ -84,9 +95,27 @@ paper-item:hover {
           </a>
         </paper-item>
         <paper-item class="login" if.bind="Menu =='music'">
+          <a paper-drawer-toggle href="/music/originals" class="nav-link" click.delegate="close()">
+            <span class="fa fa-lightbulb-o"></span>
+            <span class="nav-item" if.bind="fullmenu">Originals</span>
+          </a>
+        </paper-item>
+        <paper-item class="login" if.bind="Menu =='music'">
+          <a paper-drawer-toggle href="/music/mission" class="nav-link" click.delegate="close()">
+            <span class="fa fa-crosshairs"></span>
+            <span class="nav-item" if.bind="fullmenu">Mission Music</span>
+          </a>
+        </paper-item>
+        <paper-item class="login" if.bind="Menu =='music'">
           <a paper-drawer-toggle href="/music/pub" class="nav-link" click.delegate="close()">
             <span class="fa fa-beer"></span>
             <span class="nav-item" if.bind="fullmenu">Pub Songs</span>
+          </a>
+        </paper-item>
+        <paper-item class="login" if.bind="Menu =='music'">
+          <a paper-drawer-toggle href="/music/buymusic" class="nav-link" click.delegate="close()">
+            <span class="fa fa-money"></span>
+            <span class="nav-item" if.bind="fullmenu">Buy Music</span>
           </a>
         </paper-item>
         <paper-item class="login">

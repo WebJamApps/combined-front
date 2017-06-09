@@ -10,7 +10,6 @@ form {
 
 h1,
 h2,
-h3,
 h4 {
   font-family: 'PT Sans Caption';
 }
@@ -20,10 +19,15 @@ h3.au-target.header-text.ohaf-header {
   margin: 5px;
 }
 
+h3 {
+  font-family: 'PT Sans Caption';
+  font-weight: bold;
+}
+
 p,
 a {
   font-family: 'Habibi';
-  font-size: 18px;
+  font-size: 12pt;
 }
 
 a {
@@ -71,10 +75,25 @@ div.page-host {
   top: 0;
 }
 
+paper-button.updateButton {
+  margin: 20px 3.5cm 0;
+}
+
+paper-button.updateButton:hover {
+  background-color: #cfd;
+}
+
 .splash {
   text-align: center;
   margin: 10% 0 0;
   box-sizing: border-box;
+}
+
+.dashboardTitle {
+  margin: auto;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  text-align: center;
 }
 
 .splash .message {
@@ -207,7 +226,7 @@ section.au-enter-active {
     -webkit-transform: translate3d(100%, 0, 0);
     transform: translate3d(100%, 0, 0);
   }
-  
+
   100% {
     opacity: 1;
     -webkit-transform: none;
@@ -222,7 +241,7 @@ section.au-enter-active {
     -ms-transform: translate3d(100%, 0, 0);
     transform: translate3d(100%, 0, 0);
   }
-  
+
   100% {
     opacity: 1;
     -webkit-transform: none;
@@ -235,7 +254,7 @@ section.au-enter-active {
   0% {
     opacity: 0;
   }
-  
+
   100% {
     opacity: 1;
   }
@@ -245,7 +264,7 @@ section.au-enter-active {
   0% {
     opacity: 0;
   }
-  
+
   100% {
     opacity: 1;
   }
@@ -382,7 +401,7 @@ paper-item.x-scope.paper-item-0 {
 }
 
 /*.search-table-outer {
-  overflow-x: auto;
+overflow-x: auto;
 }*/
 
 .aut-sort::after {
@@ -686,7 +705,7 @@ min-height: 30px;
 }
 
 /*.search-table-outer {
-  overflow-x: auto;
+overflow-x: auto;
 }*/
 
 .aut-sort::after {
@@ -802,4 +821,9 @@ div#drawer.style-scope.paper-drawer-panel.iron-selected {
   border-style: outset;
   border-color: #2d8bd2;
   color: black;
+}
+
+.newUserForm {
+  margin-left: 0.5cm;
+  width: 180px;
 }

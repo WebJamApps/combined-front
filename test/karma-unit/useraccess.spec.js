@@ -3,7 +3,7 @@ import {UserAccess} from '../../src/classes/UserAccess.js';
 
 describe('The UserAccess module unit tests', () => {
   let appState;
-  let routingContext = {};
+  let routingContext = {'params': {'childRoute': 'user-account'}};
   let roles = ['foo'];
   let userAccess;
   let next;
@@ -14,7 +14,7 @@ describe('The UserAccess module unit tests', () => {
     userAccess = new UserAccess(appState);
   });
 
-  it('should not require authentication', done => {
+  it('should not require authentication', (done) => {
     next = function() {
       done();
     };
@@ -22,12 +22,22 @@ describe('The UserAccess module unit tests', () => {
     userAccess.run(routingContext, next);
   });
 
-  it('should require auth, but requested dashboard, so do not check role', done => {
+  it('should require auth, but requested dashboard, so do not check role', (done) => {
     next = function() {
       done();
     };
     routingContext.config = {auth: true};
     routingContext.fragment = '/dashboard';
+    userAccess.run(routingContext, next);
+  });
+
+  it('should require auth, but when child route is user-account do not check role', (done) => {
+    next = function() {
+      done();
+    };
+    routingContext.config = {auth: true};
+    routingContext.fragment = '';
+    routingContext.params.childRoute = 'user-account';
     userAccess.run(routingContext, next);
   });
 
@@ -51,7 +61,7 @@ describe('The UserAccess module unit tests', () => {
   //   userAccess.run(routingContext, next);
   // });
 
-  it('should require auth and check roles and be authorized', done => {
+  it('should require auth and check roles and be authorized', (done) => {
     next = function() {
       done();
     };
@@ -61,7 +71,7 @@ describe('The UserAccess module unit tests', () => {
     userAccess.run(routingContext, next);
   });
 
-  it('should require auth and cancel because not authorized', done => {
+  it('should require auth and cancel because not authorized', (done) => {
     next = {cancel: function() { done(); }};
     routingContext.config = {auth: true};
     routingContext.fragment = '/dashboard/bar';

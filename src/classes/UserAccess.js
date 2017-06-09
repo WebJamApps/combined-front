@@ -5,7 +5,7 @@ export class UserAccess {
 
   run(routingContext, next) {
     // if we need to authenticate / authorize, verify the logged in users roles here.
-    return this.appState.getRoles().then((userRoles)=>{
+    return this.appState.getRoles().then((userRoles) => {
       if (routingContext.config.auth){
         console.log('I am entering a route that requires auth');
         console.log('These are my roles: ' + userRoles);
@@ -17,9 +17,9 @@ export class UserAccess {
         }
 
         console.log('The child route is: ' + routingContext.params.childRoute);
-        // if (routingContext.params.childRoute === 'reader'){
-        //   return next();
-        // }
+        if (routingContext.params.childRoute === 'user-account'){
+          return next();
+        }
         //
         // if (routingContext.params.childRoute === 'librarian'){
         //   return next();

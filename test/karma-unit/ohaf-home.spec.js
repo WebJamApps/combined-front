@@ -7,7 +7,7 @@ describe('the OhafHome Module', () => {
     ohaf = new OhafHome();
   });
 
-  it('gets widescreen', done => {
+  it('gets widescreen', (done) => {
     ohaf.widescreen;
     done();
   });

@@ -6,6 +6,9 @@
     "no-trailing-spaces": [ 1, {"skipBlankLines" : true}],
     "no-console": [0, "never"],
     "no-alert": [0, "never"],
-    "no-empty": [0, "never"]
+    "no-empty": [0, "never"],
+    "arrow-spacing": ["error", { "before": true, "after": true }],
+    "arrow-parens": ["error", "always"]
+
   }
 }

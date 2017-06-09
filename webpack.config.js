@@ -91,7 +91,58 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     new ModuleDependenciesPlugin({
       'aurelia-auth': ['./auth-filter'],
       'aurelia-polymer': ['./au-select-custom-attribute'],
-      'au-table': ['./au-table', './au-table-select', './au-table-sort']
+      'aurelia-config': ['./aurelia-config'],
+      'au-table': ['./au-table', './au-table-select', './au-table-sort', './au-table-pagination'],
+      'aurelia-validation': [
+        './aurelia-validation',
+        './controller-validate-result',
+        './get-target-dom-element',
+        './property-info',
+        './validate-binding-behavior-base',
+        './validate-binding-behavior',
+        './validate-instruction',
+        './validate-result',
+        './validate-trigger',
+        './validation-controller-factory',
+        './validation-controller',
+        './validation-errors-custom-attribute',
+        './validation-renderer-custom-attribute',
+        './validation-renderer',
+        './validator'
+      ]
+      // ,
+      // 'aurelia-form': [ './aurelia-form', './metadata',
+      //   './attribute/prefixed',
+      //   './component/aurelia-form',
+      //   './component/form-association',
+      //   './component/form-checkbox',
+      //   './component/form-error',
+      //   './component/form-help',
+      //   './component/form-label',
+      //   './component/form-select',
+      //   './component/entity-form',
+      //   './component/form-button',
+      //   './component/form-element',
+      //   './component/form-group',
+      //   './component/form-input',
+      //   './component/form-radio',
+      //   './component/form-textarea',
+      //   './component/view/bootstrap/aurelia-form.html',
+      //   './component/view/bootstrap/form-association.html',
+      //   './component/view/bootstrap/form-checkbox.html',
+      //   './component/view/bootstrap/form-error.html',
+      //   './component/view/bootstrap/form-help.html',
+      //   './component/view/bootstrap/form-label.html',
+      //   './component/view/bootstrap/form-select.html',
+      //   './component/view/bootstrap/entity-form.html',
+      //   './component/view/bootstrap/form-button.html',
+      //   './component/view/bootstrap/form-element.html',
+      //   './component/view/bootstrap/form-group.html',
+      //   './component/view/bootstrap/form-input.html',
+      //   './component/view/bootstrap/form-radio.html',
+      //   './component/view/bootstrap/form-textarea.html',
+      //   './decorator'
+      // ]
     }),
     new ProvidePlugin({
       'Promise': 'bluebird',
@@ -115,7 +166,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     { from: 'static/includes.html', to: 'includes.html' },
     { from: 'static/imgs', to: 'static/imgs' }]
   ),
-    new webpack.EnvironmentPlugin(['NODE_ENV', 'AuthProductionBaseURL', 'PORT', 'BackendUrl', 'GoogleClientId']),
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'AuthProductionBaseURL', 'PORT', 'BackendUrl', 'GoogleClientId', 'userRoles']),
     new webpack.DefinePlugin({'process.env': Object.keys(process.env).reduce((o, k) => {
       o[k] = JSON.stringify(process.env[k]);
       return o;

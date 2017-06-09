@@ -3,12 +3,13 @@ import {HttpClient, json} from 'aurelia-fetch-client';
 import {Router} from 'aurelia-router';
 const csvjson = require('csvjson');
 const filesaver = require('file-saver');
-@inject(HttpClient, Router, FileReader)
+@inject(HttpClient, Router, FileReader, filesaver)
 export class Librarian {
-  constructor(httpClient, router, reader){
+  constructor(httpClient, router, reader, saver){
     this.httpClient = httpClient;
     this.router = router;
     this.reader = reader;
+    this.filesaver = saver;
     this.newBook = {
       'title': '',
       'type': 'hardback',
@@ -34,13 +35,13 @@ export class Librarian {
   fileList = '';
 
   async activate(){
+    this.backend = '';
+    /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production'){
       this.backend = process.env.BackendUrl;
-    } else {
-      this.backend = '';
     }
     await fetch;
-    this.httpClient.configure(config => {
+    this.httpClient.configure((config) => {
       config
       .useStandardConfiguration()
       .withBaseUrl(this.backend);
@@ -62,7 +63,7 @@ export class Librarian {
       method: 'post',
       body: json(this.newBook)
     })
-    .then(data=>{
+    .then((data) => {
       this.router.navigate('/bookshelf');
     });
   }
@@ -79,8 +80,6 @@ export class Librarian {
     }
 
     function errorHandler(evt) {
-      //TODO no file attached
-      //TODO wrong file type attached
       alert('The file could not be read');
     }
 
@@ -89,20 +88,15 @@ export class Librarian {
         method: 'post',
         body: json(jsonObject)
       })
-      .then(response=>response.json())
-      .then(data=>{
+      .then((response) => response.json())
+      .then((data) => {
         setTimeout(function () {
-          if (newState === -1) {
-          }
+
         }, 2000);
         router.navigate('/bookshelf');
       });
     }
 
-    // if (CSVFilePath.files[0] !== null){
-    // TODO: Parse all csv files
-    // TODO: add check for browser support of FileReader
-    //TODO: do not run file reader if no csv file in the form
     this.reader.onload = loaded;
     this.reader.onerror = errorHandler;
     this.reader.readAsText(CSVFilePath.files[0]);
@@ -110,15 +104,17 @@ export class Librarian {
 
   makeCSVfile(){
     this.httpClient.fetch('/book/getall')
-    .then(response=>response.json())
-    .then(data=>{
+    .then((response) => response.json())
+    .then((data) => {
       const options = {
+        //delimiter: '/\t+/',
         headers: 'key'
       };
       this.books = JSON.stringify(data);
       this.books = csvjson.toCSV(data, options);
       const file = new File([this.books], 'books_export.csv', {type: 'text/plain;charset=utf-8'});
-      filesaver.saveAs(file);
+      this.filesaver.saveAs(file);
     });
   }
+
 }

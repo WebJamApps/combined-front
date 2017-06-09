@@ -30,14 +30,30 @@ export class App {
     this.userAccess = new UserAccess(this.appState);
     if (this.auth.isAuthenticated()) {
       this.authenticated = true; //Logout element is reliant upon a local var;
-      /* istanbul ignore else */
-      //if (this.appState.getUserID() === undefined){
       let uid = this.auth.getTokenPayload().sub;
       this.user = await this.appState.getUser(uid);
-      //TODO figure out why I can't get the user here!
-      console.log('the user from app ' + this.user);
-      //}
     }
+  }
+
+  configHttpClient() {
+    this.backend = '';
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production'){
+      this.backend = process.env.BackendUrl;
+    }
+    this.httpClient.configure((httpConfig) => {
+      httpConfig
+      .withDefaults({
+        mode: 'cors',
+        credentials: 'same-origin',
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .useStandardConfiguration()
+      .withBaseUrl(this.backend)
+      .withInterceptor(this.auth.tokenInterceptor); //Adds bearer token to every HTTP request.
+    });
   }
 
   configureRouter(config, router){
@@ -51,6 +67,7 @@ export class App {
       { route: 'login', name: 'login', moduleId: PLATFORM.moduleName('./login'), nav: false, title: 'Login', settings: 'fa fa-sign-in'},
       //{ route: 'news', name: 'news', moduleId: PLATFORM.moduleName('./news'), nav: true, title: 'News', settings: 'fa fa-file-text-o' },
       { route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./ohaf-home'), nav: false, title: 'OHAF', settings: 'fa fa-handshake-o' },
+      { route: 'sc2rs', name: 'sc2rs', moduleId: PLATFORM.moduleName('./sc2rs'), nav: false, title: 'SC2RS', settings: 'fa fa-microphone' },
       // { route: 'sc2rs', name: 'sc2rs', moduleId: './sc2rs-home', nav: true, title: 'SC2RS', settings: 'fa fa-star-o' },
       //      { route: 'librarian', name: 'librarian', moduleId: PLATFORM.moduleName('./librarian'), nav: true, title: 'Librarian', settings: 'fa fa-book' },
       { route: 'library', name: 'library', moduleId: PLATFORM.moduleName('./library'), nav: false, title: 'Library', settings: 'fa fa-book' },
@@ -69,7 +86,7 @@ export class App {
   }
 
   toggleMenu() {
-    console.debug(this.fullmenu);
+    //console.debug(this.fullmenu);
     if (this.fullmenu) {
       this.fullmenu = false;
       this.drawerWidth = '50px';
@@ -83,7 +100,7 @@ export class App {
     this.appState.setUser({});
     this.authenticated = false;
     this.auth.logout('/')
-    .then(()=>{
+    .then(() => {
       console.log('Promise fulfilled, logged out');
     });
   }
@@ -93,27 +110,6 @@ export class App {
     drawer.closeDrawer();
   }
 
-  configHttpClient() {
-    if (process.env.NODE_ENV !== 'production'){
-      this.backend = process.env.BackendUrl;
-    } else {
-      this.backend = '';
-    }
-    this.httpClient.configure(httpConfig => {
-      httpConfig
-      .withDefaults({
-        mode: 'cors',
-        credentials: 'same-origin',
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      .useStandardConfiguration()
-      .withBaseUrl(this.backend)
-      .withInterceptor(this.auth.tokenInterceptor); //Adds bearer token to every HTTP request.
-    });
-  }
-
   get currentRoute() {
     if (this.router.currentInstruction) {
       return this.router.currentInstruction.config.name;
@@ -121,22 +117,13 @@ export class App {
   }
 
   get currentRouteFrag() {
+    /* istanbul ignore else */
     if (this.router.currentInstruction) {
       return this.router.currentInstruction.fragment;
     }
   }
 
-  // get routeName() {
-  //   if (this.router.currentInstruction) {
-  //     return this.router.currentInstruction.config.name;
-  //   }
-  // }
-
   get currentStyles() {
-    //let routeName = '';
-    // if (this.router.currentInstruction) {
-    //   routeName = this.router.currentInstruction.config.name;
-    // }
     let result = {};
     if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') {
       result = {
@@ -160,13 +147,15 @@ export class App {
         menuToggleClass: 'home-menu-toggle'
       };
       //console.log('route')
-      console.log(this.currentRouteFrag);
+      //console.log(this.currentRouteFrag);
       if (this.currentRoute === 'music-router') {
         this.Menu = 'music';
-      // } else if (this.currentRoute === 'library') {
-      //   this.Menu = 'library';
+      } else if (this.currentRoute === 'library') {
+        this.Menu = 'library';
       } else if (this.currentRouteFrag === '/dashboard'){
         this.Menu = 'dashboard';
+      } else if (this.currentRouteFrag === '/bookshelf'){
+        this.Menu = 'bookshelf';
       } else if (this.currentRouteFrag === '/dashboard/developer'){
         this.Menu = 'developer';
       } else if (this.currentRouteFrag === '/dashboard/reader'){
@@ -177,6 +166,8 @@ export class App {
         this.Menu = 'charity';
       } else if (this.currentRouteFrag === '/dashboard/volunteer'){
         this.Menu = 'volunteer';
+      } else if (this.currentRouteFrag === '/dashboard/user-account'){
+        this.Menu = 'user-account';
       } else {
         this.Menu = 'wj';
       }

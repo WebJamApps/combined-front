@@ -1,5 +1,7 @@
 class RouterStub {
-  currentInstruction = { config: { title: 'Howdy is cool', name: 'yoyo' } }
+  currentInstruction = {
+    config: { title: 'Howdy is cool', name: 'yoyo' },
+    fragment: {} }
   configure(handler) {
     if (handler) {
       handler(this);
@@ -41,21 +43,19 @@ class AuthStub {
   }
   logout(data) {
     const response = 'user logged out';
-    return new Promise((resolve)=>{
-      resolve({json: ()=>response});
+    return new Promise((resolve) => {
+      resolve({json: () => response});
     });
   }
   getMe() {
     const response = 'This is user data';
-    return new Promise((resolve)=>{
-      resolve({json: ()=>response});
+    return new Promise((resolve) => {
+      resolve({json: () => response});
     });
   }
   getTokenPayload() {
     const response = this.token;
-    return new Promise((resolve)=>{
-      resolve({json: ()=>response});
-    });
+    return response;
   }
   isAuthenticated() {
     this.authenticated = true;
@@ -69,12 +69,25 @@ class AppStateStub {
     this.is_auth = false;
     this.roles = [];
   }
-  getUser() {
-    // this.user = {name: 'Iddris Elba', userType: 'Volunteer'};
-    return this.user;
+  getUser(uid) {
+    if (uid === '1'){
+      this.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    } else {
+      this.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: [], volCauses: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    }
+    // return Promise.resolve({
+    //   //Headers: this.headers,
+    //   resolve(this.user)
+    // });
+    return new Promise((resolve) => {
+      resolve(this.user);
+    });
   }
   setUser(input) {
     this.user = input;
+  }
+  checkUserRole() {
+    return this.roles;
   }
   getRoles() {
     return (this.roles);
@@ -88,7 +101,7 @@ class HttpMock {
   // this one catches the ajax and then resolves a custom json data.
   // real api calls will have more methods.
   constructor(data) {
-    this.user = data || {name: 'John Fitzgerald', userType: 'Charity'};
+    this.user = data || {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: [], volCauses: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
   }
   status = 500;
   headers = {accept: 'application/json', method: '', url: ''}
@@ -109,5 +122,6 @@ class HttpMock {
     });
   }
 }
+
 
 export {RouterStub, ConfigStub, AuthStub, AppStateStub, HttpMock};

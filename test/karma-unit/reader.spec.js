@@ -1,14 +1,15 @@
-
+import {App} from '../../src/app';
 import { Reader } from '../../src/dashboard-child-routes/reader.js';
-import {AuthStub, RouterStub, HttpMock} from './commons';
-const Counter = require('assertions-counter');
+import {AuthStub, HttpMock} from './commons';
+//const Counter = require('assertions-counter');
 
 describe('the Reader Module', () => {
   let auth;
-  let http;
-  let token = 'mhioj23yr675843ho12yv9852vbbjeywouitryhrcyqo7t89vu';
+  //let http;
+  //let token = 'mhioj23yr675843ho12yv9852vbbjeywouitryhrcyqo7t89vu';
   let reader;
-  let app = {};
+  //let reader2;
+  let app;
   let book = {
     'title': '',
     'type': 'hardback',
@@ -27,46 +28,43 @@ describe('the Reader Module', () => {
   };
   beforeEach(() => {
     auth = new AuthStub();
-    http = new HttpMock();
-    reader = new Reader(auth, http, app, new RouterStub());
-    auth.setToken(token);
+    auth.setToken({sub: 'aowifjawifhiawofjo'});
+    app = new App(auth, new HttpMock());
+    app.activate();
+    //auth = new AuthStub();
+    //http = new HttpMock();
+    reader = new Reader(app);
+    //reader2 = new Reader(App);
+    //auth.setToken(token);
   });
 
-  it('activate reader', done =>{
+  it('activate reader', (done) => {
     reader.activate();
     done();
   });
 
-  it('check out a particular book', done => {
+
+  it('check out a particular book', (done) => {
     reader.checkOutBook(book);
     done();
   });
 
-  it('check in a specific book', done => {
+  it('check in a specific book', (done) => {
     reader.checkInBook(book);
     done();
   });
-  
-  it('tests configHttpClient', (done) => {
-    const { add: ok } = new Counter(2, done);
-    reader.activate().then(() => {
-      reader.httpClient.__configureCallback(new(class {
-        withBaseUrl(opts) {
-          expect(opts).toBe(process.env.BackendUrl);
-          ok();
-          return this;
-        }
-        useStandardConfiguration() {
-          ok();
-          return this;
-        }
-      })());
-    });
+
+  it('check out a specific book', (done) => {
+    reader.user = {name: 'Froyo'};
+    reader.checkOutBook(book);
+    done();
   });
 
-  // it('set process.env.AuthIsON to false', done => {
-  //   process.env.AuthIsON = false;
-  //   reader = new Reader(auth, http, app, new RouterStub());
-  //   done();
-  // });
+  it('check out a book already taken', (done) => {
+    reader.activate().then(() => {
+      reader.checkOutBook(book);
+      reader.checkOutBook(book);
+      done();
+    });
+  });
 });

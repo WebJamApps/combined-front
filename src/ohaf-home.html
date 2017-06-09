@@ -1,77 +1,75 @@
 <template>
   <div class="page-content">
-
-    <!--TODO: Get components running on prod-->
-    <!--<slideshow-beside-text if.bind="widescreen"></slideshow-beside-text>-->
     <div if.bind="widescreen">
-      <iron-grid>
-        <div class="s6 m6 l6 xl6">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
 
+            <h2 class="material-content-h2" style="text-align:center;margin-left:10px">Helping Volunteers Find Charities</h2>
+            <p class="material-content-p" style="margin-left:10px; text-align:left">Our Hands And Feet (OHAF) helps find the right volunteer positions for you by
+              matching people with opportunities to help our local charities.
+              If you want to make a difference, want to add to the positive energy of the universe,
+              or just need volunteer hours to satisfy your club requirements, OHAF can help!
+            </p>
 
-          <h2 class="material-content-h2" style="text-align:center;margin-left:10px">Helping Volunteers Find Charities</h2>
-          <p class="material-content-p" style="margin-left:10px; text-align:left">Our Hands And Feet (OHAF) helps find the right volunteer positions for you by
-            matching people with opportunities to help our local charities.
-            If you want to make a difference, want to add to the positive energy of the universe,
-            or just need volunteer hours to satisfy your club requirements, OHAF can help!
-          </p>
+            <h2 class="material-content-h2" style="text-align:center;margin-left:10px">About Our Hands And Feet</h2>
+            <p class="material-content-p" style="text-align:left">OHAF was started in the summer of 2016. It grew out of a desire to give back to
+              the
+              community and a need to find appropriate opportunities to
+              give of time and talents. OHAF is still under development by a diverse team of dedicated programmers using
+              cutting edge web technologies. Keep checking back to see what new
+              features we have created! If you are interested in joining us in creating this awesome app, please contact us
+              at
+              <a style="text-decoration: underline;" href="mailto:OHAFmain@gmail.com"><strong>OHAFMain@gmail.com</strong>
+              </a>; we are always on the lookout for talented
+              individuals. If you have more money than time to give, we also accept contributions!
+            </p>
+          </div>
 
-          <h2 class="material-content-h2" style="text-align:center;margin-left:10px">About Our Hands And Feet</h2>
-          <p class="material-content-p" style="text-align:left">OHAF was started in the summer of 2016. It grew out of a desire to give back to
-            the
-            community and a need to find appropriate opportunities to
-            give of time and talents. OHAF is still under development by a diverse team of dedicated programmers using
-            cutting edge web technologies. Keep checking back to see what new
-            features we have created! If you are interested in joining us in creating this awesome app, please contact us
-            at
-            <a style="text-decoration: underline;" href="mailto:OHAFmain@gmail.com"><strong>OHAFMain@gmail.com</strong>
-            </a>; we are always on the lookout for talented
-            individuals. If you have more money than time to give, we also accept contributions!
-          </p>
+          <div class="col-md-6">
+            <polymer-slideshow class="home-slideshow" style="margin-top:-13px">
+              <!-- The dimensions of the images are 950x300 -->
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow1.png"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow2.png"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow3.png"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow4.png"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow5.png"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow6.png"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow7.png"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow8.png"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow9.png"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow10.png"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow11.png"></paper-card>
+              </polymer-slide>
+              <polymer-slide>
+                <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow12.png"></paper-card>
+              </polymer-slide>
+            </polymer-slideshow>
+
+          </div>
         </div>
-
-        <div class="s6 m6 l6 xl6">
-          <polymer-slideshow class="home-slideshow" style="margin-top:-13px">
-            <!-- The dimensions of the images are 950x300 -->
-            <polymer-slide>
-              <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow1.png"></paper-card>
-            </polymer-slide>
-            <polymer-slide>
-              <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow2.png"></paper-card>
-            </polymer-slide>
-            <polymer-slide>
-              <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow3.png"></paper-card>
-            </polymer-slide>
-            <polymer-slide>
-              <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow4.png"></paper-card>
-            </polymer-slide>
-            <polymer-slide>
-              <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow5.png"></paper-card>
-            </polymer-slide>
-            <polymer-slide>
-              <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow6.png"></paper-card>
-            </polymer-slide>
-            <polymer-slide>
-              <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow7.png"></paper-card>
-            </polymer-slide>
-            <polymer-slide>
-              <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow8.png"></paper-card>
-            </polymer-slide>
-            <polymer-slide>
-              <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow9.png"></paper-card>
-            </polymer-slide>
-            <polymer-slide>
-              <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow10.png"></paper-card>
-            </polymer-slide>
-            <polymer-slide>
-              <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow11.png"></paper-card>
-            </polymer-slide>
-            <polymer-slide>
-              <paper-card class="slideshowimage" image="../static/imgs/ohaf/slideshow12.png"></paper-card>
-            </polymer-slide>
-          </polymer-slideshow>
-
-        </div>
-      </iron-grid>
+      </div>
       <paper-material class="material-content-faq" elevation="2">
         <h2 class="material-content-h2" style="text-align:left; margin-left:10px">Frequently Asked Questions</h2>
         <p class="question">Q: What does OHAF do?</p>
@@ -212,7 +210,7 @@
             </div>
             <paper-material class="footer" elevation="4" style="padding:8px; background-color: #565656">
               <div class="paper-card-img">
-                
+
                 <span>&nbsp;&nbsp;</span><a style="color:#c09580" target="_blank" href="https://www.facebook.com/Our-Hands-and-Feet-350610878635036/">
                   <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
                 <span>&nbsp;&nbsp;</span><a style="color:#c09580" target="_blank" href="https://plus.google.com/u/0/109018742744548655017">

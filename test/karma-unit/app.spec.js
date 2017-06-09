@@ -11,7 +11,7 @@ class AuthStub2 extends AuthStub {
 
 function testAsync(runAsync) {
   return (done) => {
-    runAsync().then(done, e => { fail(e); done(); });
+    runAsync().then(done, (e) => { fail(e); done(); });
   };
 }
 
@@ -20,9 +20,9 @@ describe('the App module', () => {
   let app2;
 
   beforeEach(() => {
-    app1 = new App(new AuthStub, new HttpMock);
+    app1 = new App(new AuthStub(), new HttpMock());
     app1.auth.setToken('No token');
-    app2 = new App(new AuthStub2, new HttpMock);
+    app2 = new App(new AuthStub2(), new HttpMock());
   });
 
   it('tests configHttpClient', (done) => {
@@ -51,7 +51,7 @@ describe('the App module', () => {
     })());
   });
 
-  it('configures the router', done => {
+  it('configures the router', (done) => {
     let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
     app1.configureRouter(configStub, RouterStub);
     expect(app1.router).toBeDefined;
@@ -76,15 +76,110 @@ describe('the App module', () => {
     //expect(route).toBe('yoyo');
   }));
 
-  it('gets the current styles', done => {
-    app1.activate().then(() => {
-      let styles = app1.currentStyles;
-      expect(styles).toBe(defined);
-    });
+  it('gets the current fragment', (done) => {
+    app1.router = new RouterStub();
+    let frag = app1.currentRouteFrag;
+    app1.currentRoute;
+    expect(typeof frag).toBe('object');
     done();
   });
 
-  it('closes the menu on cellphone display', done => {
+  it('gets the current styles with ohaf route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.config.name = 'ohaf';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with library route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.config.name = 'library';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with dashboard route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with bookshelf route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/bookshelf';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with user-account route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/user-account';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles dashboard/volunteer route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/volunteer';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with dashboard/charity route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/charity';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with dashboard/reader route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/reader';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with dashboard/librarian route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/librarian';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+  it('gets the current styles with dashboard/developer route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/developer';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles with music-router route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.config.name = 'music-router';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('gets the current styles when route is null', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.config.name = '';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('closes the menu on cellphone display', (done) => {
     //console.log(app1);
     app1.activate().then(() => {
       app1.close();
@@ -93,7 +188,7 @@ describe('the App module', () => {
     done();
   });
 
-  it('should get widescreen', done => {
+  it('should get widescreen', (done) => {
     //console.log(app1);
     const app3 = new App(new AuthStub, new HttpMock);
     expect(app3.widescreen).toBe(true);

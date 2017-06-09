@@ -1,8 +1,40 @@
 <template>
   <div class="page-content">
     <paper-material class="material-content" elevation="0">
-    <h4 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Volunteer Dashboard</strong></h4>
-    <p>Manage your volunteering here.</p>
-  </paper-material>
-  </div>
+      <h4 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Volunteer Dashboard</strong></h4>
+      <p style="text-align:center; font-weight:bold">
+        Manage your Volunteering Here
+      </p>
+      <paper-material elevation="2" style="margin:auto; padding:10px; margin-top:20px; max-width:600px">
+        <p style="font-weight:bold; text-align:center">Your Volunteering Preferences</p>
+        <div class="search-table-outer" style="position:relative;overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th style="padding:8px; width:170px">Causes to Support</th>
+                <th style="padding:8px">Talents to Use</th>
+                <th style="padding:8px">Work to Perform</th>
+                <th style="padding:8px; width:94px">Max Travel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr valign="top">
+                <td id="causes" style="padding:8px">
+                </td>
+                <td id="talents" style="padding:8px">
+                </td>
+                <td id="works" style="padding:8px">
+                </td>
+                <td style="padding:8px">
+                  <p style="font-size:10pt; margin-bottom:10px" if.bind="user.volTravelDistMiles">${user.volTravelDistMiles} miles</p>
+                  <p style="font-size:10pt; margin-bottom:10px" if.bind="!user.volTravelDistMiles">not specified</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+<p style="margin-top:10px; text-align:center">Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences.</p>
+</paper-material>
+</paper-material>
+</div>
 </template>

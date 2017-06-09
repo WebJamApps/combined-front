@@ -13,35 +13,36 @@
               <th style="padding:8px">Pages</th>
               <th style="padding:8px">Year</th>
               <th style="padding:8px" aut-sort="key: siteLocation">Location</th>
-              <!-- <th>Copies</th> -->
               <th style="padding:8px">Comments</th>
             </tr>
           </thead>
           <tbody>
             <tr repeat.for="book of $displayData">
-              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'"><paper-button class="button-checkout" raised click.delegate="checkOutBook(book)"
-                if.bind = "book.checkedOutBy == ''">
-                Checkout</paper-button>
-                <paper-button class="button-checkin" raised click.delegate="checkInBook(book)"
-                if.bind = "uid==book.checkedOutBy">
-                Checkin</paper-button>
-                <span if.bind = "uid!==book.checkedOutBy">
-                  <span if.bind = "book.checkedOutBy!==''">Checked out by ${book.checkedOutByName}
-                  </span></span>
-                </td>
-                <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.title}</td>
-                <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.type}</td>
-                <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.author}</td>
-                <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.numberPages}</td>
-                <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.dateOfPub}</td>
-                <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.siteLocation}</td>
-                <!-- <td>${book.numberOfCopies}</td> -->
-                <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.comments}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </paper-material>
-
-    </div>
-  </template>
+              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">
+                <button class="button-checkout" raised click.delegate="checkOutBook(book)"
+                if.bind = "book.checkedOutBy == '' || book.checkedOutBy === undefined">
+                Checkout
+              </button>
+              <button class="button-checkin" raised click.delegate="checkInBook(book)"
+              if.bind = "uid==book.checkedOutBy">
+              Checkin
+            </button>
+            <span if.bind ="book.checkedOutBy!==undefined">
+              <span if.bind = "uid!==book.checkedOutBy">
+                <span if.bind = "book.checkedOutBy!==''">Checked out by ${book.checkedOutByName}
+                </span></span></span>
+              </td>
+              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.title}</td>
+              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.type}</td>
+              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.author}</td>
+              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.numberPages}</td>
+              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.dateOfPub}</td>
+              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.siteLocation}</td>
+              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.comments}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </paper-material>
+  </div>
+</template>
