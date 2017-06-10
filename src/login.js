@@ -1,29 +1,29 @@
-import {AuthService} from 'aurelia-auth';
+//import {AuthService} from 'aurelia-auth';
 import {inject} from 'aurelia-framework';
 import {App} from './app';
-import {Router} from 'aurelia-router';
-import {AppState} from './classes/AppState.js';
+//import {Router} from 'aurelia-router';
+//import {AppState} from './classes/AppState.js';
 
-@inject(AuthService, App, Router, AppState)
+@inject(App)
 export class Login {
-  constructor(authService, app, router, appState){
-    this.auth = authService;
+  constructor(app){
+    //this.auth = authService;
     this.app = app;
-    this.router = router;
-    this.appState = appState;
+    //this.router = router;
+    //this.appState = appState;
   }
 
   attached() {
-    this.title = this.router.currentInstruction.config.title;
+    this.title = this.app.router.currentInstruction.config.title;
   }
 
   authenticate(name){
-    console.log('in auth');
-    let ret = this.auth.authenticate(name, false, null);
+    //console.log('in auth');
+    let ret = this.app.auth.authenticate(name, false, null);
     ret.then((data) => {
-      this.auth.setToken(data.token);
+      this.app.auth.setToken(data.token);
       //this.appState.setAuth(this.auth.isAuthenticated());
-      console.log('In login authenticate');
+      //console.log('In login authenticate');
       //console.log(this.appState.getRoles());
     }, undefined);
     return ret;
