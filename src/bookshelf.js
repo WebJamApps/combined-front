@@ -1,9 +1,9 @@
 import {inject} from 'aurelia-framework';
-import {HttpClient} from 'aurelia-fetch-client';
-@inject(HttpClient)
+import {App} from './app';
+@inject(App)
 export class Bookshelf {
-  constructor(httpClient){
-    this.httpClient = httpClient;
+  constructor(app){
+    this.app = app;
     this.filterType = '';
   }
 
@@ -17,20 +17,8 @@ export class Bookshelf {
   siteLocation = false;
 
   async activate(){
-    this.backend = '';
-    /* istanbul ignore else */
-    if (process.env.NODE_ENV !== 'production'){
-      this.backend = process.env.BackendUrl;
-    }
-    await fetch;
-    //if (process.env.NODE_ENV !== 'production'){
-    this.httpClient.configure((config) => {
-      config
-      .useStandardConfiguration()
-      .withBaseUrl(this.backend);
-    });
-    const res = await this.httpClient.fetch('/book/getall');
-    this.books =  await res.json();
+    const res = await this.app.httpClient.fetch('/book/getall');
+    this.books = await res.json();
     this.populateTypes();
     this.populateSites();
   }
@@ -81,7 +69,6 @@ export class Bookshelf {
     this.mediaTypes.push('');
     for (let next of this.books){
       let nextType = next.type;
-      /* istanbul ignore else */
       if (this.mediaTypes.indexOf(nextType) === -1){
         this.mediaTypes.push(nextType);
       }
@@ -92,7 +79,6 @@ export class Bookshelf {
     this.siteLocations.push('');
     for (let next of this.books){
       let nextSite = next.siteLocation;
-      /* istanbul ignore else */
       if (this.siteLocations.indexOf(nextSite) === -1){
         this.siteLocations.push(nextSite);
       }
