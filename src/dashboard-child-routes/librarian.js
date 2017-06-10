@@ -75,7 +75,11 @@ export class Librarian {
 
     function loaded (evt) {
       const fileString = evt.target.result;
-      jsonObj = csvjson.toObject(fileString);
+      const options = {
+        delimiter: '\t'
+      };
+      jsonObj = csvjson.toObject(fileString, options);
+      //jsonObj = csvjson.toObject(fileString);
       makeLotaBooks(jsonObj);
     }
 
@@ -107,7 +111,7 @@ export class Librarian {
     .then((response) => response.json())
     .then((data) => {
       const options = {
-        //delimiter: '/\t+/',
+        delimiter: '\t',
         headers: 'key'
       };
       this.books = JSON.stringify(data);
