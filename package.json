@@ -19,13 +19,14 @@
     "test:karma": "cross-env NODE_ENV=test nps test.lint && nps test.karma",
     "test:debug": "cross-env NODE_ENV=test nps test.karma.debug",
     "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && npm i -g yarn && yarn cache clean && yarn install && npm run postinstall:backend",
-    "postinstall:backend": "npm run fix:aurelia-val && yarn global add bower && bower install && npm run vulc && npm start -- build",
+    "postinstall:backend": "yarn global add bower && bower install && npm run vulc && npm start -- build",
     "vulc": "rm -rf static/includes.html && polymer-bundler --inline-scripts --inline-css includes.html > static/includes.html",
     "prod": "npm run vulc && npm start -- build && npm start -- serve",
     "snyk-protect": "snyk protect",
     "eslint-fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "postinstall": "npm run fix:aurelia-val"
   },
   "dependencies": {
     "au-table": "^0.1.12",
