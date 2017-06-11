@@ -1,13 +1,14 @@
 import {inject} from 'aurelia-framework';
-import {HttpClient, json} from 'aurelia-fetch-client';
-import {Router} from 'aurelia-router';
+//import {HttpClient, json} from 'aurelia-fetch-client';
+//import {Router} from 'aurelia-router';
+import {App} from '../app';
 const csvjson = require('csvjson');
 const filesaver = require('file-saver');
-@inject(HttpClient, Router, FileReader, filesaver)
+@inject(App, FileReader, filesaver)
 export class Librarian {
-  constructor(httpClient, router, reader, saver){
-    this.httpClient = httpClient;
-    this.router = router;
+  constructor(app, reader, saver){
+    this.app = app;
+    //this.router = router;
     this.reader = reader;
     this.filesaver = saver;
     this.newBook = {
@@ -34,19 +35,19 @@ export class Librarian {
   CSVFilePath = {files: ['']};
   fileList = '';
 
-  async activate(){
-    this.backend = '';
-    /* istanbul ignore else */
-    if (process.env.NODE_ENV !== 'production'){
-      this.backend = process.env.BackendUrl;
-    }
-    await fetch;
-    this.httpClient.configure((config) => {
-      config
-      .useStandardConfiguration()
-      .withBaseUrl(this.backend);
-    });
-  }
+  // async activate(){
+  //   this.backend = '';
+  //   /* istanbul ignore else */
+  //   if (process.env.NODE_ENV !== 'production'){
+  //     this.backend = process.env.BackendUrl;
+  //   }
+  //   await fetch;
+  //   this.httpClient.configure((config) => {
+  //     config
+  //     .useStandardConfiguration()
+  //     .withBaseUrl(this.backend);
+  //   });
+  // }
 
   createBook(){
     if (this.newBook.type !== 0){
@@ -59,19 +60,19 @@ export class Librarian {
     } else {
       this.newBook.access = 'Public';
     }
-    this.httpClient.fetch('/book/create', {
+    this.app.httpClient.fetch('/book/create', {
       method: 'post',
       body: json(this.newBook)
     })
     .then((data) => {
-      this.router.navigate('/bookshelf');
+      this.app.router.navigate('/bookshelf');
     });
   }
 
   createBooksFromCSV(){
     let jsonObj;
-    const httpClient = this.httpClient;
-    const router = this.router;
+    const httpClient = this.app.httpClient;
+    const router = this.app.router;
 
     function loaded (evt) {
       const fileString = evt.target.result;
@@ -107,7 +108,7 @@ export class Librarian {
   }
 
   makeCSVfile(){
-    this.httpClient.fetch('/book/getall')
+    this.app.httpClient.fetch('/book/getall')
     .then((response) => response.json())
     .then((data) => {
       const options = {
