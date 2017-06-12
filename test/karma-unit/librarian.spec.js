@@ -47,34 +47,34 @@ describe('the librarian module', () => {
   //   done();
   // });
 
-  it('should confirm a http status change', (done) => {
-    window.CSVFilePath = {files: [new Blob([csvFixture.string])] };
-    librarian.createBooksFromCSV();
-    // if dashbook.createBooksFromCSV is called, it should called the makeLotaBooks that
-    // places a http call and HttpMock will respond to it and also change the status.
-    setTimeout(function() {
-      if (newState === -1) {
-        expect(http.status).toBe(200);
-      }
-    }, 10);
-    done();
-  });
+  // it('should confirm a http status change', (done) => {
+  //   window.CSVFilePath = {files: [new Blob([csvFixture.string])] };
+  //   librarian.createBooksFromCSV();
+  //   // if dashbook.createBooksFromCSV is called, it should called the makeLotaBooks that
+  //   // places a http call and HttpMock will respond to it and also change the status.
+  //   setTimeout(function() {
+  //     if (newState === -1) {
+  //       expect(http.status).toBe(200);
+  //     }
+  //   }, 10);
+  //   done();
+  // });
 
   //TODO it should wait 2 seconds and then redirect to the bookshelf
   //expect this.router.currentInstruction.config.name toBe 'bookshelf'
 
-  it('should raise a file reader error', (done) => {
-    window.CSVFilePath = {files: [new Blob()] };
-    let error = new Event('error');
-    librarian.createBooksFromCSV();
-    // if dashbook.createBooksFromCSV is called, it should called the makeLotaBooks that
-    // places a http call and HttpMock will respond to it and also change the status.
-    reader.dispatchEvent(error);
-    setTimeout(function() {
-      //expect(http.status).toBe(200);
-    }, 10);
-    done();
-  });
+  // it('should raise a file reader error', (done) => {
+  //   window.CSVFilePath = {files: [new Blob()] };
+  //   let error = new Event('error');
+  //   librarian.createBooksFromCSV();
+  //   // if dashbook.createBooksFromCSV is called, it should called the makeLotaBooks that
+  //   // places a http call and HttpMock will respond to it and also change the status.
+  //   reader.dispatchEvent(error);
+  //   setTimeout(function() {
+  //     //expect(http.status).toBe(200);
+  //   }, 10);
+  //   done();
+  // });
 
   // it('should convert from csv and then post that array of books', (done) => {
   //   fileReaderStub.readAsText = () => {};

@@ -16,8 +16,8 @@ module.exports = {
           rimraf('test/karma-coverage'),
           'karma start test/karma.conf.js'
         ),
-        watch: 'karma start test/karma.conf.js --single-run=false --auto-watch=true',
-        debug: 'karma start test/karma.conf.js --single-run=false --auto-watch=true --debug'
+        watch: 'karma start test/karma.conf.js --auto-watch --no-single-run',
+        debug: 'karma start test/karma.conf.js --auto-watch --no-single-run --debug'
       },
       lint: {
         default: 'eslint .',
