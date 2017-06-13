@@ -80,7 +80,6 @@ export class Librarian {
         delimiter: '\t'
       };
       jsonObj = csvjson.toObject(fileString, options);
-      //jsonObj = csvjson.toObject(fileString);
       makeLotaBooks(jsonObj);
     }
 
@@ -117,7 +116,7 @@ export class Librarian {
       };
       this.books = JSON.stringify(data);
       this.books = csvjson.toCSV(data, options);
-      const file = new File([this.books], 'books_export.csv', {type: 'text/plain;charset=utf-8'});
+      const file = new File([this.books], 'books_export.txt', {type: 'text/plain;charset=utf-8'});
       this.filesaver.saveAs(file);
     });
   }
