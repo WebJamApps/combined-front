@@ -27,25 +27,25 @@ describe('the librarian module', () => {
     done();
   });
 
-  // it('should confirm 200 https status after createBook is run', (done) => {
-  //   librarian.createBook();
-  //   expect(http.status).toBe(200);
-  //   done();
-  // });
+  it('should confirm 200 https status after createBook is run', (done) => {
+    librarian.createBook();
+    expect(http.status).toBe(200);
+    done();
+  });
 
-  // it('should log a new book type when book is undefined', (done) => {
-  //   librarian.newBook.type = 0;
-  //   librarian.createBook();
-  //   expect(http.status).toBe(200);
-  //   done();
-  // });
+  it('should log a new book type when book is undefined', (done) => {
+    librarian.newBook.type = 0;
+    librarian.createBook();
+    expect(http.status).toBe(200);
+    done();
+  });
 
-  // it('should default to Public access when book access is undefined', (done) => {
-  //   librarian.newBook.access = 0;
-  //   librarian.createBook();
-  //   expect(http.status).toBe(200);
-  //   done();
-  // });
+  it('should default to Public access when book access is undefined', (done) => {
+    librarian.newBook.access = 0;
+    librarian.createBook();
+    expect(http.status).toBe(200);
+    done();
+  });
 
   // it('should confirm a http status change', (done) => {
   //   window.CSVFilePath = {files: [new Blob([csvFixture.string])] };
@@ -60,42 +60,42 @@ describe('the librarian module', () => {
   //   done();
   // });
 
-  //TODO it should wait 2 seconds and then redirect to the bookshelf
+  //it should wait 2 seconds and then redirect to the bookshelf
   //expect this.router.currentInstruction.config.name toBe 'bookshelf'
 
-  // it('should raise a file reader error', (done) => {
-  //   window.CSVFilePath = {files: [new Blob()] };
-  //   let error = new Event('error');
-  //   librarian.createBooksFromCSV();
-  //   // if dashbook.createBooksFromCSV is called, it should called the makeLotaBooks that
-  //   // places a http call and HttpMock will respond to it and also change the status.
-  //   reader.dispatchEvent(error);
-  //   setTimeout(function() {
-  //     //expect(http.status).toBe(200);
-  //   }, 10);
-  //   done();
-  // });
+  it('should raise a file reader error', (done) => {
+    window.CSVFilePath = {files: [new Blob()] };
+    let error = new Event('error');
+    librarian.createBooksFromCSV();
+    // if dashbook.createBooksFromCSV is called, it should called the makeLotaBooks that
+    // places a http call and HttpMock will respond to it and also change the status.
+    librarian.reader.dispatchEvent(error);
+    setTimeout(function() {
+      //expect(http.status).toBe(200);
+    }, 10);
+    done();
+  });
 
   // it('should convert from csv and then post that array of books', (done) => {
-  //   fileReaderStub.readAsText = () => {};
+  //   librarian.reader.readAsText = () => {};
   //   librarian.createBooksFromCSV();
-  //   librarian.httpClient.fetch = (url, {body: blob}) => {
-  //     const reader = new FileReader();
-  //     reader.onload =  () => {
-  //       const data = new TextDecoder('utf8').decode(reader.result);
+  //   librarian.app.httpClient.fetch = (url, {body: blob}) => {
+  //     //const reader = new FileReader();
+  //     librarian.reader.onload =  () => {
+  //       const data = new TextDecoder('utf8').decode(librarian.reader.result);
   //       expect(JSON.parse(data)).toBeDefined;
   //       done();
   //     };
-  //     reader.readAsArrayBuffer(blob);
+  //     librarian.reader.readAsArrayBuffer(blob);
   //     return new Promise(() => {}); // don't resolve
   //   };
-  //   fileReaderStub.onload({ target: { result: csvFixture.string } });
+  //   librarian.reader.onload({ target: { result: csvFixture.string } });
   // });
 
-  it('should make a .csv file', (done) => {
-    //TODO mock the filesaver
-    librarian.makeCSVfile();
-    //expect(http2.status).toBe(200);
-    done();
-  });
+  // it('should make a .csv file', (done) => {
+  //
+  //   librarian.makeCSVfile();
+  //   //expect(http2.status).toBe(200);
+  //   done();
+  // });
 });
