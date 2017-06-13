@@ -1,5 +1,5 @@
 import {inject} from 'aurelia-framework';
-//import {HttpClient, json} from 'aurelia-fetch-client';
+import {json} from 'aurelia-fetch-client';
 //import {Router} from 'aurelia-router';
 import {App} from '../app';
 const csvjson = require('csvjson');
