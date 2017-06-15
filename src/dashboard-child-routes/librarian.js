@@ -69,19 +69,48 @@ export class Librarian {
     });
   }
 
+  async deleteBooks(){
+    await fetch;
+    this.app.httpClient.fetch('/book/deleteall', {
+      method: 'get'
+      //body: json(this.newBook)
+    });
+    //this.createBooksFromCSV();
+    // .then((data) => {
+    //   this.app.router.navigate('/bookshelf');
+    // });
+  }
+
+  async deleteCreateBooks(){
+    await fetch;
+    this.app.httpClient.fetch('/book/deleteall', {
+      method: 'get'
+      //body: json(this.newBook)
+    });
+    setTimeout(function () {
+
+    }, 4000);
+    this.createBooksFromCSV();
+    // .then((data) => {
+    //   this.app.router.navigate('/bookshelf');
+    // });
+  }
+
   createBooksFromCSV(){
     let jsonObj;
     const httpClient = this.app.httpClient;
     const router = this.app.router;
 
-    function loaded (evt) {
+    async function loaded (evt) {
       const fileString = evt.target.result;
       const options = {
         delimiter: '\t'
       };
       jsonObj = csvjson.toObject(fileString, options);
+      //if (Object.keys(jsonObj).length !== 0 && jsonObj.constructor === Object){
       makeLotaBooks(jsonObj);
     }
+
 
     function errorHandler(evt) {
       alert('The file could not be read');
