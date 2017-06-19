@@ -82,15 +82,22 @@ export class Librarian {
   }
 
   async deleteCreateBooks(){
+    // let fakeobj = {};
+    // fakeobj.query = {};
+    //let createcsv = this.createBooksFromCSV;
     await fetch;
     this.app.httpClient.fetch('/book/deleteall', {
       method: 'get'
-      //body: json(this.newBook)
+      //body: json(fakeobj)
     });
-    setTimeout(function () {
-
-    }, 4000);
+    // .then({
+    //   createcsv();
+  //  );
     this.createBooksFromCSV();
+    // setTimeout(function () {
+    //
+    // }, 4000);
+
     // .then((data) => {
     //   this.app.router.navigate('/bookshelf');
     // });
@@ -102,6 +109,7 @@ export class Librarian {
     const router = this.app.router;
 
     async function loaded (evt) {
+      console.log('in csv create');
       const fileString = evt.target.result;
       const options = {
         delimiter: '\t'
@@ -116,7 +124,7 @@ export class Librarian {
       alert('The file could not be read');
     }
 
-    function makeLotaBooks (jsonObject) {
+    async function makeLotaBooks (jsonObject) {
       httpClient.fetch('/book/create', {
         method: 'post',
         body: json(jsonObject)
