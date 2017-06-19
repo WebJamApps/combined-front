@@ -75,6 +75,7 @@ export class Librarian {
       method: 'get'
       //body: json(this.newBook)
     });
+    this.app.router.navigate('/bookshelf');
     //this.createBooksFromCSV();
     // .then((data) => {
     //   this.app.router.navigate('/bookshelf');
@@ -89,11 +90,13 @@ export class Librarian {
     this.app.httpClient.fetch('/book/deleteall', {
       method: 'get'
       //body: json(fakeobj)
+    }).then((response) => {
+      this.createBooksFromCSV();
     });
     // .then({
     //   createcsv();
   //  );
-    this.createBooksFromCSV();
+    //this.createBooksFromCSV();
     // setTimeout(function () {
     //
     // }, 4000);

@@ -3,9 +3,17 @@
 paper-item:hover {
   background-color: white;
 }
+.mobile-menu-toggle{
+  position:fixed;
+  top: 23px;
+  right: 20px;
+  background-color:#2a222a;
+  padding:10px;
+  z-index:90000;
+}
 </style>
 <div class="page-host">
-  <paper-drawer-panel id="drawerPanel" right-drawer drawer-width.bind="drawerWidth">
+  <paper-drawer-panel id="drawerPanel" disable-edge-swipe right-drawer drawer-width.bind="drawerWidth">
     <paper-header-panel drawer class="${currentStyles.sidebarClass}">
       <div>
         <paper-card if.bind="fullmenu" image="${currentStyles.sidebarImagePath}" alt="Web Jam"></paper-card>
@@ -151,7 +159,7 @@ paper-item:hover {
         </h3>
       </paper-card>
     </paper-material>
-    <i class="fa fa-bars pull-right fa-2x mobile-menu-toggle" paper-drawer-toggle aria-hidden="true"></i>
+    <i class="fa fa-bars pull-right fa-2x mobile-menu-toggle" style='' paper-drawer-toggle aria-hidden="true"></i>
     <router-view></router-view>
   </paper-header-panel>
 </paper-drawer-panel>
