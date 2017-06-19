@@ -19,6 +19,7 @@ export class Bookshelf {
   async activate(){
     const res = await this.app.httpClient.fetch('/book/getall');
     this.books = await res.json();
+    console.log(this.books);
     this.populateTypes();
     this.populateSites();
   }
