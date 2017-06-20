@@ -4,21 +4,44 @@ import {Librarian} from '../../src/dashboard-child-routes/librarian';
 import './setup';
 import {csvFixture} from './librarian.spec.fixtures';
 import csvjson from 'csvjson';
-// import filesaver from 'file-saver';
-//const Counter = require('assertions-counter');
+import {Validator} from 'aurelia-validation';
+
+class VCMock {
+  createForCurrentScope(validator) {
+    return {validateTrigger: null};
+  }
+}
+
+class ValidatorMock extends Validator {
+  constructor(a, b) {
+    super();
+    this.a = a;
+    this.b = b;
+  }
+  validateObject(obj, rules) {
+    return Promise.resolve([{name: 'john', valid: true}]);
+  }
+  validateProperty(prop, val, rules) {
+    return Promise.resolve({});
+  }
+}
 
 describe('the librarian module', () => {
   let librarian;
   let app1;
   let http;
   let reader;
+  let vc;
+  let val;
   global.CSVFilePath = { files: [csvFixture.string] };
   beforeEach(() => {
     http = new HttpMock();
     reader = new FileReader();
     app1 = new App(new AuthStub(), http);
+    vc = new VCMock();
+    val = new ValidatorMock();
     app1.activate();
-    librarian = new Librarian(app1, reader, {});
+    librarian = new Librarian(app1, reader, {}, vc, val);
     librarian.CSVFilePath = {files: [csvFixture.string]};
   });
   it('should parse the csv.fixtures into object', (done) => {

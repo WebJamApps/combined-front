@@ -1,7 +1,6 @@
 import {Dashboard} from '../../src/dashboard';
 import {App} from '../../src/app';
 import {StageComponent} from 'aurelia-testing';
-//const Counter = require('assertions-counter');
 import {AuthStub, HttpMock, AppStateStub, RouterStub} from './commons';
 import {Validator} from 'aurelia-validation';
 

@@ -1,25 +1,21 @@
 import {inject} from 'aurelia-framework';
 import {json} from 'aurelia-fetch-client';
 import {App} from '../app';
-//import { ValidationControllerFactory, Validator} from 'aurelia-validation';
-// import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
-//import {FormValidator} from '../classes/FormValidator';
+import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
+import {FormValidator} from '../classes/FormValidator';
 const csvjson = require('csvjson');
 const filesaver = require('file-saver');
-// @inject(App, FileReader, filesaver, ValidationControllerFactory, Validator)
-@inject(App, FileReader, filesaver)
+@inject(App, FileReader, filesaver, ValidationControllerFactory, Validator)
 export class Librarian {
   controller = null;
   validator = null;
-  //constructor(app, reader, saver, controllerFactory, validator){
-  constructor(app, reader, saver){
+  constructor(app, reader, saver, controllerFactory, validator){
     this.app = app;
     this.reader = reader;
     this.filesaver = saver;
-    //this.selectedFiles = [];
     this.newBook = {
       'title': '',
-      'type': 'hardback',
+      'type': '',
       'author': '',
       'numberPages': 0,
       'dateOfPub': 0,
@@ -33,21 +29,27 @@ export class Librarian {
       'checkedOutByName': ''
     };
     this.books = {};
-    // this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
-    // this.controller = controllerFactory.createForCurrentScope(this.validator);
-    // this.controller.validateTrigger = validateTrigger.changeOrBlur;
+    this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
+    this.controller = controllerFactory.createForCurrentScope(this.validator);
+    this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;  //the button on the form
     this.validType = false;
   }
 
-  types = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audiobook', 'template'];
+  types = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audio', 'graphic'];
   accessArray = ['Private', 'Public'];
-  newBook = null;
-  //CSVFilePath = {files: ['']};
-  _validFileExtensions = ['.txt'];
+  //newBook = null;
+
+  async activate(){
+    //let uid = this.app.auth.getTokenPayload().sub;
+    //this.user = await this.app.appState.getUser(uid);
+    this.types.sort();
+    this.types.push('other');
+    //this.states.sort();
+    this.setupValidation();
+  }
 
   textFileValidate() {
-    //let arrInputs = document.getElementById('CSVFilePath');
     let nub = document.getElementById('deleteCreateButton');
     nub.style.display = 'none';
     console.log('i am validating');
@@ -66,58 +68,45 @@ export class Librarian {
       }
       alert('Sorry, ' + oInput.type + ' is an invalid file type.');
       return false;
-      //sFileName = oInput.value;
-      // if (sFileName.length > 0) {
-      //   blnValid = false;
-      // for (let j = 0; j < _validFileExtensions.length; j++) {
-      //   sCurExtension = _validFileExtensions[j];
-      //   if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() === sCurExtension.toLowerCase()) {
-      //     blnValid = true;
-      //     nub.style.display = 'block';
-      //     break;
-      //   }
-      // }
-      //       if (!blnValid) {
-      //         alert('Sorry, ' + sFileName + ' is invalid, allowed extensions are: ' + _validFileExtensions.join(', '));
-      //         return false;
-      //       }
-      //     }
-      //   }
-      // }
-      // return true;
     }
   }
-  // setupValidation() {
-  //   ValidationRules
-  //   //.ensure(this.selectedFiles[0]).matches(/^\s*$/);
-  // }
-  //
-  // validate() {
-  //   return this.validator.validateObject(this.selectedFiles);
-  // }
-  //
-  // updateCanSubmit(validationResults) {
-  //   let valid = true;
-  //   let nub = document.getElementById('deleteCreateButton');
-  //   nub.style.display = 'none';
-  //   for (let result of validationResults) {
-  //     if (result.valid === false){
-  //       valid = false;
-  //       break;
-  //     }
-  //   }
-  //   this.canSubmit = valid;
-  //   if (this.canSubmit){
-  //     nub.style.display = 'block';
-  //   }
-  //   return this.canSubmit;
-  // }
+
+  setupValidation() {
+    ValidationRules
+    .ensure('title').required().maxLength(40).withMessage('Title is required')
+    .ensure('type').required().withMessage('Media Type is required')
+    .on(this.newBook);
+  }
+
+  validate() {
+    return this.validator.validateObject(this.newBook);
+  }
+
+  updateCanSubmit(validationResults) {
+    let valid = true;
+    let nub = document.getElementById('createMediaButton');
+    nub.style.display = 'none';
+    console.log('checking if I can submit');
+    console.log(this.newBook.type);
+    for (let result of validationResults) {
+      if (result.valid === false){
+        valid = false;
+        nub.style.display = 'none';
+        break;
+      }
+    }
+    this.canSubmit = valid;
+    if (this.canSubmit && this.newBook.type !== 0){
+      nub.style.display = 'block';
+    }
+    return this.canSubmit;
+  }
 
   createBook(){
     if (this.newBook.type !== 0){
       this.newBook.type = this.types[this.newBook.type - 1];
     } else {
-      this.newBook.type = 'book';
+      this.newBook.type = 'paperback';
     }
     if (this.newBook.access !== 0){
       this.newBook.access = this.accessArray[this.newBook.access - 1];
