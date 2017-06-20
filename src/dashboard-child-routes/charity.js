@@ -70,9 +70,7 @@ export class Charity {
         }
       }
     }
-    //this.newCharity.charityTypes = this.selectedTypes;
     if (this.newCharity.charityTypes.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
       this.typeOther = true;
     } else {
       this.typeOther = false;
@@ -83,7 +81,6 @@ export class Charity {
   setupValidation() {
     ValidationRules
     .ensure('charityPhoneNumber').matches(/[2-9]\d{9}/).maxLength(10).withMessage('10 digit phone number')
-    //.ensure('charityTypes').required().withMessage('select a charity type')
     .ensure('charityZipCode').required().matches(/\d{5}/).maxLength(5).withMessage('5-digit zipcode')
     .ensure('charityCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
     .ensure('charityName').required().maxLength(40).withMessage('Charity name please')

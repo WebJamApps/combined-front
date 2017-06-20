@@ -11,17 +11,18 @@
         <h4 class="material-header-h4">Import Books</h4>
         <p style="text-align:center">from a tab-separated .txt file</p>
         <form>
-          <input id="CSVFilePath" type="file" accept=".txt" files.bind="selectedFiles" style="padding-left: 100px" />
-          <button class="button-lib" raised click.trigger="deleteCreateBooks()">
+          <input id="CSVFilePath" type="file" accept=".txt" files.bind="selectedFiles" style="padding-left: 100px" change.delegate="textFileValidate()"/>
+          <button id="deleteCreateButton" class="button-lib" style="display:none" raised click.trigger="deleteCreateBooks()">
             Import
           </button>
         </form>
+        <p style="padding:16px; max-width:7in; margin:auto">
+          Special characters (copyright symbol, registered trademark and so forth) are suppoted by using
+          <a href="https://www.w3schools.com/html/html_entities.asp" target="_blank">HTML character entities</a>
+          in the .txt file.
+        </p>
       </paper-material>
-      <p style="padding:16px; max-width:7in; margin:auto">
-        Special characters (copyright symbol, registered trademark and so forth) are suppoted by using
-        <a href="https://www.w3schools.com/html/html_entities.asp" target="_blank">HTML character entities</a>
-        in the .txt file.
-      </p>
+      <p>&nbsp;</p>
       <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
         <h4 class="material-header-h4">Export Books</h4>
         <p style="text-align:center">to a tab-separated .txt file</p>
@@ -74,6 +75,7 @@
           </button>
         </form>
       </paper-material>
+        <p>&nbsp;</p>
     </div>
   </div>
 </template>
