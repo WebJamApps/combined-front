@@ -1,16 +1,22 @@
 import {inject} from 'aurelia-framework';
 import {json} from 'aurelia-fetch-client';
-//import {Router} from 'aurelia-router';
 import {App} from '../app';
+//import { ValidationControllerFactory, Validator} from 'aurelia-validation';
+// import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
+//import {FormValidator} from '../classes/FormValidator';
 const csvjson = require('csvjson');
 const filesaver = require('file-saver');
+// @inject(App, FileReader, filesaver, ValidationControllerFactory, Validator)
 @inject(App, FileReader, filesaver)
 export class Librarian {
+  controller = null;
+  validator = null;
+  //constructor(app, reader, saver, controllerFactory, validator){
   constructor(app, reader, saver){
     this.app = app;
-    //this.router = router;
     this.reader = reader;
     this.filesaver = saver;
+    //this.selectedFiles = [];
     this.newBook = {
       'title': '',
       'type': 'hardback',
@@ -27,26 +33,84 @@ export class Librarian {
       'checkedOutByName': ''
     };
     this.books = {};
+    // this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
+    // this.controller = controllerFactory.createForCurrentScope(this.validator);
+    // this.controller.validateTrigger = validateTrigger.changeOrBlur;
+    this.canSubmit = false;  //the button on the form
+    this.validType = false;
   }
 
   types = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audiobook', 'template'];
   accessArray = ['Private', 'Public'];
   newBook = null;
-  CSVFilePath = {files: ['']};
-  fileList = '';
+  //CSVFilePath = {files: ['']};
+  _validFileExtensions = ['.txt'];
 
-  // async activate(){
-  //   this.backend = '';
-  //   /* istanbul ignore else */
-  //   if (process.env.NODE_ENV !== 'production'){
-  //     this.backend = process.env.BackendUrl;
+  textFileValidate() {
+    //let arrInputs = document.getElementById('CSVFilePath');
+    let nub = document.getElementById('deleteCreateButton');
+    nub.style.display = 'none';
+    console.log('i am validating');
+    console.log(CSVFilePath.files);
+    if (CSVFilePath.files.length === 0) {
+      alert('no file was selected');
+      return false;
+    }
+    for (let i = 0; i < CSVFilePath.files.length; i++) {
+      let oInput = CSVFilePath.files[i];
+      console.log(oInput.type);
+      if (oInput.type === 'text/plain') {
+        console.log('type is a plain text file');
+        nub.style.display = 'block';
+        return true;
+      }
+      alert('Sorry, ' + oInput.type + ' is an invalid file type.');
+      return false;
+      //sFileName = oInput.value;
+      // if (sFileName.length > 0) {
+      //   blnValid = false;
+      // for (let j = 0; j < _validFileExtensions.length; j++) {
+      //   sCurExtension = _validFileExtensions[j];
+      //   if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() === sCurExtension.toLowerCase()) {
+      //     blnValid = true;
+      //     nub.style.display = 'block';
+      //     break;
+      //   }
+      // }
+      //       if (!blnValid) {
+      //         alert('Sorry, ' + sFileName + ' is invalid, allowed extensions are: ' + _validFileExtensions.join(', '));
+      //         return false;
+      //       }
+      //     }
+      //   }
+      // }
+      // return true;
+    }
+  }
+  // setupValidation() {
+  //   ValidationRules
+  //   //.ensure(this.selectedFiles[0]).matches(/^\s*$/);
+  // }
+  //
+  // validate() {
+  //   return this.validator.validateObject(this.selectedFiles);
+  // }
+  //
+  // updateCanSubmit(validationResults) {
+  //   let valid = true;
+  //   let nub = document.getElementById('deleteCreateButton');
+  //   nub.style.display = 'none';
+  //   for (let result of validationResults) {
+  //     if (result.valid === false){
+  //       valid = false;
+  //       break;
+  //     }
   //   }
-  //   await fetch;
-  //   this.httpClient.configure((config) => {
-  //     config
-  //     .useStandardConfiguration()
-  //     .withBaseUrl(this.backend);
-  //   });
+  //   this.canSubmit = valid;
+  //   if (this.canSubmit){
+  //     nub.style.display = 'block';
+  //   }
+  //   return this.canSubmit;
   // }
 
   createBook(){
@@ -73,44 +137,23 @@ export class Librarian {
     await fetch;
     this.app.httpClient.fetch('/book/deleteall', {
       method: 'get'
-      //body: json(this.newBook)
     });
     this.app.router.navigate('/bookshelf');
-    //this.createBooksFromCSV();
-    // .then((data) => {
-    //   this.app.router.navigate('/bookshelf');
-    // });
   }
 
   async deleteCreateBooks(){
-    // let fakeobj = {};
-    // fakeobj.query = {};
-    //let createcsv = this.createBooksFromCSV;
     await fetch;
     this.app.httpClient.fetch('/book/deleteall', {
       method: 'get'
-      //body: json(fakeobj)
     }).then((response) => {
       this.createBooksFromCSV();
     });
-    // .then({
-    //   createcsv();
-  //  );
-    //this.createBooksFromCSV();
-    // setTimeout(function () {
-    //
-    // }, 4000);
-
-    // .then((data) => {
-    //   this.app.router.navigate('/bookshelf');
-    // });
   }
 
   createBooksFromCSV(){
     let jsonObj;
     const httpClient = this.app.httpClient;
     const router = this.app.router;
-
     async function loaded (evt) {
       console.log('in csv create');
       const fileString = evt.target.result;
@@ -118,10 +161,8 @@ export class Librarian {
         delimiter: '\t'
       };
       jsonObj = csvjson.toObject(fileString, options);
-      //if (Object.keys(jsonObj).length !== 0 && jsonObj.constructor === Object){
       makeLotaBooks(jsonObj);
     }
-
 
     function errorHandler(evt) {
       alert('The file could not be read');
@@ -135,7 +176,6 @@ export class Librarian {
       .then((response) => response.json())
       .then((data) => {
         setTimeout(function () {
-
         }, 2000);
         router.navigate('/bookshelf');
       });
@@ -160,5 +200,4 @@ export class Librarian {
       this.filesaver.saveAs(file);
     });
   }
-
 }
