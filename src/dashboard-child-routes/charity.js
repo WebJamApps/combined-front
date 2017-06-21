@@ -13,19 +13,21 @@ export class Charity {
       'charityName': '',
       'charityCity': '',
       'charityState': '',
-      'charityZipCode': 2,
-      'charityPhoneNumber': 2,
+      'charityZipCode': 0,
+      //'charityPhoneNumber': 2,
       //'charityEmail': '',
       'charityTypes': [],
       'charityManagers': [],
       'charityMngIds': [],
-      'charityTypeOther': ''
+      'charityTypeOther': '',
+      'charityTypesHtml': ''
     };
     this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;  //the button on the form
     this.validType = false;
+    this.charities = {};
   }
 
   //pretty much just copy and pasted the 'causes' array from user-account.js
@@ -35,6 +37,13 @@ export class Charity {
   async activate(){
     let uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(uid);
+    const res = await this.app.httpClient.fetch('/charity/' + uid);
+    this.charities = await res.json();
+    console.log(this.charities);
+    if (this.charities !== null){
+      this.buildTypes();
+      console.log(this.charities[0].charityTypes);
+    }
     this.types.sort();
     this.types.push('other');
     this.states.sort();
@@ -114,6 +123,30 @@ export class Charity {
     })
     .then((data) => {
       console.log(data);
+      this.activate();
     });
   }
+
+  buildTypes(){
+    for (let l = 0; l < this.charities.length; l++){
+      let typeHtml = '';
+      for (let i = 0; i < this.charities[l].charityTypes.length; i++) {
+        if (this.charities[l].charityTypes[i] !== ''){
+          if (this.charities[l].charityTypes[i] !== 'other'){
+            typeHtml = typeHtml + '<p style="font-size:10pt">' + this.charities[l].charityTypes[i] + '</p>';
+          } else {
+            typeHtml = typeHtml + '<p style="font-size:10pt">' + this.charities[l].charityTypeOther + '</p>';
+          }
+        }
+      }
+      if (typeHtml === ''){
+        typeHtml = '<p style="font-size:10pt">not specified</p>';
+      }
+      this.charities[l].charityTypesHtml = typeHtml;
+    }
+  }
+
+  // attached(){
+  //   this.buildTypes();
+  // }
 }

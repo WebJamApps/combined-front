@@ -1,7 +1,7 @@
 <template>
   <div class="page-content">
     <div if.bind="books.length < 1">
-      No books in the bookshelf!
+      <p>There are currently no books in the bookshelf</p>
     </div>
     <div if.bind="books.length > 0">
       <paper-material elevation="0" style="z-index:10; position:relative;">
