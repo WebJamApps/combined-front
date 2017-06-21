@@ -3,6 +3,39 @@
     <paper-material class="material-content" elevation="0">
       <h3 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Charity Dashboard</strong></h3>
       <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
+        <h4 class="material-header-h4">Your charities</h4>
+        <div if.bind="charities === null">
+          <p style="margin:auto; padding-top:10px">You do not have any charities.</p>
+        </div>
+        <div if.bind="charities !== null">
+          <div class="search-table-outer" style="position:relative;overflow-x:auto;">
+            <table aurelia-table="data.bind: charities; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
+              <thead>
+                <tr>
+                  <th style="padding:8px" aut-sort="key: charityName; default: asc">Name</th>
+                  <th style="padding:8px" aut-sort="key: charityCity">City</th>
+                  <th style="padding:8px" >State</th>
+                  <th style="padding:8px" >Zipcode</th>
+                  <th style="padding:8px" >Phone</th>
+                    <th style="padding:8px">Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr repeat.for="charity of $displayData">
+                  <td style="padding:8px" innerhtml.bind="charity.charityName"></td>
+                  <td style="padding:8px" innerhtml.bind="charity.charityCity"></td>
+                  <td style="padding:8px" innerhtml.bind="charity.charityState"></td>
+                  <td style="padding:8px" innerhtml.bind="charity.charityZipCode"></td>
+                  <td style="padding:8px" innerhtml.bind="charity.charityPhoneNumber"></td>
+                  <td style="padding:8px" innerhtml.bind="charity.charityTypesHtml"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </paper-material>
+      <p>&nbsp;</p>
+      <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
         <h4 class="material-header-h4">Create a new charity</h4>
         <form>
           <div class="multiselect" style="width:200px; margin-top:30px">
@@ -21,8 +54,8 @@
             </iron-dropdown>
           </div>
           <paper-input if.bind="typeOther" value.two-way="newCharity.charityTypeOther" label="Other charity type"></paper-input>
-          <paper-input style="margin-top:20px" label="Charity name" value.two-way="newCharity.charityName & validate"></paper-input>
-          <paper-input style="margin-top:20px" label="City" value.two-way="newCharity.charityCity & validate"></paper-input>
+          <paper-input style="margin-top:20px" label="Charity name (required)" value.two-way="newCharity.charityName & validate"></paper-input>
+          <paper-input style="margin-top:20px" label="City (required)" value.two-way="newCharity.charityCity & validate"></paper-input>
           <paper-dropdown-menu  style="margin-top:20px" label="State/Territory">
             <paper-listbox  required  selected.two-way="newCharity.charityState" class="dropdown-content">
               <paper-item value=""></paper-item>
@@ -31,7 +64,7 @@
               </template>
             </paper-listbox>
           </paper-dropdown-menu>
-          <paper-input style="margin-top:20px" type="number" label="Zip Code" value.two-way="newCharity.charityZipCode & validate"></paper-input>
+          <paper-input style="margin-top:20px" type="number" label="Zip Code (required)" value.two-way="newCharity.charityZipCode & validate"></paper-input>
           <paper-input style="margin-top:20px" type="number" label="Phone Number" value.two-way="newCharity.charityPhoneNumber & validate"></paper-input>
           <!-- <paper-input style="margin-top:20px" label="Email" value.two-way="newCharity.charityEmail"></paper-input> -->
           <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
