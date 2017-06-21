@@ -146,7 +146,15 @@ export class Charity {
     }
   }
 
-  // attached(){
-  //   this.buildTypes();
-  // }
+  async deleteCharity(charityId){
+    await fetch;
+    this.app.httpClient.fetch('/charity/' + charityId, {
+      method: 'delete'
+    })
+    .then((data) => {
+      console.log('your charity has been deleted');
+      this.activate();
+      //this.app.logout();
+    });
+  }
 }

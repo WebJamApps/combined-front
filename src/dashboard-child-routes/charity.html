@@ -12,16 +12,22 @@
             <table aurelia-table="data.bind: charities; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
               <thead>
                 <tr>
+                  <th style="padding:8px">Action</th>
                   <th style="padding:8px" aut-sort="key: charityName; default: asc">Name</th>
                   <th style="padding:8px" aut-sort="key: charityCity">City</th>
                   <th style="padding:8px" >State</th>
                   <th style="padding:8px" >Zipcode</th>
                   <th style="padding:8px" >Phone</th>
-                    <th style="padding:8px">Type</th>
+                  <th style="padding:8px">Type</th>
                 </tr>
               </thead>
               <tbody>
                 <tr repeat.for="charity of $displayData">
+                  <td style="padding:8px">
+                    <button class="button-checkout" raised click.delegate="deleteCharity(charity._id)">
+                      Delete
+                    </button>
+                  </td>
                   <td style="padding:8px" innerhtml.bind="charity.charityName"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityCity"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityState"></td>
