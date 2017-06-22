@@ -40,7 +40,7 @@ export class Charity {
     const res = await this.app.httpClient.fetch('/charity/' + uid);
     this.charities = await res.json();
     console.log(this.charities);
-    if (this.charities !== null){
+    if (this.charities.length !== 0){
       this.buildTypes();
       console.log(this.charities[0].charityTypes);
     }
