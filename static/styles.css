@@ -33,6 +33,8 @@ a {
 a {
   text-decoration: underline;
   text-align: center;
+  cursor: pointer;
+  cursor: hand;
 }
 
 h2 {
