@@ -61,6 +61,8 @@ export class Librarian {
     for (let i = 0; i < CSVFilePath.files.length; i++) {
       let oInput = CSVFilePath.files[i];
       console.log(oInput.type);
+      // the type is determined automatically during the creation of the Blob.
+      // this value cannot be controlled by developer, hence cannot test it.
       if (oInput.type === 'text/plain') {
         console.log('type is a plain text file');
         nub.style.display = 'block';
