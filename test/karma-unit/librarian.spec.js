@@ -34,6 +34,7 @@ describe('the librarian module', () => {
   let vc;
   let val;
   global.CSVFilePath = { files: [csvFixture.string] };
+
   beforeEach(() => {
     http = new HttpMock();
     reader = new FileReader();
@@ -44,6 +45,19 @@ describe('the librarian module', () => {
     librarian = new Librarian(app1, reader, {}, vc, val);
     librarian.CSVFilePath = {files: [csvFixture.string]};
   });
+
+  it('should activate', (done) => {
+    librarian.activate();
+    done();
+  });
+
+  it('should validate', (done) => {
+    document.body.innerHTML = '<div id="createMediaButton"></div>';
+    librarian.validate();
+    librarian.updateCanSubmit([{valid: false}]);
+    done();
+  });
+
   it('should parse the csv.fixtures into object', (done) => {
     let object = csvjson.toObject(librarian.CSVFilePath.files[0]);
     expect(object instanceof Array).toBeTruthy();
@@ -70,55 +84,48 @@ describe('the librarian module', () => {
     done();
   });
 
-  // it('should confirm a http status change', (done) => {
-  //   window.CSVFilePath = {files: [new Blob([csvFixture.string])] };
-  //   librarian.createBooksFromCSV();
-  //   // if dashbook.createBooksFromCSV is called, it should called the makeLotaBooks that
-  //   // places a http call and HttpMock will respond to it and also change the status.
-  //   setTimeout(function() {
-  //     if (newState === -1) {
-  //       expect(http.status).toBe(200);
-  //     }
-  //   }, 10);
-  //   done();
-  // });
-
-  //it should wait 2 seconds and then redirect to the bookshelf
-  //expect this.router.currentInstruction.config.name toBe 'bookshelf'
-
   it('should raise a file reader error', (done) => {
     window.CSVFilePath = {files: [new Blob()] };
     let error = new Event('error');
+    let load = new Event('load');
     librarian.createBooksFromCSV();
     // if dashbook.createBooksFromCSV is called, it should called the makeLotaBooks that
     // places a http call and HttpMock will respond to it and also change the status.
     librarian.reader.dispatchEvent(error);
+    librarian.reader.dispatchEvent(load);
     setTimeout(function() {
       //expect(http.status).toBe(200);
-    }, 10);
+      done();
+    }, 2001);
+  });
+
+  it('should validate textFile', (done) => {
+    document.body.innerHTML = '<div id="deleteCreateButton"></div>';
+    librarian.newBook.type = 'text/plain';
+    librarian.textFileValidate();
     done();
   });
 
-  // it('should convert from csv and then post that array of books', (done) => {
-  //   librarian.reader.readAsText = () => {};
-  //   librarian.createBooksFromCSV();
-  //   librarian.app.httpClient.fetch = (url, {body: blob}) => {
-  //     //const reader = new FileReader();
-  //     librarian.reader.onload =  () => {
-  //       const data = new TextDecoder('utf8').decode(librarian.reader.result);
-  //       expect(JSON.parse(data)).toBeDefined;
-  //       done();
-  //     };
-  //     librarian.reader.readAsArrayBuffer(blob);
-  //     return new Promise(() => {}); // don't resolve
-  //   };
-  //   librarian.reader.onload({ target: { result: csvFixture.string } });
-  // });
+  it('should createBooksFromCSV', (done) => {
+    librarian.createBooksFromCSV();
+    done();
+  });
 
-  // it('should make a .csv file', (done) => {
-  //
-  //   librarian.makeCSVfile();
-  //   //expect(http2.status).toBe(200);
-  //   done();
-  // });
+  it('should make a .csv file', (done) => {
+    librarian.makeCSVfile();
+    //expect(http2.status).toBe(200);
+    done();
+  });
+
+  it('should delete and deleteCreate', (done) => {
+    librarian.deleteBooks();
+    librarian.deleteCreateBooks();
+    done();
+  });
+
+  it('should validate textFile', (done) => {
+    global.CSVFilePath = { files: [] };
+    librarian.textFileValidate();
+    done();
+  });
 });
