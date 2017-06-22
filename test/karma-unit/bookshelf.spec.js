@@ -20,11 +20,15 @@ let book = {
   '_id': '12345'
 };
 
+let book2 = book;
+book2.type = 'hardrock';
+book2.siteLocation = 'https://bookstore.com/home';
+
 class HttpStub extends HttpMock {
   fetch(url, obj) {
     return Promise.resolve({
       Headers: this.headers,
-      json: () => Promise.resolve([book, book, book])
+      json: () => Promise.resolve([book, book2, book])
     });
   }
 }
@@ -71,23 +75,6 @@ describe('The Bookshelf Module', () => {
       done();
     });
   });
-
-  // it('tests configHttpClient', (done) => {
-  //   const { add: ok } = new Counter(2, done);
-  //   bookshelf2.activate().then(() => {
-  //     bookshelf2.httpClient.__configureCallback(new(class {
-  //       withBaseUrl(opts) {
-  //         expect(opts).toBe(process.env.BackendUrl);
-  //         ok();
-  //         return this;
-  //       }
-  //       useStandardConfiguration() {
-  //         ok();
-  //         return this;
-  //       }
-  //     })());
-  //   });
-  // });
 
   it('should check if the user is authenticated', (done) => {
     shelf.selectedFilter = [1, 2, 3, 4];
