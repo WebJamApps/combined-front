@@ -4,10 +4,10 @@
       <h3 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Charity Dashboard</strong></h3>
       <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
         <h4 class="material-header-h4">Your charities</h4>
-        <div if.bind="charities === null">
+        <div if.bind="charities.length === 0">
           <p style="margin:auto; padding-top:10px">You do not have any charities.</p>
         </div>
-        <div if.bind="charities !== null">
+        <div if.bind="charities.length !== 0">
           <div class="search-table-outer" style="position:relative;overflow-x:auto;">
             <table aurelia-table="data.bind: charities; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
               <thead>
