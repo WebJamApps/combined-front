@@ -28,6 +28,21 @@ class ValidatorMock extends Validator {
   }
 }
 
+class HttpMockChar extends HttpMock {
+  fetch(url, obj) {
+    this.headers.url = url;
+    this.headers.method = obj ? obj.method : 'GET';
+    if (obj && obj.method === 'put') {
+      this.user = obj.body;
+    }
+    this.status = 200;
+    return Promise.resolve({
+      Headers: this.headers,
+      json: () => Promise.resolve([{charityTypes: ['Home', 'Elderly']}, {charityTypes: ['Home', 'Elderly', 'other']}, {charityTypes: []}])
+    });
+  }
+}
+
 describe('the Charity Module', () => {
   let charity;
   let app;
@@ -39,7 +54,7 @@ describe('the Charity Module', () => {
     val = new ValidatorMock();
     auth = new AuthStub();
     auth.setToken({sub: 'aowifjawifhiawofjo'});
-    app = new App(auth, new HttpMock());
+    app = new App(auth, new HttpMockChar());
     app.activate();
     charity = new Charity(app, vc, val);
     charity.app.appState = new AppStateStub();
@@ -129,7 +144,6 @@ describe('the Charity Module', () => {
     done();
   });
 
-
   it('new charity created', (done) => {
     //charity.app.appState = new AppStateStub();
     charity.activate();
@@ -138,6 +152,11 @@ describe('the Charity Module', () => {
     charity.createCharity();
     expect(charity.newCharity.charityManagers[0]).toBe('Test Name');
     expect(charity.newCharity.charityState).toBe('Alabama');
+    done();
+  });
+
+  it('deletes charity', (done) => {
+    charity.deleteCharity();
     done();
   });
 });
