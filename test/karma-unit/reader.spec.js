@@ -1,7 +1,6 @@
 import {App} from '../../src/app';
-import { Reader } from '../../src/dashboard-child-routes/reader.js';
 import {AuthStub, HttpMock} from './commons';
-//const Counter = require('assertions-counter');
+import { Reader } from '../../src/dashboard-child-routes/reader.js';
 
 describe('the Reader Module', () => {
   let auth;

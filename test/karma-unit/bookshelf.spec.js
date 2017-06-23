@@ -1,6 +1,7 @@
-const Counter = require('assertions-counter');
-import {HttpMock} from './commons';
+//const Counter = require('assertions-counter');
+import {HttpMock, AuthStub} from './commons';
 import {Bookshelf} from '../../src/bookshelf';
+import {App} from '../../src/app';
 
 let book = {
   'title': '',
@@ -19,11 +20,15 @@ let book = {
   '_id': '12345'
 };
 
+let book2 = book;
+book2.type = 'hardrock';
+book2.siteLocation = 'https://bookstore.com/home';
+
 class HttpStub extends HttpMock {
   fetch(url, obj) {
     return Promise.resolve({
       Headers: this.headers,
-      json: () => Promise.resolve([book, book, book])
+      json: () => Promise.resolve([book, book2, book])
     });
   }
 }
@@ -46,14 +51,16 @@ describe('The Bookshelf Module', () => {
   let http;
   let http2;
   let shelf;
+  let app;
   let bookshelf2;
   beforeEach(() => {
     let itemStubs = [1];
     http = new HttpStub();
-    shelf = new Bookshelf(http);
+    app = new App(new AuthStub(), http);
+    shelf = new Bookshelf(app);
     http2 = new HttpStub2();
     http2.itemStub = itemStubs;
-    bookshelf2 = new Bookshelf(http2);
+    bookshelf2 = new Bookshelf(app);
   });
 
   it('should activate', (done) => {
@@ -66,23 +73,6 @@ describe('The Bookshelf Module', () => {
       expect(bookshelf2.books).toBe(itemStubs);
       //expect(bookshelf1.books).not.toBe(itemFake);
       done();
-    });
-  });
-
-  it('tests configHttpClient', (done) => {
-    const { add: ok } = new Counter(2, done);
-    bookshelf2.activate().then(() => {
-      bookshelf2.httpClient.__configureCallback(new(class {
-        withBaseUrl(opts) {
-          expect(opts).toBe(process.env.BackendUrl);
-          ok();
-          return this;
-        }
-        useStandardConfiguration() {
-          ok();
-          return this;
-        }
-      })());
     });
   });
 

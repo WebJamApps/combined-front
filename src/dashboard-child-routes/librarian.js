@@ -1,18 +1,21 @@
 import {inject} from 'aurelia-framework';
-import {HttpClient, json} from 'aurelia-fetch-client';
-import {Router} from 'aurelia-router';
+import {json} from 'aurelia-fetch-client';
+import {App} from '../app';
+import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
+import {FormValidator} from '../classes/FormValidator';
 const csvjson = require('csvjson');
 const filesaver = require('file-saver');
-@inject(HttpClient, Router, FileReader, filesaver)
+@inject(App, FileReader, filesaver, ValidationControllerFactory, Validator)
 export class Librarian {
-  constructor(httpClient, router, reader, saver){
-    this.httpClient = httpClient;
-    this.router = router;
+  controller = null;
+  validator = null;
+  constructor(app, reader, saver, controllerFactory, validator){
+    this.app = app;
     this.reader = reader;
     this.filesaver = saver;
     this.newBook = {
       'title': '',
-      'type': 'hardback',
+      'type': '',
       'author': '',
       'numberPages': 0,
       'dateOfPub': 0,
@@ -26,56 +29,129 @@ export class Librarian {
       'checkedOutByName': ''
     };
     this.books = {};
+    this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
+    this.controller = controllerFactory.createForCurrentScope(this.validator);
+    this.controller.validateTrigger = validateTrigger.changeOrBlur;
+    this.canSubmit = false;  //the button on the form
+    this.validType = false;
   }
 
-  types = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audiobook', 'template'];
+  types = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audio', 'graphic'];
   accessArray = ['Private', 'Public'];
-  newBook = null;
-  CSVFilePath = {files: ['']};
-  fileList = '';
+  //newBook = null;
 
   async activate(){
-    this.backend = '';
-    /* istanbul ignore else */
-    if (process.env.NODE_ENV !== 'production'){
-      this.backend = process.env.BackendUrl;
+    //let uid = this.app.auth.getTokenPayload().sub;
+    //this.user = await this.app.appState.getUser(uid);
+    this.types.sort();
+    this.types.push('other');
+    //this.states.sort();
+    this.setupValidation();
+  }
+
+  textFileValidate() {
+    let nub = document.getElementById('deleteCreateButton');
+    nub.style.display = 'none';
+    console.log('i am validating');
+    console.log(CSVFilePath.files);
+    if (CSVFilePath.files.length === 0) {
+      alert('no file was selected');
+      return false;
     }
-    await fetch;
-    this.httpClient.configure((config) => {
-      config
-      .useStandardConfiguration()
-      .withBaseUrl(this.backend);
-    });
+    for (let i = 0; i < CSVFilePath.files.length; i++) {
+      let oInput = CSVFilePath.files[i];
+      console.log(oInput.type);
+      // the type is determined automatically during the creation of the Blob.
+      // this value cannot be controlled by developer, hence cannot test it.
+      if (oInput.type === 'text/plain') {
+        console.log('type is a plain text file');
+        nub.style.display = 'block';
+        return true;
+      }
+      alert('Sorry, ' + oInput.type + ' is an invalid file type.');
+      return false;
+    }
+  }
+
+  setupValidation() {
+    ValidationRules
+    .ensure('title').required().maxLength(40).withMessage('Title is required')
+    .ensure('type').required().withMessage('Media Type is required')
+    .on(this.newBook);
+  }
+
+  validate() {
+    return this.validator.validateObject(this.newBook);
+  }
+
+  updateCanSubmit(validationResults) {
+    let valid = true;
+    let nub = document.getElementById('createMediaButton');
+    nub.style.display = 'none';
+    console.log('checking if I can submit');
+    console.log(this.newBook.type);
+    for (let result of validationResults) {
+      if (result.valid === false){
+        valid = false;
+        nub.style.display = 'none';
+        break;
+      }
+    }
+    this.canSubmit = valid;
+    if (this.canSubmit && this.newBook.type !== 0){
+      nub.style.display = 'block';
+    }
+    return this.canSubmit;
   }
 
   createBook(){
     if (this.newBook.type !== 0){
       this.newBook.type = this.types[this.newBook.type - 1];
     } else {
-      this.newBook.type = 'book';
+      this.newBook.type = 'paperback';
     }
     if (this.newBook.access !== 0){
       this.newBook.access = this.accessArray[this.newBook.access - 1];
     } else {
       this.newBook.access = 'Public';
     }
-    this.httpClient.fetch('/book/create', {
+    this.app.httpClient.fetch('/book/create', {
       method: 'post',
       body: json(this.newBook)
     })
     .then((data) => {
-      this.router.navigate('/bookshelf');
+      this.app.router.navigate('/bookshelf');
+    });
+  }
+
+  async deleteBooks(){
+    await fetch;
+    this.app.httpClient.fetch('/book/deleteall', {
+      method: 'get'
+    });
+    this.app.router.navigate('/bookshelf');
+  }
+
+  async deleteCreateBooks(){
+    await fetch;
+    this.app.httpClient.fetch('/book/deleteall', {
+      method: 'get'
+    }).then((response) => {
+      this.createBooksFromCSV();
     });
   }
 
   createBooksFromCSV(){
     let jsonObj;
-    const httpClient = this.httpClient;
-    const router = this.router;
-
-    function loaded (evt) {
+    const httpClient = this.app.httpClient;
+    const router = this.app.router;
+    async function loaded (evt) {
+      console.log('in csv create');
       const fileString = evt.target.result;
-      jsonObj = csvjson.toObject(fileString);
+      const options = {
+        delimiter: '\t'
+      };
+      jsonObj = csvjson.toObject(fileString, options);
       makeLotaBooks(jsonObj);
     }
 
@@ -83,7 +159,7 @@ export class Librarian {
       alert('The file could not be read');
     }
 
-    function makeLotaBooks (jsonObject) {
+    async function makeLotaBooks (jsonObject) {
       httpClient.fetch('/book/create', {
         method: 'post',
         body: json(jsonObject)
@@ -91,7 +167,6 @@ export class Librarian {
       .then((response) => response.json())
       .then((data) => {
         setTimeout(function () {
-
         }, 2000);
         router.navigate('/bookshelf');
       });
@@ -103,18 +178,17 @@ export class Librarian {
   }
 
   makeCSVfile(){
-    this.httpClient.fetch('/book/getall')
+    this.app.httpClient.fetch('/book/getall')
     .then((response) => response.json())
     .then((data) => {
       const options = {
-        //delimiter: '/\t+/',
+        delimiter: '\t',
         headers: 'key'
       };
       this.books = JSON.stringify(data);
       this.books = csvjson.toCSV(data, options);
-      const file = new File([this.books], 'books_export.csv', {type: 'text/plain;charset=utf-8'});
+      const file = new File([this.books], 'books_export.txt', {type: 'text/plain;charset=utf-8'});
       this.filesaver.saveAs(file);
     });
   }
-
 }
