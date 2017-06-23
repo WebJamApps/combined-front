@@ -28,11 +28,11 @@ export class Charity {
     this.canSubmit = false;  //the button on the form
     this.validType = false;
     this.charities = {};
-    this.updateCharityDisplay = false;
+    //this.updateCharityDisplay = false;
   }
 
   //pretty much just copy and pasted the 'causes' array from user-account.js
-  types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
+  //types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
   states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
 
   async activate(){
@@ -45,6 +45,7 @@ export class Charity {
       this.buildTypes();
       console.log(this.charities[0].charityTypes);
     }
+    this.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
     this.types.sort();
     this.types.push('other');
     this.states.sort();
@@ -52,8 +53,18 @@ export class Charity {
   }
 
   showUpdateCharity(charity){
-    this.updateCharityDisplay = true;
+    //this.updateCharityDisplay = true;
+    let updateDiv = document.getElementById('updateCharitySection');
+    updateDiv.style.display = 'block';
     this.charityName = charity.charityName;
+    this.updateCharity = charity;
+    if (this.updateCharity.charityTypes.includes('other')){
+      this.typeOther = true;
+    } else {
+      this.typeOther = false;
+      this.updateCharity.charitytypeOther = '';
+    }
+    document.getElementById('updateCharitySection').scrollIntoView();
   }
 
   showCheckboxes(id){
@@ -83,7 +94,28 @@ export class Charity {
       this.typeOther = true;
     } else {
       this.typeOther = false;
-      this.newCharity.charitytypeOther = '';
+      this.newCharity.charityTypeOther = '';
+    }
+  }
+
+  updateTypePicked(){
+    this.validType = false;
+    let nub = document.getElementById('updateCharityButton');
+    nub.style.display = 'none';
+    for (let i = 0; i < this.types.length; i++) {
+      if (this.updateCharity.charityTypes.indexOf(this.types[i]) > -1){
+        this.validType = true;
+        //if (this.canSubmit){
+        nub.style.display = 'block';
+        //}
+      }
+    }
+    console.log('the charity types picked are: ' + this.updateCharity.charityTypes);
+    if (this.updateCharity.charityTypes.includes('other')){
+      this.typeOther = true;
+    } else {
+      this.typeOther = false;
+      this.updateCharity.charityTypeOther = '';
     }
   }
 
@@ -129,6 +161,7 @@ export class Charity {
     })
     .then((data) => {
       console.log(data);
+      this.newCharity = {};
       this.activate();
     });
   }
@@ -160,7 +193,29 @@ export class Charity {
     .then((data) => {
       console.log('your charity has been deleted');
       this.activate();
-      //this.app.logout();
     });
   }
+
+  async updateCharityFunct(){
+    await fetch;
+    this.app.httpClient.fetch('/charity/' +   this.updateCharity._id, {
+      method: 'put',
+      body: json(this.updateCharity)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      let updateDiv = document.getElementById('updateCharitySection');
+      updateDiv.style.display = 'none';
+      this.updateCharity = {};
+      document.getElementById('charityDash').scrollIntoView();
+      this.activate();
+    });
+  }
+
+  // attached(){
+  //   if (this.updateCharityDisplay === true){
+  //
+  //   }
+  // }
+
 }

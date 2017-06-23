@@ -83,6 +83,7 @@ describe('the Charity Module', () => {
 
   it('runs type picked when nothing is selected', (done) => {
     document.body.innerHTML = '<button id="newCharityButton">';
+    charity.types = ['Christian', 'Hunger'];
     charity.typePicked();
     //expect(charity.newCharity.charityType.length).toBe(0);
     done();
@@ -90,6 +91,7 @@ describe('the Charity Module', () => {
 
   it('runs type picked with valid types and other selected and can submit', (done) => {
     document.body.innerHTML = '<button id="newCharityButton">';
+    charity.types = ['Christian', 'Hunger'];
     charity.newCharity.charityTypes = ['Christian', 'other'];
     charity.canSubmit = true;
     charity.typePicked();
@@ -99,6 +101,7 @@ describe('the Charity Module', () => {
 
   it('runs type picked with valid types and other selected and cannot submit', (done) => {
     document.body.innerHTML = '<button id="newCharityButton">';
+    charity.types = ['Christian', 'Hunger'];
     charity.newCharity.charityTypes = ['Christian', 'other'];
     charity.canSubmit = false;
     charity.typePicked();
