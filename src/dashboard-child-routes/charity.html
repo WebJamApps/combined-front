@@ -43,6 +43,7 @@
       </paper-material>
       <p>&nbsp;</p>
       <paper-material elevation="3" style="max-width:5in; margin:auto">
+        <!-- Update form -->
         <div id="updateCharitySection" style="display:none;margin-left:10px">
           <h4 class="material-header-h4" style="padding-top:10px">Update ${charityName} charity</h4>
           <form>
@@ -62,17 +63,17 @@
               </iron-dropdown>
             </div>
             <paper-input if.bind="typeOther" value.two-way="updateCharity.charityTypeOther" label="Other charity type"></paper-input>
-            <paper-input style="margin-top:20px" label="Charity name (required)" value.two-way="updateCharity.charityName & validate"></paper-input>
-            <paper-input style="margin-top:20px" label="City (required)" value.two-way="updateCharity.charityCity & validate"></paper-input>
-            <select id="updateState" class="form-control" value.bind="updateCharity.charityState" style="margin-top:30px;width: 2.35in">
+            <paper-input style="margin-top:20px" label="Charity name (required)" value.two-way="updateCharity.charityName & validate:controller2"></paper-input>
+            <paper-input style="margin-top:20px" label="City (required)" value.two-way="updateCharity.charityCity & validate:controller2"></paper-input>
+            <select id="updateState" class="form-control" value.bind="updateCharity.charityState & validate:controller2" style="margin-top:30px;width: 2.35in">
               <option value="">State</option>
               <option repeat.for="state of states" model.bind="state">${state}</option>
             </select>
-            <paper-input style="margin-top:20px" type="number" label="Zip Code (required)" value.two-way="updateCharity.charityZipCode & validate"></paper-input>
-            <paper-input style="margin-top:20px" type="number" label="Phone Number" value.two-way="updateCharity.charityPhoneNumber & validate"></paper-input>
+            <paper-input style="margin-top:20px" type="number" label="Zip Code (required)" value.two-way="updateCharity.charityZipCode & validate:controller2"></paper-input>
+            <paper-input style="margin-top:20px" type="number" label="Phone Number" value.two-way="updateCharity.charityPhoneNumber & validate:controller2"></paper-input>
             <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
-              <ul if.bind="controller.errors">
-                <li repeat.for="error of controller.errors" style="margin-left:-24px; color:red">
+              <ul if.bind="controller2.errors">
+                <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red">
                   ${error.message}
                 </li>
               </ul>
@@ -81,6 +82,7 @@
             <p>&nbsp;</p>
           </form>
         </div>
+        <!-- End of update form -->
       </paper-material>
       <p>&nbsp;</p>
       <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
@@ -102,18 +104,14 @@
             </iron-dropdown>
           </div>
           <paper-input if.bind="typeOther" value.two-way="newCharity.charityTypeOther" label="Other charity type"></paper-input>
-          <paper-input style="margin-top:20px" label="Charity name (required)" value.two-way="newCharity.charityName & validate"></paper-input>
-          <paper-input style="margin-top:20px" label="City (required)" value.two-way="newCharity.charityCity & validate"></paper-input>
-          <paper-dropdown-menu  style="margin-top:20px" label="State/Territory">
-            <paper-listbox  required  selected.two-way="newCharity.charityState" class="dropdown-content">
-              <paper-item value=""></paper-item>
-              <template is="dom-repeat" items.two-way="states">
-                <paper-item model="{{item}}">{{item}}</paper-item>
-              </template>
-            </paper-listbox>
-          </paper-dropdown-menu>
-          <paper-input style="margin-top:20px" type="number" label="Zip Code (required)" value.two-way="newCharity.charityZipCode & validate"></paper-input>
-          <paper-input style="margin-top:20px" type="number" label="Phone Number" value.two-way="newCharity.charityPhoneNumber & validate"></paper-input>
+          <paper-input style="margin-top:20px" label="Charity name (required)" value.two-way="newCharity.charityName & validate:controller"></paper-input>
+          <paper-input style="margin-top:20px" label="City (required)" value.two-way="newCharity.charityCity & validate:controller"></paper-input>
+          <select id="createState" class="form-control" value.bind="newCharity.charityState & validate:controller" style="margin-top:30px;width: 2.35in">
+            <option value="">State (required)</option>
+            <option repeat.for="state of states" model.bind="state">${state}</option>
+          </select>
+          <paper-input style="margin-top:20px" type="number" label="Zip Code (required)" value.two-way="newCharity.charityZipCode & validate:controller"></paper-input>
+          <paper-input style="margin-top:20px" type="number" label="Phone Number" value.two-way="newCharity.charityPhoneNumber & validate:controller"></paper-input>
           <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
             <ul if.bind="controller.errors">
               <li repeat.for="error of controller.errors" style="margin-left:-24px; color:red">
