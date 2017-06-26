@@ -128,7 +128,7 @@ export class Charity {
   setupValidation() {
     ValidationRules
     .ensure('charityPhoneNumber').matches(/[2-9]\d{9}/).maxLength(10).withMessage('10 digit phone number')
-    .ensure('charityZipCode').required().matches(/\d{5}/).maxLength(5).withMessage('5-digit zipcode')
+    .ensure('charityZipCode').required().matches(/\d{5}/).withMessage('5-digit zipcode')
     .ensure('charityCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
     .ensure('charityName').required().maxLength(40).withMessage('Charity name please')
     .ensure('charityState').required().withMessage('Charity state please')
@@ -138,7 +138,7 @@ export class Charity {
   setupValidation2() {
     ValidationRules
     .ensure('charityPhoneNumber').matches(/[2-9]\d{9}/).maxLength(10).withMessage('10 digit phone number')
-    .ensure('charityZipCode').required().matches(/\d{5}/).maxLength(5).withMessage('5-digit zipcode')
+    .ensure('charityZipCode').required().matches(/\d{5}/).withMessage('5-digit zipcode')
     .ensure('charityCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
     .ensure('charityName').required().maxLength(40).withMessage('Charity name please')
     .ensure('charityState').required().withMessage('Charity state please')
@@ -149,9 +149,9 @@ export class Charity {
     return this.validator.validateObject(this.newCharity);
   }
 
-  //validate2() {
-  //  return this.validator2.validateObject(this.updateCharity);
-  //}
+  validate2() {
+    return this.validator2.validateObject(this.updateCharity);
+  }
 
   updateCanSubmit(validationResults) {
     let valid = true;
@@ -175,10 +175,11 @@ export class Charity {
     console.log('Running update funcitronfswd');
     let nub = document.getElementById('updateCharityButton');
     if (nub !== null) {
-      nub.style.display = 'none';
+      //nub.style.display = 'none';
       for (let result of validationResults) {
         if (result.valid === false){
           console.log('Something is not valid');
+          nub.style.display = 'none';
           valid = false;
           break;
         }
