@@ -48,6 +48,7 @@ export class Charity {
     console.log(this.charities);
     if (this.charities.length !== 0){
       this.buildTypes();
+      this.buildManagers();
       console.log(this.charities[0].charityTypes);
     }
     this.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
@@ -58,11 +59,13 @@ export class Charity {
   }
 
   showUpdateCharity(charity){
-    //this.updateCharityDisplay = true;
+    this.canSubmit2 = true;
+    this.validType2 = true;
     let updateDiv = document.getElementById('updateCharitySection');
     updateDiv.style.display = 'block';
     this.charityName = charity.charityName;
     this.updateCharity = charity;
+    this.updateCharity.charityEmail = '';
     this.setupValidation2();
     if (this.updateCharity.charityTypes.includes('other')){
       this.typeOther = true;
@@ -128,7 +131,7 @@ export class Charity {
   setupValidation() {
     ValidationRules
     .ensure('charityPhoneNumber').matches(/[2-9]\d{9}/).maxLength(10).withMessage('10 digit phone number')
-    .ensure('charityZipCode').required().matches(/\d{5}/).withMessage('5-digit zipcode')
+    .ensure('charityZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
     .ensure('charityCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
     .ensure('charityName').required().maxLength(40).withMessage('Charity name please')
     .ensure('charityState').required().withMessage('Charity state please')
@@ -138,7 +141,8 @@ export class Charity {
   setupValidation2() {
     ValidationRules
     .ensure('charityPhoneNumber').matches(/[2-9]\d{9}/).maxLength(10).withMessage('10 digit phone number')
-    .ensure('charityZipCode').required().matches(/\d{5}/).withMessage('5-digit zipcode')
+    .ensure('charityEmail').email()
+    .ensure('charityZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
     .ensure('charityCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
     .ensure('charityName').required().maxLength(40).withMessage('Charity name please')
     .ensure('charityState').required().withMessage('Charity state please')
@@ -215,9 +219,9 @@ export class Charity {
       for (let i = 0; i < this.charities[l].charityTypes.length; i++) {
         if (this.charities[l].charityTypes[i] !== ''){
           if (this.charities[l].charityTypes[i] !== 'other'){
-            typeHtml = typeHtml + '<p style="font-size:10pt">' + this.charities[l].charityTypes[i] + '</p>';
+            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.charities[l].charityTypes[i] + '</p>';
           } else {
-            typeHtml = typeHtml + '<p style="font-size:10pt">' + this.charities[l].charityTypeOther + '</p>';
+            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.charities[l].charityTypeOther + '</p>';
           }
         }
       }
@@ -225,6 +229,21 @@ export class Charity {
         typeHtml = '<p style="font-size:10pt">not specified</p>';
       }
       this.charities[l].charityTypesHtml = typeHtml;
+    }
+  }
+
+  buildManagers(){
+    for (let l = 0; l < this.charities.length; l++){
+      let manHtml = '';
+      for (let i = 0; i < this.charities[l].charityManagers.length; i++) {
+        if (this.charities[l].charityManagers[i] !== ''){
+          manHtml = manHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.charities[l].charityManagers[i] + '</p>';
+        }
+      }
+      if (manHtml === ''){
+        manHtml = '<p style="font-size:10pt">not specified</p>';
+      }
+      this.charities[l].charityManagersHtml = manHtml;
     }
   }
 
@@ -239,9 +258,22 @@ export class Charity {
     });
   }
 
-  async updateCharityFunct(){
+  updateCharityFunct(){
+    if (this.updateCharity.charityEmail !== '' || this.updateCharity.charityEmail !== null){
+      this.findUserByEmail();
+    } else {
+      this.putCharity();
+    }
+  }
+
+  async putCharity(){
+    // if (this.updateCharity.charityEmail !== '' || this.updateCharity.charityEmail !== null){
+    //   await this.findUserByEmail();
+    // }
+    console.log('this is the update charity');
+    console.log(this.updateCharity);
     await fetch;
-    this.app.httpClient.fetch('/charity/' +   this.updateCharity._id, {
+    this.app.httpClient.fetch('/charity/' + this.updateCharity._id, {
       method: 'put',
       body: json(this.updateCharity)
     })
@@ -255,6 +287,29 @@ export class Charity {
     });
   }
 
+  async findUserByEmail(){
+    await fetch;
+    this.app.httpClient.fetch('/user/', {
+      method: 'post',
+      body: json({email: this.updateCharity.charityEmail})
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      //this.manager = data;
+      if (data.length !== 0){
+        //console.log('the additional manager is: ' + JSON.stringify(data));
+        const tempManager = data;
+        console.log('this is the additional manager: ');
+        console.log(tempManager[0].name);
+        console.log(tempManager[0]._id);
+        this.updateCharity.charityMngIds.push(tempManager[0]._id);
+        this.updateCharity.charityManagers.push(tempManager[0].name);
+      } else {
+        alert('There is no OHAF user with that email');
+      }
+      this.putCharity();
+    });
+  }
   // attached(){
   //   if (this.updateCharityDisplay === true){
   //
