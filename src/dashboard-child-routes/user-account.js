@@ -15,6 +15,7 @@ export class UserAccount {
   works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
 
   async activate() {
+    this.canDelete = true;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.role = this.user.userType;
@@ -51,24 +52,33 @@ export class UserAccount {
     if (this.user.userType === 'Charity'){
       this.role = 'Charity Manager';
     }
-    if (this.selectedWorks.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
-      this.workOther = true;
-    } else {
-      this.workOther = false;
-    }
+    if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
+      const res = await this.app.httpClient.fetch('/charity/' + this.uid);
+      this.charities = await res.json();
+      console.log(this.charities);
+      if (this.charities.length !== 0){
+        this.canDelete = false;
+      }
 
-    if (this.selectedTalents.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
-      this.talentOther = true;
-    } else {
-      this.talentOther = false;
-    }
-    if (this.selectedCauses.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
-      this.causeOther = true;
-    } else {
-      this.causeOther = false;
+      if (this.selectedWorks.includes('other')){
+        //console.log('other was selected, we will display an additional form field now');
+        this.workOther = true;
+      } else {
+        this.workOther = false;
+      }
+
+      if (this.selectedTalents.includes('other')){
+        //console.log('other was selected, we will display an additional form field now');
+        this.talentOther = true;
+      } else {
+        this.talentOther = false;
+      }
+      if (this.selectedCauses.includes('other')){
+        //console.log('other was selected, we will display an additional form field now');
+        this.causeOther = true;
+      } else {
+        this.causeOther = false;
+      }
     }
   }
 

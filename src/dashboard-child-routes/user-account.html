@@ -61,7 +61,7 @@
         </form>
       </paper-material>
       <p> </p>
-      <paper-material elevation="2" style="padding:20px; width:300px; margin:auto">
+      <paper-material if.bind="canDelete" elevation="2" style="padding:20px; width:300px; margin:auto">
         <p style="text-align:center; font-weight:bold">Delete your user</p>
           <button style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">
             Delete User
