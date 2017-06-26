@@ -151,7 +151,7 @@ describe('the Charity Module', () => {
     //charity.app.appState = new AppStateStub();
     charity.activate();
     charity.user = {'name': 'Test Name', '_id': '32'};
-    charity.newCharity.charityState = 1;
+    charity.newCharity.charityState = 'Alabama';
     charity.createCharity();
     expect(charity.newCharity.charityManagers[0]).toBe('Test Name');
     expect(charity.newCharity.charityState).toBe('Alabama');
