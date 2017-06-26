@@ -2,7 +2,7 @@
   <div class="page-content">
     <paper-material class="material-content" elevation="0">
       <h3 id="charityDash" class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Charity Dashboard</strong></h3>
-      <paper-material class="material-content" elevation="3" style="max-width:7.5in; margin:auto">
+      <paper-material class="material-content" elevation="3" style="max-width:8in; margin:auto">
         <h4 class="material-header-h4">Your charities</h4>
         <div if.bind="charities.length === 0">
           <p style="margin:auto; padding-top:10px">You do not have any charities.</p>
@@ -12,13 +12,14 @@
             <table aurelia-table="data.bind: charities; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
               <thead>
                 <tr>
-                  <th style="padding:8px">Action</th>
-                  <th style="padding:8px" aut-sort="key: charityName; default: asc">Name</th>
+                  <th style="padding:8px; text-align:center">Action</th>
+                  <th style="padding:8px;" aut-sort="key: charityName; default: asc">Name</th>
                   <th style="padding:8px" aut-sort="key: charityCity">City</th>
                   <th style="padding:8px" >State</th>
                   <th style="padding:8px" >Zipcode</th>
                   <th style="padding:8px" >Phone</th>
                   <th style="padding:8px">Type</th>
+                  <th style="padding:8px">Manager(s)</th>
                 </tr>
               </thead>
               <tbody>
@@ -27,7 +28,7 @@
                     <button class="button-checkout" raised click.delegate="deleteCharity(charity._id)" style="margin-bottom:10px">
                       Delete
                     </button>
-                    <a click.delegate="showUpdateCharity(charity)">Update</a>
+                    <p><a click.delegate="showUpdateCharity(charity)">Update</a></p>
                   </td>
                   <td style="padding:8px" innerhtml.bind="charity.charityName"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityCity"></td>
@@ -35,6 +36,7 @@
                   <td style="padding:8px" innerhtml.bind="charity.charityZipCode"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityPhoneNumber"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityTypesHtml"></td>
+                    <td style="padding:8px" innerhtml.bind="charity.charityManagersHtml"></td>
                 </tr>
               </tbody>
             </table>
@@ -70,7 +72,8 @@
               <option repeat.for="state of states" model.bind="state">${state}</option>
             </select>
             <paper-input style="margin-top:20px" type="number" label="Zip Code (required)" value.two-way="updateCharity.charityZipCode & validate:controller2"></paper-input>
-            <paper-input style="margin-top:20px" type="number" label="Phone Number" value.two-way="updateCharity.charityPhoneNumber & validate:controller2"></paper-input>
+            <paper-input style="margin-top:20px" type="number" label="Phone Number (optional)" value.two-way="updateCharity.charityPhoneNumber & validate:controller2"></paper-input>
+            <paper-input style="margin-top:20px" label="Assign additional manager by email" value.two-way="updateCharity.charityEmail & validate:controller2"></paper-input>
             <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
               <ul if.bind="controller2.errors">
                 <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red">
