@@ -59,26 +59,34 @@ export class UserAccount {
       if (this.charities.length !== 0){
         this.canDelete = false;
       }
+    }
+    if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
+      const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
+      this.books = await res.json();
+      console.log(this.charities);
+      if (this.books.length !== 0){
+        this.canDelete = false;
+      }
+    }
 
-      if (this.selectedWorks.includes('other')){
-        //console.log('other was selected, we will display an additional form field now');
-        this.workOther = true;
-      } else {
-        this.workOther = false;
-      }
+    if (this.selectedWorks.includes('other')){
+      //console.log('other was selected, we will display an additional form field now');
+      this.workOther = true;
+    } else {
+      this.workOther = false;
+    }
 
-      if (this.selectedTalents.includes('other')){
-        //console.log('other was selected, we will display an additional form field now');
-        this.talentOther = true;
-      } else {
-        this.talentOther = false;
-      }
-      if (this.selectedCauses.includes('other')){
-        //console.log('other was selected, we will display an additional form field now');
-        this.causeOther = true;
-      } else {
-        this.causeOther = false;
-      }
+    if (this.selectedTalents.includes('other')){
+      //console.log('other was selected, we will display an additional form field now');
+      this.talentOther = true;
+    } else {
+      this.talentOther = false;
+    }
+    if (this.selectedCauses.includes('other')){
+      //console.log('other was selected, we will display an additional form field now');
+      this.causeOther = true;
+    } else {
+      this.causeOther = false;
     }
   }
 
