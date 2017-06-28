@@ -231,6 +231,12 @@ export class Charity {
   buildManagers(){
     for (let l = 0; l < this.charities.length; l++){
       let manHtml = '';
+      // if (this.charities[l].charityManagers.length > 1){
+      //   let deleteButton = document.getElementsByClassName('delete-button' + this.charities[l]._id);
+      //   console.log(deleteButton);
+        //deleteButton[0].style.display = 'none';
+        //document.getElementById('delete' + this.charities[l]._id).style.display = 'none';
+      //}
       for (let i = 0; i < this.charities[l].charityManagers.length; i++) {
         if (this.charities[l].charityManagers[i] !== ''){
           manHtml = manHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.charities[l].charityManagers[i] + '</p>';
