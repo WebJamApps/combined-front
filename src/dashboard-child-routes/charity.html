@@ -25,7 +25,7 @@
               <tbody>
                 <tr repeat.for="charity of $displayData">
                   <td style="padding:8px; text-align:center">
-                    <button class="button-checkout" raised click.delegate="deleteCharity(charity._id)" style="margin-bottom:10px">
+                    <button if.bind="charity.charityMngIds.length < 2" class="button-checkout" raised click.delegate="deleteCharity(charity._id)" style="margin-bottom:10px">
                       Delete
                     </button>
                     <p><a click.delegate="showUpdateCharity(charity)">Update</a></p>
