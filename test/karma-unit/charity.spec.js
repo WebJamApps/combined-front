@@ -82,6 +82,7 @@ describe('the Charity Module', () => {
   });
 
   it('runs type picked when nothing is selected', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.types = ['Christian', 'Hunger'];
     charity.typePicked();
@@ -90,6 +91,7 @@ describe('the Charity Module', () => {
   });
 
   it('runs type picked with valid types and other selected and can submit', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.types = ['Christian', 'Hunger'];
     charity.newCharity.charityTypes = ['Christian', 'other'];
@@ -100,6 +102,7 @@ describe('the Charity Module', () => {
   });
 
   it('runs type picked with valid types and other selected and cannot submit', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.types = ['Christian', 'Hunger'];
     charity.newCharity.charityTypes = ['Christian', 'other'];
@@ -110,6 +113,7 @@ describe('the Charity Module', () => {
   });
 
   it('validates the charity form to allow submit', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.newCharity.charityTypes = ['Christian', 'other'];
     charity.canSubmit = false;
@@ -120,6 +124,7 @@ describe('the Charity Module', () => {
   });
 
   it('does not allow submit when type is not selected', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.newCharity.charityTypes = ['Christian', 'other'];
     charity.canSubmit = false;
@@ -130,6 +135,7 @@ describe('the Charity Module', () => {
   });
 
   it('does not allow submit when validationResults are false', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.newCharity.charityTypes = ['Christian', 'other'];
     charity.canSubmit = false;
@@ -139,6 +145,7 @@ describe('the Charity Module', () => {
   });
 
   it('allows submit when validationResults are true', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.newCharity.charityTypes = ['True'];
     charity.validType = true;
