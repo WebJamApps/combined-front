@@ -48,7 +48,7 @@ export class Charity {
     this.user = await this.app.appState.getUser(this.uid);
     const res = await this.app.httpClient.fetch('/charity/' + this.uid);
     this.charities = await res.json();
-    console.log(this.charities);
+    //console.log(this.charities);
     if (this.charities.length !== 0){
       this.buildTypes();
       this.buildManagers();
@@ -296,6 +296,18 @@ export class Charity {
         console.log('this is the additional manager: ');
         console.log(tempManager[0].name);
         console.log(tempManager[0]._id);
+        //only do this if the array does not already contain the user id, else alert that the user is already a manager of this charity
+        for (let l = 0; l < this.updateCharity.charityMngIds.length; l++){
+          console.log('checking for already a manager');
+          if (this.updateCharity.charityMngIds.indexOf(tempManager[0]._id) > -1){
+            let updateDiv = document.getElementById('updateCharitySection');
+            updateDiv.style.display = 'none';
+            this.updateCharity = {};
+            document.getElementById('charityDash').scrollIntoView();
+            this.activate();
+            return alert('this user is already a manager of this charity');
+          }
+        }
         this.updateCharity.charityMngIds.push(tempManager[0]._id);
         this.updateCharity.charityManagers.push(tempManager[0].name);
       } else {
