@@ -61,11 +61,13 @@
         </form>
       </paper-material>
       <p> </p>
-      <paper-material if.bind="canDelete" elevation="2" style="padding:20px; width:300px; margin:auto">
+      <paper-material elevation="2" style="padding:20px; width:300px; margin:auto">
         <p style="text-align:center; font-weight:bold">Delete your user</p>
-          <button style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">
+          <button if.bind="canDelete" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">
             Delete User
           </button>
+          <p>${notDelR}</p>
+          <p>${notDelB}</p>
         </paper-material>
         <paper-material class="footer" elevation="4" style="padding:8px; background-color: #2a222a; margin-top:10px">
           <div class="paper-card-img"><span>&nbsp;&nbsp;</span>
