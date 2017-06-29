@@ -9,19 +9,27 @@ export class Charity {
   validator = null;
   constructor(app, controllerFactory, validator){
     this.app = app;
+    this.charities = {};
+    // these are all for the create new charity function
     this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
+    this.canSubmit = false;  //the button on the form
+    this.validType = false;
+    // these are all for the update charity function
     this.validator2 = new FormValidator(validator, (results) => this.updateCanSubmit2(results));
     this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
-    this.canSubmit = false;  //the button on the form
     this.canSubmit2 = true;
-    this.validType = false;
     this.validType2 = true;
-    this.charities = {};
+    // these are all for the scheduling of events function
+    this.validator3 = new FormValidator(validator, (results) => this.updateCanSubmit3(results));
+    this.controller3 = controllerFactory.createForCurrentScope(this.validator3);
+    this.controller3.validateTrigger = validateTrigger.changeOrBlur;
+    this.canSubmit2 = false;
+    this.validWorkType3 = false;
   }
-  
+
   async activate(){
     this.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
     this.types.sort();
@@ -55,12 +63,16 @@ export class Charity {
     }
     this.setupValidation();
   }
-  
+
   showUpdateCharity(charity){
     this.canSubmit2 = true;
     this.validType2 = true;
     let updateDiv = document.getElementById('updateCharitySection');
     updateDiv.style.display = 'block';
+    let scheduleDiv = document.getElementById('scheduleCharitySection');
+    if (scheduleDiv !== null){
+      scheduleDiv.style.display = 'none';
+    }
     this.charityName = charity.charityName;
     this.updateCharity = charity;
     this.updateCharity.charityEmail = '';
@@ -73,7 +85,46 @@ export class Charity {
     this.setupValidation2();
     document.getElementById('updateCharitySection').scrollIntoView();
   }
-  
+
+  showScheduleCharity(charity){
+    this.canSubmit3 = true;
+    this.validWorkType3 = true;
+    let scheduleDiv = document.getElementById('scheduleCharitySection');
+    let updateDiv = document.getElementById('updateCharitySection');
+    if (updateDiv !== null){
+      updateDiv.style.display = 'none';
+    }
+    scheduleDiv.style.display = 'block';
+    this.charityName = charity.charityName;
+    //this.scheduleCharity = charity;
+    this.voOpp = {
+      'voName': '',
+      'voCharityId': charity._id,
+      'voNumPeopleNeeded': 1,
+      'voDescription': '',
+      'voWorkTypes': [],
+      //insert today's date here using javascript function
+      voStartDate: '2017-07-07',
+      voStartTime: '',
+      //insert today's date here using javascript function
+      voEndDate: '2017-07-07',
+      voEndTime: '',
+      voContactName: '',
+      voContactEmail: '',
+      voContactPhone: null
+    };
+    //this.updateCharity.charityEmail = '';
+    // if (this.updateCharity.charityTypes.includes('other')){
+    //   this.typeOther = true;
+    // } else {
+    //   this.typeOther = false;
+    //   this.updateCharity.charitytypeOther = '';
+    // }
+
+    //this.setupValidation3();
+    document.getElementById('scheduleCharitySection').scrollIntoView();
+  }
+
   showCheckboxes(id){
     const checkboxes = document.getElementById(id);
     if (!this.expanded) {
@@ -84,7 +135,7 @@ export class Charity {
       this.expanded = false;
     }
   }
-  
+
   typePicked(){
     this.validType = false;
     let nub = document.getElementById('newCharityButton');
@@ -104,7 +155,7 @@ export class Charity {
       this.newCharity.charityTypeOther = '';
     }
   }
-  
+
   updateTypePicked(){
     this.validType2 = false;
     let nub = document.getElementById('updateCharityButton');
@@ -125,7 +176,7 @@ export class Charity {
       this.updateCharity.charityTypeOther = '';
     }
   }
-  
+
   setupValidation() {
     ValidationRules
     .ensure('charityPhoneNumber').matches(/\b[2-9]\d{9}\b/).withMessage('10 digit phone number')
@@ -135,7 +186,7 @@ export class Charity {
     .ensure('charityState').required().withMessage('Charity state please')
     .on(this.newCharity);
   }
-  
+
   setupValidation2() {
     ValidationRules
     .ensure('charityPhoneNumber').matches(/\b[2-9]\d{9}\b/).withMessage('10 digit phone number')
@@ -146,15 +197,15 @@ export class Charity {
     .ensure('charityState').required().withMessage('Charity state please')
     .on(this.updateCharity);
   }
-  
+
   validate() {
     return this.validator.validateObject(this.newCharity);
   }
-  
+
   validate2() {
     return this.validator2.validateObject(this.updateCharity);
   }
-  
+
   updateCanSubmit(validationResults) {
     let valid = true;
     let nub = document.getElementById('newCharityButton');
@@ -171,7 +222,7 @@ export class Charity {
     }
     return this.canSubmit;
   }
-  
+
   updateCanSubmit2(validationResults) {
     let valid = true;
     console.log('Running update funcitronfswd');
@@ -193,7 +244,7 @@ export class Charity {
       return this.canSubmit2;
     }
   }
-  
+
   createCharity(){
     this.newCharity.charityManagers[0] = this.user.name;
     this.newCharity.charityMngIds[0] = this.user._id;
@@ -207,7 +258,7 @@ export class Charity {
       this.activate();
     });
   }
-  
+
   buildTypes(){
     for (let l = 0; l < this.charities.length; l++){
       let typeHtml = '';
@@ -226,7 +277,7 @@ export class Charity {
       this.charities[l].charityTypesHtml = typeHtml;
     }
   }
-  
+
   buildManagers(){
     for (let l = 0; l < this.charities.length; l++){
       let manHtml = '';
@@ -241,7 +292,7 @@ export class Charity {
       this.charities[l].charityManagersHtml = manHtml;
     }
   }
-  
+
   async deleteCharity(charityId){
     await fetch;
     this.app.httpClient.fetch('/charity/' + charityId, {
@@ -252,7 +303,7 @@ export class Charity {
       this.activate();
     });
   }
-  
+
   updateCharityFunct(){
     console.log('this is the update charity email: ' + this.updateCharity.charityEmail);
     if (this.updateCharity.charityEmail !== '' && this.updateCharity.charityEmail !== null){
@@ -261,7 +312,7 @@ export class Charity {
       this.putCharity();
     }
   }
-  
+
   removeManager(charity){
     this.updateCharity = charity;
     const index = this.updateCharity.charityMngIds.indexOf(this.uid);
@@ -274,7 +325,7 @@ export class Charity {
     }
     this.putCharity();
   }
-  
+
   async putCharity(){
     console.log('this is the update charity');
     console.log(this.updateCharity);
@@ -294,7 +345,7 @@ export class Charity {
       this.activate();
     });
   }
-  
+
   async findUserByEmail(){
     await fetch;
     this.app.httpClient.fetch('/user/', {
@@ -330,5 +381,5 @@ export class Charity {
       this.putCharity();
     });
   }
-  
+
 }
