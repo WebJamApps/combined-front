@@ -34,6 +34,7 @@
                       Remove
                     </button>
                     <p><a click.delegate="showUpdateCharity(charity)">Update</a></p>
+                    <p><a click.delegate="showScheduleCharity(charity)">Schedule</a></p>
                   </td>
                   <td style="padding:8px" innerhtml.bind="charity.charityName"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityCity"></td>
@@ -52,7 +53,7 @@
       <paper-material elevation="3" style="max-width:5in; margin:auto">
         <!-- Update form -->
         <div id="updateCharitySection" style="display:none;margin-left:10px">
-          <h4 class="material-header-h4" style="padding-top:10px">Update ${charityName} charity</h4>
+          <h4 class="material-header-h4" style="padding-top:10px">Update ${charityName}</h4>
           <form>
             <div class="multiselect" style="width:200px; margin-top:30px">
               <div class="selectBox" click.delegate="showCheckboxes('typesUpdate')">
@@ -91,6 +92,14 @@
           </form>
         </div>
         <!-- End of update form -->
+        <div id="scheduleCharitySection" style="display:none;margin-left:10px">
+          <h4 class="material-header-h4" style="padding-top:10px">Schedule an Event for<br>${charityName}</h4>
+          <form>
+            <paper-input style="margin-top:20px" label="Event name (required)" value.two-way="voOpp.voName & validate:controller3"></paper-input>
+            <button id="scheduleCharityButton" class="updateButton" raised click.trigger="scheduleCharityFunct()" style="margin-bottom:40px; display:none">Schedule</button>
+            <p>&nbsp;</p>
+          </form>
+        </div>
       </paper-material>
       <p>&nbsp;</p>
       <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
