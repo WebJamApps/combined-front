@@ -13,7 +13,7 @@
             <label style="margin-top:20px;font-weight:normal;display:block">Zipcode (required)</label>
             <input type="text" style="max-width: 1.25in; margin:auto; padding:5px" class="newUserForm" value.bind="user.userZip & validate" required>
             <label style="margin-top:20px;font-weight:normal;">10 Digit Phone # (optional)</label>
-            <input type="text" style="max-width: 1.25in; margin:auto; padding:5px" class="newUserForm" value.bind="user.userPhone & validate" required>
+            <input type="number" style="max-width: 1.25in; margin:auto; padding:5px" class="newUserForm" value.bind="user.userPhone & validate" required>
             <select id="type" class="form-control" value.bind="user.userType & validate" change.delegate="dropdownChanged()" style="margin-top:30px;width: 2.35in">
               <option value="">Primary User Type (required)</option>
               <option repeat.for="type of userTypes" model.bind="type">${type}</option>
