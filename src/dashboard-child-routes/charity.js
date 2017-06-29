@@ -30,8 +30,7 @@ export class Charity {
       'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
       'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
       'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin',
-      'Wyoming'];
+      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     this.states.sort();
     this.newCharity = {
       'charityName': '',
@@ -231,12 +230,6 @@ export class Charity {
   buildManagers(){
     for (let l = 0; l < this.charities.length; l++){
       let manHtml = '';
-      // if (this.charities[l].charityManagers.length > 1){
-      //   let deleteButton = document.getElementsByClassName('delete-button' + this.charities[l]._id);
-      //   console.log(deleteButton);
-        //deleteButton[0].style.display = 'none';
-        //document.getElementById('delete' + this.charities[l]._id).style.display = 'none';
-      //}
       for (let i = 0; i < this.charities[l].charityManagers.length; i++) {
         if (this.charities[l].charityManagers[i] !== ''){
           manHtml = manHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.charities[l].charityManagers[i] + '</p>';
@@ -269,6 +262,19 @@ export class Charity {
     }
   }
   
+  removeManager(charity){
+    this.updateCharity = charity;
+    const index = this.updateCharity.charityMngIds.indexOf(this.uid);
+    if (index > -1){
+      this.updateCharity.charityMngIds.splice(index, 1);
+    }
+    const index2 = this.updateCharity.charityManagers.indexOf(this.user.name);
+    if (index > -1){
+      this.updateCharity.charityManagers.splice(index2, 1);
+    }
+    this.putCharity();
+  }
+  
   async putCharity(){
     console.log('this is the update charity');
     console.log(this.updateCharity);
@@ -280,7 +286,9 @@ export class Charity {
     .then((response) => response.json())
     .then((data) => {
       let updateDiv = document.getElementById('updateCharitySection');
-      updateDiv.style.display = 'none';
+      if (updateDiv !== null){
+        updateDiv.style.display = 'none';
+      }
       this.updateCharity = {};
       document.getElementById('charityDash').scrollIntoView();
       this.activate();
@@ -322,10 +330,5 @@ export class Charity {
       this.putCharity();
     });
   }
-  // attached(){
-  //   if (this.updateCharityDisplay === true){
-  //
-  //   }
-  // }
   
 }
