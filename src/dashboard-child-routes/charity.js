@@ -101,7 +101,7 @@ export class Charity {
       'voName': '',
       'voCharityId': charity._id,
       'voNumPeopleNeeded': 1,
-      'voDescription': '',
+      'voDescription': 'Describe your charity event here.',
       'voWorkTypes': [],
       //insert today's date here using javascript function
       voStartDate: '2017-07-07',

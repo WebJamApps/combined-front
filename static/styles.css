@@ -684,10 +684,13 @@ min-height: 30px;
 }*/
 
 .mobile-menu-toggle {
-  position: absolute;
-  top: 33px;
-  right: 10px;
+  position: fixed;
+  top: 32px;
+  right: 14px;
+  background-color: #2a222a;
   color: white;
+  padding: 6px;
+  z-index: 90000;
 }
 
 .nav-list {

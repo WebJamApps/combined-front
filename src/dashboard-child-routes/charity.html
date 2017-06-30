@@ -96,6 +96,11 @@
           <h4 class="material-header-h4" style="padding-top:10px">Schedule an Event for<br>${charityName}</h4>
           <form>
             <paper-input style="margin-top:20px" label="Event name (required)" value.two-way="voOpp.voName & validate:controller3"></paper-input>
+            <paper-input type="number" style="margin-top:20px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded & validate:controller3"></paper-input>
+            <textarea value.two-way="voOpp.voDescription" style="margin-top:26px" rows="5" cols="33"></textarea>
+            <paper-input style="margin-top:4px" label="Name of Event Coordinator" value.two-way="voOpp.voContactName & validate:controller3"></paper-input>
+            <paper-input style="margin-top:20px" label="Event Coordinator's Email" value.two-way="voOpp.voContactEmail & validate:controller3"></paper-input>
+            <paper-input style="margin-top:20px" label="Event Coordinator's Phone" value.two-way="voOpp.voContactPhone & validate:controller3"></paper-input>
             <button id="scheduleCharityButton" class="updateButton" raised click.trigger="scheduleCharityFunct()" style="margin-bottom:40px; display:none">Schedule</button>
             <p>&nbsp;</p>
           </form>
