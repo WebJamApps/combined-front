@@ -2,32 +2,39 @@
   <div class="page-content">
     <paper-material class="material-content" elevation="0">
       <h3 id="charityDash" class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Charity Dashboard</strong></h3>
-      <paper-material class="material-content" elevation="3" style="max-width:7.5in; margin:auto">
+      <paper-material class="material-content" elevation="3" style="max-width:8in; margin:auto">
         <h4 class="material-header-h4">Your charities</h4>
         <div if.bind="charities.length === 0">
           <p style="margin:auto; padding-top:10px">You do not have any charities.</p>
         </div>
         <div if.bind="charities.length !== 0">
           <div class="search-table-outer" style="position:relative;overflow-x:auto;">
+            <p>The <strong>Remove</strong> button is used to remove yourself as being the manager of a particular charity, and only displays if there is more than one manager.</p>
+            <p>The <strong>Delete</strong> button only displays if you are the only manager of a charity.</p>
             <table aurelia-table="data.bind: charities; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
               <thead>
                 <tr>
-                  <th style="padding:8px">Action</th>
-                  <th style="padding:8px" aut-sort="key: charityName; default: asc">Name</th>
+                  <th style="padding:8px; text-align:center">Action</th>
+                  <th style="padding:8px;" aut-sort="key: charityName; default: asc">Name</th>
                   <th style="padding:8px" aut-sort="key: charityCity">City</th>
                   <th style="padding:8px" >State</th>
                   <th style="padding:8px" >Zipcode</th>
                   <th style="padding:8px" >Phone</th>
                   <th style="padding:8px">Type</th>
+                  <th style="padding:8px">Manager(s)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr repeat.for="charity of $displayData">
                   <td style="padding:8px; text-align:center">
-                    <button class="button-checkout" raised click.delegate="deleteCharity(charity._id)" style="margin-bottom:10px">
+                    <button if.bind="charity.charityMngIds.length < 2" class="button-checkout" raised click.delegate="deleteCharity(charity._id)" style="margin-bottom:10px">
                       Delete
                     </button>
-                    <a click.delegate="showUpdateCharity(charity)">Update</a>
+                    <button if.bind="charity.charityMngIds.length > 1" class="button-checkout" raised click.delegate="removeManager(charity)" style="margin-bottom:10px; background-color:darkorange; color:black">
+                      Remove
+                    </button>
+                    <p><a click.delegate="showUpdateCharity(charity)">Update</a></p>
+                    <p><a click.delegate="showScheduleCharity(charity)">Schedule</a></p>
                   </td>
                   <td style="padding:8px" innerhtml.bind="charity.charityName"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityCity"></td>
@@ -35,6 +42,7 @@
                   <td style="padding:8px" innerhtml.bind="charity.charityZipCode"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityPhoneNumber"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityTypesHtml"></td>
+                  <td style="padding:8px" innerhtml.bind="charity.charityManagersHtml"></td>
                 </tr>
               </tbody>
             </table>
@@ -45,7 +53,7 @@
       <paper-material elevation="3" style="max-width:5in; margin:auto">
         <!-- Update form -->
         <div id="updateCharitySection" style="display:none;margin-left:10px">
-          <h4 class="material-header-h4" style="padding-top:10px">Update ${charityName} charity</h4>
+          <h4 class="material-header-h4" style="padding-top:10px">Update ${charityName}</h4>
           <form>
             <div class="multiselect" style="width:200px; margin-top:30px">
               <div class="selectBox" click.delegate="showCheckboxes('typesUpdate')">
@@ -70,7 +78,8 @@
               <option repeat.for="state of states" model.bind="state">${state}</option>
             </select>
             <paper-input style="margin-top:20px" type="number" label="Zip Code (required)" value.two-way="updateCharity.charityZipCode & validate:controller2"></paper-input>
-            <paper-input style="margin-top:20px" type="number" label="Phone Number" value.two-way="updateCharity.charityPhoneNumber & validate:controller2"></paper-input>
+            <paper-input style="margin-top:20px" type="number" label="Phone Number (optional)" value.two-way="updateCharity.charityPhoneNumber & validate:controller2"></paper-input>
+            <paper-input style="margin-top:20px" label="Assign additional manager by email" value.two-way="updateCharity.charityEmail & validate:controller2"></paper-input>
             <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
               <ul if.bind="controller2.errors">
                 <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red">
@@ -83,6 +92,19 @@
           </form>
         </div>
         <!-- End of update form -->
+        <div id="scheduleCharitySection" style="display:none;margin-left:10px">
+          <h4 class="material-header-h4" style="padding-top:10px">Schedule an Event for<br>${charityName}</h4>
+          <form>
+            <paper-input style="margin-top:20px" label="Event name (required)" value.two-way="voOpp.voName & validate:controller3"></paper-input>
+            <paper-input type="number" style="margin-top:20px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded & validate:controller3"></paper-input>
+            <textarea value.two-way="voOpp.voDescription" style="margin-top:26px" rows="5" cols="33"></textarea>
+            <paper-input style="margin-top:4px" label="Name of Event Coordinator" value.two-way="voOpp.voContactName & validate:controller3"></paper-input>
+            <paper-input style="margin-top:20px" label="Event Coordinator's Email" value.two-way="voOpp.voContactEmail & validate:controller3"></paper-input>
+            <paper-input style="margin-top:20px" label="Event Coordinator's Phone" value.two-way="voOpp.voContactPhone & validate:controller3"></paper-input>
+            <button id="scheduleCharityButton" class="updateButton" raised click.trigger="scheduleCharityFunct()" style="margin-bottom:40px; display:none">Schedule</button>
+            <p>&nbsp;</p>
+          </form>
+        </div>
       </paper-material>
       <p>&nbsp;</p>
       <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">

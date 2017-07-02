@@ -57,28 +57,43 @@ export class UserAccount {
       this.charities = await res.json();
       console.log(this.charities);
       if (this.charities.length !== 0){
+        //loop through each charity and check if there is more than one manager
         this.canDelete = false;
+        //const reason = document.getElementById('notdeletereason');
+        //console.log(reason);
+        //const reasonC = document.getElementsByClassName('notDelR');
+        //console.log(reasonC);
+        this.notDelR = 'You are not allowed to delete your account when you are a charity manager. First, delete your charities or remove yourself as manager (if there is another charity manager assigned to that charity).';
       }
+    }
+    if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
+      const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
+      this.books = await res.json();
+      console.log(this.charities);
+      if (this.books.length !== 0){
+        this.canDelete = false;
+        this.notDelB = 'You are not allowed to delete your account when you have a book checked out';
+      }
+    }
 
-      if (this.selectedWorks.includes('other')){
-        //console.log('other was selected, we will display an additional form field now');
-        this.workOther = true;
-      } else {
-        this.workOther = false;
-      }
+    if (this.selectedWorks.includes('other')){
+      //console.log('other was selected, we will display an additional form field now');
+      this.workOther = true;
+    } else {
+      this.workOther = false;
+    }
 
-      if (this.selectedTalents.includes('other')){
-        //console.log('other was selected, we will display an additional form field now');
-        this.talentOther = true;
-      } else {
-        this.talentOther = false;
-      }
-      if (this.selectedCauses.includes('other')){
-        //console.log('other was selected, we will display an additional form field now');
-        this.causeOther = true;
-      } else {
-        this.causeOther = false;
-      }
+    if (this.selectedTalents.includes('other')){
+      //console.log('other was selected, we will display an additional form field now');
+      this.talentOther = true;
+    } else {
+      this.talentOther = false;
+    }
+    if (this.selectedCauses.includes('other')){
+      //console.log('other was selected, we will display an additional form field now');
+      this.causeOther = true;
+    } else {
+      this.causeOther = false;
     }
   }
 
