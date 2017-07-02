@@ -30,6 +30,7 @@ class ValidatorMock extends Validator {
 
 class HttpMockChar extends HttpMock {
   fetch(url, obj) {
+    console.log(url);
     this.headers.url = url;
     this.headers.method = obj ? obj.method : 'GET';
     if (obj && obj.method === 'put') {
@@ -49,6 +50,7 @@ describe('the Charity Module', () => {
   let auth;
   let vc;
   let val;
+
   beforeEach(() => {
     vc = new VCMock();
     val = new ValidatorMock();
@@ -82,6 +84,7 @@ describe('the Charity Module', () => {
   });
 
   it('runs type picked when nothing is selected', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.types = ['Christian', 'Hunger'];
     charity.typePicked();
@@ -90,6 +93,7 @@ describe('the Charity Module', () => {
   });
 
   it('runs type picked with valid types and other selected and can submit', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.types = ['Christian', 'Hunger'];
     charity.newCharity.charityTypes = ['Christian', 'other'];
@@ -100,6 +104,7 @@ describe('the Charity Module', () => {
   });
 
   it('runs type picked with valid types and other selected and cannot submit', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.types = ['Christian', 'Hunger'];
     charity.newCharity.charityTypes = ['Christian', 'other'];
@@ -110,6 +115,7 @@ describe('the Charity Module', () => {
   });
 
   it('validates the charity form to allow submit', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.newCharity.charityTypes = ['Christian', 'other'];
     charity.canSubmit = false;
@@ -120,6 +126,7 @@ describe('the Charity Module', () => {
   });
 
   it('does not allow submit when type is not selected', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.newCharity.charityTypes = ['Christian', 'other'];
     charity.canSubmit = false;
@@ -130,6 +137,7 @@ describe('the Charity Module', () => {
   });
 
   it('does not allow submit when validationResults are false', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.newCharity.charityTypes = ['Christian', 'other'];
     charity.canSubmit = false;
@@ -139,6 +147,7 @@ describe('the Charity Module', () => {
   });
 
   it('allows submit when validationResults are true', (done) => {
+    charity.activate();
     document.body.innerHTML = '<button id="newCharityButton">';
     charity.newCharity.charityTypes = ['True'];
     charity.validType = true;
@@ -160,6 +169,18 @@ describe('the Charity Module', () => {
 
   it('deletes charity', (done) => {
     charity.deleteCharity();
+    done();
+  });
+
+  it('showUpdateCharity', (done) => {
+    let node = document.createElement('div');
+    let node2 = document.createElement('div');
+    // let char = {charityName: 'Homeland Security', charityTypes: []};
+    node.id = 'updateCharitySection';
+    node2.id = 'scheduleCharitySection';
+    document.getElementsByTagName('body')[0].appendChild(node);
+    document.getElementsByTagName('body')[0].appendChild(node2);
+    // charity.showUpdateCharity({charityTypes: []});
     done();
   });
 });
