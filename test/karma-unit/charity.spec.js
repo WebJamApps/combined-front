@@ -174,13 +174,39 @@ describe('the Charity Module', () => {
 
   it('showUpdateCharity', (done) => {
     let node = document.createElement('div');
-    let node2 = document.createElement('div');
-    // let char = {charityName: 'Homeland Security', charityTypes: []};
     node.id = 'updateCharitySection';
-    node2.id = 'scheduleCharitySection';
     document.getElementsByTagName('body')[0].appendChild(node);
-    document.getElementsByTagName('body')[0].appendChild(node2);
-    // charity.showUpdateCharity({charityTypes: []});
+    // charity.showUpdateCharity(charity.newCharity);
+    done();
+  });
+
+  it('updateTypePicked', (done) => {
+    let node = document.createElement('button');
+    node.id = 'updateCharityButton';
+    document.getElementsByTagName('body')[0].appendChild(node);
+    charity.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
+    charity.updateCharity = {charityTypes: ['Hunger']};
+    charity.updateTypePicked();
+    charity.updateCharity = {charityTypes: ['Hunger', 'other']};
+    charity.updateTypePicked();
+    done();
+  });
+
+  it('validate2', (done) => {
+    charity.updateCharity = {charityTypes: ['Hunger', 'other'], charityName: 'okay'};
+    charity.validate2();
+    done();
+  });
+
+  it('updateCharityFunct', (done) => {
+    let node = document.createElement('button');
+    node.id = 'updateCharitySection';
+    document.getElementsByTagName('body')[0].appendChild(node);
+    let node1 = document.createElement('section');
+    node1.id = 'charityDash';
+    document.getElementsByTagName('body')[0].appendChild(node1);
+    charity.updateCharity = charity.newCharity;
+    charity.updateCharityFunct();
     done();
   });
 });
