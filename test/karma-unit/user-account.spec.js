@@ -1,14 +1,25 @@
 import {UserAccount} from '../../src/dashboard-child-routes/user-account';
 import {AuthStub, HttpMock, AppStateStub} from './commons';
 import {App} from '../../src/app';
+
+class HttpStub extends HttpMock {
+  fetch(url) {
+    console.log(url);
+    return Promise.resolve({
+      json: () => Promise.resolve([{name: 'in the jungle'}])
+    });
+  }
+}
+
 describe('the UserAccount Module', () => {
   let ua;
   let app;
   let auth;
+
   beforeEach(() => {
     auth = new AuthStub();
     auth.setToken({sub: 'aowifjawifhiawofjo'});
-    app = new App(auth, new HttpMock());
+    app = new App(auth, new HttpStub());
     app.activate();
     ua = new UserAccount(app);
   });
@@ -101,6 +112,7 @@ describe('the UserAccount Module', () => {
       done();
     });
   });
+
   it('deletes the user', (done) => {
     ua.deleteUser();
     done();

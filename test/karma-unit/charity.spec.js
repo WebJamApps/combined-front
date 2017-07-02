@@ -30,6 +30,7 @@ class ValidatorMock extends Validator {
 
 class HttpMockChar extends HttpMock {
   fetch(url, obj) {
+    console.log(url);
     this.headers.url = url;
     this.headers.method = obj ? obj.method : 'GET';
     if (obj && obj.method === 'put') {
@@ -49,6 +50,7 @@ describe('the Charity Module', () => {
   let auth;
   let vc;
   let val;
+
   beforeEach(() => {
     vc = new VCMock();
     val = new ValidatorMock();
@@ -167,6 +169,68 @@ describe('the Charity Module', () => {
 
   it('deletes charity', (done) => {
     charity.deleteCharity();
+    done();
+  });
+
+  it('showUpdateCharity', (done) => {
+    let node = document.createElement('div');
+    let section = document.createElement('section');
+    node.id = 'updateCharitySection';
+    section.id = 'scheduleCharitySection';
+    document.getElementsByTagName('body')[0].appendChild(node);
+    document.getElementsByTagName('body')[0].appendChild(section);
+    // let newCharity = {
+    //   'charityName': '',
+    //   'charityCity': '',
+    //   'charityState': '',
+    //   'charityZipCode': '',
+    //   'charityTypes': [],
+    //   'charityManagers': [],
+    //   'charityMngIds': [],
+    //   'charityTypeOther': '',
+    //   'charityTypesHtml': ''
+    // };
+    // charity.showUpdateCharity(newCharity);
+    done();
+  });
+
+  it('updateTypePicked', (done) => {
+    let node = document.createElement('button');
+    node.id = 'updateCharityButton';
+    document.getElementsByTagName('body')[0].appendChild(node);
+    charity.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
+    charity.updateCharity = {charityTypes: ['Hunger']};
+    charity.updateTypePicked();
+    charity.updateCharity = {charityTypes: ['Hunger', 'other']};
+    charity.updateTypePicked();
+    done();
+  });
+
+  it('validate2', (done) => {
+    charity.updateCharity = {charityTypes: ['Hunger', 'other'], charityName: 'okay'};
+    charity.validate2();
+    done();
+  });
+
+  it('updateCharityFunct', (done) => {
+    charity.updateCharity = {
+      'charityName': '',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': [],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': ''
+    };
+    let node = document.createElement('div');
+    node.id = 'charityDash';
+    document.getElementsByTagName('body')[0].appendChild(node);
+    charity.updateCharityFunct();
+    charity.updateCharity.charityEmail = 'danny@mcwaves.com';
+    charity.updateCharity.charityMngIds = ['danny@mcwaves.com'];
+    charity.updateCharityFunct();
     done();
   });
 });
