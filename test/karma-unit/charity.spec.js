@@ -174,9 +174,23 @@ describe('the Charity Module', () => {
 
   it('showUpdateCharity', (done) => {
     let node = document.createElement('div');
+    let section = document.createElement('section');
     node.id = 'updateCharitySection';
+    section.id = 'scheduleCharitySection';
     document.getElementsByTagName('body')[0].appendChild(node);
-    // charity.showUpdateCharity(charity.newCharity);
+    document.getElementsByTagName('body')[0].appendChild(section);
+    // let newCharity = {
+    //   'charityName': '',
+    //   'charityCity': '',
+    //   'charityState': '',
+    //   'charityZipCode': '',
+    //   'charityTypes': [],
+    //   'charityManagers': [],
+    //   'charityMngIds': [],
+    //   'charityTypeOther': '',
+    //   'charityTypesHtml': ''
+    // };
+    // charity.showUpdateCharity(newCharity);
     done();
   });
 
@@ -199,13 +213,23 @@ describe('the Charity Module', () => {
   });
 
   it('updateCharityFunct', (done) => {
-    let node = document.createElement('button');
-    node.id = 'updateCharitySection';
+    charity.updateCharity = {
+      'charityName': '',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': [],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': ''
+    };
+    let node = document.createElement('div');
+    node.id = 'charityDash';
     document.getElementsByTagName('body')[0].appendChild(node);
-    let node1 = document.createElement('section');
-    node1.id = 'charityDash';
-    document.getElementsByTagName('body')[0].appendChild(node1);
-    charity.updateCharity = charity.newCharity;
+    charity.updateCharityFunct();
+    charity.updateCharity.charityEmail = 'danny@mcwaves.com';
+    charity.updateCharity.charityMngIds = ['danny@mcwaves.com'];
     charity.updateCharityFunct();
     done();
   });
