@@ -39,7 +39,7 @@ class HttpMockChar extends HttpMock {
     this.status = 200;
     return Promise.resolve({
       Headers: this.headers,
-      json: () => Promise.resolve([{charityTypes: ['Home', 'Elderly']}, {charityTypes: ['Home', 'Elderly', 'other']}, {charityTypes: []}])
+      json: () => Promise.resolve([{charityTypes: ['Home', 'Elderly'], charityManagers: ['Home', 'Elderly']}, {charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other']}, {charityTypes: [], charityManagers: []}])
     });
   }
 }
@@ -50,6 +50,18 @@ describe('the Charity Module', () => {
   let auth;
   let vc;
   let val;
+  let updatedCharity = {
+    'charityName': '',
+    'charityCity': '',
+    'charityState': '',
+    'charityZipCode': '',
+    'charityTypes': [],
+    'charityManagers': [],
+    'charityMngIds': [],
+    'charityTypeOther': '',
+    'charityTypesHtml': '',
+    'charityPhoneNumber': '0237654897'
+  };
 
   beforeEach(() => {
     vc = new VCMock();
@@ -157,10 +169,10 @@ describe('the Charity Module', () => {
   });
 
   it('new charity created', (done) => {
-    //charity.app.appState = new AppStateStub();
     charity.activate();
     charity.user = {'name': 'Test Name', '_id': '32'};
     charity.newCharity.charityState = 'Alabama';
+    document.body.innerHTML = '<div id="charityDash"></div>';
     charity.createCharity();
     expect(charity.newCharity.charityManagers[0]).toBe('Test Name');
     expect(charity.newCharity.charityState).toBe('Alabama');
@@ -172,25 +184,12 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('showUpdateCharity', (done) => {
+  it('showScheduleCharity', (done) => {
+    document.body.innerHTML = '<div id="scheduleCharitySection"></div>';
     let node = document.createElement('div');
-    let section = document.createElement('section');
     node.id = 'updateCharitySection';
-    section.id = 'scheduleCharitySection';
-    document.getElementsByTagName('body')[0].appendChild(node);
-    document.getElementsByTagName('body')[0].appendChild(section);
-    // let newCharity = {
-    //   'charityName': '',
-    //   'charityCity': '',
-    //   'charityState': '',
-    //   'charityZipCode': '',
-    //   'charityTypes': [],
-    //   'charityManagers': [],
-    //   'charityMngIds': [],
-    //   'charityTypeOther': '',
-    //   'charityTypesHtml': ''
-    // };
-    // charity.showUpdateCharity(newCharity);
+    document.body.appendChild(node);
+    charity.showScheduleCharity({charityName: 'Developer', _id: 'abcd1234'});
     done();
   });
 
@@ -199,6 +198,7 @@ describe('the Charity Module', () => {
     node.id = 'updateCharityButton';
     document.getElementsByTagName('body')[0].appendChild(node);
     charity.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
+    charity.canSubmit2 = true;
     charity.updateCharity = {charityTypes: ['Hunger']};
     charity.updateTypePicked();
     charity.updateCharity = {charityTypes: ['Hunger', 'other']};
@@ -213,24 +213,41 @@ describe('the Charity Module', () => {
   });
 
   it('updateCharityFunct', (done) => {
-    charity.updateCharity = {
-      'charityName': '',
-      'charityCity': '',
-      'charityState': '',
-      'charityZipCode': '',
-      'charityTypes': [],
-      'charityManagers': [],
-      'charityMngIds': [],
-      'charityTypeOther': '',
-      'charityTypesHtml': ''
-    };
+    charity.updateCharity = updatedCharity;
     let node = document.createElement('div');
     node.id = 'charityDash';
     document.getElementsByTagName('body')[0].appendChild(node);
     charity.updateCharityFunct();
-    charity.updateCharity.charityEmail = 'danny@mcwaves.com';
-    charity.updateCharity.charityMngIds = ['danny@mcwaves.com'];
+    charity.updateCharity.charityEmail = 'dannyyean@me.com';
     charity.updateCharityFunct();
+    done();
+  });
+
+  it('updateCharityFunct put charity', (done) => {
+    charity.updateCharity = updatedCharity;
+    let node = document.createElement('div');
+    node.id = 'charityDash';
+    document.getElementsByTagName('body')[0].appendChild(node);
+    charity.updateCharity.charityEmail = null;
+    charity.updateCharityFunct();
+    done();
+  });
+
+  it('showUpdateCharity', (done) => {
+    let node = document.createElement('div');
+    let section = document.createElement('section');
+    node.id = 'updateCharitySection';
+    section.id = 'scheduleCharitySection';
+    document.getElementsByTagName('body')[0].appendChild(node);
+    document.getElementsByTagName('body')[0].appendChild(section);
+    updatedCharity.charityEmail = 'dannyyean@my.com';
+    charity.showUpdateCharity(updatedCharity);
+    done();
+  });
+
+  it('removes manager', (done) => {
+    charity.user = {name: 'Dev Patel'};
+    charity.removeManager(updatedCharity);
     done();
   });
 });
