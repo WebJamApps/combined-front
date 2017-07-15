@@ -80,12 +80,12 @@
     "json-loader": "^0.5.4",
     "nps": "^5.3.1",
     "nps-utils": "^1.2.0",
+    "polymer-bundler": "^2.0.1",
     "postcss-loader": "^2.0.5",
     "pushstate-server": "^3.0.0",
     "snyk": "^1.36.1",
     "style-loader": "^0.18.2",
     "url-loader": "0.5.8",
-    "polymer-bundler": "^2.0.1",
     "wait-on": "2.0.2",
     "webpack": "^2.6.1"
   },
