@@ -29,6 +29,8 @@ export class Charity {
     this.canSubmit2 = false;
     this.validWorkType3 = false;
     this.preventDefault = this.preventEnter.bind(this);
+    this.selectedTalents = [];
+    this.selectedWorks = [];
   }
 
   async activate(){
@@ -52,6 +54,12 @@ export class Charity {
       'charityTypeOther': '',
       'charityTypesHtml': ''
     };
+    this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
+    this.works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
+    this.talents.sort();
+    this.talents.push('other');
+    this.works.sort();
+    this.works.push('other');
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     const res = await this.app.httpClient.fetch('/charity/' + this.uid);
@@ -112,6 +120,9 @@ export class Charity {
       'voNumPeopleNeeded': 1,
       'voDescription': 'Describe your charity event here.',
       'voWorkTypes': [],
+      'voTalentTypes': [],
+      'voWorkTypeOther': '',
+      'voTalentTypeOther': '',
       //insert today's date here using javascript function
       voStartDate: '2017-07-07',
       voStartTime: '',
@@ -122,14 +133,6 @@ export class Charity {
       voContactEmail: '',
       voContactPhone: null
     };
-    //this.updateCharity.charityEmail = '';
-    // if (this.updateCharity.charityTypes.includes('other')){
-    //   this.typeOther = true;
-    // } else {
-    //   this.typeOther = false;
-    //   this.updateCharity.charitytypeOther = '';
-    // }
-
     //this.setupValidation3();
     document.getElementById('scheduleCharitySection').scrollIntoView();
   }
@@ -143,6 +146,31 @@ export class Charity {
       checkboxes.opened = false;
       this.expanded = false;
     }
+  }
+
+  talentPicked(){
+    this.voOpp.volTalentTypes = this.selectedTalents;
+    //for (let i = 0; i < this.selectedTalents.length; i++) {
+    //console.log(this.selectedTalents);
+    if (this.selectedTalents.includes('other')){
+      //console.log('other was selected, we will display an additional form field now');
+      this.talentOther = true;
+    } else {
+      this.talentOther = false;
+      this.voOpp.voTalentTypeOther = '';
+    }
+  }
+
+  workPicked(){
+    this.voOpp.voWorkTypes = this.selectedWorks;
+    if (this.selectedWorks.includes('other')){
+      //console.log('other was selected, we will display an additional form field now');
+      this.workOther = true;
+    } else {
+      this.workOther = false;
+      this.voOpp.voWorkTypeOther = '';
+    }
+    //  }
   }
 
   typePicked(){

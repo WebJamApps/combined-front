@@ -64,7 +64,7 @@ export class UserAccount {
         //console.log(reason);
         //const reasonC = document.getElementsByClassName('notDelR');
         //console.log(reasonC);
-        this.notDelR = 'You are not allowed to delete your account when you are a charity manager. First, delete your charities or remove yourself as manager (if there is another charity manager assigned to that charity).';
+        this.notDelR = 'You are not allowed to delete your account when you have a charity under management. First, delete your charities or remove yourself as manager (if there is another charity manager assigned to that charity).';
       }
     }
     if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
