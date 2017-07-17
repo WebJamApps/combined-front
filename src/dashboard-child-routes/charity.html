@@ -92,11 +92,17 @@
           </form>
         </div>
         <!-- End of update form -->
-        <div id="scheduleCharitySection" style="display:none;margin-left:10px">
+        <div id="scheduleCharitySection" if.bind="showSchedule">
           <h4 class="material-header-h4" style="padding-top:10px">Schedule an Event for<br>${charityName}</h4>
           <form>
             <paper-input style="margin-top:20px" label="Event name (required)" value.two-way="voOpp.voName & validate:controller3"></paper-input>
             <textarea value.two-way="voOpp.voDescription" style="margin-top:26px" rows="5" cols="33"></textarea>
+            <label style="margin-top:16px; font-size:14pt">Start Date and Time</label>
+            <paper-date-picker force-narrow="true" min-date="July 17, 2017" max-date="July 17, 2027" value.two-way="voOpp.voStartDate"></paper-date-picker>
+            <paper-time-picker force-narrow="true" time="08:00" value.two-way="voOpp.voStartTime"></paper-time-picker>
+            <label style="margin-top:10px; font-size:14pt">End Date and Time</label>
+            <paper-date-picker force-narrow="true" min-date="July 17, 2017" max-date="July 17, 2027" value.two-way="voOpp.voEndDate"></paper-date-picker>
+            <paper-time-picker force-narrow="true" time="17:00" value.two-way="voOpp.voEndTime"></paper-time-picker>
             <paper-input style="margin-top:0" label="Name of Event Coordinator" value.two-way="voOpp.voContactName & validate:controller3"></paper-input>
             <paper-input style="margin-top:0" label="Event Coordinator's Email" value.two-way="voOpp.voContactEmail & validate:controller3"></paper-input>
             <paper-input style="margin-top:0" label="Event Coordinator's Phone" value.two-way="voOpp.voContactPhone & validate:controller3"></paper-input>
@@ -117,7 +123,7 @@
               </iron-dropdown>
             </div>
             <paper-input if.bind="talentOther" value.two-way="voOpp.voTalentTypeOther" label="Other talent" ></paper-input>
-            <div class="multiselect" style="width:170px; margin-top:15px">
+            <div class="multiselect" style="width:170px; margin-top:25px">
               <div class="selectBox" click.delegate="showCheckboxes('work')">
                 <select>
                   <option style="font-weight:normal">Volunteer work</option>
@@ -133,7 +139,7 @@
               </iron-dropdown>
             </div>
             <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
-            <button id="scheduleCharityButton" class="updateButton" raised click.trigger="scheduleCharityFunct()" style="margin-bottom:40px; display:none">Schedule</button>
+            <button id="scheduleCharityButton" class="updateButton" raised click.trigger="scheduleCharityFunct()" style="margin:40px">Schedule</button>
             <p>&nbsp;</p>
           </form>
         </div>

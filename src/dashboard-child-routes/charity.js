@@ -31,6 +31,7 @@ export class Charity {
     this.preventDefault = this.preventEnter.bind(this);
     this.selectedTalents = [];
     this.selectedWorks = [];
+    this.showSchedule = false;
   }
 
   async activate(){
@@ -106,12 +107,13 @@ export class Charity {
   showScheduleCharity(charity){
     this.canSubmit3 = true;
     this.validWorkType3 = true;
-    let scheduleDiv = document.getElementById('scheduleCharitySection');
+    //let scheduleDiv = document.getElementById('scheduleCharitySection');
     let updateDiv = document.getElementById('updateCharitySection');
     if (updateDiv !== null){
       updateDiv.style.display = 'none';
     }
-    scheduleDiv.style.display = 'block';
+    //scheduleDiv.style.display = 'block';
+    this.showSchedule = true;
     this.charityName = charity.charityName;
     //this.scheduleCharity = charity;
     this.voOpp = {
@@ -134,7 +136,9 @@ export class Charity {
       voContactPhone: null
     };
     //this.setupValidation3();
-    document.getElementById('scheduleCharitySection').scrollIntoView();
+    if (document.getElementById('scheduleCharitySection') !== null){
+      document.getElementById('scheduleCharitySection').scrollIntoView();
+    }
   }
 
   showCheckboxes(id){
@@ -262,7 +266,7 @@ export class Charity {
 
   updateCanSubmit2(validationResults) {
     let valid = true;
-    console.log('Running update funcitronfswd');
+    //console.log('Running update funcitronfswd');
     let nub = document.getElementById('updateCharityButton');
     if (nub !== null) {
       //nub.style.display = 'none';
