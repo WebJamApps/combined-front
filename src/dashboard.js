@@ -13,6 +13,7 @@ export class Dashboard {
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;  //the button on the form
+    this.preventDefault = this.preventEnter.bind(this);
   }
 
   userTypes=JSON.parse(process.env.userRoles).roles;
@@ -22,6 +23,13 @@ export class Dashboard {
     this.user = await this.app.appState.getUser(this.uid);
     this.childRoute();
     this.setupValidation();
+    window.addEventListener('keypress', this.preventDefault, false);
+  }
+
+  preventEnter(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
   }
 
   updateCanSubmit(validationResults) {
