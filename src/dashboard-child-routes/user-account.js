@@ -8,6 +8,7 @@ export class UserAccount {
     this.selectedCauses = [];
     this.selectedTalents = [];
     this.selectedWorks = [];
+    this.preventDefault = this.preventEnter.bind(this);
   }
 
   causes = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
@@ -94,6 +95,13 @@ export class UserAccount {
       this.causeOther = true;
     } else {
       this.causeOther = false;
+    }
+    window.addEventListener('keypress', this.preventDefault, false);
+  }
+
+  preventEnter(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault();
     }
   }
 
