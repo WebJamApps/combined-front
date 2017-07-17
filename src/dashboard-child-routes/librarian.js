@@ -34,6 +34,7 @@ export class Librarian {
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;  //the button on the form
     this.validType = false;
+    this.preventDefault = this.preventEnter.bind(this);
   }
 
   types = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audio', 'graphic'];
@@ -47,6 +48,13 @@ export class Librarian {
     this.types.push('other');
     //this.states.sort();
     this.setupValidation();
+    window.addEventListener('keypress', this.preventDefault, false);
+  }
+
+  preventEnter(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
   }
 
   textFileValidate() {

@@ -28,6 +28,7 @@ export class Charity {
     this.controller3.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit2 = false;
     this.validWorkType3 = false;
+    this.preventDefault = this.preventEnter.bind(this);
   }
 
   async activate(){
@@ -62,6 +63,13 @@ export class Charity {
       console.log(this.charities[0].charityTypes);
     }
     this.setupValidation();
+    window.addEventListener('keypress', this.preventDefault, false);
+  }
+
+  preventEnter(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
   }
 
   showUpdateCharity(charity){
