@@ -189,6 +189,7 @@ describe('the Charity Module', () => {
     let node = document.createElement('div');
     node.id = 'updateCharitySection';
     document.body.appendChild(node);
+    charity.activate();
     charity.showScheduleCharity({charityName: 'Developer', _id: 'abcd1234'});
     done();
   });
