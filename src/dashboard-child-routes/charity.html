@@ -95,18 +95,19 @@
         <div id="scheduleCharitySection" if.bind="showSchedule">
           <h4 class="material-header-h4" style="padding-top:10px">Schedule an Event for<br>${charityName}</h4>
           <form>
-            <paper-input style="margin-top:20px" label="Event name (required)" value.two-way="voOpp.voName & validate:controller3"></paper-input>
-            <textarea value.two-way="voOpp.voDescription" style="margin-top:26px" rows="5" cols="33"></textarea>
+            <paper-input style="margin-top:20px" label="Event name (required)" value.two-way="voOpp.voName"></paper-input>
+            <label style="font-size:14pt; margin-top:12px">Describe your event</label>
+            <textarea value.two-way="voOpp.voDescription" rows="5" cols="33"></textarea>
             <label style="margin-top:16px; font-size:14pt">Start Date and Time</label>
-            <paper-date-picker force-narrow="true" min-date="July 17, 2017" max-date="July 17, 2027" value.two-way="voOpp.voStartDate"></paper-date-picker>
-            <paper-time-picker force-narrow="true" time="08:00" value.two-way="voOpp.voStartTime"></paper-time-picker>
+            <paper-date-picker id="start-date" force-narrow="true" min-date="July 17, 2017" max-date="July 17, 2027"></paper-date-picker>
+            <paper-time-picker id="start-time" force-narrow="true" time="08:00" ></paper-time-picker>
             <label style="margin-top:10px; font-size:14pt">End Date and Time</label>
-            <paper-date-picker force-narrow="true" min-date="July 17, 2017" max-date="July 17, 2027" value.two-way="voOpp.voEndDate"></paper-date-picker>
-            <paper-time-picker force-narrow="true" time="17:00" value.two-way="voOpp.voEndTime"></paper-time-picker>
-            <paper-input style="margin-top:0" label="Name of Event Coordinator" value.two-way="voOpp.voContactName & validate:controller3"></paper-input>
-            <paper-input style="margin-top:0" label="Event Coordinator's Email" value.two-way="voOpp.voContactEmail & validate:controller3"></paper-input>
-            <paper-input style="margin-top:0" label="Event Coordinator's Phone" value.two-way="voOpp.voContactPhone & validate:controller3"></paper-input>
-            <paper-input type="number" style="margin-top:10px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded & validate:controller3"></paper-input>
+            <paper-date-picker id="end-date" force-narrow="true" min-date="July 17, 2017" max-date="July 17, 2027" ></paper-date-picker>
+            <paper-time-picker id="end-time" force-narrow="true" time="17:00" ></paper-time-picker>
+            <paper-input style="margin-top:0" label="Name of Event Coordinator" value.two-way="voOpp.voContactName"></paper-input>
+            <paper-input style="margin-top:0" label="Event Coordinator's Email" value.two-way="voOpp.voContactEmail"></paper-input>
+            <paper-input style="margin-top:0" label="Event Coordinator's Phone" value.two-way="voOpp.voContactPhone"></paper-input>
+            <paper-input type="number" style="margin-top:10px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded"></paper-input>
             <div class="multiselect" style="width:170px; margin-top:10px">
               <div class="selectBox" click.delegate="showCheckboxes('talents')">
                 <select>

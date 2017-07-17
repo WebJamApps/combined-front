@@ -23,11 +23,11 @@ export class Charity {
     this.canSubmit2 = true;
     this.validType2 = true;
     // these are all for the scheduling of events function
-    this.validator3 = new FormValidator(validator, (results) => this.updateCanSubmit3(results));
-    this.controller3 = controllerFactory.createForCurrentScope(this.validator3);
-    this.controller3.validateTrigger = validateTrigger.changeOrBlur;
-    this.canSubmit2 = false;
-    this.validWorkType3 = false;
+    //this.validator3 = new FormValidator(validator, (results) => this.updateCanSubmit3(results));
+    //this.controller3 = controllerFactory.createForCurrentScope(this.validator3);
+    //this.controller3.validateTrigger = validateTrigger.changeOrBlur;
+    //this.canSubmit2 = false;
+    //this.validWorkType3 = false;
     this.preventDefault = this.preventEnter.bind(this);
     this.selectedTalents = [];
     this.selectedWorks = [];
@@ -35,6 +35,26 @@ export class Charity {
   }
 
   async activate(){
+    this.voOpp = {
+      'voName': '',
+      'voCharityId': '',
+      'voCharityName': '',
+      'voNumPeopleNeeded': 1,
+      'voDescription': '',
+      'voWorkTypes': [],
+      'voTalentTypes': [],
+      'voWorkTypeOther': '',
+      'voTalentTypeOther': '',
+      //insert today's date here using javascript function
+      'voStartDate': null,
+      'voStartTime': '',
+      //insert today's date here using javascript function
+      'voEndDate': null,
+      'voEndTime': '',
+      'voContactName': '',
+      'voContactEmail': '',
+      'voContactPhone': null
+    };
     this.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
     this.types.sort();
     this.types.push('other');
@@ -102,43 +122,6 @@ export class Charity {
     // unit tests keep raising validation errors here;
     // this.setupValidation2();
     document.getElementById('updateCharitySection').scrollIntoView();
-  }
-
-  showScheduleCharity(charity){
-    this.canSubmit3 = true;
-    this.validWorkType3 = true;
-    //let scheduleDiv = document.getElementById('scheduleCharitySection');
-    let updateDiv = document.getElementById('updateCharitySection');
-    if (updateDiv !== null){
-      updateDiv.style.display = 'none';
-    }
-    //scheduleDiv.style.display = 'block';
-    this.showSchedule = true;
-    this.charityName = charity.charityName;
-    //this.scheduleCharity = charity;
-    this.voOpp = {
-      'voName': '',
-      'voCharityId': charity._id,
-      'voNumPeopleNeeded': 1,
-      'voDescription': 'Describe your charity event here.',
-      'voWorkTypes': [],
-      'voTalentTypes': [],
-      'voWorkTypeOther': '',
-      'voTalentTypeOther': '',
-      //insert today's date here using javascript function
-      voStartDate: '2017-07-07',
-      voStartTime: '',
-      //insert today's date here using javascript function
-      voEndDate: '2017-07-07',
-      voEndTime: '',
-      voContactName: '',
-      voContactEmail: '',
-      voContactPhone: null
-    };
-    //this.setupValidation3();
-    if (document.getElementById('scheduleCharitySection') !== null){
-      document.getElementById('scheduleCharitySection').scrollIntoView();
-    }
   }
 
   showCheckboxes(id){
@@ -420,6 +403,45 @@ export class Charity {
         alert('There is no OHAF user with that email');
       }
       this.putCharity();
+    });
+  }
+
+  showScheduleCharity(charity){
+    //this.canSubmit3 = true;
+    //this.validWorkType3 = true;
+    //let scheduleDiv = document.getElementById('scheduleCharitySection');
+    this.voOpp.voCharityId = charity._id;
+    this.voOpp.voCharityName = charity.charityName;
+    let updateDiv = document.getElementById('updateCharitySection');
+    if (updateDiv !== null){
+      updateDiv.style.display = 'none';
+    }
+    //scheduleDiv.style.display = 'block';
+    this.showSchedule = true;
+    this.charityName = charity.charityName;
+    //this.scheduleCharity = charity;
+    //this.setupValidation3();
+    if (document.getElementById('scheduleCharitySection') !== null){
+      document.getElementById('scheduleCharitySection').scrollIntoView();
+    }
+  }
+
+  scheduleCharityFunct(){
+    this.voOpp.voStartDate = document.getElementById('start-date').date;
+    this.voOpp.voStartTime = document.getElementById('start-time').time;
+    this.voOpp.voEndDate = document.getElementById('end-date').date;
+    this.voOpp.voEndTime = document.getElementById('end-time').time;
+    console.log(this.voOpp);
+    //this.newCharity.charityManagers[0] = this.user.name;
+    //this.newCharity.charityMngIds[0] = this.user._id;
+    this.app.httpClient.fetch('/volOpp/create', {
+      method: 'post',
+      body: json(this.voOpp)
+    })
+    .then((data) => {
+      console.log(data);
+      document.getElementById('charityDash').scrollIntoView();
+      this.activate();
     });
   }
 
