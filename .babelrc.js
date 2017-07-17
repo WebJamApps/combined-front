@@ -1,12 +1,7 @@
+// this file will be used by default by babel@7 once it is released
 module.exports = {
-  // "env": {
-  //   "test": {
-  //     "sourceMap": "inline",
-  //     "plugins": [ "istanbul" ],
-  //   }
-  // },
   "plugins": [
-    "transform-decorators",
+    "transform-decorators-legacy",
     "transform-class-properties"
   ],
   "presets": [
@@ -17,20 +12,14 @@ module.exports = {
         } : {
           "browsers": [
             "last 2 versions",
-            "not ie <= 10"
+            "not ie <= 11"
           ],
           "uglify": process.env.NODE_ENV === 'production',
         },
         "loose": true,
         "modules": process.env.BABEL_TARGET === 'node' ? 'commonjs' : false,
-        // "whitelist": [
-        //   "transform-es2015-literals",
-        //   "transform-es2015-template-literals"
-        // ],
-        "useBuiltIns": 'entry'
+        "useBuiltIns": true
       }
     ]
   ]
-  
-  
 }
