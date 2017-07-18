@@ -11,14 +11,14 @@ export class AppState {
   }
 
   getUser(uid) {
-    console.log('appState getUser');
+    //console.log('appState getUser');
     if (this.getUserID() !== undefined) {
-      console.log('appState returning already set user');
+      //console.log('appState returning already set user');
       return new Promise((resolve) => {
         resolve(this.user);
       });
     }
-    console.log('appState getting new user');
+    //console.log('appState getting new user');
     return this.httpClient.fetch('/user/' + uid)
     .then((response) => response.json())
     .then((data) => {
@@ -43,8 +43,8 @@ export class AppState {
   }
 
   setUser(input) {
-    console.log('appState setUser');
-    console.log(this.user);
+    //console.log('appState setUser');
+    //console.log(this.user);
     this.user = input;
   }
 
@@ -64,6 +64,6 @@ export class AppState {
 
   setRoles(input){
     this.roles = input;
-    console.log('user roles are ' + this.roles);
+    //console.log('user roles are ' + this.roles);
   }
 }
