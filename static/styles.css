@@ -85,6 +85,12 @@ paper-button.updateButton:hover {
   background-color: #cfd;
 }
 
+div#clockArea.style-scope.paper-time-picker {
+  width: 298px;
+  margin-left: 0;
+  height: 330px;
+}
+
 .splash {
   text-align: center;
   margin: 10% 0 0;

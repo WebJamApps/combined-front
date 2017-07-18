@@ -1,4 +1,5 @@
 System.import('isomorphic-fetch');
+System.import('whatwg-fetch');
 import {PLATFORM} from 'aurelia-pal';
 import {inject, bindable} from 'aurelia-framework';
 import {AuthorizeStep} from 'aurelia-auth';
