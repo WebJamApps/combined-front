@@ -89,7 +89,8 @@ export class Charity {
     if (this.charities.length !== 0){
       this.buildTypes();
       this.buildManagers();
-      console.log(this.charities[0].charityTypes);
+      this.buildEvents();
+      //console.log(this.charities[0].charityTypes);
     }
     this.setupValidation();
     window.addEventListener('keypress', this.preventDefault, false);
@@ -98,6 +99,28 @@ export class Charity {
   preventEnter(e) {
     if (e.keyCode === 13) {
       e.preventDefault();
+    }
+  }
+
+  async buildEvents(){
+    for (let l = 0; l < this.charities.length; l++){
+      let eventHtml = '';
+      this.events = [];
+      console.log('these are the charity ids');
+      console.log(this.charities[l]._id);
+      const res = await this.app.httpClient.fetch('/volOpp/' + this.charities[l]._id);
+      this.events = await res.json();
+      console.log('these are the events');
+      console.log(this.events);
+      if (this.events.length !== 0){
+        for (let i = 0; i < this.events.length; i++){
+          eventHtml = eventHtml + '<p><a>' + this.events[i].voName + '</a></p>';
+        }
+      }
+      if (eventHtml === ''){
+        eventHtml = '<p style="font-size:10pt">none scheduled</p>';
+      }
+      this.charities[l].eventHtml = eventHtml;
     }
   }
 
