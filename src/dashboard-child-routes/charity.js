@@ -32,9 +32,11 @@ export class Charity {
     this.selectedTalents = [];
     this.selectedWorks = [];
     this.showSchedule = false;
+    //this.alleventids = [];
   }
 
   async activate(){
+    this.alleventids = [];
     this.voOpp = {
       'voName': '',
       'voCharityId': '',
@@ -96,6 +98,17 @@ export class Charity {
     window.addEventListener('keypress', this.preventDefault, false);
   }
 
+  // stateChange(newState) {
+  //   setTimeout(function () {
+  //     if (newState === -1) {
+  //       console.log('inside wait');
+  //       if (this.alleventids.length !== 0){
+  //         this.setclicks();
+  //       }
+  //     }
+  //   }, 5000);
+  // }
+
   preventEnter(e) {
     if (e.keyCode === 13) {
       e.preventDefault();
@@ -108,13 +121,21 @@ export class Charity {
       this.events = [];
       console.log('these are the charity ids');
       console.log(this.charities[l]._id);
-      const res = await this.app.httpClient.fetch('/volOpp/' + this.charities[l]._id);
+      let res = await this.app.httpClient.fetch('/volOpp/' + this.charities[l]._id);
       this.events = await res.json();
       console.log('these are the events');
       console.log(this.events);
       if (this.events.length !== 0){
         for (let i = 0; i < this.events.length; i++){
-          eventHtml = eventHtml + '<p><a>' + this.events[i].voName + '</a></p>';
+          this.evid = this.events[i]._id;
+          //eventHtml = eventHtml + '<p><a click.delegate="showEvent(&apos;' + this.evid + '&apos;)">' + this.events[i].voName + '</a></p>';
+          //eventHtml = eventHtml + '<p><a onclick="showEvent(&apos;' + this.evid + '&apos;)">' + this.events[i].voName + '</a></p>';
+          eventHtml = eventHtml + '<p><a id="' + this.evid + '">' + this.events[i].voName + '</a></p>';
+          this.alleventids.push(this.evid);
+          console.log('inside the set event loop');
+          console.log(this.alleventids);
+          //document.getElementById(this.evid).addEventListener('click', showEvent(this.evid), false);
+          //eventHtml = eventHtml + '<p><a click.delegate="showEvent(&apos;' + this.evid + '&apos;)">' + this.events[i].voName + '</a></p>';
         }
       }
       if (eventHtml === ''){
@@ -122,6 +143,46 @@ export class Charity {
       }
       this.charities[l].eventHtml = eventHtml;
     }
+    // setTimeout(function () {
+    //   if (newState === -1){
+    //     this.setclicks();
+    //   }
+    // }, 5000);
+    //this.stateChange();
+    if (this.alleventids.length > 0){
+      this.setclicks();
+    }
+  }
+
+  // stateChange(newState) {
+  //   setTimeout(function () {
+  //     if (newState === -1) {
+  //       this.setclicks();
+  //     }
+  //   }, 5000);
+  // }
+
+  setclicks(){
+    console.log('running eventlisteners');
+    console.log(this.alleventids);
+    if (this.alleventids.length !== 0) {
+      console.log('there are some event ids');
+      for (let i = 0; i < this.alleventids.length; i++){
+        // setTimeout(function () {
+        // }, 3000);
+        if (document.getElementById(this.alleventids[i]) !== null){
+          document.getElementById(this.alleventids[i]).addEventListener('click', this.showEvent(this.alleventids[i]), false);
+          console.log(document.getElementById(this.alleventids[i]));
+        }
+        //document.getElementById(this.alleventids[2]).addEventListener('click', this.showEvent(this.alleventids[2]), false);
+      }
+    }
+  }
+
+  showEvent(eid){
+    console.log('showing event details for this event id');
+    console.log(eid);
+    //fetch the voOpp by id and display it back to the user
   }
 
   showUpdateCharity(charity){
