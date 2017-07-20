@@ -123,24 +123,25 @@ export class Charity {
       console.log(this.charities[l]._id);
       let res = await this.app.httpClient.fetch('/volOpp/' + this.charities[l]._id);
       this.events = await res.json();
-      console.log('these are the events');
-      console.log(this.events);
-      if (this.events.length !== 0){
-        for (let i = 0; i < this.events.length; i++){
-          this.evid = this.events[i]._id;
-          //eventHtml = eventHtml + '<p><a click.delegate="showEvent(&apos;' + this.evid + '&apos;)">' + this.events[i].voName + '</a></p>';
-          //eventHtml = eventHtml + '<p><a onclick="showEvent(&apos;' + this.evid + '&apos;)">' + this.events[i].voName + '</a></p>';
-          eventHtml = eventHtml + '<p><a id="' + this.evid + '">' + this.events[i].voName + '</a></p>';
-          this.alleventids.push(this.evid);
-          console.log('inside the set event loop');
-          console.log(this.alleventids);
-          //document.getElementById(this.evid).addEventListener('click', showEvent(this.evid), false);
-          //eventHtml = eventHtml + '<p><a click.delegate="showEvent(&apos;' + this.evid + '&apos;)">' + this.events[i].voName + '</a></p>';
-        }
-      }
-      if (eventHtml === ''){
-        eventHtml = '<p style="font-size:10pt">none scheduled</p>';
-      }
+      eventHtml = this.events;
+      // console.log('these are the events');
+      // console.log(this.events);
+      // if (this.events.length !== 0){
+      //   for (let i = 0; i < this.events.length; i++){
+      //     this.evid = this.events[i]._id;
+      //     //eventHtml = eventHtml + '<p><a click.delegate="showEvent(&apos;' + this.evid + '&apos;)">' + this.events[i].voName + '</a></p>';
+      //     //eventHtml = eventHtml + '<p><a onclick="showEvent(&apos;' + this.evid + '&apos;)">' + this.events[i].voName + '</a></p>';
+      //     eventHtml = eventHtml + '<p><a id="' + this.evid + ' click.delegate="showEvent('+this.evid+')"">' + this.events[i].voName + '</a></p>';
+      //     this.alleventids.push(this.evid);
+      //     console.log('inside the set event loop');
+      //     console.log(this.alleventids);
+      //     //document.getElementById(this.evid).addEventListener('click', showEvent(this.evid), false);
+      //     //eventHtml = eventHtml + '<p><a click.delegate="showEvent(&apos;' + this.evid + '&apos;)">' + this.events[i].voName + '</a></p>';
+      //   }
+      // }
+      // if (eventHtml === ''){
+      //   eventHtml = '<p style="font-size:10pt">none scheduled</p>';
+      // }
       this.charities[l].eventHtml = eventHtml;
     }
     // setTimeout(function () {
