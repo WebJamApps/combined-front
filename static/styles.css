@@ -85,6 +85,12 @@ paper-button.updateButton:hover {
   background-color: #cfd;
 }
 
+div#clockArea.style-scope.paper-time-picker {
+  width: 298px;
+  margin-left: 0;
+  height: 330px;
+}
+
 .splash {
   text-align: center;
   margin: 10% 0 0;
@@ -684,10 +690,13 @@ min-height: 30px;
 }*/
 
 .mobile-menu-toggle {
-  position: absolute;
-  top: 33px;
-  right: 10px;
+  position: fixed;
+  top: 32px;
+  right: 14px;
+  background-color: #2a222a;
   color: white;
+  padding: 6px;
+  z-index: 90000;
 }
 
 .nav-list {

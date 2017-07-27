@@ -25,6 +25,8 @@
     "paper-elements": "polymerelements/paper-elements#^1.0.7",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.20",
     "polymer-slideshow": "^3.1.0",
-    "iron-dropdown": "^1.0.0"
+    "iron-dropdown": "^1.0.0",
+    "paper-date-picker": "polymer-paper-date-picker#^1.2.1",
+    "paper-time-picker": "^1.1.5"
   }
 }

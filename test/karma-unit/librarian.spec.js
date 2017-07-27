@@ -1,7 +1,7 @@
 import {App} from '../../src/app';
 import {AuthStub, HttpMock} from './commons';
 import {Librarian} from '../../src/dashboard-child-routes/librarian';
-import './setup';
+//import './setup';
 import {csvFixture} from './librarian.spec.fixtures';
 import csvjson from 'csvjson';
 import {Validator} from 'aurelia-validation';
