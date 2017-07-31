@@ -186,6 +186,10 @@ export class Charity {
     //fetch the voOpp by id and display it back to the user
   }
 
+  createNewCharity(){
+    console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
+  }
+  
   showUpdateCharity(charity){
     this.canSubmit2 = true;
     this.validType2 = true;
@@ -295,6 +299,12 @@ export class Charity {
     .ensure('charityState').required().withMessage('Charity state please')
     .on(this.newCharity);
   }
+//move charity email into validation 1
+//this.newcharity or existing should be .on
+//remove all updateCharity
+//only one form in html, bind a charity selected or a completely empty
+//change button text if empty or with data
+// can we combine the create or update or if we have data in the form it goes to update (form needs to understand)
 
   setupValidation2() {
     ValidationRules
