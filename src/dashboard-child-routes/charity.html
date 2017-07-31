@@ -2,6 +2,11 @@
   <div class="page-content">
     <paper-material class="material-content" elevation="0">
       <h3 id="charityDash" class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Charity Dashboard</strong></h3>
+      <div id="create new button" style="text-align:center">
+        <p>Create a <button class="button-checkout" raised click.delegate="createNewCharity()" style="margin-bottom:10px; background-color:CornflowerBlue; color:black; width:108px">
+          New Charity
+        </button></p>
+      </div>
       <paper-material class="material-content" elevation="3" style="max-width:8in; margin:auto">
         <h4 class="material-header-h4">Your charities</h4>
         <div if.bind="charities.length === 0">
