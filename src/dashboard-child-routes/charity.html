@@ -34,7 +34,7 @@
                     <button if.bind="charity.charityMngIds.length > 1" class="button-checkout" raised click.delegate="removeManager(charity)" style="margin-bottom:10px; background-color:darkorange; color:black">
                       Remove
                     </button>
-                    <p><a click.delegate="showUpdateCharity(charity)">Update</a></p>
+                    <p><a click.delegate="updateCharityFunction(charity)">Update</a></p>
                     <p><a click.delegate="showScheduleCharity(charity)">Schedule</a></p>
                   </td>
                   <td style="padding:8px" innerhtml.bind="charity.charityName"></td>
@@ -51,11 +51,16 @@
           </div>
         </div>
       </paper-material>
-      <p>&nbsp;</p>
+      <div id="create new button" style="text-align:center; margin-top:20px">
+        <p>Create a <button class="button-checkout" raised click.delegate="createNewCharity()" style="margin-bottom:10px; background-color:CornflowerBlue; color:black; width:108px">
+          New Charity
+        </button></p>
+      </div>
       <paper-material elevation="3" style="max-width:5in; margin:auto">
         <!-- Update form -->
         <div id="updateCharitySection" style="display:none;margin-left:10px">
-          <h4 class="material-header-h4" style="padding-top:10px">Update ${charityName}</h4>
+          <h4 if.bind = "update" class="material-header-h4" style="padding-top:10px">Update ${charityName}</h4>
+          <h4 if.bind = "create" class="material-header-h4" style="padding-top:10px">Create a New Charity</h4>
           <form>
             <div class="multiselect" style="width:200px; margin-top:30px">
               <div class="selectBox" click.delegate="showCheckboxes('typesUpdate')">
@@ -147,11 +152,6 @@
           </form>
         </div>
       </paper-material>
-      <div id="create new button" style="text-align:center">
-        <p>Create a <button class="button-checkout" raised click.delegate="createNewCharity()" style="margin-bottom:10px; background-color:CornflowerBlue; color:black; width:108px">
-          New Charity
-        </button></p>
-      </div>
       <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
         <h4 class="material-header-h4">Create a new charity</h4>
         <form>
