@@ -188,8 +188,20 @@ export class Charity {
 
   createNewCharity(){
     console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
+    let charity = {
+      'charityName': '',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': [],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': ''
+    };
+    this.showUpdateCharity(charity);
   }
-  
+
   showUpdateCharity(charity){
     this.canSubmit2 = true;
     this.validType2 = true;
@@ -246,7 +258,6 @@ export class Charity {
       this.workOther = false;
       this.voOpp.voWorkTypeOther = '';
     }
-    //  }
   }
 
   typePicked(){
