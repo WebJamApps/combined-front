@@ -36,6 +36,8 @@ export class Charity {
   }
 
   async activate(){
+    this.create = false;
+    this.update = false;
     this.alleventids = [];
     this.voOpp = {
       'voName': '',
@@ -199,6 +201,14 @@ export class Charity {
       'charityTypeOther': '',
       'charityTypesHtml': ''
     };
+    this.create = true;
+    this.update = false;
+    this.showUpdateCharity(charity);
+  }
+
+  updateCharityFunction(charity){
+    this.update = true;
+    this.create = false;
     this.showUpdateCharity(charity);
   }
 
