@@ -95,89 +95,82 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('runs type picked when nothing is selected', (done) => {
-    charity.activate();
-    document.body.innerHTML = '<button id="newCharityButton">';
-    charity.types = ['Christian', 'Hunger'];
-    charity.typePicked();
-    //expect(charity.newCharity.charityType.length).toBe(0);
-    done();
-  });
+  // it('runs type picked when nothing is selected', (done) => {
+  //   charity.activate();
+  //   document.body.innerHTML = '<button id="newCharityButton">';
+  //   charity.types = ['Christian', 'Hunger'];
+  //   charity.typePicked();
+  //   done();
+  // });
 
-  it('runs type picked with valid types and other selected and can submit', (done) => {
-    charity.activate();
-    document.body.innerHTML = '<button id="newCharityButton">';
-    charity.types = ['Christian', 'Hunger'];
-    charity.newCharity.charityTypes = ['Christian', 'other'];
-    charity.canSubmit = true;
-    charity.typePicked();
-    //expect(charity.newCharity.charityType.length).toBe(0);
-    done();
-  });
+  // it('runs type picked with valid types and other selected and can submit', (done) => {
+  //   charity.activate();
+  //   document.body.innerHTML = '<button id="newCharityButton">';
+  //   charity.types = ['Christian', 'Hunger'];
+  //   charity.newCharity.charityTypes = ['Christian', 'other'];
+  //   charity.canSubmit = true;
+  //   charity.typePicked();
+  //   done();
+  // });
 
-  it('runs type picked with valid types and other selected and cannot submit', (done) => {
-    charity.activate();
-    document.body.innerHTML = '<button id="newCharityButton">';
-    charity.types = ['Christian', 'Hunger'];
-    charity.newCharity.charityTypes = ['Christian', 'other'];
-    charity.canSubmit = false;
-    charity.typePicked();
-    //expect(charity.newCharity.charityType.length).toBe(0);
-    done();
-  });
+  // it('runs type picked with valid types and other selected and cannot submit', (done) => {
+  //   charity.activate();
+  //   document.body.innerHTML = '<button id="newCharityButton">';
+  //   charity.types = ['Christian', 'Hunger'];
+  //   charity.newCharity.charityTypes = ['Christian', 'other'];
+  //   charity.canSubmit = false;
+  //   charity.typePicked();
+  //   done();
+  // });
 
-  it('validates the charity form to allow submit', (done) => {
-    charity.activate();
-    document.body.innerHTML = '<button id="newCharityButton">';
-    charity.newCharity.charityTypes = ['Christian', 'other'];
-    charity.canSubmit = false;
-    charity.validType = true;
-    charity.validate();
-    //expect(charity.newCharity.charityType.length).toBe(0);
-    done();
-  });
+  // it('validates the charity form to allow submit', (done) => {
+  //   charity.activate();
+  //   document.body.innerHTML = '<button id="newCharityButton">';
+  //   charity.newCharity.charityTypes = ['Christian', 'other'];
+  //   charity.canSubmit = false;
+  //   charity.validType = true;
+  //   charity.validate();
+  //   done();
+  // });
 
-  it('does not allow submit when type is not selected', (done) => {
-    charity.activate();
-    document.body.innerHTML = '<button id="newCharityButton">';
-    charity.newCharity.charityTypes = ['Christian', 'other'];
-    charity.canSubmit = false;
-    charity.validType = false;
-    charity.validate();
-    //expect(charity.newCharity.charityType.length).toBe(0);
-    done();
-  });
+  // it('does not allow submit when type is not selected', (done) => {
+  //   charity.activate();
+  //   document.body.innerHTML = '<button id="newCharityButton">';
+  //   charity.newCharity.charityTypes = ['Christian', 'other'];
+  //   charity.canSubmit = false;
+  //   charity.validType = false;
+  //   charity.validate();
+  //   done();
+  // });
 
-  it('does not allow submit when validationResults are false', (done) => {
-    charity.activate();
-    document.body.innerHTML = '<button id="newCharityButton">';
-    charity.newCharity.charityTypes = ['Christian', 'other'];
-    charity.canSubmit = false;
-    charity.validate();
-    //expect(charity.newCharity.charityType.length).toBe(0);
-    done();
-  });
+  // it('does not allow submit when validationResults are false', (done) => {
+  //   charity.activate();
+  //   document.body.innerHTML = '<button id="newCharityButton">';
+  //   charity.newCharity.charityTypes = ['Christian', 'other'];
+  //   charity.canSubmit = false;
+  //   charity.validate();
+  //   done();
+  // });
 
-  it('allows submit when validationResults are true', (done) => {
-    charity.activate();
-    document.body.innerHTML = '<button id="newCharityButton">';
-    charity.newCharity.charityTypes = ['True'];
-    charity.validType = true;
-    charity.validate();
-    //expect(charity.newCharity.charityType.length).toBe(0);
-    done();
-  });
+  // it('allows submit when validationResults are true', (done) => {
+  //   charity.activate();
+  //   document.body.innerHTML = '<button id="newCharityButton">';
+  //   charity.newCharity.charityTypes = ['True'];
+  //   charity.validType = true;
+  //   charity.validate();
+  //   done();
+  // });
 
-  it('new charity created', (done) => {
-    charity.activate();
-    charity.user = {'name': 'Test Name', '_id': '32'};
-    charity.newCharity.charityState = 'Alabama';
-    document.body.innerHTML = '<div id="charityDash"></div>';
-    charity.createCharity();
-    expect(charity.newCharity.charityManagers[0]).toBe('Test Name');
-    expect(charity.newCharity.charityState).toBe('Alabama');
-    done();
-  });
+  // it('new charity created', (done) => {
+  //   charity.activate();
+  //   charity.user = {'name': 'Test Name', '_id': '32'};
+  //   charity.newCharity.charityState = 'Alabama';
+  //   document.body.innerHTML = '<div id="charityDash"></div>';
+  //   charity.createCharity();
+  //   expect(charity.newCharity.charityManagers[0]).toBe('Test Name');
+  //   expect(charity.newCharity.charityState).toBe('Alabama');
+  //   done();
+  // });
 
   it('deletes charity', (done) => {
     charity.deleteCharity();
@@ -194,18 +187,18 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('updateTypePicked', (done) => {
-    let node = document.createElement('button');
-    node.id = 'updateCharityButton';
-    document.getElementsByTagName('body')[0].appendChild(node);
-    charity.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
-    charity.canSubmit2 = true;
-    charity.updateCharity = {charityTypes: ['Hunger']};
-    charity.updateTypePicked();
-    charity.updateCharity = {charityTypes: ['Hunger', 'other']};
-    charity.updateTypePicked();
-    done();
-  });
+  // it('updateTypePicked', (done) => {
+  //   let node = document.createElement('button');
+  //   node.id = 'updateCharityButton';
+  //   document.getElementsByTagName('body')[0].appendChild(node);
+  //   charity.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
+  //   charity.canSubmit2 = true;
+  //   charity.updateCharity = {charityTypes: ['Hunger']};
+  //   charity.updateTypePicked();
+  //   charity.updateCharity = {charityTypes: ['Hunger', 'other']};
+  //   charity.updateTypePicked();
+  //   done();
+  // });
 
   it('validate2', (done) => {
     charity.updateCharity = {charityTypes: ['Hunger', 'other'], charityName: 'okay'};
@@ -234,17 +227,17 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('showUpdateCharity', (done) => {
-    let node = document.createElement('div');
-    let section = document.createElement('section');
-    node.id = 'updateCharitySection';
-    section.id = 'scheduleCharitySection';
-    document.getElementsByTagName('body')[0].appendChild(node);
-    document.getElementsByTagName('body')[0].appendChild(section);
-    updatedCharity.charityEmail = 'dannyyean@my.com';
-    charity.showUpdateCharity(updatedCharity);
-    done();
-  });
+  // it('showUpdateCharity', (done) => {
+  //   let node = document.createElement('div');
+  //   let section = document.createElement('section');
+  //   node.id = 'updateCharitySection';
+  //   section.id = 'scheduleCharitySection';
+  //   document.getElementsByTagName('body')[0].appendChild(node);
+  //   document.getElementsByTagName('body')[0].appendChild(section);
+  //   updatedCharity.charityEmail = 'dannyyean@my.com';
+  //   charity.showUpdateCharity(updatedCharity);
+  //   done();
+  // });
 
   it('removes manager', (done) => {
     charity.user = {name: 'Dev Patel'};
