@@ -52,9 +52,9 @@
         </div>
       </paper-material>
       <div id="create new button" style="text-align:center; margin-top:20px">
-        <p>Create a <button class="button-checkout" raised click.delegate="createNewCharity()" style="margin-bottom:10px; background-color:CornflowerBlue; color:black; width:108px">
+        <!-- <p>Create a <button class="button-checkout" raised click.delegate="createNewCharity()" style="margin-bottom:10px; background-color:CornflowerBlue; color:black; width:108px">
           New Charity
-        </button></p>
+        </button></p> -->
       </div>
       <paper-material elevation="3" style="max-width:5in; margin:auto">
         <!-- Update form -->
@@ -94,7 +94,9 @@
                 </li>
               </ul>
             </div>
-            <button id="updateCharityButton" class="updateButton" raised click.trigger="updateCharityFunct()" style="margin-bottom:40px">Update</button>
+            <button if.bind = "update" id="updateCharityButton" class="updateButton" raised click.trigger="updateCharityFunct()" style="margin-bottom:40px">Update</button>
+              <button if.bind = "update" id="cancelUpdateCharityButton" class="updateButton" raised click.trigger="createNewCharity()" style="margin-bottom:40px">cancel</button>
+            <button if.bind = "create" id="createNewCharityButton" class="updateButton" raised click.trigger="createNewCharity()" style="margin-bottom:40px">Submit</button>
             <p>&nbsp;</p>
           </form>
         </div>
@@ -152,7 +154,7 @@
           </form>
         </div>
       </paper-material>
-      <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
+      <!-- <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
         <h4 class="material-header-h4">Create a new charity</h4>
         <form>
           <div class="multiselect" style="width:200px; margin-top:30px">
@@ -188,7 +190,7 @@
           </div>
           <button id="newCharityButton" class="updateButton" raised click.trigger="createCharity()" style="display:none;margin-bottom:40px">Submit</button>
         </form>
-      </paper-material>
+      </paper-material> -->
     </paper-material>
   </div>
 </template>

@@ -560,5 +560,7 @@ export class Charity {
       this.activate();
     });
   }
-
+  attached(){
+    this.createNewCharity();
+  }
 }
