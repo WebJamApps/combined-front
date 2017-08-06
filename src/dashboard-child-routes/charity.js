@@ -96,7 +96,7 @@ export class Charity {
       this.buildEvents();
       //console.log(this.charities[0].charityTypes);
     }
-    this.setupValidation();
+    //this.setupValidation();
     window.addEventListener('keypress', this.preventDefault, false);
   }
 
@@ -231,7 +231,7 @@ export class Charity {
       this.updateCharity.charitytypeOther = '';
     }
     // unit tests keep raising validation errors here;
-    // this.setupValidation2();
+    this.setupValidation2();
     document.getElementById('updateCharitySection').scrollIntoView();
   }
 
@@ -270,38 +270,19 @@ export class Charity {
     }
   }
 
-  typePicked(){
-    this.validType = false;
-    let nub = document.getElementById('newCharityButton');
-    nub.style.display = 'none';
-    for (let i = 0; i < this.types.length; i++) {
-      if (this.newCharity.charityTypes.indexOf(this.types[i]) > -1){
-        this.validType = true;
-        if (this.canSubmit){
-          nub.style.display = 'block';
-        }
-      }
-    }
-    if (this.newCharity.charityTypes.includes('other')){
-      this.typeOther = true;
-    } else {
-      this.typeOther = false;
-      this.newCharity.charityTypeOther = '';
-    }
-  }
-
   updateTypePicked(){
     this.validType2 = false;
-    let nub = document.getElementById('updateCharityButton');
+    let nub = document.getElementsByClassName('updateButton')[0];
     nub.style.display = 'none';
     for (let i = 0; i < this.types.length; i++) {
       if (this.updateCharity.charityTypes.indexOf(this.types[i]) > -1){
         this.validType2 = true;
-        if (this.canSubmit2){
+        if (this.canSubmit2 && nub){
           nub.style.display = 'block';
         }
       }
     }
+    this.validate2();
     console.log('the charity types picked are: ' + this.updateCharity.charityTypes);
     if (this.updateCharity.charityTypes.includes('other')){
       this.typeOther = true;
@@ -311,15 +292,7 @@ export class Charity {
     }
   }
 
-  setupValidation() {
-    ValidationRules
-    .ensure('charityPhoneNumber').matches(/\b[2-9]\d{9}\b/).withMessage('10 digit phone number')
-    .ensure('charityZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
-    .ensure('charityCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
-    .ensure('charityName').required().maxLength(40).withMessage('Charity name please')
-    .ensure('charityState').required().withMessage('Charity state please')
-    .on(this.newCharity);
-  }
+
 //move charity email into validation 1
 //this.newcharity or existing should be .on
 //remove all updateCharity
@@ -338,36 +311,16 @@ export class Charity {
     .on(this.updateCharity);
   }
 
-  validate() {
-    return this.validator.validateObject(this.newCharity);
-  }
-
   validate2() {
     return this.validator2.validateObject(this.updateCharity);
   }
 
-  updateCanSubmit(validationResults) {
-    let valid = true;
-    let nub = document.getElementById('newCharityButton');
-    nub.style.display = 'none';
-    for (let result of validationResults) {
-      if (result.valid === false){
-        valid = false;
-        break;
-      }
-    }
-    this.canSubmit = valid;
-    if (this.canSubmit && this.validType){
-      nub.style.display = 'block';
-    }
-    return this.canSubmit;
-  }
-
   updateCanSubmit2(validationResults) {
     let valid = true;
-    //console.log('Running update funcitronfswd');
-    let nub = document.getElementById('updateCharityButton');
-    if (nub !== null) {
+    console.log('Running updateCanSubmit2');
+    let nub = document.getElementsByClassName('updateButton')[0];
+    if (nub) {
+      console.log('Found my updateButton');
       //nub.style.display = 'none';
       for (let result of validationResults) {
         if (result.valid === false){
@@ -386,16 +339,17 @@ export class Charity {
   }
 
   createCharity(){
-    this.newCharity.charityManagers[0] = this.user.name;
-    this.newCharity.charityMngIds[0] = this.user._id;
+    this.updateCharity.charityManagers[0] = this.user.name;
+    this.updateCharity.charityMngIds[0] = this.user._id;
     this.app.httpClient.fetch('/charity/create', {
       method: 'post',
-      body: json(this.newCharity)
+      body: json(this.updateCharity)
     })
     .then((data) => {
       console.log(data);
       document.getElementById('charityDash').scrollIntoView();
       this.activate();
+      this.createNewCharity();
     });
   }
 
@@ -441,6 +395,7 @@ export class Charity {
     .then((data) => {
       console.log('your charity has been deleted');
       this.activate();
+      this.createNewCharity();
     });
   }
 
@@ -483,6 +438,7 @@ export class Charity {
       this.updateCharity = {};
       document.getElementById('charityDash').scrollIntoView();
       this.activate();
+      this.createNewCharity();
     });
   }
 
