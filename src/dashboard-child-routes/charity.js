@@ -9,14 +9,7 @@ export class Charity {
   validator = null;
   constructor(app, controllerFactory, validator){
     this.app = app;
-    this.charities = {};
-    // these are all for the create new charity function
-    this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
-    this.controller = controllerFactory.createForCurrentScope(this.validator);
-    this.controller.validateTrigger = validateTrigger.changeOrBlur;
-    this.canSubmit = false;  //the button on the form
-    this.validType = false;
-    // these are all for the update charity function
+    this.charities = [];
     this.validator2 = new FormValidator(validator, (results) => this.updateCanSubmit2(results));
     this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
@@ -36,7 +29,6 @@ export class Charity {
   }
 
   async activate(){
-    this.create = false;
     this.update = false;
     this.alleventids = [];
     this.voOpp = {
@@ -49,10 +41,8 @@ export class Charity {
       'voTalentTypes': [],
       'voWorkTypeOther': '',
       'voTalentTypeOther': '',
-      //insert today's date here using javascript function
       'voStartDate': null,
       'voStartTime': '',
-      //insert today's date here using javascript function
       'voEndDate': null,
       'voEndTime': '',
       'voContactName': '',
@@ -68,17 +58,6 @@ export class Charity {
       'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
       'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     this.states.sort();
-    this.newCharity = {
-      'charityName': '',
-      'charityCity': '',
-      'charityState': '',
-      'charityZipCode': '',
-      'charityTypes': [],
-      'charityManagers': [],
-      'charityMngIds': [],
-      'charityTypeOther': '',
-      'charityTypesHtml': ''
-    };
     this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
     this.works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
     this.talents.sort();
@@ -89,27 +68,13 @@ export class Charity {
     this.user = await this.app.appState.getUser(this.uid);
     const res = await this.app.httpClient.fetch('/charity/' + this.uid);
     this.charities = await res.json();
-    //console.log(this.charities);
     if (this.charities.length !== 0){
       this.buildTypes();
       this.buildManagers();
       this.buildEvents();
-      //console.log(this.charities[0].charityTypes);
     }
-    //this.setupValidation();
     window.addEventListener('keypress', this.preventDefault, false);
   }
-
-  // stateChange(newState) {
-  //   setTimeout(function () {
-  //     if (newState === -1) {
-  //       console.log('inside wait');
-  //       if (this.alleventids.length !== 0){
-  //         this.setclicks();
-  //       }
-  //     }
-  //   }, 5000);
-  // }
 
   preventEnter(e) {
     if (e.keyCode === 13) {
@@ -208,7 +173,7 @@ export class Charity {
 
   updateCharityFunction(charity){
     this.update = true;
-    this.create = false;
+    //this.create = false;
     this.showUpdateCharity(charity);
   }
 
@@ -230,7 +195,6 @@ export class Charity {
       this.typeOther = false;
       this.updateCharity.charitytypeOther = '';
     }
-    // unit tests keep raising validation errors here;
     this.setupValidation2();
     document.getElementById('updateCharitySection').scrollIntoView();
   }
@@ -248,10 +212,7 @@ export class Charity {
 
   talentPicked(){
     this.voOpp.volTalentTypes = this.selectedTalents;
-    //for (let i = 0; i < this.selectedTalents.length; i++) {
-    //console.log(this.selectedTalents);
     if (this.selectedTalents.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
       this.talentOther = true;
     } else {
       this.talentOther = false;
@@ -262,7 +223,6 @@ export class Charity {
   workPicked(){
     this.voOpp.voWorkTypes = this.selectedWorks;
     if (this.selectedWorks.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
       this.workOther = true;
     } else {
       this.workOther = false;
@@ -292,14 +252,6 @@ export class Charity {
     }
   }
 
-
-//move charity email into validation 1
-//this.newcharity or existing should be .on
-//remove all updateCharity
-//only one form in html, bind a charity selected or a completely empty
-//change button text if empty or with data
-// can we combine the create or update or if we have data in the form it goes to update (form needs to understand)
-
   setupValidation2() {
     ValidationRules
     .ensure('charityPhoneNumber').matches(/\b[2-9]\d{9}\b/).withMessage('10 digit phone number')
@@ -320,11 +272,11 @@ export class Charity {
     console.log('Running updateCanSubmit2');
     let nub = document.getElementsByClassName('updateButton')[0];
     if (nub) {
-      console.log('Found my updateButton');
+      //console.log('Found my updateButton');
       //nub.style.display = 'none';
       for (let result of validationResults) {
         if (result.valid === false){
-          console.log('Something is not valid');
+          //console.log('Something is not valid');
           nub.style.display = 'none';
           valid = false;
           break;
