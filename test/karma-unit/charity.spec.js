@@ -44,9 +44,27 @@ class HttpMockChar extends HttpMock {
   }
 }
 
+class HttpMockChar2 extends HttpMock {
+  fetch(url, obj) {
+    console.log(url);
+    this.headers.url = url;
+    this.headers.method = obj ? obj.method : 'GET';
+    if (obj && obj.method === 'put') {
+      this.user = obj.body;
+    }
+    this.status = 200;
+    return Promise.resolve({
+      Headers: this.headers,
+      json: () => Promise.resolve([])
+    });
+  }
+}
+
 describe('the Charity Module', () => {
   let charity;
+  let charity2;
   let app;
+  let app2;
   let auth;
   let vc;
   let val;
@@ -70,8 +88,12 @@ describe('the Charity Module', () => {
     auth.setToken({sub: 'aowifjawifhiawofjo'});
     app = new App(auth, new HttpMockChar());
     app.activate();
+    app2 = new App(auth, new HttpMockChar2());
+    app2.activate();
     charity = new Charity(app, vc, val);
     charity.app.appState = new AppStateStub();
+    charity2 = new Charity(app2, vc, val);
+    charity2.app.appState = new AppStateStub();
   });
 
   it('activates', (done) => {
@@ -92,6 +114,78 @@ describe('the Charity Module', () => {
     charity.expanded = false;
     charity.showCheckboxes('types');
     expect(charity.expanded).toBe(true);
+    done();
+  });
+
+  it('it does not display the charities table when there are no charities', (done) => {
+    charity2.activate();
+    expect(charity2.charities.length).toBe(0);
+    done();
+  });
+
+  it('prevents the enter key', (done) => {
+    charity.activate();
+    let e = {keyCode: 13, preventDefault: function(){}};
+    charity.preventEnter(e);
+    //expect(charity2.charities.length).toBe(0);
+    done();
+  });
+
+  it('does not prevent other events', (done) => {
+    charity.activate();
+    let e = {keyCode: 12, preventDefault: function(){}};
+    charity.preventEnter(e);
+    //expect(charity2.charities.length).toBe(0);
+    done();
+  });
+
+  it('displays the update charity table', (done) => {
+    charity.activate();
+    charity.setupValidation2 = function(){};
+    let charity1 = {
+      'charityName': 'test charity',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': ['other'],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': ''
+    };
+    //let e = {keyCode: 12, preventDefault: function(){}};
+    document.body.innerHTML = '<div id="updateCharitySection"></div><div id="scheduleCharitySection"></div>';
+    charity.updateCharityFunction(charity1);
+    expect(charity.charityName).toBe('test charity');
+    document.body.innerHTML = '<div id="updateCharitySection"></div><div id=""></div>';
+    charity.updateCharityFunction(charity1);
+    done();
+  });
+
+  it('creates a new charity in the database', (done) => {
+    charity.activate();
+    let user = {name: 'Josh', _id: '1234'};
+    charity.user = user;
+    //charity.user.name = 'Josh';
+    //charity.user._id = '1234';
+    charity.setupValidation2 = function(){};
+    charity.updateCharity = {
+      'charityName': 'test charity',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': ['other'],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': ''
+    };
+    //let e = {keyCode: 12, preventDefault: function(){}};
+    document.body.innerHTML = '<div id="charityDash"></div>';
+    charity.createCharity();
+    // expect(charity.charityName).toBe('test charity');
+    // document.body.innerHTML = '<div id="updateCharitySection"></div><div id=""></div>';
+    // charity.updateCharityFunction(charity1);
     done();
   });
 
