@@ -31,6 +31,7 @@ export class Charity {
 
   async activate(){
     this.update = false;
+    this.updateScheduleEvent = false;
     this.alleventids = [];
     this.voOpp = {
       'voName': '',
@@ -167,6 +168,7 @@ export class Charity {
     if (charitiesTable !== null){
       charitiesTable.style.display = 'block';
     }
+    this.updateScheduledEvent = false;
     this.showUpdateCharity(charity);
   }
 
@@ -454,6 +456,26 @@ export class Charity {
   }
 
   showScheduleCharity(charity){
+    if (this.updateScheduledEvent === false){
+      this.voOpp = {
+        'voName': '',
+        'voCharityId': '',
+        'voCharityName': '',
+        'voNumPeopleNeeded': 1,
+        'voDescription': '',
+        'voWorkTypes': [],
+        'voTalentTypes': [],
+        'voWorkTypeOther': '',
+        'voTalentTypeOther': '',
+        'voStartDate': null,
+        'voStartTime': '',
+        'voEndDate': null,
+        'voEndTime': '',
+        'voContactName': '',
+        'voContactEmail': '',
+        'voContactPhone': null
+      };
+    }
     //this.canSubmit3 = true;
     //this.validWorkType3 = true;
     //let scheduleDiv = document.getElementById('scheduleCharitySection');
