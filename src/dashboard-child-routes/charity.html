@@ -2,7 +2,7 @@
   <div class="page-content">
     <paper-material class="material-content" elevation="0">
       <h3 id="charityDash" class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Charity Dashboard</strong></h3>
-      <paper-material class="material-content" elevation="3" style="max-width:8in; margin:auto">
+      <paper-material id="charTable" class="material-content" elevation="3" style="max-width:8in; margin:auto">
         <h4 class="material-header-h4">Your charities</h4>
         <div id="noCharities" if.bind="charities.length === 0">
           <p style="margin:auto; padding-top:10px">You do not have any charities.</p>
@@ -145,6 +145,7 @@
             </div>
             <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
             <button id="scheduleCharityButton" class="updateButton" raised click.trigger="scheduleCharityFunct()" style="margin:40px">Schedule</button>
+            <button class="cancelButton" raised click.trigger="createNewCharity()" style="margin-bottom:40px">Cancel</button>
             <p>&nbsp;</p>
           </form>
         </div>
