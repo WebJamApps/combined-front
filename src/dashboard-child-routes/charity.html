@@ -51,16 +51,11 @@
           </div>
         </div>
       </paper-material>
-      <!-- <div id="create new button" style="text-align:center; margin-top:20px"> -->
-        <!-- <p>Create a <button class="button-checkout" raised click.delegate="createNewCharity()" style="margin-bottom:10px; background-color:CornflowerBlue; color:black; width:108px">
-          New Charity
-        </button></p> -->
-      <!-- </div> -->
       <paper-material elevation="3" style="max-width:5in; margin:auto">
         <!-- Update form -->
         <div id="updateCharitySection" style="display:none;margin-left:10px">
           <h4 if.bind = "update" class="material-header-h4" style="padding-top:10px">Update ${charityName}</h4>
-          <h4 if.bind = "create" class="material-header-h4" style="padding-top:10px">Create a New Charity</h4>
+          <h4 if.bind = "!update" class="material-header-h4" style="padding-top:10px">Create a New Charity</h4>
           <form>
             <div class="multiselect" style="width:200px; margin-top:30px">
               <div class="selectBox" click.delegate="showCheckboxes('typesUpdate')">
