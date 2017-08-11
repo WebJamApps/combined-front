@@ -25,6 +25,7 @@ export class Charity {
     this.selectedTalents = [];
     this.selectedWorks = [];
     this.showSchedule = false;
+    this.updateScheduledEvent = false;
     //this.alleventids = [];
   }
 
@@ -117,9 +118,9 @@ export class Charity {
     //   }
     // }, 5000);
     //this.stateChange();
-    if (this.alleventids.length > 0){
-      this.setclicks();
-    }
+    // if (this.alleventids.length > 0){
+    //   this.setclicks();
+    // }
   }
 
   // stateChange(newState) {
@@ -130,31 +131,22 @@ export class Charity {
   //   }, 5000);
   // }
 
-  setclicks(){
-    console.log('running eventlisteners');
-    console.log(this.alleventids);
-    if (this.alleventids.length !== 0) {
-      console.log('there are some event ids');
-      for (let i = 0; i < this.alleventids.length; i++){
-        // setTimeout(function () {
-        // }, 3000);
-        if (document.getElementById(this.alleventids[i]) !== null){
-          document.getElementById(this.alleventids[i]).addEventListener('click', this.showEvent(this.alleventids[i]), false);
-          console.log(document.getElementById(this.alleventids[i]));
-        }
-        //document.getElementById(this.alleventids[2]).addEventListener('click', this.showEvent(this.alleventids[2]), false);
-      }
-    }
-  }
-
-  async showEvent(eid){
-    console.log('showing event details for this event id');
-    console.log(eid);
-    const res = await this.app.httpClient.fetch('/volOpp/get/' + eid);
-    this.displayEvent = await res.json();
-    console.log(this.displayEvent);
-    //fetch the voOpp by id and display it back to the user
-  }
+  // setclicks(){
+  //   console.log('running eventlisteners');
+  //   console.log(this.alleventids);
+  //   if (this.alleventids.length !== 0) {
+  //     console.log('there are some event ids');
+  //     for (let i = 0; i < this.alleventids.length; i++){
+  //       // setTimeout(function () {
+  //       // }, 3000);
+  //       if (document.getElementById(this.alleventids[i]) !== null){
+  //         document.getElementById(this.alleventids[i]).addEventListener('click', this.showEvent(this.alleventids[i]), false);
+  //         console.log(document.getElementById(this.alleventids[i]));
+  //       }
+  //       //document.getElementById(this.alleventids[2]).addEventListener('click', this.showEvent(this.alleventids[2]), false);
+  //     }
+  //   }
+  // }
 
   createNewCharity(){
     console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
@@ -439,6 +431,26 @@ export class Charity {
       }
       this.putCharity();
     });
+  }
+
+  async showEvent(eid){
+    console.log('showing event details for this event id');
+    console.log(eid);
+    const res = await this.app.httpClient.fetch('/volOpp/get/' + eid);
+    this.voOpp = await res.json();
+    console.log(this.voOpp);
+//     voCharityName: { type: String, required: true },
+// voCharityId:
+    const tempCharity = {
+      '_id': this.voOpp.voCharityId, 'charityName': this.voOpp.voCharityName
+    };
+    this.updateScheduledEvent = true;
+    // document.getElementById('start-date').date = this.voOpp.voStartDate;
+    // document.getElementById('start-time').time = this.voOpp.voStartTime;
+    // document.getElementById('end-date').date = this.voOpp.voEndDate;
+    // document.getElementById('end-time').time = this.voOpp.voEndTime;
+    this.showScheduleCharity(tempCharity);
+    //fetch the voOpp by id and display it back to the user
   }
 
   showScheduleCharity(charity){
