@@ -30,7 +30,7 @@ class ValidatorMock extends Validator {
 
 class HttpMockChar extends HttpMock {
   fetch(url, obj) {
-    console.log(url);
+    //console.log(url);
     this.headers.url = url;
     this.headers.method = obj ? obj.method : 'GET';
     if (obj && obj.method === 'put') {
@@ -46,7 +46,7 @@ class HttpMockChar extends HttpMock {
 
 class HttpMockChar2 extends HttpMock {
   fetch(url, obj) {
-    console.log(url);
+    //console.log(url);
     this.headers.url = url;
     this.headers.method = obj ? obj.method : 'GET';
     if (obj && obj.method === 'put') {
@@ -155,11 +155,11 @@ describe('the Charity Module', () => {
     };
     //let e = {keyCode: 12, preventDefault: function(){}};
     charity.update = true;
-    document.body.innerHTML = '<div id="updateCharitySection"></div><div id="scheduleCharitySection"></div>';
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection"></div><div id="scheduleCharitySection"></div>';
     charity.updateCharityFunction(charity1);
     expect(charity.charityName).toBe('test charity');
     charity.update = false;
-    document.body.innerHTML = '<div id="updateCharitySection"></div><div id=""></div>';
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection"></div><div id=""></div>';
     charity.createNewCharity();
     done();
   });
@@ -256,6 +256,31 @@ describe('the Charity Module', () => {
     charity2.uid = '4556';
     charity2.user = fakeUser;
     charity2.removeManager(fakeCharity);
+    done();
+  });
+
+  it('fetches the event from the database by eventid', (done) => {
+    charity.activate();
+    charity.showEvent('1234');
+    done();
+  });
+
+  it('does not add a new charity manager if the email is not a user of the app', (done) => {
+    charity2.activate();
+    charity2.updateCharity = {
+      'charityName': 'test charity',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': ['Christian'],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': '',
+      'charityEmail': 'yoyo@yoyo.com'
+    };
+    //this.updateCharity.charityEmail
+    charity2.findUserByEmail();
     done();
   });
 

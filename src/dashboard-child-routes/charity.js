@@ -147,9 +147,12 @@ export class Charity {
     }
   }
 
-  showEvent(eid){
+  async showEvent(eid){
     console.log('showing event details for this event id');
     console.log(eid);
+    const res = await this.app.httpClient.fetch('/volOpp/get/' + eid);
+    this.displayEvent = await res.json();
+    console.log(this.displayEvent);
     //fetch the voOpp by id and display it back to the user
   }
 
@@ -168,6 +171,10 @@ export class Charity {
     };
     //this.create = true;
     this.update = false;
+    let charitiesTable = document.getElementById('charTable');
+    if (charitiesTable !== null){
+      charitiesTable.style.display = 'block';
+    }
     this.showUpdateCharity(charity);
   }
 
@@ -198,6 +205,8 @@ export class Charity {
     this.setupValidation2();
     if (this.update === true){
       document.getElementById('updateCharitySection').scrollIntoView();
+    } else {
+      document.getElementById('charityDash').scrollIntoView();
     }
   }
 
@@ -442,6 +451,14 @@ export class Charity {
     if (updateDiv !== null){
       updateDiv.style.display = 'none';
     }
+    let charitiesTable = document.getElementById('charTable');
+    if (charitiesTable !== null){
+      charitiesTable.style.display = 'none';
+    }
+    let scheduleDiv = document.getElementById('scheduleCharitySection');
+    if (scheduleDiv !== null){
+      scheduleDiv.style.display = 'block';
+    }
     //scheduleDiv.style.display = 'block';
     this.showSchedule = true;
     this.charityName = charity.charityName;
@@ -470,6 +487,7 @@ export class Charity {
       this.activate();
     });
   }
+
   attached(){
     this.createNewCharity();
   }
