@@ -166,7 +166,7 @@ export class Charity {
       'charityTypeOther': '',
       'charityTypesHtml': ''
     };
-    this.create = true;
+    //this.create = true;
     this.update = false;
     this.showUpdateCharity(charity);
   }
@@ -196,7 +196,9 @@ export class Charity {
       this.updateCharity.charitytypeOther = '';
     }
     this.setupValidation2();
-    document.getElementById('updateCharitySection').scrollIntoView();
+    if (this.update === true){
+      document.getElementById('updateCharitySection').scrollIntoView();
+    }
   }
 
   showCheckboxes(id){

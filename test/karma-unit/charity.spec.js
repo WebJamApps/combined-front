@@ -96,10 +96,10 @@ describe('the Charity Module', () => {
     charity2.app.appState = new AppStateStub();
   });
 
-  it('activates', (done) => {
-    charity.activate();
-    done();
-  });
+  // it('activates', (done) => {
+  //   charity.activate();
+  //   done();
+  // });
 
   it('checkboxes expanded', (done) => {
     document.body.innerHTML = '  <iron-dropdown id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></iron-dropdown>';
@@ -154,11 +154,13 @@ describe('the Charity Module', () => {
       'charityTypesHtml': ''
     };
     //let e = {keyCode: 12, preventDefault: function(){}};
+    charity.update = true;
     document.body.innerHTML = '<div id="updateCharitySection"></div><div id="scheduleCharitySection"></div>';
     charity.updateCharityFunction(charity1);
     expect(charity.charityName).toBe('test charity');
+    charity.update = false;
     document.body.innerHTML = '<div id="updateCharitySection"></div><div id=""></div>';
-    charity.updateCharityFunction(charity1);
+    charity.createNewCharity();
     done();
   });
 
@@ -189,82 +191,150 @@ describe('the Charity Module', () => {
     done();
   });
 
-  // it('runs type picked when nothing is selected', (done) => {
-  //   charity.activate();
-  //   document.body.innerHTML = '<button id="newCharityButton">';
-  //   charity.types = ['Christian', 'Hunger'];
-  //   charity.typePicked();
-  //   done();
-  // });
+  it('detects when the charity type is changed in the update form', (done) => {
+    charity.activate();
+    charity.updateCharity = {
+      'charityName': 'test charity',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': ['other'],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': ''
+    };
+    document.body.innerHTML = '<button class="updateButton"></button>';
+    charity.updateTypePicked();
+    charity.canSubmit2 = false;
+    charity.updateCharity = {
+      'charityName': 'test charity',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': ['Christian'],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': ''
+    };
+    charity.updateTypePicked();
+    done();
+  });
 
-  // it('runs type picked with valid types and other selected and can submit', (done) => {
-  //   charity.activate();
-  //   document.body.innerHTML = '<button id="newCharityButton">';
-  //   charity.types = ['Christian', 'Hunger'];
-  //   charity.newCharity.charityTypes = ['Christian', 'other'];
-  //   charity.canSubmit = true;
-  //   charity.typePicked();
-  //   done();
-  // });
+  it('it displays the submit or update button on the form if the form is valid', (done) => {
+    charity.activate();
+    charity.validType2 = true;
+    let validationResults = [{
+      result: {valid: true}}];
+    charity.updateCanSubmit2(validationResults);
+    done();
+  });
 
-  // it('runs type picked with valid types and other selected and cannot submit', (done) => {
-  //   charity.activate();
-  //   document.body.innerHTML = '<button id="newCharityButton">';
-  //   charity.types = ['Christian', 'Hunger'];
-  //   charity.newCharity.charityTypes = ['Christian', 'other'];
-  //   charity.canSubmit = false;
-  //   charity.typePicked();
-  //   done();
-  // });
+  it('does not display charity types when there are none', (done) => {
+    charity2.activate();
+    charity2.charities = [{charityTypes: [''], charityManagers: ['Home', 'Elderly']}, {charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other']}, {charityTypes: [], charityManagers: []}];
+    charity2.buildTypes();
+    done();
+  });
 
-  // it('validates the charity form to allow submit', (done) => {
-  //   charity.activate();
-  //   document.body.innerHTML = '<button id="newCharityButton">';
-  //   charity.newCharity.charityTypes = ['Christian', 'other'];
-  //   charity.canSubmit = false;
-  //   charity.validType = true;
-  //   charity.validate();
-  //   done();
-  // });
+  it('does not display charity managers when there are none', (done) => {
+    charity2.activate();
+    charity2.charities = [{charityTypes: [''], charityManagers: ['']}, {charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other']}, {charityTypes: [], charityManagers: []}];
+    charity2.buildManagers();
+    done();
+  });
 
-  // it('does not allow submit when type is not selected', (done) => {
-  //   charity.activate();
-  //   document.body.innerHTML = '<button id="newCharityButton">';
-  //   charity.newCharity.charityTypes = ['Christian', 'other'];
-  //   charity.canSubmit = false;
-  //   charity.validType = false;
-  //   charity.validate();
-  //   done();
-  // });
+  it('does not remove the user as manager when he or she is not assigned to the charity', (done) => {
+    charity2.activate();
+    let fakeCharity = {
+      charityManagers: ['Josh'], charityMngIds: '1234'
+    };
+    let fakeUser = {
+      name: 'Betty'
+    };
+    charity2.uid = '4556';
+    charity2.user = fakeUser;
+    charity2.removeManager(fakeCharity);
+    done();
+  });
 
-  // it('does not allow submit when validationResults are false', (done) => {
-  //   charity.activate();
-  //   document.body.innerHTML = '<button id="newCharityButton">';
-  //   charity.newCharity.charityTypes = ['Christian', 'other'];
-  //   charity.canSubmit = false;
-  //   charity.validate();
-  //   done();
-  // });
+    // it('runs type picked when nothing is selected', (done) => {
+    //   charity.activate();
+    //   document.body.innerHTML = '<button id="newCharityButton">';
+    //   charity.types = ['Christian', 'Hunger'];
+    //   charity.typePicked();
+    //   done();
+    // });
 
-  // it('allows submit when validationResults are true', (done) => {
-  //   charity.activate();
-  //   document.body.innerHTML = '<button id="newCharityButton">';
-  //   charity.newCharity.charityTypes = ['True'];
-  //   charity.validType = true;
-  //   charity.validate();
-  //   done();
-  // });
+    // it('runs type picked with valid types and other selected and can submit', (done) => {
+    //   charity.activate();
+    //   document.body.innerHTML = '<button id="newCharityButton">';
+    //   charity.types = ['Christian', 'Hunger'];
+    //   charity.newCharity.charityTypes = ['Christian', 'other'];
+    //   charity.canSubmit = true;
+    //   charity.typePicked();
+    //   done();
+    // });
 
-  // it('new charity created', (done) => {
-  //   charity.activate();
-  //   charity.user = {'name': 'Test Name', '_id': '32'};
-  //   charity.newCharity.charityState = 'Alabama';
-  //   document.body.innerHTML = '<div id="charityDash"></div>';
-  //   charity.createCharity();
-  //   expect(charity.newCharity.charityManagers[0]).toBe('Test Name');
-  //   expect(charity.newCharity.charityState).toBe('Alabama');
-  //   done();
-  // });
+    // it('runs type picked with valid types and other selected and cannot submit', (done) => {
+    //   charity.activate();
+    //   document.body.innerHTML = '<button id="newCharityButton">';
+    //   charity.types = ['Christian', 'Hunger'];
+    //   charity.newCharity.charityTypes = ['Christian', 'other'];
+    //   charity.canSubmit = false;
+    //   charity.typePicked();
+    //   done();
+    // });
+
+    // it('validates the charity form to allow submit', (done) => {
+    //   charity.activate();
+    //   document.body.innerHTML = '<button id="newCharityButton">';
+    //   charity.newCharity.charityTypes = ['Christian', 'other'];
+    //   charity.canSubmit = false;
+    //   charity.validType = true;
+    //   charity.validate();
+    //   done();
+    // });
+
+    // it('does not allow submit when type is not selected', (done) => {
+    //   charity.activate();
+    //   document.body.innerHTML = '<button id="newCharityButton">';
+    //   charity.newCharity.charityTypes = ['Christian', 'other'];
+    //   charity.canSubmit = false;
+    //   charity.validType = false;
+    //   charity.validate();
+    //   done();
+    // });
+
+    // it('does not allow submit when validationResults are false', (done) => {
+    //   charity.activate();
+    //   document.body.innerHTML = '<button id="newCharityButton">';
+    //   charity.newCharity.charityTypes = ['Christian', 'other'];
+    //   charity.canSubmit = false;
+    //   charity.validate();
+    //   done();
+    // });
+
+    // it('allows submit when validationResults are true', (done) => {
+    //   charity.activate();
+    //   document.body.innerHTML = '<button id="newCharityButton">';
+    //   charity.newCharity.charityTypes = ['True'];
+    //   charity.validType = true;
+    //   charity.validate();
+    //   done();
+    // });
+
+    // it('new charity created', (done) => {
+    //   charity.activate();
+    //   charity.user = {'name': 'Test Name', '_id': '32'};
+    //   charity.newCharity.charityState = 'Alabama';
+    //   document.body.innerHTML = '<div id="charityDash"></div>';
+    //   charity.createCharity();
+    //   expect(charity.newCharity.charityManagers[0]).toBe('Test Name');
+    //   expect(charity.newCharity.charityState).toBe('Alabama');
+    //   done();
+    // });
 
   it('deletes charity', (done) => {
     charity.deleteCharity();
@@ -281,18 +351,18 @@ describe('the Charity Module', () => {
     done();
   });
 
-  // it('updateTypePicked', (done) => {
-  //   let node = document.createElement('button');
-  //   node.id = 'updateCharityButton';
-  //   document.getElementsByTagName('body')[0].appendChild(node);
-  //   charity.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
-  //   charity.canSubmit2 = true;
-  //   charity.updateCharity = {charityTypes: ['Hunger']};
-  //   charity.updateTypePicked();
-  //   charity.updateCharity = {charityTypes: ['Hunger', 'other']};
-  //   charity.updateTypePicked();
-  //   done();
-  // });
+    // it('updateTypePicked', (done) => {
+    //   let node = document.createElement('button');
+    //   node.id = 'updateCharityButton';
+    //   document.getElementsByTagName('body')[0].appendChild(node);
+    //   charity.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
+    //   charity.canSubmit2 = true;
+    //   charity.updateCharity = {charityTypes: ['Hunger']};
+    //   charity.updateTypePicked();
+    //   charity.updateCharity = {charityTypes: ['Hunger', 'other']};
+    //   charity.updateTypePicked();
+    //   done();
+    // });
 
   it('validate2', (done) => {
     charity.updateCharity = {charityTypes: ['Hunger', 'other'], charityName: 'okay'};
@@ -321,17 +391,17 @@ describe('the Charity Module', () => {
     done();
   });
 
-  // it('showUpdateCharity', (done) => {
-  //   let node = document.createElement('div');
-  //   let section = document.createElement('section');
-  //   node.id = 'updateCharitySection';
-  //   section.id = 'scheduleCharitySection';
-  //   document.getElementsByTagName('body')[0].appendChild(node);
-  //   document.getElementsByTagName('body')[0].appendChild(section);
-  //   updatedCharity.charityEmail = 'dannyyean@my.com';
-  //   charity.showUpdateCharity(updatedCharity);
-  //   done();
-  // });
+    // it('showUpdateCharity', (done) => {
+    //   let node = document.createElement('div');
+    //   let section = document.createElement('section');
+    //   node.id = 'updateCharitySection';
+    //   section.id = 'scheduleCharitySection';
+    //   document.getElementsByTagName('body')[0].appendChild(node);
+    //   document.getElementsByTagName('body')[0].appendChild(section);
+    //   updatedCharity.charityEmail = 'dannyyean@my.com';
+    //   charity.showUpdateCharity(updatedCharity);
+    //   done();
+    // });
 
   it('removes manager', (done) => {
     charity.user = {name: 'Dev Patel'};
