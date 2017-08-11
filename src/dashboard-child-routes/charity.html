@@ -8,9 +8,9 @@
           <p style="margin:auto; padding-top:10px">You do not have any charities.</p>
         </div>
         <div if.bind="charities.length !== 0">
+          <p>The <strong>Remove</strong> button is used to remove yourself as being the manager of a particular charity, and only displays if there is more than one manager.</p>
+          <p>The <strong>Delete</strong> button only displays if you are the only manager of a charity.</p>
           <div class="search-table-outer" style="position:relative;overflow-x:auto;">
-            <p>The <strong>Remove</strong> button is used to remove yourself as being the manager of a particular charity, and only displays if there is more than one manager.</p>
-            <p>The <strong>Delete</strong> button only displays if you are the only manager of a charity.</p>
             <table aurelia-table="data.bind: charities; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
               <thead>
                 <tr>
@@ -44,7 +44,7 @@
                   <td style="padding:8px" innerhtml.bind="charity.charityPhoneNumber"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityTypesHtml"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityManagersHtml"></td>
-                  <td style="padding:8px" ><a repeat.for="event of charity.eventHtml" style="display:block;text-align:left" click.delegate="showEvent(event._id)">${event.voName}</a></td>
+                  <td style="padding:8px" ><a repeat.for="event of charity.eventHtml" style="display:block;text-align:left; padding-top:10px" click.delegate="showEvent(event._id)">${event.voName}</a></td>
                 </tr>
               </tbody>
             </table>
@@ -97,7 +97,7 @@
         </div>
         <!-- End of update form -->
         <div id="scheduleCharitySection" if.bind="showSchedule" style="margin-left:10px">
-          <h4 class="material-header-h4" style="padding-top:10px">Schedule an Event for<br>${charityName}</h4>
+          <h4 class="material-header-h4" style="padding-top:10px"><span if.bind="!updateScheduledEvent">Schedule an Event for<br></span>${charityName}</h4>
           <form>
             <paper-input style="margin-top:20px" label="Event name (required)" value.two-way="voOpp.voName"></paper-input>
             <label style="font-size:14pt; margin-top:12px">Describe your event</label>
@@ -135,7 +135,7 @@
                 </select>
                 <div class="overSelect"></div>
               </div>
-              <iron-dropdown id="work" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
+              <iron-dropdown id="work" horizontal-align="right" vertical-align="top" style="margin-top:25px;margin-bottom:10px">
                 <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
                   <label repeat.for="work of works" for="work" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
                     <input type="checkbox" value.bind="work" checked.bind="selectedWorks" change.delegate="workPicked()"> ${work}
@@ -144,8 +144,8 @@
               </iron-dropdown>
             </div>
             <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
-            <button id="scheduleCharityButton" class="updateButton" raised click.trigger="scheduleCharityFunct()" style="margin:40px">Schedule</button>
-            <button class="cancelButton" raised click.trigger="createNewCharity()" style="margin-bottom:40px">Cancel</button>
+            <button if.bind="!updateScheduledEvent" id="scheduleCharityButton" class="updateButton" raised click.trigger="scheduleCharityFunct()" style="margin:40px">Schedule</button>
+            <button class="cancelButton" raised click.trigger="createNewCharity()" style="margin-bottom:40px; margin-top:20px">Hide</button>
             <p>&nbsp;</p>
           </form>
         </div>
