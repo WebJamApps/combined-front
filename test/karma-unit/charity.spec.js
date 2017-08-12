@@ -123,21 +123,21 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('prevents the enter key', (done) => {
-    charity.activate();
-    let e = {keyCode: 13, preventDefault: function(){}};
-    charity.preventEnter(e);
-    //expect(charity2.charities.length).toBe(0);
-    done();
-  });
+  // it('prevents the enter key', (done) => {
+  //   charity.activate();
+  //   let e = {keyCode: 13, preventDefault: function(){}};
+  //   charity.preventEnter(e);
+  //   //expect(charity2.charities.length).toBe(0);
+  //   done();
+  // });
 
-  it('does not prevent other events', (done) => {
-    charity.activate();
-    let e = {keyCode: 12, preventDefault: function(){}};
-    charity.preventEnter(e);
-    //expect(charity2.charities.length).toBe(0);
-    done();
-  });
+  // it('does not prevent other events', (done) => {
+  //   charity.activate();
+  //   let e = {keyCode: 12, preventDefault: function(){}};
+  //   charity.preventEnter(e);
+  //   //expect(charity2.charities.length).toBe(0);
+  //   done();
+  // });
 
   it('displays the update charity table', (done) => {
     charity.activate();
@@ -155,11 +155,11 @@ describe('the Charity Module', () => {
     };
     //let e = {keyCode: 12, preventDefault: function(){}};
     charity.update = true;
-    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection"></div><div id="scheduleCharitySection"></div>';
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button></div><div id="scheduleCharitySection"></div>';
     charity.updateCharityFunction(charity1);
     expect(charity.charityName).toBe('test charity');
     charity.update = false;
-    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection"></div><div id=""></div>';
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button></div><div id=""></div>';
     charity.createNewCharity();
     done();
   });

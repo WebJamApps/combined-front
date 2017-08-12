@@ -2,7 +2,16 @@ export class FormValidator {
   constructor(validator, cb) {
     this.validator = validator;
     this.cb = cb;
+    this.preventDefault = this.preventEnter.bind(this);
+    window.addEventListener('keypress', this.preventDefault, false);
   }
+
+  preventEnter(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
+  }
+
   /**
   * This method will be called by the controller when validating a specific field. For instance,
   * when the user is interacting with the title input. So, we need to validate the whole form
