@@ -9,14 +9,7 @@ export class Charity {
   validator = null;
   constructor(app, controllerFactory, validator){
     this.app = app;
-    this.charities = {};
-    // these are all for the create new charity function
-    this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
-    this.controller = controllerFactory.createForCurrentScope(this.validator);
-    this.controller.validateTrigger = validateTrigger.changeOrBlur;
-    this.canSubmit = false;  //the button on the form
-    this.validType = false;
-    // these are all for the update charity function
+    this.charities = [];
     this.validator2 = new FormValidator(validator, (results) => this.updateCanSubmit2(results));
     this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
@@ -32,10 +25,13 @@ export class Charity {
     this.selectedTalents = [];
     this.selectedWorks = [];
     this.showSchedule = false;
+    this.updateScheduledEvent = false;
     //this.alleventids = [];
   }
 
   async activate(){
+    this.update = false;
+    this.updateScheduleEvent = false;
     this.alleventids = [];
     this.voOpp = {
       'voName': '',
@@ -47,10 +43,8 @@ export class Charity {
       'voTalentTypes': [],
       'voWorkTypeOther': '',
       'voTalentTypeOther': '',
-      //insert today's date here using javascript function
       'voStartDate': null,
       'voStartTime': '',
-      //insert today's date here using javascript function
       'voEndDate': null,
       'voEndTime': '',
       'voContactName': '',
@@ -66,17 +60,6 @@ export class Charity {
       'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
       'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     this.states.sort();
-    this.newCharity = {
-      'charityName': '',
-      'charityCity': '',
-      'charityState': '',
-      'charityZipCode': '',
-      'charityTypes': [],
-      'charityManagers': [],
-      'charityMngIds': [],
-      'charityTypeOther': '',
-      'charityTypesHtml': ''
-    };
     this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
     this.works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
     this.talents.sort();
@@ -87,27 +70,13 @@ export class Charity {
     this.user = await this.app.appState.getUser(this.uid);
     const res = await this.app.httpClient.fetch('/charity/' + this.uid);
     this.charities = await res.json();
-    //console.log(this.charities);
     if (this.charities.length !== 0){
       this.buildTypes();
       this.buildManagers();
       this.buildEvents();
-      //console.log(this.charities[0].charityTypes);
     }
-    this.setupValidation();
     window.addEventListener('keypress', this.preventDefault, false);
   }
-
-  // stateChange(newState) {
-  //   setTimeout(function () {
-  //     if (newState === -1) {
-  //       console.log('inside wait');
-  //       if (this.alleventids.length !== 0){
-  //         this.setclicks();
-  //       }
-  //     }
-  //   }, 5000);
-  // }
 
   preventEnter(e) {
     if (e.keyCode === 13) {
@@ -150,9 +119,9 @@ export class Charity {
     //   }
     // }, 5000);
     //this.stateChange();
-    if (this.alleventids.length > 0){
-      this.setclicks();
-    }
+    // if (this.alleventids.length > 0){
+    //   this.setclicks();
+    // }
   }
 
   // stateChange(newState) {
@@ -163,27 +132,50 @@ export class Charity {
   //   }, 5000);
   // }
 
-  setclicks(){
-    console.log('running eventlisteners');
-    console.log(this.alleventids);
-    if (this.alleventids.length !== 0) {
-      console.log('there are some event ids');
-      for (let i = 0; i < this.alleventids.length; i++){
-        // setTimeout(function () {
-        // }, 3000);
-        if (document.getElementById(this.alleventids[i]) !== null){
-          document.getElementById(this.alleventids[i]).addEventListener('click', this.showEvent(this.alleventids[i]), false);
-          console.log(document.getElementById(this.alleventids[i]));
-        }
-        //document.getElementById(this.alleventids[2]).addEventListener('click', this.showEvent(this.alleventids[2]), false);
-      }
+  // setclicks(){
+  //   console.log('running eventlisteners');
+  //   console.log(this.alleventids);
+  //   if (this.alleventids.length !== 0) {
+  //     console.log('there are some event ids');
+  //     for (let i = 0; i < this.alleventids.length; i++){
+  //       // setTimeout(function () {
+  //       // }, 3000);
+  //       if (document.getElementById(this.alleventids[i]) !== null){
+  //         document.getElementById(this.alleventids[i]).addEventListener('click', this.showEvent(this.alleventids[i]), false);
+  //         console.log(document.getElementById(this.alleventids[i]));
+  //       }
+  //       //document.getElementById(this.alleventids[2]).addEventListener('click', this.showEvent(this.alleventids[2]), false);
+  //     }
+  //   }
+  // }
+
+  createNewCharity(){
+    console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
+    let charity = {
+      'charityName': '',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': [],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': ''
+    };
+    //this.create = true;
+    this.update = false;
+    let charitiesTable = document.getElementById('charTable');
+    if (charitiesTable !== null){
+      charitiesTable.style.display = 'block';
     }
+    this.updateScheduledEvent = false;
+    this.showUpdateCharity(charity);
   }
 
-  showEvent(eid){
-    console.log('showing event details for this event id');
-    console.log(eid);
-    //fetch the voOpp by id and display it back to the user
+  updateCharityFunction(charity){
+    this.update = true;
+    //this.create = false;
+    this.showUpdateCharity(charity);
   }
 
   showUpdateCharity(charity){
@@ -204,9 +196,12 @@ export class Charity {
       this.typeOther = false;
       this.updateCharity.charitytypeOther = '';
     }
-    // unit tests keep raising validation errors here;
-    // this.setupValidation2();
-    document.getElementById('updateCharitySection').scrollIntoView();
+    this.setupValidation2();
+    if (this.update === true){
+      document.getElementById('updateCharitySection').scrollIntoView();
+    } else {
+      document.getElementById('charityDash').scrollIntoView();
+    }
   }
 
   showCheckboxes(id){
@@ -222,10 +217,7 @@ export class Charity {
 
   talentPicked(){
     this.voOpp.volTalentTypes = this.selectedTalents;
-    //for (let i = 0; i < this.selectedTalents.length; i++) {
-    //console.log(this.selectedTalents);
     if (this.selectedTalents.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
       this.talentOther = true;
     } else {
       this.talentOther = false;
@@ -236,47 +228,26 @@ export class Charity {
   workPicked(){
     this.voOpp.voWorkTypes = this.selectedWorks;
     if (this.selectedWorks.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
       this.workOther = true;
     } else {
       this.workOther = false;
       this.voOpp.voWorkTypeOther = '';
     }
-    //  }
-  }
-
-  typePicked(){
-    this.validType = false;
-    let nub = document.getElementById('newCharityButton');
-    nub.style.display = 'none';
-    for (let i = 0; i < this.types.length; i++) {
-      if (this.newCharity.charityTypes.indexOf(this.types[i]) > -1){
-        this.validType = true;
-        if (this.canSubmit){
-          nub.style.display = 'block';
-        }
-      }
-    }
-    if (this.newCharity.charityTypes.includes('other')){
-      this.typeOther = true;
-    } else {
-      this.typeOther = false;
-      this.newCharity.charityTypeOther = '';
-    }
   }
 
   updateTypePicked(){
     this.validType2 = false;
-    let nub = document.getElementById('updateCharityButton');
+    let nub = document.getElementsByClassName('updateButton')[0];
     nub.style.display = 'none';
     for (let i = 0; i < this.types.length; i++) {
       if (this.updateCharity.charityTypes.indexOf(this.types[i]) > -1){
         this.validType2 = true;
-        if (this.canSubmit2){
+        if (this.canSubmit2 && nub){
           nub.style.display = 'block';
         }
       }
     }
+    this.validate2();
     console.log('the charity types picked are: ' + this.updateCharity.charityTypes);
     if (this.updateCharity.charityTypes.includes('other')){
       this.typeOther = true;
@@ -284,16 +255,6 @@ export class Charity {
       this.typeOther = false;
       this.updateCharity.charityTypeOther = '';
     }
-  }
-
-  setupValidation() {
-    ValidationRules
-    .ensure('charityPhoneNumber').matches(/\b[2-9]\d{9}\b/).withMessage('10 digit phone number')
-    .ensure('charityZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
-    .ensure('charityCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
-    .ensure('charityName').required().maxLength(40).withMessage('Charity name please')
-    .ensure('charityState').required().withMessage('Charity state please')
-    .on(this.newCharity);
   }
 
   setupValidation2() {
@@ -307,40 +268,20 @@ export class Charity {
     .on(this.updateCharity);
   }
 
-  validate() {
-    return this.validator.validateObject(this.newCharity);
-  }
-
   validate2() {
     return this.validator2.validateObject(this.updateCharity);
   }
 
-  updateCanSubmit(validationResults) {
-    let valid = true;
-    let nub = document.getElementById('newCharityButton');
-    nub.style.display = 'none';
-    for (let result of validationResults) {
-      if (result.valid === false){
-        valid = false;
-        break;
-      }
-    }
-    this.canSubmit = valid;
-    if (this.canSubmit && this.validType){
-      nub.style.display = 'block';
-    }
-    return this.canSubmit;
-  }
-
   updateCanSubmit2(validationResults) {
     let valid = true;
-    //console.log('Running update funcitronfswd');
-    let nub = document.getElementById('updateCharityButton');
-    if (nub !== null) {
+    console.log('Running updateCanSubmit2');
+    let nub = document.getElementsByClassName('updateButton')[0];
+    if (nub) {
+      //console.log('Found my updateButton');
       //nub.style.display = 'none';
       for (let result of validationResults) {
         if (result.valid === false){
-          console.log('Something is not valid');
+          //console.log('Something is not valid');
           nub.style.display = 'none';
           valid = false;
           break;
@@ -355,16 +296,17 @@ export class Charity {
   }
 
   createCharity(){
-    this.newCharity.charityManagers[0] = this.user.name;
-    this.newCharity.charityMngIds[0] = this.user._id;
+    this.updateCharity.charityManagers[0] = this.user.name;
+    this.updateCharity.charityMngIds[0] = this.user._id;
     this.app.httpClient.fetch('/charity/create', {
       method: 'post',
-      body: json(this.newCharity)
+      body: json(this.updateCharity)
     })
     .then((data) => {
       console.log(data);
       document.getElementById('charityDash').scrollIntoView();
       this.activate();
+      this.createNewCharity();
     });
   }
 
@@ -410,6 +352,7 @@ export class Charity {
     .then((data) => {
       console.log('your charity has been deleted');
       this.activate();
+      this.createNewCharity();
     });
   }
 
@@ -452,6 +395,7 @@ export class Charity {
       this.updateCharity = {};
       document.getElementById('charityDash').scrollIntoView();
       this.activate();
+      this.createNewCharity();
     });
   }
 
@@ -491,7 +435,47 @@ export class Charity {
     });
   }
 
+  async showEvent(eid){
+    console.log('showing event details for this event id');
+    console.log(eid);
+    const res = await this.app.httpClient.fetch('/volOpp/get/' + eid);
+    this.voOpp = await res.json();
+    console.log(this.voOpp);
+//     voCharityName: { type: String, required: true },
+// voCharityId:
+    const tempCharity = {
+      '_id': this.voOpp.voCharityId, 'charityName': this.voOpp.voCharityName
+    };
+    this.updateScheduledEvent = true;
+    // document.getElementById('start-date').date = this.voOpp.voStartDate;
+    // document.getElementById('start-time').time = this.voOpp.voStartTime;
+    // document.getElementById('end-date').date = this.voOpp.voEndDate;
+    // document.getElementById('end-time').time = this.voOpp.voEndTime;
+    this.showScheduleCharity(tempCharity);
+    //fetch the voOpp by id and display it back to the user
+  }
+
   showScheduleCharity(charity){
+    if (this.updateScheduledEvent === false){
+      this.voOpp = {
+        'voName': '',
+        'voCharityId': '',
+        'voCharityName': '',
+        'voNumPeopleNeeded': 1,
+        'voDescription': '',
+        'voWorkTypes': [],
+        'voTalentTypes': [],
+        'voWorkTypeOther': '',
+        'voTalentTypeOther': '',
+        'voStartDate': null,
+        'voStartTime': '',
+        'voEndDate': null,
+        'voEndTime': '',
+        'voContactName': '',
+        'voContactEmail': '',
+        'voContactPhone': null
+      };
+    }
     //this.canSubmit3 = true;
     //this.validWorkType3 = true;
     //let scheduleDiv = document.getElementById('scheduleCharitySection');
@@ -500,6 +484,14 @@ export class Charity {
     let updateDiv = document.getElementById('updateCharitySection');
     if (updateDiv !== null){
       updateDiv.style.display = 'none';
+    }
+    let charitiesTable = document.getElementById('charTable');
+    if (charitiesTable !== null){
+      charitiesTable.style.display = 'none';
+    }
+    let scheduleDiv = document.getElementById('scheduleCharitySection');
+    if (scheduleDiv !== null){
+      scheduleDiv.style.display = 'block';
     }
     //scheduleDiv.style.display = 'block';
     this.showSchedule = true;
@@ -530,4 +522,7 @@ export class Charity {
     });
   }
 
+  attached(){
+    this.createNewCharity();
+  }
 }
