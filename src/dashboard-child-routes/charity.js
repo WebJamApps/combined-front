@@ -3,6 +3,7 @@ import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
+import {VolOpp} from '../classes/VolOpp';
 @inject(App, ValidationControllerFactory, Validator)
 export class Charity {
   controller = null;
@@ -11,6 +12,7 @@ export class Charity {
     this.app = app;
     this.charities = [];
     this.validator2 = new FormValidator(validator, (results) => this.updateCanSubmit2(results));
+    this.volopp = new VolOpp();
     this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit2 = true;
@@ -83,7 +85,7 @@ export class Charity {
       this.events = [];
       console.log('these are the charity ids');
       console.log(this.charities[l]._id);
-      let res = await this.app.httpClient.fetch('/volOpp/' + this.charities[l]._id);
+      let res = await this.app.httpClient.fetch('/volopp/' + this.charities[l]._id);
       this.events = await res.json();
       eventHtml = this.events;
       this.charities[l].eventHtml = eventHtml;
@@ -374,7 +376,7 @@ export class Charity {
   async showEvent(eid){
     console.log('showing event details for this event id');
     console.log(eid);
-    const res = await this.app.httpClient.fetch('/volOpp/get/' + eid);
+    const res = await this.app.httpClient.fetch('/volopp/get/' + eid);
     this.voOpp = await res.json();
     console.log(this.voOpp);
     const tempCharity = {
@@ -445,7 +447,7 @@ export class Charity {
     console.log(this.voOpp);
     //this.newCharity.charityManagers[0] = this.user.name;
     //this.newCharity.charityMngIds[0] = this.user._id;
-    this.app.httpClient.fetch('/volOpp/create', {
+    this.app.httpClient.fetch('/volopp/create', {
       method: 'post',
       body: json(this.voOpp)
     })
