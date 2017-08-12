@@ -60,21 +60,21 @@ describe('the Dashboard Module', () => {
       done();
     });
 
-    it('prevents the enter key', (done) => {
-      dashboard.activate();
-      let e = {keyCode: 13, preventDefault: function(){}};
-      dashboard.preventEnter(e);
-      //expect(charity2.charities.length).toBe(0);
-      done();
-    });
+    // it('prevents the enter key', (done) => {
+    //   dashboard.activate();
+    //   let e = {keyCode: 13, preventDefault: function(){}};
+    //   dashboard.preventEnter(e);
+    //   //expect(charity2.charities.length).toBe(0);
+    //   done();
+    // });
 
-    it('does not prevent other events', (done) => {
-      dashboard.activate();
-      let e = {keyCode: 12, preventDefault: function(){}};
-      dashboard.preventEnter(e);
-      //expect(charity2.charities.length).toBe(0);
-      done();
-    });
+    // it('does not prevent other events', (done) => {
+    //   dashboard.activate();
+    //   let e = {keyCode: 12, preventDefault: function(){}};
+    //   dashboard.preventEnter(e);
+    //   //expect(charity2.charities.length).toBe(0);
+    //   done();
+    // });
 
     it('should expect change in http status after Volunteer activate call', (done) => {
       http = new HttpMock({name: 'Iddris Elba', userType: 'Volunteer'});

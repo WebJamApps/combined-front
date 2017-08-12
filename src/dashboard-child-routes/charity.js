@@ -15,23 +15,16 @@ export class Charity {
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit2 = true;
     this.validType2 = true;
-    // these are all for the scheduling of events function
-    //this.validator3 = new FormValidator(validator, (results) => this.updateCanSubmit3(results));
-    //this.controller3 = controllerFactory.createForCurrentScope(this.validator3);
-    //this.controller3.validateTrigger = validateTrigger.changeOrBlur;
-    //this.canSubmit2 = false;
-    //this.validWorkType3 = false;
-    this.preventDefault = this.preventEnter.bind(this);
+    //this.preventDefault = this.preventEnter.bind(this); //FormValidator
     this.selectedTalents = [];
     this.selectedWorks = [];
     this.showSchedule = false;
     this.updateScheduledEvent = false;
-    //this.alleventids = [];
   }
 
   async activate(){
     this.update = false;
-    this.updateScheduleEvent = false;
+    this.updateScheduleEvent = false; //VolOpp
     this.alleventids = [];
     this.voOpp = {
       'voName': '',
@@ -75,14 +68,14 @@ export class Charity {
       this.buildManagers();
       this.buildEvents();
     }
-    window.addEventListener('keypress', this.preventDefault, false);
+    //window.addEventListener('keypress', this.preventDefault, false);
   }
 
-  preventEnter(e) {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-    }
-  }
+  // preventEnter(e) {
+  //   if (e.keyCode === 13) {
+  //     e.preventDefault();
+  //   }
+  // }
 
   async buildEvents(){
     for (let l = 0; l < this.charities.length; l++){
@@ -93,61 +86,9 @@ export class Charity {
       let res = await this.app.httpClient.fetch('/volOpp/' + this.charities[l]._id);
       this.events = await res.json();
       eventHtml = this.events;
-      // console.log('these are the events');
-      // console.log(this.events);
-      // if (this.events.length !== 0){
-      //   for (let i = 0; i < this.events.length; i++){
-      //     this.evid = this.events[i]._id;
-      //     //eventHtml = eventHtml + '<p><a click.delegate="showEvent(&apos;' + this.evid + '&apos;)">' + this.events[i].voName + '</a></p>';
-      //     //eventHtml = eventHtml + '<p><a onclick="showEvent(&apos;' + this.evid + '&apos;)">' + this.events[i].voName + '</a></p>';
-      //     eventHtml = eventHtml + '<p><a id="' + this.evid + ' click.delegate="showEvent('+this.evid+')"">' + this.events[i].voName + '</a></p>';
-      //     this.alleventids.push(this.evid);
-      //     console.log('inside the set event loop');
-      //     console.log(this.alleventids);
-      //     //document.getElementById(this.evid).addEventListener('click', showEvent(this.evid), false);
-      //     //eventHtml = eventHtml + '<p><a click.delegate="showEvent(&apos;' + this.evid + '&apos;)">' + this.events[i].voName + '</a></p>';
-      //   }
-      // }
-      // if (eventHtml === ''){
-      //   eventHtml = '<p style="font-size:10pt">none scheduled</p>';
-      // }
       this.charities[l].eventHtml = eventHtml;
     }
-    // setTimeout(function () {
-    //   if (newState === -1){
-    //     this.setclicks();
-    //   }
-    // }, 5000);
-    //this.stateChange();
-    // if (this.alleventids.length > 0){
-    //   this.setclicks();
-    // }
   }
-
-  // stateChange(newState) {
-  //   setTimeout(function () {
-  //     if (newState === -1) {
-  //       this.setclicks();
-  //     }
-  //   }, 5000);
-  // }
-
-  // setclicks(){
-  //   console.log('running eventlisteners');
-  //   console.log(this.alleventids);
-  //   if (this.alleventids.length !== 0) {
-  //     console.log('there are some event ids');
-  //     for (let i = 0; i < this.alleventids.length; i++){
-  //       // setTimeout(function () {
-  //       // }, 3000);
-  //       if (document.getElementById(this.alleventids[i]) !== null){
-  //         document.getElementById(this.alleventids[i]).addEventListener('click', this.showEvent(this.alleventids[i]), false);
-  //         console.log(document.getElementById(this.alleventids[i]));
-  //       }
-  //       //document.getElementById(this.alleventids[2]).addEventListener('click', this.showEvent(this.alleventids[2]), false);
-  //     }
-  //   }
-  // }
 
   createNewCharity(){
     console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
@@ -162,19 +103,18 @@ export class Charity {
       'charityTypeOther': '',
       'charityTypesHtml': ''
     };
-    //this.create = true;
     this.update = false;
     let charitiesTable = document.getElementById('charTable');
     if (charitiesTable !== null){
       charitiesTable.style.display = 'block';
     }
     this.updateScheduledEvent = false;
+    document.getElementById('createNewCharityButton').style.display = 'none';
     this.showUpdateCharity(charity);
   }
 
   updateCharityFunction(charity){
     this.update = true;
-    //this.create = false;
     this.showUpdateCharity(charity);
   }
 
@@ -277,11 +217,8 @@ export class Charity {
     console.log('Running updateCanSubmit2');
     let nub = document.getElementsByClassName('updateButton')[0];
     if (nub) {
-      //console.log('Found my updateButton');
-      //nub.style.display = 'none';
       for (let result of validationResults) {
         if (result.valid === false){
-          //console.log('Something is not valid');
           nub.style.display = 'none';
           valid = false;
           break;
@@ -407,7 +344,6 @@ export class Charity {
     })
     .then((response) => response.json())
     .then((data) => {
-      //this.manager = data;
       if (data.length !== 0){
         //console.log('the additional manager is: ' + JSON.stringify(data));
         const tempManager = data;
@@ -441,8 +377,6 @@ export class Charity {
     const res = await this.app.httpClient.fetch('/volOpp/get/' + eid);
     this.voOpp = await res.json();
     console.log(this.voOpp);
-//     voCharityName: { type: String, required: true },
-// voCharityId:
     const tempCharity = {
       '_id': this.voOpp.voCharityId, 'charityName': this.voOpp.voCharityName
     };

@@ -8,7 +8,7 @@ export class UserAccount {
     this.selectedCauses = [];
     this.selectedTalents = [];
     this.selectedWorks = [];
-    this.preventDefault = this.preventEnter.bind(this);
+    //this.preventDefault = this.preventEnter.bind(this);
   }
 
   causes = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
@@ -96,14 +96,14 @@ export class UserAccount {
     } else {
       this.causeOther = false;
     }
-    window.addEventListener('keypress', this.preventDefault, false);
+    //window.addEventListener('keypress', this.preventDefault, false);
   }
 
-  preventEnter(e) {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-    }
-  }
+  // preventEnter(e) {
+  //   if (e.keyCode === 13) {
+  //     e.preventDefault();
+  //   }
+  // }
 
   async setupVolunteer(){
     await fetch;
