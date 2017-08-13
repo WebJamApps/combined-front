@@ -3,7 +3,7 @@ import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
-import {VolOpp} from '../classes/VolOpp';
+//import {VolOpp} from '../classes/VolOpp';
 @inject(App, ValidationControllerFactory, Validator)
 export class Charity {
   controller = null;
@@ -12,7 +12,7 @@ export class Charity {
     this.app = app;
     this.charities = [];
     this.validator2 = new FormValidator(validator, (results) => this.updateCanSubmit2(results));
-    this.volopp = new VolOpp();
+    //this.volopp = new VolOpp();
     this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit2 = true;
@@ -121,8 +121,8 @@ export class Charity {
   }
 
   showUpdateCharity(charity){
-    this.canSubmit2 = true;
-    this.validType2 = true;
+    //this.canSubmit2 = true;
+    //this.validType2 = true;
     let updateDiv = document.getElementById('updateCharitySection');
     updateDiv.style.display = 'block';
     let scheduleDiv = document.getElementById('scheduleCharitySection');
