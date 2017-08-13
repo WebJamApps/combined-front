@@ -15,8 +15,8 @@ export class Charity {
     //this.volopp = new VolOpp();
     this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
-    this.canSubmit2 = true;
-    this.validType2 = true;
+    this.canSubmit2 = false;
+    this.validType2 = false;
     //this.preventDefault = this.preventEnter.bind(this); //FormValidator
     this.selectedTalents = [];
     this.selectedWorks = [];
