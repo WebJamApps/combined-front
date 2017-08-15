@@ -111,12 +111,18 @@ export class Charity {
       charitiesTable.style.display = 'block';
     }
     this.updateScheduledEvent = false;
-    document.getElementById('createNewCharityButton').style.display = 'none';
+    let createNewButton = document.getElementById('createNewCharityButton');
+    if (createNewButton !== null){
+      createNewButton.style.display = 'none';
+    }
+    //document.getElementById('createNewCharityButton').style.display = 'none';
     this.showUpdateCharity(charity);
   }
 
   updateCharityFunction(charity){
     this.update = true;
+    this.canSubmit2 = true;
+    this.validType2 = true;
     this.showUpdateCharity(charity);
   }
 

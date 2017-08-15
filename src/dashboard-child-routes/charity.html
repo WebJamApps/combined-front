@@ -35,7 +35,8 @@
                       Remove
                     </button>
                     <p><a click.delegate="updateCharityFunction(charity)">Update</a></p>
-                    <p><a click.delegate="showScheduleCharity(charity)">Schedule</a></p>
+                    <p><a click.delegate="showScheduleCharity(charity)">Schedule (old)</a></p>
+                    <p><a route-href="route: vol-ops; params.bind: {id:charity._id}">Schedule (new)</a></p>
                   </td>
                   <td style="padding:8px" innerhtml.bind="charity.charityName"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityCity"></td>
@@ -46,7 +47,6 @@
                   <td style="padding:8px" innerhtml.bind="charity.charityManagersHtml"></td>
                   <td style="padding:8px">
                     <a repeat.for="event of charity.eventHtml" style="display:block;text-align:left; padding-top:10px" click.delegate="showEvent(event._id)">${event.voName}</a>
-                    <a route-href="route: vol-ops; params.bind: {id:charity._id}">Volunteer Opportunities</a>
                   </td>
                 </tr>
               </tbody>
