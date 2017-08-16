@@ -18,34 +18,34 @@ export class Charity {
     this.canSubmit2 = false;
     this.validType2 = false;
     //this.preventDefault = this.preventEnter.bind(this); //FormValidator
-    this.selectedTalents = [];
-    this.selectedWorks = [];
-    this.showSchedule = false;
-    this.updateScheduledEvent = false;
+    //this.selectedTalents = [];
+    //this.selectedWorks = [];
+    //this.showSchedule = false;
+    //this.updateScheduledEvent = false;
   }
 
   async activate(){
     this.update = false;
-    this.updateScheduleEvent = false; //VolOpp
-    this.alleventids = [];
-    this.voOpp = {
-      'voName': '',
-      'voCharityId': '',
-      'voCharityName': '',
-      'voNumPeopleNeeded': 1,
-      'voDescription': '',
-      'voWorkTypes': [],
-      'voTalentTypes': [],
-      'voWorkTypeOther': '',
-      'voTalentTypeOther': '',
-      'voStartDate': null,
-      'voStartTime': '',
-      'voEndDate': null,
-      'voEndTime': '',
-      'voContactName': '',
-      'voContactEmail': '',
-      'voContactPhone': null
-    };
+    //this.updateScheduleEvent = false; //VolOpp
+    //this.alleventids = [];
+    // this.voOpp = {
+    //   'voName': '',
+    //   'voCharityId': '',
+    //   'voCharityName': '',
+    //   'voNumPeopleNeeded': 1,
+    //   'voDescription': '',
+    //   'voWorkTypes': [],
+    //   'voTalentTypes': [],
+    //   'voWorkTypeOther': '',
+    //   'voTalentTypeOther': '',
+    //   'voStartDate': null,
+    //   'voStartTime': '',
+    //   'voEndDate': null,
+    //   'voEndTime': '',
+    //   'voContactName': '',
+    //   'voContactEmail': '',
+    //   'voContactPhone': null
+    // };
     this.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
     this.types.sort();
     this.types.push('other');
@@ -55,12 +55,12 @@ export class Charity {
       'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
       'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     this.states.sort();
-    this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
-    this.works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
-    this.talents.sort();
-    this.talents.push('other');
-    this.works.sort();
-    this.works.push('other');
+    //this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
+    //this.works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
+    //this.talents.sort();
+    //this.talents.push('other');
+    //this.works.sort();
+    //this.works.push('other');
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     const res = await this.app.httpClient.fetch('/charity/' + this.uid);
@@ -68,7 +68,7 @@ export class Charity {
     if (this.charities.length !== 0){
       this.buildTypes();
       this.buildManagers();
-      this.buildEvents();
+      //this.buildEvents();
     }
     //window.addEventListener('keypress', this.preventDefault, false);
   }
@@ -79,18 +79,18 @@ export class Charity {
   //   }
   // }
 
-  async buildEvents(){
-    for (let l = 0; l < this.charities.length; l++){
-      let eventHtml = '';
-      this.events = [];
-      console.log('these are the charity ids');
-      console.log(this.charities[l]._id);
-      let res = await this.app.httpClient.fetch('/volopp/' + this.charities[l]._id);
-      this.events = await res.json();
-      eventHtml = this.events;
-      this.charities[l].eventHtml = eventHtml;
-    }
-  }
+  // async buildEvents(){
+  //   for (let l = 0; l < this.charities.length; l++){
+  //     let eventHtml = '';
+  //     this.events = [];
+  //     console.log('these are the charity ids');
+  //     console.log(this.charities[l]._id);
+  //     let res = await this.app.httpClient.fetch('/volopp/' + this.charities[l]._id);
+  //     this.events = await res.json();
+  //     eventHtml = this.events;
+  //     this.charities[l].eventHtml = eventHtml;
+  //   }
+  // }
 
   createNewCharity(){
     console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
@@ -163,25 +163,25 @@ export class Charity {
     }
   }
 
-  talentPicked(){
-    this.voOpp.volTalentTypes = this.selectedTalents;
-    if (this.selectedTalents.includes('other')){
-      this.talentOther = true;
-    } else {
-      this.talentOther = false;
-      this.voOpp.voTalentTypeOther = '';
-    }
-  }
+  // talentPicked(){
+  //   this.voOpp.volTalentTypes = this.selectedTalents;
+  //   if (this.selectedTalents.includes('other')){
+  //     this.talentOther = true;
+  //   } else {
+  //     this.talentOther = false;
+  //     this.voOpp.voTalentTypeOther = '';
+  //   }
+  // }
 
-  workPicked(){
-    this.voOpp.voWorkTypes = this.selectedWorks;
-    if (this.selectedWorks.includes('other')){
-      this.workOther = true;
-    } else {
-      this.workOther = false;
-      this.voOpp.voWorkTypeOther = '';
-    }
-  }
+  // workPicked(){
+  //   this.voOpp.voWorkTypes = this.selectedWorks;
+  //   if (this.selectedWorks.includes('other')){
+  //     this.workOther = true;
+  //   } else {
+  //     this.workOther = false;
+  //     this.voOpp.voWorkTypeOther = '';
+  //   }
+  // }
 
   updateTypePicked(){
     this.validType2 = false;
@@ -379,90 +379,90 @@ export class Charity {
     });
   }
 
-  async showEvent(eid){
-    console.log('showing event details for this event id');
-    console.log(eid);
-    const res = await this.app.httpClient.fetch('/volopp/get/' + eid);
-    this.voOpp = await res.json();
-    console.log(this.voOpp);
-    const tempCharity = {
-      '_id': this.voOpp.voCharityId, 'charityName': this.voOpp.voCharityName
-    };
-    this.updateScheduledEvent = true;
-    // document.getElementById('start-date').date = this.voOpp.voStartDate;
-    // document.getElementById('start-time').time = this.voOpp.voStartTime;
-    // document.getElementById('end-date').date = this.voOpp.voEndDate;
-    // document.getElementById('end-time').time = this.voOpp.voEndTime;
-    this.showScheduleCharity(tempCharity);
-    //fetch the voOpp by id and display it back to the user
-  }
+  // async showEvent(eid){
+  //   console.log('showing event details for this event id');
+  //   console.log(eid);
+  //   const res = await this.app.httpClient.fetch('/volopp/get/' + eid);
+  //   this.voOpp = await res.json();
+  //   console.log(this.voOpp);
+  //   const tempCharity = {
+  //     '_id': this.voOpp.voCharityId, 'charityName': this.voOpp.voCharityName
+  //   };
+  //   this.updateScheduledEvent = true;
+  //   // document.getElementById('start-date').date = this.voOpp.voStartDate;
+  //   // document.getElementById('start-time').time = this.voOpp.voStartTime;
+  //   // document.getElementById('end-date').date = this.voOpp.voEndDate;
+  //   // document.getElementById('end-time').time = this.voOpp.voEndTime;
+  //   this.showScheduleCharity(tempCharity);
+  //   //fetch the voOpp by id and display it back to the user
+  // }
 
-  showScheduleCharity(charity){
-    if (this.updateScheduledEvent === false){
-      this.voOpp = {
-        'voName': '',
-        'voCharityId': '',
-        'voCharityName': '',
-        'voNumPeopleNeeded': 1,
-        'voDescription': '',
-        'voWorkTypes': [],
-        'voTalentTypes': [],
-        'voWorkTypeOther': '',
-        'voTalentTypeOther': '',
-        'voStartDate': null,
-        'voStartTime': '',
-        'voEndDate': null,
-        'voEndTime': '',
-        'voContactName': '',
-        'voContactEmail': '',
-        'voContactPhone': null
-      };
-    }
-    //this.canSubmit3 = true;
-    //this.validWorkType3 = true;
-    //let scheduleDiv = document.getElementById('scheduleCharitySection');
-    this.voOpp.voCharityId = charity._id;
-    this.voOpp.voCharityName = charity.charityName;
-    let updateDiv = document.getElementById('updateCharitySection');
-    if (updateDiv !== null){
-      updateDiv.style.display = 'none';
-    }
-    let charitiesTable = document.getElementById('charTable');
-    if (charitiesTable !== null){
-      charitiesTable.style.display = 'none';
-    }
-    let scheduleDiv = document.getElementById('scheduleCharitySection');
-    if (scheduleDiv !== null){
-      scheduleDiv.style.display = 'block';
-    }
-    //scheduleDiv.style.display = 'block';
-    this.showSchedule = true;
-    this.charityName = charity.charityName;
-    //this.scheduleCharity = charity;
-    //this.setupValidation3();
-    if (document.getElementById('scheduleCharitySection') !== null){
-      document.getElementById('scheduleCharitySection').scrollIntoView();
-    }
-  }
+  // showScheduleCharity(charity){
+  //   if (this.updateScheduledEvent === false){
+  //     this.voOpp = {
+  //       'voName': '',
+  //       'voCharityId': '',
+  //       'voCharityName': '',
+  //       'voNumPeopleNeeded': 1,
+  //       'voDescription': '',
+  //       'voWorkTypes': [],
+  //       'voTalentTypes': [],
+  //       'voWorkTypeOther': '',
+  //       'voTalentTypeOther': '',
+  //       'voStartDate': null,
+  //       'voStartTime': '',
+  //       'voEndDate': null,
+  //       'voEndTime': '',
+  //       'voContactName': '',
+  //       'voContactEmail': '',
+  //       'voContactPhone': null
+  //     };
+  //   }
+  //   //this.canSubmit3 = true;
+  //   //this.validWorkType3 = true;
+  //   //let scheduleDiv = document.getElementById('scheduleCharitySection');
+  //   this.voOpp.voCharityId = charity._id;
+  //   this.voOpp.voCharityName = charity.charityName;
+  //   let updateDiv = document.getElementById('updateCharitySection');
+  //   if (updateDiv !== null){
+  //     updateDiv.style.display = 'none';
+  //   }
+  //   let charitiesTable = document.getElementById('charTable');
+  //   if (charitiesTable !== null){
+  //     charitiesTable.style.display = 'none';
+  //   }
+  //   let scheduleDiv = document.getElementById('scheduleCharitySection');
+  //   if (scheduleDiv !== null){
+  //     scheduleDiv.style.display = 'block';
+  //   }
+  //   //scheduleDiv.style.display = 'block';
+  //   this.showSchedule = true;
+  //   this.charityName = charity.charityName;
+  //   //this.scheduleCharity = charity;
+  //   //this.setupValidation3();
+  //   if (document.getElementById('scheduleCharitySection') !== null){
+  //     document.getElementById('scheduleCharitySection').scrollIntoView();
+  //   }
+  // }
 
-  scheduleCharityFunct(){
-    this.voOpp.voStartDate = document.getElementById('start-date').date;
-    this.voOpp.voStartTime = document.getElementById('start-time').time;
-    this.voOpp.voEndDate = document.getElementById('end-date').date;
-    this.voOpp.voEndTime = document.getElementById('end-time').time;
-    console.log(this.voOpp);
-    //this.newCharity.charityManagers[0] = this.user.name;
-    //this.newCharity.charityMngIds[0] = this.user._id;
-    this.app.httpClient.fetch('/volopp/create', {
-      method: 'post',
-      body: json(this.voOpp)
-    })
-    .then((data) => {
-      console.log(data);
-      document.getElementById('charityDash').scrollIntoView();
-      this.activate();
-    });
-  }
+  // scheduleCharityFunct(){
+  //   this.voOpp.voStartDate = document.getElementById('start-date').date;
+  //   this.voOpp.voStartTime = document.getElementById('start-time').time;
+  //   this.voOpp.voEndDate = document.getElementById('end-date').date;
+  //   this.voOpp.voEndTime = document.getElementById('end-time').time;
+  //   console.log(this.voOpp);
+  //   //this.newCharity.charityManagers[0] = this.user.name;
+  //   //this.newCharity.charityMngIds[0] = this.user._id;
+  //   this.app.httpClient.fetch('/volopp/create', {
+  //     method: 'post',
+  //     body: json(this.voOpp)
+  //   })
+  //   .then((data) => {
+  //     console.log(data);
+  //     document.getElementById('charityDash').scrollIntoView();
+  //     this.activate();
+  //   });
+  // }
 
   attached(){
     this.createNewCharity();

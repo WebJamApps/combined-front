@@ -22,7 +22,6 @@
                   <th style="padding:8px" >Phone</th>
                   <th style="padding:8px">Type</th>
                   <th style="padding:8px">Manager(s)</th>
-                  <th style="padding:8px">Scheduled Events(s)</th>
                 </tr>
               </thead>
               <tbody>
@@ -35,8 +34,7 @@
                       Remove
                     </button>
                     <p><a click.delegate="updateCharityFunction(charity)">Update</a></p>
-                    <p><a click.delegate="showScheduleCharity(charity)">Schedule (old)</a></p>
-                    <p><a route-href="route: vol-ops; params.bind: {id:charity._id}">Schedule (new)</a></p>
+                    <p><a route-href="route: vol-ops; params.bind: {id:charity._id}">Schedule</a></p>
                   </td>
                   <td style="padding:8px" innerhtml.bind="charity.charityName"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityCity"></td>
@@ -45,9 +43,6 @@
                   <td style="padding:8px" innerhtml.bind="charity.charityPhoneNumber"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityTypesHtml"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityManagersHtml"></td>
-                  <td style="padding:8px">
-                    <a repeat.for="event of charity.eventHtml" style="display:block;text-align:left; padding-top:10px" click.delegate="showEvent(event._id)">${event.voName}</a>
-                  </td>
                 </tr>
               </tbody>
             </table>
@@ -95,60 +90,6 @@
             <button if.bind = "update" id="updateCharityButton" class="updateButton" raised click.trigger="updateCharityFunct()" style="margin-bottom:40px">Update</button>
             <button if.bind = "update" id="cancelUpdateCharityButton" class="updateButton" raised click.trigger="createNewCharity()" style="margin-bottom:40px">Cancel</button>
             <button if.bind = "!update" id="createNewCharityButton" class="updateButton" raised click.trigger="createCharity()" style="display: none; margin-bottom:40px">Submit</button>
-            <p>&nbsp;</p>
-          </form>
-        </div>
-        <!-- End of update form -->
-        <div id="scheduleCharitySection" if.bind="showSchedule" style="margin-left:10px">
-          <h4 class="material-header-h4" style="padding-top:10px"><span if.bind="!updateScheduledEvent">Schedule an Event for<br></span>${charityName}</h4>
-          <form>
-            <paper-input style="margin-top:20px" label="Event name (required)" value.two-way="voOpp.voName"></paper-input>
-            <label style="font-size:14pt; margin-top:12px">Describe your event</label>
-            <textarea value.two-way="voOpp.voDescription" rows="5" cols="33"></textarea>
-            <label style="margin-top:16px; font-size:14pt">Start Date and Time</label>
-            <paper-date-picker id="start-date" force-narrow="true"></paper-date-picker>
-            <paper-time-picker id="start-time" force-narrow="true" time="08:00" ></paper-time-picker>
-            <label style="margin-top:10px; font-size:14pt">End Date and Time</label>
-            <paper-date-picker id="end-date" force-narrow="true"></paper-date-picker>
-            <paper-time-picker id="end-time" force-narrow="true" time="17:00" ></paper-time-picker>
-            <paper-input style="margin-top:0" label="Name of Event Coordinator" value.two-way="voOpp.voContactName"></paper-input>
-            <paper-input style="margin-top:0" label="Event Coordinator's Email" value.two-way="voOpp.voContactEmail"></paper-input>
-            <paper-input style="margin-top:0" label="Event Coordinator's Phone" value.two-way="voOpp.voContactPhone"></paper-input>
-            <paper-input type="number" style="margin-top:10px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded"></paper-input>
-            <div class="multiselect" style="width:170px; margin-top:10px">
-              <div class="selectBox" click.delegate="showCheckboxes('talents')">
-                <select>
-                  <option style="font-weight:normal">Volunteer's talent(s)</option>
-                </select>
-                <div class="overSelect"></div>
-              </div>
-              <iron-dropdown id="talents" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
-                <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 300px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-                  <label repeat.for="talent of talents" for="talent" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:150px">
-                    <input type="checkbox" value.bind="talent" checked.bind="selectedTalents" change.delegate="talentPicked()"> ${talent}
-                  </label>
-                </div>
-              </iron-dropdown>
-            </div>
-            <paper-input if.bind="talentOther" value.two-way="voOpp.voTalentTypeOther" label="Other talent" ></paper-input>
-            <div class="multiselect" style="width:170px; margin-top:25px">
-              <div class="selectBox" click.delegate="showCheckboxes('work')">
-                <select>
-                  <option style="font-weight:normal">Volunteer work</option>
-                </select>
-                <div class="overSelect"></div>
-              </div>
-              <iron-dropdown id="work" horizontal-align="right" vertical-align="top" style="margin-top:25px;margin-bottom:10px">
-                <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-                  <label repeat.for="work of works" for="work" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
-                    <input type="checkbox" value.bind="work" checked.bind="selectedWorks" change.delegate="workPicked()"> ${work}
-                  </label>
-                </div>
-              </iron-dropdown>
-            </div>
-            <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
-            <button if.bind="!updateScheduledEvent" id="scheduleCharityButton" class="updateButton" raised click.trigger="scheduleCharityFunct()" style="margin:40px">Schedule</button>
-            <button class="cancelButton" raised click.trigger="createNewCharity()" style="margin-bottom:40px; margin-top:20px">Hide</button>
             <p>&nbsp;</p>
           </form>
         </div>
