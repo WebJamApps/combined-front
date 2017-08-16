@@ -1,3 +1,47 @@
 <template>
-  <h1>HI</h1>
+  <h3 style="text-align:center">Scheduled Events for ${events[0].voCharityName}</h3>
+  <div if.bind="events.length === 0"><p style="text-align:center">There are no scheduled events</p></div>
+  <div if.bind="events.length !== 0" class="search-table-outer" style="position:relative;overflow-x:auto;">
+    <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
+      <thead>
+        <tr>
+          <th style="padding:8px; text-align:center">Action</th>
+          <th style="padding:8px;" aut-sort="key: voName; default: asc">Name</th>
+          <th style="padding:8px" >Description</th>
+          <th style="padding:8px" >Start Date</th>
+          <th style="padding:8px" >Start Time</th>
+          <th style="padding:8px">End Date</th>
+          <th style="padding:8px">End Time</th>
+          <th style="padding:8px" aut-sort="key: voNumPeopleNeeded"># of Volunteers</th>
+            <th style="padding:8px">Talents</th>
+            <th style="padding:8px">Work</th>
+          <th style="padding:8px">Phone</th>
+          <th style="padding:8px">Email</th>
+          <th style="padding:8px">Coordinator</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr repeat.for="event of $displayData">
+          <td style="padding:8px; text-align:center">
+            <button class="button-checkout" raised click.delegate="deleteEvent(event._id)" style="margin-bottom:10px">
+              Delete
+            </button>
+            <p><a click.delegate="updateEvent(event)">Update</a></p>
+          </td>
+          <td style="padding:8px" innerhtml.bind="event.voName"></td>
+          <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
+          <td style="padding:8px" innerhtml.bind="event.voStartDate"></td>
+          <td style="padding:8px" innerhtml.bind="event.voStartTime"></td>
+          <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
+          <td style="padding:8px" innerhtml.bind="event.voEndTime"></td>
+            <td style="padding:8px" innerhtml.bind="event.voNumPeopleNeeded"></td>
+              <td style="padding:8px" innerhtml.bind="event.voTalentTypes"></td>
+                <td style="padding:8px" innerhtml.bind="event.voWorkTypeOther"></td>
+          <td style="padding:8px" innerhtml.bind="event.voContactPhone"></td>
+          <td style="padding:8px" innerhtml.bind="event.voContactEmail"></td>
+          <td style="padding:8px" innerhtml.bind="event.voContactName"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
