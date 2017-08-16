@@ -191,10 +191,32 @@ export class VolunteerOpps {
     //document.getElementById('eventHeader').scrollIntoView();
   }
 
-  attached(){
-    //
-    this.showNewEvent();
-  //  }
+  async updateEvent(){
+    console.log('update Event');
+    //console.log('this is the update charity');
+    console.log(this.voOpp);
+    await fetch;
+    this.app.httpClient.fetch('/volopp/' + this.voOpp._id, {
+      method: 'put',
+      body: json(this.voOpp)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      // let updateDiv = document.getElementById('updateCharitySection');
+      // if (updateDiv !== null){
+      //   updateDiv.style.display = 'none';
+      // }
+      // this.updateCharity = {};
+      // document.getElementById('charityDash').scrollIntoView();
+      // this.activate();
+      this.showNewEvent();
+    });
   }
+
+  // attached(){
+  //   //
+  //   this.showNewEvent();
+  // //  }
+  // }
 
 }
