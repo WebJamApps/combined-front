@@ -130,4 +130,8 @@ export class VolunteerOpps {
     });
   }
 
+  attached(){
+    document.getElementById('eventHeader').scrollIntoView();
+  }
+
 }

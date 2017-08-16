@@ -171,13 +171,13 @@ describe('the App module', () => {
     done();
   });
 
-  it('gets the current styles when route is null', (done) => {
-    let routre = new RouterStub();
-    routre.currentInstruction.config.name = '';
-    app1.router = routre;
-    app1.currentStyles;
-    done();
-  });
+  // it('gets the current styles when route is null', (done) => {
+  //   let routre = new RouterStub();
+  //   routre.currentInstruction.config.name = '';
+  //   app1.router = routre;
+  //   app1.currentStyles;
+  //   done();
+  // });
 
   it('closes the menu on cellphone display', (done) => {
     //console.log(app1);

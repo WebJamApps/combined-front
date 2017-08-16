@@ -259,11 +259,11 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('fetches the event from the database by eventid', (done) => {
-    charity.activate();
-    charity.showEvent('1234');
-    done();
-  });
+  // it('fetches the event from the database by eventid', (done) => {
+  //   charity.activate();
+  //   charity.showEvent('1234');
+  //   done();
+  // });
 
   it('does not add a new charity manager if the email is not a user of the app', (done) => {
     charity2.activate();
@@ -366,15 +366,15 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('showScheduleCharity', (done) => {
-    document.body.innerHTML = '<div id="scheduleCharitySection"></div>';
-    let node = document.createElement('div');
-    node.id = 'updateCharitySection';
-    document.body.appendChild(node);
-    charity.activate();
-    charity.showScheduleCharity({charityName: 'Developer', _id: 'abcd1234'});
-    done();
-  });
+  // it('showScheduleCharity', (done) => {
+  //   document.body.innerHTML = '<div id="scheduleCharitySection"></div>';
+  //   let node = document.createElement('div');
+  //   node.id = 'updateCharitySection';
+  //   document.body.appendChild(node);
+  //   charity.activate();
+  //   charity.showScheduleCharity({charityName: 'Developer', _id: 'abcd1234'});
+  //   done();
+  // });
 
     // it('updateTypePicked', (done) => {
     //   let node = document.createElement('button');

@@ -147,7 +147,7 @@ export class App {
         sidebarClass: 'home-sidebar',
         menuToggleClass: 'home-menu-toggle'
       };
-      //console.log('route')
+      //console.log('currentRouteFrag');
       //console.log(this.currentRouteFrag);
       if (this.currentRoute === 'music-router') {
         this.Menu = 'music';
@@ -169,6 +169,12 @@ export class App {
         this.Menu = 'volunteer';
       } else if (this.currentRouteFrag === '/dashboard/user-account'){
         this.Menu = 'user-account';
+      } else if (this.currentRouteFrag !== undefined){
+        if (this.currentRouteFrag.indexOf('vol-ops/') !== -1){
+          this.Menu = 'charity';
+        } else {
+          this.Menu = 'wj';
+        }
       } else {
         this.Menu = 'wj';
       }
