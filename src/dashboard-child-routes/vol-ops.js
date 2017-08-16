@@ -73,11 +73,15 @@ export class VolunteerOpps {
     for (let i = 0; i < this.events.length; i++){
       let startDate = this.events[i].voStartDate;
       let endDate = this.events[i].voEndDate;
-      if (startDate.indexOf('T') !== -1){
-        this.events[i].voStartDate = startDate.substr(0, startDate.indexOf('T'));
+      if (startDate !== null){
+        if (startDate.indexOf('T') !== -1){
+          this.events[i].voStartDate = startDate.substr(0, startDate.indexOf('T'));
+        }
       }
-      if (endDate.indexOf('T') !== -1){
-        this.events[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
+      if (endDate !== null){
+        if (endDate.indexOf('T') !== -1){
+          this.events[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
+        }
       }
     }
   }
@@ -209,6 +213,17 @@ export class VolunteerOpps {
       // this.updateCharity = {};
       // document.getElementById('charityDash').scrollIntoView();
       // this.activate();
+      this.showNewEvent();
+    });
+  }
+
+  async deleteEvent(thisEventId){
+    await fetch;
+    this.app.httpClient.fetch('/volopp/' + thisEventId, {
+      method: 'delete'
+    })
+    .then((data) => {
+      console.log('your event has been deleted');
       this.showNewEvent();
     });
   }
