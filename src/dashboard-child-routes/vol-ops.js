@@ -12,6 +12,7 @@ export class VolunteerOpps {
     this.app = app;
     this.selectedTalents = [];
     this.selectedWorks = [];
+    this.newEvent = true;
   }
   //
   async activate(){
@@ -131,8 +132,8 @@ export class VolunteerOpps {
   }
 
   talentPicked(){
-    this.voOpp.voTalentTypes = this.selectedTalents;
-    if (this.selectedTalents.includes('other')){
+    //this.voOpp.voTalentTypes = this.selectedTalents;
+    if (this.voOpp.voTalentTypes.includes('other')){
       this.talentOther = true;
     } else {
       this.talentOther = false;
@@ -143,8 +144,8 @@ export class VolunteerOpps {
   }
 
   workPicked(){
-    this.voOpp.voWorkTypes = this.selectedWorks;
-    if (this.selectedWorks.includes('other')){
+    //this.voOpp.voWorkTypes = this.selectedWorks;
+    if (this.voOpp.voWorkTypes.includes('other')){
       this.workOther = true;
     } else {
       this.workOther = false;
@@ -172,8 +173,28 @@ export class VolunteerOpps {
     });
   }
 
+  showUpdateEvent(thisEvent){
+    this.newEvent = false;
+    document.getElementById('topSection').style.display = 'none';
+    this.voOpp = thisEvent;
+    this.talentPicked();
+    this.workPicked();
+    //document.getElementById('start-date').date = this.voOpp.voStartDate;
+  }
+
+  showNewEvent(){
+    this.newEvent = true;
+    let topSection = document.getElementById('topSection');
+    topSection.style.display = 'block';
+    topSection.scrollIntoView();
+    this.activate();
+    //document.getElementById('eventHeader').scrollIntoView();
+  }
+
   attached(){
-    document.getElementById('eventHeader').scrollIntoView();
+    //
+    this.showNewEvent();
+  //  }
   }
 
 }
