@@ -1,47 +1,124 @@
 <template>
-  <h3 style="text-align:center">Scheduled Events for ${events[0].voCharityName}</h3>
-  <div if.bind="events.length === 0"><p style="text-align:center">There are no scheduled events</p></div>
-  <div if.bind="events.length !== 0" class="search-table-outer" style="position:relative;overflow-x:auto;">
-    <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
-      <thead>
-        <tr>
-          <th style="padding:8px; text-align:center">Action</th>
-          <th style="padding:8px;" aut-sort="key: voName; default: asc">Name</th>
-          <th style="padding:8px" >Description</th>
-          <th style="padding:8px" >Start Date</th>
-          <th style="padding:8px" >Start Time</th>
-          <th style="padding:8px">End Date</th>
-          <th style="padding:8px">End Time</th>
-          <th style="padding:8px" aut-sort="key: voNumPeopleNeeded"># of Volunteers</th>
+  <div class="page-content">
+    <h3 id="eventHeader" style="text-align:center">Scheduled Events for ${events[0].voCharityName}</h3>
+    <div if.bind="events.length === 0"><p style="text-align:center">There are no scheduled events</p></div>
+    <div if.bind="events.length !== 0" class="search-table-outer" style="position:relative;overflow-x:auto;">
+      <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
+        <thead>
+          <tr>
+            <th style="padding:8px; text-align:center">Action</th>
+            <th style="padding:8px;" aut-sort="key: voName; default: asc">Name</th>
+            <th style="padding:8px" >Description</th>
+            <th style="padding:8px" >Start Date</th>
+            <th style="padding:8px" >Start Time</th>
+            <th style="padding:8px">End Date</th>
+            <th style="padding:8px">End Time</th>
+            <th style="padding:8px" aut-sort="key: voNumPeopleNeeded"># of Volunteers</th>
             <th style="padding:8px">Talents</th>
             <th style="padding:8px">Work</th>
-          <th style="padding:8px">Phone</th>
-          <th style="padding:8px">Email</th>
-          <th style="padding:8px">Coordinator</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr repeat.for="event of $displayData">
-          <td style="padding:8px; text-align:center">
-            <button class="button-checkout" raised click.delegate="deleteEvent(event._id)" style="margin-bottom:10px">
-              Delete
-            </button>
-            <p><a click.delegate="updateEvent(event)">Update</a></p>
-          </td>
-          <td style="padding:8px" innerhtml.bind="event.voName"></td>
-          <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
-          <td style="padding:8px" innerhtml.bind="event.voStartDate"></td>
-          <td style="padding:8px" innerhtml.bind="event.voStartTime"></td>
-          <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
-          <td style="padding:8px" innerhtml.bind="event.voEndTime"></td>
+            <th style="padding:8px">Phone</th>
+            <th style="padding:8px">Email</th>
+            <th style="padding:8px">Coordinator</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr repeat.for="event of $displayData">
+            <td style="padding:8px; text-align:center">
+              <button class="button-checkout" raised click.delegate="deleteEvent(event._id)" style="margin-bottom:10px">
+                Delete
+              </button>
+              <p><a click.delegate="updateEvent(event)">Update</a></p>
+            </td>
+            <td style="padding:8px" innerhtml.bind="event.voName"></td>
+            <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
+            <td style="padding:8px" innerhtml.bind="event.voStartDate"></td>
+            <td style="padding:8px" innerhtml.bind="event.voStartTime"></td>
+            <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
+            <td style="padding:8px" innerhtml.bind="event.voEndTime"></td>
             <td style="padding:8px" innerhtml.bind="event.voNumPeopleNeeded"></td>
-              <td style="padding:8px" innerhtml.bind="event.voTalentTypes"></td>
-                <td style="padding:8px" innerhtml.bind="event.voWorkTypeOther"></td>
-          <td style="padding:8px" innerhtml.bind="event.voContactPhone"></td>
-          <td style="padding:8px" innerhtml.bind="event.voContactEmail"></td>
-          <td style="padding:8px" innerhtml.bind="event.voContactName"></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</template>
+            <td style="padding:8px" innerhtml.bind="event.voTalentTypes"></td>
+            <td style="padding:8px" innerhtml.bind="event.voWorkTypeOther"></td>
+            <td style="padding:8px" innerhtml.bind="event.voContactPhone"></td>
+            <td style="padding:8px" innerhtml.bind="event.voContactEmail"></td>
+            <td style="padding:8px" innerhtml.bind="event.voContactName"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="newEventSection" style="margin-left:10px">
+
+      <h4 class="material-header-h4" style="margin-top:40px"><strong>Schedule A New Event</strong></h4>
+      <form>
+        <paper-input label="Event name (required)" value.two-way="voOpp.voName"></paper-input>
+        <label style="font-size:14pt; margin-top:12px">Describe your event</label>
+        <textarea value.two-way="voOpp.voDescription" rows="5" cols="33"></textarea>
+        <label style="margin-top:16px; font-size:14pt">Start Date</label>
+        <paper-date-picker id="start-date" force-narrow="true"></paper-date-picker>
+        <label style="margin-top:16px; font-size:14pt">Start Time</label>
+        <paper-time-picker id="start-time" force-narrow="true" time="08:00" ></paper-time-picker>
+        <label style="margin-top:10px; font-size:14pt">End Date</label>
+        <paper-date-picker id="end-date" force-narrow="true"></paper-date-picker>
+        <label style="margin-top:10px; font-size:14pt">End Time</label>
+        <paper-time-picker id="end-time" force-narrow="true" time="17:00" ></paper-time-picker>
+
+        <paper-input style="margin-top:0" label="Name of Event Coordinator" value.two-way="voOpp.voContactName"></paper-input>
+        <paper-input style="margin-top:0" label="Event Coordinator's Email" value.two-way="voOpp.voContactEmail"></paper-input>
+        <paper-input style="margin-top:0" label="Event Coordinator's Phone" value.two-way="voOpp.voContactPhone"></paper-input>
+        <paper-input type="number" style="margin-top:10px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded"></paper-input>
+        <div class="multiselect" style="width:170px; margin-top:10px">
+          <div class="selectBox" click.delegate="showCheckboxes('talents')">
+            <select>
+              <option style="font-weight:normal">Volunteer's talent(s)</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <iron-dropdown id="talents" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
+            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 300px; max-height: 362px;overflow:auto;border:1px #dadada solid">
+              <label repeat.for="talent of talents" for="talent" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:150px">
+                <input type="checkbox" value.bind="talent" checked.bind="selectedTalents" change.delegate="talentPicked()"> ${talent}
+              </label>
+            </div>
+          </iron-dropdown>
+        </div>
+        <paper-input if.bind="talentOther" value.two-way="voOpp.voTalentTypeOther" label="Other talent" ></paper-input>
+
+        <div class="multiselect" style="width:170px; margin-top:25px">
+          <div class="selectBox" click.delegate="showCheckboxes('work')">
+            <select>
+              <option style="font-weight:normal">Volunteer work</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+
+          <iron-dropdown id="work" horizontal-align="right" vertical-align="top" style="margin-top:25px;margin-bottom:10px">
+            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
+              <label repeat.for="work of works" for="work" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
+                <input type="checkbox" value.bind="work" checked.bind="selectedWorks" change.delegate="workPicked()"> ${work}
+              </label>
+            </div>
+          </iron-dropdown>
+        </div>
+        <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
+
+        <button id="scheduleEvent" class="updateButton" raised click.trigger="scheduleEvent()" style="margin:40px">Schedule</button>
+
+
+      </form>
+      <paper-material class="footer" elevation="4" style="padding:8px; background-color: #565656">
+        <div class="paper-card-img">
+
+          <span>&nbsp;&nbsp;</span><a style="color:#c09580" target="_blank" href="https://www.facebook.com/Our-Hands-and-Feet-350610878635036/">
+            <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+            <span>&nbsp;&nbsp;</span><a style="color:#c09580" target="_blank" href="https://plus.google.com/u/0/109018742744548655017">
+              <i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
+              <span>&nbsp;&nbsp;</span><a style="color:#c09580" target="_blank" href="https://twitter.com/OurHandsAndFee1">
+                <i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>
+                <span style="color:white; font-size: 9pt;margin:auto">Powered by
+                  <a target="_blank" style="color:white; font-size:9pt; font-weight: bold;" href="https://www.web-jam.com">Web Jam LLC</a>
+                </span>
+              </div>
+            </paper-material>
+          </div>
+        </div>
+      </template>
