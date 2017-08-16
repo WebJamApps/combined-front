@@ -28,6 +28,7 @@ export class VolunteerOpps {
     console.log(this.events);
     if (this.events.length > 0){
       this.fixDates();
+      this.buildWorkPrefs();
       this.charityName = this.events[0].voCharityName;
     } else {
       this.findCharityName();
@@ -76,6 +77,25 @@ export class VolunteerOpps {
       if (endDate.indexOf('T') !== -1){
         this.events[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
       }
+    }
+  }
+
+  buildWorkPrefs(){
+    for (let l = 0; l < this.events.length; l++){
+      let workHtml = '';
+      for (let i = 0; i < this.events[l].voWorkTypes.length; i++) {
+        if (this.events[l].voWorkTypes[i] !== ''){
+          if (this.events[l].voWorkTypes[i] !== 'other'){
+            workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypes[i] + '</p>';
+          } else {
+            workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypeOther + '</p>';
+          }
+        }
+      }
+      if (workHtml === ''){
+        workHtml = '<p style="font-size:10pt">not specified</p>';
+      }
+      this.events[l].workHtml = workHtml;
     }
   }
 
