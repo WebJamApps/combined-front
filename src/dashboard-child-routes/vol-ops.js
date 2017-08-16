@@ -29,6 +29,7 @@ export class VolunteerOpps {
     if (this.events.length > 0){
       this.fixDates();
       this.buildWorkPrefs();
+      this.buildTalents();
       this.charityName = this.events[0].voCharityName;
     } else {
       this.findCharityName();
@@ -99,6 +100,25 @@ export class VolunteerOpps {
     }
   }
 
+  buildTalents(){
+    for (let l = 0; l < this.events.length; l++){
+      let talentHtml = '';
+      for (let i = 0; i < this.events[l].voTalentTypes.length; i++) {
+        if (this.events[l].voTalentTypes[i] !== ''){
+          if (this.events[l].voTalentTypes[i] !== 'other'){
+            talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypes[i] + '</p>';
+          } else {
+            talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypeOther + '</p>';
+          }
+        }
+      }
+      if (talentHtml === ''){
+        talentHtml = '<p style="font-size:10pt">not specified</p>';
+      }
+      this.events[l].talentHtml = talentHtml;
+    }
+  }
+
   showCheckboxes(id){
     const checkboxes = document.getElementById(id);
     if (!this.expanded) {
@@ -111,13 +131,15 @@ export class VolunteerOpps {
   }
 
   talentPicked(){
-    this.voOpp.volTalentTypes = this.selectedTalents;
+    this.voOpp.voTalentTypes = this.selectedTalents;
     if (this.selectedTalents.includes('other')){
       this.talentOther = true;
     } else {
       this.talentOther = false;
       this.voOpp.voTalentTypeOther = '';
     }
+    // console.log('selected talent');
+    // console.log()
   }
 
   workPicked(){

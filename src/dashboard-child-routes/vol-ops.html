@@ -1,6 +1,6 @@
 <template>
   <div class="page-content">
-    <h3 id="eventHeader" style="text-align:center">Scheduled Events for ${events[0].voCharityName}</h3>
+    <h3 id="eventHeader" style="text-align:center">Events for ${charityName}</h3>
     <div if.bind="events.length === 0"><p style="text-align:center">There are no scheduled events</p></div>
     <div if.bind="events.length !== 0" class="search-table-outer" style="position:relative;overflow-x:auto;">
       <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
