@@ -261,4 +261,10 @@ export class VolunteerOpps {
     .on(this.voOpp);
   }
 
+  onlyPositive(){
+    if (this.voOpp.voNumPeopleNeeded < 1){
+      this.voOpp.voNumPeopleNeeded = 1;
+    }
+  }
+
 }
