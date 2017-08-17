@@ -52,10 +52,11 @@
       <h4 if.bind="newEvent" class="material-header-h4" style="margin-top:40px"><strong>Schedule A New Event</strong></h4>
       <h4 if.bind="!newEvent" class="material-header-h4" style="margin-top:40px"><strong>Update the ${charityName} Event</strong></h4>
       <form>
-        <paper-input label="Event name (required)" value.two-way="voOpp.voName"></paper-input>
+        <paper-input label="Event name (required)" value.two-way="voOpp.voName & validate:controller2"></paper-input>
         <label style="font-size:14pt; margin-top:12px">Describe your event</label>
         <textarea value.two-way="voOpp.voDescription" rows="5" cols="33"></textarea>
-        <paper-input type="number" style="margin-top:10px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded"></paper-input>
+        <!--TODO only allow entering positve whole numbers greater than 0 -->
+        <paper-input type="number" style="margin-top:10px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded & validate:controller2"></paper-input>
         <div class="multiselect" style="width:170px; margin-top:10px">
           <div class="selectBox" click.delegate="showCheckboxes('talents')">
             <select>
@@ -90,20 +91,27 @@
           </iron-dropdown>
         </div>
         <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
-        <label style="margin-top:16px; font-size:14pt">Start Date</label>
+        <label style="margin-top:16px; font-size:14pt">Start Date (required)</label>
         <paper-date-picker id="start-date" force-narrow="true"></paper-date-picker>
-        <label style="margin-top:16px; font-size:14pt">Start Time</label>
+        <label style="margin-top:16px; font-size:14pt">Start Time (required)</label>
         <paper-time-picker id="start-time" force-narrow="true" time="8:00" ></paper-time-picker>
-        <label style="margin-top:10px; font-size:14pt">End Date</label>
+        <label style="margin-top:10px; font-size:14pt">End Date (required)</label>
         <paper-date-picker id="end-date" force-narrow="true"></paper-date-picker>
-        <label style="margin-top:10px; font-size:14pt">End Time</label>
+        <label style="margin-top:10px; font-size:14pt">End Time (required)</label>
         <paper-time-picker id="end-time" force-narrow="true" time="17:00" ></paper-time-picker>
         <paper-input style="margin-top:0" label="Name of Coordinator (if not yourself)" value.two-way="voOpp.voContactName"></paper-input>
-        <paper-input style="margin-top:0" label="Coordinator's Email (if not your email)" value.two-way="voOpp.voContactEmail"></paper-input>
-        <paper-input style="margin-top:0" label="Coordinator's Phone (not required)" value.two-way="voOpp.voContactPhone"></paper-input>
-        <button if.bind="newEvent" id="scheduleEvent" class="updateButton" raised click.trigger="scheduleEvent()" style="margin:40px">Schedule</button>
-        <button if.bind="!newEvent" id="updateScheduleEvent" class="updateButton" raised click.trigger="updateEvent()" style="margin:40px">Update</button>
-        <button id="nevermind" class="updateButton" raised click.trigger="showNewEvent()">Nevermind</button>
+        <paper-input style="margin-top:0" label="Coordinator's Email (if not your email)" value.two-way="voOpp.voContactEmail & validate:controller2"></paper-input>
+        <paper-input style="margin-top:0" label="Coordinator's Phone (not required)" value.two-way="voOpp.voContactPhone & validate:controller2"></paper-input>
+        <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
+          <ul if.bind="controller2.errors">
+            <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red">
+              ${error.message}
+            </li>
+          </ul>
+        </div>
+        <button if.bind="newEvent" id="scheduleEvent" class="updateButton" raised click.trigger="scheduleEvent()" style="display:none;margin-bottom:40px">Schedule</button>
+        <button if.bind="!newEvent" id="updateScheduleEvent" class="updateButton" raised click.trigger="updateEvent()" style="margin-bottom:40px">Update</button>
+        <button id="nevermind" class="updateButton" raised click.trigger="showNewEvent()" style="margin-bottom:40px">Nevermind</button>
       </form>
       <paper-material class="footer" elevation="4" style="padding:8px; background-color: #565656">
         <div class="paper-card-img">
