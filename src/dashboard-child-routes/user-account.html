@@ -16,8 +16,8 @@
           </div>
           <iron-dropdown id="causes" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
             <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-              <label repeat.for="cause of causes" for="cause" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
-                <input type="checkbox" value.bind="cause" checked.bind="selectedCauses" change.delegate="causePicked()"> ${cause}
+              <label repeat.for="cause of causes" for="${cause}" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
+                <input type="checkbox" value.bind="cause" id.bind="cause" checked.bind="selectedCauses" change.delegate="causePicked()"> ${cause}
               </label>
             </div>
           </iron-dropdown>
@@ -32,8 +32,8 @@
           </div>
           <iron-dropdown id="talents" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
             <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 300px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-              <label repeat.for="talent of talents" for="talent" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:150px">
-                <input type="checkbox" value.bind="talent" checked.bind="selectedTalents" change.delegate="talentPicked()"> ${talent}
+              <label repeat.for="talent of talents" for="${talent}" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:150px">
+                <input type="checkbox" value.bind="talent" id.bind="talent" checked.bind="selectedTalents" change.delegate="talentPicked()"> ${talent}
               </label>
             </div>
           </iron-dropdown>
@@ -48,8 +48,8 @@
           </div>
           <iron-dropdown id="work" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
             <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-              <label repeat.for="work of works" for="work" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
-                <input type="checkbox" value.bind="work" checked.bind="selectedWorks" change.delegate="workPicked()"> ${work}
+              <label repeat.for="work of works" for="${work}" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
+                <input type="checkbox" value.bind="work" id.bind="work" checked.bind="selectedWorks" change.delegate="workPicked()"> ${work}
               </label>
             </div>
           </iron-dropdown>
