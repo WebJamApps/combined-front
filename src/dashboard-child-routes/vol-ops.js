@@ -55,9 +55,9 @@ export class VolunteerOpps {
       'voStartTime': '',
       'voEndDate': null,
       'voEndTime': '',
-      'voContactName': '',
-      'voContactEmail': '',
-      'voContactPhone': null
+      'voContactName': this.user.name,
+      'voContactEmail': this.user.email,
+      'voContactPhone': this.user.userPhone
     };
     this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
     this.works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
@@ -266,5 +266,9 @@ export class VolunteerOpps {
       this.voOpp.voNumPeopleNeeded = 1;
     }
   }
+
+  // setEndDate(){
+  //   console.log(document.getElementById('start-date').date);
+  // }
 
 }
