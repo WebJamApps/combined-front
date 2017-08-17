@@ -243,6 +243,15 @@ export class Charity {
   createCharity(){
     this.updateCharity.charityManagers[0] = this.user.name;
     this.updateCharity.charityMngIds[0] = this.user._id;
+    console.log('this is the update charity email: ' + this.updateCharity.charityEmail);
+    if (this.updateCharity.charityEmail !== '' && this.updateCharity.charityEmail !== null){
+      this.findUserByEmail('post');
+    } else {
+      this.postCharity();
+    }
+  }
+
+  postCharity(){
     this.app.httpClient.fetch('/charity/create', {
       method: 'post',
       body: json(this.updateCharity)
@@ -304,7 +313,7 @@ export class Charity {
   updateCharityFunct(){
     console.log('this is the update charity email: ' + this.updateCharity.charityEmail);
     if (this.updateCharity.charityEmail !== '' && this.updateCharity.charityEmail !== null){
-      this.findUserByEmail();
+      this.findUserByEmail('put');
     } else {
       this.putCharity();
     }
@@ -344,7 +353,7 @@ export class Charity {
     });
   }
 
-  async findUserByEmail(){
+  async findUserByEmail(thenDo){
     await fetch;
     this.app.httpClient.fetch('/user/', {
       method: 'post',
@@ -372,10 +381,14 @@ export class Charity {
         }
         this.updateCharity.charityMngIds.push(tempManager[0]._id);
         this.updateCharity.charityManagers.push(tempManager[0].name);
+        if (thenDo === 'put'){
+          this.putCharity();
+        } else if (thenDo === 'post'){
+          this.postCharity();
+        }
       } else {
         alert('There is no OHAF user with that email');
       }
-      this.putCharity();
     });
   }
 
