@@ -1,18 +1,24 @@
 import {inject} from 'aurelia-framework';
 import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
-//import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
-//import {FormValidator} from '../classes/FormValidator';
-//import {VolOpp} from '../classes/VolOpp';
-//@inject(App, ValidationControllerFactory, Validator)
-@inject(App)
+import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
+import {FormValidator} from '../classes/FormValidator';
+@inject(App, ValidationControllerFactory, Validator)
+//@inject(App)
 export class VolunteerOpps {
-//constructor(app, controllerFactory, validator){
-  constructor(app){
+  controller = null;
+  validator = null;
+  constructor(app, controllerFactory, validator){
+  //constructor(app){
     this.app = app;
     this.selectedTalents = [];
     this.selectedWorks = [];
     this.newEvent = true;
+    this.validator2 = new FormValidator(validator, (results) => this.updateCanSubmit2(results));
+    this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
+    this.controller2.validateTrigger = validateTrigger.changeOrBlur;
+    this.canSubmit2 = false;
+    //this.validType2 = false;
   }
   //
   async activate(){
@@ -59,6 +65,7 @@ export class VolunteerOpps {
     this.talents.push('other');
     this.works.sort();
     this.works.push('other');
+    this.setupValidation2();
   }
 
   async findCharityName(){
@@ -206,13 +213,6 @@ export class VolunteerOpps {
     })
     .then((response) => response.json())
     .then((data) => {
-      // let updateDiv = document.getElementById('updateCharitySection');
-      // if (updateDiv !== null){
-      //   updateDiv.style.display = 'none';
-      // }
-      // this.updateCharity = {};
-      // document.getElementById('charityDash').scrollIntoView();
-      // this.activate();
       this.showNewEvent();
     });
   }
@@ -228,10 +228,37 @@ export class VolunteerOpps {
     });
   }
 
-  // attached(){
-  //   //
-  //   this.showNewEvent();
-  // //  }
-  // }
+  updateCanSubmit2(validationResults) {
+    let valid = true;
+    console.log('Running updateCanSubmit2');
+    let nub = document.getElementsByClassName('updateButton')[0];
+    if (nub) {
+      for (let result of validationResults) {
+        if (result.valid === false){
+          nub.style.display = 'none';
+          valid = false;
+          break;
+        }
+      }
+      this.canSubmit2 = valid;
+      if (this.canSubmit2){
+        nub.style.display = 'block';
+      }
+      return this.canSubmit2;
+    }
+  }
+
+  validate2() {
+    return this.validator2.validateObject(this.voOpp);
+  }
+
+  setupValidation2() {
+    ValidationRules
+    .ensure('voContactPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digit phone number')
+    .ensure('voContactEmail').email()
+    .ensure('voName').required().maxLength(40).withMessage('Name of Event please')
+    .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')// TODO should be a postive whole number greater than 0
+    .on(this.voOpp);
+  }
 
 }
