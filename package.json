@@ -80,6 +80,7 @@
     "jquery": "3.2.1",
     "json-loader": "^0.5.4",
     "materialize-css": "^0.100.1",
+    "md-date-time-picker": "^2.3.0",
     "nps": "^5.6.0",
     "nps-utils": "^1.2.0",
     "polymer-bundler": "^2.0.1",

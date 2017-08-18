@@ -3,6 +3,7 @@ import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
+const MdDateTimePicker = require('md-date-time-picker');
 @inject(App, ValidationControllerFactory, Validator)
 //@inject(App)
 export class VolunteerOpps {
@@ -65,7 +66,13 @@ export class VolunteerOpps {
     this.talents.push('other');
     this.works.sort();
     this.works.push('other');
+    this.dialog = new MdDateTimePicker.default({type: 'time'});
+    console.log(this.dialog);
     this.setupValidation2();
+  }
+
+  showTime(){
+    this.dialog.toggle();
   }
 
   async findCharityName(){
