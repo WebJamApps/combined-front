@@ -1,5 +1,6 @@
 System.import('isomorphic-fetch');
 System.import('whatwg-fetch');
+//System.import('materialize-css/dist/css/materialize.min.css');
 import {PLATFORM} from 'aurelia-pal';
 import {inject, bindable} from 'aurelia-framework';
 import {AuthorizeStep} from 'aurelia-auth';
