@@ -186,7 +186,10 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
 //   template: 'bower_components/polymer/polymer-micro.html'
 // }),
     new CopyWebpackPlugin([
-  { from: 'bower_components/webcomponentsjs/webcomponents.min.js', to: 'webcomponents.min.js' }
+  { from: 'bower_components/webcomponentsjs/webcomponents.min.js', to: 'webcomponents.min.js' },
+  { from: 'node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js', to: 'mdDateTimePicker.min.js' },
+  { from: 'node_modules/md-date-time-picker/dist/js/draggabilly.pkgd.min.js', to: 'draggabilly.pkgd.min.js' },
+  { from: 'node_modules/md-date-time-picker/dist/js/moment.min.js', to: 'moment.min.js' }
     ]),
     ...when(extractCss, new ExtractTextPlugin({
       filename: production ? '[contenthash].css' : '[id].css',

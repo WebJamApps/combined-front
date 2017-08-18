@@ -111,6 +111,10 @@
           <input md-datepicker="container.bind: dpWrapper" value.two-way="voOpp.voEndDate" type="date" placeholder="Select Date" />
         </div>
         <label style="margin-top:16px; font-size:14pt">Start Time (required)</label>
+        <p>&nbsp;</p>
+        <input id="s-time" value.two-way="voOpp.voStartTime" placeholder="Select Time" change.delegate="showTime('s-time')"/>
+      <button id="id-of-button-to-open-it" raised class="updateButton" click.trigger="showTime()">Time</button>
+      <p>&nbsp;</p>
         <paper-time-picker id="start-time" force-narrow="true" time="8:00" ></paper-time-picker>
         <label style="margin-top:10px; font-size:14pt">End Time (required)</label>
         <paper-time-picker id="end-time" force-narrow="true" time="17:00" ></paper-time-picker>
