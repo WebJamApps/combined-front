@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title><%- htmlWebpackPlugin.options.metadata.title %></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
+<head>
+  <meta charset="utf-8">
+  <title><%- htmlWebpackPlugin.options.metadata.title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
 
-     <script src="webcomponents.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+  <script src="webcomponents.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
 
-     <link href="//fonts.googleapis.com/css?family=PT Sans Caption" rel="stylesheet">
-<link href="//fonts.googleapis.com/css?family=Habibi" rel="stylesheet">
-<!-- <link rel="import" href="polymer.html"> -->
-<link rel="import" href="includes.html">
+  <link href="//fonts.googleapis.com/css?family=PT Sans Caption" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Habibi" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="import" href="includes.html">
 
-    <!-- imported CSS are concatenated and added automatically -->
-  </head>
-  <body aurelia-app="main">
-    <div class="splash">
-      <div class="message"><%- htmlWebpackPlugin.options.metadata.title %></div>
-      <i class="fa fa-spinner fa-spin"></i>
-    </div>
-    <% if (htmlWebpackPlugin.options.metadata.server) { %>
+  <!-- imported CSS are concatenated and added automatically -->
+</head>
+<body aurelia-app="main">
+  <div class="splash">
+    <div class="message"><%- htmlWebpackPlugin.options.metadata.title %></div>
+    <i class="fa fa-spinner fa-spin"></i>
+  </div>
+  <% if (htmlWebpackPlugin.options.metadata.server) { %>
     <!-- Webpack Dev Server reload -->
     <script src="/webpack-dev-server.js"></script>
     <% } %>
   </body>
-</html>
+  </html>

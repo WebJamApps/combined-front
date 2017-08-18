@@ -3,8 +3,10 @@
 import config from './authConfig';
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'materialize-css/dist/css/materialize.min.css';
 import '../static/styles.css';
 import * as Bluebird from 'bluebird';
+import 'materialize-css';
 import 'babel-polyfill';
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });
@@ -12,15 +14,12 @@ Bluebird.config({ warnings: { wForgottenReturn: false } });
 export async function configure(aurelia) {
   aurelia.use
   .standardConfiguration()
-  .developmentLogging();
-  aurelia.use.plugin(PLATFORM.moduleName('au-table'));
-  //aurelia.use.plugin(PLATFORM.moduleName('aurelia-view-manager'));
-  //aurelia.use.plugin(PLATFORM.moduleName('aurelia-config'));
-  aurelia.use.plugin(PLATFORM.moduleName('aurelia-validation'));
-  //aurelia.use.plugin(PLATFORM.moduleName('aurelia-form'));
-  //aurelia.use.plugin(PLATFORM.moduleName('aurelia-form-validation'));
-  aurelia.use.plugin(PLATFORM.moduleName('aurelia-polymer'));
-  aurelia.use.plugin(PLATFORM.moduleName('aurelia-auth'), (baseConfig) => {
+  .developmentLogging()
+  .plugin(PLATFORM.moduleName('au-table'))
+  .plugin(PLATFORM.moduleName('aurelia-validation'))
+  .plugin(PLATFORM.moduleName('aurelia-materialize-bridge'), (b) => b.useAll())
+  .plugin(PLATFORM.moduleName('aurelia-polymer'))
+  .plugin(PLATFORM.moduleName('aurelia-auth'), (baseConfig) => {
     baseConfig.configure(config);
   });
 
