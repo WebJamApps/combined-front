@@ -32,6 +32,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     extensions: ['.js'],
     modules: [srcDir, 'node_modules']
   },
+  devtool: production ? 'source-map' : 'cheap-module-eval-source-map',
   entry: {
     app: ['aurelia-bootstrapper'],
     vendor: ['bluebird', 'jquery', 'bootstrap', 'whatwg-fetch', 'isomorphic-fetch']
@@ -48,7 +49,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     historyApiFallback: true,
     port: parseInt(process.env.PORT, 10)
   },
-  devtool: (process.env.NODE_ENV !== 'production') ? 'inline-source-map' : false,
+  //devtool: (process.env.NODE_ENV !== 'production') ? 'inline-source-map' : false,
   // server: {port: parseInt(process.env.PORT, 10)},
   module: {
     rules: [
