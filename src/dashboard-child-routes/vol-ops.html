@@ -1,4 +1,5 @@
 <template>
+  <!-- <require from="materialize-css/dist/css/materialize.min.css"></require> -->
   <div class="page-content">
     <div id="topSection">
       <h3 id="eventHeader" style="text-align:center">Events for ${charityName}</h3>
@@ -52,10 +53,20 @@
       <h4 if.bind="newEvent" class="material-header-h4" style="margin-top:40px"><strong>Schedule A New Event</strong></h4>
       <h4 if.bind="!newEvent" class="material-header-h4" style="margin-top:40px"><strong>Update the ${charityName} Event</strong></h4>
       <form>
+        <!-- <div class="row">
+    <div class="col s4" style="width:200px">
+      <select md-select value.two-way="selectedMeal">
+        <option>Select your meal</option>
+        <option repeat.for="meal of food" model.bind="meal">
+        name of meal
+        </option>
+      </select>
+    </div>
+  </div> -->
         <paper-input label="Event name (required)" value.two-way="voOpp.voName & validate:controller2"></paper-input>
         <label style="font-size:14pt; margin-top:12px">Describe your event</label>
         <textarea value.two-way="voOpp.voDescription" rows="5" cols="33"></textarea>
-        <!--TODO only allow entering positve whole numbers greater than 0 -->
+
         <paper-input type="number" change.delegate="onlyPositive()" style="margin-top:10px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded & validate:controller2"></paper-input>
         <div class="multiselect" style="width:170px; margin-top:10px">
           <div class="selectBox" click.delegate="showCheckboxes('talents')">
@@ -92,11 +103,15 @@
         </div>
         <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
         <label style="margin-top:16px; font-size:14pt">Start Date (required)</label>
-        <paper-date-picker id="start-date" force-narrow="true"></paper-date-picker>
+        <div ref="dpWrapper">
+          <input id="start-date" md-datepicker="container.bind: dpWrapper" value.two-way="voOpp.voStartDate" type="date" placeholder="Select Date" />
+        </div>
+        <label style="margin-top:10px; font-size:14pt">End Date (required)</label>
+        <div ref="dpWrapper">
+          <input md-datepicker="container.bind: dpWrapper" value.two-way="voOpp.voEndDate" type="date" placeholder="Select Date" />
+        </div>
         <label style="margin-top:16px; font-size:14pt">Start Time (required)</label>
         <paper-time-picker id="start-time" force-narrow="true" time="8:00" ></paper-time-picker>
-        <label style="margin-top:10px; font-size:14pt">End Date (required)</label>
-        <paper-date-picker id="end-date" force-narrow="true"></paper-date-picker>
         <label style="margin-top:10px; font-size:14pt">End Time (required)</label>
         <paper-time-picker id="end-time" force-narrow="true" time="17:00" ></paper-time-picker>
         <paper-input style="margin-top:0" label="Name of Coordinator (if not yourself)" value.two-way="voOpp.voContactName"></paper-input>

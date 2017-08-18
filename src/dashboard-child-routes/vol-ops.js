@@ -165,9 +165,9 @@ export class VolunteerOpps {
   }
 
   scheduleEvent(){
-    this.voOpp.voStartDate = document.getElementById('start-date').date;
+    //this.voOpp.voStartDate = document.getElementById('start-date').date;
     this.voOpp.voStartTime = document.getElementById('start-time').time;
-    this.voOpp.voEndDate = document.getElementById('end-date').date;
+    //this.voOpp.voEndDate = document.getElementById('end-date').date;
     this.voOpp.voEndTime = document.getElementById('end-time').time;
     this.voOpp.voCharityName = this.charityName;
     console.log(this.voOpp);
@@ -188,6 +188,11 @@ export class VolunteerOpps {
     this.newEvent = false;
     document.getElementById('topSection').style.display = 'none';
     this.voOpp = thisEvent;
+    // let startDate = document.getElementById('start-date');
+    // startDate.value = this.voOpp.voStartDate;
+    // console.log(startDate);
+    // console.log('this event to be updated');
+    // console.log(this.voOpp);
     this.talentPicked();
     this.workPicked();
     //document.getElementById('start-date').date = this.voOpp.voStartDate;
@@ -257,7 +262,7 @@ export class VolunteerOpps {
     .ensure('voContactPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digit phone number')
     .ensure('voContactEmail').email()
     .ensure('voName').required().maxLength(40).withMessage('Name of Event please')
-    .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')// TODO should be a postive whole number greater than 0
+    .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
     .on(this.voOpp);
   }
 
