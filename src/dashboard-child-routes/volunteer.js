@@ -10,6 +10,7 @@ export class Volunteer {
   async activate() {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
+    this.app.dashboardTitle = this.user.userType;
   }
 
   buildCauses(){

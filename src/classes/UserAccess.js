@@ -39,8 +39,8 @@ export class UserAccess {
 
 
         for (let i = 0; i < userRoles.length; i++) {
-          console.log(routingContext.params.childRoute);
-          console.log(userRoles[i].toLowerCase());
+          // console.log(routingContext.params.childRoute);
+          // console.log(userRoles[i].toLowerCase());
           // in this case the user is only in one role at a time.
           if (routingContext.params.childRoute === userRoles[i].toLowerCase()){
             //console.log('YAY! authorized.');

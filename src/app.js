@@ -12,6 +12,7 @@ export class App {
   constructor(auth, httpClient) {
     this.auth = auth;
     this.httpClient = httpClient;
+    this.dashboardTitle = 'Dashboard';
   }
 
   email = '';
@@ -33,6 +34,11 @@ export class App {
       this.authenticated = true; //Logout element is reliant upon a local var;
       let uid = this.auth.getTokenPayload().sub;
       this.user = await this.appState.getUser(uid);
+      if (this.user){
+        this.dashboardTitle = this.user.userType;
+      }
+      // console.log('this user');
+      // console.log(this.user);
     }
   }
 
