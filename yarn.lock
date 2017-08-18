@@ -461,21 +461,7 @@ aurelia-fetch-client@1.1.2, aurelia-fetch-client@^1.0.0, aurelia-fetch-client@^1
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/aurelia-fetch-client/-/aurelia-fetch-client-1.1.2.tgz#123a04d8677e15a8feca0553bc8486515a15dd2a"
 
-aurelia-framework@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/aurelia-framework/-/aurelia-framework-1.1.2.tgz#54483ac535a88a3d1f4bac9f0ac4abd8cb19d448"
-  dependencies:
-    aurelia-binding "^1.0.0"
-    aurelia-dependency-injection "^1.0.0"
-    aurelia-loader "^1.0.0"
-    aurelia-logging "^1.0.0"
-    aurelia-metadata "^1.0.0"
-    aurelia-pal "^1.0.0"
-    aurelia-path "^1.0.0"
-    aurelia-task-queue "^1.0.0"
-    aurelia-templating "^1.0.0"
-
-aurelia-framework@^1.0.0, aurelia-framework@^1.0.1:
+aurelia-framework@^1.0.0, aurelia-framework@^1.0.1, aurelia-framework@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/aurelia-framework/-/aurelia-framework-1.1.4.tgz#4dc630b1c48203167466e5df2878803ff41dff65"
   dependencies:
@@ -582,13 +568,7 @@ aurelia-path@^1.0.0, aurelia-path@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/aurelia-path/-/aurelia-path-1.1.1.tgz#caa9d20bc8515a5f9f286d9a3b18d81b2c85b0dd"
 
-aurelia-polyfills@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/aurelia-polyfills/-/aurelia-polyfills-1.2.1.tgz#c429385691f39cb0bf54862385995532d9725411"
-  dependencies:
-    aurelia-pal "^1.0.0"
-
-aurelia-polyfills@^1.0.0:
+aurelia-polyfills@^1.0.0, aurelia-polyfills@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/aurelia-polyfills/-/aurelia-polyfills-1.2.2.tgz#b8d0eb059e94f25be583e29af0aa50ab49f5c27d"
   dependencies:
@@ -723,7 +703,7 @@ autoprefixer@^6.0.0, autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-autoprefixer@^7.1.1:
+autoprefixer@^7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-7.1.2.tgz#fbeaf07d48fd878e0682bf7cbeeade728adb2b18"
   dependencies:
@@ -914,7 +894,7 @@ babel-helpers@^6.24.1:
     babel-runtime "^6.22.0"
     babel-template "^6.24.1"
 
-babel-loader@^7.0.0:
+babel-loader@^7.1.1:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-7.1.1.tgz#b87134c8b12e3e4c2a94e0546085bc680a2b8488"
   dependencies:
@@ -1194,7 +1174,7 @@ babel-polyfill@^6.23.0:
     core-js "^2.5.0"
     regenerator-runtime "^0.10.5"
 
-babel-preset-env@^1.5.2:
+babel-preset-env@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.6.0.tgz#2de1c782a780a0a5d605d199c957596da43c44e4"
   dependencies:
@@ -4213,7 +4193,7 @@ items@2.x.x:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/items/-/items-2.1.1.tgz#8bd16d9c83b19529de5aea321acaada78364a198"
 
-jasmine-core@^2.6.3, jasmine-core@~2.7.0:
+jasmine-core@^2.6.4, jasmine-core@~2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.7.0.tgz#50ff8c4f92d8ef5c0b2c1b846dd263ed85152091"
 
@@ -4371,7 +4351,7 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-karma-chrome-launcher@^2.1.1:
+karma-chrome-launcher@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/karma-chrome-launcher/-/karma-chrome-launcher-2.2.0.tgz#cf1b9d07136cc18fe239327d24654c3dbc368acf"
   dependencies:
@@ -4410,7 +4390,7 @@ karma-sourcemap-loader@^0.3.7:
   dependencies:
     graceful-fs "^4.1.2"
 
-karma-webpack@^2.0.3:
+karma-webpack@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/karma-webpack/-/karma-webpack-2.0.4.tgz#3e2d4f48ba94a878e1c66bb8e1ae6128987a175b"
   dependencies:
@@ -5047,7 +5027,7 @@ nps-utils@^1.2.0:
     opn-cli "^3.1.0"
     rimraf "^2.6.1"
 
-nps@^5.3.1:
+nps@^5.6.0:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/nps/-/nps-5.7.0.tgz#a2e8dd230068997fac078e94623968a2581cc852"
   dependencies:
@@ -5582,7 +5562,7 @@ postcss-load-plugins@^2.3.0:
     cosmiconfig "^2.1.1"
     object-assign "^4.1.0"
 
-postcss-loader@^2.0.5:
+postcss-loader@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/postcss-loader/-/postcss-loader-2.0.6.tgz#8c7e0055a3df1889abc6bad52dd45b2f41bbc6fc"
   dependencies:
@@ -7484,9 +7464,9 @@ upper-case@^1.1.1:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/upper-case/-/upper-case-1.1.3.tgz#f6b4501c2ec4cdd26ba78be7222961de77621598"
 
-url-loader@0.5.8:
-  version "0.5.8"
-  resolved "https://registry.yarnpkg.com/url-loader/-/url-loader-0.5.8.tgz#b9183b1801e0f847718673673040bc9dc1c715c5"
+url-loader@0.5.9:
+  version "0.5.9"
+  resolved "https://registry.yarnpkg.com/url-loader/-/url-loader-0.5.9.tgz#cc8fea82c7b906e7777019250869e569e995c295"
   dependencies:
     loader-utils "^1.0.2"
     mime "1.3.x"
