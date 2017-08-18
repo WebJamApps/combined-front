@@ -24,7 +24,7 @@ paper-item:hover {
           <paper-item if.bind="authenticated" class="login" style="padding-left:10px">
             <a paper-drawer-toggle href="/dashboard" class="nav-link" click.delegate="close()">
               <span class="fa fa-tachometer"></span>
-              <span if.bind="fullmenu" class="nav-item">Dashboard</span>
+              <span if.bind="fullmenu" class="nav-item">${dashboardTitle}</span>
             </a>
           </paper-item>
           <paper-item if.bind="authenticated" class="login" style="padding-left:10px">

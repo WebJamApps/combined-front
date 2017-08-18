@@ -50,6 +50,7 @@ export class Reader {
     this.books = await res.json();
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
+    this.app.dashboardTitle = this.user.userType;
   }
 
   // configHttpClient(){

@@ -31,6 +31,7 @@ export class Charity {
     this.states.sort();
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
+    this.app.dashboardTitle = this.user.userType;
     const res = await this.app.httpClient.fetch('/charity/' + this.uid);
     this.charities = await res.json();
     if (this.charities.length !== 0){
