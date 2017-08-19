@@ -64,9 +64,8 @@
     </div>
   </div> -->
         <paper-input label="Event name (required)" value.two-way="voOpp.voName & validate:controller2"></paper-input>
-        <label style="font-size:14pt; margin-top:12px">Describe your event</label>
+        <label style="font-size:12pt; margin-top:12px">Describe your event</label>
         <textarea value.two-way="voOpp.voDescription" rows="5" cols="33"></textarea>
-
         <paper-input type="number" change.delegate="onlyPositive()" style="margin-top:10px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded & validate:controller2"></paper-input>
         <div class="multiselect" style="width:170px; margin-top:10px">
           <div class="selectBox" click.delegate="showCheckboxes('talents')">
@@ -84,7 +83,6 @@
           </iron-dropdown>
         </div>
         <paper-input if.bind="talentOther" value.two-way="voOpp.voTalentTypeOther" label="Other talent" ></paper-input>
-
         <div class="multiselect" style="width:170px; margin-top:25px">
           <div class="selectBox" click.delegate="showCheckboxes('work')">
             <select>
@@ -92,7 +90,6 @@
             </select>
             <div class="overSelect"></div>
           </div>
-
           <iron-dropdown id="work" horizontal-align="right" vertical-align="top" style="margin-top:25px;margin-bottom:10px">
             <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
               <label repeat.for="work of works" for="${work}" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
@@ -102,23 +99,31 @@
           </iron-dropdown>
         </div>
         <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
-        <label style="margin-top:16px; font-size:14pt">Start Date (required)</label>
-        <div ref="dpWrapper">
+        <!-- <label style="margin-top:18px; font-size:12pt">Start Date (required)</label> -->
+        <p>&nbsp;</p>
+        <paper-input label="Start Date (required)" id="start-date" value.two-way="voOpp.voStartDate & validate:controller2" type="date" change.delegate="selectDate('start-date')"></paper-input>
+
+        <!-- <div ref="dpWrapper">
           <input id="start-date" md-datepicker="container.bind: dpWrapper; value.two-way: voOpp.voStartDate" type="date" placeholder="Select Date" />
-        </div>
-        <label style="margin-top:10px; font-size:14pt">End Date (required)</label>
-        <div ref="dpWrapper">
+        </div> -->
+        <!-- <label style="margin-top:10px; font-size:14pt">End Date (required)</label> -->
+        <!-- <div ref="dpWrapper">
           <input id="end-date" md-datepicker="container.bind: dpWrapper; value.two-way: voOpp.voEndDate" type="date" placeholder="Select Date" />
-        </div>
-        <label style="margin-top:16px; font-size:14pt">Start Time (required)</label>
+        </div> -->
+        <p>&nbsp;</p>
+        <paper-input label="End Date (required)" id="end-date" value.two-way="voOpp.voEndDate & validate:controller2" type="date" change.delegate="selectDate('end-date')"></paper-input>
+        <!-- <label style="margin-top:16px; font-size:14pt">Start Time (required)</label> -->
         <!-- <p>Format is <i>HH:MM AM</i></p> -->
-        <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" placeholder="HH:MM AM" click.delegate="showTime('s-time')">
+        <p>&nbsp;</p>
+        <paper-input label="Start Time (required)" id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="time" click.delegate="showTime('s-time')"></paper-input>
       <!-- <button id="id-of-button-to-open-it" raised class="updateButton" click.delegate="showTime()">Time</button>
       <p>&nbsp;</p> -->
         <!-- <paper-time-picker id="start-time" force-narrow="true" time="8:00" ></paper-time-picker> -->
-        <label style="margin-top:10px; font-size:14pt">End Time (required)</label>
-          <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" placeholder="HH:MM PM" click.delegate="showTime('e-time')">
+        <!-- <label style="margin-top:10px; font-size:14pt">End Time (required)</label> -->
+        <p>&nbsp;</p>
+          <paper-input label="End Time (required)" id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="time" click.delegate="showTime('e-time')"></paper-input>
         <!-- <paper-time-picker id="end-time" force-narrow="true" time="17:00" ></paper-time-picker> -->
+          <p>&nbsp;</p>
         <paper-input style="margin-top:0" label="Name of Coordinator (if not yourself)" value.two-way="voOpp.voContactName"></paper-input>
         <paper-input style="margin-top:0" label="Coordinator's Email (if not your email)" value.two-way="voOpp.voContactEmail & validate:controller2"></paper-input>
         <paper-input style="margin-top:0" label="Coordinator's Phone (not required)" value.two-way="voOpp.voContactPhone & validate:controller2"></paper-input>
@@ -130,8 +135,8 @@
           </ul>
         </div>
         <button if.bind="newEvent" id="scheduleEvent" class="updateButton" raised click.trigger="scheduleEvent()" style="display:none;margin-bottom:40px">Schedule</button>
-        <button if.bind="!newEvent" id="updateScheduleEvent" class="updateButton" raised click.trigger="updateEvent()" style="margin-bottom:40px">Update</button>
-        <button id="nevermind" class="updateButton" raised click.trigger="showNewEvent()" style="margin-bottom:40px">Nevermind</button>
+        <button if.bind="!newEvent" id="updateScheduleEvent" class="updateButton" raised click.trigger="updateEvent()" style="display:none;margin-bottom:40px">Update</button>
+        <button id="nevermind" class="nevermind" raised click.trigger="showNewEvent()" style="margin-bottom:40px">Nevermind</button>
       </form>
       <paper-material class="footer" elevation="4" style="padding:8px; background-color: #565656">
         <div class="paper-card-img">
