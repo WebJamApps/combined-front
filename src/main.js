@@ -4,7 +4,7 @@ import config from './authConfig';
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'materialize-css/dist/css/materialize.min.css';
-import 'md-date-time-picker/dist/css/mdDateTimePicker.min.css';
+//import 'md-date-time-picker/dist/css/mdDateTimePicker.min.css';
 import '../static/styles.css';
 import * as Bluebird from 'bluebird';
 import 'materialize-css';

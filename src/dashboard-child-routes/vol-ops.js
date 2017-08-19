@@ -3,8 +3,8 @@ import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
-const MdDateTimePicker = require('md-date-time-picker');
-const moment = require('moment');
+// const MdDateTimePicker = require('md-date-time-picker');
+// const moment = require('moment');
 @inject(App, ValidationControllerFactory, Validator)
 //@inject(App)
 export class VolunteerOpps {
@@ -67,15 +67,15 @@ export class VolunteerOpps {
     this.talents.push('other');
     this.works.sort();
     this.works.push('other');
-    this.dialog = new MdDateTimePicker.default({type: 'time'}, {init: new moment()});
-    console.log(this.dialog);
+    // this.dialog = new MdDateTimePicker.default({type: 'time'}, {init: new moment()});
+    // console.log(this.dialog);
     this.setupValidation2();
   }
 
   showTime(){
-    console.log('show time');
-    this.dialog.time = new moment();
-    this.dialog.toggle();
+    console.log('show time picker here');
+  //   this.dialog.time = new moment();
+  //   this.dialog.toggle();
   }
 
   async findCharityName(){
@@ -176,9 +176,9 @@ export class VolunteerOpps {
 
   scheduleEvent(){
     //this.voOpp.voStartDate = document.getElementById('start-date').date;
-    this.voOpp.voStartTime = document.getElementById('start-time').time;
+    //this.voOpp.voStartTime = document.getElementById('start-time').time;
     //this.voOpp.voEndDate = document.getElementById('end-date').date;
-    this.voOpp.voEndTime = document.getElementById('end-time').time;
+    //this.voOpp.voEndTime = document.getElementById('end-time').time;
     this.voOpp.voCharityName = this.charityName;
     console.log(this.voOpp);
     //this.newCharity.charityManagers[0] = this.user.name;
@@ -273,6 +273,10 @@ export class VolunteerOpps {
     .ensure('voContactEmail').email()
     .ensure('voName').required().maxLength(40).withMessage('Name of Event please')
     .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
+    .ensure('voStartTime').required()
+    .ensure('voEndTime').required()
+    // .ensure('voStartDate').required()
+    // .ensure('voEndDate').required()
     .on(this.voOpp);
   }
 
