@@ -108,16 +108,17 @@
         </div>
         <label style="margin-top:10px; font-size:14pt">End Date (required)</label>
         <div ref="dpWrapper">
-          <input md-datepicker="container.bind: dpWrapper" value.two-way="voOpp.voEndDate" type="date" placeholder="Select Date" />
+          <input id="end-date" md-datepicker="container.bind: dpWrapper" value.two-way="voOpp.voEndDate" type="date" placeholder="Select Date" />
         </div>
         <label style="margin-top:16px; font-size:14pt">Start Time (required)</label>
-        <p>&nbsp;</p>
-        <input id="s-time" value.two-way="voOpp.voStartTime" placeholder="Select Time" click.delegate="showTime()">
-      <button id="id-of-button-to-open-it" raised class="updateButton" click.delegate="showTime()">Time</button>
-      <p>&nbsp;</p>
-        <paper-time-picker id="start-time" force-narrow="true" time="8:00" ></paper-time-picker>
+        <!-- <p>Format is <i>HH:MM AM</i></p> -->
+        <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" placeholder="HH:MM AM" click.delegate="showTime('s-time')">
+      <!-- <button id="id-of-button-to-open-it" raised class="updateButton" click.delegate="showTime()">Time</button>
+      <p>&nbsp;</p> -->
+        <!-- <paper-time-picker id="start-time" force-narrow="true" time="8:00" ></paper-time-picker> -->
         <label style="margin-top:10px; font-size:14pt">End Time (required)</label>
-        <paper-time-picker id="end-time" force-narrow="true" time="17:00" ></paper-time-picker>
+          <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" placeholder="HH:MM PM" click.delegate="showTime('e-time')">
+        <!-- <paper-time-picker id="end-time" force-narrow="true" time="17:00" ></paper-time-picker> -->
         <paper-input style="margin-top:0" label="Name of Coordinator (if not yourself)" value.two-way="voOpp.voContactName"></paper-input>
         <paper-input style="margin-top:0" label="Coordinator's Email (if not your email)" value.two-way="voOpp.voContactEmail & validate:controller2"></paper-input>
         <paper-input style="margin-top:0" label="Coordinator's Phone (not required)" value.two-way="voOpp.voContactPhone & validate:controller2"></paper-input>
