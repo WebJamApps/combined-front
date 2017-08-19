@@ -24,6 +24,7 @@ export class VolunteerOpps {
   }
   //
   async activate(){
+    this.canSubmit2 = false;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     //console.log(this.app.router.currentInstruction.params.childRoute);
@@ -43,24 +44,6 @@ export class VolunteerOpps {
     } else {
       this.findCharityName();
     }
-    this.voOpp = {
-      'voName': '',
-      'voCharityId': this.charityID,
-      'voCharityName': this.charityName,
-      'voNumPeopleNeeded': 1,
-      'voDescription': '',
-      'voWorkTypes': [],
-      'voTalentTypes': [],
-      'voWorkTypeOther': '',
-      'voTalentTypeOther': '',
-      'voStartDate': null,
-      'voStartTime': '',
-      'voEndDate': null,
-      'voEndTime': '',
-      'voContactName': this.user.name,
-      'voContactEmail': this.user.email,
-      'voContactPhone': this.user.userPhone
-    };
     this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
     this.works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
     this.talents.sort();
@@ -69,11 +52,17 @@ export class VolunteerOpps {
     this.works.push('other');
     // this.dialog = new MdDateTimePicker.default({type: 'time'}, {init: new moment()});
     // console.log(this.dialog);
-    this.setupValidation2();
+    //this.setupValidation2();
   }
 
   showTime(){
     console.log('show time picker here');
+  //   this.dialog.time = new moment();
+  //   this.dialog.toggle();
+  }
+
+  selectDate(){
+    console.log('show date picker here');
   //   this.dialog.time = new moment();
   //   this.dialog.toggle();
   }
@@ -196,6 +185,7 @@ export class VolunteerOpps {
 
   showUpdateEvent(thisEvent){
     this.newEvent = false;
+    this.canSubmit2 = false;
     document.getElementById('topSection').style.display = 'none';
     this.voOpp = thisEvent;
     // let startDate = document.getElementById('start-date');
@@ -205,15 +195,39 @@ export class VolunteerOpps {
     // console.log(this.voOpp);
     this.talentPicked();
     this.workPicked();
+    this.setupValidation2();
+    this.controller2.errors = [];
+    //document.getElementById('updateScheduleEvent').style.display = 'none';
     //document.getElementById('start-date').date = this.voOpp.voStartDate;
   }
 
   showNewEvent(){
+    this.voOpp = {
+      'voName': '',
+      'voCharityId': this.charityID,
+      'voCharityName': this.charityName,
+      'voNumPeopleNeeded': 1,
+      'voDescription': '',
+      'voWorkTypes': [],
+      'voTalentTypes': [],
+      'voWorkTypeOther': '',
+      'voTalentTypeOther': '',
+      'voStartDate': null,
+      'voStartTime': '',
+      'voEndDate': null,
+      'voEndTime': '',
+      'voContactName': this.user.name,
+      'voContactEmail': this.user.email,
+      'voContactPhone': this.user.userPhone
+    };
     this.newEvent = true;
+    this.canSubmit2 = false;
     let topSection = document.getElementById('topSection');
     topSection.style.display = 'block';
     topSection.scrollIntoView();
-    this.activate();
+    //this.activate();
+    this.setupValidation2();
+    this.controller2.errors = [];
     //document.getElementById('eventHeader').scrollIntoView();
   }
 
@@ -275,8 +289,8 @@ export class VolunteerOpps {
     .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
     .ensure('voStartTime').required()
     .ensure('voEndTime').required()
-    // .ensure('voStartDate').required()
-    // .ensure('voEndDate').required()
+    .ensure('voStartDate').required()
+    .ensure('voEndDate').required()
     .on(this.voOpp);
   }
 
@@ -286,8 +300,8 @@ export class VolunteerOpps {
     }
   }
 
-  // setEndDate(){
-  //   console.log(document.getElementById('start-date').date);
-  // }
+  attached(){
+    this.showNewEvent();
+  }
 
 }
