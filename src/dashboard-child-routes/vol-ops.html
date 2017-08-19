@@ -104,11 +104,11 @@
         <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
         <label style="margin-top:16px; font-size:14pt">Start Date (required)</label>
         <div ref="dpWrapper">
-          <input id="start-date" md-datepicker="container.bind: dpWrapper" value.two-way="voOpp.voStartDate" type="date" placeholder="Select Date" />
+          <input id="start-date" md-datepicker="container.bind: dpWrapper; value.two-way: voOpp.voStartDate" type="date" placeholder="Select Date" />
         </div>
         <label style="margin-top:10px; font-size:14pt">End Date (required)</label>
         <div ref="dpWrapper">
-          <input id="end-date" md-datepicker="container.bind: dpWrapper" value.two-way="voOpp.voEndDate" type="date" placeholder="Select Date" />
+          <input id="end-date" md-datepicker="container.bind: dpWrapper; value.two-way: voOpp.voEndDate" type="date" placeholder="Select Date" />
         </div>
         <label style="margin-top:16px; font-size:14pt">Start Time (required)</label>
         <!-- <p>Format is <i>HH:MM AM</i></p> -->
