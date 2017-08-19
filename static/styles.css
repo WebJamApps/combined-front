@@ -12,16 +12,19 @@ h1,
 h2,
 h4 {
   font-family: 'PT Sans Caption';
+  font-size: 18px;
 }
 
 h3.au-target.header-text.ohaf-header {
   padding: 0;
   margin: 5px;
+  font-size: 24px;
 }
 
 h3 {
   font-family: 'PT Sans Caption';
   font-weight: bold;
+  font-size: 24px;
 }
 
 p,
@@ -51,6 +54,9 @@ h1 {
   margin: auto;
 }
 
+strong {
+  font-weight:700;
+}
 table {
   margin: auto;
 }
@@ -635,6 +641,7 @@ div.au-stagger {
 
 .header-text {
   color: white;
+  font-size: 24px;
 }
 
 .header-text-card {
