@@ -53,6 +53,11 @@ export class VolunteerOpps {
     // this.dialog = new MdDateTimePicker.default({type: 'time'}, {init: new moment()});
     // console.log(this.dialog);
     //this.setupValidation2();
+    // $( document ).ready(function() {
+    //   $('input[type=time]').change(function() {
+    //     $(this).val($(this).val().replace(/(:\d\d:)(\d\d)$/, '\$100'));
+    //   });
+    // });
   }
 
   showTime(){
