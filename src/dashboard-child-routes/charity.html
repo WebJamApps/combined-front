@@ -9,7 +9,7 @@
         </div>
         <div if.bind="charities.length !== 0">
           <p>The <strong>Remove</strong> button is used to remove yourself as being the manager of a particular charity, and only displays if there is more than one manager.</p>
-          <p>The <strong>Delete</strong> button only displays if you are the only manager of a charity.</p>
+          <p>The <strong>Delete</strong> button only displays if you are the only manager of a charity and you do not have any events scheduled.</p>
           <div class="search-table-outer" style="position:relative;overflow-x:auto;">
             <table aurelia-table="data.bind: charities; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
               <thead>
@@ -27,7 +27,7 @@
               <tbody>
                 <tr repeat.for="charity of $displayData">
                   <td style="padding:8px; text-align:center">
-                    <button if.bind="charity.charityMngIds.length < 2" class="button-checkout" raised click.delegate="deleteCharity(charity._id)" style="margin-bottom:10px">
+                    <button if.bind="charity.charityMngIds.length < 2 && !charity.hasEvents" class="button-checkout" raised click.delegate="deleteCharity(charity._id)" style="margin-bottom:10px">
                       Delete
                     </button>
                     <button if.bind="charity.charityMngIds.length > 1" class="button-checkout" raised click.delegate="removeManager(charity)" style="margin-bottom:10px; background-color:darkorange; color:black">

@@ -253,7 +253,7 @@ export class VolunteerOpps {
     })
     .then((data) => {
       console.log('your event has been deleted');
-      this.showNewEvent();
+      this.activate();
     });
   }
 

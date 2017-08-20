@@ -37,6 +37,19 @@ export class Charity {
     if (this.charities.length !== 0){
       this.buildTypes();
       this.buildManagers();
+      this.checkEvents();
+    }
+  }
+
+  async checkEvents(){
+    for (let i = 0; i < this.charities.length; i++){
+      let foundEvents = [];
+      this.charities[i].hasEvents = false;
+      let res = await this.app.httpClient.fetch('/volopp/' + this.charities[i]._id);
+      foundEvents = await res.json();
+      if (foundEvents.length > 0){
+        this.charities[i].hasEvents = true;
+      }
     }
   }
 
