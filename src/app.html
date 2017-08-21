@@ -13,7 +13,7 @@ paper-item:hover {
         <div class="nav-list">
           <p if.bind="fullmenu" style="font-size:1px">&nbsp;</p>
           <paper-item if.bind="widescreen">
-            <i class="fa fa-bars pull-left fa-1x" click.delegate="toggleMenu()" style="color:#0275d8; cursor: pointer; cursor: hand;"></i>
+            <i class="fa fa-bars pull-left fa-1x" click.delegate="toggleMenu()" style="color:#23527c; cursor: pointer; cursor: hand;"></i>
           </paper-item>
           <paper-item if.bind="!authenticated" class="login" style="padding-left:10px">
             <a paper-drawer-toggle href="/login" class="nav-link" click.delegate="close()">
@@ -141,10 +141,10 @@ paper-item:hover {
       <paper-card alt="Web Jam" image="${currentStyles.headerImagePath}"
       class="${currentStyles.headerImageClass} ${currentStyles.headerClass}"></paper-card>
       <paper-card class="${currentStyles.headerClass} header-text-card" style="bottom:30px">
-        <h3 if.bind="currentRoute !== 'ohaf'" class="header-text ${currentStyles.headerClass}">
+        <h3 if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf'" class="header-text ${currentStyles.headerClass}">
           ${currentStyles.headerText1}
         </h3>
-        <h3 if.bind="currentRoute == 'ohaf'" class="header-text ${currentStyles.headerClass}">
+        <h3 if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf'" class="header-text ${currentStyles.headerClass}">
           ${currentStyles.headerText1}
           <br>${currentStyles.headerText2}
           <br>${currentStyles.headerText3}

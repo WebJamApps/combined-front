@@ -84,13 +84,13 @@ describe('the App module', () => {
     done();
   });
 
-  it('gets the current styles with ohaf route', (done) => {
-    let routre = new RouterStub();
-    routre.currentInstruction.config.name = 'ohaf';
-    app1.router = routre;
-    app1.currentStyles;
-    done();
-  });
+  // it('gets the current styles with ohaf route', (done) => {
+  //   let routre = new RouterStub();
+  //   routre.currentInstruction.config.name = 'ohaf';
+  //   app1.router = routre;
+  //   app1.currentStyles;
+  //   done();
+  // });
 
   it('gets the current styles with library route', (done) => {
     let routre = new RouterStub();
@@ -124,21 +124,21 @@ describe('the App module', () => {
     done();
   });
 
-  it('gets the current styles dashboard/volunteer route', (done) => {
-    let routre = new RouterStub();
-    routre.currentInstruction.fragment = '/dashboard/volunteer';
-    app1.router = routre;
-    app1.currentStyles;
-    done();
-  });
+  // it('gets the current styles dashboard/volunteer route', (done) => {
+  //   let routre = new RouterStub();
+  //   routre.currentInstruction.fragment = '/dashboard/volunteer';
+  //   app1.router = routre;
+  //   app1.currentStyles;
+  //   done();
+  // });
 
-  it('gets the current styles with dashboard/charity route', (done) => {
-    let routre = new RouterStub();
-    routre.currentInstruction.fragment = '/dashboard/charity';
-    app1.router = routre;
-    app1.currentStyles;
-    done();
-  });
+  // it('gets the current styles with dashboard/charity route', (done) => {
+  //   let routre = new RouterStub();
+  //   routre.currentInstruction.fragment = '/dashboard/charity';
+  //   app1.router = routre;
+  //   app1.currentStyles;
+  //   done();
+  // });
 
   it('gets the current styles with dashboard/reader route', (done) => {
     let routre = new RouterStub();
