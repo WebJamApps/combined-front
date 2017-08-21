@@ -133,7 +133,39 @@ export class App {
 
   get currentStyles() {
     let result = {};
+    let footer;
     if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') {
+      this.Menu = 'ohaf';
+    } else if (this.currentRoute === 'music-router') {
+      this.Menu = 'music';
+    } else if (this.currentRoute === 'library') {
+      this.Menu = 'library';
+    } else if (this.currentRouteFrag === '/dashboard'){
+      this.Menu = 'dashboard';
+    } else if (this.currentRouteFrag === '/bookshelf'){
+      this.Menu = 'bookshelf';
+    } else if (this.currentRouteFrag === '/dashboard/developer'){
+      this.Menu = 'developer';
+    } else if (this.currentRouteFrag === '/dashboard/reader'){
+      this.Menu = 'reader';
+    } else if (this.currentRouteFrag === '/dashboard/librarian'){
+      this.Menu = 'librarian';
+    } else if (this.currentRouteFrag === '/dashboard/charity'){
+      this.Menu = 'charity';
+    } else if (this.currentRouteFrag === '/dashboard/volunteer'){
+      this.Menu = 'volunteer';
+    } else if (this.currentRouteFrag === '/dashboard/user-account'){
+      this.Menu = 'user-account';
+    } else if (this.currentRouteFrag !== undefined){
+      if (this.currentRouteFrag.indexOf('vol-ops/') !== -1){
+        this.Menu = 'charity';
+      } else {
+        this.Menu = 'wj';
+      }
+    } else {
+      this.Menu = 'wj';
+    }
+    if (this.Menu === 'charity' || this.Menu === 'ohaf' || this.Menu === 'volunteer'){
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',
         headerText1: 'Our',
@@ -144,7 +176,17 @@ export class App {
         sidebarClass: 'ohaf-sidebar',
         menuToggleClass: 'ohaf-menu-toggle'
       };
-      this.Menu = 'ohaf';
+      result.sidebarImagePath = '../static/imgs/ohaf/butterfly.png';
+      footer = document.getElementById('ohaf-footer');
+      footer.innerHTML = '<div class="paper-card-img">' +
+      '<a style="margin-left:10px;padding-right:10px; color:#c09580" target="_blank" href="https://www.facebook.com/Our-Hands-and-Feet-350610878635036/">' +
+      '<i class="ohaf-social-media fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>' +
+      '<a style="padding-right:10px; color:#c09580" target="_blank" href="https://plus.google.com/u/0/109018742744548655017">' +
+      '<i class="ohaf-social-media fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>' +
+      '<a style="padding-right:10px; color:#c09580" target="_blank" href="https://twitter.com/OurHandsAndFee1">' +
+      '<i class="ohaf-social-media fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>' +
+      '<span style="color:white; font-size: 9pt;margin:auto">Powered by' +
+      '<a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
     } else {
       result = {
         headerImagePath: '../static/imgs/webjamicon7.png',
@@ -154,39 +196,8 @@ export class App {
         sidebarClass: 'home-sidebar',
         menuToggleClass: 'home-menu-toggle'
       };
-      //console.log('currentRouteFrag');
-      //console.log(this.currentRouteFrag);
-      if (this.currentRoute === 'music-router') {
-        this.Menu = 'music';
-      } else if (this.currentRoute === 'library') {
-        this.Menu = 'library';
-      } else if (this.currentRouteFrag === '/dashboard'){
-        this.Menu = 'dashboard';
-      } else if (this.currentRouteFrag === '/bookshelf'){
-        this.Menu = 'bookshelf';
-      } else if (this.currentRouteFrag === '/dashboard/developer'){
-        this.Menu = 'developer';
-      } else if (this.currentRouteFrag === '/dashboard/reader'){
-        this.Menu = 'reader';
-      } else if (this.currentRouteFrag === '/dashboard/librarian'){
-        this.Menu = 'librarian';
-      } else if (this.currentRouteFrag === '/dashboard/charity'){
-        this.Menu = 'charity';
-      } else if (this.currentRouteFrag === '/dashboard/volunteer'){
-        this.Menu = 'volunteer';
-      } else if (this.currentRouteFrag === '/dashboard/user-account'){
-        this.Menu = 'user-account';
-      } else if (this.currentRouteFrag !== undefined){
-        if (this.currentRouteFrag.indexOf('vol-ops/') !== -1){
-          this.Menu = 'charity';
-        } else {
-          this.Menu = 'wj';
-        }
-      } else {
-        this.Menu = 'wj';
-      }
+      result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
     }
-    result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
     return result;
   }
 }

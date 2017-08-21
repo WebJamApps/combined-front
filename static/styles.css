@@ -652,7 +652,7 @@ div.au-stagger {
 }
 
 .ohaf-sidebar {
-  background-color: #2a222a;
+  background-color: #c09580;
 }
 .ohaf-header {
   background-color: #565656;
@@ -714,7 +714,7 @@ min-height: 30px;
 
 .nav-link {
   display: block !important;
-  color: #0275d8;
+  color: #23527c;
 }
 
 .nav-item {
@@ -844,4 +844,14 @@ div#drawer.style-scope.paper-drawer-panel.iron-selected {
 .newUserForm {
   margin-left: 0.5cm;
   width: 180px;
+}
+
+.ohaf-social-media:hover {
+  color: white;
+}
+.wjllc {
+color:white; font-size:9pt; font-weight: bold;
+}
+.wjllc:hover {
+  color: black;
 }
