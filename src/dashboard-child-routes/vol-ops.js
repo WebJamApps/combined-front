@@ -50,6 +50,10 @@ export class VolunteerOpps {
     this.talents.push('other');
     this.works.sort();
     this.works.push('other');
+    this.today = new Date().toISOString().split('T')[0];
+    this.minEndDate = this.today;
+    console.log('today is ' + this.today);
+//document.getElementsByName("somedate")[0].setAttribute('min', today);
     // this.dialog = new MdDateTimePicker.default({type: 'time'}, {init: new moment()});
     // console.log(this.dialog);
     //this.setupValidation2();
@@ -66,8 +70,15 @@ export class VolunteerOpps {
   //   this.dialog.toggle();
   }
 
-  selectDate(){
+  selectDate(dtype){
     console.log('show date picker here');
+    if (dtype === 'start-date'){
+      console.log(dtype);
+      console.log(this.voOpp.voStartDate);
+    } else {
+      console.log(dtype);
+      console.log(this.voOpp.voEndDate);
+    }
   //   this.dialog.time = new moment();
   //   this.dialog.toggle();
   }
