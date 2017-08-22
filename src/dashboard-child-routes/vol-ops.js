@@ -315,8 +315,8 @@ export class VolunteerOpps {
     .ensure('voContactEmail').email()
     .ensure('voName').required().maxLength(40).withMessage('Name of Event please')
     .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
-    .ensure('voStartTime').required()
-    .ensure('voEndTime').required()
+    .ensure('voStartTime').required().matches(/\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([ap][m]))/)
+    .ensure('voEndTime').required().matches(/\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([ap][m]))/)
     .ensure('voStartDate').required()
     .ensure('voEndDate').required()
     .on(this.voOpp);
