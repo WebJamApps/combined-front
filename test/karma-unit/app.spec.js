@@ -84,13 +84,14 @@ describe('the App module', () => {
     done();
   });
 
-  // it('gets the current styles with ohaf route', (done) => {
-  //   let routre = new RouterStub();
-  //   routre.currentInstruction.config.name = 'ohaf';
-  //   app1.router = routre;
-  //   app1.currentStyles;
-  //   done();
-  // });
+  it('gets the current styles with ohaf route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.config.name = 'ohaf';
+    document.body.innerHTML = '<paper-material id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></paper-material>';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
 
   it('gets the current styles with library route', (done) => {
     let routre = new RouterStub();
@@ -124,21 +125,23 @@ describe('the App module', () => {
     done();
   });
 
-  // it('gets the current styles dashboard/volunteer route', (done) => {
-  //   let routre = new RouterStub();
-  //   routre.currentInstruction.fragment = '/dashboard/volunteer';
-  //   app1.router = routre;
-  //   app1.currentStyles;
-  //   done();
-  // });
+  it('gets the current styles dashboard/volunteer route', (done) => {
+    let routre = new RouterStub();
+    document.body.innerHTML = '<paper-material id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></paper-material>';
+    routre.currentInstruction.fragment = '/dashboard/volunteer';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
 
-  // it('gets the current styles with dashboard/charity route', (done) => {
-  //   let routre = new RouterStub();
-  //   routre.currentInstruction.fragment = '/dashboard/charity';
-  //   app1.router = routre;
-  //   app1.currentStyles;
-  //   done();
-  // });
+  it('gets the current styles with dashboard/charity route', (done) => {
+    document.body.innerHTML = '<paper-material id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></paper-material>';
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/charity';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
 
   it('gets the current styles with dashboard/reader route', (done) => {
     let routre = new RouterStub();
@@ -171,13 +174,29 @@ describe('the App module', () => {
     done();
   });
 
-  // it('gets the current styles when route is null', (done) => {
-  //   let routre = new RouterStub();
-  //   routre.currentInstruction.config.name = '';
-  //   app1.router = routre;
-  //   app1.currentStyles;
-  //   done();
-  // });
+  it('gets the current styles when route is sc2rs', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/sc2rs';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('leaves the styles set to wj if undefined route frag', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = undefined;
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
+
+  it('it sets the style to be charity for vol-ops', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/vol-ops/12434';
+    app1.router = routre;
+    app1.currentStyles;
+    done();
+  });
 
   it('closes the menu on cellphone display', (done) => {
     //console.log(app1);

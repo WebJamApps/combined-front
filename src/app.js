@@ -35,11 +35,11 @@ export class App {
       this.authenticated = true; //Logout element is reliant upon a local var;
       let uid = this.auth.getTokenPayload().sub;
       this.user = await this.appState.getUser(uid);
-      if (this.user){
-        this.dashboardTitle = this.user.userType;
-      }
       // console.log('this user');
       // console.log(this.user);
+      // if (this.user){
+      //   this.dashboardTitle = this.user.userType;
+      // }
     }
   }
 
@@ -134,6 +134,7 @@ export class App {
   get currentStyles() {
     let result = {};
     let footer;
+    this.Menu = 'wj';
     if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') {
       this.Menu = 'ohaf';
     } else if (this.currentRoute === 'music-router') {
@@ -159,11 +160,11 @@ export class App {
     } else if (this.currentRouteFrag !== undefined){
       if (this.currentRouteFrag.indexOf('vol-ops/') !== -1){
         this.Menu = 'charity';
-      } else {
-        this.Menu = 'wj';
+        // } else {
+        //   this.Menu = 'wj';
       }
-    } else {
-      this.Menu = 'wj';
+      // } else {
+      //   this.Menu = 'wj';
     }
     if (this.Menu === 'charity' || this.Menu === 'ohaf' || this.Menu === 'volunteer'){
       result = {
