@@ -76,6 +76,7 @@
     "font-awesome": "4.7.0",
     "global": "^4.3.2",
     "html-webpack-plugin": "^2.29.0",
+    "inputmask": "^3.3.7",
     "isomorphic-fetch": "2.2.1",
     "jquery": "3.2.1",
     "json-loader": "^0.5.4",

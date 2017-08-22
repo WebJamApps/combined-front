@@ -9,6 +9,7 @@ import '../static/styles.css';
 import * as Bluebird from 'bluebird';
 import 'materialize-css';
 import 'babel-polyfill';
+import 'inputmask';
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });
 
