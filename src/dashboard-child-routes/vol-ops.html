@@ -101,7 +101,7 @@
 <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
 <!-- <label style="margin-top:18px; font-size:12pt">Start Date (required)</label> -->
 <p>&nbsp;</p>
-<paper-input label="Start Date (required)" id="start-date" value.two-way="voOpp.voStartDate & validate:controller2" type="date" change.delegate="selectDate('start-date')"></paper-input>
+<paper-input label="Start Date (required)" id="start-date" value.two-way="voOpp.voStartDate & validate:controller2" type="date" min="${today}" change.delegate="selectDate('start-date')"></paper-input>
 
 <!-- <div ref="dpWrapper">
 <input id="start-date" md-datepicker="container.bind: dpWrapper; value.two-way: voOpp.voStartDate" type="date" placeholder="Select Date" />
@@ -111,7 +111,7 @@
 <input id="end-date" md-datepicker="container.bind: dpWrapper; value.two-way: voOpp.voEndDate" type="date" placeholder="Select Date" />
 </div> -->
 <p>&nbsp;</p>
-<paper-input label="End Date (required)" id="end-date" value.two-way="voOpp.voEndDate & validate:controller2" type="date" change.delegate="selectDate('end-date')"></paper-input>
+<paper-input label="End Date (required)" id="end-date" value.two-way="voOpp.voEndDate & validate:controller2" type="date" min="${minEndDate}" change.delegate="selectDate('end-date')"></paper-input>
 <!-- <label style="margin-top:16px; font-size:14pt">Start Time (required)</label> -->
 <!-- <p>Format is <i>HH:MM AM</i></p> -->
 <p>&nbsp;</p>

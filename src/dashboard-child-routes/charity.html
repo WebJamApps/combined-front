@@ -74,7 +74,7 @@
             <paper-input style="margin-top:20px" label="Charity name (required)" value.two-way="updateCharity.charityName & validate:controller2"></paper-input>
             <paper-input style="margin-top:20px" label="City (required)" value.two-way="updateCharity.charityCity & validate:controller2"></paper-input>
             <select id="updateState" class="form-control" value.bind="updateCharity.charityState & validate:controller2" style="margin-top:30px;width: 2.35in">
-              <option value="">State</option>
+              <option value="">State (required)</option>
               <option repeat.for="state of states" model.bind="state">${state}</option>
             </select>
             <paper-input style="margin-top:20px" type="number" label="Zip Code (required)" value.two-way="updateCharity.charityZipCode & validate:controller2"></paper-input>
