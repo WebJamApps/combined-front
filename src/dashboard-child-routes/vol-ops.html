@@ -101,7 +101,7 @@
 <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
 <!-- <label style="margin-top:18px; font-size:12pt">Start Date (required)</label> -->
 <p>&nbsp;</p>
-<paper-input label="Start Date (required)" id="start-date" value.two-way="voOpp.voStartDate & validate:controller2" type="date" min="${today}" change.delegate="selectDate('start-date')"></paper-input>
+<paper-input label="Start Date (required)" id="start-date" value.two-way="voOpp.voStartDate & validate:controller2" type="date" min="${today}" max="${maxStartDate}" change.delegate="selectDate('start-date')"></paper-input>
 
 <!-- <div ref="dpWrapper">
 <input id="start-date" md-datepicker="container.bind: dpWrapper; value.two-way: voOpp.voStartDate" type="date" placeholder="Select Date" />
