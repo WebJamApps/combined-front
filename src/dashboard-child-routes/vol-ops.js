@@ -52,6 +52,7 @@ export class VolunteerOpps {
     this.works.push('other');
     this.today = new Date().toISOString().split('T')[0];
     this.minEndDate = this.today;
+    this.maxStartDate = '';
     console.log('today is ' + this.today);
 //document.getElementsByName("somedate")[0].setAttribute('min', today);
     // this.dialog = new MdDateTimePicker.default({type: 'time'}, {init: new moment()});
@@ -75,9 +76,11 @@ export class VolunteerOpps {
     if (dtype === 'start-date'){
       console.log(dtype);
       console.log(this.voOpp.voStartDate);
+      this.minEndDate = this.voOpp.voStartDate;
     } else {
       console.log(dtype);
       console.log(this.voOpp.voEndDate);
+      this.maxStartDate = this.voOpp.voEndDate;
     }
   //   this.dialog.time = new moment();
   //   this.dialog.toggle();
