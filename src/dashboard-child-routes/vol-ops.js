@@ -3,6 +3,7 @@ import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
+const Inputmask = require('inputmask');
 // const MdDateTimePicker = require('md-date-time-picker');
 // const moment = require('moment');
 @inject(App, ValidationControllerFactory, Validator)
@@ -54,6 +55,7 @@ export class VolunteerOpps {
     this.minEndDate = this.today;
     this.maxStartDate = '';
     console.log('today is ' + this.today);
+
 //document.getElementsByName("somedate")[0].setAttribute('min', today);
     // this.dialog = new MdDateTimePicker.default({type: 'time'}, {init: new moment()});
     // console.log(this.dialog);
@@ -247,6 +249,13 @@ export class VolunteerOpps {
     //this.activate();
     this.setupValidation2();
     this.controller2.errors = [];
+    let startTimeInput = document.getElementById('s-time');
+    let endTimeInput = document.getElementById('e-time');
+    // console.log('the start time input is ');
+    // console.log(startTimeInput);
+    let imst = new Inputmask('99:99 am');
+    imst.mask(startTimeInput);
+    imst.mask(endTimeInput);
     //document.getElementById('eventHeader').scrollIntoView();
   }
 

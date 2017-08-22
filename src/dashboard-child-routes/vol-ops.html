@@ -64,7 +64,7 @@
   </div>
 </div> -->
 <paper-input label="Event name (required)" value.two-way="voOpp.voName & validate:controller2"></paper-input>
-<label style="font-size:12pt; margin-top:12px">Describe your event</label>
+<label style="font-size:11pt; margin-top:12px">Describe your event</label>
 <textarea value.two-way="voOpp.voDescription" rows="5" cols="33"></textarea>
 <paper-input type="number" change.delegate="onlyPositive()" style="margin-top:10px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded & validate:controller2"></paper-input>
 <div class="multiselect" style="width:170px; margin-top:10px">
@@ -112,16 +112,16 @@
 </div> -->
 <p>&nbsp;</p>
 <paper-input label="End Date (required)" id="end-date" value.two-way="voOpp.voEndDate & validate:controller2" type="date" min="${minEndDate}" change.delegate="selectDate('end-date')"></paper-input>
-<!-- <label style="margin-top:16px; font-size:14pt">Start Time (required)</label> -->
+<label style="margin-top:48px; font-size:11pt">Start Time (required)</label>
 <!-- <p>Format is <i>HH:MM AM</i></p> -->
-<p>&nbsp;</p>
-<paper-input label="Start Time (required)" id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text" click.delegate="showTime('s-time')"></paper-input>
+
+<input label="Start Time (required)" id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text" click.delegate="showTime('s-time')">
 <!-- <button id="id-of-button-to-open-it" raised class="updateButton" click.delegate="showTime()">Time</button>
 <p>&nbsp;</p> -->
 <!-- <paper-time-picker id="start-time" force-narrow="true" time="8:00" ></paper-time-picker> -->
 <!-- <label style="margin-top:10px; font-size:14pt">End Time (required)</label> -->
-<p>&nbsp;</p>
-<paper-input label="End Time (required)" id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text" click.delegate="showTime('e-time')"></paper-input>
+<label style="margin-top:48px; font-size:11pt">End Time (required)</label>
+<input label="End Time (required)" id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text" click.delegate="showTime('e-time')">
 <!-- <paper-time-picker id="end-time" force-narrow="true" time="17:00" ></paper-time-picker> -->
 <p>&nbsp;</p>
 <paper-input style="margin-top:0" label="Name of Coordinator (if not yourself)" value.two-way="voOpp.voContactName"></paper-input>
