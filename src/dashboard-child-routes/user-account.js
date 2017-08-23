@@ -53,10 +53,12 @@ export class UserAccount {
     if (this.user.userType === 'Charity'){
       this.role = 'Charity Manager';
     }
+    /* istanbul ignore else */
     if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
       const res = await this.app.httpClient.fetch('/charity/' + this.uid);
       this.charities = await res.json();
       console.log(this.charities);
+      /* istanbul ignore else */
       if (this.charities.length !== 0){
         //loop through each charity and check if there is more than one manager
         this.canDelete = false;
@@ -71,6 +73,7 @@ export class UserAccount {
       const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
       this.books = await res.json();
       console.log(this.charities);
+      /* istanbul ignore else */
       if (this.books.length !== 0){
         this.canDelete = false;
         this.notDelB = 'You are not allowed to delete your account when you have a book checked out';

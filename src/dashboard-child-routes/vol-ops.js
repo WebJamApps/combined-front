@@ -209,17 +209,10 @@ export class VolunteerOpps {
     this.canSubmit2 = false;
     document.getElementById('topSection').style.display = 'none';
     this.voOpp = thisEvent;
-    // let startDate = document.getElementById('start-date');
-    // startDate.value = this.voOpp.voStartDate;
-    // console.log(startDate);
-    // console.log('this event to be updated');
-    // console.log(this.voOpp);
     this.talentPicked();
     this.workPicked();
     this.setupValidation2();
     this.controller2.errors = [];
-    //document.getElementById('updateScheduleEvent').style.display = 'none';
-    //document.getElementById('start-date').date = this.voOpp.voStartDate;
   }
 
   showNewEvent(){
@@ -289,6 +282,7 @@ export class VolunteerOpps {
     let valid = true;
     console.log('Running updateCanSubmit2');
     let nub = document.getElementsByClassName('updateButton')[0];
+    /* istanbul ignore else */
     if (nub) {
       for (let result of validationResults) {
         if (result.valid === false){
