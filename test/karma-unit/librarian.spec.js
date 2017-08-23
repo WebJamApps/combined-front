@@ -1,5 +1,5 @@
 import {App} from '../../src/app';
-import {AuthStub, HttpMock} from './commons';
+import {AuthStub, HttpMock, AppStateStub} from './commons';
 import {Librarian} from '../../src/dashboard-child-routes/librarian';
 //import './setup';
 import {csvFixture} from './librarian.spec.fixtures';
@@ -33,16 +33,20 @@ describe('the librarian module', () => {
   let reader;
   let vc;
   let val;
-  global.CSVFilePath = { files: [csvFixture.string] };
+  let auth;
+  global.CSVFilePath = { files: [csvFixture.string, 'sample.txt']};
 
   beforeEach(() => {
+    auth = new AuthStub();
+    auth.setToken({sub: '1'});
     http = new HttpMock();
     reader = new FileReader();
-    app1 = new App(new AuthStub(), http);
+    app1 = new App(auth, http);
     vc = new VCMock();
     val = new ValidatorMock();
     app1.activate();
     librarian = new Librarian(app1, reader, {}, vc, val);
+    librarian.app.appState = new AppStateStub();
     librarian.CSVFilePath = {files: [csvFixture.string]};
   });
 
