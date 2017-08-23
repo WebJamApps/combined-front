@@ -48,6 +48,8 @@ export class UserAccess {
             return next();
           }
           if (routingContext.params.childRoute.indexOf('vol-ops/') !== -1 && userRoles[i].toLowerCase() === 'charity') {
+            console.log(routingContext.fragment);
+            console.log(routingContext.params.childRoute);
             return next();
           }
         }

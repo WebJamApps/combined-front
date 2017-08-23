@@ -87,12 +87,12 @@ export class Charity {
   }
 
   showUpdateCharity(charity){
-    let updateDiv = document.getElementById('updateCharitySection');
-    updateDiv.style.display = 'block';
-    let scheduleDiv = document.getElementById('scheduleCharitySection');
-    if (scheduleDiv !== null){
-      scheduleDiv.style.display = 'none';
-    }
+    // let updateDiv = document.getElementById('updateCharitySection');
+    // updateDiv.style.display = 'block';
+    // let scheduleDiv = document.getElementById('scheduleCharitySection');
+    // if (scheduleDiv !== null){
+    //   scheduleDiv.style.display = 'none';
+    // }
     this.charityName = charity.charityName;
     this.updateCharity = charity;
     this.updateCharity.charityEmail = '';
@@ -280,10 +280,10 @@ export class Charity {
     })
     .then((response) => response.json())
     .then((data) => {
-      let updateDiv = document.getElementById('updateCharitySection');
-      if (updateDiv !== null){
-        updateDiv.style.display = 'none';
-      }
+      // let updateDiv = document.getElementById('updateCharitySection');
+      // if (updateDiv !== null){
+      //   updateDiv.style.display = 'none';
+      // }
       this.updateCharity = {};
       document.getElementById('charityDash').scrollIntoView();
       this.activate();
@@ -308,12 +308,8 @@ export class Charity {
         //only do this if the array does not already contain the user id, else alert that the user is already a manager of this charity
         for (let l = 0; l < this.updateCharity.charityMngIds.length; l++){
           console.log('checking for already a manager');
+          /* istanbul ignore else */
           if (this.updateCharity.charityMngIds.indexOf(tempManager[0]._id) > -1){
-            let updateDiv = document.getElementById('updateCharitySection');
-            updateDiv.style.display = 'none';
-            this.updateCharity = {};
-            document.getElementById('charityDash').scrollIntoView();
-            this.activate();
             return alert('this user is already a manager of this charity');
           }
         }
@@ -321,7 +317,7 @@ export class Charity {
         this.updateCharity.charityManagers.push(tempManager[0].name);
         if (thenDo === 'put'){
           this.putCharity();
-        } else if (thenDo === 'post'){
+        } else {
           this.postCharity();
         }
       } else {

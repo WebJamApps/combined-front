@@ -11,10 +11,10 @@ class RouterStub {
     return this.router.currentInstruction.config.title; //name of the route
   }
   addPipelineStep(param1, AuthorizeStep) {
-    //do nothing
+      //do nothing
   }
   options() {
-    //do nothing
+      //do nothing
   }
   map(routes) {
     this.routes = routes;
@@ -26,7 +26,7 @@ class RouterStub {
   fallbackRoute(opt) {
     this.opt = opt;
   }
-}
+  }
 
 class ConfigStub {
   map(array1) {
@@ -35,7 +35,7 @@ class ConfigStub {
   fallbackRoute(route) {
     this.route = route;
   }
-}
+  }
 
 class AuthStub {
   setToken(token) {
@@ -61,7 +61,7 @@ class AuthStub {
     this.authenticated = true;
     return this.authenticated;
   }
-}
+  }
 
 class AppStateStub {
   constructor() {
@@ -77,10 +77,10 @@ class AppStateStub {
     } else {
       this.user = {name: 'Iddris Elba', userType: 'Developer', _id: '3333333', volTalents: [], volCauses: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
     }
-    // return Promise.resolve({
-    //   //Headers: this.headers,
-    //   resolve(this.user)
-    // });
+      // return Promise.resolve({
+      //   //Headers: this.headers,
+      //   resolve(this.user)
+      // });
     return new Promise((resolve) => {
       resolve(this.user);
     });
@@ -97,11 +97,11 @@ class AppStateStub {
   setRoles(input) {
     this.roles = input;
   }
-}
+  }
 
 class HttpMock {
-  // this one catches the ajax and then resolves a custom json data.
-  // real api calls will have more methods.
+    // this one catches the ajax and then resolves a custom json data.
+    // real api calls will have more methods.
   constructor(data) {
     this.user = data || {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: [], volCauses: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
   }
@@ -123,7 +123,6 @@ class HttpMock {
       json: () => Promise.resolve(this.user)
     });
   }
-}
-
+  }
 
 export {RouterStub, ConfigStub, AuthStub, AppStateStub, HttpMock};
