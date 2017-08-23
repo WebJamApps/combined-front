@@ -96,11 +96,6 @@ describe('the Charity Module', () => {
     charity2.app.appState = new AppStateStub();
   });
 
-  // it('activates', (done) => {
-  //   charity.activate();
-  //   done();
-  // });
-
   it('checkboxes expanded', (done) => {
     document.body.innerHTML = '  <iron-dropdown id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></iron-dropdown>';
     charity.expanded = true;
@@ -123,21 +118,14 @@ describe('the Charity Module', () => {
     done();
   });
 
-  // it('prevents the enter key', (done) => {
-  //   charity.activate();
-  //   let e = {keyCode: 13, preventDefault: function(){}};
-  //   charity.preventEnter(e);
-  //   //expect(charity2.charities.length).toBe(0);
-  //   done();
-  // });
-
-  // it('does not prevent other events', (done) => {
-  //   charity.activate();
-  //   let e = {keyCode: 12, preventDefault: function(){}};
-  //   charity.preventEnter(e);
-  //   //expect(charity2.charities.length).toBe(0);
-  //   done();
-  // });
+  it('it displays the new charity form on page load', (done) => {
+    charity2.activate();
+    charity2.setupValidation2 = function(){};
+    document.body.innerHTML = '<div id="charityDash"></div><div id="updateCharitySection"></div>';
+    charity2.attached();
+    //expect(charity2.charities.length).toBe(0);
+    done();
+  });
 
   it('displays the update charity table', (done) => {
     charity.activate();
@@ -153,7 +141,6 @@ describe('the Charity Module', () => {
       'charityTypeOther': '',
       'charityTypesHtml': ''
     };
-    //let e = {keyCode: 12, preventDefault: function(){}};
     charity.update = true;
     document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button></div><div id="scheduleCharitySection"></div>';
     charity.updateCharityFunction(charity1);
@@ -164,12 +151,10 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('creates a new charity in the database', (done) => {
+  it('creates a new charity in the database with email as quote quote, null, and filled in', (done) => {
     charity.activate();
     let user = {name: 'Josh', _id: '1234'};
     charity.user = user;
-    //charity.user.name = 'Josh';
-    //charity.user._id = '1234';
     charity.setupValidation2 = function(){};
     charity.updateCharity = {
       'charityName': 'test charity',
@@ -182,14 +167,27 @@ describe('the Charity Module', () => {
       'charityTypeOther': '',
       'charityTypesHtml': ''
     };
-    //let e = {keyCode: 12, preventDefault: function(){}};
     document.body.innerHTML = '<div id="charityDash"></div>';
     charity.createCharity();
-    // expect(charity.charityName).toBe('test charity');
+    charity.updateCharity.charityEmail = '';
+    charity.createCharity();
+    charity.updateCharity.charityEmail = 'howdy@howdy.com';
+    charity.createCharity();
+    //expect(charity.updateCharity.charityName).toBe('test charity');
     // document.body.innerHTML = '<div id="updateCharitySection"></div><div id=""></div>';
     // charity.updateCharityFunction(charity1);
     done();
   });
+
+  // it('it hides the update charity section', (done) => {
+  //   charity.activate();
+  //   document.body.innerHTML = '<div id="updateCharitySection"></div>';
+  //   // charity.validType2 = true;
+  //   // let validationResults = [{
+  //   //   result: {valid: true}}];
+  //   charity.putCharity();
+  //   done();
+  // });
 
   it('detects when the charity type is changed in the update form', (done) => {
     charity.activate();
@@ -231,6 +229,16 @@ describe('the Charity Module', () => {
     done();
   });
 
+  it('it doesn not try to display the submit or update button if it does not exist', (done) => {
+    charity.activate();
+    charity.validType2 = true;
+    document.body.innerHTML = '<button class="blah"></button>';
+    let validationResults = [{
+      result: {valid: true}}];
+    charity.updateCanSubmit2(validationResults);
+    done();
+  });
+
   it('does not display charity types when there are none', (done) => {
     charity2.activate();
     charity2.charities = [{charityTypes: [''], charityManagers: ['Home', 'Elderly']}, {charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other']}, {charityTypes: [], charityManagers: []}];
@@ -259,11 +267,16 @@ describe('the Charity Module', () => {
     done();
   });
 
-  // it('fetches the event from the database by eventid', (done) => {
-  //   charity.activate();
-  //   charity.showEvent('1234');
-  //   done();
-  // });
+  it('displays the submit button when a type has been selected and the rest of the form is valid', (done) => {
+    charity2.activate();
+    charity2.updateCharity = {
+      'charityTypes': [ 'Christian', 'Homeless']
+    };
+    document.body.innerHTML = '<button id="newCharityButton" class="updateButton">';
+    charity2.canSubmit2 = true;
+    charity2.updateTypePicked();
+    done();
+  });
 
   it('does not add a new charity manager if the email is not a user of the app', (done) => {
     charity2.activate();
@@ -279,8 +292,14 @@ describe('the Charity Module', () => {
       'charityTypesHtml': '',
       'charityEmail': 'yoyo@yoyo.com'
     };
-    //this.updateCharity.charityEmail
     charity2.findUserByEmail();
+    done();
+  });
+
+  it('it checks if a charity does not have any events', (done) => {
+    charity2.activate();
+    charity2.charities = [{_id: '1234', charityTypes: [''], charityManagers: ['']}, {_id: '2345', charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other']}];
+    charity2.checkEvents();
     done();
   });
 
