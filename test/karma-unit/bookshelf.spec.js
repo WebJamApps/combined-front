@@ -1,5 +1,5 @@
 //const Counter = require('assertions-counter');
-import {HttpMock, AuthStub} from './commons';
+import {HttpMock, AuthStub, AppStateStub} from './commons';
 import {Bookshelf} from '../../src/bookshelf';
 import {App} from '../../src/app';
 
@@ -53,14 +53,19 @@ describe('The Bookshelf Module', () => {
   let shelf;
   let app;
   let bookshelf2;
+  let auth;
   beforeEach(() => {
     let itemStubs = [1];
     http = new HttpStub();
-    app = new App(new AuthStub(), http);
+    auth = new AuthStub();
+    auth.setToken({sub: '112'});
+    app = new App(auth, http);
     shelf = new Bookshelf(app);
+    shelf.app.appState = new AppStateStub();
     http2 = new HttpStub2();
     http2.itemStub = itemStubs;
     bookshelf2 = new Bookshelf(app);
+    bookshelf2.app.appState = new AppStateStub();
   });
 
   it('should activate', (done) => {
