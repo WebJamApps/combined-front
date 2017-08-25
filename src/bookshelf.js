@@ -5,6 +5,7 @@ export class Bookshelf {
   constructor(app){
     this.app = app;
     this.filterType = '';
+    this.reader = false;
   }
 
   mediaTypes = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audiobook', 'template'];
@@ -22,6 +23,22 @@ export class Bookshelf {
     console.log(this.books);
     this.populateTypes();
     this.populateSites();
+    /* istanbul ignore else */
+    if (this.app.auth.isAuthenticated()) {
+      console.log('i am authenticated');
+      this.uid = this.app.auth.getTokenPayload().sub;
+      this.user = await this.app.appState.getUser(this.uid);
+      console.log(this.user);
+        /* istanbul ignore else */
+      if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
+        this.reader = true;
+      }
+      // console.log('this user');
+      // console.log(this.user);
+      // if (this.user){
+      //   this.dashboardTitle = this.user.userType;
+      // }
+    }
   }
 
   filterPicked(){

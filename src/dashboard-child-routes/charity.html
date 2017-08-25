@@ -9,7 +9,7 @@
         </div>
         <div if.bind="charities.length !== 0">
           <p>The <strong>Remove</strong> button is used to remove yourself as being the manager of a particular charity, and only displays if there is more than one manager.</p>
-          <p>The <strong>Delete</strong> button only displays if you are the only manager of a charity.</p>
+          <p>The <strong>Delete</strong> button only displays if you are the only manager of a charity and you do not have any events scheduled.</p>
           <div class="search-table-outer" style="position:relative;overflow-x:auto;">
             <table aurelia-table="data.bind: charities; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
               <thead>
@@ -22,20 +22,19 @@
                   <th style="padding:8px" >Phone</th>
                   <th style="padding:8px">Type</th>
                   <th style="padding:8px">Manager(s)</th>
-                  <th style="padding:8px">Scheduled Events(s)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr repeat.for="charity of $displayData">
                   <td style="padding:8px; text-align:center">
-                    <button if.bind="charity.charityMngIds.length < 2" class="button-checkout" raised click.delegate="deleteCharity(charity._id)" style="margin-bottom:10px">
+                    <button if.bind="charity.charityMngIds.length < 2 && !charity.hasEvents" class="button-checkout" raised click.delegate="deleteCharity(charity._id)" style="margin-bottom:10px">
                       Delete
                     </button>
                     <button if.bind="charity.charityMngIds.length > 1" class="button-checkout" raised click.delegate="removeManager(charity)" style="margin-bottom:10px; background-color:darkorange; color:black">
                       Remove
                     </button>
                     <p><a click.delegate="updateCharityFunction(charity)">Update</a></p>
-                    <p><a click.delegate="showScheduleCharity(charity)">Schedule</a></p>
+                    <p><a route-href="route: vol-ops; params.bind: {id:charity._id}">Schedule</a></p>
                   </td>
                   <td style="padding:8px" innerhtml.bind="charity.charityName"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityCity"></td>
@@ -44,7 +43,6 @@
                   <td style="padding:8px" innerhtml.bind="charity.charityPhoneNumber"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityTypesHtml"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityManagersHtml"></td>
-                  <td style="padding:8px" ><a repeat.for="event of charity.eventHtml" style="display:block;text-align:left; padding-top:10px" click.delegate="showEvent(event._id)">${event.voName}</a></td>
                 </tr>
               </tbody>
             </table>
@@ -53,7 +51,7 @@
       </paper-material>
       <paper-material elevation="3" style="max-width:5in; margin:auto">
         <!-- Update form -->
-        <div id="updateCharitySection" style="display:none;margin-left:10px">
+        <div id="updateCharitySection" style="margin-left:10px">
           <h4 if.bind = "update" class="material-header-h4" style="padding-top:10px">Update ${charityName}</h4>
           <h4 if.bind = "!update" class="material-header-h4" style="padding-top:10px">Create a New Charity</h4>
           <form>
@@ -66,21 +64,22 @@
               </div>
               <iron-dropdown id="typesUpdate" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
                 <div class="dropdown-content" style="width:150px;background-color:white;box-sizing: border-box; max-width: 250px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-                  <label repeat.for="type of types" for="type" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
-                    <input type="checkbox" value.bind="type" checked.bind="updateCharity.charityTypes" change.delegate="updateTypePicked()"> ${type}
+                  <label repeat.for="type of types" for="${type}" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
+                    <input type="checkbox" value.bind="type" id.bind="type" checked.bind="updateCharity.charityTypes" change.delegate="updateTypePicked()"> ${type}
                   </label>
                 </div>
               </iron-dropdown>
             </div>
             <paper-input if.bind="typeOther" value.two-way="updateCharity.charityTypeOther" label="Other charity type"></paper-input>
             <paper-input style="margin-top:20px" label="Charity name (required)" value.two-way="updateCharity.charityName & validate:controller2"></paper-input>
+            <paper-input style="margin-top:20px" label="Charity street address (required)" value.two-way="updateCharity.charityStreet & validate:controller2"></paper-input>
             <paper-input style="margin-top:20px" label="City (required)" value.two-way="updateCharity.charityCity & validate:controller2"></paper-input>
             <select id="updateState" class="form-control" value.bind="updateCharity.charityState & validate:controller2" style="margin-top:30px;width: 2.35in">
-              <option value="">State</option>
+              <option value="">State (required)</option>
               <option repeat.for="state of states" model.bind="state">${state}</option>
             </select>
-            <paper-input style="margin-top:20px" type="number" label="Zip Code (required)" value.two-way="updateCharity.charityZipCode & validate:controller2"></paper-input>
-            <paper-input style="margin-top:20px" type="number" label="Phone Number (optional)" value.two-way="updateCharity.charityPhoneNumber & validate:controller2"></paper-input>
+            <paper-input style="margin-top:20px" label="Zip Code (required)" value.two-way="updateCharity.charityZipCode & validate:controller2"></paper-input>
+            <paper-input id="charity-phone" style="margin-top:20px" type="tel" label="Phone Number (optional)" value.two-way="updateCharity.charityPhoneNumber & validate:controller2"></paper-input>
             <paper-input style="margin-top:20px" label="Assign additional manager by email" value.two-way="updateCharity.charityEmail & validate:controller2"></paper-input>
             <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
               <ul if.bind="controller2.errors">
@@ -95,61 +94,8 @@
             <p>&nbsp;</p>
           </form>
         </div>
-        <!-- End of update form -->
-        <div id="scheduleCharitySection" if.bind="showSchedule" style="margin-left:10px">
-          <h4 class="material-header-h4" style="padding-top:10px"><span if.bind="!updateScheduledEvent">Schedule an Event for<br></span>${charityName}</h4>
-          <form>
-            <paper-input style="margin-top:20px" label="Event name (required)" value.two-way="voOpp.voName"></paper-input>
-            <label style="font-size:14pt; margin-top:12px">Describe your event</label>
-            <textarea value.two-way="voOpp.voDescription" rows="5" cols="33"></textarea>
-            <label style="margin-top:16px; font-size:14pt">Start Date and Time</label>
-            <paper-date-picker id="start-date" force-narrow="true"></paper-date-picker>
-            <paper-time-picker id="start-time" force-narrow="true" time="08:00" ></paper-time-picker>
-            <label style="margin-top:10px; font-size:14pt">End Date and Time</label>
-            <paper-date-picker id="end-date" force-narrow="true"></paper-date-picker>
-            <paper-time-picker id="end-time" force-narrow="true" time="17:00" ></paper-time-picker>
-            <paper-input style="margin-top:0" label="Name of Event Coordinator" value.two-way="voOpp.voContactName"></paper-input>
-            <paper-input style="margin-top:0" label="Event Coordinator's Email" value.two-way="voOpp.voContactEmail"></paper-input>
-            <paper-input style="margin-top:0" label="Event Coordinator's Phone" value.two-way="voOpp.voContactPhone"></paper-input>
-            <paper-input type="number" style="margin-top:10px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded"></paper-input>
-            <div class="multiselect" style="width:170px; margin-top:10px">
-              <div class="selectBox" click.delegate="showCheckboxes('talents')">
-                <select>
-                  <option style="font-weight:normal">Volunteer's talent(s)</option>
-                </select>
-                <div class="overSelect"></div>
-              </div>
-              <iron-dropdown id="talents" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
-                <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 300px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-                  <label repeat.for="talent of talents" for="talent" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:150px">
-                    <input type="checkbox" value.bind="talent" checked.bind="selectedTalents" change.delegate="talentPicked()"> ${talent}
-                  </label>
-                </div>
-              </iron-dropdown>
-            </div>
-            <paper-input if.bind="talentOther" value.two-way="voOpp.voTalentTypeOther" label="Other talent" ></paper-input>
-            <div class="multiselect" style="width:170px; margin-top:25px">
-              <div class="selectBox" click.delegate="showCheckboxes('work')">
-                <select>
-                  <option style="font-weight:normal">Volunteer work</option>
-                </select>
-                <div class="overSelect"></div>
-              </div>
-              <iron-dropdown id="work" horizontal-align="right" vertical-align="top" style="margin-top:25px;margin-bottom:10px">
-                <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-                  <label repeat.for="work of works" for="work" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
-                    <input type="checkbox" value.bind="work" checked.bind="selectedWorks" change.delegate="workPicked()"> ${work}
-                  </label>
-                </div>
-              </iron-dropdown>
-            </div>
-            <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
-            <button if.bind="!updateScheduledEvent" id="scheduleCharityButton" class="updateButton" raised click.trigger="scheduleCharityFunct()" style="margin:40px">Schedule</button>
-            <button class="cancelButton" raised click.trigger="createNewCharity()" style="margin-bottom:40px; margin-top:20px">Hide</button>
-            <p>&nbsp;</p>
-          </form>
-        </div>
       </paper-material>
     </paper-material>
+    <paper-material id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></paper-material>
   </div>
 </template>

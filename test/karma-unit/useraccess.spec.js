@@ -4,7 +4,7 @@ import {UserAccess} from '../../src/classes/UserAccess.js';
 describe('The UserAccess module unit tests', () => {
   let appState;
   let routingContext = {'params': {'childRoute': 'user-account'}};
-  let roles = ['foo'];
+  let roles = ['foo', 'charity'];
   let userAccess;
   let next;
 
@@ -68,6 +68,16 @@ describe('The UserAccess module unit tests', () => {
     routingContext.config = {auth: true};
     routingContext.fragment = '/dashboard/foo';
     routingContext.params = {childRoute: 'foo'};
+    userAccess.run(routingContext, next);
+  });
+
+  it('should allow charity role to schedule events', (done) => {
+    next = function() {
+      done();
+    };
+    routingContext.config = {auth: true};
+    routingContext.fragment = '/dashboard/vol-ops/599c17ffed5a5716af47f51d';
+    routingContext.params = {childRoute: 'vol-ops/599c17ffed5a5716af47f51d'};
     userAccess.run(routingContext, next);
   });
 

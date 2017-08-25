@@ -86,9 +86,9 @@ module.exports = {
         }
       },
       server: {
-        default: 'webpack-dev-server -d --devtool "#source-map" --inline --env.server',
-        extractCss: 'webpack-dev-server -d --devtool "#source-map" --inline --env.server --env.extractCss',
-        hmr: 'webpack-dev-server -d --devtool "#source-map" --inline --hot --env.server'
+        default: 'webpack-dev-server -d --inline --env.server',
+        extractCss: 'webpack-dev-server -d --inline --env.server --env.extractCss',
+        hmr: 'webpack-dev-server -d --inline --hot --env.server'
       }
     },
     serve: 'pushstate-server dist'

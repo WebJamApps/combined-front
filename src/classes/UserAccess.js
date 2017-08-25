@@ -37,11 +37,19 @@ export class UserAccess {
         //   return next();
         // }
 
+
         for (let i = 0; i < userRoles.length; i++) {
+          // console.log(routingContext.params.childRoute);
+          // console.log(userRoles[i].toLowerCase());
           // in this case the user is only in one role at a time.
           if (routingContext.params.childRoute === userRoles[i].toLowerCase()){
             //console.log('YAY! authorized.');
             //routingContext.getAllInstructions();
+            return next();
+          }
+          if (routingContext.params.childRoute.indexOf('vol-ops/') !== -1 && userRoles[i].toLowerCase() === 'charity') {
+            console.log(routingContext.fragment);
+            console.log(routingContext.params.childRoute);
             return next();
           }
         }

@@ -12,16 +12,19 @@ h1,
 h2,
 h4 {
   font-family: 'PT Sans Caption';
+  font-size: 18px;
 }
 
 h3.au-target.header-text.ohaf-header {
   padding: 0;
   margin: 5px;
+  font-size: 24px;
 }
 
 h3 {
   font-family: 'PT Sans Caption';
   font-weight: bold;
+  font-size: 24px;
 }
 
 p,
@@ -51,6 +54,9 @@ h1 {
   margin: auto;
 }
 
+strong {
+  font-weight:700;
+}
 table {
   margin: auto;
 }
@@ -635,6 +641,7 @@ div.au-stagger {
 
 .header-text {
   color: white;
+  font-size: 24px;
 }
 
 .header-text-card {
@@ -645,7 +652,7 @@ div.au-stagger {
 }
 
 .ohaf-sidebar {
-  background-color: #2a222a;
+  background-color: #c09580;
 }
 .ohaf-header {
   background-color: #565656;
@@ -707,7 +714,7 @@ min-height: 30px;
 
 .nav-link {
   display: block !important;
-  color: #0275d8;
+  color: #23527c;
 }
 
 .nav-item {
@@ -837,4 +844,14 @@ div#drawer.style-scope.paper-drawer-panel.iron-selected {
 .newUserForm {
   margin-left: 0.5cm;
   width: 180px;
+}
+
+.ohaf-social-media:hover {
+  color: white;
+}
+.wjllc {
+color:white; font-size:9pt; font-weight: bold;
+}
+.wjllc:hover {
+  color: black;
 }

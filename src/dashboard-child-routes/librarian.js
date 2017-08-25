@@ -34,7 +34,7 @@ export class Librarian {
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;  //the button on the form
     this.validType = false;
-    this.preventDefault = this.preventEnter.bind(this);
+    //this.preventDefault = this.preventEnter.bind(this);
   }
 
   types = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audio', 'graphic'];
@@ -42,20 +42,21 @@ export class Librarian {
   //newBook = null;
 
   async activate(){
-    //let uid = this.app.auth.getTokenPayload().sub;
-    //this.user = await this.app.appState.getUser(uid);
+    let uid = this.app.auth.getTokenPayload().sub;
+    this.user = await this.app.appState.getUser(uid);
+    this.app.dashboardTitle = this.user.userType;
     this.types.sort();
     this.types.push('other');
     //this.states.sort();
     this.setupValidation();
-    window.addEventListener('keypress', this.preventDefault, false);
+    //window.addEventListener('keypress', this.preventDefault, false);
   }
 
-  preventEnter(e) {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-    }
-  }
+  // preventEnter(e) {
+  //   if (e.keyCode === 13) {
+  //     e.preventDefault();
+  //   }
+  // }
 
   textFileValidate() {
     let nub = document.getElementById('deleteCreateButton');
@@ -71,6 +72,7 @@ export class Librarian {
       console.log(oInput.type);
       // the type is determined automatically during the creation of the Blob.
       // this value cannot be controlled by developer, hence cannot test it.
+      /* istanbul ignore if*/
       if (oInput.type === 'text/plain') {
         console.log('type is a plain text file');
         nub.style.display = 'block';

@@ -64,7 +64,9 @@
                   <a style="font-size:11pt" show.bind="book.url" href="${book.url}" target="_blank" innerhtml.bind="book.title | sanitizeHTML">
                     <!-- ${book.title} -->
                   </a>
-                  <a style="font-size:11pt" if.bind="!book.url" href="/dashboard/reader" innerhtml.bind="book.title | sanitizeHTML"></a></td>
+                  <a style="font-size:11pt" if.bind="!book.url && reader" href="/dashboard/reader" innerhtml.bind="book.title | sanitizeHTML"></a>
+                  <p if.bind="!book.url && !reader" innerhtml.bind="book.title | sanitizeHTML"></p>
+                </td>
                   <td style="padding:8px" innerhtml.bind="book.type | sanitizeHTML"></td>
                   <td style="padding:8px">${book.author}</td>
                   <td style="padding:8px">${book.numberPages}</td>

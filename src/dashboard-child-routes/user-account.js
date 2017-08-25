@@ -8,7 +8,7 @@ export class UserAccount {
     this.selectedCauses = [];
     this.selectedTalents = [];
     this.selectedWorks = [];
-    this.preventDefault = this.preventEnter.bind(this);
+    //this.preventDefault = this.preventEnter.bind(this);
   }
 
   causes = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
@@ -53,10 +53,12 @@ export class UserAccount {
     if (this.user.userType === 'Charity'){
       this.role = 'Charity Manager';
     }
+    /* istanbul ignore else */
     if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
       const res = await this.app.httpClient.fetch('/charity/' + this.uid);
       this.charities = await res.json();
       console.log(this.charities);
+      /* istanbul ignore else */
       if (this.charities.length !== 0){
         //loop through each charity and check if there is more than one manager
         this.canDelete = false;
@@ -71,6 +73,7 @@ export class UserAccount {
       const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
       this.books = await res.json();
       console.log(this.charities);
+      /* istanbul ignore else */
       if (this.books.length !== 0){
         this.canDelete = false;
         this.notDelB = 'You are not allowed to delete your account when you have a book checked out';
@@ -96,14 +99,14 @@ export class UserAccount {
     } else {
       this.causeOther = false;
     }
-    window.addEventListener('keypress', this.preventDefault, false);
+    //window.addEventListener('keypress', this.preventDefault, false);
   }
 
-  preventEnter(e) {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-    }
-  }
+  // preventEnter(e) {
+  //   if (e.keyCode === 13) {
+  //     e.preventDefault();
+  //   }
+  // }
 
   async setupVolunteer(){
     await fetch;
