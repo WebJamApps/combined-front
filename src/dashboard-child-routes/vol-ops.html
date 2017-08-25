@@ -9,8 +9,8 @@
             <tr>
               <th style="padding:8px; text-align:center">Action</th>
               <th style="padding:8px;" aut-sort="key: voName; default: asc">Name</th>
-              <th style="padding:8px" >Description</th>
-              <th style="padding:8px" >Location</th>
+              <th style="padding:8px;min-width:200px" >Description</th>
+              <th style="padding:8px; min-width:200px" >Location</th>
               <th style="padding:8px" >Start Date</th>
               <th style="padding:8px" >Start Time</th>
               <th style="padding:8px">End Date</th>
@@ -33,7 +33,7 @@
               </td>
               <td style="padding:8px" innerhtml.bind="event.voName"></td>
               <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
-              <td style="padding:8px"><p>${event.voStreet}</p><p>${event.voCity}, ${event.voState}  ${event.voZipCode}</p></td>
+              <td style="padding:8px; min-width:100px"><p>${event.voStreet}</p><p>${event.voCity}, ${event.voState}&nbsp;&nbsp;${event.voZipCode}</p></td>
               <td style="padding:8px" innerhtml.bind="event.voStartDate"></td>
               <td style="padding:8px" innerhtml.bind="event.voStartTime"></td>
               <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>

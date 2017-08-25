@@ -16,9 +16,9 @@
                 <tr>
                   <th style="padding:8px; text-align:center">Action</th>
                   <th style="padding:8px;" aut-sort="key: charityName; default: asc">Name</th>
-                  <th style="padding:8px" aut-sort="key: charityCity">City</th>
-                  <th style="padding:8px" >State</th>
-                  <th style="padding:8px" >Zipcode</th>
+                  <th style="padding:8px; min-width:200px">Address</th>
+                  <!-- <th style="padding:8px" >State</th>
+                  <th style="padding:8px" >Zipcode</th> -->
                   <th style="padding:8px" >Phone</th>
                   <th style="padding:8px">Type</th>
                   <th style="padding:8px">Manager(s)</th>
@@ -37,9 +37,9 @@
                     <p><a route-href="route: vol-ops; params.bind: {id:charity._id}">Schedule</a></p>
                   </td>
                   <td style="padding:8px" innerhtml.bind="charity.charityName"></td>
-                  <td style="padding:8px" innerhtml.bind="charity.charityCity"></td>
-                  <td style="padding:8px" innerhtml.bind="charity.charityState"></td>
-                  <td style="padding:8px" innerhtml.bind="charity.charityZipCode"></td>
+                  <td style="padding:8px;min-width:100px"><p>${charity.charityStreet}</p><p>${charity.charityCity}, ${charity.charityState}&nbsp;&nbsp;${charity.charityZipCode}</p></td>
+                  <!-- <td style="padding:8px" innerhtml.bind="charity.charityState"></td>
+                  <td style="padding:8px" innerhtml.bind="charity.charityZipCode"></td> -->
                   <td style="padding:8px" innerhtml.bind="charity.charityPhoneNumber"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityTypesHtml"></td>
                   <td style="padding:8px" innerhtml.bind="charity.charityManagersHtml"></td>
