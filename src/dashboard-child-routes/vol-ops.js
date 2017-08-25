@@ -111,6 +111,16 @@ export class VolunteerOpps {
     this.voOpp.voCity = this.charity.charityCity;
     this.voOpp.voState = this.charity.charityState;
     this.voOpp.voZipCode = this.charity.charityZipCode;
+    this.voOpp.voCharityTypes = this.charity.charityTypes;
+    if (this.charity.charityTypeOther !== ''){
+      let index = this.voOpp.voCharityTypes.indexOf('other');
+      if (index > -1) {
+        this.voOpp.voCharityTypes.splice(index, 1);
+      }
+      this.voOpp.voCharityTypes.push(this.charity.charityTypeOther);
+    }
+    console.log('the charity types attached to this event');
+    console.log(this.voOpp.voCharityTypes.length);
   }
 
   fixDates(){
