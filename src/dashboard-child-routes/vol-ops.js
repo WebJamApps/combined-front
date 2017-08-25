@@ -21,7 +21,9 @@ export class VolunteerOpps {
     this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit2 = false;
-    //this.validType2 = false;
+    this.newAddress = false;
+    this.charity = {};
+    this.voOpp = {};
   }
   //
   async activate(){
@@ -32,19 +34,24 @@ export class VolunteerOpps {
     let currentUrl = (window.location.href);
     console.log(currentUrl);
     this.charityID = currentUrl.substring(currentUrl.indexOf('vol-ops/') + 8);
-    console.log(this.charityID);
+    //console.log(this.charityID);
     let res = await this.app.httpClient.fetch('/volopp/' + this.charityID);
     this.events = await res.json();
-    console.log('this.events');
-    console.log(this.events);
+    //console.log('this.events');
+    //console.log(this.events);
+    // let res2 = await this.app.httpClient.fetch('/charity/find/' + this.charityID);
+    // this.charity = await res2.json();
+    // this.voOpp
+    //console.log(this.charity);
     if (this.events.length > 0){
       this.fixDates();
       this.buildWorkPrefs();
       this.buildTalents();
-      this.charityName = this.events[0].voCharityName;
-    } else {
-      this.findCharityName();
+      //this.charityName = this.events[0].voCharityName;
     }
+    //else {
+    this.findCharity();
+    //}
     this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
     this.works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
     this.talents.sort();
@@ -55,16 +62,12 @@ export class VolunteerOpps {
     this.minEndDate = this.today;
     this.maxStartDate = '';
     console.log('today is ' + this.today);
-
-//document.getElementsByName("somedate")[0].setAttribute('min', today);
-    // this.dialog = new MdDateTimePicker.default({type: 'time'}, {init: new moment()});
-    // console.log(this.dialog);
-    //this.setupValidation2();
-    // $( document ).ready(function() {
-    //   $('input[type=time]').change(function() {
-    //     $(this).val($(this).val().replace(/(:\d\d:)(\d\d)$/, '\$100'));
-    //   });
-    // });
+    this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
+      'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
+      'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+      'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
+      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+    this.states.sort();
   }
 
   showTime(){
@@ -72,6 +75,15 @@ export class VolunteerOpps {
   //   this.dialog.time = new moment();
   //   this.dialog.toggle();
   }
+
+  // radio(type){
+  //   console.log('radio type is ' + type);
+  //   if (type === 'charity'){
+  //     this.newAddress = false;
+  //   } else {
+  //     this.newAddress = true;
+  //   }
+  // }
 
   selectDate(dtype){
     console.log('show date picker here');
@@ -88,12 +100,17 @@ export class VolunteerOpps {
   //   this.dialog.toggle();
   }
 
-  async findCharityName(){
+  async findCharity(){
     let res2 = await this.app.httpClient.fetch('/charity/find/' + this.charityID);
-    let foundCharity = await res2.json();
+    this.charity = await res2.json();
     console.log('foundCharity');
-    console.log(foundCharity);
-    this.charityName = foundCharity.charityName;
+    console.log(this.charity);
+    //this.charityName = foundCharity.charityName;
+    this.voOpp.voCharityName = this.charity.charityName;
+    this.voOpp.voStreet = this.charity.charityStreet;
+    this.voOpp.voCity = this.charity.charityCity;
+    this.voOpp.voState = this.charity.charityState;
+    this.voOpp.voZipCode = this.charity.charityZipCode;
   }
 
   fixDates(){
@@ -189,7 +206,7 @@ export class VolunteerOpps {
     //this.voOpp.voStartTime = document.getElementById('start-time').time;
     //this.voOpp.voEndDate = document.getElementById('end-date').date;
     //this.voOpp.voEndTime = document.getElementById('end-time').time;
-    this.voOpp.voCharityName = this.charityName;
+    //this.voOpp.voCharityName = this.charityName;
     console.log(this.voOpp);
     //this.newCharity.charityManagers[0] = this.user.name;
     //this.newCharity.charityMngIds[0] = this.user._id;
@@ -206,13 +223,14 @@ export class VolunteerOpps {
 
   showUpdateEvent(thisEvent){
     this.newEvent = false;
-    this.canSubmit2 = false;
+    this.canSubmit2 = true;
     document.getElementById('topSection').style.display = 'none';
     this.voOpp = thisEvent;
     this.talentPicked();
     this.workPicked();
     this.setupValidation2();
     this.controller2.errors = [];
+    this.validate2();
   }
 
   showNewEvent(){
@@ -235,7 +253,7 @@ export class VolunteerOpps {
       'voContactPhone': this.user.userPhone
     };
     this.newEvent = true;
-    this.canSubmit2 = false;
+    //this.canSubmit2 = false;
     let topSection = document.getElementById('topSection');
     topSection.style.display = 'block';
     topSection.scrollIntoView();
@@ -305,7 +323,7 @@ export class VolunteerOpps {
 
   setupValidation2() {
     ValidationRules
-    .ensure('voContactPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digit phone number')
+    .ensure('voContactPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
     .ensure('voContactEmail').email()
     .ensure('voName').required().maxLength(40).withMessage('Name of Event please')
     .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
@@ -313,6 +331,10 @@ export class VolunteerOpps {
     .ensure('voEndTime').required().matches(/\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([ap][m]))/)
     .ensure('voStartDate').required()
     .ensure('voEndDate').required()
+    .ensure('voZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
+    .ensure('voCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
+    .ensure('voStreet').required().maxLength(40).withMessage('Charity street address please')
+    .ensure('voState').required().withMessage('Charity state please')
     .on(this.voOpp);
   }
 

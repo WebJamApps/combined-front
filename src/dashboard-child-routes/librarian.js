@@ -72,6 +72,7 @@ export class Librarian {
       console.log(oInput.type);
       // the type is determined automatically during the creation of the Blob.
       // this value cannot be controlled by developer, hence cannot test it.
+      /* istanbul ignore if*/
       if (oInput.type === 'text/plain') {
         console.log('type is a plain text file');
         nub.style.display = 'block';

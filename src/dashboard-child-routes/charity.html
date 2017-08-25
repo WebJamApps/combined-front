@@ -72,13 +72,14 @@
             </div>
             <paper-input if.bind="typeOther" value.two-way="updateCharity.charityTypeOther" label="Other charity type"></paper-input>
             <paper-input style="margin-top:20px" label="Charity name (required)" value.two-way="updateCharity.charityName & validate:controller2"></paper-input>
+            <paper-input style="margin-top:20px" label="Charity street address (required)" value.two-way="updateCharity.charityStreet & validate:controller2"></paper-input>
             <paper-input style="margin-top:20px" label="City (required)" value.two-way="updateCharity.charityCity & validate:controller2"></paper-input>
             <select id="updateState" class="form-control" value.bind="updateCharity.charityState & validate:controller2" style="margin-top:30px;width: 2.35in">
               <option value="">State (required)</option>
               <option repeat.for="state of states" model.bind="state">${state}</option>
             </select>
-            <paper-input style="margin-top:20px" type="number" label="Zip Code (required)" value.two-way="updateCharity.charityZipCode & validate:controller2"></paper-input>
-            <paper-input style="margin-top:20px" type="number" label="Phone Number (optional)" value.two-way="updateCharity.charityPhoneNumber & validate:controller2"></paper-input>
+            <paper-input style="margin-top:20px" label="Zip Code (required)" value.two-way="updateCharity.charityZipCode & validate:controller2"></paper-input>
+            <paper-input id="charity-phone" style="margin-top:20px" type="tel" label="Phone Number (optional)" value.two-way="updateCharity.charityPhoneNumber & validate:controller2"></paper-input>
             <paper-input style="margin-top:20px" label="Assign additional manager by email" value.two-way="updateCharity.charityEmail & validate:controller2"></paper-input>
             <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
               <ul if.bind="controller2.errors">

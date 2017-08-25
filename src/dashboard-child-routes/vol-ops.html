@@ -1,7 +1,7 @@
 <template>
   <div class="page-content">
     <div id="topSection">
-      <h3 id="eventHeader" style="text-align:center">Events for ${charityName}</h3>
+      <h3 id="eventHeader" style="text-align:center">Events for ${voOpp.voCharityName}</h3>
       <div if.bind="events.length === 0"><p style="text-align:center">There are no scheduled events</p></div>
       <div if.bind="events.length !== 0" class="search-table-outer" style="position:relative;overflow-x:auto;">
         <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
@@ -10,6 +10,7 @@
               <th style="padding:8px; text-align:center">Action</th>
               <th style="padding:8px;" aut-sort="key: voName; default: asc">Name</th>
               <th style="padding:8px" >Description</th>
+              <th style="padding:8px" >Location</th>
               <th style="padding:8px" >Start Date</th>
               <th style="padding:8px" >Start Time</th>
               <th style="padding:8px">End Date</th>
@@ -32,6 +33,7 @@
               </td>
               <td style="padding:8px" innerhtml.bind="event.voName"></td>
               <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
+              <td style="padding:8px"><p>${event.voStreet}</p><p>${event.voCity}, ${event.voState}  ${event.voZipCode}</p></td>
               <td style="padding:8px" innerhtml.bind="event.voStartDate"></td>
               <td style="padding:8px" innerhtml.bind="event.voStartTime"></td>
               <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
@@ -87,34 +89,26 @@
   </iron-dropdown>
 </div>
 <paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
-<!-- <label style="margin-top:18px; font-size:12pt">Start Date (required)</label> -->
 <p>&nbsp;</p>
 <paper-input label="Start Date (required)" id="start-date" value.two-way="voOpp.voStartDate & validate:controller2" type="date" min="${today}" max="${maxStartDate}" change.delegate="selectDate('start-date')"></paper-input>
-
-<!-- <div ref="dpWrapper">
-<input id="start-date" md-datepicker="container.bind: dpWrapper; value.two-way: voOpp.voStartDate" type="date" placeholder="Select Date" />
-</div> -->
-<!-- <label style="margin-top:10px; font-size:14pt">End Date (required)</label> -->
-<!-- <div ref="dpWrapper">
-<input id="end-date" md-datepicker="container.bind: dpWrapper; value.two-way: voOpp.voEndDate" type="date" placeholder="Select Date" />
-</div> -->
 <p>&nbsp;</p>
 <paper-input label="End Date (required)" id="end-date" value.two-way="voOpp.voEndDate & validate:controller2" type="date" min="${minEndDate}" change.delegate="selectDate('end-date')"></paper-input>
 <label style="margin-top:48px; font-size:11pt">Start Time (required)</label>
-<!-- <p>Format is <i>HH:MM AM</i></p> -->
-
 <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text" click.delegate="showTime('s-time')">
-<!-- <button id="id-of-button-to-open-it" raised class="updateButton" click.delegate="showTime()">Time</button>
-<p>&nbsp;</p> -->
-<!-- <paper-time-picker id="start-time" force-narrow="true" time="8:00" ></paper-time-picker> -->
-<!-- <label style="margin-top:10px; font-size:14pt">End Time (required)</label> -->
 <label style="margin-top:48px; font-size:11pt">End Time (required)</label>
 <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text" click.delegate="showTime('e-time')">
-<!-- <paper-time-picker id="end-time" force-narrow="true" time="17:00" ></paper-time-picker> -->
-<p>&nbsp;</p>
+<label style="margin-top:40px; font-size:11pt">Location of Event (required)</label><br>
+  <paper-input input label="Street Address" type="text" value.two-way="voOpp.voStreet & validate:controller2"></paper-input>
+  <paper-input input label="City" type="text" value.two-way="voOpp.voCity & validate:controller2"></paper-input>
+  <select  id="updateState" class="form-control" value.bind="voOpp.voState & validate:controller2" style="margin-top:30px;width: 2.35in">
+    <option value="">State</option>
+    <option repeat.for="state of states" model.bind="state">${state}</option>
+  </select>
+  <paper-input style="margin-top:20px" label="Zip Code (required)" value.two-way="voOpp.voZipCode & validate:controller2"></paper-input>
+  <p>&nbsp;</p>
 <paper-input style="margin-top:0" label="Name of Coordinator (if not yourself)" value.two-way="voOpp.voContactName"></paper-input>
 <paper-input style="margin-top:0" label="Coordinator's Email (if not your email)" value.two-way="voOpp.voContactEmail & validate:controller2"></paper-input>
-<paper-input style="margin-top:0" label="Coordinator's Phone (not required)" value.two-way="voOpp.voContactPhone & validate:controller2" type="number"></paper-input>
+<paper-input style="margin-top:0" label="Coordinator's Phone (not required)" value.two-way="voOpp.voContactPhone & validate:controller2" type="tel"></paper-input>
 <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
   <ul if.bind="controller2.errors">
     <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red">
