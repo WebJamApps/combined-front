@@ -57,6 +57,7 @@ export class Charity {
     console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
     let charity = {
       'charityName': '',
+      'charityStreet': '',
       'charityCity': '',
       'charityState': '',
       'charityZipCode': '',
@@ -145,11 +146,12 @@ export class Charity {
 
   setupValidation2() {
     ValidationRules
-    .ensure('charityPhoneNumber').matches(/\b[2-9]\d{9}\b/).withMessage('10 digit phone number')
+    .ensure('charityPhoneNumber').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
+    .ensure('charityName').required().maxLength(40).withMessage('Charity name please')
     .ensure('charityEmail').email()
     .ensure('charityZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
     .ensure('charityCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
-    .ensure('charityName').required().maxLength(40).withMessage('Charity name please')
+    .ensure('charityStreet').required().maxLength(40).withMessage('Charity street address please')
     .ensure('charityState').required().withMessage('Charity state please')
     .on(this.updateCharity);
   }
@@ -325,6 +327,15 @@ export class Charity {
       }
     });
   }
+
+  // removeHyphen(){
+  //   console.log('running remove hyphen');
+  //   let charityPhone = document.getElementById('charity-phone').value;
+  //   console.log(charityPhone);
+  //   if (charityPhone.indexOf('-') !== -1){
+  //     charityPhone.replace('-', '');
+  //   }
+  // }
 
   attached(){
     this.createNewCharity();
