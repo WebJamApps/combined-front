@@ -8,6 +8,26 @@ export class Volunteer {
     this.events = [];
   }
 
+  //charityTypes
+  //mediaTypes = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audiobook', 'template'];
+  //zipcodes
+  siteLocations = [];
+  causes = [];
+  //filterby = ['keyword', 'media type', 'location'];
+  filterby = ['keyword', 'zipcode', 'cause'];
+  selectedFilter = [];
+  expanded = false;
+  keyword = false;
+  //mediaType = false;
+  siteLocation = false;
+  causeFilter = false;
+  filters = [
+    {value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState']},
+    //{value: '', keys: ['type']},
+    {value: '', keys: ['voZipCode']},
+    {value: '', keys: ['voCharityTypes']}
+  ];
+
   async activate() {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
@@ -20,9 +40,89 @@ export class Volunteer {
       this.fixDates();
       this.buildWorkPrefs();
       this.buildTalents();
+      this.populateTypes();
+      this.populateSites();
+      this.populateCauses();
       //this.charityName = this.events[0].voCharityName;
     }
   }
+
+  filterPicked(){
+    let arrayLength = this.selectedFilter.length;
+    this.keyword = false;
+    //this.mediaType = false;
+    this.siteLocation = false;
+    if (arrayLength === 0){
+      this.filters[0].value = '';
+      this.filters[1].value = '';
+      //this.filters[2].value = '';
+      return;
+    }
+    for (let i = 0; i < arrayLength; i++) {
+      /* look in array, if filter type is contained then set the selected filtertype to be true  this.keyword = true; this.mediaType=true; this.siteLocation=true*/
+      if (this.selectedFilter.includes('keyword')) {
+        this.keyword = true;
+      } else {
+        console.log('you unchecked the keyword filter');
+        this.filters[0].value = '';
+        this.keyword = false;
+        //this.activate();
+      }
+      // if (this.selectedFilter.includes('media type')) {
+      //   this.mediaType = true;
+      // } else {
+      //   this.filters[1].value = '';
+      //   this.mediaType = false;
+      // }
+      if (this.selectedFilter.includes('zipcode')) {
+        this.siteLocation = true;
+      } else {
+        this.filters[1].value = '';
+        this.siteLocation = false;
+      }
+      if (this.selectedFilter.includes('cause')) {
+        this.causeFilter = true;
+      } else {
+        this.filters[2].value = '';
+        this.causeFilter = false;
+      }
+    }
+  }
+
+  populateTypes(){
+    // this.mediaTypes.push('');
+    // for (let next of this.books){
+    //   let nextType = next.type;
+    //   if (this.mediaTypes.indexOf(nextType) === -1){
+    //     this.mediaTypes.push(nextType);
+    //   }
+    // }
+  }
+
+  populateSites(){
+    this.siteLocations.push('');
+    for (let next of this.events){
+      let nextSite = next.voZipCode;
+      if (this.siteLocations.indexOf(nextSite) === -1){
+        this.siteLocations.push(nextSite);
+      }
+    }
+  }
+
+  populateCauses(){
+    this.causes.push('');
+    for (let next of this.events){
+      let nextCharityType = next.voCharityTypes;
+      for (let nextType of nextCharityType){
+        if (this.causes.indexOf(nextType) === -1){
+          this.causes.push(nextType);
+        }
+      }
+    }
+  }
+  // setFilter(filterType){
+  //   this.filterType = this.filterby[this.filterType - 1];
+  // }
 
   fixDates(){
     for (let i = 0; i < this.events.length; i++){

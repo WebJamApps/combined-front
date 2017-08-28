@@ -113,8 +113,8 @@ describe('The Bookshelf Module', () => {
     done();
   });
 
-  it('should expect change in http status after getUser call', (done) => {
-    shelf.setFilter(2);
-    done();
-  });
+  // it('should expect change in http status after getUser call', (done) => {
+  //   shelf.setFilter(2);
+  //   done();
+  // });
 });
