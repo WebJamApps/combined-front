@@ -1,5 +1,5 @@
 {
-  "name": "web-jam-front",
+  "name": "combined-front",
   "version": "0.1.0",
   "description": "Front End of web-jam.com App",
   "main": "dist/app.bundle.js",
@@ -51,7 +51,7 @@
     "aurelia-templating-resources": "1.4.0",
     "aurelia-templating-router": "1.1.0",
     "aurelia-validation": "^1.0.0",
-    "aurelia-webpack-plugin": "2.0.0-rc.3",
+    "aurelia-webpack-plugin": "^2.0.0-rc.5",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.1",
