@@ -78,7 +78,7 @@ export class Bookshelf {
   }
 
   filters = [
-    {value: '', keys: ['title', 'type', 'author', 'numberPages', 'dateOfPub', 'siteLocation', 'access']},
+    {value: '', keys: ['title', 'type', 'author', 'numberPages', 'dateOfPub', 'siteLocation', 'access', 'comments']},
     {value: '', keys: ['type']},
     {value: '', keys: ['siteLocation']}
   ];
@@ -103,9 +103,9 @@ export class Bookshelf {
     }
   }
 
-  setFilter(filterType){
-    this.filterType = this.filterby[this.filterType - 1];
-  }
+  // setFilter(filterType){
+  //   this.filterType = this.filterby[this.filterType - 1];
+  // }
 
   showCheckboxes(){
     const checkboxes = document.getElementById('checkboxes-iron');
