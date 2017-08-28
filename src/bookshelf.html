@@ -17,8 +17,8 @@
                 </div>
                 <iron-dropdown id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
                   <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 250px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-                    <label repeat.for="filter of filterby" for="filter" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
-                      <input type="checkbox" value.bind="filter" checked.bind="selectedFilter" change.delegate="filterPicked()"> ${filter}
+                    <label repeat.for="filter of filterby" for="${filter}" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
+                      <input type="checkbox" value.bind="filter" id.bind="filter" checked.bind="selectedFilter" change.delegate="filterPicked()"> ${filter}
                     </label>
                   </div>
                 </iron-dropdown>
