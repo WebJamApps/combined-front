@@ -50,7 +50,7 @@
   <!-- <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf"> -->
       <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
     <thead>
-      <tr>
+      <tr><th style="padding:8px;min-width:130px; text-align:center">Action</th>
         <th style="padding:8px;min-width:130px" aut-sort="key: voName; default: asc">Event Name</th>
         <th style="padding:8px;min-width:200px" >Description</th>
         <th style="padding:8px; min-width:150px" >Location</th>
@@ -71,6 +71,14 @@
     </thead>
     <tbody>
       <tr repeat.for="event of $displayData">
+        <td style="padding:8px; text-align:center">
+          <button if.bind="!event.scheduled" class="button-checkout" raised click.delegate="signupEvent(event._id)" style="margin-bottom:10px">
+            Sign Up
+          </button>
+          <button if.bind="event.scheduled" class="button-checkout" raised click.delegate="cancelSignup(event._id)" style="color:black; margin-bottom:10px; background-color: red">
+            Cancel
+          </button>
+        </td>
         <td style="padding:8px" innerhtml.bind="event.voName"></td>
         <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
         <td style="padding:8px; min-width:100px"><p>${event.voStreet}</p><p>${event.voCity}, ${event.voState}</p></td>

@@ -1,11 +1,12 @@
 import {inject} from 'aurelia-framework';
 import {App} from '../app';
-//import {json} from 'aurelia-fetch-client';
+import {json} from 'aurelia-fetch-client';
 @inject(App)
 export class Volunteer {
   constructor(app){
     this.app = app;
     this.events = [];
+    this.signup = {};
   }
 
   //charityTypes
@@ -43,10 +44,28 @@ export class Volunteer {
       this.populateTypes();
       this.populateSites();
       this.populateCauses();
+      this.checkSignups();
       //this.charityName = this.events[0].voCharityName;
     }
   }
 
+  async checkSignups(){
+    const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
+    this.userSignups = await resp.json();
+    console.log('this user has signed up for these events');
+    console.log(this.userSignups);
+    //loop through all userSignups and check against looping through all events
+    for (let next of this.userSignups){
+      let nextEventId = next.voloppId;
+      for (let i = 0; i < this.events.length; i++){
+        if (this.events[i]._id === nextEventId){
+          this.events[i].scheduled = true;
+        }
+        // if (this.mediaTypes.indexOf(nextType) === -1){
+        //   this.mediaTypes.push(nextType);
+      }
+    }
+  }
   filterPicked(){
     let arrayLength = this.selectedFilter.length;
     this.keyword = false;
@@ -243,6 +262,39 @@ export class Volunteer {
       checkboxes.opened = false;
       this.expanded = false;
     }
+  }
+
+  signupEvent(eventID){
+    //   voloppId: { type: String, required: true },
+    // userId: { type: String, required: true },
+    // numPeople: { type: Number, required: true },
+    // groupName: { type: String, required: false }
+    this.signup.voloppId = eventID;
+    this.signup.userId = this.uid;
+    this.signup.numPeople = 1;
+    this.signup.groupName = '';
+    this.app.httpClient.fetch('/signup/create', {
+      method: 'post',
+      body: json(this.signup)
+    })
+    .then((data) => {
+      console.log(data);
+      //document.getElementById('charityDash').scrollIntoView();
+      this.activate();
+      //this.createNewCharity();
+    });
+  }
+
+  async cancelSignup(eId){
+    await fetch;
+    this.app.httpClient.fetch('/signup/' + eId, {
+      method: 'delete'
+    })
+    .then((data) => {
+      console.log('no longer volunteering for that event');
+      this.activate();
+      //this.createNewCharity();
+    });
   }
 
   attached(){
