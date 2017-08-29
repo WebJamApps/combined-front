@@ -8,14 +8,15 @@
           <thead>
             <tr>
               <th style="padding:8px; text-align:center">Action</th>
-              <th style="padding:8px;" aut-sort="key: voName; default: asc">Name</th>
-              <th style="padding:8px;min-width:200px" >Description</th>
+              <th style="padding:8px; min-width:150px" aut-sort="key: voName; default: asc">Name</th>
+              <th style="padding:8px; min-width:200px" >Description</th>
               <th style="padding:8px; min-width:200px" >Location</th>
-              <th style="padding:8px" >Start Date</th>
-              <th style="padding:8px" >Start Time</th>
-              <th style="padding:8px">End Date</th>
-              <th style="padding:8px">End Time</th>
-              <th style="padding:8px"># of Volunteers</th>
+              <th style="padding:8px; min-width:100px" >Start Date</th>
+              <th style="padding:8px; min-width:100px" >Start Time</th>
+              <th style="padding:8px; min-width:100px">End Date</th>
+              <th style="padding:8px; min-width:100px">End Time</th>
+              <th style="padding:8px">People<br>Needed</th>
+              <th style="padding:8px">People<br>Scheduled</th>
               <th style="padding:8px">Talents</th>
               <th style="padding:8px">Work</th>
               <th style="padding:8px">Phone</th>
@@ -39,6 +40,7 @@
               <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
               <td style="padding:8px" innerhtml.bind="event.voEndTime"></td>
               <td style="padding:8px" innerhtml.bind="event.voNumPeopleNeeded"></td>
+              <td style="padding:8px" innerhtml.bind="event.voNumPeopleScheduled"></td>
               <td style="padding:8px" innerhtml.bind="event.talentHtml"></td>
               <td style="padding:8px" innerhtml.bind="event.workHtml"></td>
               <td style="padding:8px" innerhtml.bind="event.voContactPhone"></td>

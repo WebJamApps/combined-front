@@ -66,6 +66,7 @@ export class Volunteer {
       }
     }
   }
+  
   filterPicked(){
     let arrayLength = this.selectedFilter.length;
     this.keyword = false;
