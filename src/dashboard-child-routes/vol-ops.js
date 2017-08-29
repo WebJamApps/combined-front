@@ -12,7 +12,7 @@ export class VolunteerOpps {
   controller = null;
   validator = null;
   constructor(app, controllerFactory, validator){
-  //constructor(app){
+    //constructor(app){
     this.app = app;
     this.selectedTalents = [];
     this.selectedWorks = [];
@@ -47,6 +47,7 @@ export class VolunteerOpps {
       this.fixDates();
       this.buildWorkPrefs();
       this.buildTalents();
+      this.checkScheduled();
       //this.charityName = this.events[0].voCharityName;
     }
     //else {
@@ -70,20 +71,30 @@ export class VolunteerOpps {
     this.states.sort();
   }
 
-  showTime(){
-    console.log('show time picker here');
-  //   this.dialog.time = new moment();
-  //   this.dialog.toggle();
+  async checkScheduled(){
+    //loop through each evnt
+    // get signups by event id
+    // if length > 0, add number of volunteers to the event. number of people signed up
+    // number needed - number signed up = the number still needed
+    let resp;
+    let scheduledEvents;
+    let total = 0;
+    for (let i = 0; i < this.events.length; i++){
+      resp = await this.app.httpClient.fetch('/signup/event/' + this.events[i]._id);
+      scheduledEvents = await resp.json();
+      console.log('these are the schedule events for this event id');
+      console.log(scheduledEvents);
+      for (let hasVolunteers of scheduledEvents){
+        total = total + hasVolunteers.numPeople;
+      }
+      this.events[i].voNumPeopleScheduled = total;
+      total = 0;
+    }
   }
 
-  // radio(type){
-  //   console.log('radio type is ' + type);
-  //   if (type === 'charity'){
-  //     this.newAddress = false;
-  //   } else {
-  //     this.newAddress = true;
-  //   }
-  // }
+  showTime(){
+    console.log('show time picker here');
+  }
 
   selectDate(dtype){
     console.log('show date picker here');
@@ -96,8 +107,8 @@ export class VolunteerOpps {
       console.log(this.voOpp.voEndDate);
       this.maxStartDate = this.voOpp.voEndDate;
     }
-  //   this.dialog.time = new moment();
-  //   this.dialog.toggle();
+    //   this.dialog.time = new moment();
+    //   this.dialog.toggle();
   }
 
   async findCharity(){
