@@ -27,10 +27,17 @@
           <tbody>
             <tr repeat.for="event of $displayData">
               <td style="padding:8px; text-align:center">
-                <button class="button-checkout" raised click.delegate="deleteEvent(event._id)" style="margin-bottom:10px">
+                <button if.bind="event.voNumPeopleScheduled === 0 && event.voStatus !=='cancel'" class="button-checkout" raised click.delegate="deleteEvent(event._id)" style="margin-bottom:10px">
                   Delete
                 </button>
-                <p><a click.delegate="showUpdateEvent(event)">Update</a></p>
+                <button if.bind="event.voNumPeopleScheduled > 0 && event.voStatus !=='cancel'" class="button-checkout" raised click.delegate="cancelEvent(event)" style="margin-bottom:10px">
+                  Cancel
+                </button>
+                <p><a if.bind="event.voStatus !=='cancel'" click.delegate="showUpdateEvent(event)">Update</a></p>
+                <p if.bind="event.voStatus ==='cancel'"><strong>This event has been cancelled</strong></p>
+                <button if.bind="event.voStatus ==='cancel'" class="button-checkout" raised click.delegate="reactivateEvent(event)" style="margin-bottom:10px">
+                  Reactivate
+                </button>
               </td>
               <td style="padding:8px" innerhtml.bind="event.voName"></td>
               <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
@@ -119,7 +126,7 @@
   </ul>
 </div>
 <button if.bind="newEvent" id="scheduleEvent" class="updateButton" raised click.trigger="scheduleEvent()" style="display:none;margin-bottom:40px">Schedule</button>
-<button if.bind="!newEvent" id="updateScheduleEvent" class="updateButton" raised click.trigger="updateEvent()" style="display:none;margin-bottom:40px">Update</button>
+<button if.bind="!newEvent" id="updateScheduleEvent" class="updateButton" raised click.trigger="updateEvent('update')" style="display:none;margin-bottom:40px">Update</button>
 <button id="nevermind" class="nevermind" raised click.trigger="showNewEvent()" style="margin-bottom:40px">Nevermind</button>
 </form>
 </div>
