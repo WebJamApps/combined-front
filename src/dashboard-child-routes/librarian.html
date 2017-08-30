@@ -35,7 +35,6 @@
           <p>&nbsp;</p>
       <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
         <h4 class="material-header-h4">Delete All Media</h4>
-
         <form>
           <button class="button-lib; width:3cm" raised click.trigger="deleteBooks()">
             Delete Books
@@ -61,14 +60,6 @@
             <option value="">Access</option>
             <option repeat.for="access of accessArray" model.bind="access">${access}</option>
           </select>
-          <!-- <paper-dropdown-menu  label="Access">
-            <paper-listbox  required  selected.two-way="newBook.access" class="dropdown-content">
-              <paper-item value=""></paper-item>
-              <template is="dom-repeat" items.two-way="accessArray">
-                <paper-item model="{{item}}">{{item}}</paper-item>
-              </template>
-            </paper-listbox>
-          </paper-dropdown-menu> -->
           <paper-input  value.two-way="newBook.comments" label="Comments" ></paper-input>
           <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
             <ul if.bind="controller.errors">
@@ -84,5 +75,6 @@
       </paper-material>
         <p>&nbsp;</p>
     </div>
+    <!-- <div id="wjfooter" class="footer" style="padding:8px; background-color: #2a222a"></div> -->
   </div>
 </template>
