@@ -47,28 +47,28 @@
         <h4 class="material-header-h4">Add Media</h4>
         <form>
           <paper-input  label="Title (required)" value.two-way="newBook.title & validate"></paper-input>
-          <paper-dropdown-menu  label="Media Type (required)">
-            <paper-listbox  required  selected.two-way="newBook.type & validate" class="dropdown-content">
-              <paper-item value=""></paper-item>
-              <template is="dom-repeat" items.two-way="types">
-                <paper-item model="{{item}}">{{item}}</paper-item>
-              </template>
-            </paper-listbox>
-          </paper-dropdown-menu>
+          <select id="mediaType" class="form-control" value.bind="newBook.type & validate" style="margin-top:30px;width: 2.35in">
+            <option value="">Media Type (required)</option>
+            <option repeat.for="type of types" model.bind="type">${type}</option>
+          </select>
           <paper-input  value.two-way="newBook.author" label="Author" ></paper-input>
           <paper-input type="number" label="Number of Pages" value.two-way="newBook.numberPages"></paper-input>
           <paper-input type="number" label="Year of Publication"  value.two-way="newBook.dateOfPub"></paper-input>
           <paper-input value.two-way="newBook.url" label="URL (if pdf or webpage)" ></paper-input>
           <paper-input  value.two-way="newBook.isbn" label="Catalog Number" ></paper-input>
           <paper-input  value.two-way="newBook.siteLocation" label="Site Location (if physical book)" ></paper-input>
-          <paper-dropdown-menu  label="Access">
+          <select id="Access" class="form-control" value.bind="newBook.access" style="margin-top:30px;width: 2.35in">
+            <option value="">Access</option>
+            <option repeat.for="access of accessArray" model.bind="access">${access}</option>
+          </select>
+          <!-- <paper-dropdown-menu  label="Access">
             <paper-listbox  required  selected.two-way="newBook.access" class="dropdown-content">
               <paper-item value=""></paper-item>
               <template is="dom-repeat" items.two-way="accessArray">
                 <paper-item model="{{item}}">{{item}}</paper-item>
               </template>
             </paper-listbox>
-          </paper-dropdown-menu>
+          </paper-dropdown-menu> -->
           <paper-input  value.two-way="newBook.comments" label="Comments" ></paper-input>
           <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
             <ul if.bind="controller.errors">

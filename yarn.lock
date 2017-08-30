@@ -41,8 +41,8 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.34.tgz#aa7af69a3a91922171ee411b3c9d8f6beb4af321"
 
 "@types/node@*":
-  version "8.0.25"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.25.tgz#66ecaf4df93f5281b48427ee96fbcdfc4f0cdce1"
+  version "8.0.26"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.26.tgz#4d58be925306fd22b1141085535a0268b8beb189"
 
 "@types/node@^6.0.0", "@types/node@^6.0.46":
   version "6.0.88"
@@ -1616,12 +1616,12 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000187, caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000718"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000718.tgz#86cdd97987302554934c61e106f4e470f16f993c"
+  version "1.0.30000721"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000721.tgz#cdc52efe8f82dd13916615b78e86f704ece61802"
 
 caniuse-lite@^1.0.30000718:
-  version "1.0.30000718"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000718.tgz#0dd24290beb11310b2d80f6b70a823c2a65a6fad"
+  version "1.0.30000721"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000721.tgz#931a21a7bd85016300328d21f126d84b73437d35"
 
 capture-stack-trace@^1.0.0:
   version "1.0.0"
@@ -3781,8 +3781,8 @@ ieee754@^1.1.4:
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
 
 ignore@^3.2.0:
-  version "3.3.4"
-  resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.4.tgz#85ab6d0a9ca8b27b31604c09efe1c14dc21ab872"
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.5.tgz#c4e715455f6073a8d7e5dae72d2fc9d71663dba6"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
@@ -4444,8 +4444,8 @@ karma-webpack@^2.0.4:
     webpack-dev-middleware "^1.0.11"
 
 karma@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/karma/-/karma-1.7.0.tgz#6f7a1a406446fa2e187ec95398698f4cee476269"
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/karma/-/karma-1.7.1.tgz#85cc08e9e0a22d7ce9cca37c4a1be824f6a2b1ae"
   dependencies:
     bluebird "^3.3.0"
     body-parser "^1.16.1"
@@ -4816,9 +4816,13 @@ mime@1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.3.4.tgz#115f9e3b6b3daf2959983cb38f149a2d40eb5d53"
 
-mime@1.3.x, mime@^1.3.4:
+mime@1.3.x:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.3.6.tgz#591d84d3653a6b0b4a3b9df8de5aa8108e72e5e0"
+
+mime@^1.3.4:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/mime/-/mime-1.4.0.tgz#69e9e0db51d44f2a3b56e48b7817d7d137f1a343"
 
 mimic-fn@^1.0.0:
   version "1.1.0"
@@ -4920,8 +4924,8 @@ mute-stream@0.0.6:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.6.tgz#48962b19e169fd1dfc240b3f1e7317627bbc47db"
 
 nan@^2.3.0:
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.7.0.tgz#d95bf721ec877e08db276ed3fc6eb78f9083ad46"
 
 natural-compare@^1.4.0:
   version "1.4.0"
@@ -6632,16 +6636,16 @@ snyk-config@1.0.1:
     nconf "^0.7.2"
     path-is-absolute "^1.0.0"
 
-snyk-go-plugin@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/snyk-go-plugin/-/snyk-go-plugin-1.1.2.tgz#af93ab38d34ab40c67f1ffb00eb3bf6e4b6ab17c"
+snyk-go-plugin@1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/snyk-go-plugin/-/snyk-go-plugin-1.1.3.tgz#68fc6ef980872b254fb812430a6b1f3d84a146fd"
   dependencies:
     fs "0.0.1-security"
     toml "^2.3.2"
 
-snyk-gradle-plugin@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/snyk-gradle-plugin/-/snyk-gradle-plugin-1.1.1.tgz#9d75c973ce0e2e94bbf031ca737a354d9f2aa026"
+snyk-gradle-plugin@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/snyk-gradle-plugin/-/snyk-gradle-plugin-1.1.2.tgz#9857b808a2bac8d4374ae47a9cef5e127cf56d74"
   dependencies:
     clone-deep "^0.3.0"
 
@@ -6652,9 +6656,9 @@ snyk-module@1.8.1, snyk-module@^1.6.0, snyk-module@^1.8.1:
     debug "^2.2.0"
     hosted-git-info "^2.1.4"
 
-snyk-mvn-plugin@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/snyk-mvn-plugin/-/snyk-mvn-plugin-1.0.0.tgz#99ae297b7ae40fa8df78a39fa13816dc513c2d10"
+snyk-mvn-plugin@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/snyk-mvn-plugin/-/snyk-mvn-plugin-1.0.1.tgz#dc6dd6a363c9bfac259ee3c126f5ec1607b40a73"
 
 snyk-policy@1.7.1:
   version "1.7.1"
@@ -6670,9 +6674,9 @@ snyk-policy@1.7.1:
     snyk-try-require "^1.1.1"
     then-fs "^2.0.0"
 
-snyk-python-plugin@1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/snyk-python-plugin/-/snyk-python-plugin-1.2.3.tgz#c7c7df73576c6f8e9fab25364e8bab0b325b5ca9"
+snyk-python-plugin@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/snyk-python-plugin/-/snyk-python-plugin-1.2.4.tgz#bcd69a6a284e75b58aab92ee1b253ff9ca049fe4"
 
 snyk-recursive-readdir@^2.0.0:
   version "2.0.0"
@@ -6706,9 +6710,9 @@ snyk-resolve@1.0.0, snyk-resolve@^1.0.0:
     debug "^2.2.0"
     then-fs "^2.0.0"
 
-snyk-sbt-plugin@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/snyk-sbt-plugin/-/snyk-sbt-plugin-1.1.0.tgz#922bc70220ee95f26fbb1e482ff1dcbccdd1f050"
+snyk-sbt-plugin@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/snyk-sbt-plugin/-/snyk-sbt-plugin-1.1.1.tgz#eb8ce1dc5d0da49fb7b3672e34717e196774816f"
 
 snyk-tree@^1.0.0:
   version "1.0.0"
@@ -6727,8 +6731,8 @@ snyk-try-require@^1.1.1, snyk-try-require@^1.2.0:
     then-fs "^2.0.0"
 
 snyk@^1.36.1:
-  version "1.40.1"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.40.1.tgz#36120e6ab1659185db33fd3404377152bb92cdf2"
+  version "1.40.2"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.40.2.tgz#0084cdb969f0ee0282f5b1de562434d916c732c5"
   dependencies:
     abbrev "^1.0.7"
     ansi-escapes "^1.3.0"
@@ -6743,16 +6747,16 @@ snyk@^1.36.1:
     request "^2.74.0"
     semver "^5.1.0"
     snyk-config "1.0.1"
-    snyk-go-plugin "1.1.2"
-    snyk-gradle-plugin "1.1.1"
+    snyk-go-plugin "1.1.3"
+    snyk-gradle-plugin "1.1.2"
     snyk-module "1.8.1"
-    snyk-mvn-plugin "1.0.0"
+    snyk-mvn-plugin "1.0.1"
     snyk-policy "1.7.1"
-    snyk-python-plugin "1.2.3"
+    snyk-python-plugin "1.2.4"
     snyk-recursive-readdir "^2.0.0"
     snyk-resolve "1.0.0"
     snyk-resolve-deps "1.7.0"
-    snyk-sbt-plugin "1.1.0"
+    snyk-sbt-plugin "1.1.1"
     snyk-tree "^1.0.0"
     snyk-try-require "^1.2.0"
     tempfile "^1.1.1"
