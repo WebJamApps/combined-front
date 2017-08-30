@@ -15,6 +15,13 @@ h4 {
   font-size: 18px;
 }
 
+h5 {
+  font-family: 'PT Sans Caption';
+  font-size: 16px;
+  margin-bottom:20px;
+  margin-top:0;
+}
+
 h3.au-target.header-text.ohaf-header {
   padding: 0;
   margin: 5px;
@@ -59,6 +66,7 @@ strong {
 }
 table {
   margin: auto;
+  border-collapse: separate;
 }
 
 tbody tr:nth-child(odd) {
@@ -639,6 +647,9 @@ div.au-stagger {
   }
 }
 
+.elevation2 {
+      box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+}
 .header-text {
   color: white;
   font-size: 24px;
