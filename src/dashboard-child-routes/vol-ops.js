@@ -223,11 +223,7 @@ export class VolunteerOpps {
   }
 
   scheduleEvent(){
-    //this.voOpp.voStartDate = document.getElementById('start-date').date;
-    //this.voOpp.voStartTime = document.getElementById('start-time').time;
-    //this.voOpp.voEndDate = document.getElementById('end-date').date;
-    //this.voOpp.voEndTime = document.getElementById('end-time').time;
-    //this.voOpp.voCharityName = this.charityName;
+    this.voOpp.voStatus = 'new';
     console.log(this.voOpp);
     //this.newCharity.charityManagers[0] = this.user.name;
     //this.newCharity.charityMngIds[0] = this.user._id;
@@ -291,9 +287,20 @@ export class VolunteerOpps {
     //document.getElementById('eventHeader').scrollIntoView();
   }
 
-  async updateEvent(){
+  cancelEvent(theEvent){
+    this.voOpp = theEvent;
+    this.updateEvent('cancel');
+  }
+
+  reactivateEvent(theEvent){
+    this.voOpp = theEvent;
+    this.updateEvent('update');
+  }
+
+  async updateEvent(updateType){
     console.log('update Event');
     //console.log('this is the update charity');
+    this.voOpp.voStatus = updateType;
     console.log(this.voOpp);
     await fetch;
     this.app.httpClient.fetch('/volopp/' + this.voOpp._id, {
@@ -302,7 +309,7 @@ export class VolunteerOpps {
     })
     .then((response) => response.json())
     .then((data) => {
-      this.showNewEvent();
+      this.activate();
     });
   }
 
