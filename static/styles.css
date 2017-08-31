@@ -61,6 +61,15 @@ h1 {
   margin: auto;
 }
 
+label {
+  font-size:11pt;
+  padding-top:20px;
+  margin-bottom:0;
+  padding-bottom:1px;
+  display: block;
+  width: 100%;
+}
+
 strong {
   font-weight:700;
 }

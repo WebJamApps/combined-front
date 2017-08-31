@@ -1,9 +1,9 @@
 <template>
   <div class="page-content">
-    <paper-material class="material-content" elevation="0">
+    <div>
       <h4 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>${user.name}'s User Account</strong></h4>
-      <p style="margin:auto; text-align:center; padding-bottom:20px">Your primary role is ${role}</p>
-    </paper-material>
+      <p style="margin:auto; text-align:center; padding-bottom:20px">Your primary role is <u>${role}</u></p>
+    </div>
     <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto" if.bind="role === 'Volunteer' || role === 'Developer'">
       <h4 class="material-header-h4">Set Your Volunteering Preferences</h4>
       <form>
@@ -22,7 +22,8 @@
             </div>
           </iron-dropdown>
         </div>
-        <paper-input if.bind="causeOther" value.two-way="user.volCauseOther" label="Other cause"></paper-input>
+        <label if.bind="causeOther">Other Causes</label>
+        <input if.bind="causeOther" value.two-way="user.volCauseOther">
         <div class="multiselect" style="width:170px; margin-top:50px">
           <div class="selectBox" click.delegate="showCheckboxes('talents')">
             <select>
@@ -38,7 +39,8 @@
             </div>
           </iron-dropdown>
         </div>
-        <paper-input if.bind="talentOther" value.two-way="user.volTalentOther" label="Other talent" ></paper-input>
+        <label if.bind="talentOther">Other Talent</label>
+        <input if.bind="talentOther" value.two-way="user.volTalentOther">
         <div class="multiselect" style="width:170px; margin-top:50px">
           <div class="selectBox" click.delegate="showCheckboxes('work')">
             <select>
@@ -54,14 +56,17 @@
             </div>
           </iron-dropdown>
         </div>
-        <paper-input if.bind="workOther" value.two-way="user.volWorkOther" label="Other work" ></paper-input>
-        <paper-input style="margin-top:25px" value.two-way="user.volTravelDistMiles" label="Furthest distance willing to travel (miles)" ></paper-input>
+        <label if.bind="workOther">Other Work</label>
+        <input if.bind="workOther" value.two-way="user.volWorkOther">
+        <p>&nbsp;</p>
+        <label>Furthest distance willing to travel (miles)</label>
+        <input style="margin-top:0" value.two-way="user.volTravelDistMiles">
         <button class="button-lib" raised click.trigger="setupVolunteer()">
           Submit</button>
         </form>
       </paper-material>
       <p> </p>
-      <paper-material elevation="2" style="padding:20px; width:300px; margin:auto">
+      <paper-material elevation="2" style="padding:20px; max-width:600px; margin:auto">
         <p style="text-align:center; font-weight:bold">Delete your user</p>
         <button if.bind="canDelete" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">
           Delete User
@@ -69,6 +74,6 @@
         <p>${notDelR}</p>
         <p>${notDelB}</p>
       </paper-material>
-<!-- <div id="wjfooter" class="footer" style="padding:8px; background-color: #2a222a"></div> -->
+      <p>&nbsp;</p>
     </div>
   </template>
