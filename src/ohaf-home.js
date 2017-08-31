@@ -9,9 +9,30 @@ export class OhafHome {
   get widescreen() {
     return document.documentElement.clientWidth > 1100;
   }
-  // attached() {
-  //   document.title = this.router.currentInstruction.config.title;
-  // }
 
+  showSlides() {
+    let slides;
+    slides = document.getElementById('slideshow1');
+    if (slides !== null){
+      $('#slideshow1 > div:first')
+      .hide()
+      .next()
+      .fadeIn(1500)
+      .end()
+      .appendTo('#slideshow1');
+    } else {
+      $('#slideshow > div:first')
+      .hide()
+      .next()
+      .fadeIn(1500)
+      .end()
+      .appendTo('#slideshow');
+    }
+  }
+  attached() {
+    //$('#slideshow > div:gt(0)').hide();
+    //$('#slideshow1 > div:gt(0)').hide();
+    setInterval(this.showSlides, 4000);
+  }
 
 }
