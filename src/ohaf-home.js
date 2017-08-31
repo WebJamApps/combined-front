@@ -29,9 +29,8 @@ export class OhafHome {
       .appendTo('#slideshow');
     }
   }
+
   attached() {
-    //$('#slideshow > div:gt(0)').hide();
-    //$('#slideshow1 > div:gt(0)').hide();
     setInterval(this.showSlides, 4000);
   }
 

@@ -1,57 +1,46 @@
 <template>
   <div class="page-content">
-    <div style="float: right; width: 600px; margin-top: 25px" if.bind = "widescreen">
-      <paper-material class="material-content" elevation="0">
-        <polymer-slideshow class="home-slideshow">
-          <polymer-slide>
-            <paper-card class="slideshowimage" image="../static/imgs/library/books1.jpg"></paper-card>
-          </polymer-slide>
-          <polymer-slide>
-            <paper-card class="slideshowimage" image="../static/imgs/library/books2.jpg"></paper-card>
-          </polymer-slide>
-          <polymer-slide>
-            <paper-card class="slideshowimage" image="../static/imgs/library/books3.jpg"></paper-card>
-          </polymer-slide>
-        </polymer-slideshow>
-        <p class="material-content-p" style="font-style: italic; font-size: 9pt; margin-top:40px">A library is the delivery room for the birth of ideas, a place where history comes to life.<br>  --Norman Cousins</p>
-      </paper-material>
+    <div if.bind="widescreen">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6" style="top:0">
+            <h3 style="text-align:left; padding-left:10px">About the library</h3>
+            <p class="material-content-p" style="text-align:left; padding-left:10px">Your place to go for links to books, videos, work instructions, product documentation, etc.</p>
+            <ul>
+              <li>Click the <a href="/bookshelf">Bookshelf</a> and select a filter to quickly find what you are looking for.</li>
+              <li><a href="/login">Login</a> and choose the Reader or Librarian.</li>
+              <li>The Reader can checkout physical books.</li>
+              <li>The Librarian can update the available books in the Bookshelf.</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <div id="slideshow1" style="top:1px">
+              <div style="display:block"><img src="../static/imgs/library/books1.jpg"></div>
+              <div style="display:none"><img src="../static/imgs/library/books2.jpg"></div>
+              <div style="display:none"><img src="../static/imgs/library/books3.jpg"></div>
+            </div>
+            <p class="material-content-p" style="font-style: italic; font-size: 9pt; margin-top:10px; text-align:left">A library is the delivery room for the birth of ideas, a place where history comes to life.&nbsp;&nbsp;--Norman Cousins</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div style="width: 750px; margin-bottom:275px" if.bind = "widescreen">
-      <paper-material class="material-content" elevation="0">
-        <h1 class="material-content-h1" style="text-align:left; padding-left:10px">About the library</h1>
-        <p class="material-content-p" style="text-align:left; padding-left:10px">Your place to go for links to books, videos, work instructions, product documentation, etc.</p>
+    <div if.bind = "!widescreen" style="margin-top:1px;">
+      <div id="slideshow">
+        <div style="display:block"><img src="../static/imgs/library/books1.jpg"></div>
+        <div style="display:none"><img src="../static/imgs/library/books2.jpg"></div>
+        <div style="display:none"><img src="../static/imgs/library/books3.jpg"></div>
+      </div>
+      <p class="material-content-p" style="font-style: italic; margin-top:1%">A library is the delivery room for the birth of ideas, a place where history comes to life.<br>--Norman Cousins</p>
+      <h1 class="material-content-h1">About the library</h1>
+      <p class="material-content-p">Your place to go for links to books, videos, work instructions, product documentation, etc.</p>
+      <div style="margin-left:5%">
         <ul>
           <li>Click the <a href="/bookshelf">Bookshelf</a> and select a filter to quickly find what you are looking for.</li>
           <li><a href="/login">Login</a> and choose the Reader or Librarian.</li>
           <li>The Reader can checkout physical books.</li>
           <li>The Librarian can update the available books in the Bookshelf.</li>
         </ul>
-      </paper-material>
+      </div>
     </div>
-    <div if.bind = "!widescreen" style="margin-top:8px;">
-      <paper-material class="material-content" elevation="0">
-        <polymer-slideshow class="home-slideshow">
-          <polymer-slide>
-            <paper-card class="slideshowimage" image="../static/imgs/library/books1.jpg"></paper-card>
-          </polymer-slide>
-          <polymer-slide>
-            <paper-card class="slideshowimage" image="../static/imgs/library/books2.jpg"></paper-card>
-          </polymer-slide>
-          <polymer-slide>
-            <paper-card class="slideshowimage" image="../static/imgs/library/books3.jpg"></paper-card>
-          </polymer-slide>
-        </polymer-slideshow>
-        <p class="material-content-p" style="font-style: italic; margin-top:10%">A library is the delivery room for the birth of ideas, a place where history comes to life.  --Norman Cousins</p>
-        <h1 class="material-content-h1">About the library</h1>
-        <p class="material-content-p">Your place to go for links to books, videos, work instructions, product documentation, etc.</p>
-        <ul>
-          <li>Click the <a href="/bookshelf">Bookshelf</a> and select a filter to quickly find what you are looking for.</li>
-          <li><a href="/login">Login</a> and choose the Reader or Librarian.</li>
-          <li>The Reader can checkout physical books.</li>
-          <li>The Librarian can update the available books in the Bookshelf.</li>
-        </ul>
-      </paper-material>
-    </div>
-<!-- <div id="wjfooter" class="footer" style="padding:8px; background-color: #2a222a"></div> -->
   </div>
 </template>
