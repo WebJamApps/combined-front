@@ -870,12 +870,13 @@ color:white; font-size:9pt; font-weight: bold;
 * {box-sizing:border-box}
 
 /* Slideshow container */
+#slideshow1,
 #slideshow {
   max-width: 1000px;
   position: relative;
   margin: auto;
 }
-
+#slideshow1 img,
 #slideshow img {
   width: 100%;
 }

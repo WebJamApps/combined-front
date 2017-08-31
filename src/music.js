@@ -9,10 +9,10 @@ export class Music {
   //   this.app = app;
   //   this.router = router;
   // }
-  activate(){
-    this.slideIndex = 0;
-    this.counter = 0;
-  }
+  // activate(){
+  //   this.slideIndex = 0;
+  //   this.counter = 0;
+  // }
 
   jump(h){
     //console.log(document.getElementById(h));
@@ -29,7 +29,7 @@ export class Music {
   }
 
   attached() {
-    $("#slideshow > div:gt(0)").hide();
-    setInterval(this.showSlides, 5000);
+    $('#slideshow > div:gt(0)').hide();
+    setInterval(this.showSlides, 5500);
   }
 }
