@@ -870,14 +870,14 @@ color:white; font-size:9pt; font-weight: bold;
 * {box-sizing:border-box}
 
 /* Slideshow container */
-.slideshow-container {
+#slideshow {
   max-width: 1000px;
   position: relative;
   margin: auto;
 }
 
-.mySlides {
-    display: none;
+#slideshow img {
+  width: 100%;
 }
 
 /* Next & previous buttons */
@@ -940,22 +940,4 @@ color:white; font-size:9pt; font-weight: bold;
 
 .active, .dot:hover {
   background-color: #717171;
-}
-
-/* Fading animation */
-.fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-@-webkit-keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
-}
-
-@keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
 }
