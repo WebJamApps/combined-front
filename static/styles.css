@@ -81,12 +81,6 @@ td {
   text-align: left;
 }
 
-polymer-slideshow {
-  width: 100% !important;
-  height: 50% !important;
-  padding-bottom: 38%;
-}
-
 div.page-host {
   top: 0;
 }

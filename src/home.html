@@ -1,30 +1,42 @@
 <template>
   <div class="page-content">
-    <div style="float: right; width: 800px; margin:auto;padding-left:10px;" if.bind = "widescreen">
-      <div>
-        <polymer-slideshow style="margin-top:1px; padding-left:10px; ">
-          <polymer-slide>
-            <paper-card class="slideshowimage" image="../static/imgs/banner1.jpg"></paper-card>
-          </polymer-slide>
-        </polymer-slideshow>
+    <div if.bind="widescreen">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6" style="top:0">
+            <p if.bind = "widescreen" style="margin-top:54px; margin-bottom:40px; margin-right:15px; width:640px">
+              Web Jam LLC helps businesses bring their web technologies into the 21st century!<br>Let us
+              help make your website mobile-friendly and grow your business by utilizing<br>the power of online services.
+              More information is available in our
+              <a href="https://drive.google.com/file/d/0B3XmLSSHvCS7b29tNzcxeDEwNjA/view?usp=sharing">Fact Sheet</a>.
+            </p>
+            <h3>FAQs</h3>
+            <p style="font-size:18px"><b><i>Q:</i></b> How can I contact you?</p>
+            <p style="font-size:18px"><b><i>A:</i></b> Send an email to Josh & Maria Sherman<br>
+              <a style="text-decoration: underline;font-size:18px" href="mailto:web.jam.adm@gmail.com"><strong>web.jam.adm@gmail.com</strong></a>
+              <br>or call <a href="tel:5404948035" style="text-decoration: underline;font-size:18px"><strong>540-494-8035</strong></a>
+            </p><br>
+            <p style="font-size:18px"><b><i>Q:</i></b> What does Web Jam LLC do?</p>
+            <p style="font-size:18px"><b><i>A:</i></b> We provide mobile-friendly web technologies and services.</p><br>
+            <p style="font-size:18px"><b><i>Q:</i></b> What is your mission statement?</p>
+            <p style="font-size:18px"><b><i>A:</i></b> To assist small businesses by refactoring their existing websites to be mobile-friendly,
+              providing new online services, empowering business owner, and training staff to use these new services effectively.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <div id="slideshow1" style="top:1px">
+              <img src="../static/imgs/banner1.jpg">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div if.bind = "!widescreen">
-      <polymer-slideshow style="margin-top:1px">
-        <polymer-slide>
-          <paper-card class="slideshowimage" image="../static/imgs/banner1.jpg"></paper-card>
-        </polymer-slide>
-      </polymer-slideshow>
-    </div>
-    <div>
-      <div class="material-content" style="margin-bottom:-20px">
-        <p if.bind = "!widescreen" style="margin-top:16%">
-          Web Jam LLC helps businesses bring their web technologies into the 21st century! Let us
-          help make your website mobile-friendly and grow your business by utilizing the power of online services.
-          More information is available in our
-          <a href="https://drive.google.com/file/d/0B3XmLSSHvCS7b29tNzcxeDEwNjA/view?usp=sharing">Fact Sheet</a>.
-        </p>
-        <p if.bind = "widescreen" style="margin-top:54px; margin-bottom:40px; margin-right:15px; width:640px">
+    <div if.bind = "!widescreen" style="margin-top:1px;">
+      <div id="slideshow">
+        <img src="../static/imgs/banner1.jpg">
+      </div>
+      <div style="padding:10px; margin-bottom:-20px">
+        <p>
           Web Jam LLC helps businesses bring their web technologies into the 21st century! Let us
           help make your website mobile-friendly and grow your business by utilizing the power of online services.
           More information is available in our
@@ -40,42 +52,42 @@
         <p style="font-size:18px"><b><i>A:</i></b> We provide mobile-friendly web technologies and services.</p><br>
         <p style="font-size:18px"><b><i>Q:</i></b> What is your mission statement?</p>
         <p style="font-size:18px"><b><i>A:</i></b> To assist small businesses by refactoring their existing websites to be mobile-friendly,
-          providing new online services, empowering business owner, and training staff to use these new services effectively.</p>
-        </div>
-        <hr>
-        <div class="material-content">
-          <h3 style="text-align:center; margin-top:20px;margin-bottom:15px">Our Current Projects</h3>
-          <div class="elevation2" style="padding:10px; max-width:500px;margin:auto">
-            <h4 style="text-align:center"><strong>Our Hands and Feet (<a href="/ohaf">OHAF</a>)</strong></h4>
-            <p style="text-align:center">This app connects volunteers with charity opportunities.</p>
-            <div class="paper-card-img"><paper-card style="width:270px" image="https://web-jam.com/static/imgs/ohaf/charitylogo.png"></paper-card><br>
-              <a href="http://www.ourhandsandfeet.org" target="_blank" style="text-decoration:underline; text-align:center">ourhandsandfeet.org</a>
-            </div>
-          </div>
-          <p>&nbsp;</p>
-          <div class="elevation2" style="padding:10px; max-width:500px;margin:auto">
-            <h4 style="text-align:center"><strong>Street Corner to Rock-Star (<a href="/sc2rs">SC2RS</a>)</strong></h4>
-            <p style="text-align:center">This app connects bands with performance opportunities.</p>
-            <div class="paper-card-img"><paper-card image="../static/imgs/sc2rs.png"></paper-card><br>
-              <a href="http://www.sc2rs.com" target="_blank" style="text-decoration:underline; text-align:center">sc2rs.com</a><br>
-            </div>
-          </div>
-          <p>&nbsp;</p>
-          <div class="elevation2" style="padding:10px; max-width:500px;margin:auto">
-            <h4 style="text-align:center"><strong>Web Jam <a href="/library">Library</a></strong></h4>
-            <p style="text-align:center">This app allows Readers to checkout physical books.</p>
-            <div class="paper-card-img"><paper-card image="https://web-jam.com/static/imgs/library/books2.jpg"></paper-card><br>
-            </div>
-          </div>
-          <p>&nbsp;</p>
-          <div class="elevation2" style="padding:10px; max-width:500px;margin:auto">
-            <h4 style="text-align:center"><strong>Apperson Automotive</strong></h4>
-            <div class="paper-card-img"><paper-card image="../static/imgs/AppersonAutomotive.png"></paper-card><br>
-              <a href="http://www.appersonautomotive.com" target="_blank" style="text-decoration:underline; text-align:center">appersonautomotive.com</a><br>
-            </div>
-          </div>
-        </div>
-        <!-- <div id="wjfooter" class="footer" style="padding:8px; background-color: #2a222a"></div> -->
+          providing new online services, empowering business owner, and training staff to use these new services effectively.
+        </p>
       </div>
     </div>
-  </template>
+    <hr>
+    <div class="material-content">
+      <h3 style="text-align:center; margin-top:15px;margin-bottom:15px">Our Current Projects</h3>
+      <div class="elevation2" style="padding:10px; max-width:500px;margin:auto">
+        <h4 style="text-align:center"><strong>Our Hands and Feet (<a href="/ohaf">OHAF</a>)</strong></h4>
+        <p style="text-align:center">This app connects volunteers with charity opportunities.</p>
+        <div class="paper-card-img"><paper-card style="width:270px" image="https://web-jam.com/static/imgs/ohaf/charitylogo.png"></paper-card><br>
+          <a href="http://www.ourhandsandfeet.org" target="_blank" style="text-decoration:underline; text-align:center">ourhandsandfeet.org</a>
+        </div>
+      </div>
+      <p>&nbsp;</p>
+      <div class="elevation2" style="padding:10px; max-width:500px;margin:auto">
+        <h4 style="text-align:center"><strong>Street Corner to Rock-Star (<a href="/sc2rs">SC2RS</a>)</strong></h4>
+        <p style="text-align:center">This app connects bands with performance opportunities.</p>
+        <div class="paper-card-img"><paper-card image="../static/imgs/sc2rs.png"></paper-card><br>
+          <a href="http://www.sc2rs.com" target="_blank" style="text-decoration:underline; text-align:center">sc2rs.com</a><br>
+        </div>
+      </div>
+      <p>&nbsp;</p>
+      <div class="elevation2" style="padding:10px; max-width:500px;margin:auto">
+        <h4 style="text-align:center"><strong>Web Jam <a href="/library">Library</a></strong></h4>
+        <p style="text-align:center">This app allows Readers to checkout physical books.</p>
+        <div class="paper-card-img"><paper-card image="https://web-jam.com/static/imgs/library/books2.jpg"></paper-card><br>
+        </div>
+      </div>
+      <p>&nbsp;</p>
+      <div class="elevation2" style="padding:10px; max-width:500px;margin:auto">
+        <h4 style="text-align:center"><strong>Apperson Automotive</strong></h4>
+        <div class="paper-card-img"><paper-card image="../static/imgs/AppersonAutomotive.png"></paper-card><br>
+          <a href="http://www.appersonautomotive.com" target="_blank" style="text-decoration:underline; text-align:center">appersonautomotive.com</a><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
