@@ -4,7 +4,7 @@
       <p>There are currently no books in the bookshelf</p>
     </div>
     <div if.bind="books.length > 0">
-      <paper-material elevation="0" style="z-index:10; position:relative;">
+      <div style="z-index:10; position:relative;">
         <div style="width: 4.5in; margin:auto">
           <h1 class="material-content-h1" style="margin-bottom: 10px">Bookshelf
             <span style="font-size: 14px; float:right; margin-right: 132px; margin-top: 8px">
@@ -25,8 +25,8 @@
               </div>
             </span></h1>
           </div>
-        </paper-material>
-        <paper-material elevation="0">
+        </div>
+        <div>
           <div class="form-group" if.bind="keyword" style="max-width: 4in; margin:auto; padding:5px">
             <input type="text" value.bind="filters[0].value" placeholder="Enter Keyword" class="form-control"/>
           </div>
@@ -42,7 +42,7 @@
               <option repeat.for="siteLocation of siteLocations" model.bind="siteLocation">${siteLocation}</option>
             </select>
           </div>
-        </paper-material>
+        </div>
         <!-- cannot use aurelia table inside another polymer element, it breaks the data binding -->
         <div class="search-table-outer" style="position:relative;overflow-x:auto;">
           <table aurelia-table="data.bind: books; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
@@ -53,7 +53,7 @@
                 <th style="padding:8px" >Author</th>
                 <th style="padding:8px" >Pages</th>
                 <th style="padding:8px" >Year</th>
-                <th style="padding:8px; width:100px" aut-sort="key: siteLocation">Location</th>
+                <th style="padding:8px; min-width:100px" aut-sort="key: siteLocation">Location</th>
                 <th style="padding:8px">Access</th>
                   <th style="padding:8px">Comments</th>
               </tr>
