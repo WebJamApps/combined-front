@@ -10172,15 +10172,188 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
+<script>
+  /**
+   * `IronResizableBehavior` is a behavior that can be used in Polymer elements to
+   * coordinate the flow of resize events between "resizers" (elements that control the
+   * size or hidden state of their children) and "resizables" (elements that need to be
+   * notified when they are resized or un-hidden by their parents in order to take
+   * action on their new measurements).
+   *
+   * Elements that perform measurement should add the `IronResizableBehavior` behavior to
+   * their element definition and listen for the `iron-resize` event on themselves.
+   * This event will be fired when they become showing after having been hidden,
+   * when they are resized explicitly by another resizable, or when the window has been
+   * resized.
+   *
+   * Note, the `iron-resize` event is non-bubbling.
+   *
+   * @polymerBehavior Polymer.IronResizableBehavior
+   * @demo demo/index.html
+   **/
+  Polymer.IronResizableBehavior = {
+    properties: {
+      /**
+       * The closest ancestor element that implements `IronResizableBehavior`.
+       */
+      _parentResizable: {
+        type: Object,
+        observer: '_parentResizableChanged'
+      },
+
+      /**
+       * True if this element is currently notifying its descendant elements of
+       * resize.
+       */
+      _notifyingDescendant: {
+        type: Boolean,
+        value: false
+      }
+    },
+
+    listeners: {
+      'iron-request-resize-notifications': '_onIronRequestResizeNotifications'
+    },
+
+    created: function() {
+      // We don't really need property effects on these, and also we want them
+      // to be created before the `_parentResizable` observer fires:
+      this._interestedResizables = [];
+      this._boundNotifyResize = this.notifyResize.bind(this);
+    },
+
+    attached: function() {
+      this.fire('iron-request-resize-notifications', null, {
+        node: this,
+        bubbles: true,
+        cancelable: true
+      });
+
+      if (!this._parentResizable) {
+        window.addEventListener('resize', this._boundNotifyResize);
+        this.notifyResize();
+      }
+    },
+
+    detached: function() {
+      if (this._parentResizable) {
+        this._parentResizable.stopResizeNotificationsFor(this);
+      } else {
+        window.removeEventListener('resize', this._boundNotifyResize);
+      }
+
+      this._parentResizable = null;
+    },
+
+    /**
+     * Can be called to manually notify a resizable and its descendant
+     * resizables of a resize change.
+     */
+    notifyResize: function() {
+      if (!this.isAttached) {
+        return;
+      }
+
+      this._interestedResizables.forEach(function(resizable) {
+        if (this.resizerShouldNotify(resizable)) {
+          this._notifyDescendant(resizable);
+        }
+      }, this);
+
+      this._fireResize();
+    },
+
+    /**
+     * Used to assign the closest resizable ancestor to this resizable
+     * if the ancestor detects a request for notifications.
+     */
+    assignParentResizable: function(parentResizable) {
+      this._parentResizable = parentResizable;
+    },
+
+    /**
+     * Used to remove a resizable descendant from the list of descendants
+     * that should be notified of a resize change.
+     */
+    stopResizeNotificationsFor: function(target) {
+      var index = this._interestedResizables.indexOf(target);
+
+      if (index > -1) {
+        this._interestedResizables.splice(index, 1);
+        this.unlisten(target, 'iron-resize', '_onDescendantIronResize');
+      }
+    },
+
+    /**
+     * This method can be overridden to filter nested elements that should or
+     * should not be notified by the current element. Return true if an element
+     * should be notified, or false if it should not be notified.
+     *
+     * @param {HTMLElement} element A candidate descendant element that
+     * implements `IronResizableBehavior`.
+     * @return {boolean} True if the `element` should be notified of resize.
+     */
+    resizerShouldNotify: function(element) { return true; },
+
+    _onDescendantIronResize: function(event) {
+      if (this._notifyingDescendant) {
+        event.stopPropagation();
+        return;
+      }
+
+      // NOTE(cdata): In ShadowDOM, event retargeting makes echoing of the
+      // otherwise non-bubbling event "just work." We do it manually here for
+      // the case where Polymer is not using shadow roots for whatever reason:
+      if (!Polymer.Settings.useShadow) {
+        this._fireResize();
+      }
+    },
+
+    _fireResize: function() {
+      this.fire('iron-resize', null, {
+        node: this,
+        bubbles: false
+      });
+    },
+
+    _onIronRequestResizeNotifications: function(event) {
+      var target = event.path ? event.path[0] : event.target;
+
+      if (target === this) {
+        return;
+      }
+
+      if (this._interestedResizables.indexOf(target) === -1) {
+        this._interestedResizables.push(target);
+        this.listen(target, 'iron-resize', '_onDescendantIronResize');
+      }
+
+      target.assignParentResizable(this);
+      this._notifyDescendant(target);
+
+      event.stopPropagation();
+    },
+
+    _parentResizableChanged: function(parentResizable) {
+      if (parentResizable) {
+        window.removeEventListener('resize', this._boundNotifyResize);
+      }
+    },
+
+    _notifyDescendant: function(descendant) {
+      // NOTE(cdata): In IE10, attached is fired on children first, so it's
+      // important not to notify them if the parent is not attached yet (or
+      // else they will get redundantly notified when the parent attaches).
+      if (!this.isAttached) {
+        return;
+      }
+
+      this._notifyingDescendant = true;
+      descendant.notifyResize();
+      this._notifyingDescendant = false;
+    }
+  };
+</script>
 
 <!--
 @license
@@ -10784,790 +10957,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
 
 </script>
-<script>
-
-  /**
-   * @demo demo/index.html
-   * @polymerBehavior Polymer.IronButtonState
-   */
-  Polymer.IronButtonStateImpl = {
-
-    properties: {
-
-      /**
-       * If true, the user is currently holding down the button.
-       */
-      pressed: {
-        type: Boolean,
-        readOnly: true,
-        value: false,
-        reflectToAttribute: true,
-        observer: '_pressedChanged'
-      },
-
-      /**
-       * If true, the button toggles the active state with each tap or press
-       * of the spacebar.
-       */
-      toggles: {
-        type: Boolean,
-        value: false,
-        reflectToAttribute: true
-      },
-
-      /**
-       * If true, the button is a toggle and is currently in the active state.
-       */
-      active: {
-        type: Boolean,
-        value: false,
-        notify: true,
-        reflectToAttribute: true
-      },
-
-      /**
-       * True if the element is currently being pressed by a "pointer," which
-       * is loosely defined as mouse or touch input (but specifically excluding
-       * keyboard input).
-       */
-      pointerDown: {
-        type: Boolean,
-        readOnly: true,
-        value: false
-      },
-
-      /**
-       * True if the input device that caused the element to receive focus
-       * was a keyboard.
-       */
-      receivedFocusFromKeyboard: {
-        type: Boolean,
-        readOnly: true
-      },
-
-      /**
-       * The aria attribute to be set if the button is a toggle and in the
-       * active state.
-       */
-      ariaActiveAttribute: {
-        type: String,
-        value: 'aria-pressed',
-        observer: '_ariaActiveAttributeChanged'
-      }
-    },
-
-    listeners: {
-      down: '_downHandler',
-      up: '_upHandler',
-      tap: '_tapHandler'
-    },
-
-    observers: [
-      '_focusChanged(focused)',
-      '_activeChanged(active, ariaActiveAttribute)'
-    ],
-
-    keyBindings: {
-      'enter:keydown': '_asyncClick',
-      'space:keydown': '_spaceKeyDownHandler',
-      'space:keyup': '_spaceKeyUpHandler',
-    },
-
-    _mouseEventRe: /^mouse/,
-
-    _tapHandler: function() {
-      if (this.toggles) {
-       // a tap is needed to toggle the active state
-        this._userActivate(!this.active);
-      } else {
-        this.active = false;
-      }
-    },
-
-    _focusChanged: function(focused) {
-      this._detectKeyboardFocus(focused);
-
-      if (!focused) {
-        this._setPressed(false);
-      }
-    },
-
-    _detectKeyboardFocus: function(focused) {
-      this._setReceivedFocusFromKeyboard(!this.pointerDown && focused);
-    },
-
-    // to emulate native checkbox, (de-)activations from a user interaction fire
-    // 'change' events
-    _userActivate: function(active) {
-      if (this.active !== active) {
-        this.active = active;
-        this.fire('change');
-      }
-    },
-
-    _downHandler: function(event) {
-      this._setPointerDown(true);
-      this._setPressed(true);
-      this._setReceivedFocusFromKeyboard(false);
-    },
-
-    _upHandler: function() {
-      this._setPointerDown(false);
-      this._setPressed(false);
-    },
-
-    /**
-     * @param {!KeyboardEvent} event .
-     */
-    _spaceKeyDownHandler: function(event) {
-      var keyboardEvent = event.detail.keyboardEvent;
-      var target = Polymer.dom(keyboardEvent).localTarget;
-
-      // Ignore the event if this is coming from a focused light child, since that
-      // element will deal with it.
-      if (this.isLightDescendant(/** @type {Node} */(target)))
-        return;
-
-      keyboardEvent.preventDefault();
-      keyboardEvent.stopImmediatePropagation();
-      this._setPressed(true);
-    },
-
-    /**
-     * @param {!KeyboardEvent} event .
-     */
-    _spaceKeyUpHandler: function(event) {
-      var keyboardEvent = event.detail.keyboardEvent;
-      var target = Polymer.dom(keyboardEvent).localTarget;
-
-      // Ignore the event if this is coming from a focused light child, since that
-      // element will deal with it.
-      if (this.isLightDescendant(/** @type {Node} */(target)))
-        return;
-
-      if (this.pressed) {
-        this._asyncClick();
-      }
-      this._setPressed(false);
-    },
-
-    // trigger click asynchronously, the asynchrony is useful to allow one
-    // event handler to unwind before triggering another event
-    _asyncClick: function() {
-      this.async(function() {
-        this.click();
-      }, 1);
-    },
-
-    // any of these changes are considered a change to button state
-
-    _pressedChanged: function(pressed) {
-      this._changedButtonState();
-    },
-
-    _ariaActiveAttributeChanged: function(value, oldValue) {
-      if (oldValue && oldValue != value && this.hasAttribute(oldValue)) {
-        this.removeAttribute(oldValue);
-      }
-    },
-
-    _activeChanged: function(active, ariaActiveAttribute) {
-      if (this.toggles) {
-        this.setAttribute(this.ariaActiveAttribute,
-                          active ? 'true' : 'false');
-      } else {
-        this.removeAttribute(this.ariaActiveAttribute);
-      }
-      this._changedButtonState();
-    },
-
-    _controlStateChanged: function() {
-      if (this.disabled) {
-        this._setPressed(false);
-      } else {
-        this._changedButtonState();
-      }
-    },
-
-    // provide hook for follow-on behaviors to react to button-state
-
-    _changedButtonState: function() {
-      if (this._buttonStateChanged) {
-        this._buttonStateChanged(); // abstract
-      }
-    }
-
-  };
-
-  /** @polymerBehavior */
-  Polymer.IronButtonState = [
-    Polymer.IronA11yKeysBehavior,
-    Polymer.IronButtonStateImpl
-  ];
-
-</script>
-<!--
-`PaperItemBehavior` is a convenience behavior shared by <paper-item> and
-<paper-icon-item> that manages the shared control states and attributes of
-the items.
--->
-
-<script>
-  /** @polymerBehavior Polymer.PaperItemBehavior */
-  Polymer.PaperItemBehaviorImpl = {
-    hostAttributes: {
-      role: 'option',
-      tabindex: '0'
-    }
-  };
-
-  /** @polymerBehavior */
-  Polymer.PaperItemBehavior = [
-    Polymer.IronButtonState,
-    Polymer.IronControlState,
-    Polymer.PaperItemBehaviorImpl
-  ];
-</script>
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic" crossorigin="anonymous">
-<style is="custom-style">
-
-  :root {
-
-    /* Shared Styles */
-    --paper-font-common-base: {
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-    };
-
-    --paper-font-common-code: {
-      font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
-      -webkit-font-smoothing: antialiased;
-    };
-
-    --paper-font-common-expensive-kerning: {
-      text-rendering: optimizeLegibility;
-    };
-
-    --paper-font-common-nowrap: {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    };
-
-    /* Material Font Styles */
-
-    --paper-font-display4: {
-      @apply(--paper-font-common-base);
-      @apply(--paper-font-common-nowrap);
-
-      font-size: 112px;
-      font-weight: 300;
-      letter-spacing: -.044em;
-      line-height: 120px;
-    };
-
-    --paper-font-display3: {
-      @apply(--paper-font-common-base);
-      @apply(--paper-font-common-nowrap);
-
-      font-size: 56px;
-      font-weight: 400;
-      letter-spacing: -.026em;
-      line-height: 60px;
-    };
-
-    --paper-font-display2: {
-      @apply(--paper-font-common-base);
-
-      font-size: 45px;
-      font-weight: 400;
-      letter-spacing: -.018em;
-      line-height: 48px;
-    };
-
-    --paper-font-display1: {
-      @apply(--paper-font-common-base);
-
-      font-size: 34px;
-      font-weight: 400;
-      letter-spacing: -.01em;
-      line-height: 40px;
-    };
-
-    --paper-font-headline: {
-      @apply(--paper-font-common-base);
-
-      font-size: 24px;
-      font-weight: 400;
-      letter-spacing: -.012em;
-      line-height: 32px;
-    };
-
-    --paper-font-title: {
-      @apply(--paper-font-common-base);
-      @apply(--paper-font-common-nowrap);
-
-      font-size: 20px;
-      font-weight: 500;
-      line-height: 28px;
-    };
-
-    --paper-font-subhead: {
-      @apply(--paper-font-common-base);
-
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 24px;
-    };
-
-    --paper-font-body2: {
-      @apply(--paper-font-common-base);
-
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 24px;
-    };
-
-    --paper-font-body1: {
-      @apply(--paper-font-common-base);
-
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 20px;
-    };
-
-    --paper-font-caption: {
-      @apply(--paper-font-common-base);
-      @apply(--paper-font-common-nowrap);
-
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: 0.011em;
-      line-height: 20px;
-    };
-
-    --paper-font-menu: {
-      @apply(--paper-font-common-base);
-      @apply(--paper-font-common-nowrap);
-
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 24px;
-    };
-
-    --paper-font-button: {
-      @apply(--paper-font-common-base);
-      @apply(--paper-font-common-nowrap);
-
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.018em;
-      line-height: 24px;
-      text-transform: uppercase;
-    };
-
-    --paper-font-code2: {
-      @apply(--paper-font-common-code);
-
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 20px;
-    };
-
-    --paper-font-code1: {
-      @apply(--paper-font-common-code);
-
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-    };
-
-  }
-
-</style>
-<dom-module id="paper-item-shared-styles" assetpath="bower_components/paper-item/">
-  <template>
-    <style>
-      :host, .paper-item {
-        display: block;
-        position: relative;
-        min-height: var(--paper-item-min-height, 48px);
-        padding: 0px 16px;
-      }
-
-      .paper-item {
-        @apply(--paper-font-subhead);
-        border:none;
-        outline: none;
-        background: white;
-        width: 100%;
-        text-align: left;
-      }
-
-      :host([hidden]), .paper-item[hidden] {
-        display: none !important;
-      }
-
-      :host(.iron-selected), .paper-item.iron-selected {
-        font-weight: var(--paper-item-selected-weight, bold);
-
-        @apply(--paper-item-selected);
-      }
-
-      :host([disabled]), .paper-item[disabled] {
-        color: var(--paper-item-disabled-color, --disabled-text-color);
-
-        @apply(--paper-item-disabled);
-      }
-
-      :host(:focus), .paper-item:focus {
-        position: relative;
-        outline: 0;
-
-        @apply(--paper-item-focused);
-      }
-
-      :host(:focus):before, .paper-item:focus:before {
-        @apply(--layout-fit);
-
-        background: currentColor;
-        content: '';
-        opacity: var(--dark-divider-opacity);
-        pointer-events: none;
-
-        @apply(--paper-item-focused-before);
-      }
-    </style>
-  </template>
-</dom-module>
-<!--
-Material design: [Lists](https://www.google.com/design/spec/components/lists.html)
-
-`<paper-item>` is an interactive list item. By default, it is a horizontal flexbox.
-
-    <paper-item>Item</paper-item>
-
-Use this element with `<paper-item-body>` to make Material Design styled two-line and three-line
-items.
-
-    <paper-item>
-      <paper-item-body two-line>
-        <div>Show your status</div>
-        <div secondary>Your status is visible to everyone</div>
-      </paper-item-body>
-      <iron-icon icon="warning"></iron-icon>
-    </paper-item>
-
-To use `paper-item` as a link, wrap it in an anchor tag. Since `paper-item` will
-already receive focus, you may want to prevent the anchor tag from receiving
-focus as well by setting its tabindex to -1.
-
-    <a href="https://www.polymer-project.org/" tabindex="-1">
-      <paper-item raised>Polymer Project</paper-item>
-    </a>
-
-If you are concerned about performance and want to use `paper-item` in a `paper-listbox`
-with many items, you can just use a native `button` with the `paper-item` class
-applied (provided you have correctly included the shared styles):
-
-    <style is="custom-style" include="paper-item-shared-styles"></style>
-
-    <paper-listbox>
-      <button class="paper-item" role="option">Inbox</button>
-      <button class="paper-item" role="option">Starred</button>
-      <button class="paper-item" role="option">Sent mail</button>
-    </paper-listbox>
-
-### Styling
-
-The following custom properties and mixins are available for styling:
-
-Custom property               | Description                                  | Default
-------------------------------|----------------------------------------------|----------
-`--paper-item-min-height`     | Minimum height of the item                   | `48px`
-`--paper-item`                | Mixin applied to the item                    | `{}`
-`--paper-item-selected-weight`| The font weight of a selected item           | `bold`
-`--paper-item-selected`       | Mixin applied to selected paper-items        | `{}`
-`--paper-item-disabled-color` | The color for disabled paper-items           | `--disabled-text-color`
-`--paper-item-disabled`       | Mixin applied to disabled paper-items        | `{}`
-`--paper-item-focused`        | Mixin applied to focused paper-items         | `{}`
-`--paper-item-focused-before` | Mixin applied to :before focused paper-items | `{}`
-
-### Accessibility
-
-This element has `role="listitem"` by default. Depending on usage, it may be more appropriate to set
-`role="menuitem"`, `role="menuitemcheckbox"` or `role="menuitemradio"`.
-
-    <paper-item role="menuitemcheckbox">
-      <paper-item-body>
-        Show your status
-      </paper-item-body>
-      <paper-checkbox></paper-checkbox>
-    </paper-item>
-
-@group Paper Elements
-@element paper-item
-@demo demo/index.html
--->
-
-<dom-module id="paper-item" assetpath="bower_components/paper-item/">
-  <template>
-    <style include="paper-item-shared-styles"></style>
-    <style>
-      :host {
-        @apply(--layout-horizontal);
-        @apply(--layout-center);
-        @apply(--paper-font-subhead);
-
-        @apply(--paper-item);
-      }
-    </style>
-
-    <content></content>
-  </template>
-
-  <script>
-    Polymer({
-      is: 'paper-item',
-
-      behaviors: [
-        Polymer.PaperItemBehavior
-      ]
-    });
-  </script>
-</dom-module>
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<script>
-  /**
-   * `IronResizableBehavior` is a behavior that can be used in Polymer elements to
-   * coordinate the flow of resize events between "resizers" (elements that control the
-   * size or hidden state of their children) and "resizables" (elements that need to be
-   * notified when they are resized or un-hidden by their parents in order to take
-   * action on their new measurements).
-   *
-   * Elements that perform measurement should add the `IronResizableBehavior` behavior to
-   * their element definition and listen for the `iron-resize` event on themselves.
-   * This event will be fired when they become showing after having been hidden,
-   * when they are resized explicitly by another resizable, or when the window has been
-   * resized.
-   *
-   * Note, the `iron-resize` event is non-bubbling.
-   *
-   * @polymerBehavior Polymer.IronResizableBehavior
-   * @demo demo/index.html
-   **/
-  Polymer.IronResizableBehavior = {
-    properties: {
-      /**
-       * The closest ancestor element that implements `IronResizableBehavior`.
-       */
-      _parentResizable: {
-        type: Object,
-        observer: '_parentResizableChanged'
-      },
-
-      /**
-       * True if this element is currently notifying its descendant elements of
-       * resize.
-       */
-      _notifyingDescendant: {
-        type: Boolean,
-        value: false
-      }
-    },
-
-    listeners: {
-      'iron-request-resize-notifications': '_onIronRequestResizeNotifications'
-    },
-
-    created: function() {
-      // We don't really need property effects on these, and also we want them
-      // to be created before the `_parentResizable` observer fires:
-      this._interestedResizables = [];
-      this._boundNotifyResize = this.notifyResize.bind(this);
-    },
-
-    attached: function() {
-      this.fire('iron-request-resize-notifications', null, {
-        node: this,
-        bubbles: true,
-        cancelable: true
-      });
-
-      if (!this._parentResizable) {
-        window.addEventListener('resize', this._boundNotifyResize);
-        this.notifyResize();
-      }
-    },
-
-    detached: function() {
-      if (this._parentResizable) {
-        this._parentResizable.stopResizeNotificationsFor(this);
-      } else {
-        window.removeEventListener('resize', this._boundNotifyResize);
-      }
-
-      this._parentResizable = null;
-    },
-
-    /**
-     * Can be called to manually notify a resizable and its descendant
-     * resizables of a resize change.
-     */
-    notifyResize: function() {
-      if (!this.isAttached) {
-        return;
-      }
-
-      this._interestedResizables.forEach(function(resizable) {
-        if (this.resizerShouldNotify(resizable)) {
-          this._notifyDescendant(resizable);
-        }
-      }, this);
-
-      this._fireResize();
-    },
-
-    /**
-     * Used to assign the closest resizable ancestor to this resizable
-     * if the ancestor detects a request for notifications.
-     */
-    assignParentResizable: function(parentResizable) {
-      this._parentResizable = parentResizable;
-    },
-
-    /**
-     * Used to remove a resizable descendant from the list of descendants
-     * that should be notified of a resize change.
-     */
-    stopResizeNotificationsFor: function(target) {
-      var index = this._interestedResizables.indexOf(target);
-
-      if (index > -1) {
-        this._interestedResizables.splice(index, 1);
-        this.unlisten(target, 'iron-resize', '_onDescendantIronResize');
-      }
-    },
-
-    /**
-     * This method can be overridden to filter nested elements that should or
-     * should not be notified by the current element. Return true if an element
-     * should be notified, or false if it should not be notified.
-     *
-     * @param {HTMLElement} element A candidate descendant element that
-     * implements `IronResizableBehavior`.
-     * @return {boolean} True if the `element` should be notified of resize.
-     */
-    resizerShouldNotify: function(element) { return true; },
-
-    _onDescendantIronResize: function(event) {
-      if (this._notifyingDescendant) {
-        event.stopPropagation();
-        return;
-      }
-
-      // NOTE(cdata): In ShadowDOM, event retargeting makes echoing of the
-      // otherwise non-bubbling event "just work." We do it manually here for
-      // the case where Polymer is not using shadow roots for whatever reason:
-      if (!Polymer.Settings.useShadow) {
-        this._fireResize();
-      }
-    },
-
-    _fireResize: function() {
-      this.fire('iron-resize', null, {
-        node: this,
-        bubbles: false
-      });
-    },
-
-    _onIronRequestResizeNotifications: function(event) {
-      var target = event.path ? event.path[0] : event.target;
-
-      if (target === this) {
-        return;
-      }
-
-      if (this._interestedResizables.indexOf(target) === -1) {
-        this._interestedResizables.push(target);
-        this.listen(target, 'iron-resize', '_onDescendantIronResize');
-      }
-
-      target.assignParentResizable(this);
-      this._notifyDescendant(target);
-
-      event.stopPropagation();
-    },
-
-    _parentResizableChanged: function(parentResizable) {
-      if (parentResizable) {
-        window.removeEventListener('resize', this._boundNotifyResize);
-      }
-    },
-
-    _notifyDescendant: function(descendant) {
-      // NOTE(cdata): In IE10, attached is fired on children first, so it's
-      // important not to notify them if the parent is not attached yet (or
-      // else they will get redundantly notified when the parent attaches).
-      if (!this.isAttached) {
-        return;
-      }
-
-      this._notifyingDescendant = true;
-      descendant.notifyResize();
-      this._notifyingDescendant = false;
-    }
-  };
-</script>
-
 <!--
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
@@ -16721,6 +16110,182 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic" crossorigin="anonymous">
+<style is="custom-style">
+
+  :root {
+
+    /* Shared Styles */
+    --paper-font-common-base: {
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    };
+
+    --paper-font-common-code: {
+      font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
+      -webkit-font-smoothing: antialiased;
+    };
+
+    --paper-font-common-expensive-kerning: {
+      text-rendering: optimizeLegibility;
+    };
+
+    --paper-font-common-nowrap: {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    };
+
+    /* Material Font Styles */
+
+    --paper-font-display4: {
+      @apply(--paper-font-common-base);
+      @apply(--paper-font-common-nowrap);
+
+      font-size: 112px;
+      font-weight: 300;
+      letter-spacing: -.044em;
+      line-height: 120px;
+    };
+
+    --paper-font-display3: {
+      @apply(--paper-font-common-base);
+      @apply(--paper-font-common-nowrap);
+
+      font-size: 56px;
+      font-weight: 400;
+      letter-spacing: -.026em;
+      line-height: 60px;
+    };
+
+    --paper-font-display2: {
+      @apply(--paper-font-common-base);
+
+      font-size: 45px;
+      font-weight: 400;
+      letter-spacing: -.018em;
+      line-height: 48px;
+    };
+
+    --paper-font-display1: {
+      @apply(--paper-font-common-base);
+
+      font-size: 34px;
+      font-weight: 400;
+      letter-spacing: -.01em;
+      line-height: 40px;
+    };
+
+    --paper-font-headline: {
+      @apply(--paper-font-common-base);
+
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: -.012em;
+      line-height: 32px;
+    };
+
+    --paper-font-title: {
+      @apply(--paper-font-common-base);
+      @apply(--paper-font-common-nowrap);
+
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 28px;
+    };
+
+    --paper-font-subhead: {
+      @apply(--paper-font-common-base);
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    };
+
+    --paper-font-body2: {
+      @apply(--paper-font-common-base);
+
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 24px;
+    };
+
+    --paper-font-body1: {
+      @apply(--paper-font-common-base);
+
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+    };
+
+    --paper-font-caption: {
+      @apply(--paper-font-common-base);
+      @apply(--paper-font-common-nowrap);
+
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.011em;
+      line-height: 20px;
+    };
+
+    --paper-font-menu: {
+      @apply(--paper-font-common-base);
+      @apply(--paper-font-common-nowrap);
+
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 24px;
+    };
+
+    --paper-font-button: {
+      @apply(--paper-font-common-base);
+      @apply(--paper-font-common-nowrap);
+
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.018em;
+      line-height: 24px;
+      text-transform: uppercase;
+    };
+
+    --paper-font-code2: {
+      @apply(--paper-font-common-code);
+
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 20px;
+    };
+
+    --paper-font-code1: {
+      @apply(--paper-font-common-code);
+
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+    };
+
+  }
+
+</style>
 <!--
 Material design: [Toolbars](https://www.google.com/design/spec/components/toolbars.html)
 
