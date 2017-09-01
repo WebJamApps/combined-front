@@ -417,8 +417,24 @@ paper-card.au-target.x-scope.paper-card-0.home-header-image.home-header {
   top: 1px;
 }
 
-paper-item.x-scope.paper-item-0 {
+.menu-item:hover {
+  background-color: white;
+}
+
+.menu-item{
   padding-left: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: 'Roboto', 'Noto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  position: relative;
+  min-height: 48px;
+  padding: 0px 16px;
+  box-sizing: border-box;
 }
 
 .paper-drawer-panel-0 iron-selector.paper-drawer-panel > #drawer.paper-drawer-panel {
