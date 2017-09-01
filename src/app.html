@@ -2,151 +2,159 @@
   <div class="page-host">
     <paper-drawer-panel id="drawerPanel" disable-edge-swipe right-drawer drawer-width.bind="drawerWidth">
       <paper-header-panel drawer class="${currentStyles.sidebarClass}">
-        <div>
-          <paper-card if.bind="fullmenu" image="${currentStyles.sidebarImagePath}" alt="Web Jam"></paper-card>
-          <paper-card if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 50px"></paper-card>
-          <div class="nav-list">
-            <nav>
-              <p if.bind="fullmenu" style="font-size:1px">&nbsp;</p>
-              <div class="menu-item" if.bind="widescreen">
-                <i class="fa fa-bars pull-left fa-1x" click.delegate="toggleMenu()" style="color:#23527c; cursor: pointer; cursor: hand;"></i>
-              </div>
-              <div class="menu-item" if.bind="!authenticated">
-                <a paper-drawer-toggle href="/login" class="nav-link" click.delegate="close()">
-                  <span class="fa fa-sign-in"></span>
-                  <span if.bind="fullmenu" class="nav-item">Login</span>
-                </a>
-              </div>
-              <div class="menu-item" if.bind="authenticated">
-                <a paper-drawer-toggle href="/dashboard" class="nav-link" click.delegate="close()">
-                  <span class="fa fa-tachometer"></span>
-                  <span if.bind="fullmenu" class="nav-item">${dashboardTitle}</span>
-                </a>
-              </div>
-              <div class="menu-item" if.bind="authenticated">
-                <a paper-drawer-toggle href="/dashboard/user-account" class="nav-link" click.delegate="close()">
-                  <span class="fa fa-user"></span>
-                  <span if.bind="fullmenu" class="nav-item">User Account</span>
-                </a>
-              </div>
-              <!-- <div repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''} menu-toggle menu-item">
-              <a paper-drawer-toggle href.bind="row.href" class="nav-link" click.delegate="close()">
-              <span class="${row.settings}"></span>
-              <span if.bind="fullmenu" class="nav-item">${row.title}</span>
-            </a>
-          </div> -->
-          <div class="menu-item" if.bind="Menu == 'wj' || Menu =='ohaf'">
-            <a paper-drawer-toggle href="/ohaf" class="nav-link" click.delegate="close()">
-              <span class="fa fa-handshake-o"></span>
-              <span class="nav-item" if.bind="fullmenu">OHAF</span>
-            </a>
+        <div if.bind="fullmenu">
+          <img id="webjamwidelogo" src="${currentStyles.sidebarImagePath}" style="width:182px"
+          if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf'">
+          <img id="ohafbutterflies" src="${currentStyles.sidebarImagePath}" style="width:175px"
+          if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf'">
+        </div>
+        <div if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 50px; height:91px"></div>
+        <div class="nav-list">
+          <nav>
+            <p if.bind="fullmenu" style="font-size:1px">&nbsp;</p>
+            <div class="menu-item" if.bind="widescreen">
+              <i class="fa fa-bars pull-left fa-1x" click.delegate="toggleMenu()" style="color:#23527c; cursor: pointer; cursor: hand;"></i>
+            </div>
+            <div class="menu-item" if.bind="!authenticated">
+              <a paper-drawer-toggle href="/login" class="nav-link" click.delegate="close()">
+                <span class="fa fa-sign-in"></span>
+                <span if.bind="fullmenu" class="nav-item">Login</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="authenticated">
+              <a paper-drawer-toggle href="/dashboard" class="nav-link" click.delegate="close()">
+                <span class="fa fa-tachometer"></span>
+                <span if.bind="fullmenu" class="nav-item">${dashboardTitle}</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="authenticated">
+              <a paper-drawer-toggle href="/dashboard/user-account" class="nav-link" click.delegate="close()">
+                <span class="fa fa-user"></span>
+                <span if.bind="fullmenu" class="nav-item">User Account</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu == 'wj' || Menu =='ohaf'">
+              <a paper-drawer-toggle href="/ohaf" class="nav-link" click.delegate="close()">
+                <span class="fa fa-handshake-o"></span>
+                <span class="nav-item" if.bind="fullmenu">OHAF</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu == 'wj'">
+              <a paper-drawer-toggle href="/sc2rs" class="nav-link" click.delegate="close()">
+                <span class="fa fa-microphone"></span>
+                <span class="nav-item" if.bind="fullmenu">SC2RS</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu=='wj' || Menu=='library' || Menu=='reader' || Menu=='librarian' || Menu=='bookshelf'">
+              <a paper-drawer-toggle href="/library" class="nav-link" click.delegate="close()">
+                <span class="fa fa-book"></span>
+                <span class="nav-item" if.bind="fullmenu">Library</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu=='bookshelf' || Menu=='reader' || Menu=='librarian' || Menu=='developer' || Menu=='library'">
+              <a paper-drawer-toggle href="/bookshelf" class="nav-link" click.delegate="close()">
+                <span class="fa fa-book"></span>
+                <span class="nav-item" if.bind="fullmenu">Bookshelf</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu =='developer'">
+              <a paper-drawer-toggle href="/dashboard/reader" class="nav-link" click.delegate="close()">
+                <span class="fa fa-book"></span>
+                <span class="nav-item" if.bind="fullmenu">Reader</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu =='developer'">
+              <a paper-drawer-toggle href="/dashboard/librarian" class="nav-link" click.delegate="close()">
+                <span class="fa fa-book"></span>
+                <span class="nav-item" if.bind="fullmenu">Librarian</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu =='developer'">
+              <a paper-drawer-toggle href="/dashboard/charity" class="nav-link" click.delegate="close()">
+                <span class="fa fa-handshake-o"></span>
+                <span class="nav-item" if.bind="fullmenu">Charity</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu =='developer'">
+              <a paper-drawer-toggle href="/dashboard/volunteer" class="nav-link" click.delegate="close()">
+                <span class="fa fa-handshake-o"></span>
+                <span class="nav-item" if.bind="fullmenu">Volunteer</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu == 'wj' || Menu =='music'">
+              <a paper-drawer-toggle href="/music" class="nav-link" click.delegate="close()">
+                <span class="fa fa-music"></span>
+                <span class="nav-item" if.bind="fullmenu">Music</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu =='music'">
+              <a paper-drawer-toggle href="/music/originals" class="nav-link" click.delegate="close()">
+                <span class="fa fa-lightbulb-o"></span>
+                <span class="nav-item" if.bind="fullmenu">Originals</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu =='music'">
+              <a paper-drawer-toggle href="/music/mission" class="nav-link" click.delegate="close()">
+                <span class="fa fa-crosshairs"></span>
+                <span class="nav-item" if.bind="fullmenu">Mission Music</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu =='music'">
+              <a paper-drawer-toggle href="/music/pub" class="nav-link" click.delegate="close()">
+                <span class="fa fa-beer"></span>
+                <span class="nav-item" if.bind="fullmenu">Pub Songs</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="Menu =='music'">
+              <a paper-drawer-toggle href="/music/buymusic" class="nav-link" click.delegate="close()">
+                <span class="fa fa-money"></span>
+                <span class="nav-item" if.bind="fullmenu">Buy Music</span>
+              </a>
+            </div>
+            <div class="menu-item">
+              <a paper-drawer-toggle href="/" class="nav-link" click.delegate="close()">
+                <span class="fa fa-home"></span>
+                <span class="nav-item" if.bind="fullmenu">Web Jam LLC</span>
+              </a>
+            </div>
+            <div class="menu-item" if.bind="authenticated">
+              <a paper-drawer-toggle class="nav-link" click.delegate="logout()">
+                <span class="fa fa-sign-out" style="cursor: pointer; cursor: hand;"></span>
+              </a>
+              <span if.bind="fullmenu">&nbsp;</span>
+              <button if.bind="fullmenu" click.delegate="logout()" class="material-content-button">
+                Logout
+              </button>
+            </div>
+          </nav>
+        </div>
+      </paper-header-panel>
+      <paper-header-panel main class="main-panel">
+        <div class="material-header ${currentStyles.headerClass}">
+
+          <div if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf'" class="headercontent">
+            <img src="${currentStyles.headerImagePath}" class="${currentStyles.headerImageClass}">
           </div>
-          <div class="menu-item" if.bind="Menu == 'wj'">
-            <a paper-drawer-toggle href="/sc2rs" class="nav-link" click.delegate="close()">
-              <span class="fa fa-microphone"></span>
-              <span class="nav-item" if.bind="fullmenu">SC2RS</span>
-            </a>
+
+          <div id="ohaflogo" if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf'" class="headercontent" style="top:-23px; left:3px">
+            <img src="${currentStyles.headerImagePath}" class="${currentStyles.headerImageClass}" style="margin-top:0">
           </div>
-          <div class="menu-item" if.bind="Menu=='wj' || Menu=='library' || Menu=='reader' || Menu=='librarian' || Menu=='bookshelf'">
-            <a paper-drawer-toggle href="/library" class="nav-link" click.delegate="close()">
-              <span class="fa fa-book"></span>
-              <span class="nav-item" if.bind="fullmenu">Library</span>
-            </a>
-          </div>
-          <div class="menu-item" if.bind="Menu=='bookshelf' || Menu=='reader' || Menu=='librarian' || Menu=='developer' || Menu=='library'">
-            <a paper-drawer-toggle href="/bookshelf" class="nav-link" click.delegate="close()">
-              <span class="fa fa-book"></span>
-              <span class="nav-item" if.bind="fullmenu">Bookshelf</span>
-            </a>
-          </div>
-          <div class="menu-item" if.bind="Menu =='developer'">
-            <a paper-drawer-toggle href="/dashboard/reader" class="nav-link" click.delegate="close()">
-              <span class="fa fa-book"></span>
-              <span class="nav-item" if.bind="fullmenu">Reader</span>
-            </a>
-          </div>
-          <div class="menu-item" if.bind="Menu =='developer'">
-            <a paper-drawer-toggle href="/dashboard/librarian" class="nav-link" click.delegate="close()">
-              <span class="fa fa-book"></span>
-              <span class="nav-item" if.bind="fullmenu">Librarian</span>
-            </a>
-          </div>
-          <div class="menu-item" if.bind="Menu =='developer'">
-            <a paper-drawer-toggle href="/dashboard/charity" class="nav-link" click.delegate="close()">
-              <span class="fa fa-handshake-o"></span>
-              <span class="nav-item" if.bind="fullmenu">Charity</span>
-            </a>
-          </div>
-          <div class="menu-item" if.bind="Menu =='developer'">
-            <a paper-drawer-toggle href="/dashboard/volunteer" class="nav-link" click.delegate="close()">
-              <span class="fa fa-handshake-o"></span>
-              <span class="nav-item" if.bind="fullmenu">Volunteer</span>
-            </a>
-          </div>
-          <div class="menu-item" if.bind="Menu == 'wj' || Menu =='music'">
-            <a paper-drawer-toggle href="/music" class="nav-link" click.delegate="close()">
-              <span class="fa fa-music"></span>
-              <span class="nav-item" if.bind="fullmenu">Music</span>
-            </a>
-          </div>
-          <div class="menu-item" if.bind="Menu =='music'">
-            <a paper-drawer-toggle href="/music/originals" class="nav-link" click.delegate="close()">
-              <span class="fa fa-lightbulb-o"></span>
-              <span class="nav-item" if.bind="fullmenu">Originals</span>
-            </a>
-          </div>
-          <div class="menu-item" if.bind="Menu =='music'">
-            <a paper-drawer-toggle href="/music/mission" class="nav-link" click.delegate="close()">
-              <span class="fa fa-crosshairs"></span>
-              <span class="nav-item" if.bind="fullmenu">Mission Music</span>
-            </a>
-          </div>
-          <div class="menu-item" if.bind="Menu =='music'">
-            <a paper-drawer-toggle href="/music/pub" class="nav-link" click.delegate="close()">
-              <span class="fa fa-beer"></span>
-              <span class="nav-item" if.bind="fullmenu">Pub Songs</span>
-            </a>
-          </div>
-          <div class="menu-item" if.bind="Menu =='music'">
-            <a paper-drawer-toggle href="/music/buymusic" class="nav-link" click.delegate="close()">
-              <span class="fa fa-money"></span>
-              <span class="nav-item" if.bind="fullmenu">Buy Music</span>
-            </a>
-          </div>
-          <div class="menu-item">
-            <a paper-drawer-toggle href="/" class="nav-link" click.delegate="close()">
-              <span class="fa fa-home"></span>
-              <span class="nav-item" if.bind="fullmenu">Web Jam LLC</span>
-            </a>
-          </div>
-          <div class="menu-item" if.bind="authenticated">
-            <a paper-drawer-toggle class="nav-link" click.delegate="logout()">
-              <span class="fa fa-sign-out" style="cursor: pointer; cursor: hand;"></span>
-            </a>
-            <span if.bind="fullmenu">&nbsp;</span>
-            <button if.bind="fullmenu" click.delegate="logout()" class="material-content-button">
-              Logout
-            </button>
-          </div>
-        </nav>
-      </div>
-    </div>
-  </paper-header-panel>
-  <paper-header-panel main class="main-panel">
-    <paper-material class="material-header ${currentStyles.headerClass}" elevation="0">
-      <paper-card alt="Web Jam" image="${currentStyles.headerImagePath}"
-      class="${currentStyles.headerImageClass} ${currentStyles.headerClass}"></paper-card>
-      <paper-card class="${currentStyles.headerClass} header-text-card" style="bottom:30px">
-        <h3 if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf'" class="header-text ${currentStyles.headerClass}">
-          ${currentStyles.headerText1}
-        </h3>
-        <h3 if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf'" class="header-text ${currentStyles.headerClass}">
+          <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:5px; height:50px"
+          if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf'">
+          <h3 class="header-text">
+            ${currentStyles.headerText1}
+          </h3>
+        </div>
+
+        <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:8px; height:81px; padding-left:2px"
+        if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf'">
+        <h3 class="header-text" style="margin-top:0">
           ${currentStyles.headerText1}
           <br>${currentStyles.headerText2}
           <br>${currentStyles.headerText3}
         </h3>
-      </paper-card>
-    </paper-material>
+      </div>
+    </div>
     <i id="mobilemenutoggle" class="fa fa-bars pull-right fa-1.5x mobile-menu-toggle" paper-drawer-toggle aria-hidden="true"></i>
     <router-view></router-view>
     <div id="wjfooter" class="footer" style="padding:8px;"></div>
