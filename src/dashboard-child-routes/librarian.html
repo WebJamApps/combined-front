@@ -32,7 +32,7 @@
           </button>
         </form>
       </paper-material>
-          <p>&nbsp;</p>
+      <p>&nbsp;</p>
       <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
         <h4 class="material-header-h4">Delete All Media</h4>
         <form>
@@ -45,22 +45,30 @@
       <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
         <h4 class="material-header-h4">Add Media</h4>
         <form>
-          <paper-input  label="Title (required)" value.two-way="newBook.title & validate"></paper-input>
+          <label>Title (required)</label>
+          <input value.two-way="newBook.title & validate">
           <select id="mediaType" class="form-control" value.bind="newBook.type & validate" style="margin-top:30px;width: 2.35in">
             <option value="">Media Type (required)</option>
             <option repeat.for="type of types" model.bind="type">${type}</option>
           </select>
-          <paper-input  value.two-way="newBook.author" label="Author" ></paper-input>
-          <paper-input type="number" label="Number of Pages" value.two-way="newBook.numberPages"></paper-input>
-          <paper-input type="number" label="Year of Publication"  value.two-way="newBook.dateOfPub"></paper-input>
-          <paper-input value.two-way="newBook.url" label="URL (if pdf or webpage)" ></paper-input>
-          <paper-input  value.two-way="newBook.isbn" label="Catalog Number" ></paper-input>
-          <paper-input  value.two-way="newBook.siteLocation" label="Site Location (if physical book)" ></paper-input>
+          <label>Author</label>
+          <input value.two-way="newBook.author">
+          <label>Number of Pages</label>
+          <input type="number" value.two-way="newBook.numberPages">
+          <label>Year of Publication</label>
+          <input type="number" value.two-way="newBook.dateOfPub">
+          <label>URL (if pdf or webpage)</label>
+          <input value.two-way="newBook.url">
+          <label>Catalog Number</label>
+          <input value.two-way="newBook.isbn">
+          <label>Site Location (if physical book)</label>
+          <input value.two-way="newBook.siteLocation">
           <select id="Access" class="form-control" value.bind="newBook.access" style="margin-top:30px;width: 2.35in">
             <option value="">Access</option>
             <option repeat.for="access of accessArray" model.bind="access">${access}</option>
           </select>
-          <paper-input  value.two-way="newBook.comments" label="Comments" ></paper-input>
+          <label>Comments</label>
+          <input value.two-way="newBook.comments">
           <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
             <ul if.bind="controller.errors">
               <li repeat.for="error of controller.errors" style="margin-left:-24px; color:red">
@@ -73,7 +81,7 @@
           </button>
         </form>
       </paper-material>
-        <p>&nbsp;</p>
+      <p>&nbsp;</p>
     </div>
     <!-- <div id="wjfooter" class="footer" style="padding:8px; background-color: #2a222a"></div> -->
   </div>

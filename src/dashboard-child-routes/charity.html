@@ -49,11 +49,11 @@
           </div>
         </div>
       </paper-material>
-      <paper-material elevation="3" style="max-width:5in; margin:auto">
+      <paper-material elevation="3" style="max-width:6in; margin:auto; top:10px">
         <!-- Create/Update form -->
-        <div id="updateCharitySection" style="margin-left:10px">
-          <h4 if.bind = "update" class="material-header-h4" style="padding-top:10px">Update ${charityName}</h4>
-          <h4 if.bind = "!update" class="material-header-h4" style="padding-top:10px">Create a New Charity</h4>
+        <div id="updateCharitySection" style="margin-left:10px; padding-top:25px">
+          <h4 if.bind = "update" class="material-header-h4">Update ${charityName}</h4>
+          <h4 if.bind = "!update" class="material-header-h4">Create a New Charity</h4>
           <form>
             <div class="multiselect" style="width:200px; margin-top:30px">
               <div class="selectBox" click.delegate="showCheckboxes('typesUpdate')">
@@ -70,17 +70,24 @@
                 </div>
               </iron-dropdown>
             </div>
-            <paper-input if.bind="typeOther" value.two-way="updateCharity.charityTypeOther" label="Other charity type"></paper-input>
-            <paper-input style="margin-top:20px" label="Charity name (required)" value.two-way="updateCharity.charityName & validate:controller2"></paper-input>
-            <paper-input style="margin-top:20px" label="Charity street address (required)" value.two-way="updateCharity.charityStreet & validate:controller2"></paper-input>
-            <paper-input style="margin-top:20px" label="City (required)" value.two-way="updateCharity.charityCity & validate:controller2"></paper-input>
+            <label if.bind="typeOther">Other charity type</label>
+            <input if.bind="typeOther" value.two-way="updateCharity.charityTypeOther">
+            <label>Charity Name (required)</label>
+            <input value.two-way="updateCharity.charityName & validate:controller2">
+            <label>Charity Street Address (required)</label>
+            <input value.two-way="updateCharity.charityStreet & validate:controller2">
+            <label>City (required)</label>
+            <input value.two-way="updateCharity.charityCity & validate:controller2">
             <select id="updateState" class="form-control" value.bind="updateCharity.charityState & validate:controller2" style="margin-top:30px;width: 2.35in">
               <option value="">State (required)</option>
               <option repeat.for="state of states" model.bind="state">${state}</option>
             </select>
-            <paper-input style="margin-top:20px" label="Zip Code (required)" value.two-way="updateCharity.charityZipCode & validate:controller2"></paper-input>
-            <paper-input id="charity-phone" style="margin-top:20px" type="tel" label="Phone Number (optional)" value.two-way="updateCharity.charityPhoneNumber & validate:controller2"></paper-input>
-            <paper-input style="margin-top:20px" label="Assign additional manager by email" value.two-way="updateCharity.charityEmail & validate:controller2"></paper-input>
+            <label>Zipcode (required)</label>
+            <input value.two-way="updateCharity.charityZipCode & validate:controller2">
+            <label>Phone Number (optional)</label>
+            <input id="charity-phone" type="tel" value.two-way="updateCharity.charityPhoneNumber & validate:controller2">
+            <label>Add additional manager by email (optional)</label>
+            <input value.two-way="updateCharity.charityEmail & validate:controller2">
             <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
               <ul if.bind="controller2.errors">
                 <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red">
@@ -96,6 +103,5 @@
         </div>
       </paper-material>
     </paper-material>
-    <!-- <div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div> -->
   </div>
 </template>
