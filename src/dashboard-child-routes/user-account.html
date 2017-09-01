@@ -5,7 +5,7 @@
       <p style="margin:auto; text-align:center; padding-bottom:20px">Your primary role is <u>${role}</u></p>
     </div>
     <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto" if.bind="role === 'Volunteer' || role === 'Developer'">
-      <h4 class="material-header-h4">Set Your Volunteering Preferences</h4>
+      <h4 class="material-header-h4">Set Volunteering Preferences</h4>
       <form>
         <div class="multiselect" style="width:170px; margin-top:40px">
           <div class="selectBox" click.delegate="showCheckboxes('causes')">
@@ -67,7 +67,7 @@
       </paper-material>
       <p> </p>
       <paper-material elevation="2" style="padding:20px; max-width:600px; margin:auto">
-        <p style="text-align:center; font-weight:bold">Delete your user</p>
+        <p style="text-align:center; font-weight:bold">Delete Account</p>
         <button if.bind="canDelete" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">
           Delete User
         </button>
