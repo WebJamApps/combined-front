@@ -397,26 +397,6 @@ section.au-enter-active {
   height: 0;
 }
 
-.paper-card-img {
-  text-align: center;
-}
-
-paper-card.au-target.material-header.home-header.x-scope.paper-card-0 {
-  top: -15px;
-}
-
-paper-card.au-target.header-text-card.x-scope.paper-card-0.ohaf-header {
-  top: 8px;
-}
-
-paper-card.au-target.x-scope.paper-card-0.ohaf-header-image.ohaf-header {
-  top: 18px;
-}
-
-paper-card.au-target.x-scope.paper-card-0.home-header-image.home-header {
-  top: 1px;
-}
-
 .menu-item:hover {
   background-color: white;
 }
@@ -674,6 +654,16 @@ div.au-stagger {
 .elevation2 {
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
 }
+
+.headercontent{
+  top: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
 .header-text {
   color: white;
   font-size: 24px;
@@ -691,12 +681,14 @@ div.au-stagger {
 }
 .ohaf-header {
   background-color: #565656;
-  top: -14px;
+  /*top: -16px;*/
+  height:91px;
 }
 .ohaf-header-image {
   width: 85px;
-  top: 10px;
+  /*top: 10px;*/
   left: 2px;
+  margin-top:-62px;
 }
 .ohaf-menu-toggle {
   color: white;
@@ -708,7 +700,7 @@ div.au-stagger {
 .home-header {
   background-color: #2a222a;
   margin: 0;
-  /*height: 90px;*/
+  height: 91px;
 }
 .home-header-image {
   width: 85px;

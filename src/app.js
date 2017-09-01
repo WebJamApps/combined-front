@@ -181,7 +181,7 @@ export class App {
       //footer = document.getElementById('wjfooter');
       if (footer !== null){
         footer.style.backgroundColor = '#565656';
-        footer.innerHTML = '<div class="paper-card-img">' +
+        footer.innerHTML = '<div style="text-align: center">' +
         '<a style="margin-left:10px;padding-right:10px; color:#c09580" target="_blank" href="https://www.facebook.com/Our-Hands-and-Feet-350610878635036/">' +
         '<i class="ohaf-social-media fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>' +
         '<a style="padding-right:10px; color:#c09580" target="_blank" href="https://plus.google.com/u/0/109018742744548655017">' +
@@ -207,7 +207,7 @@ export class App {
       //footer = document.getElementById('wjfooter');
       if (footer !== null){
         footer.style.backgroundColor = '#2a222a';
-        footer.innerHTML = '<div class="paper-card-img"><span>&nbsp;&nbsp;</span>' +
+        footer.innerHTML = '<div style="text-align: center"><span>&nbsp;&nbsp;</span>' +
         '<a target="_blank" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>' +
         '<span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>' +
         '<span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>' +
