@@ -450,18 +450,6 @@ overflow-x: auto;
   content: "\f161";
 }
 
-paper-material.material-header x-scope paper-material-0 {
-  background-color: #c0c0c0;
-}
-
-paper-material.material-content.x-scope.paper-material-0 {
-  padding: 8px;
-}
-
-paper-material.au-target.material-header.x-scope.paper-material-0.ohaf-header {
-  height: 104px;
-}
-
 .spaceUnderSlideShow {
   margin-top: auto;
 }
@@ -653,6 +641,10 @@ div.au-stagger {
 
 .elevation2 {
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+}
+
+.elevation3 {
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
 }
 
 .headercontent{

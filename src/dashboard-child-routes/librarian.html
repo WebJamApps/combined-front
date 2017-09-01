@@ -1,13 +1,17 @@
 <template>
   <div class="page-content">
-    <h3 style="text-align:center;">Librarian</h3>
-    <p style="padding:16px; max-width:7in; margin:auto">
-      To get started, first create your first item using the <strong>Add Media</strong> web-form. Then, click the <strong>Export</strong> button. A new .txt file will download.
-      From Excel, start the data importer and choose the .txt file. Make changes to the information and then save it as a tab-separeted .txt file.
-      Click the <strong>Import</strong> button and select this new file to populate your bookshelf.
-    </p>
+    <h4 style="text-align:center;padding-top:15px; padding-bottom:0; margin-bottom:0"><strong>The Librarian Dashboard</strong></h4>
+        <p style="margin:0; padding:0">&nbsp;</p>
+    <div class="material-content elevation3" style="max-width: 8.5in; margin:auto">
+      <p style="padding:16px; max-width:7in; margin:auto">
+        To get started, first create your first item using the <strong>Add Media</strong> web-form. Then, click the <strong>Export</strong> button. A new .txt file will download.
+        From Excel, start the data importer and choose the .txt file. Make changes to the information and then save it as a tab-separeted .txt file.
+        Click the <strong>Import</strong> button and select this new file to populate your bookshelf.
+      </p>
+    </div>
     <div class="books">
-      <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
+      <p>&nbsp;</p>
+      <div class="material-content elevation3" style="max-width:5in; margin:auto">
         <h4 class="material-header-h4">Import Media</h4>
         <p style="text-align:center">from a tab-separated .txt file</p>
         <form>
@@ -21,9 +25,9 @@
           <a href="https://www.w3schools.com/html/html_entities.asp" target="_blank">HTML character entities</a>
           in the .txt file.
         </p>
-      </paper-material>
+      </div>
       <p>&nbsp;</p>
-      <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
+      <div class="material-content elevation3" style="max-width:5in; margin:auto">
         <h4 class="material-header-h4">Export Media</h4>
         <p style="text-align:center">to a tab-separated .txt file</p>
         <form>
@@ -31,18 +35,18 @@
             Export
           </button>
         </form>
-      </paper-material>
+      </div>
       <p>&nbsp;</p>
-      <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
+      <div class="material-content elevation3" style="max-width:5in; margin:auto">
         <h4 class="material-header-h4">Delete All Media</h4>
         <form>
           <button class="button-lib; width:3cm" raised click.trigger="deleteBooks()">
             Delete Books
           </button>
         </form>
-      </paper-material>
+      </div>
       <p>&nbsp;</p>
-      <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto">
+      <div class="material-content elevation3" style="max-width:5in; margin:auto">
         <h4 class="material-header-h4">Add Media</h4>
         <form>
           <label>Title (required)</label>
@@ -80,7 +84,7 @@
             Submit
           </button>
         </form>
-      </paper-material>
+      </div>
       <p>&nbsp;</p>
     </div>
     <!-- <div id="wjfooter" class="footer" style="padding:8px; background-color: #2a222a"></div> -->

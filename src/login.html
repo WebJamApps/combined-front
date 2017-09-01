@@ -1,12 +1,12 @@
 <template>
-  <paper-material class="material-content" style="padding-bottom:50px">
-    <h3 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Our ${title} Page</strong></h3>
-    <p class="material-content-p">By clicking this button and creating an account, I certify that I am 13 years of age or older
-      <br>and agree to the terms and conditions in the Privacy Policy and the Rights and Use policy.
-    </p>
-    <div style="text-align:center">
-      <button click.delegate="authenticate('google')" class="material-content-button">Login with Google</button>
+  <div style="padding-bottom:50px">
+    <h4 class="ohaf" style="margin:auto; padding:20px;text-align:center"><strong>Our ${title} Page</strong></h4>
+    <div class="material-content elevation2" style="max-width:5in; margin:auto">
+      <p class="material-content-p;text-align:left">By clicking this button and creating an account, I certify that I am 13 years of age or older; I agree to the terms and conditions in the Privacy Policy and the Rights and Use policy.
+      </p>
+      <div style="text-align:center">
+        <button click.delegate="authenticate('google')" class="material-content-button">Login with Google</button>
+      </div>
     </div>
-  </paper-material>
-<!-- <div id="wjfooter" class="footer" style="padding:8px; background-color: #2a222a"></div> -->
+  </div>
 </template>
