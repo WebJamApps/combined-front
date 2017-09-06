@@ -10,13 +10,13 @@
               </select>
               <div class="overSelect"></div>
             </div>
-            <iron-dropdown id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
-              <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 250px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-                <label repeat.for="filter of filterby" for="${filter}" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
-                  <input type="checkbox" value.bind="filter" id.bind="filter" checked.bind="selectedFilter" change.delegate="filterPicked()"> ${filter}
+            <div class="checkboxes-div" id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="position:absolute; top:124px; margin-top:0">
+              <div class="dropdown-content">
+                <label class="checkboxes-label" repeat.for="filter of filterby" for="${filter}" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
+                  <input class="checkboxes-input" type="checkbox" value.bind="filter" id.bind="filter" checked.bind="selectedFilter" change.delegate="filterPicked()"> ${filter}
                 </label>
               </div>
-            </iron-dropdown>
+            </div>
           </div>
         </span>
       </h4>

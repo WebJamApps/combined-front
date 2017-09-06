@@ -114,10 +114,10 @@ export class Charity {
   showCheckboxes(id){
     const checkboxes = document.getElementById(id);
     if (!this.expanded) {
-      checkboxes.opened = true;
+      checkboxes.style.display = 'block';
       this.expanded = true;
     } else {
-      checkboxes.opened = false;
+      checkboxes.style.display = 'none';
       this.expanded = false;
     }
   }

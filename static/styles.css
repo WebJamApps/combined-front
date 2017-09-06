@@ -45,6 +45,7 @@ a {
   text-align: center;
   cursor: pointer;
   cursor: hand;
+  border:none !important;
 }
 
 h2 {
@@ -66,6 +67,11 @@ input {
   padding-left: 5px;
 }
 
+input.checkboxes-input{
+  min-width:0;
+  padding:5px;
+}
+
 label {
   font-size:11pt;
   padding-top:20px;
@@ -74,6 +80,43 @@ label {
   display: block;
   width: 100%;
 }
+
+label.checkboxes-label{
+  /*display:block;*/
+  font-size:10pt;
+  font-weight:normal;
+  text-align:left;
+  padding:5px;
+  /*padding-top:0;*/
+  /*margin-left:5px;
+  margin-right:5px*/
+}
+
+div.checkboxes-div{
+  /*margin-top: 25px;*/
+  outline: none;
+  position:relative;
+  margin-top:0;
+  z-index: 103;
+  display:none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+div.dropdown-content{
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color:white;
+  box-sizing: border-box;
+  max-width: 250px;
+  max-height: 362px;
+  /*overflow:auto;*/
+  border:1px #dadada solid;
+}
+
+/*nav >:first-child a {
+  border:none;
+}*/
 
 strong {
   font-weight:700;
@@ -329,7 +372,8 @@ section.au-enter-active {
 }
 
 .material-content-h1,
-.material-content-h2 {
+.material-content-h2,
+.material-content-h3 {
   text-align: center;
   margin-top: 15px;
 }
@@ -644,7 +688,7 @@ div.au-stagger {
 }
 
 .elevation3 {
-      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
 }
 
 .headercontent{
@@ -734,7 +778,16 @@ min-height: 30px;
 .nav-link {
   display: block !important;
   color: #23527c;
+  /*border:none !important;*/
+  outline:none !important;
+  /*box-shadow: none !important;*/
 }
+
+/*a span {
+  border:none;
+  outline:none;
+  box-shadow: none !important;
+}*/
 
 .nav-item {
   padding-right: 0;

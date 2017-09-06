@@ -63,13 +63,13 @@
                 </select>
                 <div class="overSelect"></div>
               </div>
-              <iron-dropdown id="typesUpdate" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
-                <div class="dropdown-content" style="width:150px;background-color:white;box-sizing: border-box; max-width: 250px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-                  <label repeat.for="type of types" for="${type}" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
-                    <input type="checkbox" value.bind="type" id.bind="type" checked.bind="updateCharity.charityTypes" change.delegate="updateTypePicked()"> ${type}
+              <div class="checkboxes-div" id="typesUpdate" horizontal-align="right" vertical-align="top" style="position:relative;margin-top:0">
+                <div class="dropdown-content">
+                  <label class="checkboxes-label" repeat.for="type of types" for="${type}">
+                    <input class="checkboxes-input" type="checkbox" value.bind="type" id.bind="type" checked.bind="updateCharity.charityTypes" change.delegate="updateTypePicked()"> ${type}
                   </label>
                 </div>
-              </iron-dropdown>
+              </div>
             </div>
             <label if.bind="typeOther">Other charity type</label>
             <input if.bind="typeOther" value.two-way="updateCharity.charityTypeOther">

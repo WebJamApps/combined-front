@@ -97,7 +97,7 @@ describe('the Charity Module', () => {
   });
 
   it('checkboxes expanded', (done) => {
-    document.body.innerHTML = '  <iron-dropdown id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></iron-dropdown>';
+    document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
     charity.expanded = true;
     charity.showCheckboxes('types');
     expect(charity.expanded).toBe(false);
@@ -105,7 +105,7 @@ describe('the Charity Module', () => {
   });
 
   it('checkboxes closed', (done) => {
-    document.body.innerHTML = '  <iron-dropdown id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></iron-dropdown>';
+    document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
     charity.expanded = false;
     charity.showCheckboxes('types');
     expect(charity.expanded).toBe(true);

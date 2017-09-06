@@ -47,7 +47,7 @@ describe('the UserAccount Module', () => {
   });
 
   it('checkboxes expanded', (done) => {
-    document.body.innerHTML = '  <iron-dropdown id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></iron-dropdown>';
+    document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
     ua.expanded = true;
     ua.showCheckboxes('types');
     expect(ua.expanded).toBe(false);
@@ -55,7 +55,7 @@ describe('the UserAccount Module', () => {
   });
 
   it('checkboxes closed', (done) => {
-    document.body.innerHTML = '  <iron-dropdown id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></iron-dropdown>';
+    document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
     ua.expanded = false;
     ua.showCheckboxes('types');
     expect(ua.expanded).toBe(true);
