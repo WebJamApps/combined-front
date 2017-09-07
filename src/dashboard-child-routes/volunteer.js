@@ -9,22 +9,16 @@ export class Volunteer {
     this.signup = {};
   }
 
-  //charityTypes
-  //mediaTypes = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audiobook', 'template'];
-  //zipcodes
   siteLocations = [];
   causes = [];
-  //filterby = ['keyword', 'media type', 'location'];
-  filterby = ['keyword', 'zipcode', 'cause'];
+  filterby = ['keyword', 'zipcode', 'cause', 'future date'];
   selectedFilter = [];
   expanded = false;
   keyword = false;
-  //mediaType = false;
   siteLocation = false;
   causeFilter = false;
   filters = [
     {value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState']},
-    //{value: '', keys: ['type']},
     {value: '', keys: ['voZipCode']},
     {value: '', keys: ['voCharityTypes']}
   ];
@@ -41,11 +35,9 @@ export class Volunteer {
       this.fixDates();
       this.buildWorkPrefs();
       this.buildTalents();
-      this.populateTypes();
       this.populateSites();
       this.populateCauses();
       this.checkSignups();
-      //this.charityName = this.events[0].voCharityName;
     }
   }
 
@@ -54,15 +46,12 @@ export class Volunteer {
     this.userSignups = await resp.json();
     console.log('this user has signed up for these events');
     console.log(this.userSignups);
-    //loop through all userSignups and check against looping through all events
     for (let next of this.userSignups){
       let nextEventId = next.voloppId;
       for (let i = 0; i < this.events.length; i++){
         if (this.events[i]._id === nextEventId){
           this.events[i].scheduled = true;
         }
-        // if (this.mediaTypes.indexOf(nextType) === -1){
-        //   this.mediaTypes.push(nextType);
       }
     }
   }
@@ -70,53 +59,74 @@ export class Volunteer {
   filterPicked(){
     let arrayLength = this.selectedFilter.length;
     this.keyword = false;
-    //this.mediaType = false;
     this.siteLocation = false;
     if (arrayLength === 0){
-      this.filters[0].value = '';
-      this.filters[1].value = '';
-      //this.filters[2].value = '';
-      return;
-    }
-    for (let i = 0; i < arrayLength; i++) {
-      /* look in array, if filter type is contained then set the selected filtertype to be true  this.keyword = true; this.mediaType=true; this.siteLocation=true*/
-      if (this.selectedFilter.includes('keyword')) {
-        this.keyword = true;
+      if (this.startingDateFilter){
+        this.activate();
       } else {
-        console.log('you unchecked the keyword filter');
         this.filters[0].value = '';
-        this.keyword = false;
-        //this.activate();
-      }
-      // if (this.selectedFilter.includes('media type')) {
-      //   this.mediaType = true;
-      // } else {
-      //   this.filters[1].value = '';
-      //   this.mediaType = false;
-      // }
-      if (this.selectedFilter.includes('zipcode')) {
-        this.siteLocation = true;
-      } else {
         this.filters[1].value = '';
-        this.siteLocation = false;
-      }
-      if (this.selectedFilter.includes('cause')) {
-        this.causeFilter = true;
-      } else {
         this.filters[2].value = '';
         this.causeFilter = false;
+        this.siteFilter = false;
+        this.keyword = false;
+        //this.filters[3].value = '';
+        return;
       }
+    }
+    // for (let i = 0; i < arrayLength; i++) {
+    if (this.selectedFilter.includes('keyword')) {
+      this.keyword = true;
+    } else {
+      console.log('you unchecked the keyword filter');
+      this.filters[0].value = '';
+      this.keyword = false;
+    }
+    if (this.selectedFilter.includes('zipcode')) {
+      this.siteLocation = true;
+    } else {
+      this.filters[1].value = '';
+      this.siteLocation = false;
+    }
+    if (this.selectedFilter.includes('cause')) {
+      this.causeFilter = true;
+    } else {
+      this.filters[2].value = '';
+      this.causeFilter = false;
+    }
+    if (this.selectedFilter.includes('future date')) {
+      this.startingDateFilter = true;
+      console.log('you selected the starting date filter');
+      this.removePast();
     }
   }
 
-  populateTypes(){
-    // this.mediaTypes.push('');
-    // for (let next of this.books){
-    //   let nextType = next.type;
-    //   if (this.mediaTypes.indexOf(nextType) === -1){
-    //     this.mediaTypes.push(nextType);
-    //   }
-    // }
+  removePast() {
+    let testDate;
+    let today = new Date();
+    let mm = today.getMonth() + 1; // getMonth() is zero-based
+    let dd = today.getDate();
+    today = [today.getFullYear(),
+      (mm > 9 ? '' : '0') + mm,
+      (dd > 9 ? '' : '0') + dd].join('');
+    console.log(today);
+    for (let i = 0; i < this.events.length; i++){
+        //console.log(this.events[i].voStartDate);
+
+      if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
+        console.log('undefined date');
+        this.events[i].voStartDate = today;
+      }
+      testDate = this.events[i].voStartDate.replace('-', '');
+      testDate = testDate.replace('-', '');
+      console.log(testDate);
+      if (testDate < today){
+        console.log('this date is past');
+        console.log(this.events[i].voStartDate);
+        this.events[i].past = true;
+      }
+        //console.log()
+    }
   }
 
   populateSites(){
@@ -140,9 +150,6 @@ export class Volunteer {
       }
     }
   }
-  // setFilter(filterType){
-  //   this.filterType = this.filterby[this.filterType - 1];
-  // }
 
   fixDates(){
     for (let i = 0; i < this.events.length; i++){
@@ -210,11 +217,9 @@ export class Volunteer {
         }
       }
     }
-    //console.log('this is the causes html' + causesHtml);
     if (causesHtml === ''){
       causesHtml = '<p style="font-size:10pt">not specified</p>';
     }
-    //console.log('current causes: ' + causesHtml);
     document.getElementById('causes').innerHTML = causesHtml;
   }
 
@@ -232,7 +237,6 @@ export class Volunteer {
     if (talentsHtml === ''){
       talentsHtml = '<p style="font-size:10pt">not specified</p>';
     }
-    //console.log('current causes: ' + causesHtml);
     document.getElementById('talents').innerHTML = talentsHtml;
   }
 
@@ -250,7 +254,6 @@ export class Volunteer {
     if (worksHtml === ''){
       worksHtml = '<p style="font-size:10pt">not specified</p>';
     }
-    //console.log('current causes: ' + causesHtml);
     document.getElementById('works').innerHTML = worksHtml;
   }
 
@@ -266,10 +269,6 @@ export class Volunteer {
   }
 
   signupEvent(eventID){
-    //   voloppId: { type: String, required: true },
-    // userId: { type: String, required: true },
-    // numPeople: { type: Number, required: true },
-    // groupName: { type: String, required: false }
     this.signup.voloppId = eventID;
     this.signup.userId = this.uid;
     this.signup.numPeople = 1;
@@ -278,12 +277,10 @@ export class Volunteer {
       method: 'post',
       body: json(this.signup)
     })
-    .then((data) => {
-      console.log(data);
-      //document.getElementById('charityDash').scrollIntoView();
-      this.activate();
-      //this.createNewCharity();
-    });
+      .then((data) => {
+        console.log(data);
+        this.activate();
+      });
   }
 
   async cancelSignup(eId){
@@ -291,11 +288,10 @@ export class Volunteer {
     this.app.httpClient.fetch('/signup/' + eId, {
       method: 'delete'
     })
-    .then((data) => {
-      console.log('no longer volunteering for that event');
-      this.activate();
-      //this.createNewCharity();
-    });
+      .then((data) => {
+        console.log('no longer volunteering for that event');
+        this.activate();
+      });
   }
 
   attached(){

@@ -39,7 +39,8 @@
     <div class="search-table-outer" style="position:relative;overflow-x:auto;">
       <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
         <thead>
-          <tr><th style="padding:8px;min-width:130px; text-align:center">Action</th>
+          <tr>
+            <th style="padding:8px;min-width:130px; text-align:center">Action</th>
             <th style="padding:8px;min-width:130px" aut-sort="key: voName; default: asc">Event Name</th>
             <th style="padding:8px;min-width:200px" >Description</th>
             <th style="padding:8px; min-width:150px" >Location</th>
@@ -59,7 +60,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr repeat.for="event of $displayData">
+          <tr repeat.for="event of $displayData" if.bind="!event.past">
             <td style="padding:8px; text-align:center">
               <button if.bind="!event.scheduled" class="button-checkout" raised click.delegate="signupEvent(event._id)" style="margin-bottom:10px">
                 Sign Up
@@ -90,7 +91,8 @@
       <!-- DO NOT DELETE the following "p" line; it is to slow down the rendering of the filter by box -->
       <p style="color: white">selected filter: ${selectedFilter}</p>
     </div>
-    <div class="elevation2" style="margin:auto; padding:10px; margin-top:20px; max-width:600px">
+    <p>&nbsp;</p>
+    <div class="elevation2" style="margin:auto; padding:10px; max-width:600px">
       <p style="font-weight:bold; text-align:center">Your Volunteering Preferences</p>
       <div class="search-table-outer" style="position:relative;overflow-x:auto;">
         <table>
@@ -120,5 +122,6 @@
       </div>
       <p style="margin-top:10px; text-align:center">Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences.</p>
     </div>
+    <p>&nbsp;</p>
   </div>
 </template>
