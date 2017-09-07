@@ -29,7 +29,7 @@ export class Music {
   }
 
   attached() {
-    $('#slideshow > div:gt(0)').hide();
+    //$('#slideshow > div:gt(0)').hide();
     setInterval(this.showSlides, 5500);
   }
 }

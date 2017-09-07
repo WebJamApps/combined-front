@@ -1,6 +1,6 @@
 {
   "name": "combined-front",
-  "version": "1.0.1",
+  "version": "0.7.1",
   "description": "Front End of web-jam.com App",
   "main": "dist/app.bundle.js",
   "repository": {
