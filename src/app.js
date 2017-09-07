@@ -34,11 +34,6 @@ export class App {
       this.authenticated = true; //Logout element is reliant upon a local var;
       let uid = this.auth.getTokenPayload().sub;
       this.user = await this.appState.getUser(uid);
-      // console.log('this user');
-      // console.log(this.user);
-      // if (this.user){
-      //   this.dashboardTitle = this.user.userType;
-      // }
     }
   }
 

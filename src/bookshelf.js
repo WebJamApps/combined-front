@@ -33,11 +33,6 @@ export class Bookshelf {
       if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
         this.reader = true;
       }
-      // console.log('this user');
-      // console.log(this.user);
-      // if (this.user){
-      //   this.dashboardTitle = this.user.userType;
-      // }
     }
   }
 
