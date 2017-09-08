@@ -87,7 +87,7 @@ describe('the App module', () => {
   it('gets the current styles with ohaf route', (done) => {
     let routre = new RouterStub();
     routre.currentInstruction.config.name = 'ohaf';
-    document.body.innerHTML = '<div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div>';
+    document.body.innerHTML = '<div id="wjfooter" class="footer"><i id="mobilemenutoggle"></i></div>';
     app1.router = routre;
     app1.currentStyles;
     done();
@@ -96,6 +96,7 @@ describe('the App module', () => {
   it('gets the current styles with library route', (done) => {
     let routre = new RouterStub();
     routre.currentInstruction.config.name = 'library';
+    document.body.innerHTML = '<div id="wjfooter" class="footer"><i id="mobilemenutoggle"></i></div>';
     app1.router = routre;
     app1.currentStyles;
     done();
