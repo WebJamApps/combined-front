@@ -1,31 +1,23 @@
 <template>
   <div class="page-content">
-
-    <polymer-slideshow class="music-slideshow">
-      <!-- The dimensions of the images are 950x300 -->
-      <polymer-slide>
-        <paper-card class="slideshowimage" image="../static/imgs/hiddenValleyTalentShow.png"></paper-card>
-      </polymer-slide>
-      <polymer-slide>
-        <paper-card class="slideshowimage" image="../static/imgs/ourWedding.png"></paper-card>
-      </polymer-slide>
-      <polymer-slide>
-        <paper-card class="slideshowimage" image="../static/imgs/prom2015.png"></paper-card>
-      </polymer-slide>
-    </polymer-slideshow>
-
-    <paper-material class="material-content" elevation="2">
-      <p style="margin-top:40px;">Josh and Maria were married in July of 2012 and have been singing together
+    <!-- The dimensions of the images are 950x300 -->
+    <div id="slideshow" style="padding:1px">
+      <div style="display:block">
+        <img src="../static/imgs/hiddenValleyTalentShow.png">
+      </div>
+      <div style="display:none">
+        <img src="../static/imgs/ourWedding.png">
+      </div>
+      <div style="display:none">
+        <img src="../static/imgs/prom2015.png">
+      </div>
+    </div>
+    <div class="material-content elevation2">
+      <p style="margin-top:10px;">Josh and Maria were married in July of 2012 and have been singing together
         for even longer. Whether it is at church, at the Rescue Mission, in a public venue or in the
-        great outdoors, this couple will knock your socks off. Follow us on
-        <span style="color: #3366ff;">
-          <a style="color: #3366ff;" title="Find us on Facebook" href="https://www.facebook.com/pages/Josh-Sherman-Band/125614520857570" target="_blank">
-            Facebook
-          </a>
-        </span>
-        to keep up with our latest adventures!
+        great outdoors, this couple will knock your socks off.
       </p>
-      <section id="main" style="text-align: center">
+      <section id="main">
         <a click.delegate="jump('joshbio')">
           <img src="/static/imgs/josh01thumb.jpg" alt="Josh image" width="96" style="cursor: pointer; cursor: hand;">
         </a>
@@ -35,7 +27,7 @@
         </a>
         <p>Maria Sherman – primo soprano and bass guitarist</p>
       </section><hr>
-      <section style="margin-left:0;text-align:center;margin-top:40px">
+      <section>
         <h3 style="text-align:center; margin-bottom:30px">Who are these classy people?</h3>
         <h4>Josh Sherman</h4>
         <a id="joshbio">
@@ -107,20 +99,6 @@
                   </aside>
                 </article>
               </section>
-            </paper-material>
-
-            <paper-material class="footer" elevation="4" style="padding:8px; background-color: #2a222a">
-              <div class="paper-card-img"><span>&nbsp;&nbsp;</span>
-                <a target="_blank" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
-                <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>
-                <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
-                <span>&nbsp;&nbsp;</span><a target="_blank" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
-                <span>&nbsp;&nbsp;</span><a target="_blank" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>
-                <span style="color:white; font-size: 9pt; padding-left:18px;">Powered by
-                  <a target="_blank" style="color:white; font-size:9pt;font-weight: bold;" href="https://www.web-jam.com">Web Jam LLC</a>
-                </span>
-              </div>
-            </paper-material>
-
+            </div>
           </div>
         </template>

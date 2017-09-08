@@ -1,41 +1,127 @@
 <template>
   <div class="page-content">
-    <paper-material class="material-content" elevation="0">
-      <h4 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Volunteer Dashboard</strong></h4>
-      <p style="text-align:center; font-weight:bold">
-        Manage your Volunteering Here
-      </p>
-      <paper-material elevation="2" style="margin:auto; padding:10px; margin-top:20px; max-width:600px">
-        <p style="font-weight:bold; text-align:center">Your Volunteering Preferences</p>
-        <div class="search-table-outer" style="position:relative;overflow-x:auto;">
-          <table>
-            <thead>
-              <tr>
-                <th style="padding:8px; width:170px">Causes to Support</th>
-                <th style="padding:8px">Talents to Use</th>
-                <th style="padding:8px">Work to Perform</th>
-                <th style="padding:8px; width:94px">Max Travel</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr valign="top">
-                <td id="causes" style="padding:8px">
-                </td>
-                <td id="talents" style="padding:8px">
-                </td>
-                <td id="works" style="padding:8px">
-                </td>
-                <td style="padding:8px">
-                  <p style="font-size:10pt; margin-bottom:10px" if.bind="user.volTravelDistMiles">${user.volTravelDistMiles} miles</p>
-                  <p style="font-size:10pt; margin-bottom:10px" if.bind="!user.volTravelDistMiles">not specified</p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-<p style="margin-top:10px; text-align:center">Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences.</p>
-</paper-material>
-</paper-material>
-<paper-material id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></paper-material>
-</div>
+    <div style="width: 4.5in; margin:auto">
+      <h4 class="ohaf" style="margin-bottom: 20px; text-align:center"><strong>Volunteer Dashboard</strong>
+        <span style="font-size: 14px; float:right; margin-right: 132px; margin-top: 0">
+          <div class="multiselect">
+            <div class="selectBox" click.delegate="showCheckboxes()">
+              <select>
+                <option>Filter by</option>
+              </select>
+              <div class="overSelect"></div>
+            </div>
+            <div class="checkboxes-div" id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="position:absolute; top:124px; margin-top:0">
+              <div class="dropdown-content">
+                <label class="checkboxes-label" repeat.for="filter of filterby" for="${filter}" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
+                  <input class="checkboxes-input" type="checkbox" value.bind="filter" id.bind="filter" checked.bind="selectedFilter" change.delegate="filterPicked()"> ${filter}
+                </label>
+              </div>
+            </div>
+          </div>
+        </span>
+      </h4>
+    </div>
+    <div class="form-group" if.bind="keyword" style="max-width: 4in; margin:auto; padding:5px">
+      <input type="text" value.bind="filters[0].value" placeholder="Enter Keyword" class="form-control"/>
+    </div>
+    <div class="form-group" if.bind="siteLocation" style="max-width: 4in; margin:auto; padding:5px">
+      <select id="site" class="form-control" value.bind="filters[1].value">
+        <option value="">Choose Zipcode...</option>
+        <option repeat.for="siteLocation of siteLocations" model.bind="siteLocation">${siteLocation}</option>
+      </select>
+    </div>
+    <div class="form-group" if.bind="causeFilter" style="max-width: 4in; margin:auto; padding:5px">
+      <select id="cause" class="form-control" value.bind="filters[2].value">
+        <option value="">Choose Cause...</option>
+        <option repeat.for="cause of causes" model.bind="cause">${cause}</option>
+      </select>
+    </div>
+    <div class="search-table-outer" style="position:relative;overflow-x:auto;">
+      <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
+        <thead>
+          <tr>
+            <th style="padding:8px;min-width:130px; text-align:center">Action</th>
+            <th style="padding:8px;min-width:130px" aut-sort="key: voName; default: asc">Event Name</th>
+            <th style="padding:8px;min-width:200px" >Description</th>
+            <th style="padding:8px; min-width:150px" >Location</th>
+            <th style="padding:8px; min-width:100px" aut-sort="key: voZipCode;">Zipcode</th>
+            <th style="padding:8px" >Start Date</th>
+            <th style="padding:8px" >Start Time</th>
+            <th style="padding:8px">End Date</th>
+            <th style="padding:8px">End Time</th>
+            <th style="padding:8px"># of Volunteers</th>
+            <th style="padding:8px">Talents</th>
+            <th style="padding:8px">Work</th>
+            <th style="padding:8px">Charity Name</th>
+            <th style="padding:8px">Charity Type</th>
+            <th style="padding:8px">Phone</th>
+            <th style="padding:8px">Email</th>
+            <th style="padding:8px">Coordinator</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr repeat.for="event of $displayData" if.bind="!event.past">
+            <td style="padding:8px; text-align:center">
+              <button if.bind="!event.scheduled" class="button-checkout" raised click.delegate="signupEvent(event._id)" style="margin-bottom:10px">
+                Sign Up
+              </button>
+              <button if.bind="event.scheduled" class="button-checkout" raised click.delegate="cancelSignup(event._id)" style="color:black; margin-bottom:10px; background-color: red">
+                Cancel
+              </button>
+            </td>
+            <td style="padding:8px" innerhtml.bind="event.voName"></td>
+            <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
+            <td style="padding:8px; min-width:100px"><p>${event.voStreet}</p><p>${event.voCity}, ${event.voState}</p></td>
+            <td style="padding:8px" innerhtml.bind="event.voZipCode"></td>
+            <td style="padding:8px" innerhtml.bind="event.voStartDate"></td>
+            <td style="padding:8px" innerhtml.bind="event.voStartTime"></td>
+            <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
+            <td style="padding:8px" innerhtml.bind="event.voEndTime"></td>
+            <td style="padding:8px" innerhtml.bind="event.voNumPeopleNeeded"></td>
+            <td style="padding:8px" innerhtml.bind="event.talentHtml"></td>
+            <td style="padding:8px" innerhtml.bind="event.workHtml"></td>
+            <td style="padding:8px" innerhtml.bind="event.voCharityName"></td>
+            <td style="padding:8px" innerhtml.bind="event.voCharityTypes"></td>
+            <td style="padding:8px" innerhtml.bind="event.voContactPhone"></td>
+            <td style="padding:8px" innerhtml.bind="event.voContactEmail"></td>
+            <td style="padding:8px" innerhtml.bind="event.voContactName"></td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- DO NOT DELETE the following "p" line; it is to slow down the rendering of the filter by box -->
+      <p style="color: white">selected filter: ${selectedFilter}</p>
+    </div>
+    <p>&nbsp;</p>
+    <div class="elevation2" style="margin:auto; padding:10px; max-width:600px">
+      <p style="font-weight:bold; text-align:center">Your Volunteering Preferences</p>
+      <div class="search-table-outer" style="position:relative;overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th style="padding:8px; width:170px">Causes to Support</th>
+              <th style="padding:8px">Talents to Use</th>
+              <th style="padding:8px">Work to Perform</th>
+              <th style="padding:8px; width:94px">Max Travel</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr valign="top">
+              <td id="causes" style="padding:8px">
+              </td>
+              <td id="talents" style="padding:8px">
+              </td>
+              <td id="works" style="padding:8px">
+              </td>
+              <td style="padding:8px">
+                <p style="font-size:10pt; margin-bottom:10px" if.bind="user.volTravelDistMiles">${user.volTravelDistMiles} miles</p>
+                <p style="font-size:10pt; margin-bottom:10px" if.bind="!user.volTravelDistMiles">not specified</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:10px; text-align:center">Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences.</p>
+    </div>
+    <p>&nbsp;</p>
+  </div>
 </template>

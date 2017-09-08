@@ -8,14 +8,15 @@
           <thead>
             <tr>
               <th style="padding:8px; text-align:center">Action</th>
-              <th style="padding:8px;" aut-sort="key: voName; default: asc">Name</th>
-              <th style="padding:8px;min-width:200px" >Description</th>
+              <th style="padding:8px; min-width:150px" aut-sort="key: voName; default: asc">Name</th>
+              <th style="padding:8px; min-width:200px" >Description</th>
               <th style="padding:8px; min-width:200px" >Location</th>
-              <th style="padding:8px" >Start Date</th>
-              <th style="padding:8px" >Start Time</th>
-              <th style="padding:8px">End Date</th>
-              <th style="padding:8px">End Time</th>
-              <th style="padding:8px"># of Volunteers</th>
+              <th style="padding:8px; min-width:100px" >Start Date</th>
+              <th style="padding:8px; min-width:100px" >Start Time</th>
+              <th style="padding:8px; min-width:100px">End Date</th>
+              <th style="padding:8px; min-width:100px">End Time</th>
+              <th style="padding:8px">People<br>Needed</th>
+              <th style="padding:8px">People<br>Scheduled</th>
               <th style="padding:8px">Talents</th>
               <th style="padding:8px">Work</th>
               <th style="padding:8px">Phone</th>
@@ -26,10 +27,17 @@
           <tbody>
             <tr repeat.for="event of $displayData">
               <td style="padding:8px; text-align:center">
-                <button class="button-checkout" raised click.delegate="deleteEvent(event._id)" style="margin-bottom:10px">
+                <button if.bind="event.voNumPeopleScheduled === 0 && event.voStatus !=='cancel'" class="button-checkout" raised click.delegate="deleteEvent(event._id)" style="margin-bottom:10px">
                   Delete
                 </button>
-                <p><a click.delegate="showUpdateEvent(event)">Update</a></p>
+                <button if.bind="event.voNumPeopleScheduled > 0 && event.voStatus !=='cancel'" class="button-checkout" raised click.delegate="cancelEvent(event)" style="margin-bottom:10px">
+                  Cancel
+                </button>
+                <p><a if.bind="event.voStatus !=='cancel'" click.delegate="showUpdateEvent(event)">Update</a></p>
+                <p if.bind="event.voStatus ==='cancel'"><strong>This event has been cancelled</strong></p>
+                <button if.bind="event.voStatus ==='cancel'" class="button-checkout" raised click.delegate="reactivateEvent(event)" style="margin-bottom:10px">
+                  Reactivate
+                </button>
               </td>
               <td style="padding:8px" innerhtml.bind="event.voName"></td>
               <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
@@ -39,6 +47,7 @@
               <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
               <td style="padding:8px" innerhtml.bind="event.voEndTime"></td>
               <td style="padding:8px" innerhtml.bind="event.voNumPeopleNeeded"></td>
+              <td style="padding:8px" innerhtml.bind="event.voNumPeopleScheduled"></td>
               <td style="padding:8px" innerhtml.bind="event.talentHtml"></td>
               <td style="padding:8px" innerhtml.bind="event.workHtml"></td>
               <td style="padding:8px" innerhtml.bind="event.voContactPhone"></td>
@@ -53,74 +62,91 @@
       <h4 if.bind="newEvent" class="material-header-h4" style="margin-top:40px"><strong>Schedule A New Event</strong></h4>
       <h4 if.bind="!newEvent" class="material-header-h4" style="margin-top:40px"><strong>Update the ${charityName} Event</strong></h4>
       <form>
-<paper-input label="Event name (required)" value.two-way="voOpp.voName & validate:controller2"></paper-input>
-<label style="font-size:11pt; margin-top:12px">Describe your event</label>
-<textarea value.two-way="voOpp.voDescription" rows="5" cols="33"></textarea>
-<paper-input type="number" change.delegate="onlyPositive()" style="margin-top:10px" label="# of Volunteers Needed (required)" value.two-way="voOpp.voNumPeopleNeeded & validate:controller2"></paper-input>
-<div class="multiselect" style="width:170px; margin-top:10px">
-  <div class="selectBox" click.delegate="showCheckboxes('talents')">
-    <select>
-      <option style="font-weight:normal">Volunteer's talent(s)</option>
-    </select>
-    <div class="overSelect"></div>
-  </div>
-  <iron-dropdown id="talents" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
-    <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 300px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-      <label repeat.for="talent of talents" for="${talent}" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:150px">
-        <input type="checkbox" value.bind="talent" id.bind="talent" checked.bind="voOpp.voTalentTypes" change.delegate="talentPicked()"> ${talent}
-      </label>
-    </div>
-  </iron-dropdown>
-</div>
-<paper-input if.bind="talentOther" value.two-way="voOpp.voTalentTypeOther" label="Other talent" ></paper-input>
-<div class="multiselect" style="width:170px; margin-top:25px">
-  <div class="selectBox" click.delegate="showCheckboxes('work')">
-    <select>
-      <option style="font-weight:normal">Volunteer work</option>
-    </select>
-    <div class="overSelect"></div>
-  </div>
-  <iron-dropdown id="work" horizontal-align="right" vertical-align="top" style="margin-top:25px;margin-bottom:10px">
-    <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-      <label repeat.for="work of works" for="${work}" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
-        <input type="checkbox" value.bind="work" id.bind="work" checked.bind="voOpp.voWorkTypes" change.delegate="workPicked()"> ${work}
-      </label>
-    </div>
-  </iron-dropdown>
-</div>
-<paper-input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther" label="Other work" ></paper-input>
-<p>&nbsp;</p>
-<paper-input label="Start Date (required)" id="start-date" value.two-way="voOpp.voStartDate & validate:controller2" type="date" min="${today}" max="${maxStartDate}" change.delegate="selectDate('start-date')"></paper-input>
-<p>&nbsp;</p>
-<paper-input label="End Date (required)" id="end-date" value.two-way="voOpp.voEndDate & validate:controller2" type="date" min="${minEndDate}" change.delegate="selectDate('end-date')"></paper-input>
-<label style="margin-top:48px; font-size:11pt">Start Time (required)</label>
-<input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text" click.delegate="showTime('s-time')">
-<label style="margin-top:48px; font-size:11pt">End Time (required)</label>
-<input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text" click.delegate="showTime('e-time')">
-<label style="margin-top:40px; font-size:11pt">Location of Event (required)</label><br>
-  <paper-input input label="Street Address" type="text" value.two-way="voOpp.voStreet & validate:controller2"></paper-input>
-  <paper-input input label="City" type="text" value.two-way="voOpp.voCity & validate:controller2"></paper-input>
-  <select  id="updateState" class="form-control" value.bind="voOpp.voState & validate:controller2" style="margin-top:30px;width: 2.35in">
-    <option value="">State</option>
-    <option repeat.for="state of states" model.bind="state">${state}</option>
-  </select>
-  <paper-input style="margin-top:20px" label="Zip Code (required)" value.two-way="voOpp.voZipCode & validate:controller2"></paper-input>
+        <label style="margin-top:10px; font-size:11pt">Event Name (required)</label>
+        <input value.two-way="voOpp.voName & validate:controller2">
+        <label style="font-size:11pt; margin-top:16px">Describe your event</label>
+        <textarea value.two-way="voOpp.voDescription" rows="5" cols="33"></textarea>
+        <label style="font-size:11pt; margin-top:16px"># of Volunteers Needed</label>
+        <input type="number" change.delegate="onlyPositive()" value.two-way="voOpp.voNumPeopleNeeded & validate:controller2">
+        <div class="multiselect" style="width:170px; margin-top:20px">
+          <div class="selectBox" click.delegate="showCheckboxes('talents')">
+            <select>
+              <option style="font-weight:normal">Volunteer's talent(s)</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <div class="checkboxes-div" id="talents" horizontal-align="right" vertical-align="top">
+            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 300px; max-height: 362px;overflow:auto;border:1px #dadada solid">
+              <label class="checkboxes-label" repeat.for="talent of talents" for="${talent}">
+                <input class="checkboxes-input" type="checkbox" value.bind="talent" id.bind="talent" checked.bind="voOpp.voTalentTypes" change.delegate="talentPicked()"> ${talent}
+              </label>
+            </div>
+          </div>
+        </div>
+        <label if.bind="talentOther" style="font-size:11pt; margin-top:16px; margin-bottom:-5px">Other Talent</label>
+        <p style="font-size: 1px; margin-top:-10px" if.bind="talentOther">&nbsp;</p>
+        <input if.bind="talentOther" value.two-way="voOpp.voTalentTypeOther">
+        <div class="multiselect" style="width:170px; margin-top:25px">
+          <div class="selectBox" click.delegate="showCheckboxes('work')">
+            <select>
+              <option style="font-weight:normal">Volunteer work</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <div class="checkboxes-div" id="work" horizontal-align="right" vertical-align="top">
+            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
+              <label class="checkboxes-label" repeat.for="work of works" for="${work}">
+                <input class="checkboxes-input" type="checkbox" value.bind="work" id.bind="work" checked.bind="voOpp.voWorkTypes" change.delegate="workPicked()"> ${work}
+              </label>
+            </div>
+          </div>
+        </div>
+        <label if.bind="workOther" style="font-size:11pt; margin-top:16px; margin-bottom:-5px">Other Work</label>
+        <p style="font-size: 1px; margin-top:-10px" if.bind="workOther">&nbsp;</p>
+        <input if.bind="workOther" value.two-way="voOpp.voWorkTypeOther">
+        <p>&nbsp;</p>
+        <label style="font-size:11pt; margin-top:10px;margin-bottom:2px">Start Date (required)</label>
+        <p style="font-size: 1px; margin-top:0; margin-bottom:0">&nbsp;</p>
+        <input id="start-date" value.two-way="voOpp.voStartDate & validate:controller2" type="date" min="${today}" max="${maxStartDate}" change.delegate="selectDate('start-date')">
+        <p>&nbsp;</p>
+        <label style="font-size:11pt; margin-top:10px;margin-bottom:2px">End Date (required)</label>
+        <p style="font-size: 1px; margin-top:0; margin-bottom:0">&nbsp;</p>
+        <input id="end-date" value.two-way="voOpp.voEndDate & validate:controller2" type="date" min="${minEndDate}" change.delegate="selectDate('end-date')">
   <p>&nbsp;</p>
-<paper-input style="margin-top:0" label="Name of Coordinator (if not yourself)" value.two-way="voOpp.voContactName"></paper-input>
-<paper-input style="margin-top:0" label="Coordinator's Email (if not your email)" value.two-way="voOpp.voContactEmail & validate:controller2"></paper-input>
-<paper-input style="margin-top:0" label="Coordinator's Phone (not required)" value.two-way="voOpp.voContactPhone & validate:controller2" type="tel"></paper-input>
-<div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
-  <ul if.bind="controller2.errors">
-    <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red">
-      ${error.message}
-    </li>
-  </ul>
-</div>
-<button if.bind="newEvent" id="scheduleEvent" class="updateButton" raised click.trigger="scheduleEvent()" style="display:none;margin-bottom:40px">Schedule</button>
-<button if.bind="!newEvent" id="updateScheduleEvent" class="updateButton" raised click.trigger="updateEvent()" style="display:none;margin-bottom:40px">Update</button>
-<button id="nevermind" class="nevermind" raised click.trigger="showNewEvent()" style="margin-bottom:40px">Nevermind</button>
-</form>
-</div>
-<paper-material id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></paper-material>
-</div>
+        <label style="margin-top:10px; font-size:11pt">Start Time (required)</label>
+        <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text" click.delegate="showTime('s-time')">
+        <label style="margin-top:48px; font-size:11pt">End Time (required)</label>
+        <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text" click.delegate="showTime('e-time')">
+        <label style="margin-top:40px; font-size:11pt">Location of Event (required)</label>
+        <p style="font-size:9pt; margin-bottom:2px">Street Address</p>
+        <input type="text" value.two-way="voOpp.voStreet & validate:controller2">
+        <p style="font-size:9pt; margin-bottom:2px; margin-top:10px">City</p>
+        <input input type="text" value.two-way="voOpp.voCity & validate:controller2">
+          <p style="font-size:9pt; margin-bottom:2px; margin-top:10px">State</p>
+        <select id="updateState" class="form-control" value.bind="voOpp.voState & validate:controller2" style="margin-top:0;width: 2.35in">
+          <option value="">Select State</option>
+          <option repeat.for="state of states" model.bind="state">${state}</option>
+        </select>
+          <p style="font-size:9pt; margin-bottom:2px; margin-top:10px">Zipcode</p>
+        <input style="margin-top:0" value.two-way="voOpp.voZipCode & validate:controller2">
+        <label style="font-size:11pt; margin-top:24px; margin-bottom:2px">Name of Coordinator (if not yourself)</label>
+        <input style="margin-top:0; width:260px" value.two-way="voOpp.voContactName">
+        <label style="font-size:11pt; margin-top:24px; margin-bottom:2px">Coordinator's Email (if not your email)</label>
+        <input style="margin-top:0; width:260px" value.two-way="voOpp.voContactEmail & validate:controller2">
+            <label style="font-size:11pt; margin-top:24px; margin-bottom:2px">Coordinator's Phone (not required)</label>
+        <input style="margin-top:0" value.two-way="voOpp.voContactPhone & validate:controller2" type="tel">
+        <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
+          <ul if.bind="controller2.errors">
+            <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red">
+              ${error.message}
+            </li>
+          </ul>
+        </div>
+        <button if.bind="newEvent" id="scheduleEvent" class="updateButton" raised click.trigger="scheduleEvent()" style="display:none;margin-bottom:40px">Schedule</button>
+        <button if.bind="!newEvent" id="updateScheduleEvent" class="updateButton" raised click.trigger="updateEvent('update')" style="display:none;margin-bottom:40px">Update</button>
+        <button id="nevermind" class="nevermind" raised click.trigger="showNewEvent()" style="margin-bottom:40px">Nevermind</button>
+      </form>
+    </div>
+    <!-- <div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div> -->
+  </div>
 </template>

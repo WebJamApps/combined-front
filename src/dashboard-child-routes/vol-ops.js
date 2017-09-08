@@ -12,7 +12,7 @@ export class VolunteerOpps {
   controller = null;
   validator = null;
   constructor(app, controllerFactory, validator){
-  //constructor(app){
+    //constructor(app){
     this.app = app;
     this.selectedTalents = [];
     this.selectedWorks = [];
@@ -32,7 +32,7 @@ export class VolunteerOpps {
     this.user = await this.app.appState.getUser(this.uid);
     //console.log(this.app.router.currentInstruction.params.childRoute);
     let currentUrl = (window.location.href);
-    console.log(currentUrl);
+    //console.log(currentUrl);
     this.charityID = currentUrl.substring(currentUrl.indexOf('vol-ops/') + 8);
     //console.log(this.charityID);
     let res = await this.app.httpClient.fetch('/volopp/' + this.charityID);
@@ -47,6 +47,7 @@ export class VolunteerOpps {
       this.fixDates();
       this.buildWorkPrefs();
       this.buildTalents();
+      this.checkScheduled();
       //this.charityName = this.events[0].voCharityName;
     }
     //else {
@@ -61,7 +62,7 @@ export class VolunteerOpps {
     this.today = new Date().toISOString().split('T')[0];
     this.minEndDate = this.today;
     this.maxStartDate = '';
-    console.log('today is ' + this.today);
+    //console.log('today is ' + this.today);
     this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
       'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
       'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
@@ -70,34 +71,44 @@ export class VolunteerOpps {
     this.states.sort();
   }
 
-  showTime(){
-    console.log('show time picker here');
-  //   this.dialog.time = new moment();
-  //   this.dialog.toggle();
+  async checkScheduled(){
+    //loop through each evnt
+    // get signups by event id
+    // if length > 0, add number of volunteers to the event. number of people signed up
+    // number needed - number signed up = the number still needed
+    let resp;
+    let scheduledEvents;
+    let total = 0;
+    for (let i = 0; i < this.events.length; i++){
+      resp = await this.app.httpClient.fetch('/signup/event/' + this.events[i]._id);
+      scheduledEvents = await resp.json();
+      //console.log('these are the schedule events for this event id');
+      //console.log(scheduledEvents);
+      for (let hasVolunteers of scheduledEvents){
+        total = total + hasVolunteers.numPeople;
+      }
+      this.events[i].voNumPeopleScheduled = total;
+      total = 0;
+    }
   }
 
-  // radio(type){
-  //   console.log('radio type is ' + type);
-  //   if (type === 'charity'){
-  //     this.newAddress = false;
-  //   } else {
-  //     this.newAddress = true;
-  //   }
-  // }
+  showTime(){
+    console.log('show time picker here');
+  }
 
   selectDate(dtype){
-    console.log('show date picker here');
+    //console.log('show date picker here');
     if (dtype === 'start-date'){
-      console.log(dtype);
-      console.log(this.voOpp.voStartDate);
+      //console.log(dtype);
+      //console.log(this.voOpp.voStartDate);
       this.minEndDate = this.voOpp.voStartDate;
     } else {
-      console.log(dtype);
-      console.log(this.voOpp.voEndDate);
+      //console.log(dtype);
+      //console.log(this.voOpp.voEndDate);
       this.maxStartDate = this.voOpp.voEndDate;
     }
-  //   this.dialog.time = new moment();
-  //   this.dialog.toggle();
+    //   this.dialog.time = new moment();
+    //   this.dialog.toggle();
   }
 
   async findCharity(){
@@ -111,6 +122,18 @@ export class VolunteerOpps {
     this.voOpp.voCity = this.charity.charityCity;
     this.voOpp.voState = this.charity.charityState;
     this.voOpp.voZipCode = this.charity.charityZipCode;
+    this.voOpp.voCharityTypes = this.charity.charityTypes;
+    /* istanbul ignore else */
+    if (this.charity.charityTypeOther !== ''){
+      let index = this.voOpp.voCharityTypes.indexOf('other');
+      /* istanbul ignore else */
+      if (index > -1) {
+        this.voOpp.voCharityTypes.splice(index, 1);
+      }
+      this.voOpp.voCharityTypes.push(this.charity.charityTypeOther);
+    }
+    console.log('the charity types attached to this event');
+    console.log(this.voOpp.voCharityTypes.length);
   }
 
   fixDates(){
@@ -171,10 +194,10 @@ export class VolunteerOpps {
   showCheckboxes(id){
     const checkboxes = document.getElementById(id);
     if (!this.expanded) {
-      checkboxes.opened = true;
+      checkboxes.style.display = 'block';
       this.expanded = true;
     } else {
-      checkboxes.opened = false;
+      checkboxes.style.display = 'none';
       this.expanded = false;
     }
   }
@@ -202,11 +225,7 @@ export class VolunteerOpps {
   }
 
   scheduleEvent(){
-    //this.voOpp.voStartDate = document.getElementById('start-date').date;
-    //this.voOpp.voStartTime = document.getElementById('start-time').time;
-    //this.voOpp.voEndDate = document.getElementById('end-date').date;
-    //this.voOpp.voEndTime = document.getElementById('end-time').time;
-    //this.voOpp.voCharityName = this.charityName;
+    this.voOpp.voStatus = 'new';
     console.log(this.voOpp);
     //this.newCharity.charityManagers[0] = this.user.name;
     //this.newCharity.charityMngIds[0] = this.user._id;
@@ -270,9 +289,20 @@ export class VolunteerOpps {
     //document.getElementById('eventHeader').scrollIntoView();
   }
 
-  async updateEvent(){
+  cancelEvent(theEvent){
+    this.voOpp = theEvent;
+    this.updateEvent('cancel');
+  }
+
+  reactivateEvent(theEvent){
+    this.voOpp = theEvent;
+    this.updateEvent('update');
+  }
+
+  async updateEvent(updateType){
     console.log('update Event');
     //console.log('this is the update charity');
+    this.voOpp.voStatus = updateType;
     console.log(this.voOpp);
     await fetch;
     this.app.httpClient.fetch('/volopp/' + this.voOpp._id, {
@@ -281,7 +311,7 @@ export class VolunteerOpps {
     })
     .then((response) => response.json())
     .then((data) => {
-      this.showNewEvent();
+      this.activate();
     });
   }
 

@@ -33,11 +33,6 @@ export class Bookshelf {
       if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
         this.reader = true;
       }
-      // console.log('this user');
-      // console.log(this.user);
-      // if (this.user){
-      //   this.dashboardTitle = this.user.userType;
-      // }
     }
   }
 
@@ -78,7 +73,7 @@ export class Bookshelf {
   }
 
   filters = [
-    {value: '', keys: ['title', 'type', 'author', 'numberPages', 'dateOfPub', 'siteLocation', 'access']},
+    {value: '', keys: ['title', 'type', 'author', 'numberPages', 'dateOfPub', 'siteLocation', 'access', 'comments']},
     {value: '', keys: ['type']},
     {value: '', keys: ['siteLocation']}
   ];
@@ -103,17 +98,17 @@ export class Bookshelf {
     }
   }
 
-  setFilter(filterType){
-    this.filterType = this.filterby[this.filterType - 1];
-  }
+  // setFilter(filterType){
+  //   this.filterType = this.filterby[this.filterType - 1];
+  // }
 
   showCheckboxes(){
     const checkboxes = document.getElementById('checkboxes-iron');
     if (!this.expanded) {
-      checkboxes.opened = true;
+      checkboxes.style.display = 'block';
       this.expanded = true;
     } else {
-      checkboxes.opened = false;
+      checkboxes.style.display = 'none';
       this.expanded = false;
     }
   }

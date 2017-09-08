@@ -1,8 +1,8 @@
 {
-  "name": "web-jam-front",
-  "version": "0.1.0",
+  "name": "combined-front",
+  "version": "0.7.1",
   "description": "Front End of web-jam.com App",
-  "main": "dist/app.bundle.js",
+  "main": "dist/index.html",
   "repository": {
     "url": "git+ssh://git@github.com/WebJamApps/combined-front.git",
     "type": "git"
@@ -11,14 +11,15 @@
   "license": "MIT",
   "engines": {
     "node": "8.4.0",
-    "npm": "5.3.0"
+    "npm": "5.4.1",
+    "yarn": "1.0.1"
   },
   "scripts": {
     "start": "nps",
     "test": "npm run test:karma && nps e2e",
     "test:karma": "cross-env NODE_ENV=test nps test.lint && nps test.karma",
     "test:debug": "cross-env NODE_ENV=test nps test.karma.debug",
-    "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && npm i -g yarn && yarn cache clean && yarn install && npm run postinstall:backend",
+    "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && npm i -g yarn@1.0.1 && yarn cache clean && yarn install && npm run postinstall:backend",
     "postinstall:backend": "yarn global add bower && bower install && npm run vulc && npm start -- build",
     "vulc": "rm -rf static/includes.html && polymer-bundler --inline-scripts --inline-css includes.html > static/includes.html",
     "prod": "npm run vulc && npm start -- build && npm start -- serve",
@@ -40,7 +41,6 @@
     "aurelia-loader-nodejs": "1.0.1",
     "aurelia-loader-webpack": "2.1.0",
     "aurelia-logging-console": "1.0.0",
-    "aurelia-materialize-bridge": "^0.30.0",
     "aurelia-pal-browser": "1.2.1",
     "aurelia-pal-nodejs": "1.0.0-beta.1.0.0",
     "aurelia-polyfills": "^1.2.2",
@@ -51,7 +51,7 @@
     "aurelia-templating-resources": "1.4.0",
     "aurelia-templating-router": "1.1.0",
     "aurelia-validation": "^1.0.0",
-    "aurelia-webpack-plugin": "2.0.0-rc.3",
+    "aurelia-webpack-plugin": "^2.0.0-rc.5",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.1",
@@ -80,7 +80,6 @@
     "isomorphic-fetch": "2.2.1",
     "jquery": "3.2.1",
     "json-loader": "^0.5.4",
-    "materialize-css": "^0.100.1",
     "nps": "^5.6.0",
     "nps-utils": "^1.2.0",
     "polymer-bundler": "^2.0.1",
@@ -114,8 +113,8 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.4",
     "protractor": "^5.1.2",
-    "stylelint": "^7.8.0",
-    "stylelint-config-standard": "^16.0.0",
+    "stylelint": "^8.1.1",
+    "stylelint-config-standard": "^17.0.0",
     "webpack-dev-server": "^2.6.1"
   },
   "snyk": true

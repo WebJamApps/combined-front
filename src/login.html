@@ -1,23 +1,12 @@
 <template>
-  <paper-material class="material-content" style="padding-bottom:50px">
-    <h3 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Our ${title} Page</strong></h3>
-    <p class="material-content-p">By clicking this button and creating an account, I certify that I am 13 years of age or older
-      <br>and agree to the terms and conditions in the Privacy Policy and the Rights and Use policy.
-    </p>
-    <div style="text-align:center">
-      <button click.delegate="authenticate('google')" class="material-content-button">Login with Google</button>
+  <div style="padding-bottom:50px">
+    <h4 class="ohaf" style="margin:auto; padding:20px;text-align:center"><strong>Our ${title} Page</strong></h4>
+    <div class="material-content elevation2" style="max-width:5in; margin:auto">
+      <p class="material-content-p;text-align:left">By clicking this button and creating an account, I certify that I am 13 years of age or older; I agree to the terms and conditions in the Privacy Policy and the Rights and Use policy.
+      </p>
+      <div style="text-align:center">
+        <button click.delegate="authenticate('google')" class="material-content-button">Login with Google</button>
+      </div>
     </div>
-  </paper-material>
-  <paper-material class="footer" elevation="4" style="padding:8px; background-color: #2a222a">
-    <div class="paper-card-img"><span>&nbsp;&nbsp;</span>
-      <a target="_blank" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
-      <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>
-      <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
-      <span>&nbsp;&nbsp;</span><a target="_blank" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
-      <span>&nbsp;&nbsp;</span><a target="_blank" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>
-      <span style="color:white; font-size: 9pt; padding-left:18px;">Powered by
-        <a target="_blank" style="color:white; font-size:9pt;font-weight: bold;" href="https://www.web-jam.com">Web Jam LLC</a>
-      </span>
-    </div>
-  </paper-material>
+  </div>
 </template>

@@ -1,9 +1,15 @@
+
 {
+  "extends": "stylelint-config-standard",
   "rules": {
     "no-eol-whitespace": null,
-    "rule-empty-line-before": null,
-    "selector-type-no-unknown": null,
+    "rule-empty-line-before": [ "always", {
+      "ignore": ["after-comment", "inside-block"]
+    } ],
     "comment-empty-line-before": null,
-    "comment-whitespace-inside": null
+    "color-no-invalid-hex": true,
+    "comment-whitespace-inside": null,
+    "unit-no-unknown": true,
+    "unit-blacklist": ""
   }
 }

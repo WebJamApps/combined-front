@@ -1,11 +1,11 @@
 <template>
   <div class="page-content">
-    <paper-material class="material-content" elevation="0">
+    <div>
       <h4 class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>${user.name}'s User Account</strong></h4>
-      <p style="margin:auto; text-align:center; padding-bottom:20px">Your primary role is ${role}</p>
-    </paper-material>
-    <paper-material class="material-content" elevation="3" style="max-width:5in; margin:auto" if.bind="role === 'Volunteer' || role === 'Developer'">
-      <h4 class="material-header-h4">Set Your Volunteering Preferences</h4>
+      <p style="margin:auto; text-align:center; padding-bottom:20px">Your primary role is <u>${role}</u></p>
+    </div>
+    <div class="material-content elevation3" style="max-width:5in; margin:auto" if.bind="role === 'Volunteer' || role === 'Developer'">
+      <h4 class="material-header-h4">Set Volunteering Preferences</h4>
       <form>
         <div class="multiselect" style="width:170px; margin-top:40px">
           <div class="selectBox" click.delegate="showCheckboxes('causes')">
@@ -14,15 +14,16 @@
             </select>
             <div class="overSelect"></div>
           </div>
-          <iron-dropdown id="causes" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
-            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-              <label repeat.for="cause of causes" for="${cause}" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
-                <input type="checkbox" value.bind="cause" id.bind="cause" checked.bind="selectedCauses" change.delegate="causePicked()"> ${cause}
+          <div class="checkboxes-div" id="causes" horizontal-align="right" vertical-align="top">
+            <div class="dropdown-content">
+              <label class="checkboxes-label" repeat.for="cause of causes" for="${cause}">
+                <input class="checkboxes-input" type="checkbox" value.bind="cause" id.bind="cause" checked.bind="selectedCauses" change.delegate="causePicked()"> ${cause}
               </label>
             </div>
-          </iron-dropdown>
+          </div>
         </div>
-        <paper-input if.bind="causeOther" value.two-way="user.volCauseOther" label="Other cause"></paper-input>
+        <label if.bind="causeOther">Other Causes</label>
+        <input if.bind="causeOther" value.two-way="user.volCauseOther">
         <div class="multiselect" style="width:170px; margin-top:50px">
           <div class="selectBox" click.delegate="showCheckboxes('talents')">
             <select>
@@ -30,15 +31,16 @@
             </select>
             <div class="overSelect"></div>
           </div>
-          <iron-dropdown id="talents" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
+          <div class="checkboxes-div" id="talents" horizontal-align="right" vertical-align="top">
             <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 300px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-              <label repeat.for="talent of talents" for="${talent}" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:150px">
-                <input type="checkbox" value.bind="talent" id.bind="talent" checked.bind="selectedTalents" change.delegate="talentPicked()"> ${talent}
+              <label class="checkboxes-label" repeat.for="talent of talents" for="${talent}">
+                <input class="checkboxes-input" type="checkbox" value.bind="talent" id.bind="talent" checked.bind="selectedTalents" change.delegate="talentPicked()"> ${talent}
               </label>
             </div>
-          </iron-dropdown>
+          </div>
         </div>
-        <paper-input if.bind="talentOther" value.two-way="user.volTalentOther" label="Other talent" ></paper-input>
+        <label if.bind="talentOther">Other Talent</label>
+        <input if.bind="talentOther" value.two-way="user.volTalentOther">
         <div class="multiselect" style="width:170px; margin-top:50px">
           <div class="selectBox" click.delegate="showCheckboxes('work')">
             <select>
@@ -46,40 +48,32 @@
             </select>
             <div class="overSelect"></div>
           </div>
-          <iron-dropdown id="work" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
+          <div class="checkboxes-div" id="work" horizontal-align="right" vertical-align="top">
             <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-              <label repeat.for="work of works" for="${work}" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
-                <input type="checkbox" value.bind="work" id.bind="work" checked.bind="selectedWorks" change.delegate="workPicked()"> ${work}
+              <label class="checkboxes-label" repeat.for="work of works" for="${work}" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
+                <input class="checkboxes-input" type="checkbox" value.bind="work" id.bind="work" checked.bind="selectedWorks" change.delegate="workPicked()"> ${work}
               </label>
             </div>
-          </iron-dropdown>
+          </div>
         </div>
-        <paper-input if.bind="workOther" value.two-way="user.volWorkOther" label="Other work" ></paper-input>
-        <paper-input style="margin-top:25px" value.two-way="user.volTravelDistMiles" label="Furthest distance willing to travel (miles)" ></paper-input>
+        <label if.bind="workOther">Other Work</label>
+        <input if.bind="workOther" value.two-way="user.volWorkOther">
+        <p>&nbsp;</p>
+        <label>Furthest distance willing to travel (miles)</label>
+        <input style="margin-top:0" value.two-way="user.volTravelDistMiles">
         <button class="button-lib" raised click.trigger="setupVolunteer()">
           Submit</button>
         </form>
-      </paper-material>
+      </div>
       <p> </p>
-      <paper-material elevation="2" style="padding:20px; width:300px; margin:auto">
-        <p style="text-align:center; font-weight:bold">Delete your user</p>
+      <div class="elevation2" style="padding:20px; max-width:600px; margin:auto">
+        <p style="text-align:center; font-weight:bold">Delete Account</p>
         <button if.bind="canDelete" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">
           Delete User
         </button>
         <p>${notDelR}</p>
         <p>${notDelB}</p>
-      </paper-material>
-      <paper-material class="footer" elevation="4" style="padding:8px; background-color: #2a222a; margin-top:10px">
-        <div class="paper-card-img"><span>&nbsp;&nbsp;</span>
-          <a target="_blank" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
-          <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>
-          <span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
-          <span>&nbsp;&nbsp;</span><a target="_blank" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>
-          <span>&nbsp;&nbsp;</span><a target="_blank" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>
-          <span style="color:white; font-size: 9pt; padding-left:18px;">Powered by
-            <a target="_blank" style="color:white; font-size:9pt;font-weight: bold;" href="https://www.web-jam.com">Web Jam LLC</a>
-          </span>
-        </div>
-      </paper-material>
+      </div>
+      <p>&nbsp;</p>
     </div>
   </template>

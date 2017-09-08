@@ -1,8 +1,8 @@
 <template>
   <div class="page-content">
-    <paper-material class="material-content" elevation="0">
+    <div class="material-content">
       <h3 id="charityDash" class="ohaf" style="margin:auto; padding-top:10px; padding-bottom:20px;text-align:center"><strong>Charity Dashboard</strong></h3>
-      <paper-material id="charTable" class="material-content" elevation="3" style="max-width:8in; margin:auto">
+      <div id="charTable" class="material-content elevation3" style="max-width:8in; margin:auto">
         <h4 class="material-header-h4">Your charities</h4>
         <div id="noCharities" if.bind="charities.length === 0">
           <p style="margin:auto; padding-top:10px">You do not have any charities.</p>
@@ -48,12 +48,13 @@
             </table>
           </div>
         </div>
-      </paper-material>
-      <paper-material elevation="3" style="max-width:5in; margin:auto">
-        <!-- Update form -->
-        <div id="updateCharitySection" style="margin-left:10px">
-          <h4 if.bind = "update" class="material-header-h4" style="padding-top:10px">Update ${charityName}</h4>
-          <h4 if.bind = "!update" class="material-header-h4" style="padding-top:10px">Create a New Charity</h4>
+      </div>
+      <p>&nbsp;</p>
+      <div class ="elevation3" style="max-width:6in; margin:auto;">
+        <!-- Create/Update form -->
+        <div id="updateCharitySection" style="margin-left:10px; padding-top:25px">
+          <h4 if.bind = "update" class="material-header-h4">Update ${charityName}</h4>
+          <h4 if.bind = "!update" class="material-header-h4">Create a New Charity</h4>
           <form>
             <div class="multiselect" style="width:200px; margin-top:30px">
               <div class="selectBox" click.delegate="showCheckboxes('typesUpdate')">
@@ -62,25 +63,32 @@
                 </select>
                 <div class="overSelect"></div>
               </div>
-              <iron-dropdown id="typesUpdate" horizontal-align="right" vertical-align="top" style="margin-top:25px;">
-                <div class="dropdown-content" style="width:150px;background-color:white;box-sizing: border-box; max-width: 250px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-                  <label repeat.for="type of types" for="${type}" style="display:block;text-align:left;margin-left:5px;margin-right:5px">
-                    <input type="checkbox" value.bind="type" id.bind="type" checked.bind="updateCharity.charityTypes" change.delegate="updateTypePicked()"> ${type}
+              <div class="checkboxes-div" id="typesUpdate" horizontal-align="right" vertical-align="top" style="position:relative;margin-top:0">
+                <div class="dropdown-content">
+                  <label class="checkboxes-label" repeat.for="type of types" for="${type}">
+                    <input class="checkboxes-input" type="checkbox" value.bind="type" id.bind="type" checked.bind="updateCharity.charityTypes" change.delegate="updateTypePicked()"> ${type}
                   </label>
                 </div>
-              </iron-dropdown>
+              </div>
             </div>
-            <paper-input if.bind="typeOther" value.two-way="updateCharity.charityTypeOther" label="Other charity type"></paper-input>
-            <paper-input style="margin-top:20px" label="Charity name (required)" value.two-way="updateCharity.charityName & validate:controller2"></paper-input>
-            <paper-input style="margin-top:20px" label="Charity street address (required)" value.two-way="updateCharity.charityStreet & validate:controller2"></paper-input>
-            <paper-input style="margin-top:20px" label="City (required)" value.two-way="updateCharity.charityCity & validate:controller2"></paper-input>
+            <label if.bind="typeOther">Other charity type</label>
+            <input if.bind="typeOther" value.two-way="updateCharity.charityTypeOther">
+            <label>Charity Name (required)</label>
+            <input value.two-way="updateCharity.charityName & validate:controller2">
+            <label>Charity Street Address (required)</label>
+            <input value.two-way="updateCharity.charityStreet & validate:controller2">
+            <label>City (required)</label>
+            <input value.two-way="updateCharity.charityCity & validate:controller2">
             <select id="updateState" class="form-control" value.bind="updateCharity.charityState & validate:controller2" style="margin-top:30px;width: 2.35in">
               <option value="">State (required)</option>
               <option repeat.for="state of states" model.bind="state">${state}</option>
             </select>
-            <paper-input style="margin-top:20px" label="Zip Code (required)" value.two-way="updateCharity.charityZipCode & validate:controller2"></paper-input>
-            <paper-input id="charity-phone" style="margin-top:20px" type="tel" label="Phone Number (optional)" value.two-way="updateCharity.charityPhoneNumber & validate:controller2"></paper-input>
-            <paper-input style="margin-top:20px" label="Assign additional manager by email" value.two-way="updateCharity.charityEmail & validate:controller2"></paper-input>
+            <label>Zipcode (required)</label>
+            <input value.two-way="updateCharity.charityZipCode & validate:controller2">
+            <label>Phone Number (optional)</label>
+            <input id="charity-phone" type="tel" value.two-way="updateCharity.charityPhoneNumber & validate:controller2">
+            <label>Add additional manager by email (optional)</label>
+            <input value.two-way="updateCharity.charityEmail & validate:controller2">
             <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
               <ul if.bind="controller2.errors">
                 <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red">
@@ -94,8 +102,7 @@
             <p>&nbsp;</p>
           </form>
         </div>
-      </paper-material>
-    </paper-material>
-    <paper-material id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></paper-material>
+      </div>
+    </div>
   </div>
 </template>

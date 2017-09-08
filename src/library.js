@@ -7,14 +7,30 @@ export class Library {
 
   get widescreen(){
     return document.documentElement.clientWidth > 1000;
-    // let iswidescreen = false;
-    // let currentscreenwidth = document.documentElement.clientWidth;
-    // if (currentscreenwidth > 1000){
-    //   iswidescreen = true;
-    //   this.columnWidth = '450px';
-    // } else {
-    //   this.columnWidth = 'auto';
-    // }
-    // return iswidescreen;
   }
+
+  showSlides() {
+    let slides;
+    slides = document.getElementById('slideshow1');
+    if (slides !== null){
+      $('#slideshow1 > div:first')
+      .hide()
+      .next()
+      .fadeIn(1500)
+      .end()
+      .appendTo('#slideshow1');
+    } else {
+      $('#slideshow > div:first')
+      .hide()
+      .next()
+      .fadeIn(1500)
+      .end()
+      .appendTo('#slideshow');
+    }
+  }
+
+  attached() {
+    setInterval(this.showSlides, 4000);
+  }
+
 }
