@@ -13,4 +13,11 @@ describe('the Music module', () => {
     //   //expect(music1.jump('joshbio')).toBe(defined);
     done();
   });
+
+  it('runs showSlides to display the slideshow', (done) => {
+    document.body.innerHTML = '<div id="slideshow"><div></div><div>';
+    music1.attached();
+    music1.showSlides();
+    done();
+  });
 });

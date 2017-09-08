@@ -32,7 +32,7 @@ export class VolunteerOpps {
     this.user = await this.app.appState.getUser(this.uid);
     //console.log(this.app.router.currentInstruction.params.childRoute);
     let currentUrl = (window.location.href);
-    console.log(currentUrl);
+    //console.log(currentUrl);
     this.charityID = currentUrl.substring(currentUrl.indexOf('vol-ops/') + 8);
     //console.log(this.charityID);
     let res = await this.app.httpClient.fetch('/volopp/' + this.charityID);
@@ -62,7 +62,7 @@ export class VolunteerOpps {
     this.today = new Date().toISOString().split('T')[0];
     this.minEndDate = this.today;
     this.maxStartDate = '';
-    console.log('today is ' + this.today);
+    //console.log('today is ' + this.today);
     this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
       'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
       'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
@@ -82,8 +82,8 @@ export class VolunteerOpps {
     for (let i = 0; i < this.events.length; i++){
       resp = await this.app.httpClient.fetch('/signup/event/' + this.events[i]._id);
       scheduledEvents = await resp.json();
-      console.log('these are the schedule events for this event id');
-      console.log(scheduledEvents);
+      //console.log('these are the schedule events for this event id');
+      //console.log(scheduledEvents);
       for (let hasVolunteers of scheduledEvents){
         total = total + hasVolunteers.numPeople;
       }
@@ -97,14 +97,14 @@ export class VolunteerOpps {
   }
 
   selectDate(dtype){
-    console.log('show date picker here');
+    //console.log('show date picker here');
     if (dtype === 'start-date'){
-      console.log(dtype);
-      console.log(this.voOpp.voStartDate);
+      //console.log(dtype);
+      //console.log(this.voOpp.voStartDate);
       this.minEndDate = this.voOpp.voStartDate;
     } else {
-      console.log(dtype);
-      console.log(this.voOpp.voEndDate);
+      //console.log(dtype);
+      //console.log(this.voOpp.voEndDate);
       this.maxStartDate = this.voOpp.voEndDate;
     }
     //   this.dialog.time = new moment();
@@ -123,8 +123,10 @@ export class VolunteerOpps {
     this.voOpp.voState = this.charity.charityState;
     this.voOpp.voZipCode = this.charity.charityZipCode;
     this.voOpp.voCharityTypes = this.charity.charityTypes;
+    /* istanbul ignore else */
     if (this.charity.charityTypeOther !== ''){
       let index = this.voOpp.voCharityTypes.indexOf('other');
+      /* istanbul ignore else */
       if (index > -1) {
         this.voOpp.voCharityTypes.splice(index, 1);
       }

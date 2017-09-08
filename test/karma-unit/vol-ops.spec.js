@@ -16,8 +16,8 @@ class ValidatorMock extends Validator {
     this.b = b;
   }
   validateObject(obj, rules) {
-    console.log('obj');
-    console.log(obj);
+    //console.log('obj');
+    //console.log(obj);
     // if (obj.charityTypes.indexOf('True') > -1){
     //   return Promise.resolve([{rule: Object, object: Object, propertyName: 'charityPhoneNumber', valid: true, message: 'Charity Phone Number is correct'}]);
     // }
@@ -94,6 +94,21 @@ class HttpMockEvent2 extends HttpMock {
   }
 }
 
+class HttpMockChar extends HttpMock {
+  fetch(url, obj) {
+    //console.log(url);
+    this.headers.url = url;
+    this.headers.method = obj ? obj.method : 'GET';
+    if (obj && obj.method === 'put') {
+      this.user = obj.body;
+    }
+    this.status = 200;
+    return Promise.resolve({
+      Headers: this.headers,
+      json: () => Promise.resolve({_id: '123', charityTypeOther: 'tree huggers', charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Josh', 'Maria', 'Bob']})
+    });
+  }
+}
 
 describe('the Volunteer Opps Module', () => {
   let app;
@@ -101,6 +116,8 @@ describe('the Volunteer Opps Module', () => {
   let volops;
   let app2;
   let volops2;
+  let app3;
+  let volops3;
   beforeEach(() => {
     auth = new AuthStub();
     auth.setToken({sub: 'aowifjawifhiawofjo'});
@@ -110,6 +127,9 @@ describe('the Volunteer Opps Module', () => {
     app2 = new App(auth, new HttpMockEvent2());
     volops2 = new VolunteerOpps(app2, new VCMock(), new ValidatorMockFalse());
     volops2.app.appState = new AppStateStub();
+    app3 = new App(auth, new HttpMockChar());
+    volops3 = new VolunteerOpps(app3, new VCMock(), new ValidatorMockFalse());
+    volops3.app.appState = new AppStateStub();
   });
 
   it('activates and there are events and runs the show time', (done) => {
@@ -245,6 +265,36 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
+  it('it cancels an event', (done) => {
+    let signupevent = {
+      '_id': '123',
+      'voWorkTypes': ['other'],
+      'voWorkTypeOther': '',
+      'voCharityName': '',
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+      'voTalentTypeOther': 'scrubbing'
+    };
+    volops.cancelEvent(signupevent);
+    done();
+  });
+
+  it('it reactivates a cancelled event', (done) => {
+    let signupevent = {
+      '_id': '123',
+      'voWorkTypes': ['other'],
+      'voWorkTypeOther': '',
+      'voCharityName': '',
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+      'voTalentTypeOther': 'scrubbing'
+    };
+    volops.reactivateEvent(signupevent);
+    done();
+  });
+
   it('displays the update event form', (done) => {
     volops.activate();
     document.body.innerHTML = '<div id="topSection"></div>';
@@ -270,17 +320,24 @@ describe('the Volunteer Opps Module', () => {
       'userPhone': '3333333333'
     };
     document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
-    //volops.charityName = 'OHAF';
-    // let thisEvent = {
-    //   'voWorkTypes': ['other'],
-    //   'voCharityName': '',
-    //   'voStartDate': '2017-12-12',
-    //   'voEndDate': '2017-12-12',
-    //   'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-    //   'voTalentTypeOther': 'scrubbing'
-    // };
     volops.setupValidation2 = function(){};
     volops.showNewEvent();
+    done();
+  });
+
+  it('displays the charity types including other types', (done) => {
+    volops3.charityID = '123';
+    volops3.voOpp = {
+      'voWorkTypes': ['other'],
+      'voWorkTypeOther': '',
+      'voCharityName': '',
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+      'voTalentTypeOther': 'scrubbing',
+      'voCharityTypes': ['Christian', 'other']
+    };
+    volops3.findCharity();
     done();
   });
 
@@ -333,12 +390,16 @@ describe('the Volunteer Opps Module', () => {
       'voTalentTypeOther': 'scrubbing',
       '_id': '2222'
     };
-    //volops.setupValidation2 = function(){};
-    volops.validate2();
+    volops.validType2 = true;
+    let validationResults = [{
+      result: {valid: true}}];
+    volops.updateCanSubmit2(validationResults);
     done();
   });
+
   it('the submit button is not displayed when the form is not valid', (done) => {
     volops2.activate();
+    //volops2.setupValidation2();
     document.body.innerHTML = '<button class="updateButton"></button>';
     volops2.charityName = 'OHAF';
     volops2.voOpp = {

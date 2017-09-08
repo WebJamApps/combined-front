@@ -7,12 +7,13 @@ export class Volunteer {
     this.app = app;
     this.events = [];
     this.signup = {};
+    this.selectedFilter = ['future date'];
   }
 
   siteLocations = [];
   causes = [];
   filterby = ['keyword', 'zipcode', 'cause', 'future date'];
-  selectedFilter = [];
+  // selectedFilter = [];
   expanded = false;
   keyword = false;
   siteLocation = false;
@@ -38,6 +39,11 @@ export class Volunteer {
       this.populateSites();
       this.populateCauses();
       this.checkSignups();
+      if (this.selectedFilter.includes('future date')) {
+        this.startingDateFilter = true;
+        console.log('you selected the starting date filter');
+        this.removePast();
+      }
     }
   }
 
