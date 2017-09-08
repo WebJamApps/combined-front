@@ -41,7 +41,7 @@ export class Volunteer {
       this.checkSignups();
       this.fixZipcodes();
       if (this.selectedFilter.includes('future date')) {
-        this.startingDateFilter = true;
+        //this.startingDateFilter = true;
         console.log('you selected the starting date filter');
         this.removePast();
       }
