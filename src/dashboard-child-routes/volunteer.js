@@ -39,10 +39,23 @@ export class Volunteer {
       this.populateSites();
       this.populateCauses();
       this.checkSignups();
+      this.fixZipcodes();
       if (this.selectedFilter.includes('future date')) {
         this.startingDateFilter = true;
         console.log('you selected the starting date filter');
         this.removePast();
+      }
+    }
+  }
+
+  // get widescreen() {
+  //   return document.documentElement.clientWidth > 1100;
+  // }
+
+  fixZipcodes(){
+    for (let i = 0; i < this.events.length; i++){
+      if (this.events[i].voZipCode === undefined || this.events[i].voZipCode === '' || this.events[i].voZipCode === null){
+        this.events[i].voZipCode = '00000';
       }
     }
   }
@@ -67,18 +80,19 @@ export class Volunteer {
     this.keyword = false;
     this.siteLocation = false;
     if (arrayLength === 0){
-      if (this.startingDateFilter){
-        this.activate();
-      } else {
-        this.filters[0].value = '';
-        this.filters[1].value = '';
-        this.filters[2].value = '';
-        this.causeFilter = false;
-        this.siteFilter = false;
-        this.keyword = false;
+      // if (this.startingDateFilter){
+      //   this.activate();
+      // } else {
+      this.filters[0].value = '';
+      this.filters[1].value = '';
+      this.filters[2].value = '';
+      this.causeFilter = false;
+      this.siteFilter = false;
+      this.keyword = false;
+      this.includePast();
         //this.filters[3].value = '';
-        return;
-      }
+      return;
+      // }
     }
     // for (let i = 0; i < arrayLength; i++) {
     if (this.selectedFilter.includes('keyword')) {
@@ -101,9 +115,17 @@ export class Volunteer {
       this.causeFilter = false;
     }
     if (this.selectedFilter.includes('future date')) {
-      this.startingDateFilter = true;
+      //this.startingDateFilter = true;
       console.log('you selected the starting date filter');
       this.removePast();
+    } else {
+      this.includePast();
+    }
+  }
+
+  includePast(){
+    for (let i = 0; i < this.events.length; i++){
+      this.events[i].past = false;
     }
   }
 
