@@ -1,6 +1,7 @@
 <template>
   <div class="page-content">
     <div style="width: 4.5in; margin:auto">
+      <!-- <h2>${widescreen}</h2> -->
       <h4 class="ohaf" style="margin-bottom: 20px; text-align:center"><strong>Volunteer Dashboard</strong>
         <span style="font-size: 14px; float:right; margin-right: 132px; margin-top: 0">
           <div class="multiselect">
@@ -36,7 +37,7 @@
         <option repeat.for="cause of causes" model.bind="cause">${cause}</option>
       </select>
     </div>
-    <div class="search-table-outer" style="position:relative;overflow-x:auto;">
+    <div class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px">
       <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
         <thead>
           <tr>
