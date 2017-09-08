@@ -132,8 +132,8 @@ export class VolunteerOpps {
       }
       this.voOpp.voCharityTypes.push(this.charity.charityTypeOther);
     }
-    console.log('the charity types attached to this event');
-    console.log(this.voOpp.voCharityTypes.length);
+    // console.log('the charity types attached to this event');
+    // console.log(this.voOpp.voCharityTypes);
   }
 
   fixDates(){
@@ -256,7 +256,6 @@ export class VolunteerOpps {
     this.voOpp = {
       'voName': '',
       'voCharityId': this.charityID,
-      'voCharityName': this.charityName,
       'voNumPeopleNeeded': 1,
       'voDescription': '',
       'voWorkTypes': [],
@@ -271,6 +270,14 @@ export class VolunteerOpps {
       'voContactEmail': this.user.email,
       'voContactPhone': this.user.userPhone
     };
+    this.voOpp.voCharityName = this.charity.charityName;
+    this.voOpp.voStreet = this.charity.charityStreet;
+    this.voOpp.voCity = this.charity.charityCity;
+    this.voOpp.voState = this.charity.charityState;
+    this.voOpp.voZipCode = this.charity.charityZipCode;
+    // this.voOpp.voCharityTypes = this.charity.charityTypes;
+    // console.log('this.charity.charityTypes');
+    // console.log(this.charity.charityTypes.length);
     this.newEvent = true;
     //this.canSubmit2 = false;
     let topSection = document.getElementById('topSection');
