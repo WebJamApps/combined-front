@@ -30,7 +30,7 @@
                 <button if.bind="event.voNumPeopleScheduled === 0 && event.voStatus !=='cancel'" class="button-checkout" raised click.delegate="deleteEvent(event._id)" style="margin-bottom:10px">
                   Delete
                 </button>
-                <button if.bind="event.voNumPeopleScheduled > 0 && event.voStatus !=='cancel'" class="button-checkout" raised click.delegate="cancelEvent(event)" style="margin-bottom:10px">
+                <button if.bind="event.voNumPeopleScheduled > 0 && event.voStatus !=='cancel' && !event.past" class="button-checkout" raised click.delegate="cancelEvent(event)" style="margin-bottom:10px">
                   Cancel
                 </button>
                 <p><a if.bind="event.voStatus !=='cancel'" click.delegate="showUpdateEvent(event)">Update</a></p>

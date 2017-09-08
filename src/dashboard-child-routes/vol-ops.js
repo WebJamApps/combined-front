@@ -48,6 +48,7 @@ export class VolunteerOpps {
       this.buildWorkPrefs();
       this.buildTalents();
       this.checkScheduled();
+      this.markPast();
       //this.charityName = this.events[0].voCharityName;
     }
     //else {
@@ -89,6 +90,34 @@ export class VolunteerOpps {
       }
       this.events[i].voNumPeopleScheduled = total;
       total = 0;
+    }
+  }
+
+  markPast() {
+    let testDate;
+    let today = new Date();
+    let mm = today.getMonth() + 1; // getMonth() is zero-based
+    let dd = today.getDate();
+    today = [today.getFullYear(),
+      (mm > 9 ? '' : '0') + mm,
+      (dd > 9 ? '' : '0') + dd].join('');
+    console.log(today);
+    for (let i = 0; i < this.events.length; i++){
+        //console.log(this.events[i].voStartDate);
+
+      if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
+        console.log('undefined date');
+        this.events[i].voStartDate = today;
+      }
+      testDate = this.events[i].voStartDate.replace('-', '');
+      testDate = testDate.replace('-', '');
+      console.log(testDate);
+      if (testDate < today){
+        console.log('this date is past');
+        console.log(this.events[i].voStartDate);
+        this.events[i].past = true;
+      }
+        //console.log()
     }
   }
 
