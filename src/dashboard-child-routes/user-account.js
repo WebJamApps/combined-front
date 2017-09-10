@@ -19,7 +19,7 @@ export class UserAccount {
     this.canDelete = true;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
-    this.role = this.user.userType;
+    this.app.role = this.user.userType;
     this.causes.sort();
     this.causes.push('other');
     for (let i = 0; i < this.causes.length; i++) {
@@ -50,9 +50,9 @@ export class UserAccount {
       }
     }
     //console.log('the selected talents are: ' + this.selectedTalents);
-    if (this.user.userType === 'Charity'){
-      this.role = 'Charity Manager';
-    }
+    // if (this.user.userType === 'Charity'){
+    //   this.role = 'Charity Manager';
+    // }
     /* istanbul ignore else */
     if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
       const res = await this.app.httpClient.fetch('/charity/' + this.uid);

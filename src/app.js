@@ -13,6 +13,7 @@ export class App {
     this.auth = auth;
     this.httpClient = httpClient;
     this.dashboardTitle = 'Dashboard';
+    this.role = '';
   }
 
   email = '';
@@ -34,6 +35,9 @@ export class App {
       this.authenticated = true; //Logout element is reliant upon a local var;
       let uid = this.auth.getTokenPayload().sub;
       this.user = await this.appState.getUser(uid);
+      if (this.user !== undefined){
+        this.role = this.user.userType;
+      }
     }
   }
 
@@ -161,7 +165,7 @@ export class App {
       // } else {
       //   this.Menu = 'wj';
     }
-    if (this.Menu === 'charity' || this.Menu === 'ohaf' || this.Menu === 'volunteer'){
+    if (this.Menu === 'charity' || this.Menu === 'ohaf' || this.Menu === 'volunteer' || this.role === 'Charity' || this.role === 'Volunteer'){
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',
         headerText1: 'Our',
