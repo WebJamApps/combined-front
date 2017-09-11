@@ -70,6 +70,9 @@ export class Volunteer {
       if (this.events[i].voNumPeopleScheduled - this.events[i].voNumPeopleNeeded >= 0 && !this.events[i].scheduled){
         this.events[i].full = true;
       }
+      if (this.events[i].voStatus === 'cancel' && !this.events[i].scheduled){
+        this.events[i].full = true;
+      }
       total = 0;
     }
   }

@@ -328,10 +328,21 @@ export class VolunteerOpps {
   cancelEvent(theEvent){
     this.voOpp = theEvent;
     this.updateEvent('cancel');
+    if (this.voOpp.voDescription !== undefined){
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
+    // this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
+    // this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
+      this.voOpp.voDescription = '<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>' + this.voOpp.voDescription;
+    //console.log(this.voOpp.voDescription);
+    }
   }
 
   reactivateEvent(theEvent){
     this.voOpp = theEvent;
+    //this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>', '');
+    if (this.voOpp.voDescription !== undefined){
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>', '<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>');
+    }
     this.updateEvent('update');
   }
 
@@ -339,7 +350,11 @@ export class VolunteerOpps {
     console.log('update Event');
     //console.log('this is the update charity');
     this.voOpp.voStatus = updateType;
-    console.log(this.voOpp);
+    if (updateType === 'update'){
+      //this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>' + this.voOpp.voDescription;
+    }
+    //console.log(this.voOpp);
     await fetch;
     this.app.httpClient.fetch('/volopp/' + this.voOpp._id, {
       method: 'put',
@@ -348,6 +363,7 @@ export class VolunteerOpps {
     .then((response) => response.json())
     .then((data) => {
       this.activate();
+      this.showNewEvent();
     });
   }
 
