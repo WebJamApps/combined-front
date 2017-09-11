@@ -28,6 +28,7 @@ export class Volunteer {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
+    this.app.role = this.user.userType;
     const res = await this.app.httpClient.fetch('/volopp/getall');
     this.events = await res.json();
     console.log('all events');
