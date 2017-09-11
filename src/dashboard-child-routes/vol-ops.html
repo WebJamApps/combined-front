@@ -47,7 +47,10 @@
               <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
               <td style="padding:8px" innerhtml.bind="event.voEndTime"></td>
               <td style="padding:8px" innerhtml.bind="event.voNumPeopleNeeded"></td>
-              <td style="padding:8px" innerhtml.bind="event.voNumPeopleScheduled"></td>
+              <td style="padding:8px">
+                <a if.bind="event.voNumPeopleScheduled > 0" click.delegate="viewPeople(event)">${event.voNumPeopleScheduled}</a>
+                <span if.bind="event.voNumPeopleScheduled === 0">0</span>
+              </td>
               <td style="padding:8px" innerhtml.bind="event.talentHtml"></td>
               <td style="padding:8px" innerhtml.bind="event.workHtml"></td>
               <td style="padding:8px" innerhtml.bind="event.voContactPhone"></td>
@@ -57,10 +60,76 @@
           </tbody>
         </table>
       </div>
+      <p>&nbsp;</p>
+      <div id="showvolunteers" if.bind="showVolunteers" class="search-table-outer" style="position:relative;overflow-x:auto;">
+        <table aurelia-table="data.bind: allPeople; display-data.bind: $displayData1" class="bookshelf">
+          <caption style="margin:auto; text-align:center"><strong>Volunteers for ${eventTitle}</strong></caption>
+          <thead>
+            <tr>
+              <!-- <th style="padding:8px; text-align:center">Action</th> -->
+              <th style="padding:8px; min-width:150px" aut-sort="key: name; default: asc">Name</th>
+              <th style="padding:8px; min-width:200px" >Email</th>
+              <th style="padding:8px; min-width:200px" >Phone</th>
+              <th style="padding:8px; min-width:200px" >City</th>
+              <th style="padding:8px; min-width:200px" >Zipcode</th>
+              <!-- <th style="padding:8px; min-width:100px" >Start Date</th>
+              <th style="padding:8px; min-width:100px" >Start Time</th>
+              <th style="padding:8px; min-width:100px">End Date</th>
+              <th style="padding:8px; min-width:100px">End Time</th>
+              <th style="padding:8px">People<br>Needed</th>
+              <th style="padding:8px">People<br>Scheduled</th>
+              <th style="padding:8px">Talents</th>
+              <th style="padding:8px">Work</th>
+              <th style="padding:8px">Phone</th>
+              <th style="padding:8px">Email</th>
+              <th style="padding:8px">Coordinator</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="user of $displayData1">
+              <!-- <td style="padding:8px; text-align:center">
+                <button if.bind="event.voNumPeopleScheduled === 0 && event.voStatus !=='cancel'" class="button-checkout" raised click.delegate="deleteEvent(event._id)" style="margin-bottom:10px">
+                  Delete
+                </button>
+                <button if.bind="event.voNumPeopleScheduled > 0 && event.voStatus !=='cancel' && !event.past" class="button-checkout" raised click.delegate="cancelEvent(event)" style="margin-bottom:10px">
+                  Cancel
+                </button>
+                <p><a if.bind="event.voStatus !=='cancel'" click.delegate="showUpdateEvent(event)">Update</a></p>
+                <p if.bind="event.voStatus ==='cancel'"><strong>This event has been cancelled</strong></p>
+                <button if.bind="event.voStatus ==='cancel'" class="button-checkout" raised click.delegate="reactivateEvent(event)" style="margin-bottom:10px">
+                  Reactivate
+                </button>
+              </td> -->
+              <td style="padding:8px" innerhtml.bind="user.name"></td>
+              <td style="padding:8px" innerhtml.bind="user.email"></td>
+              <td style="padding:8px" innerhtml.bind="user.userPhone"></td>
+              <td style="padding:8px" innerhtml.bind="user.userCity"></td>
+                <td style="padding:8px" innerhtml.bind="user.userZip"></td>
+              <!-- <td style="padding:8px; min-width:100px"><p>${event.voStreet}</p><p>${event.voCity}, ${event.voState}&nbsp;&nbsp;${event.voZipCode}</p></td>
+              <td style="padding:8px" innerhtml.bind="event.voStartDate"></td>
+              <td style="padding:8px" innerhtml.bind="event.voStartTime"></td>
+              <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
+              <td style="padding:8px" innerhtml.bind="event.voEndTime"></td>
+              <td style="padding:8px" innerhtml.bind="event.voNumPeopleNeeded"></td>
+              <td style="padding:8px">
+                <a if.bind="event.voNumPeopleScheduled > 0" click.delegate="viewPeople(event)">${event.voNumPeopleScheduled}</a>
+                <span if.bind="event.voNumPeopleScheduled === 0">0</span>
+              </td>
+              <td style="padding:8px" innerhtml.bind="event.talentHtml"></td>
+              <td style="padding:8px" innerhtml.bind="event.workHtml"></td>
+              <td style="padding:8px" innerhtml.bind="event.voContactPhone"></td>
+              <td style="padding:8px" innerhtml.bind="event.voContactEmail"></td>
+              <td style="padding:8px" innerhtml.bind="event.voContactName"></td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div id="newEventSection" style="margin-left:10px">
-      <h4 if.bind="newEvent" class="material-header-h4" style="margin-top:40px"><strong>Schedule A New Event</strong></h4>
-      <h4 if.bind="!newEvent" class="material-header-h4" style="margin-top:40px"><strong>Update the ${charityName} Event</strong></h4>
+    <p>&nbsp;</p>
+    <div id="newEventSection" style="margin:auto; max-width:500px" class="elevation2">
+      <p>&nbsp;</p>
+      <h4 if.bind="newEvent" class="material-header-h4" style="margin-top:10px"><strong>Schedule A New Event</strong></h4>
+      <h4 if.bind="!newEvent" class="material-header-h4" style="margin-top:10px"><strong>Update the ${charityName} Event</strong></h4>
       <form>
         <label style="margin-top:10px; font-size:11pt">Event Name (required)</label>
         <input value.two-way="voOpp.voName & validate:controller2">
@@ -147,6 +216,7 @@
         <button id="nevermind" class="nevermind" raised click.trigger="showNewEvent()" style="margin-bottom:40px">Nevermind</button>
       </form>
     </div>
+    <p>&nbsp;</p>
     <!-- <div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div> -->
   </div>
 </template>
