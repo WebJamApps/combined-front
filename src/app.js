@@ -105,10 +105,17 @@ export class App {
   logout() {
     this.appState.setUser({});
     this.authenticated = false;
-    this.auth.logout('/')
-    .then(() => {
-      console.log('Promise fulfilled, logged out');
-    });
+    if (this.role !== 'Charity' && this.role !== 'Volunteer'){
+      this.auth.logout('/')
+      .then(() => {
+        console.log('Promise fulfilled, logged out');
+      });
+    } else {
+      this.auth.logout('/ohaf')
+      .then(() => {
+        console.log('Promise fulfilled, logged out');
+      });
+    }
   }
 
   close() {

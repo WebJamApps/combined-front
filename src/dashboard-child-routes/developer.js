@@ -12,6 +12,7 @@ export class Developer {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
+    this.app.role = this.user.userType;
   }
 
 }

@@ -32,6 +32,7 @@ export class VolunteerOpps {
     this.showVolunteers = false;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
+    this.app.role = this.user.userType;
     //console.log(this.app.router.currentInstruction.params.childRoute);
     let currentUrl = (window.location.href);
     //console.log(currentUrl);
