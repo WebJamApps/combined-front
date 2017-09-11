@@ -24,10 +24,12 @@ export class VolunteerOpps {
     this.newAddress = false;
     this.charity = {};
     this.voOpp = {};
+    this.showVolunteers = false;
   }
   //
   async activate(){
     this.canSubmit2 = false;
+    this.showVolunteers = false;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     //console.log(this.app.router.currentInstruction.params.childRoute);
@@ -80,6 +82,7 @@ export class VolunteerOpps {
     let resp;
     let scheduledEvents;
     let total = 0;
+    let signupUserIds = [];
     for (let i = 0; i < this.events.length; i++){
       resp = await this.app.httpClient.fetch('/signup/event/' + this.events[i]._id);
       scheduledEvents = await resp.json();
@@ -87,9 +90,51 @@ export class VolunteerOpps {
       //console.log(scheduledEvents);
       for (let hasVolunteers of scheduledEvents){
         total = total + hasVolunteers.numPeople;
+        signupUserIds.push(hasVolunteers.userId);
       }
+      // if (total > 0){
+      //   this.events[i].voNumPeopleScheduled = '<a click.delegate="viewPeople(event)">' + total + '</a>';
+      // } else {
       this.events[i].voNumPeopleScheduled = total;
+      this.events[i].voSignupUserIds = signupUserIds;
+      // }
       total = 0;
+      signupUserIds = [];
+    }
+  }
+
+  async viewPeople(thisevent){
+    this.showVolunteers = true;
+    console.log(thisevent);
+    let res;
+    let person;
+//     const userSchema = new Schema({
+//   name: { type: String, required: true },
+//   email: { type: String, required: true, unique: true },
+//   userPhone: { type: Number, required: false },
+//   userType: { type: String, required: false },
+//   userCity: { type: String, required: false },
+//   userZip: { type: String, required: false },
+//   userDetails:{ type: String, required: false },
+//   volTravelDistMiles: { type: Number, required: false },
+//   volCauses: { type: [String], required: false },
+//   volTalents: { type: [String], required: false },
+//   volWorkPrefs: { type: [String], required: false },
+//   volCauseOther:{ type: String, required: false },
+//   volTalentOther:{ type: String, required: false },
+//   volWorkOther:{ type: String, required: false }
+// });
+    this.allPeople = [];
+    for (let i = 0; i < thisevent.voSignupUserIds.length; i++){
+      res = await this.app.httpClient.fetch('/user/' + thisevent.voSignupUserIds[i]);
+      person = await res.json();
+      this.allPeople.push(person);
+    }
+    console.log(this.allPeople);
+    this.eventTitle = thisevent.voName;
+    let display = document.getElementById('showvolunteers');
+    if (display !== null){
+      display.scrollIntoView();
     }
   }
 
