@@ -39,6 +39,7 @@ export class Volunteer {
       this.populateSites();
       this.populateCauses();
       this.checkSignups();
+      this.checkScheduled();
       this.fixZipcodes();
       if (this.selectedFilter.includes('future date')) {
         //this.startingDateFilter = true;
@@ -48,9 +49,30 @@ export class Volunteer {
     }
   }
 
-  // get widescreen() {
-  //   return document.documentElement.clientWidth > 1100;
-  // }
+  async checkScheduled(){
+    //loop through each evnt
+    // get signups by event id
+    // if length > 0, add number of volunteers to the event. number of people signed up
+    // number needed - number signed up = the number still needed
+    let resp;
+    let scheduledEvents;
+    let total = 0;
+    for (let i = 0; i < this.events.length; i++){
+      resp = await this.app.httpClient.fetch('/signup/event/' + this.events[i]._id);
+      scheduledEvents = await resp.json();
+      //console.log('these are the schedule events for this event id');
+      //console.log(scheduledEvents);
+      for (let hasVolunteers of scheduledEvents){
+        total = total + hasVolunteers.numPeople;
+      }
+      this.events[i].voNumPeopleScheduled = total;
+      //console.log(this.events[i].voNumPeopleScheduled - this.events[i].voNumPeopleNeeded);
+      if (this.events[i].voNumPeopleScheduled - this.events[i].voNumPeopleNeeded >= 0 && !this.events[i].scheduled){
+        this.events[i].full = true;
+      }
+      total = 0;
+    }
+  }
 
   fixZipcodes(){
     for (let i = 0; i < this.events.length; i++){
