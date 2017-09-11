@@ -50,7 +50,8 @@
             <th style="padding:8px" >Start Time</th>
             <th style="padding:8px">End Date</th>
             <th style="padding:8px">End Time</th>
-            <th style="padding:8px"># of Volunteers</th>
+            <th style="padding:8px">People Needed</th>
+            <th style="padding:8px">People Scheduled</th>
             <th style="padding:8px">Talents</th>
             <th style="padding:8px">Work</th>
             <th style="padding:8px">Charity Name</th>
@@ -61,7 +62,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr repeat.for="event of $displayData" if.bind="!event.past">
+          <tr repeat.for="event of $displayData" if.bind="!event.past && !event.full">
             <td style="padding:8px; text-align:center">
               <button if.bind="!event.scheduled" class="button-checkout" raised click.delegate="signupEvent(event._id)" style="margin-bottom:10px">
                 Sign Up
@@ -79,6 +80,7 @@
             <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
             <td style="padding:8px" innerhtml.bind="event.voEndTime"></td>
             <td style="padding:8px" innerhtml.bind="event.voNumPeopleNeeded"></td>
+              <td style="padding:8px" innerhtml.bind="event.voNumPeopleScheduled"></td>
             <td style="padding:8px" innerhtml.bind="event.talentHtml"></td>
             <td style="padding:8px" innerhtml.bind="event.workHtml"></td>
             <td style="padding:8px" innerhtml.bind="event.voCharityName"></td>
