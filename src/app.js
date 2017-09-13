@@ -7,6 +7,7 @@ import {UserAccess} from './classes/UserAccess.js';
 import {AuthService} from 'aurelia-auth';
 import {HttpClient} from 'aurelia-fetch-client';
 import {AppState} from './classes/AppState.js';
+//import {activationStrategy} from 'aurelia-router';
 @inject(AuthService, HttpClient)
 export class App {
   constructor(auth, httpClient) {
@@ -79,7 +80,7 @@ export class App {
       { route: 'library', name: 'library', moduleId: PLATFORM.moduleName('./library'), nav: false, title: 'Library', settings: 'fa fa-book' },
       { route: 'bookshelf', name: 'bookshelf', moduleId: PLATFORM.moduleName('./bookshelf'), nav: false, title: 'Bookshelf', settings: 'fa fa-book' },
       //  { route: 'reader', name: 'reader', moduleId: PLATFORM.moduleName('./reader'), nav: true, title: 'Reader', settings: 'fa fa-file-pdf-o' },
-      { route: 'music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: false, title: '', settings: 'fa fa-music' },
+      { route: 'music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: false, title: '', settings: 'fa fa-music'},
       // { route: 'textadventure', name: 'textadventure', moduleId: './textadventure-home', nav: true, title: 'Text Adventure', settings: 'fa fa-shield' },
       { route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: false, title: '', settings: 'fa fa-home' }
     ]);
