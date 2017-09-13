@@ -22,7 +22,12 @@ export class Login {
     //delete all login database objects
     //create a new login database object, set isOhafLogin attribute
     //console.log('in auth');
-    let ret = this.app.auth.authenticate(name, false, null);
+    let ret;
+    if (this.app.appState.isOhafLogin){
+      ret = this.app.auth.authenticate(name, false, {'isOhafUser': true });
+    } else {
+      ret = this.app.auth.authenticate(name, false, {'isOhafUser': false });
+    }
     ret.then((data) => {
       this.app.auth.setToken(data.token);
       //this.appState.setAuth(this.auth.isAuthenticated());
