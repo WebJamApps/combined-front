@@ -16,17 +16,17 @@ export class Music {
   //   window.location.reload(false);
   // }
 
-  determineActivationStrategy() {
-    return activationStrategy.replace; //replace the viewmodel with a new instance
-    // or activationStrategy.invokeLifecycle to invoke router lifecycle methods on the existing VM
-    // or activationStrategy.noChange to explicitly use the default behavior
-  }
+  // determineActivationStrategy() {
+  //   return activationStrategy.replace; //replace the viewmodel with a new instance
+  //   // or activationStrategy.invokeLifecycle to invoke router lifecycle methods on the existing VM
+  //   // or activationStrategy.noChange to explicitly use the default behavior
+  // }
 
   jump(h){
     //console.log(document.getElementById(h));
     document.getElementById(h).scrollIntoView();
   }
-  slideIndex = 0;
+  // slideIndex = 0;
   showSlides() {
     $('#slideshowMusic > div:first')
       .hide()
