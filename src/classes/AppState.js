@@ -4,6 +4,7 @@ export class AppState {
     this.user = {};
     this.is_auth = false;
     this.roles = [];
+    this.isOhafLogin = false;
   }
 
   getUserID() {

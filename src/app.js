@@ -15,7 +15,7 @@ export class App {
     this.httpClient = httpClient;
     this.dashboardTitle = 'Dashboard';
     this.role = '';
-    this.ohafLogin1 = false;
+    //this.ohafLogin1 = false;
   }
 
   email = '';
@@ -108,7 +108,7 @@ export class App {
     this.close();
     console.log('ohaf login!');
     this.menu = 'ohaf';
-    this.ohafLogin1 = true;
+    this.appState.isOhafLogin = true;
     this.router.navigate('/login');
   }
 
@@ -116,7 +116,7 @@ export class App {
     this.close();
     console.log('wj login!');
     this.menu = 'wj';
-    this.ohafLogin1 = false;
+    this.appState.isOhafLogin = false;
     this.router.navigate('/login');
   }
 
@@ -135,6 +135,7 @@ export class App {
       });
     }
     this.role =  '';
+    this.appState.isOhafLogin = false;
   }
 
   close() {
@@ -173,7 +174,7 @@ export class App {
       // }
       this.Menu = 'library';
     } else if (this.currentRoute === 'login') {
-      if (this.ohafLogin1){
+      if (this.appState.isOhafLogin){
         this.Menu = 'ohaf';
       } else {
         this.Menu = 'wj';
