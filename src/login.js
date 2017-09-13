@@ -15,9 +15,12 @@ export class Login {
 
   attached() {
     this.title = this.app.router.currentInstruction.config.title;
+    console.log('in the login module true means ohaf login ' + this.app.appState.isOhafLogin);
   }
 
   authenticate(name){
+    //delete all login database objects
+    //create a new login database object, set isOhafLogin attribute
     //console.log('in auth');
     let ret = this.app.auth.authenticate(name, false, null);
     ret.then((data) => {

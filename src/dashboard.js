@@ -9,6 +9,7 @@ export class Dashboard {
   validator = null;
   constructor(app, controllerFactory, validator){
     this.app = app;
+    this.newUser = false;
     this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
@@ -21,17 +22,27 @@ export class Dashboard {
   async activate() {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
+    // this.checkLogin();
     this.childRoute();
     this.setupValidation();
-    console.log('is this an ohaf login? ' + this.app.ohafLogin1);
-    //window.addEventListener('keypress', this.preventDefault, false);
+    console.log('This is an ohaf login. ' + this.app.appState.isOhafLogin);
   }
 
-  // preventEnter(e) {
-  //   if (e.keyCode === 13) {
-  //     e.preventDefault();
-  //   }
-  // }
+  async checkLogin(){
+    let login;
+    let resp;
+  //fetch all from login database object
+    login = await resp.json();
+    if (login.isOhafLogin) {
+      this.app.appState.isOhafLogin = true;
+      if (this.user.usertype === undefined || this.user.userType === ''){
+        this.user.userType = 'Volunteer';
+        this.newUser = true;
+        this.updateUser();
+      }
+      this.app.router.navigate('dashboard/charity');
+    }
+  }
 
   updateCanSubmit(validationResults) {
     let valid = true;
@@ -59,6 +70,9 @@ export class Dashboard {
   }
 
   childRoute(){
+    if (this.newUser){
+      return this.app.router.navigate('dashboard/user-account');
+    }
     if (this.user.userType === 'Charity'){
       this.app.router.navigate('dashboard/charity');
     } else if (this.user.userType === 'Volunteer'){
