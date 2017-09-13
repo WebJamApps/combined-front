@@ -15,6 +15,7 @@ export class App {
     this.httpClient = httpClient;
     this.dashboardTitle = 'Dashboard';
     this.role = '';
+    this.ohafLogin1 = false;
   }
 
   email = '';
@@ -103,6 +104,22 @@ export class App {
     }
   }
 
+  ohafLogin(){
+    this.close();
+    console.log('ohaf login!');
+    this.menu = 'ohaf';
+    this.ohafLogin1 = true;
+    this.router.navigate('/login');
+  }
+
+  wjLogin(){
+    this.close();
+    console.log('wj login!');
+    this.menu = 'wj';
+    this.ohafLogin1 = false;
+    this.router.navigate('/login');
+  }
+
   logout() {
     this.appState.setUser({});
     this.authenticated = false;
@@ -117,6 +134,7 @@ export class App {
         console.log('Promise fulfilled, logged out');
       });
     }
+    this.role =  '';
   }
 
   close() {
@@ -145,12 +163,27 @@ export class App {
     if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') {
       this.Menu = 'ohaf';
     } else if (this.currentRoute === 'music-router') {
+      // if (this.role === 'Volunteer'){
+      //   this.role = '';
+      // }
       this.Menu = 'music';
     } else if (this.currentRoute === 'library') {
+      // if (this.role === 'Volunteer'){
+      //   this.role = '';
+      // }
       this.Menu = 'library';
+    } else if (this.currentRoute === 'login') {
+      if (this.ohafLogin1){
+        this.Menu = 'ohaf';
+      } else {
+        this.Menu = 'wj';
+      }
     } else if (this.currentRouteFrag === '/dashboard'){
       this.Menu = 'dashboard';
     } else if (this.currentRouteFrag === '/bookshelf'){
+      // if (this.role === 'Volunteer'){
+      //   this.role = '';
+      // }
       this.Menu = 'bookshelf';
     } else if (this.currentRouteFrag === '/dashboard/developer'){
       this.Menu = 'developer';

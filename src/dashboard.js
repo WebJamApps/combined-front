@@ -23,6 +23,7 @@ export class Dashboard {
     this.user = await this.app.appState.getUser(this.uid);
     this.childRoute();
     this.setupValidation();
+    console.log('is this an ohaf login? ' + this.app.ohafLogin1);
     //window.addEventListener('keypress', this.preventDefault, false);
   }
 
