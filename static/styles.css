@@ -155,6 +155,9 @@ td {
 }
 
 /* Slideshow container */
+#libslideshow,
+#libslideshow1,
+#slideshowMusic,
 #slideshow1,
 #slideshow {
   max-width: 1000px;
@@ -162,6 +165,9 @@ td {
   margin: auto;
 }
 
+#libslideshow img,
+#libslideshow1 img,
+#slideshowMusic img,
 #slideshow1 img,
 #slideshow img {
   width: 100%;
