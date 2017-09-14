@@ -9,7 +9,7 @@ export class Dashboard {
   validator = null;
   constructor(app, controllerFactory, validator){
     this.app = app;
-    this.newUser = false;
+    //this.newUser = false;
     this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
@@ -22,27 +22,36 @@ export class Dashboard {
   async activate() {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
-    // this.checkLogin();
-    this.childRoute();
-    this.setupValidation();
-    console.log('This is an ohaf login. ' + this.app.appState.isOhafLogin);
-  }
-
-  async checkLogin(){
-    let login;
-    let resp;
-  //fetch all from login database object
-    login = await resp.json();
-    if (login.isOhafLogin) {
-      this.app.appState.isOhafLogin = true;
-      if (this.user.usertype === undefined || this.user.userType === ''){
+    console.log('dashboard user type is ' + this.user.userType);
+    if (this.user.userType === undefined || this.user.userType === '' || this.user.userType === 'null'){
+      if (this.user.isOhafUser){
         this.user.userType = 'Volunteer';
-        this.newUser = true;
+        this.user.userDetails = 'newUser';
+        //this.app.appState.newUser = true;
         this.updateUser();
       }
-      this.app.router.navigate('dashboard/charity');
+    } else {
+      this.childRoute();
     }
+    this.setupValidation();
+    //console.log('This is an ohaf login. ' + this.app.appState.isOhafLogin);
   }
+
+  // async checkIfNewOhaf(){
+  //   //   let login;
+  //   //   let resp;
+  //   // //fetch all from login database object
+  //   //   login = await resp.json();
+  //   // if (login.isOhafLogin) {
+  //   //   this.app.appState.isOhafLogin = true;
+  //   // if (this.user.usertype === undefined || this.user.userType === ''){
+  //   //   console.log('from the dashboard, this is the userType ' + this.user.userType);
+  //   if (this.user.isOhafUser){
+  //     this.user.userType = 'Volunteer';
+  //     this.app.appState.newUser = true;
+  //     this.updateUser();
+  //   }
+  // }
 
   updateCanSubmit(validationResults) {
     let valid = true;
@@ -70,9 +79,9 @@ export class Dashboard {
   }
 
   childRoute(){
-    if (this.newUser){
-      return this.app.router.navigate('dashboard/user-account');
-    }
+    // if (this.app.appState.newUser){
+    //   return this.app.router.navigate('dashboard/user-account');
+    // }
     if (this.user.userType === 'Charity'){
       this.app.router.navigate('dashboard/charity');
     } else if (this.user.userType === 'Volunteer'){
@@ -109,7 +118,8 @@ export class Dashboard {
     .then((data) => {
       this.app.appState.setUser(this.user);
       this.app.appState.checkUserRole();
-      this.childRoute();
+      //this.app.appState.newUser = false;
+      this.activate();
     });
   }
 }

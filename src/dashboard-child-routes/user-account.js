@@ -20,6 +20,10 @@ export class UserAccount {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.role = this.user.userType;
+    console.log('The user details ' + this.user.userDetails);
+    if (this.user.userDetails === 'newUser'){
+      this.setNolongerNew();
+    }
     this.causes.sort();
     this.causes.push('other');
     for (let i = 0; i < this.causes.length; i++) {
@@ -57,7 +61,7 @@ export class UserAccount {
     if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
       const res = await this.app.httpClient.fetch('/charity/' + this.uid);
       this.charities = await res.json();
-      console.log(this.charities);
+      //console.log(this.charities);
       /* istanbul ignore else */
       if (this.charities.length !== 0){
         //loop through each charity and check if there is more than one manager
@@ -72,7 +76,7 @@ export class UserAccount {
     if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
       const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
       this.books = await res.json();
-      console.log(this.charities);
+      //console.log(this.charities);
       /* istanbul ignore else */
       if (this.books.length !== 0){
         this.canDelete = false;
@@ -99,14 +103,24 @@ export class UserAccount {
     } else {
       this.causeOther = false;
     }
-    //window.addEventListener('keypress', this.preventDefault, false);
+    // if (this.user.userDetails === 'newUser'){
+    //   this.setNolongerNew();
+    // }
   }
 
-  // preventEnter(e) {
-  //   if (e.keyCode === 13) {
-  //     e.preventDefault();
-  //   }
-  // }
+  async setNolongerNew(){
+    await fetch;
+    this.user.userDetails = '';
+    this.app.httpClient.fetch('/user/' + this.uid, {
+      method: 'put',
+      body: json(this.user)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      this.app.appState.setUser(this.user);
+      console.log('set no longer new ' +  this.user.userDetails);
+    });
+  }
 
   async setupVolunteer(){
     await fetch;

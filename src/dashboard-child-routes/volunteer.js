@@ -31,8 +31,9 @@ export class Volunteer {
     this.app.role = this.user.userType;
     const res = await this.app.httpClient.fetch('/volopp/getall');
     this.events = await res.json();
-    console.log('all events');
-    console.log(this.events);
+    //console.log('all events');
+    //console.log(this.events);
+    //console.log('new user? ' + this.app.appState.newUser);
     if (this.events.length > 0){
       this.fixDates();
       this.buildWorkPrefs();
@@ -44,10 +45,30 @@ export class Volunteer {
       this.fixZipcodes();
       if (this.selectedFilter.includes('future date')) {
         //this.startingDateFilter = true;
-        console.log('you selected the starting date filter');
+        //console.log('you selected the starting date filter');
         this.removePast();
       }
     }
+    console.log('volunteer dashboard user details ' + this.user.userDetails);
+    if (this.user.userDetails === 'newUser'){
+      this.setNolongerNew();
+    }
+  }
+
+  async setNolongerNew(){
+    await fetch;
+    this.user.userDetails = '';
+    this.app.httpClient.fetch('/user/' + this.uid, {
+      method: 'put',
+      body: json(this.user)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      this.app.appState.setUser(this.user);
+      //this.activate();
+      this.app.router.navigate('dashboard/user-account');
+      this.activate();
+    });
   }
 
   async checkScheduled(){
@@ -89,8 +110,8 @@ export class Volunteer {
   async checkSignups(){
     const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
     this.userSignups = await resp.json();
-    console.log('this user has signed up for these events');
-    console.log(this.userSignups);
+    //console.log('this user has signed up for these events');
+    //console.log(this.userSignups);
     for (let next of this.userSignups){
       let nextEventId = next.voloppId;
       for (let i = 0; i < this.events.length; i++){
@@ -163,20 +184,20 @@ export class Volunteer {
     today = [today.getFullYear(),
       (mm > 9 ? '' : '0') + mm,
       (dd > 9 ? '' : '0') + dd].join('');
-    console.log(today);
+    //console.log(today);
     for (let i = 0; i < this.events.length; i++){
         //console.log(this.events[i].voStartDate);
 
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
-        console.log('undefined date');
+        //console.log('undefined date');
         this.events[i].voStartDate = today;
       }
       testDate = this.events[i].voStartDate.replace('-', '');
       testDate = testDate.replace('-', '');
-      console.log(testDate);
+      //console.log(testDate);
       if (testDate < today){
-        console.log('this date is past');
-        console.log(this.events[i].voStartDate);
+        //console.log('this date is past');
+        //console.log(this.events[i].voStartDate);
         this.events[i].past = true;
       }
         //console.log()

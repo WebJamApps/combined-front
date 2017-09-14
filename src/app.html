@@ -125,7 +125,7 @@
               <span class="nav-item" if.bind="fullmenu">Buy Music</span>
             </a>
           </div>
-          <div class="menu-item">
+          <div class="menu-item" if.bind="Menu=='wj' || Menu=='library' || Menu=='reader' || Menu=='librarian' || Menu=='bookshelf' || Menu=='ohaf'">
             <a paper-drawer-toggle href="/" class="nav-link" click.delegate="close()">
               <span class="fa fa-home"></span>
               <span class="nav-item" if.bind="fullmenu">Web Jam LLC</span>
