@@ -8,7 +8,7 @@ engines:
     enabled: true
     config:
       languages:
-      - javascript
+        javascript:
   eslint:
     enabled: true
   stylelint:
