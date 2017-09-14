@@ -51,25 +51,26 @@ export class Volunteer {
     }
     console.log('volunteer dashboard user details ' + this.user.userDetails);
     if (this.user.userDetails === 'newUser'){
-      this.setNolongerNew();
+      // this.setNolongerNew();
+      this.app.router.navigate('dashboard/user-account');
     }
   }
 
-  async setNolongerNew(){
-    await fetch;
-    this.user.userDetails = '';
-    this.app.httpClient.fetch('/user/' + this.uid, {
-      method: 'put',
-      body: json(this.user)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      this.app.appState.setUser(this.user);
-      //this.activate();
-      this.app.router.navigate('dashboard/user-account');
-      this.activate();
-    });
-  }
+  // async setNolongerNew(){
+  //   await fetch;
+  //   this.user.userDetails = '';
+  //   this.app.httpClient.fetch('/user/' + this.uid, {
+  //     method: 'put',
+  //     body: json(this.user)
+  //   })
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     this.app.appState.setUser(this.user);
+  //     //this.activate();
+  //     this.app.router.navigate('dashboard/user-account');
+  //     this.activate();
+  //   });
+  // }
 
   async checkScheduled(){
     //loop through each evnt
