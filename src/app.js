@@ -201,12 +201,13 @@ export class App {
     } else if (this.currentRouteFrag !== undefined){
       if (this.currentRouteFrag.indexOf('vol-ops/') !== -1){
         this.Menu = 'charity';
-        // } else {
-        //   this.Menu = 'wj';
+      } else {
+        this.Menu = 'wj';
       }
-      // } else {
-      //   this.Menu = 'wj';
+    } else {
+      this.Menu = 'wj';
     }
+    
     if (this.Menu === 'charity' || this.Menu === 'ohaf' || this.Menu === 'volunteer' || this.role === 'Charity' || this.role === 'Volunteer'){
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',

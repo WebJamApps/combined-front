@@ -37,22 +37,6 @@ export class Dashboard {
     //console.log('This is an ohaf login. ' + this.app.appState.isOhafLogin);
   }
 
-  // async checkIfNewOhaf(){
-  //   //   let login;
-  //   //   let resp;
-  //   // //fetch all from login database object
-  //   //   login = await resp.json();
-  //   // if (login.isOhafLogin) {
-  //   //   this.app.appState.isOhafLogin = true;
-  //   // if (this.user.usertype === undefined || this.user.userType === ''){
-  //   //   console.log('from the dashboard, this is the userType ' + this.user.userType);
-  //   if (this.user.isOhafUser){
-  //     this.user.userType = 'Volunteer';
-  //     this.app.appState.newUser = true;
-  //     this.updateUser();
-  //   }
-  // }
-
   updateCanSubmit(validationResults) {
     let valid = true;
     for (let result of validationResults) {
