@@ -73,6 +73,7 @@ export class VolunteerOpps {
       'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
       'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     this.states.sort();
+    //TODO setupvalidation here, but figure out why the forms are not working properly afterwards
   }
 
   async checkScheduled(){
@@ -212,6 +213,7 @@ export class VolunteerOpps {
   }
 
   fixDates(){
+    //put into util class with fixDates(array)();
     for (let i = 0; i < this.events.length; i++){
       let startDate = this.events[i].voStartDate;
       let endDate = this.events[i].voEndDate;
