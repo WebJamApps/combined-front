@@ -8,23 +8,31 @@ export class UserAccount {
     this.selectedCauses = [];
     this.selectedTalents = [];
     this.selectedWorks = [];
+    this.canChangeUserType = true;
     //this.preventDefault = this.preventEnter.bind(this);
   }
 
   causes = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
   talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
   works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
+  userTypes=JSON.parse(process.env.userRoles).roles;
 
   async activate() {
     this.canDelete = true;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.role = this.user.userType;
-    console.log('The user details ' + this.user.userDetails);
-    if (this.user.userDetails === 'newUser'){
-      console.log('this is a new user, we need to ask if they want to be a Charity instead of a Volunteer');
-      //this.setNolongerNew();
-    }
+    // console.log('The user details ' + this.user.userDetails);
+    // if (this.user.userDetails === 'newUser'){
+    //   console.log('this is a new user, we need to ask if they want to be a Charity instead of a Volunteer');
+    //   //this.setNolongerNew();
+    // }
+    this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
+      'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
+      'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+      'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
+      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+    this.states.sort();
     this.causes.sort();
     this.causes.push('other');
     for (let i = 0; i < this.causes.length; i++) {
@@ -34,7 +42,7 @@ export class UserAccount {
         this.selectedCauses.push('');
       }
     }
-    //console.log('the selected causes are: ' + this.selectedCauses);
+    this.userTypes.sort();
     this.talents.sort();
     this.talents.push('other');
     for (let i = 0; i < this.talents.length; i++) {
@@ -54,10 +62,6 @@ export class UserAccount {
         this.selectedWorks.push('');
       }
     }
-    //console.log('the selected talents are: ' + this.selectedTalents);
-    // if (this.user.userType === 'Charity'){
-    //   this.role = 'Charity Manager';
-    // }
     /* istanbul ignore else */
     if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
       const res = await this.app.httpClient.fetch('/charity/' + this.uid);
@@ -84,14 +88,12 @@ export class UserAccount {
         this.notDelB = 'You are not allowed to delete your account when you have a book checked out';
       }
     }
-
     if (this.selectedWorks.includes('other')){
       //console.log('other was selected, we will display an additional form field now');
       this.workOther = true;
     } else {
       this.workOther = false;
     }
-
     if (this.selectedTalents.includes('other')){
       //console.log('other was selected, we will display an additional form field now');
       this.talentOther = true;
@@ -104,9 +106,20 @@ export class UserAccount {
     } else {
       this.causeOther = false;
     }
-    // if (this.user.userDetails === 'newUser'){
-    //   this.setNolongerNew();
-    // }
+    this.checkChangeUserType();
+  }
+
+  checkChangeUserType(){
+    if (user.usertype === 'Volunteer'){
+// Do not allow user to change their primary userType away from Volunteer if they have signed up for an event
+    }
+    if (user.usertype === 'Charity'){
+// Do not allow user to change their primary userType away from Charity if they have created a charity
+// Do not allow user to change their primary userType away from Charity if they have created an Event
+    }
+    if (user.usertype === 'Reader'){
+// Do not allow user to change their primary userType away from Reader if they have a book checked out
+    }
   }
 
   async setNolongerNew(){
@@ -149,6 +162,19 @@ export class UserAccount {
     .then((data) => {
       this.app.appState.setUser(this.user);
       this.app.router.navigate('dashboard/volunteer');
+    });
+  }
+
+  async updateUser(){
+    await fetch;
+    this.app.httpClient.fetch('/user/' + this.uid, {
+      method: 'put',
+      body: json(this.user)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      this.app.appState.setUser(this.user);
+      this.app.router.navigate('dashboard');
     });
   }
 
