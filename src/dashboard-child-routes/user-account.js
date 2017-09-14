@@ -22,7 +22,8 @@ export class UserAccount {
     this.app.role = this.user.userType;
     console.log('The user details ' + this.user.userDetails);
     if (this.user.userDetails === 'newUser'){
-      this.setNolongerNew();
+      console.log('this is a new user, we need to ask if they want to be a Charity instead of a Volunteer');
+      //this.setNolongerNew();
     }
     this.causes.sort();
     this.causes.push('other');
@@ -119,6 +120,22 @@ export class UserAccount {
     .then((data) => {
       this.app.appState.setUser(this.user);
       console.log('set no longer new ' +  this.user.userDetails);
+    });
+  }
+
+  async setCharity(){
+    await fetch;
+    this.user.userDetails = '';
+    this.user.userType = 'Charity';
+    this.app.httpClient.fetch('/user/' + this.uid, {
+      method: 'put',
+      body: json(this.user)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      this.app.appState.setUser(this.user);
+      this.app.appState.checkUserRole();
+      this.app.router.navigate('dashboard');
     });
   }
 
