@@ -5,6 +5,7 @@ export class AppState {
     this.is_auth = false;
     this.roles = [];
     this.isOhafLogin = false;
+    //this.newUser = false;
   }
 
   getUserID() {
@@ -48,6 +49,10 @@ export class AppState {
     //console.log(this.user);
     this.user = input;
   }
+
+  // setNewUser(input) {
+  //   this.newUser = input;
+  // }
 
   // getAuth() {
   //   return (this.is_auth);
