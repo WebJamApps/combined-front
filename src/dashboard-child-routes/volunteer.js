@@ -10,6 +10,7 @@ export class Volunteer {
     this.selectedFilter = ['future date'];
     this.doubleCheckSignups = false;
     this.canSignup = true;
+    this.showtable = false;
   }
 
   siteLocations = [];
@@ -31,31 +32,29 @@ export class Volunteer {
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
     this.app.role = this.user.userType;
-    const res = await this.app.httpClient.fetch('/volopp/getall');
-    this.events = await res.json();
-    //console.log('all events');
-    //console.log(this.events);
-    //console.log('new user? ' + this.app.appState.newUser);
+    await this.fetchAllEvents();
     if (this.events.length > 0){
+      await this.checkSignups();
+      this.fixZipcodes();
       this.fixDates();
       this.buildWorkPrefs();
       this.buildTalents();
       this.populateSites();
       this.populateCauses();
-      this.checkSignups();
-      this.checkScheduled();
-      this.fixZipcodes();
+      await this.checkScheduled();
       if (this.selectedFilter.includes('future date')) {
-        //this.startingDateFilter = true;
-        //console.log('you selected the starting date filter');
         this.removePast();
       }
+      this.showtable = true;
     }
-    console.log('volunteer dashboard user details ' + this.user.userDetails);
     if (this.user.userDetails === 'newUser'){
-      // this.setNolongerNew();
       this.app.router.navigate('dashboard/user-account');
     }
+  }
+
+  async fetchAllEvents(){
+    const res = await this.app.httpClient.fetch('/volopp/getall');
+    this.events = await res.json();
   }
 
   async checkScheduled(){
@@ -105,6 +104,9 @@ export class Volunteer {
         if (this.events[i]._id === nextEventId){
           this.events[i].scheduled = true;
         }
+        // } else {
+        //   this.events[i].scheduled = false;
+        // }
       }
     }
   }
@@ -166,7 +168,6 @@ export class Volunteer {
       (dd > 9 ? '' : '0') + dd].join('');
     for (let i = 0; i < this.events.length; i++){
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
-        //console.log('undefined date');
         this.events[i].voStartDate = today;
       }
       testDate = this.events[i].voStartDate.replace('-', '');
@@ -323,9 +324,6 @@ export class Volunteer {
     if (!this.canSignup){
       return;
     }
-    //let res = await this.app.httpClient.fetch('/volopp/get/' + thisevent._id);
-    //let fetchedEvent = res.json();
-    //(if fetchedEvent.voNumPeopleNeeded thisevent.voNumPeopleScheduled)
     this.signup.voloppId = thisevent._id;
     this.signup.userId = this.uid;
     this.signup.numPeople = 1;
@@ -336,6 +334,7 @@ export class Volunteer {
     })
       .then((data) => {
         console.log(data);
+        this.showtable = false;
         this.activate();
       });
   }
@@ -347,6 +346,7 @@ export class Volunteer {
     })
       .then((data) => {
         console.log('no longer volunteering for that event');
+        this.showtable = false;
         this.activate();
       });
   }
