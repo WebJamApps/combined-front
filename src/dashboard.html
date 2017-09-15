@@ -22,10 +22,12 @@
           <label style="margin-top:20px;font-weight:normal;">10 Digit Phone # (optional)</label>
           <input type="number" style="max-width: 1.25in; margin:auto; padding:5px" class="newUserForm" value.bind="user.userPhone & validate" required>
           <label>Primary User Type (required)</label>
+          <div>
           <select id="type" class="form-control" value.bind="user.userType & validate" change.delegate="dropdownChanged()" style="width: 2.35in">
             <option value=""> </option>
             <option repeat.for="type of userTypes" model.bind="type">${type}</option>
           </select>
+        </div>
         </div>
         <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
           <ul if.bind="controller.errors">

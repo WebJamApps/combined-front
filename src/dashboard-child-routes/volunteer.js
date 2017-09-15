@@ -8,6 +8,8 @@ export class Volunteer {
     this.events = [];
     this.signup = {};
     this.selectedFilter = ['future date'];
+    this.doubleCheckSignups = false;
+    this.canSignup = true;
   }
 
   siteLocations = [];
@@ -73,6 +75,11 @@ export class Volunteer {
       this.events[i].voNumPeopleScheduled = total;
       if (this.events[i].voNumPeopleScheduled - this.events[i].voNumPeopleNeeded >= 0 && !this.events[i].scheduled){
         this.events[i].full = true;
+        if (this.doubleCheckSignups){
+          alert('someone else signed up for the last spot to volunteer at this event');
+          this.doubleCheckSignups = false;
+          return this.canSignup = false;
+        }
       }
       if (this.events[i].voStatus === 'cancel' && !this.events[i].scheduled){
         this.events[i].full = true;
@@ -309,12 +316,21 @@ export class Volunteer {
     }
   }
 
-  signupEvent(eventID){
-    this.signup.voloppId = eventID;
+  async signupEvent(thisevent){
+    //doublecheck that someone else has not already signedup to hit the max volunteers needed
+    this.doubleCheckSignups = true;
+    await this.checkScheduled();
+    if (!this.canSignup){
+      return;
+    }
+    //let res = await this.app.httpClient.fetch('/volopp/get/' + thisevent._id);
+    //let fetchedEvent = res.json();
+    //(if fetchedEvent.voNumPeopleNeeded thisevent.voNumPeopleScheduled)
+    this.signup.voloppId = thisevent._id;
     this.signup.userId = this.uid;
     this.signup.numPeople = 1;
     this.signup.groupName = '';
-    this.app.httpClient.fetch('/signup/create', {
+    await this.app.httpClient.fetch('/signup/create', {
       method: 'post',
       body: json(this.signup)
     })
