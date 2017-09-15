@@ -132,10 +132,11 @@ export class VolunteerOpps {
         total = total + hasVolunteers.numPeople;
         signupUserIds.push(hasVolunteers.userId);
       }
-      if (this.events[i].voNumPeopleScheduled === undefined){
-        this.events[i].voNumPeopleScheduled = total;
-      }
+      //if (this.events[i].voNumPeopleScheduled === undefined){
+      this.events[i].voNumPeopleScheduled = total;
+      //}
       this.events[i].voSignupUserIds = signupUserIds;
+      //if(signupUserIds.length >)
       total = 0;
       signupUserIds = [];
     }
@@ -150,7 +151,7 @@ export class VolunteerOpps {
       try {
         res = await this.app.httpClient.fetch('/user/' + thisevent.voSignupUserIds[i]);
       } catch (err) {
-        this.voOpp = thisevent;
+        //this.voOpp = thisevent;
         console.log('the user does not exist');
         await this.fixUserSignups();
         //await this.updateEvent('removeOneSignup');
@@ -380,6 +381,7 @@ export class VolunteerOpps {
     this.updateEvent('cancel');
     if (this.voOpp.voDescription !== undefined){
       this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
       this.voOpp.voDescription = '<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>' + this.voOpp.voDescription;
     }
   }
@@ -387,9 +389,10 @@ export class VolunteerOpps {
   reactivateEvent(theEvent){
     this.voOpp = theEvent;
     if (this.voOpp.voDescription !== undefined){
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
       this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>', '<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>');
     }
-    this.updateEvent('update');
+    this.updateEvent('reactivate');
   }
 
   async updateEvent(updateType){
@@ -399,7 +402,9 @@ export class VolunteerOpps {
     //   this.voOpp.voNumPeopleScheduled = this.voOpp.voNumPeopleScheduled - 1;
     // }
     if (updateType === 'update'){
-      //this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
       this.voOpp.voDescription = '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>' + this.voOpp.voDescription;
     }
     //console.log(this.voOpp);
