@@ -9,8 +9,7 @@ export class UserAccount {
     this.selectedTalents = [];
     this.selectedWorks = [];
     this.canChangeUserType = true;
-    this.notDelR = '';
-    //this.preventDefault = this.preventEnter.bind(this);
+    //this.notDelR = '';
   }
 
   causes = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
@@ -19,15 +18,10 @@ export class UserAccount {
   userTypes=JSON.parse(process.env.userRoles).roles;
 
   async activate() {
-    this.canDelete = true;
+    //this.canDelete = true;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.role = this.user.userType;
-    // console.log('The user details ' + this.user.userDetails);
-    // if (this.user.userDetails === 'newUser'){
-    //   console.log('this is a new user, we need to ask if they want to be a Charity instead of a Volunteer');
-    //   //this.setNolongerNew();
-    // }
     this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
       'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
       'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
@@ -53,7 +47,6 @@ export class UserAccount {
         this.selectedTalents.push('');
       }
     }
-    //console.log('the selected talents are: ' + this.selectedTalents);
     this.works.sort();
     this.works.push('other');
     for (let i = 0; i < this.works.length; i++) {
@@ -61,26 +54,6 @@ export class UserAccount {
         this.selectedWorks.push(this.works[i]);
       } else {
         this.selectedWorks.push('');
-      }
-    }
-    /* istanbul ignore else */
-    if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
-      const res = await this.app.httpClient.fetch('/charity/' + this.uid);
-      this.charities = await res.json();
-          /* istanbul ignore else */
-      if (this.charities.length !== 0){
-        //loop through each charity and check if there is more than one manager
-        this.canDelete = false;
-        this.notDelR = this.notDelR + '<i>You are not allowed to delete your account when you have a charity under management. First, delete your charities or remove yourself as manager (if there is another charity manager assigned to that charity).</i><br><br>';
-      }
-    }
-    if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
-      const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
-      this.books = await res.json();
-      /* istanbul ignore else */
-      if (this.books.length !== 0){
-        this.canDelete = false;
-        this.notDelR = this.notDelR + '<i>You are not allowed to delete your account when you have a book checked out.</i><br><br>';
       }
     }
     if (this.selectedWorks.includes('other')){
@@ -102,26 +75,43 @@ export class UserAccount {
   }
 
   async checkChangeUserType(){
-    this.reason = '';
+    this.reasons = '';
     console.log('check change user type');
     if (this.user.userType === 'Volunteer' || this.user.userType === 'Developer'){
       await this.checkSignups();
       if (this.userSignups.length > 0){
         this.canChangeUserType = false;
-        this.canDelete = false;
-        this.reason = 'you signed up to work at a charity event.';
-        this.notDelR = this.notDelR + '<i>You are not allowed to delete your account because ' + this.reason + '</i><br><br>';
+        //this.canDelete = false;
+        this.reasons = this.reasons + '<li>You signed up to work at a charity event.</li>';
+        //this.notDelR = this.notDelR + '<i>You are not allowed to delete your account because ' + this.reason + '</i><br><br>';
       }
       console.log('the user signups inside the check function');
       console.log(this.userSignups);
       console.log('I can change the user type: ' + this.canChangeUserType);
     }
-    if (this.user.usertype === 'Charity'){
-// Do not allow user to change their primary userType away from Charity if they have created a charity
-// Do not allow user to change their primary userType away from Charity if they have created an Event
+    if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
+      // Do not allow user to change their primary userType away from Charity if they have created a charity
+      const res = await this.app.httpClient.fetch('/charity/' + this.uid);
+      this.charities = await res.json();
+      /* istanbul ignore else */
+      if (this.charities.length > 0){
+        //this.canDelete = false;
+        this.canChangeUserType = false;
+        this.reasons = this.reasons + '<li>You are the manager of a charity.</li>';
+        //this.notDelR = this.notDelR + '<i>You are not allowed to delete your account when you have a charity under management. First, delete your charities or remove yourself as manager (if there is another charity manager assigned to that charity).</i><br><br>';
+      }
     }
-    if (this.user.usertype === 'Reader'){
-// Do not allow user to change their primary userType away from Reader if they have a book checked out
+      /* istanbul ignore else */
+    if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
+      const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
+      this.books = await res.json();
+        /* istanbul ignore else */
+      if (this.books.length > 0){
+        //this.canDelete = false;
+        this.canChangeUserType = false;
+        this.reasons = this.reasons + '<li>You have a book checked out.</li>';
+        //this.notDelR = this.notDelR + '<i>You are not allowed to delete your account when you have a book checked out.</i><br><br>';
+      }
     }
   }
 
