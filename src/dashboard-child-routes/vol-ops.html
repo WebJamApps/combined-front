@@ -62,8 +62,8 @@
       </div>
       <p>&nbsp;</p>
       <div id="showvolunteers" if.bind="showVolunteers" class="search-table-outer" style="position:relative;overflow-x:auto;">
+        <h4 style="text-align:center"><strong>Volunteers for the Event: <i>${eventTitle}</i></strong></h4>
         <table aurelia-table="data.bind: allPeople; display-data.bind: $displayData1" class="bookshelf">
-          <caption style="margin:auto; text-align:center"><strong>Volunteers for ${eventTitle}</strong></caption>
           <thead>
             <tr>
               <th style="padding:8px; min-width:150px" aut-sort="key: name; default: asc">Name</th>
