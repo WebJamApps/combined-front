@@ -47,6 +47,7 @@ export class VolunteerOpps {
     // this.voOpp
     //console.log(this.charity);
     if (this.events.length > 0){
+      //this.fixUserSignups();
       this.fixDates();
       this.buildWorkPrefs();
       this.buildTalents();
@@ -76,6 +77,45 @@ export class VolunteerOpps {
     //TODO setupvalidation here, but figure out why the forms are not working properly afterwards
   }
 
+  async fixUserSignups(){
+    let allSignups = [];
+    //let userSignUp = '';
+    //let resp = '';
+    let res = await this.app.httpClient.fetch('/signup/getall');
+    allSignups = await res.json();
+    console.log('here are all of the signups');
+    console.log(allSignups);
+    for (let i = 0; i < allSignups.length; i++){
+      try {
+        await this.app.httpClient.fetch('/user/' + allSignups[i].userId);
+      } catch (err) {
+        console.log('the user does not exist');
+        await this.removeSignup(allSignups[i].userId);
+      }
+      //if(resp !== undefined || resp !== ''){
+
+    //  }
+      //userSignUp = await resp.json();
+      //console.log('does this user exist?');
+      //console.log(userSignUp);
+      //if (userSignUp === undefined || userSignUp === null){
+        //await removeSignup(allSignups[i].userId);
+    }
+      //userSignUp = '';
+  }
+  //}
+
+  async removeSignup(userid){
+    await fetch;
+    this.app.httpClient.fetch('/signup/remove/' + userid, {
+      method: 'delete'
+    })
+      .then((data) => {
+        console.log('removed signup attached to a nonexisting user');
+        //this.activate();
+      });
+  }
+
   async checkScheduled(){
     //loop through each evnt
     // get signups by event id
@@ -88,18 +128,14 @@ export class VolunteerOpps {
     for (let i = 0; i < this.events.length; i++){
       resp = await this.app.httpClient.fetch('/signup/event/' + this.events[i]._id);
       scheduledEvents = await resp.json();
-      //console.log('these are the schedule events for this event id');
-      //console.log(scheduledEvents);
       for (let hasVolunteers of scheduledEvents){
         total = total + hasVolunteers.numPeople;
         signupUserIds.push(hasVolunteers.userId);
       }
-      // if (total > 0){
-      //   this.events[i].voNumPeopleScheduled = '<a click.delegate="viewPeople(event)">' + total + '</a>';
-      // } else {
-      this.events[i].voNumPeopleScheduled = total;
+      if (this.events[i].voNumPeopleScheduled === undefined){
+        this.events[i].voNumPeopleScheduled = total;
+      }
       this.events[i].voSignupUserIds = signupUserIds;
-      // }
       total = 0;
       signupUserIds = [];
     }
@@ -107,30 +143,25 @@ export class VolunteerOpps {
 
   async viewPeople(thisevent){
     this.showVolunteers = true;
-    console.log(thisevent);
     let res;
     let person;
-//     const userSchema = new Schema({
-//   name: { type: String, required: true },
-//   email: { type: String, required: true, unique: true },
-//   userPhone: { type: Number, required: false },
-//   userType: { type: String, required: false },
-//   userCity: { type: String, required: false },
-//   userZip: { type: String, required: false },
-//   userDetails:{ type: String, required: false },
-//   volTravelDistMiles: { type: Number, required: false },
-//   volCauses: { type: [String], required: false },
-//   volTalents: { type: [String], required: false },
-//   volWorkPrefs: { type: [String], required: false },
-//   volCauseOther:{ type: String, required: false },
-//   volTalentOther:{ type: String, required: false },
-//   volWorkOther:{ type: String, required: false }
-// });
     this.allPeople = [];
     for (let i = 0; i < thisevent.voSignupUserIds.length; i++){
-      res = await this.app.httpClient.fetch('/user/' + thisevent.voSignupUserIds[i]);
-      person = await res.json();
-      this.allPeople.push(person);
+      try {
+        res = await this.app.httpClient.fetch('/user/' + thisevent.voSignupUserIds[i]);
+      } catch (err) {
+        this.voOpp = thisevent;
+        console.log('the user does not exist');
+        await this.fixUserSignups();
+        //await this.updateEvent('removeOneSignup');
+        // let resp = await this.app.httpClient.fetch('/volopp/' + this.charityID);
+        // this.events = await resp.json();
+      }
+      if (res !== undefined && res !== ''){
+        person = await res.json();
+        this.allPeople.push(person);
+        res = '';
+      }
     }
     console.log(this.allPeople);
     this.eventTitle = thisevent.voName;
@@ -150,8 +181,6 @@ export class VolunteerOpps {
       (dd > 9 ? '' : '0') + dd].join('');
     console.log(today);
     for (let i = 0; i < this.events.length; i++){
-        //console.log(this.events[i].voStartDate);
-
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
         console.log('undefined date');
         this.events[i].voStartDate = today;
@@ -164,7 +193,6 @@ export class VolunteerOpps {
         console.log(this.events[i].voStartDate);
         this.events[i].past = true;
       }
-        //console.log()
     }
   }
 
@@ -173,26 +201,16 @@ export class VolunteerOpps {
   }
 
   selectDate(dtype){
-    //console.log('show date picker here');
     if (dtype === 'start-date'){
-      //console.log(dtype);
-      //console.log(this.voOpp.voStartDate);
       this.minEndDate = this.voOpp.voStartDate;
     } else {
-      //console.log(dtype);
-      //console.log(this.voOpp.voEndDate);
       this.maxStartDate = this.voOpp.voEndDate;
     }
-    //   this.dialog.time = new moment();
-    //   this.dialog.toggle();
   }
 
   async findCharity(){
     let res2 = await this.app.httpClient.fetch('/charity/find/' + this.charityID);
     this.charity = await res2.json();
-    console.log('foundCharity');
-    console.log(this.charity);
-    //this.charityName = foundCharity.charityName;
     this.voOpp.voCharityName = this.charity.charityName;
     this.voOpp.voStreet = this.charity.charityStreet;
     this.voOpp.voCity = this.charity.charityCity;
@@ -208,8 +226,6 @@ export class VolunteerOpps {
       }
       this.voOpp.voCharityTypes.push(this.charity.charityTypeOther);
     }
-    // console.log('the charity types attached to this event');
-    // console.log(this.voOpp.voCharityTypes);
   }
 
   fixDates(){
@@ -280,19 +296,15 @@ export class VolunteerOpps {
   }
 
   talentPicked(){
-    //this.voOpp.voTalentTypes = this.selectedTalents;
     if (this.voOpp.voTalentTypes.includes('other')){
       this.talentOther = true;
     } else {
       this.talentOther = false;
       this.voOpp.voTalentTypeOther = '';
     }
-    // console.log('selected talent');
-    // console.log()
   }
 
   workPicked(){
-    //this.voOpp.voWorkTypes = this.selectedWorks;
     if (this.voOpp.voWorkTypes.includes('other')){
       this.workOther = true;
     } else {
@@ -304,8 +316,6 @@ export class VolunteerOpps {
   scheduleEvent(){
     this.voOpp.voStatus = 'new';
     console.log(this.voOpp);
-    //this.newCharity.charityManagers[0] = this.user.name;
-    //this.newCharity.charityMngIds[0] = this.user._id;
     this.app.httpClient.fetch('/volopp/create', {
       method: 'post',
       body: json(this.voOpp)
@@ -352,25 +362,17 @@ export class VolunteerOpps {
     this.voOpp.voCity = this.charity.charityCity;
     this.voOpp.voState = this.charity.charityState;
     this.voOpp.voZipCode = this.charity.charityZipCode;
-    // this.voOpp.voCharityTypes = this.charity.charityTypes;
-    // console.log('this.charity.charityTypes');
-    // console.log(this.charity.charityTypes.length);
     this.newEvent = true;
-    //this.canSubmit2 = false;
     let topSection = document.getElementById('topSection');
     topSection.style.display = 'block';
     topSection.scrollIntoView();
-    //this.activate();
     this.setupValidation2();
     this.controller2.errors = [];
     let startTimeInput = document.getElementById('s-time');
     let endTimeInput = document.getElementById('e-time');
-    // console.log('the start time input is ');
-    // console.log(startTimeInput);
     let imst = new Inputmask('99:99 am');
     imst.mask(startTimeInput);
     imst.mask(endTimeInput);
-    //document.getElementById('eventHeader').scrollIntoView();
   }
 
   cancelEvent(theEvent){
@@ -378,16 +380,12 @@ export class VolunteerOpps {
     this.updateEvent('cancel');
     if (this.voOpp.voDescription !== undefined){
       this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
-    // this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
-    // this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
       this.voOpp.voDescription = '<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>' + this.voOpp.voDescription;
-    //console.log(this.voOpp.voDescription);
     }
   }
 
   reactivateEvent(theEvent){
     this.voOpp = theEvent;
-    //this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>', '');
     if (this.voOpp.voDescription !== undefined){
       this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>', '<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>');
     }
@@ -396,8 +394,10 @@ export class VolunteerOpps {
 
   async updateEvent(updateType){
     console.log('update Event');
-    //console.log('this is the update charity');
     this.voOpp.voStatus = updateType;
+    // if (updateType === 'removeOneSignup'){
+    //   this.voOpp.voNumPeopleScheduled = this.voOpp.voNumPeopleScheduled - 1;
+    // }
     if (updateType === 'update'){
       //this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
       this.voOpp.voDescription = '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>' + this.voOpp.voDescription;

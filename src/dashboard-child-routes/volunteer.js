@@ -56,22 +56,6 @@ export class Volunteer {
     }
   }
 
-  // async setNolongerNew(){
-  //   await fetch;
-  //   this.user.userDetails = '';
-  //   this.app.httpClient.fetch('/user/' + this.uid, {
-  //     method: 'put',
-  //     body: json(this.user)
-  //   })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     this.app.appState.setUser(this.user);
-  //     //this.activate();
-  //     this.app.router.navigate('dashboard/user-account');
-  //     this.activate();
-  //   });
-  // }
-
   async checkScheduled(){
     //loop through each evnt
     // get signups by event id
@@ -83,13 +67,10 @@ export class Volunteer {
     for (let i = 0; i < this.events.length; i++){
       resp = await this.app.httpClient.fetch('/signup/event/' + this.events[i]._id);
       scheduledEvents = await resp.json();
-      //console.log('these are the schedule events for this event id');
-      //console.log(scheduledEvents);
       for (let hasVolunteers of scheduledEvents){
         total = total + hasVolunteers.numPeople;
       }
       this.events[i].voNumPeopleScheduled = total;
-      //console.log(this.events[i].voNumPeopleScheduled - this.events[i].voNumPeopleNeeded);
       if (this.events[i].voNumPeopleScheduled - this.events[i].voNumPeopleNeeded >= 0 && !this.events[i].scheduled){
         this.events[i].full = true;
       }
@@ -111,8 +92,6 @@ export class Volunteer {
   async checkSignups(){
     const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
     this.userSignups = await resp.json();
-    //console.log('this user has signed up for these events');
-    //console.log(this.userSignups);
     for (let next of this.userSignups){
       let nextEventId = next.voloppId;
       for (let i = 0; i < this.events.length; i++){
@@ -128,9 +107,6 @@ export class Volunteer {
     this.keyword = false;
     this.siteLocation = false;
     if (arrayLength === 0){
-      // if (this.startingDateFilter){
-      //   this.activate();
-      // } else {
       this.filters[0].value = '';
       this.filters[1].value = '';
       this.filters[2].value = '';
@@ -138,11 +114,8 @@ export class Volunteer {
       this.siteFilter = false;
       this.keyword = false;
       this.includePast();
-        //this.filters[3].value = '';
       return;
-      // }
     }
-    // for (let i = 0; i < arrayLength; i++) {
     if (this.selectedFilter.includes('keyword')) {
       this.keyword = true;
     } else {
@@ -163,7 +136,6 @@ export class Volunteer {
       this.causeFilter = false;
     }
     if (this.selectedFilter.includes('future date')) {
-      //this.startingDateFilter = true;
       console.log('you selected the starting date filter');
       this.removePast();
     } else {
@@ -185,23 +157,16 @@ export class Volunteer {
     today = [today.getFullYear(),
       (mm > 9 ? '' : '0') + mm,
       (dd > 9 ? '' : '0') + dd].join('');
-    //console.log(today);
     for (let i = 0; i < this.events.length; i++){
-        //console.log(this.events[i].voStartDate);
-
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
         //console.log('undefined date');
         this.events[i].voStartDate = today;
       }
       testDate = this.events[i].voStartDate.replace('-', '');
       testDate = testDate.replace('-', '');
-      //console.log(testDate);
       if (testDate < today){
-        //console.log('this date is past');
-        //console.log(this.events[i].voStartDate);
         this.events[i].past = true;
       }
-        //console.log()
     }
   }
 
