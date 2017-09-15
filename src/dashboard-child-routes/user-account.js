@@ -9,6 +9,7 @@ export class UserAccount {
     this.selectedTalents = [];
     this.selectedWorks = [];
     this.canChangeUserType = true;
+    this.notDelR = '';
     //this.preventDefault = this.preventEnter.bind(this);
   }
 
@@ -66,42 +67,33 @@ export class UserAccount {
     if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
       const res = await this.app.httpClient.fetch('/charity/' + this.uid);
       this.charities = await res.json();
-      //console.log(this.charities);
-      /* istanbul ignore else */
+          /* istanbul ignore else */
       if (this.charities.length !== 0){
         //loop through each charity and check if there is more than one manager
         this.canDelete = false;
-        //const reason = document.getElementById('notdeletereason');
-        //console.log(reason);
-        //const reasonC = document.getElementsByClassName('notDelR');
-        //console.log(reasonC);
-        this.notDelR = 'You are not allowed to delete your account when you have a charity under management. First, delete your charities or remove yourself as manager (if there is another charity manager assigned to that charity).';
+        this.notDelR = this.notDelR + '<i>You are not allowed to delete your account when you have a charity under management. First, delete your charities or remove yourself as manager (if there is another charity manager assigned to that charity).</i><br><br>';
       }
     }
     if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
       const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
       this.books = await res.json();
-      //console.log(this.charities);
       /* istanbul ignore else */
       if (this.books.length !== 0){
         this.canDelete = false;
-        this.notDelB = 'You are not allowed to delete your account when you have a book checked out';
+        this.notDelR = this.notDelR + '<i>You are not allowed to delete your account when you have a book checked out.</i><br><br>';
       }
     }
     if (this.selectedWorks.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
       this.workOther = true;
     } else {
       this.workOther = false;
     }
     if (this.selectedTalents.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
       this.talentOther = true;
     } else {
       this.talentOther = false;
     }
     if (this.selectedCauses.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
       this.causeOther = true;
     } else {
       this.causeOther = false;
@@ -116,7 +108,9 @@ export class UserAccount {
       await this.checkSignups();
       if (this.userSignups.length > 0){
         this.canChangeUserType = false;
+        this.canDelete = false;
         this.reason = 'you signed up to work at a charity event.';
+        this.notDelR = this.notDelR + '<i>You are not allowed to delete your account because ' + this.reason + '</i><br><br>';
       }
       console.log('the user signups inside the check function');
       console.log(this.userSignups);

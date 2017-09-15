@@ -107,8 +107,8 @@
         <button if.bind="canDelete" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">
           Delete User
         </button>
-        <p style="padding:5px"><i>${notDelR}</i></p>
-        <p style="padding:5px"><i>${notDelB}</i></p>
+        <p style="padding:5px" innerhtml.bind="notDelR"></p>
+        <!-- <p style="padding:5px"><i>${notDelB}</i></p> -->
       </div>
       <p>&nbsp;</p>
     </div>
