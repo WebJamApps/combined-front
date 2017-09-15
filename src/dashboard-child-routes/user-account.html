@@ -79,10 +79,11 @@
           <p><strong>User Name:</strong> <i>${user.name}</i></p>
           <p><strong>Email:</strong> <i>${user.email}</i></p>
           <label>Primary User Type (required)</label>
-          <select id="type" class="form-control" value.bind="user.userType" style="width: 2.35in">
+          <select if.bind="canChangeUserType" id="type" class="form-control" value.bind="user.userType" style="width: 2.35in">
             <option value="">Primary User Type (required)</option>
             <option repeat.for="type of userTypes" model.bind="type">${type}</option>
           </select>
+          <p if.bind="!canChangeUserType"><i>You are not allowed to change your primary user type because ${reason}</i></p>
           <label>Street Address</label>
           <input value.two-way="user.userStreetAddress">
           <label>City</label>
@@ -106,8 +107,8 @@
         <button if.bind="canDelete" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">
           Delete User
         </button>
-        <p>${notDelR}</p>
-        <p>${notDelB}</p>
+        <p style="padding:5px"><i>${notDelR}</i></p>
+        <p style="padding:5px"><i>${notDelB}</i></p>
       </div>
       <p>&nbsp;</p>
     </div>

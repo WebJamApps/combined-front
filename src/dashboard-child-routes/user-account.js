@@ -109,17 +109,34 @@ export class UserAccount {
     this.checkChangeUserType();
   }
 
-  checkChangeUserType(){
-    if (user.usertype === 'Volunteer'){
-// Do not allow user to change their primary userType away from Volunteer if they have signed up for an event
+  async checkChangeUserType(){
+    this.reason = '';
+    console.log('check change user type');
+    if (this.user.userType === 'Volunteer' || this.user.userType === 'Developer'){
+      await this.checkSignups();
+      if (this.userSignups.length > 0){
+        this.canChangeUserType = false;
+        this.reason = 'you signed up to work at a charity event.';
+      }
+      console.log('the user signups inside the check function');
+      console.log(this.userSignups);
+      console.log('I can change the user type: ' + this.canChangeUserType);
     }
-    if (user.usertype === 'Charity'){
+    if (this.user.usertype === 'Charity'){
 // Do not allow user to change their primary userType away from Charity if they have created a charity
 // Do not allow user to change their primary userType away from Charity if they have created an Event
     }
-    if (user.usertype === 'Reader'){
+    if (this.user.usertype === 'Reader'){
 // Do not allow user to change their primary userType away from Reader if they have a book checked out
     }
+  }
+
+  async checkSignups(){
+    this.userSignups = [];
+    const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
+    this.userSignups = await resp.json();
+    //console.log('these are the signups for this user');
+    //console.log(this.userSignups);
   }
 
   async setNolongerNew(){
