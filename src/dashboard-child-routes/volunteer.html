@@ -37,7 +37,7 @@
         <option repeat.for="cause of causes" model.bind="cause">${cause}</option>
       </select>
     </div>
-    <div class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px">
+    <div if.bind="showtable" class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px">
       <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
         <thead>
           <tr>
@@ -64,7 +64,7 @@
         <tbody>
           <tr repeat.for="event of $displayData" if.bind="!event.past && !event.full">
             <td style="padding:8px; text-align:center">
-              <button if.bind="!event.scheduled" class="button-checkout" raised click.delegate="signupEvent(event._id)" style="margin-bottom:10px">
+              <button if.bind="!event.scheduled" class="button-checkout" raised click.delegate="signupEvent(event)" style="margin-bottom:10px">
                 Sign Up
               </button>
               <button if.bind="event.scheduled" class="button-checkout" raised click.delegate="cancelSignup(event._id)" style="color:black; margin-bottom:10px; background-color: red">
