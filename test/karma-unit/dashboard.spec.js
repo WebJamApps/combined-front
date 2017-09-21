@@ -17,7 +17,10 @@ class ValidatorMock extends Validator {
     this.b = b;
   }
   validateObject(obj, rules) {
-    return Promise.resolve([{name: 'john', valid: true}]);
+    if (obj.userType.indexOf('True') > -1){
+      return Promise.resolve([{rule: Object, object: Object, propertyName: 'userType', valid: true, message: 'good'}]);
+    }
+    return Promise.resolve([{rule: Object, object: Object, propertyName: 'userType', valid: false, message: 'bad'}]);
   }
   validateProperty(prop, val, rules) {
     return Promise.resolve({});
@@ -36,17 +39,23 @@ describe('the Dashboard Module', () => {
 
     beforeEach(() => {
       auth = new AuthStub();
-      auth.setToken({sub: 'aowifjawifhiawofjo'});
+      auth.setToken({sub: '3456'});
       app = new App(auth, new HttpMock());
       app.router = new RouterStub();
       app.activate();
       vc = new VCMock();
       val = new ValidatorMock();
       dashboard = new Dashboard(app, vc, val);
+      dashboard.app.appState = new AppStateStub();
+      //dahsboard.activate();
     });
 
-    it('activate dashboard', (done) => {
-      dashboard.app.appState = new AppStateStub();
+    it('should activate dashboard', (done) => {
+      let thisuser = {
+        _id: '3456', userType: 'Developer'
+      };
+      dashboard.app.appState.setUser(thisuser);
+      //dashboard.app.appState = new AppStateStub();
       dashboard.activate();
       setTimeout(function() {
         //expect(http.status).toBe(200);
@@ -60,19 +69,23 @@ describe('the Dashboard Module', () => {
       done();
     });
 
-    // it('prevents the enter key', (done) => {
-    //   dashboard.activate();
-    //   let e = {keyCode: 13, preventDefault: function(){}};
-    //   dashboard.preventEnter(e);
-    //   //expect(charity2.charities.length).toBe(0);
-    //   done();
-    // });
+    it('should default to Volunteer only when a new ohaf user', (done) => {
+      dashboard.user = {userType: '', isOhafUser: true};
+      dashboard.childRoute();
+      dashboard.user = {userType: '', isOhafUser: false};
+      dashboard.childRoute();
+      dashboard.user = {userType: 'Charity', isOhafUser: true};
+      dashboard.childRoute();
+      done();
+    });
 
-    // it('does not prevent other events', (done) => {
+    // it('should set up validation to display the new user form', (done) => {
     //   dashboard.activate();
-    //   let e = {keyCode: 12, preventDefault: function(){}};
-    //   dashboard.preventEnter(e);
-    //   //expect(charity2.charities.length).toBe(0);
+    //   dashboard.user = {userType: '', isOhafUser: false};
+    //   dashboard.childRoute();
+    //   dashboard.setupValidation = function(){};
+    //   //document.body.innerHTML = '<div id="charityDash"></div><div id="updateCharitySection"></div>';
+    //   dashboard.attached();
     //   done();
     // });
 
@@ -120,11 +133,29 @@ describe('the Dashboard Module', () => {
 
     it('should validate', (done) => {
       dashboard.user = {name: 'Ray Smith', userType: 'Reader'};
+      dashboard.canSubmit = true;
       document.body.innerHTML = '<div id=\'newUserButton\'></div>';
       dashboard.validate();
-      dashboard.dropdownChanged();
+      let validationResults = [{
+        result: {valid: true}}];
+      dashboard.updateCanSubmit(validationResults);
+      //dashboard.dropdownChanged();
+      //dashboard.canSubmit = true;
+      //dashboard.dropdownChanged();
+      done();
+    });
+
+    it('should setup the validation', (done) => {
+      dashboard.user = {name: 'Ray Smith', userType: 'Reader'};
       dashboard.canSubmit = true;
-      dashboard.dropdownChanged();
+      document.body.innerHTML = '<div id=\'newUserButton\'></div>';
+      dashboard.validate();
+      let validationResults = [{
+        result: {valid: true}}];
+      dashboard.updateCanSubmit(validationResults);
+      //dashboard.dropdownChanged();
+      //dashboard.canSubmit = true;
+      //dashboard.dropdownChanged();
       done();
     });
 

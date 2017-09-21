@@ -9,12 +9,10 @@ export class Dashboard {
   validator = null;
   constructor(app, controllerFactory, validator){
     this.app = app;
-    //this.newUser = false;
     this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;  //the button on the form
-    //this.preventDefault = this.preventEnter.bind(this);
   }
 
   userTypes=JSON.parse(process.env.userRoles).roles;
@@ -22,25 +20,15 @@ export class Dashboard {
   async activate() {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
-    console.log('dashboard user type is ' + this.user.userType);
-    if (this.user.userType === undefined || this.user.userType === '' || this.user.userType === 'null'){
-      if (this.user.isOhafUser){
-        this.user.userType = 'Volunteer';
-        this.user.userDetails = 'newUser';
-        //this.app.appState.newUser = true;
-        this.updateUser();
-      }
-    } else {
-      this.childRoute();
-    }
+    //console.log('dashboard user type is ' + this.user.userType);
     this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
       'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
       'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
       'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
       'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     this.states.sort();
+    this.childRoute();
     this.setupValidation();
-    //console.log('This is an ohaf login. ' + this.app.appState.isOhafLogin);
   }
 
   updateCanSubmit(validationResults) {
@@ -54,34 +42,46 @@ export class Dashboard {
     this.canSubmit = valid;
     if (this.user.userType !== '' && this.canSubmit){
       let nub = document.getElementById('newUserButton');
-      nub.style.display = 'block';
+    /* istanbul ignore else */
+      if (nub !== null){
+        nub.style.display = 'block';
+      }
     }
     return this.canSubmit;
   }
 
-  dropdownChanged() {
-    let nub = document.getElementById('newUserButton');
-    if (this.user.userType !== '' && this.canSubmit){
-      nub.style.display = 'block';
-    } else {
-      nub.style.display = 'none';
-    }
-  }
+  // dropdownChanged() {
+  //   let nub = document.getElementById('newUserButton');
+  //   if (this.user.userType !== '' && this.canSubmit){
+  //     nub.style.display = 'block';
+  //   } else {
+  //     nub.style.display = 'none';
+  //   }
+  // }
 
   childRoute(){
-    // if (this.app.appState.newUser){
-    //   return this.app.router.navigate('dashboard/user-account');
-    // }
-    if (this.user.userType === 'Charity'){
-      this.app.router.navigate('dashboard/charity');
-    } else if (this.user.userType === 'Volunteer'){
-      this.app.router.navigate('dashboard/volunteer');
-    } else if (this.user.userType === 'Reader'){
-      this.app.router.navigate('dashboard/reader');
-    } else if (this.user.userType === 'Librarian'){
-      this.app.router.navigate('dashboard/librarian');
-    } else if (this.user.userType === 'Developer'){
-      this.app.router.navigate('dashboard/developer');
+    if (this.user.userType === undefined || this.user.userType === ''){
+      if (this.user.isOhafUser){
+        this.user.userType = 'Volunteer';
+        this.user.userDetails = 'newUser';
+        return this.updateUser();
+      }
+    } else {
+      /* istanbul ignore else */
+      if (this.user.userType === 'Charity'){
+        this.app.router.navigate('dashboard/charity');
+      } else if (this.user.userType === 'Volunteer'){
+        this.app.router.navigate('dashboard/volunteer');
+      } else if (this.user.userType === 'Reader'){
+        this.app.router.navigate('dashboard/reader');
+      } else if (this.user.userType === 'Librarian'){
+        this.app.router.navigate('dashboard/librarian');
+      } else if (this.user.userType === 'Developer'){
+        this.app.router.navigate('dashboard/developer');
+      }
+      //else {
+      //   this.setupValidation();
+      //}
     }
   }
 
@@ -113,4 +113,8 @@ export class Dashboard {
       this.activate();
     });
   }
+
+  // attached(){
+  //   this.setupValidation();
+  // }
 }
