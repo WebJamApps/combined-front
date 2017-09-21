@@ -7,15 +7,15 @@ export class Volunteer {
     this.app = app;
     this.events = [];
     this.signup = {};
-    this.selectedFilter = ['future date'];
+    this.selectedFilter = ['future only'];
     this.doubleCheckSignups = false;
     this.canSignup = true;
-    this.showtable = false;
+    //this.showtable = false;
   }
 
   siteLocations = [];
   causes = [];
-  filterby = ['keyword', 'zipcode', 'cause', 'future date'];
+  filterby = ['keyword', 'zipcode', 'cause', 'future only'];
   // selectedFilter = [];
   expanded = false;
   keyword = false;
@@ -32,6 +32,8 @@ export class Volunteer {
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
     this.app.role = this.user.userType;
+    let res2 = await this.app.httpClient.fetch('/signup/getall');
+    this.signups = await res2.json();
     await this.fetchAllEvents();
     if (this.events.length > 0){
       await this.checkSignups();
@@ -42,10 +44,10 @@ export class Volunteer {
       this.populateSites();
       this.populateCauses();
       await this.checkScheduled();
-      if (this.selectedFilter.includes('future date')) {
+      if (this.selectedFilter.includes('future only')) {
         this.removePast();
       }
-      this.showtable = true;
+      //this.showtable = true;
     }
     if (this.user.userDetails === 'newUser'){
       this.app.router.navigate('dashboard/user-account');
@@ -58,20 +60,17 @@ export class Volunteer {
   }
 
   async checkScheduled(){
-    //loop through each evnt
-    // get signups by event id
-    // if length > 0, add number of volunteers to the event. number of people signed up
-    // number needed - number signed up = the number still needed
-    let resp;
-    let scheduledEvents;
     let total = 0;
+    let signupUserIds = [];
     for (let i = 0; i < this.events.length; i++){
-      resp = await this.app.httpClient.fetch('/signup/event/' + this.events[i]._id);
-      scheduledEvents = await resp.json();
-      for (let hasVolunteers of scheduledEvents){
-        total = total + hasVolunteers.numPeople;
+      for (let e = 0; e < this.signups.length; e++){
+        if (this.events[i]._id === this.signups[e].voloppId){
+          total = total + this.signups[e].numPeople;
+          signupUserIds.push(this.signups[e].userId);
+        }
       }
       this.events[i].voNumPeopleScheduled = total;
+      this.events[i].voSignupUserIds = signupUserIds;
       if (this.events[i].voNumPeopleScheduled - this.events[i].voNumPeopleNeeded >= 0 && !this.events[i].scheduled){
         this.events[i].full = true;
         if (this.doubleCheckSignups){
@@ -84,7 +83,20 @@ export class Volunteer {
         this.events[i].full = true;
       }
       total = 0;
+      signupUserIds = [];
     }
+    //let resp;
+    //let scheduledEvents;
+    //let total = 0;
+    //for (let i = 0; i < this.events.length; i++){
+      //resp = await this.app.httpClient.fetch('/signup/event/' + this.events[i]._id);
+      //scheduledEvents = await resp.json();
+      //for (let hasVolunteers of scheduledEvents){
+        //total = total + hasVolunteers.numPeople;
+      //}
+      //this.events[i].voNumPeopleScheduled = total;
+      //total = 0;
+    //}
   }
 
   fixZipcodes(){
@@ -144,7 +156,7 @@ export class Volunteer {
       this.filters[2].value = '';
       this.causeFilter = false;
     }
-    if (this.selectedFilter.includes('future date')) {
+    if (this.selectedFilter.includes('future only')) {
       console.log('you selected the starting date filter');
       this.removePast();
     } else {
@@ -334,7 +346,7 @@ export class Volunteer {
     })
       .then((data) => {
         console.log(data);
-        this.showtable = false;
+        //this.showtable = false;
         this.activate();
       });
   }
@@ -346,7 +358,7 @@ export class Volunteer {
     })
       .then((data) => {
         console.log('no longer volunteering for that event');
-        this.showtable = false;
+        //this.showtable = false;
         this.activate();
       });
   }
