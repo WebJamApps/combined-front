@@ -37,7 +37,8 @@
         <option repeat.for="cause of causes" model.bind="cause">${cause}</option>
       </select>
     </div>
-    <div if.bind="showtable" class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px">
+    <!-- <div if.bind="showtable" class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px"> -->
+      <div class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px">
       <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
         <thead>
           <tr>
