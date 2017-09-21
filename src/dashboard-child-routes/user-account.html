@@ -16,26 +16,35 @@
         <p><strong>User Name:</strong> <i>${user.name}</i></p>
         <p><strong>Email:</strong> <i>${user.email}</i></p>
         <label style="margin-top:0; padding-top:0;max-height:30px">Primary User Type (required)<span if.bind="!canChangeUserType">:<i style="font-weight:normal;"> ${user.userType}</i><br><br></span></label>
-        <select if.bind="canChangeUserType" id="type" class="form-control" value.bind="user.userType" style="width: 2.35in">
+        <select if.bind="canChangeUserType" id="type" class="form-control" value.bind="user.userType & validate" style="width: 2.35in">
           <option value="">Primary User Type (required)</option>
           <option repeat.for="type of userTypes" model.bind="type">${type}</option>
         </select>
         <p if.bind="!canChangeUserType"><i>You are not allowed to change your primary user type for the following reasons:</i></p>
         <ul if.bind="!canChangeUserType" innerhtml.bind="reasons"></ul>
         <label>Street Address</label>
-        <input value.two-way="user.userStreetAddress">
-        <label>City</label>
-        <input value.two-way="user.userCity">
-        <label>State</label>
-        <select id="updateState" class="form-control" value.bind="user.userState" style="width: 2.35in">
-          <option value="">State (required)</option>
+        <input value.two-way="user.userStreetAddress & validate">
+        <label>City (required)</label>
+        <input value.two-way="user.userCity & validate">
+        <label>State (required)</label>
+        <select id="updateState" class="form-control" value.bind="user.userState & validate" style="width: 2.35in">
+          <option value=""> </option>
           <option repeat.for="state of states" model.bind="state">${state}</option>
         </select>
-        <label>Zipcode</label>
-        <input value.two-way="user.userZip">
+        <label>Zipcode (required)</label>
+        <input value.two-way="user.userZip & validate">
+        <label style="margin-top:20px;font-weight:normal;">10 Digit Phone # (optional)</label>
+        <input type="number" style="max-width: 1.25in; margin:auto; padding:5px" class="newUserForm" value.bind="user.userPhone & validate" required>
         <label>Short Bio</label>
-        <textarea value.two-way="user.userDetails" rows="5" cols="33"></textarea>
-        <button class="button-lib" raised click.trigger="updateUser()">
+        <textarea value.two-way="user.userDetails & validate" rows="5" cols="33"></textarea>
+        <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
+          <ul if.bind="controller.errors">
+            <li repeat.for="error of controller.errors" style="margin-left:-24px; color:red">
+              ${error.message}
+            </li>
+          </ul>
+        </div>
+        <button id="updateUserButton" class="button-lib" raised click.trigger="updateUser()" style="display:none">
           update</button>
         </form>
       </div>

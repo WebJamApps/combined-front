@@ -1,15 +1,22 @@
 import {inject} from 'aurelia-framework';
 import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
-@inject(App)
+import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
+import {FormValidator} from '../classes/FormValidator';
+@inject(App, ValidationControllerFactory, Validator)
 export class UserAccount {
-  constructor(app){
+  controller = null;
+  validator = null;
+  constructor(app, controllerFactory, validator){
     this.app = app;
     this.selectedCauses = [];
     this.selectedTalents = [];
     this.selectedWorks = [];
     this.canChangeUserType = true;
-    //this.notDelR = '';
+    this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results));
+    this.controller = controllerFactory.createForCurrentScope(this.validator);
+    this.controller.validateTrigger = validateTrigger.changeOrBlur;
+    this.canSubmit = false;
   }
 
   causes = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
@@ -18,7 +25,6 @@ export class UserAccount {
   userTypes=JSON.parse(process.env.userRoles).roles;
 
   async activate() {
-    //this.canDelete = true;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.role = this.user.userType;
@@ -81,6 +87,37 @@ export class UserAccount {
         this.userTypes.push('Developer');
       }
     }
+    this.setupValidation();
+  }
+
+  setupValidation() {
+    ValidationRules
+    .ensure('userPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
+    .ensure('userType').required().minLength(5).withMessage('select a user type')
+    .ensure('userZip').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
+    .ensure('userCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
+    .ensure('userState').required()
+    .on(this.user);
+  }
+
+  validate() {
+    this.validator.validateObject(this.user);
+  }
+
+  updateCanSubmit(validationResults) {
+    let valid = true;
+    for (let result of validationResults) {
+      if (result.valid === false){
+        valid = false;
+        break;
+      }
+    }
+    this.canSubmit = valid;
+    if (this.user.userType !== '' && this.canSubmit){
+      let nub = document.getElementById('updateUserButton');
+      nub.style.display = 'block';
+    }
+    return this.canSubmit;
   }
 
   async checkChangeUserType(){
@@ -90,9 +127,7 @@ export class UserAccount {
       await this.checkSignups();
       if (this.userSignups.length > 0){
         this.canChangeUserType = false;
-        //this.canDelete = false;
         this.reasons = this.reasons + '<li>You signed up to work at a charity event.</li>';
-        //this.notDelR = this.notDelR + '<i>You are not allowed to delete your account because ' + this.reason + '</i><br><br>';
       }
       console.log('the user signups inside the check function');
       console.log(this.userSignups);
@@ -107,19 +142,16 @@ export class UserAccount {
         //this.canDelete = false;
         this.canChangeUserType = false;
         this.reasons = this.reasons + '<li>You are the manager of a charity.</li>';
-        //this.notDelR = this.notDelR + '<i>You are not allowed to delete your account when you have a charity under management. First, delete your charities or remove yourself as manager (if there is another charity manager assigned to that charity).</i><br><br>';
       }
     }
-      /* istanbul ignore else */
+    /* istanbul ignore else */
     if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
       const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
       this.books = await res.json();
-        /* istanbul ignore else */
+      /* istanbul ignore else */
       if (this.books.length > 0){
-        //this.canDelete = false;
         this.canChangeUserType = false;
         this.reasons = this.reasons + '<li>You have a book checked out.</li>';
-        //this.notDelR = this.notDelR + '<i>You are not allowed to delete your account when you have a book checked out.</i><br><br>';
       }
     }
   }
@@ -128,8 +160,6 @@ export class UserAccount {
     this.userSignups = [];
     const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
     this.userSignups = await resp.json();
-    //console.log('these are the signups for this user');
-    //console.log(this.userSignups);
   }
 
   async setNolongerNew(){
@@ -203,44 +233,32 @@ export class UserAccount {
 
   causePicked(){
     this.user.volCauses = this.selectedCauses;
-    //for (let i = 0; i < this.selectedCauses.length; i++) {
-    //console.log(this.selectedCauses);
     if (this.selectedCauses.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
       this.causeOther = true;
     } else {
       this.causeOther = false;
       this.user.volCauseOther = '';
     }
-    //}
   }
 
   talentPicked(){
     this.user.volTalents = this.selectedTalents;
-    //for (let i = 0; i < this.selectedTalents.length; i++) {
-    //console.log(this.selectedTalents);
     if (this.selectedTalents.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
       this.talentOther = true;
     } else {
       this.talentOther = false;
       this.user.volTalentOther = '';
     }
-    //  }
   }
 
   workPicked(){
     this.user.volWorkPrefs = this.selectedWorks;
-    //for (let i = 0; i < this.selectedWorks.length; i++) {
-    //console.log(this.selectedWorks);
     if (this.selectedWorks.includes('other')){
-      //console.log('other was selected, we will display an additional form field now');
       this.workOther = true;
     } else {
       this.workOther = false;
       this.user.volWorkOther = '';
     }
-    //  }
   }
 
   async deleteUser(){
@@ -249,7 +267,6 @@ export class UserAccount {
       method: 'delete'
     })
     .then((data) => {
-      //console.log('user has been deleted');
       this.app.logout();
     });
   }
