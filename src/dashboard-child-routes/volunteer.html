@@ -42,9 +42,9 @@
       <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
         <thead>
           <tr>
-            <th style="padding:8px;min-width:130px; text-align:center">Action</th>
+            <th style="padding:8px;min-width:130px; text-align:center" aut-sort="key: past">Action</th>
             <th style="padding:8px;min-width:130px" aut-sort="key: voName; default: asc">Event Name</th>
-            <th style="padding:8px;min-width:200px" >Description</th>
+            <th style="padding:8px;min-width:200px" aut-sort="key: voDescription">Description</th>
             <th style="padding:8px; min-width:150px" >Location</th>
             <th style="padding:8px; min-width:100px" aut-sort="key: voZipCode;">Zipcode</th>
             <th style="padding:8px" >Start Date</th>
@@ -63,14 +63,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr repeat.for="event of $displayData" if.bind="!event.past && !event.full">
+          <tr repeat.for="event of $displayData" if.bind="(!event.past || (event.past && showPast)) && !event.full">
             <td style="padding:8px; text-align:center">
-              <button if.bind="!event.scheduled" class="button-checkout" raised click.delegate="signupEvent(event)" style="margin-bottom:10px">
+              <button if.bind="!event.scheduled && !event.past" class="button-checkout" raised click.delegate="signupEvent(event)" style="margin-bottom:10px">
                 Sign Up
               </button>
-              <button if.bind="event.scheduled" class="button-checkout" raised click.delegate="cancelSignup(event._id)" style="color:black; margin-bottom:10px; background-color: red">
+              <button if.bind="event.scheduled && !event.past" class="button-checkout" raised click.delegate="cancelSignup(event._id)" style="color:black; margin-bottom:10px; background-color: red">
                 Cancel
               </button>
+              <p if.bind="event.past">This event has past</p>
             </td>
             <td style="padding:8px" innerhtml.bind="event.voName"></td>
             <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
