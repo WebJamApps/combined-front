@@ -308,7 +308,7 @@ describe('the Volunteer Opps Module', () => {
       'voTalentTypeOther': 'scrubbing'
     };
     volops.setupValidation2 = function(){};
-    volops.showUpdateEvent(thisEvent);
+    volops.showUpdateEvent(thisEvent, 'update');
     done();
   });
 

@@ -4,15 +4,11 @@ import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
 const Inputmask = require('inputmask');
-// const MdDateTimePicker = require('md-date-time-picker');
-// const moment = require('moment');
 @inject(App, ValidationControllerFactory, Validator)
-//@inject(App)
 export class VolunteerOpps {
   controller = null;
   validator = null;
   constructor(app, controllerFactory, validator){
-    //constructor(app){
     this.app = app;
     this.selectedTalents = [];
     this.selectedWorks = [];
@@ -26,7 +22,6 @@ export class VolunteerOpps {
     this.voOpp = {};
     this.showVolunteers = false;
   }
-  //
   async activate(){
     this.canSubmit2 = false;
     this.showVolunteers = false;
@@ -40,24 +35,21 @@ export class VolunteerOpps {
     //console.log(this.charityID);
     let res = await this.app.httpClient.fetch('/volopp/' + this.charityID);
     this.events = await res.json();
+    let res2 = await this.app.httpClient.fetch('/signup/getall');
+    this.signups = await res2.json();
+    console.log('here are all of the signups from the database');
+    console.log(this.signups);
     //console.log('this.events');
     //console.log(this.events);
-    // let res2 = await this.app.httpClient.fetch('/charity/find/' + this.charityID);
-    // this.charity = await res2.json();
-    // this.voOpp
     //console.log(this.charity);
     if (this.events.length > 0){
-      //this.fixUserSignups();
       this.fixDates();
       this.buildWorkPrefs();
       this.buildTalents();
       this.checkScheduled();
       this.markPast();
-      //this.charityName = this.events[0].voCharityName;
     }
-    //else {
     this.findCharity();
-    //}
     this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
     this.works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
     this.talents.sort();
@@ -67,7 +59,6 @@ export class VolunteerOpps {
     this.today = new Date().toISOString().split('T')[0];
     this.minEndDate = this.today;
     this.maxStartDate = '';
-    //console.log('today is ' + this.today);
     this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
       'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
       'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
@@ -79,8 +70,6 @@ export class VolunteerOpps {
 
   async fixUserSignups(){
     let allSignups = [];
-    //let userSignUp = '';
-    //let resp = '';
     let res = await this.app.httpClient.fetch('/signup/getall');
     allSignups = await res.json();
     console.log('here are all of the signups');
@@ -92,18 +81,8 @@ export class VolunteerOpps {
         console.log('the user does not exist');
         await this.removeSignup(allSignups[i].userId);
       }
-      //if(resp !== undefined || resp !== ''){
-
-    //  }
-      //userSignUp = await resp.json();
-      //console.log('does this user exist?');
-      //console.log(userSignUp);
-      //if (userSignUp === undefined || userSignUp === null){
-        //await removeSignup(allSignups[i].userId);
     }
-      //userSignUp = '';
   }
-  //}
 
   async removeSignup(userid){
     await fetch;
@@ -112,31 +91,21 @@ export class VolunteerOpps {
     })
       .then((data) => {
         console.log('removed signup attached to a nonexisting user');
-        //this.activate();
       });
   }
 
   async checkScheduled(){
-    //loop through each evnt
-    // get signups by event id
-    // if length > 0, add number of volunteers to the event. number of people signed up
-    // number needed - number signed up = the number still needed
-    let resp;
-    let scheduledEvents;
     let total = 0;
     let signupUserIds = [];
     for (let i = 0; i < this.events.length; i++){
-      resp = await this.app.httpClient.fetch('/signup/event/' + this.events[i]._id);
-      scheduledEvents = await resp.json();
-      for (let hasVolunteers of scheduledEvents){
-        total = total + hasVolunteers.numPeople;
-        signupUserIds.push(hasVolunteers.userId);
+      for (let e = 0; e < this.signups.length; e++){
+        if (this.events[i]._id === this.signups[e].voloppId){
+          total = total + this.signups[e].numPeople;
+          signupUserIds.push(this.signups[e].userId);
+        }
       }
-      //if (this.events[i].voNumPeopleScheduled === undefined){
       this.events[i].voNumPeopleScheduled = total;
-      //}
       this.events[i].voSignupUserIds = signupUserIds;
-      //if(signupUserIds.length >)
       total = 0;
       signupUserIds = [];
     }
@@ -151,12 +120,8 @@ export class VolunteerOpps {
       try {
         res = await this.app.httpClient.fetch('/user/' + thisevent.voSignupUserIds[i]);
       } catch (err) {
-        //this.voOpp = thisevent;
         console.log('the user does not exist');
         await this.fixUserSignups();
-        //await this.updateEvent('removeOneSignup');
-        // let resp = await this.app.httpClient.fetch('/volopp/' + this.charityID);
-        // this.events = await resp.json();
       }
       if (res !== undefined && res !== ''){
         person = await res.json();
@@ -164,7 +129,7 @@ export class VolunteerOpps {
         res = '';
       }
     }
-    console.log(this.allPeople);
+    //console.log(this.allPeople);
     this.eventTitle = thisevent.voName;
     let display = document.getElementById('showvolunteers');
     if (display !== null){
@@ -180,7 +145,7 @@ export class VolunteerOpps {
     today = [today.getFullYear(),
       (mm > 9 ? '' : '0') + mm,
       (dd > 9 ? '' : '0') + dd].join('');
-    console.log(today);
+    //console.log(today);
     for (let i = 0; i < this.events.length; i++){
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
         console.log('undefined date');
@@ -188,17 +153,17 @@ export class VolunteerOpps {
       }
       testDate = this.events[i].voStartDate.replace('-', '');
       testDate = testDate.replace('-', '');
-      console.log(testDate);
+      //console.log(testDate);
       if (testDate < today){
-        console.log('this date is past');
-        console.log(this.events[i].voStartDate);
+        //console.log('this date is past');
+        //console.log(this.events[i].voStartDate);
         this.events[i].past = true;
       }
     }
   }
 
   showTime(){
-    console.log('show time picker here');
+    //console.log('show time picker here');
   }
 
   selectDate(dtype){
@@ -328,16 +293,18 @@ export class VolunteerOpps {
     });
   }
 
-  showUpdateEvent(thisEvent){
-    this.newEvent = false;
-    this.canSubmit2 = true;
-    document.getElementById('topSection').style.display = 'none';
-    this.voOpp = thisEvent;
+  showUpdateEvent(thisEvent, type){
+    if (type === 'update'){
+      this.newEvent = false;
+      this.canSubmit2 = true;
+      document.getElementById('topSection').style.display = 'none';
+      this.voOpp = thisEvent;
+    }
     this.talentPicked();
     this.workPicked();
     this.setupValidation2();
-    this.controller2.errors = [];
-    this.validate2();
+    //this.controller2.errors = [];
+    //this.validate2();
   }
 
   showNewEvent(){
@@ -367,13 +334,14 @@ export class VolunteerOpps {
     let topSection = document.getElementById('topSection');
     topSection.style.display = 'block';
     topSection.scrollIntoView();
-    this.setupValidation2();
-    this.controller2.errors = [];
+    //this.setupValidation2();
+    //this.controller2.errors = [];
     let startTimeInput = document.getElementById('s-time');
     let endTimeInput = document.getElementById('e-time');
     let imst = new Inputmask('99:99 am');
     imst.mask(startTimeInput);
     imst.mask(endTimeInput);
+    this.showUpdateEvent(null, 'new');
   }
 
   cancelEvent(theEvent){
@@ -398,9 +366,6 @@ export class VolunteerOpps {
   async updateEvent(updateType){
     console.log('update Event');
     this.voOpp.voStatus = updateType;
-    // if (updateType === 'removeOneSignup'){
-    //   this.voOpp.voNumPeopleScheduled = this.voOpp.voNumPeopleScheduled - 1;
-    // }
     if (updateType === 'update'){
       this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
       this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
