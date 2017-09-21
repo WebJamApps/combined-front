@@ -10,6 +10,7 @@ export class Volunteer {
     this.selectedFilter = ['future only'];
     this.doubleCheckSignups = false;
     this.canSignup = true;
+    this.showPast = false;
     //this.showtable = false;
   }
 
@@ -85,18 +86,6 @@ export class Volunteer {
       total = 0;
       signupUserIds = [];
     }
-    //let resp;
-    //let scheduledEvents;
-    //let total = 0;
-    //for (let i = 0; i < this.events.length; i++){
-      //resp = await this.app.httpClient.fetch('/signup/event/' + this.events[i]._id);
-      //scheduledEvents = await resp.json();
-      //for (let hasVolunteers of scheduledEvents){
-        //total = total + hasVolunteers.numPeople;
-      //}
-      //this.events[i].voNumPeopleScheduled = total;
-      //total = 0;
-    //}
   }
 
   fixZipcodes(){
@@ -116,9 +105,6 @@ export class Volunteer {
         if (this.events[i]._id === nextEventId){
           this.events[i].scheduled = true;
         }
-        // } else {
-        //   this.events[i].scheduled = false;
-        // }
       }
     }
   }
@@ -134,7 +120,7 @@ export class Volunteer {
       this.causeFilter = false;
       this.siteFilter = false;
       this.keyword = false;
-      this.includePast();
+      this.showPast = true;
       return;
     }
     if (this.selectedFilter.includes('keyword')) {
@@ -159,14 +145,9 @@ export class Volunteer {
     if (this.selectedFilter.includes('future only')) {
       console.log('you selected the starting date filter');
       this.removePast();
+      this.showPast = false;
     } else {
-      this.includePast();
-    }
-  }
-
-  includePast(){
-    for (let i = 0; i < this.events.length; i++){
-      this.events[i].past = false;
+      this.showPast = true;
     }
   }
 
@@ -186,6 +167,8 @@ export class Volunteer {
       testDate = testDate.replace('-', '');
       if (testDate < today){
         this.events[i].past = true;
+      } else {
+        this.events[i].past = false;
       }
     }
   }
