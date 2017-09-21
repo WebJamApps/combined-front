@@ -28,7 +28,8 @@
     "eslint-fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
     "postinstall": "npm run fix:aurelia-val",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "au-table": "^0.1.12",
@@ -86,7 +87,7 @@
     "polymer-bundler": "^2.0.1",
     "postcss-loader": "^2.0.6",
     "pushstate-server": "^3.0.0",
-    "snyk": "^1.36.1",
+    "snyk": "^1.40.4",
     "style-loader": "^0.18.2",
     "url-loader": "0.5.9",
     "wait-on": "2.0.2",

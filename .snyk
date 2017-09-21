@@ -9,6 +9,22 @@ ignore:
     - aurelia-validation > typedoc > shelljs:
         reason: None given
         expires: '2017-07-07T10:34:15.083Z'
+  'npm:tough-cookie:20170905':
+    - aurelia-pal-nodejs > jsdom > tough-cookie:
+        reason: None given
+        expires: '2017-10-21T17:53:55.521Z'
+    - snyk > request > tough-cookie:
+        reason: None given
+        expires: '2017-10-21T17:53:55.521Z'
+    - wait-on > request > tough-cookie:
+        reason: None given
+        expires: '2017-10-21T17:53:55.521Z'
+    - aurelia-pal-nodejs > jsdom > request > tough-cookie:
+        reason: None given
+        expires: '2017-10-21T17:53:55.521Z'
+    - webpack > watchpack > chokidar > fsevents > node-pre-gyp > request > tough-cookie:
+        reason: None given
+        expires: '2017-10-21T17:53:55.521Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:marked:20170112':
