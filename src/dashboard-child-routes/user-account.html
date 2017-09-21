@@ -2,13 +2,44 @@
   <div class="page-content">
     <div>
       <h3 class="ohaf" style="margin:auto; padding-top:20px; padding-bottom:20px;text-align:center"><strong>User Account</strong></h3>
-      <!-- <p style="margin:auto; text-align:center; padding-bottom:20px">Your primary role is <u>${app.role}</u></p> -->
+      <!-- <p if.bind="user.userDetails ==='newUser' && user.userType ==='Volunteer'">You are a new user. Do you want to change your primary user role to be Charity instead of Volunteer?</p> -->
     </div>
-    <div class="material-content elevation3" style="max-width:5in; margin:auto" if.bind="user.userDetails ==='newUser'">
-      <p>You are a new user. Do you want to change your primary user role to be Charity instead of Volunteer?</p>
+    <!-- <div class="material-content elevation3" style="max-width:5in; margin:auto" ">
+
       <button style="margin-right:20px" click.delegate="setCharity()">Charity</button><button click.delegate="setNolongerNew()">Volunteer</button>
-    </div>
-    <p if.bind="user.userDetails ==='newUser'">&nbsp;</p>
+    </div> -->
+    <!-- <p if.bind="user.userDetails ==='newUser'">&nbsp;</p> -->
+    <div class="material-content elevation3" style="max-width:5in; margin:auto">
+      <h4 class="material-header-h4">Update User Account</h4>
+      <p>&nbsp;</p>
+      <form>
+        <p><strong>User Name:</strong> <i>${user.name}</i></p>
+        <p><strong>Email:</strong> <i>${user.email}</i></p>
+        <label style="margin-top:0; padding-top:0;max-height:30px">Primary User Type (required)<span if.bind="!canChangeUserType">:<i style="font-weight:normal;"> ${user.userType}</i><br><br></span></label>
+        <select if.bind="canChangeUserType" id="type" class="form-control" value.bind="user.userType" style="width: 2.35in">
+          <option value="">Primary User Type (required)</option>
+          <option repeat.for="type of userTypes" model.bind="type">${type}</option>
+        </select>
+        <p if.bind="!canChangeUserType"><i>You are not allowed to change your primary user type for the following reasons:</i></p>
+        <ul if.bind="!canChangeUserType" innerhtml.bind="reasons"></ul>
+        <label>Street Address</label>
+        <input value.two-way="user.userStreetAddress">
+        <label>City</label>
+        <input value.two-way="user.userCity">
+        <label>State</label>
+        <select id="updateState" class="form-control" value.bind="user.userState" style="width: 2.35in">
+          <option value="">State (required)</option>
+          <option repeat.for="state of states" model.bind="state">${state}</option>
+        </select>
+        <label>Zipcode</label>
+        <input value.two-way="user.userZip">
+        <label>Short Bio</label>
+        <textarea value.two-way="user.userDetails" rows="5" cols="33"></textarea>
+        <button class="button-lib" raised click.trigger="updateUser()">
+          update</button>
+        </form>
+      </div>
+        <p>&nbsp;</p>
     <div class="material-content elevation3" style="max-width:5in; margin:auto" if.bind="user.userType === 'Volunteer' || user.userType === 'Developer'">
       <h4 class="material-header-h4">Set Volunteering Preferences</h4>
       <form>
@@ -66,43 +97,11 @@
         <p>&nbsp;</p>
         <label>Furthest distance willing to travel (miles)</label>
         <input style="margin-top:0" value.two-way="user.volTravelDistMiles">
-        <button class="button-lib" raised click.trigger="setupVolunteer()">
+        <button class="button-lib" raised click.trigger="updateUser()">
           Submit</button>
         </form>
       </div>
       <p>&nbsp;</p>
-
-      <div class="material-content elevation3" style="max-width:5in; margin:auto">
-        <h4 class="material-header-h4">Update User Account</h4>
-        <p>&nbsp;</p>
-        <form>
-          <p><strong>User Name:</strong> <i>${user.name}</i></p>
-          <p><strong>Email:</strong> <i>${user.email}</i></p>
-          <label style="margin-top:0; padding-top:0;max-height:30px">Primary User Type (required)<span if.bind="!canChangeUserType">:<i style="font-weight:normal;"> ${user.userType}</i><br><br></span></label>
-          <select if.bind="canChangeUserType" id="type" class="form-control" value.bind="user.userType" style="width: 2.35in">
-            <option value="">Primary User Type (required)</option>
-            <option repeat.for="type of userTypes" model.bind="type">${type}</option>
-          </select>
-          <p if.bind="!canChangeUserType"><i>You are not allowed to change your primary user type for the following reasons:</i></p>
-          <ul if.bind="!canChangeUserType" innerhtml.bind="reasons"></ul>
-          <label>Street Address</label>
-          <input value.two-way="user.userStreetAddress">
-          <label>City</label>
-          <input value.two-way="user.userCity">
-          <label>State</label>
-          <select id="updateState" class="form-control" value.bind="user.userState" style="width: 2.35in">
-            <option value="">State (required)</option>
-            <option repeat.for="state of states" model.bind="state">${state}</option>
-          </select>
-          <label>Zipcode</label>
-          <input value.two-way="user.userZip">
-          <label>Short Bio</label>
-          <textarea value.two-way="user.userDetails" rows="5" cols="33"></textarea>
-          <button class="button-lib" raised click.trigger="updateUser()">
-            update</button>
-          </form>
-        </div>
-        <p>&nbsp;</p>
       <div class="elevation2" style="padding:5px;max-width:5in; margin:auto">
         <h4 style="text-align:center;">Delete Account</h4>
         <button if.bind="canChangeUserType" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">

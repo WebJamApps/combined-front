@@ -72,6 +72,15 @@ export class UserAccount {
       this.causeOther = false;
     }
     this.checkChangeUserType();
+    if (this.user.userDetails === 'newUser'){
+      this.setNolongerNew();
+    }
+    if (this.user.isOhafUser && this.user.userType === 'Volunteer'){
+      this.userTypes = ['Charity', 'Volunteer'];
+      if (process.env.NODE_ENV === 'development'){
+        this.userTypes.push('Developer');
+      }
+    }
   }
 
   async checkChangeUserType(){
@@ -175,7 +184,9 @@ export class UserAccount {
     .then((response) => response.json())
     .then((data) => {
       this.app.appState.setUser(this.user);
-      this.app.router.navigate('dashboard');
+      this.app.appState.checkUserRole();
+      this.app.router.navigate('dashboard/' + this.user.userType.toLowerCase());
+      console.log('dashboard/' + this.user.userType.toLowerCase());
     });
   }
 
