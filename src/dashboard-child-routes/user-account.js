@@ -44,7 +44,6 @@ export class UserAccount {
         this.selectedCauses.push('');
       }
     }
-    this.userTypes.sort();
     this.talents.sort();
     this.talents.push('other');
     for (let i = 0; i < this.talents.length; i++) {
@@ -84,10 +83,11 @@ export class UserAccount {
     }
     if (this.user.isOhafUser && this.user.userType === 'Volunteer'){
       this.userTypes = ['Charity', 'Volunteer'];
-      if (process.env.NODE_ENV === 'development' || this.user.userType === 'Developer'){
-        this.userTypes.push('Developer');
-      }
     }
+    if (process.env.NODE_ENV === 'development' || this.user.userType === 'Developer'){
+      this.userTypes.push('Developer');
+    }
+    this.userTypes.sort();
     this.setupValidation();
   }
 
