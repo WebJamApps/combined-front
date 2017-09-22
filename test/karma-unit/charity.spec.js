@@ -16,8 +16,6 @@ class ValidatorMock extends Validator {
     this.b = b;
   }
   validateObject(obj, rules) {
-    //console.log('obj');
-    //console.log(obj);
     if (obj.charityTypes.indexOf('True') > -1){
       return Promise.resolve([{rule: Object, object: Object, propertyName: 'charityPhoneNumber', valid: true, message: 'Charity Phone Number is correct'}]);
     }
@@ -30,7 +28,6 @@ class ValidatorMock extends Validator {
 
 class HttpMockChar extends HttpMock {
   fetch(url, obj) {
-    //console.log(url);
     this.headers.url = url;
     this.headers.method = obj ? obj.method : 'GET';
     if (obj && obj.method === 'put') {
@@ -46,7 +43,6 @@ class HttpMockChar extends HttpMock {
 
 class HttpMockChar2 extends HttpMock {
   fetch(url, obj) {
-    //console.log(url);
     this.headers.url = url;
     this.headers.method = obj ? obj.method : 'GET';
     if (obj && obj.method === 'put') {

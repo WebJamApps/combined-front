@@ -7,12 +7,16 @@ export class Volunteer {
     this.app = app;
     this.events = [];
     this.signup = {};
-    this.selectedFilter = ['future date'];
+    this.selectedFilter = ['future only'];
+    this.doubleCheckSignups = false;
+    this.canSignup = true;
+    this.showPast = false;
+    //this.showtable = false;
   }
 
   siteLocations = [];
   causes = [];
-  filterby = ['keyword', 'zipcode', 'cause', 'future date'];
+  filterby = ['keyword', 'zipcode', 'cause', 'future only'];
   // selectedFilter = [];
   expanded = false;
   keyword = false;
@@ -28,21 +32,66 @@ export class Volunteer {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
-    const res = await this.app.httpClient.fetch('/volopp/getall');
-    this.events = await res.json();
-    console.log('all events');
-    console.log(this.events);
+    this.app.role = this.user.userType;
+    let res2 = await this.app.httpClient.fetch('/signup/getall');
+    this.signups = await res2.json();
+    await this.fetchAllEvents();
     if (this.events.length > 0){
+      await this.checkSignups();
+      this.fixZipcodes();
       this.fixDates();
       this.buildWorkPrefs();
       this.buildTalents();
       this.populateSites();
       this.populateCauses();
-      this.checkSignups();
-      if (this.selectedFilter.includes('future date')) {
-        this.startingDateFilter = true;
-        console.log('you selected the starting date filter');
+      await this.checkScheduled();
+      if (this.selectedFilter.includes('future only')) {
         this.removePast();
+      }
+      //this.showtable = true;
+    }
+    if (this.user.userDetails === 'newUser'){
+      this.app.router.navigate('dashboard/user-account');
+    }
+  }
+
+  async fetchAllEvents(){
+    const res = await this.app.httpClient.fetch('/volopp/getall');
+    this.events = await res.json();
+  }
+
+  async checkScheduled(){
+    let total = 0;
+    let signupUserIds = [];
+    for (let i = 0; i < this.events.length; i++){
+      for (let e = 0; e < this.signups.length; e++){
+        if (this.events[i]._id === this.signups[e].voloppId){
+          total = total + this.signups[e].numPeople;
+          signupUserIds.push(this.signups[e].userId);
+        }
+      }
+      this.events[i].voNumPeopleScheduled = total;
+      this.events[i].voSignupUserIds = signupUserIds;
+      if (this.events[i].voNumPeopleScheduled - this.events[i].voNumPeopleNeeded >= 0 && !this.events[i].scheduled){
+        this.events[i].full = true;
+        if (this.doubleCheckSignups){
+          alert('someone else signed up for the last spot to volunteer at this event');
+          this.doubleCheckSignups = false;
+          return this.canSignup = false;
+        }
+      }
+      if (this.events[i].voStatus === 'cancel' && !this.events[i].scheduled){
+        this.events[i].full = true;
+      }
+      total = 0;
+      signupUserIds = [];
+    }
+  }
+
+  fixZipcodes(){
+    for (let i = 0; i < this.events.length; i++){
+      if (this.events[i].voZipCode === undefined || this.events[i].voZipCode === '' || this.events[i].voZipCode === null){
+        this.events[i].voZipCode = '00000';
       }
     }
   }
@@ -50,8 +99,6 @@ export class Volunteer {
   async checkSignups(){
     const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
     this.userSignups = await resp.json();
-    console.log('this user has signed up for these events');
-    console.log(this.userSignups);
     for (let next of this.userSignups){
       let nextEventId = next.voloppId;
       for (let i = 0; i < this.events.length; i++){
@@ -67,20 +114,15 @@ export class Volunteer {
     this.keyword = false;
     this.siteLocation = false;
     if (arrayLength === 0){
-      if (this.startingDateFilter){
-        this.activate();
-      } else {
-        this.filters[0].value = '';
-        this.filters[1].value = '';
-        this.filters[2].value = '';
-        this.causeFilter = false;
-        this.siteFilter = false;
-        this.keyword = false;
-        //this.filters[3].value = '';
-        return;
-      }
+      this.filters[0].value = '';
+      this.filters[1].value = '';
+      this.filters[2].value = '';
+      this.causeFilter = false;
+      this.siteFilter = false;
+      this.keyword = false;
+      this.showPast = true;
+      return;
     }
-    // for (let i = 0; i < arrayLength; i++) {
     if (this.selectedFilter.includes('keyword')) {
       this.keyword = true;
     } else {
@@ -100,10 +142,12 @@ export class Volunteer {
       this.filters[2].value = '';
       this.causeFilter = false;
     }
-    if (this.selectedFilter.includes('future date')) {
-      this.startingDateFilter = true;
+    if (this.selectedFilter.includes('future only')) {
       console.log('you selected the starting date filter');
       this.removePast();
+      this.showPast = false;
+    } else {
+      this.showPast = true;
     }
   }
 
@@ -115,23 +159,17 @@ export class Volunteer {
     today = [today.getFullYear(),
       (mm > 9 ? '' : '0') + mm,
       (dd > 9 ? '' : '0') + dd].join('');
-    console.log(today);
     for (let i = 0; i < this.events.length; i++){
-        //console.log(this.events[i].voStartDate);
-
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
-        console.log('undefined date');
         this.events[i].voStartDate = today;
       }
       testDate = this.events[i].voStartDate.replace('-', '');
       testDate = testDate.replace('-', '');
-      console.log(testDate);
       if (testDate < today){
-        console.log('this date is past');
-        console.log(this.events[i].voStartDate);
         this.events[i].past = true;
+      } else {
+        this.events[i].past = false;
       }
-        //console.log()
     }
   }
 
@@ -274,17 +312,24 @@ export class Volunteer {
     }
   }
 
-  signupEvent(eventID){
-    this.signup.voloppId = eventID;
+  async signupEvent(thisevent){
+    //doublecheck that someone else has not already signedup to hit the max volunteers needed
+    this.doubleCheckSignups = true;
+    await this.checkScheduled();
+    if (!this.canSignup){
+      return;
+    }
+    this.signup.voloppId = thisevent._id;
     this.signup.userId = this.uid;
     this.signup.numPeople = 1;
     this.signup.groupName = '';
-    this.app.httpClient.fetch('/signup/create', {
+    await this.app.httpClient.fetch('/signup/create', {
       method: 'post',
       body: json(this.signup)
     })
       .then((data) => {
         console.log(data);
+        //this.showtable = false;
         this.activate();
       });
   }
@@ -296,6 +341,7 @@ export class Volunteer {
     })
       .then((data) => {
         console.log('no longer volunteering for that event');
+        //this.showtable = false;
         this.activate();
       });
   }

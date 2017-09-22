@@ -1,6 +1,6 @@
 {
   "name": "combined-front",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Front End of web-jam.com App",
   "main": "dist/index.html",
   "repository": {
@@ -10,16 +10,17 @@
   "author": "HandlersAndKickers",
   "license": "MIT",
   "engines": {
-    "node": "8.4.0",
+    "node": "8.5.0",
     "npm": "5.4.1",
-    "yarn": "1.0.1"
+    "yarn": "1.0.2"
   },
   "scripts": {
     "start": "nps",
     "test": "npm run test:karma && nps e2e",
     "test:karma": "cross-env NODE_ENV=test nps test.lint && nps test.karma",
     "test:debug": "cross-env NODE_ENV=test nps test.karma.debug",
-    "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && npm i -g yarn@1.0.1 && yarn cache clean && yarn install && npm run postinstall:backend",
+    "preinstall": "npm i -g npm && npm i -g yarn@1.0.2",
+    "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && yarn cache clean && yarn install && npm run postinstall:backend",
     "postinstall:backend": "yarn global add bower && bower install && npm run vulc && npm start -- build",
     "vulc": "rm -rf static/includes.html && polymer-bundler --inline-scripts --inline-css includes.html > static/includes.html",
     "prod": "npm run vulc && npm start -- build && npm start -- serve",
@@ -27,7 +28,8 @@
     "eslint-fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
     "postinstall": "npm run fix:aurelia-val",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "au-table": "^0.1.12",
@@ -85,7 +87,7 @@
     "polymer-bundler": "^2.0.1",
     "postcss-loader": "^2.0.6",
     "pushstate-server": "^3.0.0",
-    "snyk": "^1.36.1",
+    "snyk": "^1.40.4",
     "style-loader": "^0.18.2",
     "url-loader": "0.5.9",
     "wait-on": "2.0.2",

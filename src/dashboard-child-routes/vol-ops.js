@@ -4,15 +4,11 @@ import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
 const Inputmask = require('inputmask');
-// const MdDateTimePicker = require('md-date-time-picker');
-// const moment = require('moment');
 @inject(App, ValidationControllerFactory, Validator)
-//@inject(App)
 export class VolunteerOpps {
   controller = null;
   validator = null;
   constructor(app, controllerFactory, validator){
-    //constructor(app){
     this.app = app;
     this.selectedTalents = [];
     this.selectedWorks = [];
@@ -24,35 +20,30 @@ export class VolunteerOpps {
     this.newAddress = false;
     this.charity = {};
     this.voOpp = {};
+    this.showVolunteers = false;
   }
-  //
   async activate(){
     this.canSubmit2 = false;
+    this.showVolunteers = false;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
-    //console.log(this.app.router.currentInstruction.params.childRoute);
+    this.app.role = this.user.userType;
     let currentUrl = (window.location.href);
-    //console.log(currentUrl);
     this.charityID = currentUrl.substring(currentUrl.indexOf('vol-ops/') + 8);
-    //console.log(this.charityID);
     let res = await this.app.httpClient.fetch('/volopp/' + this.charityID);
     this.events = await res.json();
-    //console.log('this.events');
-    //console.log(this.events);
-    // let res2 = await this.app.httpClient.fetch('/charity/find/' + this.charityID);
-    // this.charity = await res2.json();
-    // this.voOpp
-    //console.log(this.charity);
+    let res2 = await this.app.httpClient.fetch('/signup/getall');
+    this.signups = await res2.json();
+    // console.log('here are all of the signups from the database');
+    // console.log(this.signups);
     if (this.events.length > 0){
       this.fixDates();
       this.buildWorkPrefs();
       this.buildTalents();
       this.checkScheduled();
-      //this.charityName = this.events[0].voCharityName;
+      this.markPast();
     }
-    //else {
     this.findCharity();
-    //}
     this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
     this.works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
     this.talents.sort();
@@ -62,7 +53,6 @@ export class VolunteerOpps {
     this.today = new Date().toISOString().split('T')[0];
     this.minEndDate = this.today;
     this.maxStartDate = '';
-    //console.log('today is ' + this.today);
     this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
       'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
       'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
@@ -71,52 +61,114 @@ export class VolunteerOpps {
     this.states.sort();
   }
 
+  async fixUserSignups(){
+    let allSignups = [];
+    let res = await this.app.httpClient.fetch('/signup/getall');
+    allSignups = await res.json();
+    // console.log('here are all of the signups');
+    // console.log(allSignups);
+    for (let i = 0; i < allSignups.length; i++){
+      try {
+        await this.app.httpClient.fetch('/user/' + allSignups[i].userId);
+      } catch (err) {
+        // console.log('the user does not exist');
+        await this.removeSignup(allSignups[i].userId);
+      }
+    }
+  }
+
+  async removeSignup(userid){
+    await fetch;
+    this.app.httpClient.fetch('/signup/remove/' + userid, {
+      method: 'delete'
+    })
+      .then((data) => {
+        //console.log('removed signup attached to a nonexisting user');
+      });
+  }
+
   async checkScheduled(){
-    //loop through each evnt
-    // get signups by event id
-    // if length > 0, add number of volunteers to the event. number of people signed up
-    // number needed - number signed up = the number still needed
-    let resp;
-    let scheduledEvents;
     let total = 0;
+    let signupUserIds = [];
     for (let i = 0; i < this.events.length; i++){
-      resp = await this.app.httpClient.fetch('/signup/event/' + this.events[i]._id);
-      scheduledEvents = await resp.json();
-      //console.log('these are the schedule events for this event id');
-      //console.log(scheduledEvents);
-      for (let hasVolunteers of scheduledEvents){
-        total = total + hasVolunteers.numPeople;
+      for (let e = 0; e < this.signups.length; e++){
+        /* istanbul ignore else */
+        if (this.events[i]._id === this.signups[e].voloppId){
+          total = total + this.signups[e].numPeople;
+          signupUserIds.push(this.signups[e].userId);
+        }
       }
       this.events[i].voNumPeopleScheduled = total;
+      this.events[i].voSignupUserIds = signupUserIds;
       total = 0;
+      signupUserIds = [];
     }
   }
 
-  showTime(){
-    console.log('show time picker here');
+  async viewPeople(thisevent){
+    this.showVolunteers = true;
+    let res;
+    let person;
+    this.allPeople = [];
+    for (let i = 0; i < thisevent.voSignupUserIds.length; i++){
+      try {
+        res = await this.app.httpClient.fetch('/user/' + thisevent.voSignupUserIds[i]);
+      } catch (err) {
+        //console.log('the user does not exist');
+        await this.fixUserSignups();
+      }
+      /* istanbul ignore else */
+      if (res !== undefined && res !== ''){
+        person = await res.json();
+        this.allPeople.push(person);
+        res = '';
+      }
+    }
+    this.eventTitle = thisevent.voName;
+    let display = document.getElementById('showvolunteers');
+    /* istanbul ignore else */
+    if (display !== null){
+      display.scrollIntoView();
+    }
   }
+
+  markPast() {
+    let testDate;
+    let today = new Date();
+    let mm = today.getMonth() + 1; // getMonth() is zero-based
+    let dd = today.getDate();
+    today = [today.getFullYear(),
+      (mm > 9 ? '' : '0') + mm,
+      (dd > 9 ? '' : '0') + dd].join('');
+    for (let i = 0; i < this.events.length; i++){
+      if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
+        //console.log('undefined date');
+        this.events[i].voStartDate = today;
+      }
+      testDate = this.events[i].voStartDate.replace('-', '');
+      testDate = testDate.replace('-', '');
+      if (testDate < today){
+        this.events[i].past = true;
+      }
+    }
+  }
+
+//TODO display a clock UI
+  // showTime(type){
+  //   //console.log('show time picker here');
+  // }
 
   selectDate(dtype){
-    //console.log('show date picker here');
     if (dtype === 'start-date'){
-      //console.log(dtype);
-      //console.log(this.voOpp.voStartDate);
       this.minEndDate = this.voOpp.voStartDate;
     } else {
-      //console.log(dtype);
-      //console.log(this.voOpp.voEndDate);
       this.maxStartDate = this.voOpp.voEndDate;
     }
-    //   this.dialog.time = new moment();
-    //   this.dialog.toggle();
   }
 
   async findCharity(){
     let res2 = await this.app.httpClient.fetch('/charity/find/' + this.charityID);
     this.charity = await res2.json();
-    console.log('foundCharity');
-    console.log(this.charity);
-    //this.charityName = foundCharity.charityName;
     this.voOpp.voCharityName = this.charity.charityName;
     this.voOpp.voStreet = this.charity.charityStreet;
     this.voOpp.voCity = this.charity.charityCity;
@@ -132,11 +184,10 @@ export class VolunteerOpps {
       }
       this.voOpp.voCharityTypes.push(this.charity.charityTypeOther);
     }
-    console.log('the charity types attached to this event');
-    console.log(this.voOpp.voCharityTypes.length);
   }
 
   fixDates(){
+    //TODO put into util class with fixDates(array)();
     for (let i = 0; i < this.events.length; i++){
       let startDate = this.events[i].voStartDate;
       let endDate = this.events[i].voEndDate;
@@ -203,19 +254,15 @@ export class VolunteerOpps {
   }
 
   talentPicked(){
-    //this.voOpp.voTalentTypes = this.selectedTalents;
     if (this.voOpp.voTalentTypes.includes('other')){
       this.talentOther = true;
     } else {
       this.talentOther = false;
       this.voOpp.voTalentTypeOther = '';
     }
-    // console.log('selected talent');
-    // console.log()
   }
 
   workPicked(){
-    //this.voOpp.voWorkTypes = this.selectedWorks;
     if (this.voOpp.voWorkTypes.includes('other')){
       this.workOther = true;
     } else {
@@ -226,37 +273,34 @@ export class VolunteerOpps {
 
   scheduleEvent(){
     this.voOpp.voStatus = 'new';
-    console.log(this.voOpp);
-    //this.newCharity.charityManagers[0] = this.user.name;
-    //this.newCharity.charityMngIds[0] = this.user._id;
+    //console.log(this.voOpp);
     this.app.httpClient.fetch('/volopp/create', {
       method: 'post',
       body: json(this.voOpp)
     })
     .then((data) => {
-      console.log(data);
+      //console.log(data);
       document.getElementById('eventHeader').scrollIntoView();
       this.activate();
     });
   }
 
-  showUpdateEvent(thisEvent){
-    this.newEvent = false;
-    this.canSubmit2 = true;
-    document.getElementById('topSection').style.display = 'none';
-    this.voOpp = thisEvent;
+  showUpdateEvent(thisEvent, type){
+    if (type === 'update'){
+      this.newEvent = false;
+      this.canSubmit2 = true;
+      document.getElementById('topSection').style.display = 'none';
+      this.voOpp = thisEvent;
+    }
     this.talentPicked();
     this.workPicked();
     this.setupValidation2();
-    this.controller2.errors = [];
-    this.validate2();
   }
 
   showNewEvent(){
     this.voOpp = {
       'voName': '',
       'voCharityId': this.charityID,
-      'voCharityName': this.charityName,
       'voNumPeopleNeeded': 1,
       'voDescription': '',
       'voWorkTypes': [],
@@ -271,39 +315,51 @@ export class VolunteerOpps {
       'voContactEmail': this.user.email,
       'voContactPhone': this.user.userPhone
     };
+    this.voOpp.voCharityName = this.charity.charityName;
+    this.voOpp.voStreet = this.charity.charityStreet;
+    this.voOpp.voCity = this.charity.charityCity;
+    this.voOpp.voState = this.charity.charityState;
+    this.voOpp.voZipCode = this.charity.charityZipCode;
     this.newEvent = true;
-    //this.canSubmit2 = false;
     let topSection = document.getElementById('topSection');
     topSection.style.display = 'block';
     topSection.scrollIntoView();
-    //this.activate();
-    this.setupValidation2();
-    this.controller2.errors = [];
     let startTimeInput = document.getElementById('s-time');
     let endTimeInput = document.getElementById('e-time');
-    // console.log('the start time input is ');
-    // console.log(startTimeInput);
     let imst = new Inputmask('99:99 am');
     imst.mask(startTimeInput);
     imst.mask(endTimeInput);
-    //document.getElementById('eventHeader').scrollIntoView();
+    this.showUpdateEvent(null, 'new');
   }
 
   cancelEvent(theEvent){
     this.voOpp = theEvent;
     this.updateEvent('cancel');
+    if (this.voOpp.voDescription !== undefined){
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = '<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>' + this.voOpp.voDescription;
+    }
   }
 
   reactivateEvent(theEvent){
     this.voOpp = theEvent;
-    this.updateEvent('update');
+    if (this.voOpp.voDescription !== undefined){
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>', '<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>');
+    }
+    this.updateEvent('reactivate');
   }
 
   async updateEvent(updateType){
-    console.log('update Event');
-    //console.log('this is the update charity');
+    //console.log('update Event');
     this.voOpp.voStatus = updateType;
-    console.log(this.voOpp);
+    if (updateType === 'update'){
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
+      this.voOpp.voDescription = '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>' + this.voOpp.voDescription;
+    }
     await fetch;
     this.app.httpClient.fetch('/volopp/' + this.voOpp._id, {
       method: 'put',
@@ -312,6 +368,7 @@ export class VolunteerOpps {
     .then((response) => response.json())
     .then((data) => {
       this.activate();
+      this.showNewEvent();
     });
   }
 
@@ -321,14 +378,14 @@ export class VolunteerOpps {
       method: 'delete'
     })
     .then((data) => {
-      console.log('your event has been deleted');
+      //console.log('your event has been deleted');
       this.activate();
     });
   }
 
   updateCanSubmit2(validationResults) {
     let valid = true;
-    console.log('Running updateCanSubmit2');
+    //console.log('Running updateCanSubmit2');
     let nub = document.getElementsByClassName('updateButton')[0];
     /* istanbul ignore else */
     if (nub) {

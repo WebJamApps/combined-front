@@ -13,6 +13,7 @@ export class App {
     this.auth = auth;
     this.httpClient = httpClient;
     this.dashboardTitle = 'Dashboard';
+    this.role = '';
   }
 
   email = '';
@@ -30,10 +31,17 @@ export class App {
     this.configHttpClient();
     this.appState = new AppState(this.httpClient);
     this.userAccess = new UserAccess(this.appState);
+    await this.checkUser();
+  }
+
+  async checkUser(){
     if (this.auth.isAuthenticated()) {
       this.authenticated = true; //Logout element is reliant upon a local var;
       let uid = this.auth.getTokenPayload().sub;
       this.user = await this.appState.getUser(uid);
+      if (this.user !== undefined){
+        this.role = this.user.userType;
+      }
     }
   }
 
@@ -75,7 +83,7 @@ export class App {
       { route: 'library', name: 'library', moduleId: PLATFORM.moduleName('./library'), nav: false, title: 'Library', settings: 'fa fa-book' },
       { route: 'bookshelf', name: 'bookshelf', moduleId: PLATFORM.moduleName('./bookshelf'), nav: false, title: 'Bookshelf', settings: 'fa fa-book' },
       //  { route: 'reader', name: 'reader', moduleId: PLATFORM.moduleName('./reader'), nav: true, title: 'Reader', settings: 'fa fa-file-pdf-o' },
-      { route: 'music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: false, title: '', settings: 'fa fa-music' },
+      { route: 'music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: false, title: '', settings: 'fa fa-music'},
       // { route: 'textadventure', name: 'textadventure', moduleId: './textadventure-home', nav: true, title: 'Text Adventure', settings: 'fa fa-shield' },
       { route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: false, title: '', settings: 'fa fa-home' }
     ]);
@@ -98,13 +106,38 @@ export class App {
     }
   }
 
+  ohafLogin(){
+    //this.close();
+    console.log('ohaf login!');
+    this.menu = 'ohaf';
+    this.appState.isOhafLogin = true;
+    this.router.navigate('/login');
+  }
+
+  wjLogin(){
+    //this.close();
+    console.log('wj login!');
+    this.menu = 'wj';
+    this.appState.isOhafLogin = false;
+    this.router.navigate('/login');
+  }
+
   logout() {
     this.appState.setUser({});
     this.authenticated = false;
-    this.auth.logout('/')
-    .then(() => {
-      console.log('Promise fulfilled, logged out');
-    });
+    if (this.role !== 'Charity' && this.role !== 'Volunteer'){
+      this.auth.logout('/')
+      .then(() => {
+        console.log('Promise fulfilled, logged out');
+      });
+    } else {
+      this.auth.logout('/ohaf')
+      .then(() => {
+        console.log('Promise fulfilled, logged out');
+      });
+    }
+    this.role =  '';
+    this.appState.isOhafLogin = false;
   }
 
   close() {
@@ -133,12 +166,27 @@ export class App {
     if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') {
       this.Menu = 'ohaf';
     } else if (this.currentRoute === 'music-router') {
+      // if (this.role === 'Volunteer'){
+      //   this.role = '';
+      // }
       this.Menu = 'music';
     } else if (this.currentRoute === 'library') {
+      // if (this.role === 'Volunteer'){
+      //   this.role = '';
+      // }
       this.Menu = 'library';
+    } else if (this.currentRoute === 'login') {
+      if (this.appState.isOhafLogin){
+        this.Menu = 'ohaf';
+      } else {
+        this.Menu = 'wj';
+      }
     } else if (this.currentRouteFrag === '/dashboard'){
       this.Menu = 'dashboard';
     } else if (this.currentRouteFrag === '/bookshelf'){
+      // if (this.role === 'Volunteer'){
+      //   this.role = '';
+      // }
       this.Menu = 'bookshelf';
     } else if (this.currentRouteFrag === '/dashboard/developer'){
       this.Menu = 'developer';
@@ -155,13 +203,14 @@ export class App {
     } else if (this.currentRouteFrag !== undefined){
       if (this.currentRouteFrag.indexOf('vol-ops/') !== -1){
         this.Menu = 'charity';
-        // } else {
-        //   this.Menu = 'wj';
+      } else {
+        this.Menu = 'wj';
       }
-      // } else {
-      //   this.Menu = 'wj';
+    } else {
+      this.Menu = 'wj';
     }
-    if (this.Menu === 'charity' || this.Menu === 'ohaf' || this.Menu === 'volunteer'){
+
+    if (this.Menu === 'charity' || this.Menu === 'ohaf' || this.Menu === 'volunteer' || this.role === 'Charity' || this.role === 'Volunteer'){
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',
         headerText1: 'Our',

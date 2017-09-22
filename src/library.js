@@ -11,21 +11,21 @@ export class Library {
 
   showSlides() {
     let slides;
-    slides = document.getElementById('slideshow1');
+    slides = document.getElementById('libslideshow1');
     if (slides !== null){
-      $('#slideshow1 > div:first')
+      $('#libslideshow1 > div:first')
       .hide()
       .next()
       .fadeIn(1500)
       .end()
-      .appendTo('#slideshow1');
+      .appendTo('#libslideshow1');
     } else {
-      $('#slideshow > div:first')
+      $('#libslideshow > div:first')
       .hide()
       .next()
       .fadeIn(1500)
       .end()
-      .appendTo('#slideshow');
+      .appendTo('#libslideshow');
     }
   }
 

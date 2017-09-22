@@ -45,6 +45,7 @@ export class Librarian {
     let uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(uid);
     this.app.dashboardTitle = this.user.userType;
+    this.app.role = this.user.userType;
     this.types.sort();
     this.types.push('other');
     //this.states.sort();

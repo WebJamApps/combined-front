@@ -7,41 +7,7 @@ import {json} from 'aurelia-fetch-client';
 export class Reader {
   constructor(app){
     this.app = app;
-    // this.auth = auth;
-    // this.httpClient = httpClient;
-    // this.book = {
-    //   'title': '',
-    //   'type': 'hardback',
-    //   'author': '',
-    //   'numberPages': 0,
-    //   'dateOfPub': 0,
-    //   'url': '',
-    //   'isbn': '',
-    //   'siteLocation': '',
-    //   'numberOfCopies': 1,
-    //   'access': '',
-    //   'comments': '',
-    //   'checkedOutBy': '',
-    //   'checkedOutByName': ''
-    // };
   }
-
-  // tempBook = {
-  //   'title': '',
-  //   'type': 'hardback',
-  //   'author': '',
-  //   'numberPages': 0,
-  //   'dateOfPub': 0,
-  //   'url': '',
-  //   'isbn': '',
-  //   'siteLocation': '',
-  //   'numberOfCopies': 1,
-  //   'access': '',
-  //   'comments': '',
-  //   'checkedOutBy': '',
-  //   'checkedOutByName': '',
-  //   '_id': ''
-  // };
 
   async activate(){
     //this.app.configHttpClient();
@@ -51,20 +17,8 @@ export class Reader {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
+    this.app.role = this.user.userType;
   }
-
-  // configHttpClient(){
-  //   this.backend = '';
-  //   /* istanbul ignore else */
-  //   if (process.env.NODE_ENV !== 'production'){
-  //     this.backend = process.env.BackendUrl;
-  //   }
-  //   this.httpClient.configure((config) => {
-  //     config
-  //     .useStandardConfiguration()
-  //     .withBaseUrl(this.backend);
-  //   });
-  // }
 
   async checkOutBook(tempBook){
     //double check that someone else didn't already check out this book
