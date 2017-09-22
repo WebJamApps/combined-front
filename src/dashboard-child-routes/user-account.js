@@ -83,7 +83,7 @@ export class UserAccount {
     }
     if (this.user.isOhafUser && this.user.userType === 'Volunteer'){
       this.userTypes = ['Charity', 'Volunteer'];
-      if (process.env.NODE_ENV === 'development'){
+      if (process.env.NODE_ENV === 'development' || this.user.userType === 'Developer'){
         this.userTypes.push('Developer');
       }
     }
