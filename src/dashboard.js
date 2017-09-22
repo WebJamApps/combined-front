@@ -15,9 +15,10 @@ export class Dashboard {
     this.canSubmit = false;  //the button on the form
   }
 
-  userTypes=JSON.parse(process.env.userRoles).roles;
+  //userTypes=JSON.parse(process.env.userRoles).roles;
 
   async activate() {
+    this.userTypes = JSON.parse(process.env.userRoles).roles;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     if (this.user.userType === 'Developer'){
