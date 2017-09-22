@@ -15,26 +15,17 @@
             <i class="fa fa-bars pull-left fa-1x" click.delegate="toggleMenu()" style="color:#23527c; cursor: pointer; cursor: hand;"></i>
           </div>
           <div class="menu-item" if.bind="!authenticated && Menu !== 'ohaf'">
-            <a paper-drawer-toggle href="/login" class="nav-link" click.delegate="wjLogin()">
+            <a paper-drawer-toggle href="/login" class="nav-link" click.delegate="(close() || 1) && wjLogin()">
               <span class="fa fa-sign-in"></span>
               <span if.bind="fullmenu" class="nav-item">Login</span>
             </a>
           </div>
           <div class="menu-item" if.bind="!authenticated && Menu === 'ohaf'">
-            <a paper-drawer-toggle click.delegate="ohafLogin()" class="nav-link">
+            <a paper-drawer-toggle click.delegate="(close() || 1) && ohafLogin()" class="nav-link">
               <span class="fa fa-sign-in"></span>
               <span if.bind="fullmenu" class="nav-item">Login</span>
             </a>
           </div>
-          <!-- <div class="menu-item" if.bind="!authenticated && Menu === 'ohaf'">
-            <a paper-drawer-toggle class="nav-link" click.delegate="ohafLogin('google')">
-              <span class="fa fa-sign-in" style="cursor: pointer; cursor: hand;"></span>
-            </a>
-            <span if.bind="fullmenu">&nbsp;</span>
-            <button if.bind="fullmenu" click.delegate="ohafLogin()" class="material-content-button">
-              Login
-            </button>
-          </div> -->
           <div class="menu-item" if.bind="authenticated">
             <a paper-drawer-toggle href="/dashboard" class="nav-link" click.delegate="close()">
               <span class="fa fa-tachometer"></span>

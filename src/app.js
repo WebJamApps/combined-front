@@ -7,7 +7,6 @@ import {UserAccess} from './classes/UserAccess.js';
 import {AuthService} from 'aurelia-auth';
 import {HttpClient} from 'aurelia-fetch-client';
 import {AppState} from './classes/AppState.js';
-//import {activationStrategy} from 'aurelia-router';
 @inject(AuthService, HttpClient)
 export class App {
   constructor(auth, httpClient) {
@@ -15,7 +14,6 @@ export class App {
     this.httpClient = httpClient;
     this.dashboardTitle = 'Dashboard';
     this.role = '';
-    //this.ohafLogin1 = false;
   }
 
   email = '';
@@ -33,6 +31,10 @@ export class App {
     this.configHttpClient();
     this.appState = new AppState(this.httpClient);
     this.userAccess = new UserAccess(this.appState);
+    await this.checkUser();
+  }
+
+  async checkUser(){
     if (this.auth.isAuthenticated()) {
       this.authenticated = true; //Logout element is reliant upon a local var;
       let uid = this.auth.getTokenPayload().sub;
@@ -105,7 +107,7 @@ export class App {
   }
 
   ohafLogin(){
-    this.close();
+    //this.close();
     console.log('ohaf login!');
     this.menu = 'ohaf';
     this.appState.isOhafLogin = true;
@@ -113,7 +115,7 @@ export class App {
   }
 
   wjLogin(){
-    this.close();
+    //this.close();
     console.log('wj login!');
     this.menu = 'wj';
     this.appState.isOhafLogin = false;
@@ -207,7 +209,7 @@ export class App {
     } else {
       this.Menu = 'wj';
     }
-    
+
     if (this.Menu === 'charity' || this.Menu === 'ohaf' || this.Menu === 'volunteer' || this.role === 'Charity' || this.role === 'Volunteer'){
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',

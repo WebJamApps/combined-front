@@ -1,5 +1,5 @@
 import {App} from '../../src/app';
-import {AuthStub, HttpMock, RouterStub} from './commons';
+import {AuthStub, HttpMock, RouterStub, AppStateStub} from './commons';
 const Counter = require('assertions-counter');
 
 class AuthStub2 extends AuthStub {
@@ -22,7 +22,11 @@ describe('the App module', () => {
   beforeEach(() => {
     app1 = new App(new AuthStub(), new HttpMock());
     app1.auth.setToken('No token');
+    app1.activate();
+    app1.appState = new AppStateStub();
     app2 = new App(new AuthStub2(), new HttpMock());
+    app2.activate();
+    app2.appState = new AppStateStub();
   });
 
   it('tests configHttpClient', (done) => {
@@ -58,6 +62,35 @@ describe('the App module', () => {
     done();
   });
 
+  it('should find a user when authenticated', (done) => {
+    //let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+    app1.checkUser();
+    //expect(app1.router).toBeDefined;
+    done();
+  });
+
+  it('should provide a login page for OHAF', (done) => {
+    app1.activate().then(() => {
+      app1.ohafLogin();
+    });
+    done();
+  });
+
+  it('should provide a login page for WJ', (done) => {
+    app1.activate().then(() => {
+      app1.wjLogin();
+    });
+    done();
+  });
+
+  it('should sent an OHAF user to /OHAF on logout', (done) => {
+    //app1.activate().then(() => {
+    app1.role = 'Charity';
+    app1.logout();
+    //});
+    done();
+  });
+
   it('tests logout', testAsync(async function() {
     await app1.activate();
     await app1.logout();
@@ -81,6 +114,21 @@ describe('the App module', () => {
     let frag = app1.currentRouteFrag;
     app1.currentRoute;
     expect(typeof frag).toBe('object');
+    done();
+  });
+
+  it('should provide the correct /login page styles for WJ or OHAF', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.config.name = 'login';
+    app1.router = routre;
+    app1.appState.isOhafLogin = true;
+    //app1.currentRoute = 'login';
+    app1.currentStyles;
+    //app1.logout();
+    expect(app1.Menu).toBe('ohaf');
+    app1.appState.isOhafLogin = false;
+    app1.currentStyles;
+    expect(app1.Menu).toBe('wj');
     done();
   });
 
