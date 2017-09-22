@@ -143,9 +143,11 @@
         <input id="end-date" value.two-way="voOpp.voEndDate & validate:controller2" type="date" min="${minEndDate}" change.delegate="selectDate('end-date')">
         <p>&nbsp;</p>
         <label style="margin-top:10px; font-size:11pt">Start Time (required)</label>
-        <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text" click.delegate="showTime('s-time')">
+        <!-- <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text" click.delegate="showTime('s-time')"> -->
+        <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text">
         <label style="margin-top:48px; font-size:11pt">End Time (required)</label>
-        <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text" click.delegate="showTime('e-time')">
+        <!-- <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text" click.delegate="showTime('e-time')"> -->
+        <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text">
         <label style="margin-top:40px; font-size:11pt">Location of Event (required)</label>
         <p style="font-size:9pt; margin-bottom:2px">Street Address</p>
         <input type="text" value.two-way="voOpp.voStreet & validate:controller2">
