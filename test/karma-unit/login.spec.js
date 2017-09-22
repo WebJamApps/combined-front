@@ -1,5 +1,5 @@
 import {Login} from '../../src/login';
-import {RouterStub, AuthStub, HttpMock} from './commons';
+import {RouterStub, AuthStub, HttpMock, AppStateStub} from './commons';
 import {App} from '../../src/app';
 
 class AuthStub1 extends AuthStub {
@@ -22,22 +22,31 @@ describe('the Login module', () => {
 
   beforeEach(() => {
     auth = new AuthStub1();
-    //auth.setToken({sub: 'aowifjawifhiawofjo'});
+    auth.setToken({sub: 'aowifjawifhiawofjo'});
     app1 = new AppStub(auth, new HttpMock());
     app1.router = new RouterStub();
     app1.activate();
     login = new Login(app1);
+    login.app.appState = new AppStateStub();
+    //login.activate();
     //sut.app.appState = new AppStateStub();
     //sut.app.authenticated = false;
   });
 
-  it('should expect authentication to function as rewritten.', (done) => {
+  it('should authentication when not from OHAF', (done) => {
     login.authenticate('google').then((data) => {
       //console.log(data); // disable this if you want to.
       done();
     }, null);
   });
 
+  it('should authentication when from OHAF', (done) => {
+    login.app.appState.isOhafLogin = true;
+    login.authenticate('google').then((data) => {
+      //console.log(data); // disable this if you want to.
+      done();
+    }, null);
+  });
   // it('runs the authenticate function', (done) => {
   //   sut.authenticate('google');
   //   //expect isAuthenticated to be called after the sut.authenticate is done calling to register change in authentication.
