@@ -28,20 +28,14 @@ export class VolunteerOpps {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.role = this.user.userType;
-    //console.log(this.app.router.currentInstruction.params.childRoute);
     let currentUrl = (window.location.href);
-    //console.log(currentUrl);
     this.charityID = currentUrl.substring(currentUrl.indexOf('vol-ops/') + 8);
-    //console.log(this.charityID);
     let res = await this.app.httpClient.fetch('/volopp/' + this.charityID);
     this.events = await res.json();
     let res2 = await this.app.httpClient.fetch('/signup/getall');
     this.signups = await res2.json();
-    console.log('here are all of the signups from the database');
-    console.log(this.signups);
-    //console.log('this.events');
-    //console.log(this.events);
-    //console.log(this.charity);
+    // console.log('here are all of the signups from the database');
+    // console.log(this.signups);
     if (this.events.length > 0){
       this.fixDates();
       this.buildWorkPrefs();
@@ -65,20 +59,19 @@ export class VolunteerOpps {
       'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
       'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     this.states.sort();
-    //TODO setupvalidation here, but figure out why the forms are not working properly afterwards
   }
 
   async fixUserSignups(){
     let allSignups = [];
     let res = await this.app.httpClient.fetch('/signup/getall');
     allSignups = await res.json();
-    console.log('here are all of the signups');
-    console.log(allSignups);
+    // console.log('here are all of the signups');
+    // console.log(allSignups);
     for (let i = 0; i < allSignups.length; i++){
       try {
         await this.app.httpClient.fetch('/user/' + allSignups[i].userId);
       } catch (err) {
-        console.log('the user does not exist');
+        // console.log('the user does not exist');
         await this.removeSignup(allSignups[i].userId);
       }
     }
@@ -90,7 +83,7 @@ export class VolunteerOpps {
       method: 'delete'
     })
       .then((data) => {
-        console.log('removed signup attached to a nonexisting user');
+        //console.log('removed signup attached to a nonexisting user');
       });
   }
 
@@ -99,6 +92,7 @@ export class VolunteerOpps {
     let signupUserIds = [];
     for (let i = 0; i < this.events.length; i++){
       for (let e = 0; e < this.signups.length; e++){
+        /* istanbul ignore else */
         if (this.events[i]._id === this.signups[e].voloppId){
           total = total + this.signups[e].numPeople;
           signupUserIds.push(this.signups[e].userId);
@@ -120,18 +114,19 @@ export class VolunteerOpps {
       try {
         res = await this.app.httpClient.fetch('/user/' + thisevent.voSignupUserIds[i]);
       } catch (err) {
-        console.log('the user does not exist');
+        //console.log('the user does not exist');
         await this.fixUserSignups();
       }
+      /* istanbul ignore else */
       if (res !== undefined && res !== ''){
         person = await res.json();
         this.allPeople.push(person);
         res = '';
       }
     }
-    //console.log(this.allPeople);
     this.eventTitle = thisevent.voName;
     let display = document.getElementById('showvolunteers');
+    /* istanbul ignore else */
     if (display !== null){
       display.scrollIntoView();
     }
@@ -145,26 +140,23 @@ export class VolunteerOpps {
     today = [today.getFullYear(),
       (mm > 9 ? '' : '0') + mm,
       (dd > 9 ? '' : '0') + dd].join('');
-    //console.log(today);
     for (let i = 0; i < this.events.length; i++){
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
-        console.log('undefined date');
+        //console.log('undefined date');
         this.events[i].voStartDate = today;
       }
       testDate = this.events[i].voStartDate.replace('-', '');
       testDate = testDate.replace('-', '');
-      //console.log(testDate);
       if (testDate < today){
-        //console.log('this date is past');
-        //console.log(this.events[i].voStartDate);
         this.events[i].past = true;
       }
     }
   }
 
-  showTime(){
-    //console.log('show time picker here');
-  }
+//TODO display a clock UI
+  // showTime(type){
+  //   //console.log('show time picker here');
+  // }
 
   selectDate(dtype){
     if (dtype === 'start-date'){
@@ -195,7 +187,7 @@ export class VolunteerOpps {
   }
 
   fixDates(){
-    //put into util class with fixDates(array)();
+    //TODO put into util class with fixDates(array)();
     for (let i = 0; i < this.events.length; i++){
       let startDate = this.events[i].voStartDate;
       let endDate = this.events[i].voEndDate;
@@ -281,13 +273,13 @@ export class VolunteerOpps {
 
   scheduleEvent(){
     this.voOpp.voStatus = 'new';
-    console.log(this.voOpp);
+    //console.log(this.voOpp);
     this.app.httpClient.fetch('/volopp/create', {
       method: 'post',
       body: json(this.voOpp)
     })
     .then((data) => {
-      console.log(data);
+      //console.log(data);
       document.getElementById('eventHeader').scrollIntoView();
       this.activate();
     });
@@ -303,8 +295,6 @@ export class VolunteerOpps {
     this.talentPicked();
     this.workPicked();
     this.setupValidation2();
-    //this.controller2.errors = [];
-    //this.validate2();
   }
 
   showNewEvent(){
@@ -334,8 +324,6 @@ export class VolunteerOpps {
     let topSection = document.getElementById('topSection');
     topSection.style.display = 'block';
     topSection.scrollIntoView();
-    //this.setupValidation2();
-    //this.controller2.errors = [];
     let startTimeInput = document.getElementById('s-time');
     let endTimeInput = document.getElementById('e-time');
     let imst = new Inputmask('99:99 am');
@@ -364,7 +352,7 @@ export class VolunteerOpps {
   }
 
   async updateEvent(updateType){
-    console.log('update Event');
+    //console.log('update Event');
     this.voOpp.voStatus = updateType;
     if (updateType === 'update'){
       this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
@@ -372,7 +360,6 @@ export class VolunteerOpps {
       this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
       this.voOpp.voDescription = '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>' + this.voOpp.voDescription;
     }
-    //console.log(this.voOpp);
     await fetch;
     this.app.httpClient.fetch('/volopp/' + this.voOpp._id, {
       method: 'put',
@@ -391,14 +378,14 @@ export class VolunteerOpps {
       method: 'delete'
     })
     .then((data) => {
-      console.log('your event has been deleted');
+      //console.log('your event has been deleted');
       this.activate();
     });
   }
 
   updateCanSubmit2(validationResults) {
     let valid = true;
-    console.log('Running updateCanSubmit2');
+    //console.log('Running updateCanSubmit2');
     let nub = document.getElementsByClassName('updateButton')[0];
     /* istanbul ignore else */
     if (nub) {
