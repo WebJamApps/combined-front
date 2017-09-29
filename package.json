@@ -87,7 +87,7 @@
     "polymer-bundler": "^2.0.1",
     "postcss-loader": "^2.0.6",
     "pushstate-server": "^3.0.0",
-    "snyk": "^1.40.4",
+    "snyk": "^1.41.1",
     "style-loader": "^0.18.2",
     "url-loader": "0.5.9",
     "wait-on": "2.0.2",
