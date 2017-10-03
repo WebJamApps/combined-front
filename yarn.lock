@@ -415,7 +415,7 @@ aurelia-auth@^3.0.5:
     aurelia-router "^1.0.0-beta.1.2.3"
     isomorphic-fetch "^2.2.1"
 
-aurelia-binding@^1.0.0, aurelia-binding@^1.0.9, aurelia-binding@^1.1.0, aurelia-binding@^1.2.1, aurelia-binding@^1.3.0:
+aurelia-binding@^1.0.0, aurelia-binding@^1.0.9, aurelia-binding@^1.1.0, aurelia-binding@^1.2.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/aurelia-binding/-/aurelia-binding-1.3.0.tgz#362deae261b5ac668960148f048cabab0ab1cf07"
   dependencies:
@@ -569,7 +569,7 @@ aurelia-pal-nodejs@1.0.0-beta.1.0.0:
     aurelia-pal "^1.1.0"
     jsdom "^9.8.3"
 
-aurelia-pal@^1.0.0, aurelia-pal@^1.1.0, aurelia-pal@^1.1.1, aurelia-pal@^1.3.0, aurelia-pal@^1.4.0:
+aurelia-pal@^1.0.0, aurelia-pal@^1.1.0, aurelia-pal@^1.1.1, aurelia-pal@^1.3.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/aurelia-pal/-/aurelia-pal-1.4.0.tgz#1148f256c854c0e020a0a8f465cbf4a6eeaf9188"
 
@@ -651,7 +651,7 @@ aurelia-templating-router@1.1.0, aurelia-templating-router@^1.0.0:
     aurelia-router "^1.0.1"
     aurelia-templating "^1.3.0"
 
-aurelia-templating@1.4.2, aurelia-templating@^1.0.0, aurelia-templating@^1.1.2, aurelia-templating@^1.3.0, aurelia-templating@^1.4.2, aurelia-templating@^1.5.0:
+aurelia-templating@1.4.2, aurelia-templating@^1.0.0, aurelia-templating@^1.1.2, aurelia-templating@^1.3.0, aurelia-templating@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/aurelia-templating/-/aurelia-templating-1.4.2.tgz#479ce47705a095fd636e0975c9cb79cbee7ed7cb"
   dependencies:
@@ -681,7 +681,7 @@ aurelia-tools@1.0.0:
     breeze-dag "^0.1.0"
     through2 "^2.0.0"
 
-aurelia-validation@^1.0.0:
+aurelia-validation@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/aurelia-validation/-/aurelia-validation-1.1.2.tgz#22304ad65add4132dbc090d93faa04d5cc2c3ce9"
   dependencies:
@@ -6807,7 +6807,7 @@ snyk-try-require@^1.1.1, snyk-try-require@^1.2.0:
     lru-cache "^4.0.0"
     then-fs "^2.0.0"
 
-snyk@^1.40.4:
+snyk@^1.41.1:
   version "1.42.3"
   resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.42.3.tgz#08aa86cdfa6a552f430fd9d449809c03563d9cd2"
   dependencies:
