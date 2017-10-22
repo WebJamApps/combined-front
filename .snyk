@@ -111,3 +111,12 @@ patch:
         patched: '2017-06-26T14:55:05.860Z'
     - pushstate-server > serve-static > send > ms:
         patched: '2017-06-26T14:55:05.860Z'
+  'npm:debug:20170905':
+    - pushstate-server > compression > debug:
+        patched: '2017-09-29T05:25:16.929Z'
+    - pushstate-server > connect > debug:
+        patched: '2017-09-29T05:25:16.929Z'
+    - pushstate-server > connect > finalhandler > debug:
+        patched: '2017-09-29T05:25:16.929Z'
+    - pushstate-server > serve-static > send > debug:
+        patched: '2017-09-29T05:25:16.929Z'
