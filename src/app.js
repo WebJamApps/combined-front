@@ -226,12 +226,12 @@ export class App {
       if (footer !== null){
         footer.style.backgroundColor = '#565656';
         footer.innerHTML = '<div style="text-align: center">' +
-        '<a style="margin-left:10px;padding-right:10px; color:#c09580" target="_blank" href="https://www.facebook.com/Our-Hands-and-Feet-350610878635036/">' +
+        '<a style="margin-left:10px;padding-right:10px; color:#c09580" target="_blank" href="https://www.facebook.com/WebJamLLC/">' +
         '<i class="ohaf-social-media fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>' +
-        '<a style="padding-right:10px; color:#c09580" target="_blank" href="https://plus.google.com/u/0/109018742744548655017">' +
-        '<i class="ohaf-social-media fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>' +
-        '<a style="padding-right:10px; color:#c09580" target="_blank" href="https://twitter.com/OurHandsAndFee1">' +
-        '<i class="ohaf-social-media fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>' +
+        '<a style="padding-right:10px; color:#c09580" target="_blank" href="https://twitter.com/WebJamLLC">' +
+        '<i class="ohaf-social-media fa fa-twitter fa-2x" aria-hidden="true"></i></a>' +
+        '<a style="padding-right:10px; color:#c09580" target="_blank" href="https://plus.google.com/u/1/109586499331294076292">' +
+        '<i class="ohaf-social-media fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a><br>' +
         '<span style="color:white; font-size: 9pt;margin:auto">Powered by ' +
         '<a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
       }

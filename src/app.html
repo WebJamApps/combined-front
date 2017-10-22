@@ -116,7 +116,13 @@
               <span class="nav-item" if.bind="fullmenu">Buy Music</span>
             </a>
           </div>
-          <div class="menu-item" if.bind="Menu=='wj' || Menu=='library' || Menu=='reader' || Menu=='librarian' || Menu=='bookshelf' || Menu=='ohaf'">
+          <div class="menu-item" if.bind="Menu =='music'">
+            <a paper-drawer-toggle href="/music/band" class="nav-link" click.delegate="close()">
+              <span class="fa fa-bus"></span>
+              <span class="nav-item" if.bind="fullmenu">Band</span>
+            </a>
+          </div>
+          <div class="menu-item" if.bind="Menu=='wj' || Menu=='library' || Menu=='reader' || Menu=='librarian' || Menu=='bookshelf' || Menu=='ohaf' || Menu=='music'">
             <a paper-drawer-toggle href="/" class="nav-link" click.delegate="close()">
               <span class="fa fa-home"></span>
               <span class="nav-item" if.bind="fullmenu">Web Jam LLC</span>
