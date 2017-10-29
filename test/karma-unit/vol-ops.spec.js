@@ -65,8 +65,7 @@ class HttpMockEvent extends HttpMock {
         'voEndTime': '',
         'voContactName': this.user.name,
         'voContactEmail': this.user.email,
-        'voContactPhone': this.user.userPhone}])
-    });
+        'voContactPhone': this.user.userPhone}])});
   }
 }
 
@@ -82,6 +81,33 @@ class HttpMockEvent2 extends HttpMock {
       Headers: this.headers,
       json: () => Promise.resolve([])
     });
+  }
+}
+
+class HttpMockGetSignups extends HttpMock {
+  fetch(url, obj) {
+    this.headers.url = url;
+    this.headers.method = obj ? obj.method : 'GET';
+    if (obj && obj.method === 'put') {
+      this.voOpp = obj.body;
+    }
+    this.status = 200;
+    if (url === '/signup/getall') {
+      return Promise.resolve({
+        Headers: this.headers,
+        json: () => Promise.resolve([
+          {voloppId: '123', userId: '22222', numPeople: 1}
+        ])
+      });
+    }
+    if (url === '/user/') {
+      return Promise.resolve({
+        Headers: this.headers,
+        json: () => Promise.resolve([
+          {voloppId: '123', userId: '22222', numPeople: 1}
+        ])
+      });
+    }
   }
 }
 
@@ -181,8 +207,7 @@ describe('the Volunteer Opps Module', () => {
       'voEndDate': '2017-12-12',
       'voWorkTypes': [''],
       'voWorkTypeOther': ''
-    }
-    ];
+    }];
     volops.buildWorkPrefs();
     done();
   });
@@ -199,8 +224,7 @@ describe('the Volunteer Opps Module', () => {
       'voEndDate': '2017-12-12',
       'voTalentTypes': [''],
       'voTalentTypeOther': ''
-    }
-    ];
+    }];
     volops.buildTalents();
     done();
   });
@@ -419,8 +443,7 @@ describe('the Volunteer Opps Module', () => {
       '_id': '2222'
     };
     volops.validType2 = true;
-    let validationResults = [{
-      result: {valid: true}}];
+    let validationResults = [{result: {valid: true}}];
     volops.updateCanSubmit2(validationResults);
     done();
   });
