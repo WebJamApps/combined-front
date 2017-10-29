@@ -84,33 +84,6 @@ class HttpMockEvent2 extends HttpMock {
   }
 }
 
-class HttpMockGetSignups extends HttpMock {
-  fetch(url, obj) {
-    this.headers.url = url;
-    this.headers.method = obj ? obj.method : 'GET';
-    if (obj && obj.method === 'put') {
-      this.voOpp = obj.body;
-    }
-    this.status = 200;
-    if (url === '/signup/getall') {
-      return Promise.resolve({
-        Headers: this.headers,
-        json: () => Promise.resolve([
-          {voloppId: '123', userId: '22222', numPeople: 1}
-        ])
-      });
-    }
-    if (url === '/user/') {
-      return Promise.resolve({
-        Headers: this.headers,
-        json: () => Promise.resolve([
-          {voloppId: '123', userId: '22222', numPeople: 1}
-        ])
-      });
-    }
-  }
-}
-
 class HttpMockChar extends HttpMock {
   fetch(url, obj) {
     this.headers.url = url;
@@ -126,6 +99,7 @@ class HttpMockChar extends HttpMock {
   }
 }
 
+
 describe('the Volunteer Opps Module', () => {
   let app;
   let auth;
@@ -134,6 +108,8 @@ describe('the Volunteer Opps Module', () => {
   let volops2;
   let app3;
   let volops3;
+  let volops4;
+  let app4;
   beforeEach(() => {
     auth = new AuthStub();
     auth.setToken({sub: 'aowifjawifhiawofjo'});
@@ -149,6 +125,10 @@ describe('the Volunteer Opps Module', () => {
     volops3 = new VolunteerOpps(app3, new VCMock(), new ValidatorMockFalse());
     volops3.activate();
     volops3.app.appState = new AppStateStub();
+    app4 = new App(auth, new HttpMock());
+    volops4 = new VolunteerOpps(app4, new VCMock(), new ValidatorMock());
+    volops4.activate();
+    volops4.app.appState = new AppStateStub();
   });
 
   it('activates and there are events and runs the show time', (done) => {
@@ -313,7 +293,7 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  it('should display the users who signed up for the event, but remove any signups where the user no longer exists', (done) => {
+  it('should display the users who signed up for the event', (done) => {
     let signupevent = {
       '_id': '123',
       'voWorkTypes': ['other'],
@@ -327,6 +307,11 @@ describe('the Volunteer Opps Module', () => {
     };
     //TODO this same httpmock needs to have a /user/uid that responds with a 404 error (user not found)
     volops.viewPeople(signupevent);
+    done();
+  });
+
+  it('remove any signups where the user no longer exists', (done) => {
+    volops4.fixUserSignups();
     done();
   });
 
