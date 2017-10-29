@@ -119,45 +119,40 @@ class HttpMock {
     }
     this.status = 200;
 
-    let return_value = this.user
-    console.log(url)
+    let returnValue = this.user;
+    console.log(url);
     if (url === '/signup/getall') {
-      return_value = this.getSignUpAll();
-      console.log(return_value);
-    }    else if (url === '/user/1' || url==='/user/2'){
-      return_value = this.getSpecificUser(url.substring(-1));
+      returnValue = this.getSignUpAll();
+      //console.log(return_value);
+    }    else if (url === '/user/1' || url === '/user/2'){
+      returnValue = this.getSpecificUser(url.substring(-1));
     }
-    if (return_value != null){
+    if (returnValue !== null){
       return Promise.resolve({
         Headers: this.headers,
-        json: () => Promise.resolve(return_value)
+        json: () => Promise.resolve(returnValue)
       });
     }
-    else{
-      return Promise.reject(new Error("fail"));
-    }
 
-
+    return Promise.reject(new Error('fail'));
   }
   getSpecificUser(id){
-    if (id == '1') {
+    if (id === '1') {
       return [
           {name: 'Iddris Elba', userType: 'Volunteer', _id: '1', volTalents: [], volCauses: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''}
-        ];
-    }
-    else if (id == '2'){
+      ];
+    }    else if (id === '2'){
       return null;
     }
-    else {
-      return null;
-    }
+
+    return null;
   }
 
   getSignUpAll(){
-    return[
+    return [
         {_id: '2124', voloppId: '123', userId: '1', numPeople: 1},
         {_id: '2124', voloppId: '123', userId: '2', numPeople: 1}
-      ];
+    ];
   }
 
   getMockCharity(){
