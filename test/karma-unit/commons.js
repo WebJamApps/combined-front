@@ -118,9 +118,52 @@ class HttpMock {
       this.user = obj.body;
     }
     this.status = 200;
+
+    let return_value = this.user
+    console.log(url)
+    if (url === '/signup/getall') {
+      return_value = this.getSignUpAll();
+      console.log(return_value);
+    }    else if (url === '/user/1' || url==='/user/2'){
+      return_value = this.getSpecificUser(url.substring(-1));
+    }
+    if (return_value != null){
+      return Promise.resolve({
+        Headers: this.headers,
+        json: () => Promise.resolve(return_value)
+      });
+    }
+    else{
+      return Promise.reject(new Error("fail"));
+    }
+
+
+  }
+  getSpecificUser(id){
+    if (id == '1') {
+      return [
+          {name: 'Iddris Elba', userType: 'Volunteer', _id: '1', volTalents: [], volCauses: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''}
+        ];
+    }
+    else if (id == '2'){
+      return null;
+    }
+    else {
+      return null;
+    }
+  }
+
+  getSignUpAll(){
+    return[
+        {_id: '2124', voloppId: '123', userId: '1', numPeople: 1},
+        {_id: '2124', voloppId: '123', userId: '2', numPeople: 1}
+      ];
+  }
+
+  getMockCharity(){
     return Promise.resolve({
       Headers: this.headers,
-      json: () => Promise.resolve(this.user)
+      json: () => Promise.resolve({_id: '123', charityTypeOther: 'tree huggers', charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Josh', 'Maria', 'Bob']})
     });
   }
   }
