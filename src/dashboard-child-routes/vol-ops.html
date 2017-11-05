@@ -98,7 +98,7 @@
         <label style="font-size:11pt; margin-top:16px"># of Volunteers Needed</label>
         <input type="number" change.delegate="onlyPositive()" value.two-way="voOpp.voNumPeopleNeeded & validate:controller2">
         <div class="multiselect" style="width:170px; margin-top:20px">
-          <div class="selectBox" click.delegate="showCheckboxes('talents')">
+          <div class="selectBox" click.delegate="app.showCheckboxes('talents')">
             <select>
               <option style="font-weight:normal">Volunteer's talent(s)</option>
             </select>
@@ -116,7 +116,7 @@
         <p style="font-size: 1px; margin-top:-10px" if.bind="talentOther">&nbsp;</p>
         <input if.bind="talentOther" value.two-way="voOpp.voTalentTypeOther">
         <div class="multiselect" style="width:170px; margin-top:25px">
-          <div class="selectBox" click.delegate="showCheckboxes('work')">
+          <div class="selectBox" click.delegate="app.showCheckboxes('work')">
             <select>
               <option style="font-weight:normal">Volunteer work</option>
             </select>
@@ -156,7 +156,7 @@
         <p style="font-size:9pt; margin-bottom:2px; margin-top:10px">State</p>
         <select id="updateState" class="form-control" value.bind="voOpp.voState & validate:controller2" style="margin-top:0;width: 2.35in">
           <option value="">Select State</option>
-          <option repeat.for="state of states" model.bind="state">${state}</option>
+          <option repeat.for="state of app.states" model.bind="state">${state}</option>
         </select>
         <p style="font-size:9pt; margin-bottom:2px; margin-top:10px">Zipcode</p>
         <input style="margin-top:0" value.two-way="voOpp.voZipCode & validate:controller2">

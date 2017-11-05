@@ -212,9 +212,9 @@ describe('the Volunteer Opps Module', () => {
   it('opens and closes the drop-down checkboxes', (done) => {
     //volops.activate();
     document.body.innerHTML = '<div id="talents" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    volops.showCheckboxes('talents');
-    volops.expanded = true;
-    volops.showCheckboxes('talents');
+    volops.app.showCheckboxes('talents');
+    volops.app.expanded = true;
+    volops.app.showCheckboxes('talents');
     done();
   });
 

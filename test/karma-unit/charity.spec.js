@@ -92,19 +92,19 @@ describe('the Charity Module', () => {
     charity2.app.appState = new AppStateStub();
   });
 
-  it('checkboxes expanded', (done) => {
+  it('checkboxes app.expanded', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    charity.expanded = true;
-    charity.showCheckboxes('types');
-    expect(charity.expanded).toBe(false);
+    charity.app.expanded = true;
+    charity.app.showCheckboxes('types');
+    expect(charity.app.expanded).toBe(false);
     done();
   });
 
   it('checkboxes closed', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    charity.expanded = false;
-    charity.showCheckboxes('types');
-    expect(charity.expanded).toBe(true);
+    charity.app.expanded = false;
+    charity.app.showCheckboxes('types');
+    expect(charity.app.expanded).toBe(true);
     done();
   });
 
@@ -143,6 +143,19 @@ describe('the Charity Module', () => {
     charity.update = false;
     document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button></div><div id=""></div>';
     charity.createNewCharity();
+    done();
+  });
+
+  it('has a list of states', (done) => {
+    let states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
+      'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
+      'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+      'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
+      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+    states.sort();
+    charity.activate();
+    expect(charity.app.states).toContain(states[0]);
+    expect(charity.app.states.length).toBe(states.length)
     done();
   });
 
