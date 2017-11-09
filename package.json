@@ -19,7 +19,7 @@
     "test": "npm run test:karma && nps e2e",
     "test:karma": "cross-env NODE_ENV=test nps test.lint && nps test.karma",
     "test:debug": "cross-env NODE_ENV=test nps test.karma.debug",
-    "installglobals": "npm i -g npm@latest && npm i -g yarn@latest && npm i -g bower@latest",
+    "installglobals": "npm i -g yarn@latest && npm i -g bower@latest",
     "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && yarn cache clean && npm run installglobals && yarn install && npm run postinstall:backend",
     "postinstall:backend": "bower install && npm run vulc && npm start -- build",
     "vulc": "rm -rf static/includes.html && polymer-bundler --inline-scripts --inline-css includes.html > static/includes.html",
