@@ -132,8 +132,23 @@ describe('the Volunteer Opps Module', () => {
   });
 
   it('activates and there are events and runs the show time', (done) => {
+
     volops.activate();
     //volops.showTime();
+    done();
+  });
+
+  it("Mark past date", (done)=>{
+    volops.events = [{
+      'voStartDate': '2016-12-12',
+      'voEndDate': '2016-12-12'
+    },
+    {
+      'voStartDate': '2016-12-12',
+      'voEndDate': '2016-12-12'
+    }];
+    volops.markPast();
+    expect(volops.events[0].past).toBe(true);
     done();
   });
   //
@@ -212,9 +227,9 @@ describe('the Volunteer Opps Module', () => {
   it('opens and closes the drop-down checkboxes', (done) => {
     //volops.activate();
     document.body.innerHTML = '<div id="talents" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    volops.showCheckboxes('talents');
-    volops.expanded = true;
-    volops.showCheckboxes('talents');
+    volops.app.showCheckboxes('talents');
+    volops.app.expanded = true;
+    volops.app.showCheckboxes('talents');
     done();
   });
 
@@ -306,7 +321,7 @@ describe('the Volunteer Opps Module', () => {
       'voSignupUserIds': ['1', '2', '3']
     };
     //TODO this same httpmock needs to have a /user/uid that responds with a 404 error (user not found)
-    volops.viewPeople(signupevent);
+    volops4.viewPeople(signupevent);
     done();
   });
 

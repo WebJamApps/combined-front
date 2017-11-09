@@ -72,19 +72,19 @@ describe('the UserAccount Module', () => {
     });
   });
 
-  it('checkboxes expanded', (done) => {
+  it('checkboxes app.expanded', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    ua.expanded = true;
-    ua.showCheckboxes('types');
-    expect(ua.expanded).toBe(false);
+    ua.app.expanded = true;
+    ua.app.showCheckboxes('types');
+    expect(ua.app.expanded).toBe(false);
     done();
   });
 
   it('checkboxes closed', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    ua.expanded = false;
-    ua.showCheckboxes('types');
-    expect(ua.expanded).toBe(true);
+    ua.app.expanded = false;
+    ua.app.showCheckboxes('types');
+    expect(ua.app.expanded).toBe(true);
     done();
   });
 

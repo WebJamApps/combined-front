@@ -20,7 +20,7 @@ export class App {
   password = '';
   authenticated = false;
   token = '';
-
+  expanded = false;
   @bindable
   drawerWidth = '175px';
 
@@ -31,6 +31,13 @@ export class App {
     this.configHttpClient();
     this.appState = new AppState(this.httpClient);
     this.userAccess = new UserAccess(this.appState);
+    this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
+      'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
+      'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+      'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
+      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+    this.states.sort();
+
     await this.checkUser();
   }
 
@@ -265,5 +272,22 @@ export class App {
       }
     }
     return result;
+  }
+
+  showCheckboxes(id=null){
+    let checkboxes = null;
+    if (id != null){
+      checkboxes = document.getElementById(id);
+    }
+    else{
+      checkboxes = document.getElementById('checkboxes-iron');
+    }
+    if (!this.expanded) {
+      checkboxes.style.display = 'block';
+      this.expanded = true;
+    } else {
+      checkboxes.style.display = 'none';
+      this.expanded = false;
+    }
   }
 }

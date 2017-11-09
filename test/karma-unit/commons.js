@@ -124,7 +124,7 @@ class HttpMock {
     if (url === '/signup/getall') {
       returnValue = this.getSignUpAll();
       //console.log(return_value);
-    }    else if (url === '/user/1' || url === '/user/2'){
+    } else if (url === '/user/1' || url === '/user/2' || url === '/user/3'){
       returnValue = this.getSpecificUser(url.substring(-1));
     }
     if (returnValue !== null){
@@ -141,8 +141,12 @@ class HttpMock {
       return [
           {name: 'Iddris Elba', userType: 'Volunteer', _id: '1', volTalents: [], volCauses: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''}
       ];
-    }    else if (id === '2'){
+    } else if (id === '2'){
       return null;
+    } else if (id === '3') {
+      return [
+          {name: 'Test Elba', userType: 'Volunteer', _id: '3', volTalents: [], volCauses: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''}
+      ];
     }
 
     return null;
@@ -151,7 +155,8 @@ class HttpMock {
   getSignUpAll(){
     return [
         {_id: '2124', voloppId: '123', userId: '1', numPeople: 1},
-        {_id: '2124', voloppId: '123', userId: '2', numPeople: 1}
+        {_id: '2124', voloppId: '123', userId: '2', numPeople: 1},
+        {_id: '2124', voloppId: '123', userId: '3', numPeople: 1}
     ];
   }
 

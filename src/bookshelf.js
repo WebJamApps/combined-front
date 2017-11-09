@@ -12,7 +12,6 @@ export class Bookshelf {
   siteLocations = [];
   filterby = ['keyword', 'media type', 'location'];
   selectedFilter = [];
-  expanded = false;
   keyword = false;
   mediaType = false;
   siteLocation = false;
@@ -101,16 +100,5 @@ export class Bookshelf {
   // setFilter(filterType){
   //   this.filterType = this.filterby[this.filterType - 1];
   // }
-
-  showCheckboxes(){
-    const checkboxes = document.getElementById('checkboxes-iron');
-    if (!this.expanded) {
-      checkboxes.style.display = 'block';
-      this.expanded = true;
-    } else {
-      checkboxes.style.display = 'none';
-      this.expanded = false;
-    }
-  }
 
 }

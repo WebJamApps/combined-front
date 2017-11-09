@@ -29,7 +29,7 @@
         <label>State (required)</label>
         <select id="updateState" class="form-control" value.bind="user.userState & validate" style="width: 2.35in">
           <option value=""> </option>
-          <option repeat.for="state of states" model.bind="state">${state}</option>
+          <option repeat.for="state of app.states" model.bind="state">${state}</option>
         </select>
         <label>Zipcode (required)</label>
         <input value.two-way="user.userZip & validate">
@@ -53,7 +53,7 @@
       <h4 class="material-header-h4">Set Volunteering Preferences</h4>
       <form>
         <div class="multiselect" style="width:170px; margin-top:40px">
-          <div class="selectBox" click.delegate="showCheckboxes('causes')">
+          <div class="selectBox" click.delegate="app.showCheckboxes('causes')">
             <select>
               <option style="font-weight:normal">Cause(s) to support</option>
             </select>
@@ -70,7 +70,7 @@
         <label if.bind="causeOther">Other Causes</label>
         <input if.bind="causeOther" value.two-way="user.volCauseOther">
         <div class="multiselect" style="width:170px; margin-top:50px">
-          <div class="selectBox" click.delegate="showCheckboxes('talents')">
+          <div class="selectBox" click.delegate="app.showCheckboxes('talents')">
             <select>
               <option style="font-weight:normal">Your talent(s)</option>
             </select>
@@ -87,7 +87,7 @@
         <label if.bind="talentOther">Other Talent</label>
         <input if.bind="talentOther" value.two-way="user.volTalentOther">
         <div class="multiselect" style="width:170px; margin-top:50px">
-          <div class="selectBox" click.delegate="showCheckboxes('work')">
+          <div class="selectBox" click.delegate="app.showCheckboxes('work')">
             <select>
               <option style="font-weight:normal">Can work doing...</option>
             </select>
