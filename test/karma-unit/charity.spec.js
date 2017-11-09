@@ -155,7 +155,7 @@ describe('the Charity Module', () => {
     states.sort();
     charity.activate();
     expect(charity.app.states).toContain(states[0]);
-    expect(charity.app.states.length).toBe(states.length)
+    expect(charity.app.states.length).toBe(states.length);
     done();
   });
 

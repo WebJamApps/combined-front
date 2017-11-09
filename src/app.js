@@ -274,12 +274,11 @@ export class App {
     return result;
   }
 
-  showCheckboxes(id=null){
+  showCheckboxes(id = null){
     let checkboxes = null;
-    if (id != null){
+    if (id !== null){
       checkboxes = document.getElementById(id);
-    }
-    else{
+    }    else {
       checkboxes = document.getElementById('checkboxes-iron');
     }
     if (!this.expanded) {
