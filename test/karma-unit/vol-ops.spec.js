@@ -132,13 +132,12 @@ describe('the Volunteer Opps Module', () => {
   });
 
   it('activates and there are events and runs the show time', (done) => {
-
     volops.activate();
     //volops.showTime();
     done();
   });
 
-  it("Mark past date", (done)=>{
+  it('Mark past date', (done) => {
     volops.events = [{
       'voStartDate': '2016-12-12',
       'voEndDate': '2016-12-12'
