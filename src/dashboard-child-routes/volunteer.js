@@ -18,7 +18,6 @@ export class Volunteer {
   causes = [];
   filterby = ['keyword', 'zipcode', 'cause', 'future only'];
   // selectedFilter = [];
-  expanded = false;
   keyword = false;
   siteLocation = false;
   causeFilter = false;
@@ -299,17 +298,6 @@ export class Volunteer {
       worksHtml = '<p style="font-size:10pt">not specified</p>';
     }
     document.getElementById('works').innerHTML = worksHtml;
-  }
-
-  showCheckboxes(){
-    const checkboxes = document.getElementById('checkboxes-iron');
-    if (!this.expanded) {
-      checkboxes.style.display = 'block';
-      this.expanded = true;
-    } else {
-      checkboxes.style.display = 'none';
-      this.expanded = false;
-    }
   }
 
   async signupEvent(thisevent){
