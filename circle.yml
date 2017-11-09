@@ -4,7 +4,7 @@ machine:
 dependencies:
   pre:
     - curl -s https://raw.githubusercontent.com/chronogolf/circleci-google-chrome/master/use_chrome_stable_version.sh | bash
-    - npm run installglobals && npm install -g codeclimate-test-reporter && sudo npm install -g yarn@latest
+    - npm run installglobals && npm install -g codeclimate-test-reporter
   override:
     - yarn install
     - npm run postinstall:backend
