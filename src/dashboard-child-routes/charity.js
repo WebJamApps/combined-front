@@ -30,7 +30,7 @@ export class Charity {
     const res = await this.app.httpClient.fetch('/charity/' + this.uid);
     this.charities = await res.json();
     if (this.charities.length !== 0){
-      this.app.buildPTag(this.charities, "charityTypes", "charityTypeOther", "charityTypesHtml");
+      this.app.buildPTag(this.charities, 'charityTypes', 'charityTypeOther', 'charityTypesHtml');
       this.buildManagers();
       this.checkEvents();
     }

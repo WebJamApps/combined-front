@@ -290,22 +290,22 @@ export class App {
     }
   }
 
-  buildPTag(object, object_selector, object_selector_other, object_store_result){
+  buildPTag(object, objectSelector, objectSelectorOther, objectStoreResult){
     for (let l = 0; l < object.length; l++){
       let typeHtml = '';
-      for (let i = 0; i < object[l][object_selector].length; i++) {
-        if (object[l][object_selector][i] !== ''){
-          if (object[l][object_selector][i] !== 'other'){
-            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + object[l][object_selector][i] + '</p>';
+      for (let i = 0; i < object[l][objectSelector].length; i++) {
+        if (object[l][objectSelector][i] !== ''){
+          if (object[l][objectSelector][i] !== 'other'){
+            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + object[l][objectSelector][i] + '</p>';
           } else {
-            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + object[l][object_selector_other] + '</p>';
+            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + object[l][objectSelectorOther] + '</p>';
           }
         }
       }
       if (typeHtml === ''){
         typeHtml = '<p style="font-size:10pt">not specified</p>';
       }
-      object[l][object_store_result] = typeHtml;
+      object[l][objectStoreResult] = typeHtml;
     }
   }
 }

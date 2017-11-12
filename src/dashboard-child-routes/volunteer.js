@@ -249,21 +249,21 @@ export class Volunteer {
     }
   }
 
-  buildVolunteerPTag(object_selector, object_selector_other, element_id){
-    let return_html = '';
-    for (let i = 0; i < this.user[object_selector].length; i++) {
-      if (this.user[object_selector][i] !== ''){
-        if (this.user[object_selector][i] !== 'other'){
-          return_html = return_html + '<p style="font-size:10pt">' + this.user[object_selector][i] + '</p>';
+  buildVolunteerPTag(objectSelector, objectSelectorOther, elementId){
+    let returnHtml = '';
+    for (let i = 0; i < this.user[objectSelector].length; i++) {
+      if (this.user[objectSelector][i] !== ''){
+        if (this.user[objectSelector][i] !== 'other'){
+          returnHtml = returnHtml + '<p style="font-size:10pt">' + this.user[objectSelector][i] + '</p>';
         } else {
-          return_html = return_html + '<p style="font-size:10pt">' + this.user[object_selector_other] + '</p>';
+          returnHtml = returnHtml + '<p style="font-size:10pt">' + this.user[objectSelectorOther] + '</p>';
         }
       }
     }
-    if (return_html === ''){
-      return_html = '<p style="font-size:10pt">not specified</p>';
+    if (returnHtml === ''){
+      returnHtml = '<p style="font-size:10pt">not specified</p>';
     }
-    document.getElementById(element_id).innerHTML = return_html;
+    document.getElementById(elementId).innerHTML = returnHtml;
   }
 
   async signupEvent(thisevent){
@@ -301,8 +301,8 @@ export class Volunteer {
   }
 
   attached(){
-    this.buildVolunteerPTag("volCauses", "volCauseOther", "causes");
-    this.buildVolunteerPTag("volTalents", "volTalentOther", "talents");
-    this.buildVolunteerPTag("volWorkPrefs", "volWorkOther", "works");
+    this.buildVolunteerPTag('volCauses', 'volCauseOther', 'causes');
+    this.buildVolunteerPTag('volTalents', 'volTalentOther', 'talents');
+    this.buildVolunteerPTag('volWorkPrefs', 'volWorkOther', 'works');
   }
 }
