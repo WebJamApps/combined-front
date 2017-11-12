@@ -68,6 +68,9 @@ describe('the Volunteer Module', () => {
     document.body.innerHTML = '<p id="causes"></p><p id="talents"></p><p id="works"></p>';
     volunteer.user = {volCauses: [''], volTalents: [''], volWorkPrefs: [''] };
     volunteer.attached();
+    expect(document.getElementById('causes').innerHTML).toBe('<p style="font-size:10pt">not specified</p>');
+    expect(document.getElementById('talents').innerHTML).toBe('<p style="font-size:10pt">not specified</p>');
+    expect(document.getElementById('works').innerHTML).toBe('<p style="font-size:10pt">not specified</p>');
     done();
   });
 
@@ -76,6 +79,9 @@ describe('the Volunteer Module', () => {
     document.body.innerHTML = '<p id="causes"></p><p id="talents"></p><p id="works"></p>';
     volunteer.user = {volCauses: ['Hunger', 'other'], volTalents: ['Cooking', 'other'], volWorkPrefs: ['Chopping', 'other'], volCauseOther: 'Thirst', volTalentOther: 'Singing', volWorkOther: 'Cleaning' };
     volunteer.attached();
+    expect(document.getElementById('causes').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
+    expect(document.getElementById('talents').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
+    expect(document.getElementById('works').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
     done();
   });
 });

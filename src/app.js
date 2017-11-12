@@ -289,4 +289,23 @@ export class App {
       this.expanded = false;
     }
   }
+
+  buildPTag(object, object_selector, object_selector_other, object_store_result){
+    for (let l = 0; l < object.length; l++){
+      let typeHtml = '';
+      for (let i = 0; i < object[l][object_selector].length; i++) {
+        if (object[l][object_selector][i] !== ''){
+          if (object[l][object_selector][i] !== 'other'){
+            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + object[l][object_selector][i] + '</p>';
+          } else {
+            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + object[l][object_selector_other] + '</p>';
+          }
+        }
+      }
+      if (typeHtml === ''){
+        typeHtml = '<p style="font-size:10pt">not specified</p>';
+      }
+      object[l][object_store_result] = typeHtml;
+    }
+  }
 }

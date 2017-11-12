@@ -30,7 +30,7 @@ export class Charity {
     const res = await this.app.httpClient.fetch('/charity/' + this.uid);
     this.charities = await res.json();
     if (this.charities.length !== 0){
-      this.buildTypes();
+      this.app.buildPTag(this.charities, "charityTypes", "charityTypeOther", "charityTypesHtml");
       this.buildManagers();
       this.checkEvents();
     }
@@ -187,26 +187,7 @@ export class Charity {
       this.createNewCharity();
     });
   }
-
-  buildTypes(){
-    for (let l = 0; l < this.charities.length; l++){
-      let typeHtml = '';
-      for (let i = 0; i < this.charities[l].charityTypes.length; i++) {
-        if (this.charities[l].charityTypes[i] !== ''){
-          if (this.charities[l].charityTypes[i] !== 'other'){
-            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.charities[l].charityTypes[i] + '</p>';
-          } else {
-            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.charities[l].charityTypeOther + '</p>';
-          }
-        }
-      }
-      if (typeHtml === ''){
-        typeHtml = '<p style="font-size:10pt">not specified</p>';
-      }
-      this.charities[l].charityTypesHtml = typeHtml;
-    }
-  }
-
+  
   buildManagers(){
     for (let l = 0; l < this.charities.length; l++){
       let manHtml = '';
