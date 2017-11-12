@@ -237,7 +237,16 @@ describe('the Charity Module', () => {
   it('does not display charity types when there are none', (done) => {
     charity2.activate();
     charity2.charities = [{charityTypes: [''], charityManagers: ['Home', 'Elderly']}, {charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other']}, {charityTypes: [], charityManagers: []}];
-    charity2.buildTypes();
+    charity2.app.buildPTag(charity2.charities, "charityTypes", "charityTypeOther", "charityTypesHtml");
+    expect(charity2.charities[0].charityTypesHtml).toBe('<p style="font-size:10pt">not specified</p>');
+    done();
+  });
+
+  it('displays charity types when there are some', (done) => {
+    charity2.activate();
+    charity2.charities = [{charityTypes: [''], charityManagers: ['Home', 'Elderly']}, {charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other']}, {charityTypes: [], charityManagers: []}];
+    charity2.app.buildPTag(charity2.charities, "charityTypes", "charityTypeOther", "charityTypesHtml");
+    expect(charity2.charities[1].charityTypesHtml).not.toBe('<p style="font-size:10pt">not specified</p>');
     done();
   });
 

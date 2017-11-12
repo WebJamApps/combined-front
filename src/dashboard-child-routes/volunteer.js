@@ -249,55 +249,21 @@ export class Volunteer {
     }
   }
 
-  buildUserCauses(){
-    let causesHtml = '';
-    for (let i = 0; i < this.user.volCauses.length; i++) {
-      if (this.user.volCauses[i] !== ''){
-        if (this.user.volCauses[i] !== 'other'){
-          causesHtml = causesHtml + '<p style="font-size:10pt">' + this.user.volCauses[i] + '</p>';
+  buildVolunteerPTag(object_selector, object_selector_other, element_id){
+    let return_html = '';
+    for (let i = 0; i < this.user[object_selector].length; i++) {
+      if (this.user[object_selector][i] !== ''){
+        if (this.user[object_selector][i] !== 'other'){
+          return_html = return_html + '<p style="font-size:10pt">' + this.user[object_selector][i] + '</p>';
         } else {
-          causesHtml = causesHtml + '<p style="font-size:10pt">' + this.user.volCauseOther + '</p>';
+          return_html = return_html + '<p style="font-size:10pt">' + this.user[object_selector_other] + '</p>';
         }
       }
     }
-    if (causesHtml === ''){
-      causesHtml = '<p style="font-size:10pt">not specified</p>';
+    if (return_html === ''){
+      return_html = '<p style="font-size:10pt">not specified</p>';
     }
-    document.getElementById('causes').innerHTML = causesHtml;
-  }
-
-  buildUserTalents(){
-    let talentsHtml = '';
-    for (let i = 0; i < this.user.volTalents.length; i++) {
-      if (this.user.volTalents[i] !== ''){
-        if (this.user.volTalents[i] !== 'other'){
-          talentsHtml = talentsHtml + '<p style="font-size:10pt">' + this.user.volTalents[i] + '</p>';
-        } else {
-          talentsHtml = talentsHtml + '<p style="font-size:10pt">' + this.user.volTalentOther + '</p>';
-        }
-      }
-    }
-    if (talentsHtml === ''){
-      talentsHtml = '<p style="font-size:10pt">not specified</p>';
-    }
-    document.getElementById('talents').innerHTML = talentsHtml;
-  }
-
-  buildUserWorks(){
-    let worksHtml = '';
-    for (let i = 0; i < this.user.volWorkPrefs.length; i++) {
-      if (this.user.volWorkPrefs[i] !== ''){
-        if (this.user.volWorkPrefs[i] !== 'other'){
-          worksHtml = worksHtml + '<p style="font-size:10pt">' + this.user.volWorkPrefs[i] + '</p>';
-        } else {
-          worksHtml = worksHtml + '<p style="font-size:10pt">' + this.user.volWorkOther + '</p>';
-        }
-      }
-    }
-    if (worksHtml === ''){
-      worksHtml = '<p style="font-size:10pt">not specified</p>';
-    }
-    document.getElementById('works').innerHTML = worksHtml;
+    document.getElementById(element_id).innerHTML = return_html;
   }
 
   async signupEvent(thisevent){
@@ -335,8 +301,8 @@ export class Volunteer {
   }
 
   attached(){
-    this.buildUserCauses();
-    this.buildUserTalents();
-    this.buildUserWorks();
+    this.buildVolunteerPTag("volCauses", "volCauseOther", "causes");
+    this.buildVolunteerPTag("volTalents", "volTalentOther", "talents");
+    this.buildVolunteerPTag("volWorkPrefs", "volWorkOther", "works");
   }
 }
