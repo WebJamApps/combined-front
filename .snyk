@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.7.1
+version: v1.8.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   'npm:shelljs:20140723':
@@ -25,6 +25,21 @@ ignore:
     - webpack > watchpack > chokidar > fsevents > node-pre-gyp > request > tough-cookie:
         reason: None given
         expires: '2017-10-21T17:53:55.521Z'
+  'npm:fresh:20170908':
+    - pushstate-server > serve-static > send > fresh:
+        reason: None given
+        expires: '2017-12-18T20:09:03.236Z'
+  'npm:jquery:20170829':
+    - jquery:
+        reason: None given
+        expires: '2017-12-18T20:09:03.237Z'
+  'npm:mime:20170907':
+    - pushstate-server > connect-static-file > send > mime:
+        reason: None given
+        expires: '2017-12-18T20:09:03.237Z'
+    - pushstate-server > serve-static > send > mime:
+        reason: None given
+        expires: '2017-12-18T20:09:03.237Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:marked:20170112':
