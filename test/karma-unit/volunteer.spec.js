@@ -43,23 +43,44 @@ describe('the Volunteer Module', () => {
     auth = new AuthStub();
     auth.setToken({sub: '1'});
     app = new App(auth, new HttpMock());
-    app.appstate = new AppStateStub();
+    app.appState = new AppStateStub();
     app.activate();
-    //app.appstate.user = {_id: '23334', name: 'billy', email: 'billy@billy.com', volCauses: ['', '']};
+    app.appState.user = {_id: '1', name: 'billy', email: 'billy@billy.com', volCauses: ['', '']};
     volunteer = new Volunteer(app);
     app2 = new App(auth, new HttpMockEvent());
-    app2.appstate = new AppStateStub();
+    app2.appState = new AppStateStub();
+    app2.appState.user = {_id: '1', name: 'billy', email: 'billy@billy.com', volCauses: ['', '']};
     app2.activate();
     volunteer2 = new Volunteer(app2);
   });
 
   it('should active so it can display the volunteer settings', (done) => {
     volunteer.activate();
+    console.log(volunteer.user);
     done();
   });
 
   it('should active and get all events', (done) => {
     volunteer2.activate();
+    done();
+  });
+
+  it('displays the events', (done) => {
+    volunteer2.activate();
+    volunteer2.events = [{
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing'
+    }, {
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': [''],
+      'voWorkTypeOther': ''
+    }];
+    volunteer2.displayEvents(volunteer2.events);
+    //console.log(volunteer2.events);
+    //expect(volunteer2.events[1].workHtml).toBe('<p style="font-size:10pt">not specified</p>');
     done();
   });
 

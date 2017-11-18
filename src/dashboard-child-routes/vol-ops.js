@@ -38,8 +38,10 @@ export class VolunteerOpps {
     // console.log(this.signups);
     if (this.events.length > 0){
       this.fixDates();
-      this.buildWorkPrefs();
-      this.buildTalents();
+      //this.buildWorkPrefs();
+      this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
+      this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
+      //this.buildTalents();
       this.checkScheduled();
       this.markPast();
     }
@@ -131,9 +133,8 @@ export class VolunteerOpps {
     let today = new Date();
     let mm = today.getMonth() + 1; // getMonth() is zero-based
     let dd = today.getDate();
-    today = [today.getFullYear(),
-      (mm > 9 ? '' : '0') + mm,
-      (dd > 9 ? '' : '0') + dd].join('');
+      /* istanbul ignore next */
+    today = [today.getFullYear(), (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('');
     for (let i = 0; i < this.events.length; i++){
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
         //console.log('undefined date');
@@ -198,43 +199,43 @@ export class VolunteerOpps {
     }
   }
 
-  buildWorkPrefs(){
-    for (let l = 0; l < this.events.length; l++){
-      let workHtml = '';
-      for (let i = 0; i < this.events[l].voWorkTypes.length; i++) {
-        if (this.events[l].voWorkTypes[i] !== ''){
-          if (this.events[l].voWorkTypes[i] !== 'other'){
-            workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypes[i] + '</p>';
-          } else {
-            workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypeOther + '</p>';
-          }
-        }
-      }
-      if (workHtml === ''){
-        workHtml = '<p style="font-size:10pt">not specified</p>';
-      }
-      this.events[l].workHtml = workHtml;
-    }
-  }
+  // buildWorkPrefs(){
+  //   for (let l = 0; l < this.events.length; l++){
+  //     let workHtml = '';
+  //     for (let i = 0; i < this.events[l].voWorkTypes.length; i++) {
+  //       if (this.events[l].voWorkTypes[i] !== ''){
+  //         if (this.events[l].voWorkTypes[i] !== 'other'){
+  //           workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypes[i] + '</p>';
+  //         } else {
+  //           workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypeOther + '</p>';
+  //         }
+  //       }
+  //     }
+  //     if (workHtml === ''){
+  //       workHtml = '<p style="font-size:10pt">not specified</p>';
+  //     }
+  //     this.events[l].workHtml = workHtml;
+  //   }
+  // }
 
-  buildTalents(){
-    for (let l = 0; l < this.events.length; l++){
-      let talentHtml = '';
-      for (let i = 0; i < this.events[l].voTalentTypes.length; i++) {
-        if (this.events[l].voTalentTypes[i] !== ''){
-          if (this.events[l].voTalentTypes[i] !== 'other'){
-            talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypes[i] + '</p>';
-          } else {
-            talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypeOther + '</p>';
-          }
-        }
-      }
-      if (talentHtml === ''){
-        talentHtml = '<p style="font-size:10pt">not specified</p>';
-      }
-      this.events[l].talentHtml = talentHtml;
-    }
-  }
+  // buildTalents(){
+  //   for (let l = 0; l < this.events.length; l++){
+  //     let talentHtml = '';
+  //     for (let i = 0; i < this.events[l].voTalentTypes.length; i++) {
+  //       if (this.events[l].voTalentTypes[i] !== ''){
+  //         if (this.events[l].voTalentTypes[i] !== 'other'){
+  //           talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypes[i] + '</p>';
+  //         } else {
+  //           talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypeOther + '</p>';
+  //         }
+  //       }
+  //     }
+  //     if (talentHtml === ''){
+  //       talentHtml = '<p style="font-size:10pt">not specified</p>';
+  //     }
+  //     this.events[l].talentHtml = talentHtml;
+  //   }
+  // }
 
   talentPicked(){
     if (this.voOpp.voTalentTypes.includes('other')){
