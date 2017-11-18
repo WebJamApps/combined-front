@@ -202,7 +202,10 @@ describe('the Volunteer Opps Module', () => {
       'voWorkTypes': [''],
       'voWorkTypeOther': ''
     }];
-    volops.buildWorkPrefs();
+    volops.app.buildPTag(volops.events, 'voWorkTypes', 'voWorkTypeOther', 'workHtml');
+    //console.log(volops.events[1]);
+    expect(volops.events[1].workHtml).toBe('<p style="font-size:10pt">not specified</p>');
+    //volops.buildWorkPrefs();
     done();
   });
 
@@ -219,7 +222,8 @@ describe('the Volunteer Opps Module', () => {
       'voTalentTypes': [''],
       'voTalentTypeOther': ''
     }];
-    volops.buildTalents();
+    volops.app.buildPTag(volops.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
+    expect(volops.events[1].talentHtml).toBe('<p style="font-size:10pt">not specified</p>');
     done();
   });
 
