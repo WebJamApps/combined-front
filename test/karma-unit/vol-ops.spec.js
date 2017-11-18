@@ -2,6 +2,7 @@ import {VolunteerOpps} from '../../src/dashboard-child-routes/vol-ops';
 import {App} from '../../src/app';
 import {AuthStub, HttpMock, AppStateStub} from './commons';
 import {Validator} from 'aurelia-validation';
+//import {ValidationRules} from 'aurelia-validation';
 
 class VCMock {
   createForCurrentScope(validator) {
@@ -288,9 +289,77 @@ describe('the Volunteer Opps Module', () => {
       'voStartDate': '2017-12-12',
       'voEndDate': '2017-12-12',
       'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+      'voTalentTypeOther': 'scrubbing',
+      'voDescription': 'howdy'
+    };
+    volops.cancelEvent(signupevent);
+    expect(volops.voOpp.voDescription).toBe('<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>howdy');
+    done();
+  });
+
+  it('it cancels an event without any description', (done) => {
+    let signupevent = {
+      '_id': '123',
+      'voWorkTypes': ['other'],
+      'voWorkTypeOther': '',
+      'voCharityName': '',
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
       'voTalentTypeOther': 'scrubbing'
     };
     volops.cancelEvent(signupevent);
+    expect(volops.voOpp.voDescription).toBe(undefined);
+    done();
+  });
+
+  it('it reactivates an event without any description', (done) => {
+    let signupevent = {
+      '_id': '123',
+      'voWorkTypes': ['other'],
+      'voWorkTypeOther': '',
+      'voCharityName': '',
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+      'voTalentTypeOther': 'scrubbing'
+    };
+    volops.reactivateEvent(signupevent);
+    expect(volops.voOpp.voDescription).toBe(undefined);
+    done();
+  });
+
+  it('it reactivates an event with description', (done) => {
+    let signupevent = {
+      '_id': '123',
+      'voWorkTypes': ['other'],
+      'voWorkTypeOther': '',
+      'voCharityName': '',
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+      'voTalentTypeOther': 'scrubbing',
+      'voDescription': 'howdy'
+    };
+    volops.reactivateEvent(signupevent);
+    expect(volops.voOpp.voDescription).toBe('howdy');
+    done();
+  });
+
+  it('it updates an event', (done) => {
+    volops.voOpp = {
+      '_id': '123',
+      'voWorkTypes': ['other'],
+      'voWorkTypeOther': '',
+      'voCharityName': '',
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+      'voTalentTypeOther': 'scrubbing',
+      'voDescription': 'howdy'
+    };
+    volops.updateEvent('update');
+    expect(volops.voOpp.voDescription).toBe('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>howdy');
     done();
   });
 
@@ -357,7 +426,17 @@ describe('the Volunteer Opps Module', () => {
       'voStartDate': '2017-12-12',
       'voEndDate': '2017-12-12',
       'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-      'voTalentTypeOther': 'scrubbing'
+      'voTalentTypeOther': 'scrubbing',
+      'voContactPhone': '5555555',
+      'voContactEmail': 'j@b.com',
+      'voName': 'howdy',
+      'voNumPeopleNeeded': 4,
+      'voStartTime': '08:00 am',
+      'voEndTime': '05:00 pm',
+      'voZipCode': '24153',
+      'voCity': 'Rochester',
+      'voStreet': '120 street drive',
+      'voState': 'Virginia'
     };
     volops.setupValidation2 = function(){};
     volops.showUpdateEvent(thisEvent, 'update');
@@ -488,27 +567,27 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  it('run attached', (done) => {
-    //volops2.activate();
-    volops2.user = {
-      'name': 'me',
-      'email': 'me@me.org',
-      'userPhone': '3333333333'
-    };
-    document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text"><button class="updateButton"></button>';
-    volops2.charityName = 'OHAF';
-    volops2.voOpp = {
-      'voWorkTypes': ['other'],
-      'voCharityName': '',
-      'voStartDate': '2017-12-12',
-      'voEndDate': '2017-12-12',
-      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-      'voTalentTypeOther': 'scrubbing',
-      '_id': '2222',
-      'voNumPeopleNeeded': 0
-    };
-    volops2.setupValidation2 = function(){};
-    volops2.attached();
-    done();
-  });
+//   it('run attached', (done) => {
+//     //volops2.activate();
+//     volops2.user = {
+//       'name': 'me',
+//       'email': 'me@me.org',
+//       'userPhone': '3333333333'
+//     };
+//     document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text"><button class="updateButton"></button>';
+//     volops2.charityName = 'OHAF';
+//     volops2.voOpp = {
+//       'voWorkTypes': ['other'],
+//       'voCharityName': '',
+//       'voStartDate': '2017-12-12',
+//       'voEndDate': '2017-12-12',
+//       'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+//       'voTalentTypeOther': 'scrubbing',
+//       '_id': '2222',
+//       'voNumPeopleNeeded': 0
+//     };
+//     volops2.setupValidation2 = function(){};
+//     volops2.attached();
+//     done();
+//   });
 });

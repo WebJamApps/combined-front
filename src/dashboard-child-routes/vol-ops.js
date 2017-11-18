@@ -9,6 +9,7 @@ export class VolunteerOpps {
   controller = null;
   validator = null;
   constructor(app, controllerFactory, validator){
+    //this.validationRules = ValidationRules;
     this.app = app;
     this.selectedTalents = [];
     this.selectedWorks = [];
@@ -55,6 +56,8 @@ export class VolunteerOpps {
     this.today = new Date().toISOString().split('T')[0];
     this.minEndDate = this.today;
     this.maxStartDate = '';
+    this.showNewEvent();
+    this.setupValidation2();
   }
 
   async fixUserSignups(){
@@ -278,7 +281,7 @@ export class VolunteerOpps {
     }
     this.talentPicked();
     this.workPicked();
-    this.setupValidation2();
+    //this.setupValidation2();
   }
 
   showNewEvent(){
@@ -352,7 +355,7 @@ export class VolunteerOpps {
     .then((response) => response.json())
     .then((data) => {
       this.activate();
-      this.showNewEvent();
+      //this.showNewEvent();
     });
   }
 
@@ -415,8 +418,8 @@ export class VolunteerOpps {
     }
   }
 
-  attached(){
-    this.showNewEvent();
-  }
+  // attached(){
+  //   this.showNewEvent();
+  // }
 
 }
