@@ -9,14 +9,14 @@ class VCMock {
   }
 }
 
-class HttpStub extends HttpMock {
-  fetch(url) {
-    console.log(url);
-    return Promise.resolve({
-      json: () => Promise.resolve([{name: 'in the jungle'}])
-    });
-  }
-}
+// class HttpStub extends HttpMock {
+//   fetch(url) {
+//     console.log(url);
+//     return Promise.resolve({
+//       json: () => Promise.resolve([{name: 'in the jungle'}])
+//     });
+//   }
+// }
 
 class ValidatorMock extends Validator {
   constructor(a, b) {
@@ -95,12 +95,12 @@ describe('the UserAccount Module', () => {
   it('should change other cause type', (done) => {
     //volops.activate();
     ua.selectedCauses = ['other'];
-    ua.app.selectPickedChange(ua.user, ua, "selectedCauses", 'volCauseOther', 'causeOther', true, 'volCauses');
+    ua.app.selectPickedChange(ua.user, ua, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
     expect(ua.causeOther).toBe(true);
     expect(ua.user.volCauses).toBe(ua.selectedCauses);
     ua.selectedCauses = ['somethingelse'];
-    ua.user.volCauseOther = "Teststring";
-    ua.app.selectPickedChange(ua.user, ua, "selectedCauses", 'volCauseOther', 'causeOther', true, 'volCauses');
+    ua.user.volCauseOther = 'Teststring';
+    ua.app.selectPickedChange(ua.user, ua, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
     expect(ua.causeOther).toBe(false);
     expect(ua.user.volCauseOther).toBe('');
     expect(ua.user.volCauses).toBe(ua.selectedCauses);
@@ -111,12 +111,12 @@ describe('the UserAccount Module', () => {
   it('should change other work type', (done) => {
     //volops.activate();
     ua.selectedWorks = ['other'];
-    ua.app.selectPickedChange(ua.user, ua, "selectedWorks", 'volWorkOther', 'workOther', true, 'volWorkPrefs');
+    ua.app.selectPickedChange(ua.user, ua, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
     expect(ua.workOther).toBe(true);
     expect(ua.user.volWorkPrefs).toBe(ua.selectedWorks);
     ua.selectedWorks = ['somethingelse'];
-    ua.user.volWorkPrefs = "Teststring";
-    ua.app.selectPickedChange(ua.user, ua, "selectedWorks", 'volWorkOther', 'workOther', true, 'volWorkPrefs');
+    ua.user.volWorkPrefs = 'Teststring';
+    ua.app.selectPickedChange(ua.user, ua, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
     expect(ua.workOther).toBe(false);
     expect(ua.user.volWorkOther).toBe('');
     expect(ua.user.volWorkPrefs).toBe(ua.selectedWorks);
@@ -127,12 +127,12 @@ describe('the UserAccount Module', () => {
   it('should change other talent type', (done) => {
     //volops.activate();
     ua.selectedTalents = ['other'];
-    ua.app.selectPickedChange(ua.user, ua, "selectedTalents", 'volTalentOther', 'talentOther', true, 'volTalents');
+    ua.app.selectPickedChange(ua.user, ua, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
     expect(ua.talentOther).toBe(true);
     expect(ua.user.volTalents).toBe(ua.selectedTalents);
     ua.selectedTalents = ['somethingelse'];
-    ua.user.volTalentOther = "Teststring";
-    ua.app.selectPickedChange(ua.user, ua, "selectedTalents", 'volTalentOther', 'talentOther', true, 'volTalents');
+    ua.user.volTalentOther = 'Teststring';
+    ua.app.selectPickedChange(ua.user, ua, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
     expect(ua.talentOther).toBe(false);
     expect(ua.user.volTalentOther).toBe('');
     expect(ua.user.volTalents).toBe(ua.selectedTalents);
