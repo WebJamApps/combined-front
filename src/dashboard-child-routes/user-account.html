@@ -62,7 +62,7 @@
           <div class="checkboxes-div" id="causes" horizontal-align="right" vertical-align="top">
             <div class="dropdown-content">
               <label class="checkboxes-label" repeat.for="cause of causes" for="${cause}">
-                <input class="checkboxes-input" type="checkbox" value.bind="cause" id.bind="cause" checked.bind="selectedCauses" change.delegate="this.app.selectPickedChange(this.user, this, "selectedCauses", 'volCauseOther', 'causeOther', true, 'volCauses')"> ${cause}
+                <input class="checkboxes-input" type="checkbox" value.bind="cause" id.bind="cause" checked.bind="selectedCauses" change.delegate="selectPickChange('causes')"> ${cause}
               </label>
             </div>
           </div>
@@ -79,7 +79,7 @@
           <div class="checkboxes-div" id="talents" horizontal-align="right" vertical-align="top">
             <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 300px; max-height: 362px;overflow:auto;border:1px #dadada solid">
               <label class="checkboxes-label" repeat.for="talent of talents" for="${talent}">
-                <input class="checkboxes-input" type="checkbox" value.bind="talent" id.bind="talent" checked.bind="selectedTalents" change.delegate="this.app.selectPickedChange(this.user, this, "selectedTalents", 'volTalentOther', 'talentOther', true, 'volTalents')"> ${talent}
+                <input class="checkboxes-input" type="checkbox" value.bind="talent" id.bind="talent" checked.bind="selectedTalents" change.delegate="selectPickChange('talents')"> ${talent}
               </label>
             </div>
           </div>
@@ -96,7 +96,7 @@
           <div class="checkboxes-div" id="work" horizontal-align="right" vertical-align="top">
             <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
               <label class="checkboxes-label" repeat.for="work of works" for="${work}" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
-                <input class="checkboxes-input" type="checkbox" value.bind="work" id.bind="work" checked.bind="selectedWorks" change.delegate="this.app.selectPickedChange(this.user, this, "selectedWorks", 'volWorkOther', 'workOther', true, 'volWorkPrefs')"> ${work}
+                <input class="checkboxes-input" type="checkbox" value.bind="work" id.bind="work" checked.bind="selectedWorks" change.delegate="selectPickChange('work')"> ${work}
               </label>
             </div>
           </div>

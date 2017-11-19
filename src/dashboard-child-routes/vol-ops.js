@@ -400,8 +400,16 @@ export class VolunteerOpps {
     }
   }
 
-  // attached(){
-  //   this.showNewEvent();
-  // }
+  selectPickChange(type){
+    // if (type === 'causes'){
+    //   this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
+    // }
+    if (type === 'work'){
+      this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
+    }
+    if (type === 'talents'){
+      this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
+    }
+  }
 
 }
