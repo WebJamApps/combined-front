@@ -41,13 +41,17 @@ describe('the UserAccount Module', () => {
   beforeEach(() => {
     auth = new AuthStub();
     auth.setToken({sub: 'aowifjawifhiawofjo'});
-    app = new App(auth, new HttpStub());
+    app = new App(auth, new HttpMock());
     app.router = new RouterStub();
     app.activate();
     ua = new UserAccount(app, new VCMock(), new ValidatorMock());
     ua.app.appState = new AppStateStub();
     //us.app.appState = new AppStateStub();
+    ua.selectedCauses = ['other'];
+    ua.selectedWorks = ['other'];
+    ua.selectedTalents = ['other'];
     ua.activate();
+    ua.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
   });
 
   // it('should activate user account', (done) => {
@@ -88,6 +92,54 @@ describe('the UserAccount Module', () => {
     done();
   });
 
+  it('should change other cause type', (done) => {
+    //volops.activate();
+    ua.selectedCauses = ['other'];
+    ua.app.selectPickedChange(ua.user, ua, "selectedCauses", 'volCauseOther', 'causeOther', true, 'volCauses');
+    expect(ua.causeOther).toBe(true);
+    expect(ua.user.volCauses).toBe(ua.selectedCauses);
+    ua.selectedCauses = ['somethingelse'];
+    ua.user.volCauseOther = "Teststring";
+    ua.app.selectPickedChange(ua.user, ua, "selectedCauses", 'volCauseOther', 'causeOther', true, 'volCauses');
+    expect(ua.causeOther).toBe(false);
+    expect(ua.user.volCauseOther).toBe('');
+    expect(ua.user.volCauses).toBe(ua.selectedCauses);
+
+    done();
+  });
+
+  it('should change other work type', (done) => {
+    //volops.activate();
+    ua.selectedWorks = ['other'];
+    ua.app.selectPickedChange(ua.user, ua, "selectedWorks", 'volWorkOther', 'workOther', true, 'volWorkPrefs');
+    expect(ua.workOther).toBe(true);
+    expect(ua.user.volWorkPrefs).toBe(ua.selectedWorks);
+    ua.selectedWorks = ['somethingelse'];
+    ua.user.volWorkPrefs = "Teststring";
+    ua.app.selectPickedChange(ua.user, ua, "selectedWorks", 'volWorkOther', 'workOther', true, 'volWorkPrefs');
+    expect(ua.workOther).toBe(false);
+    expect(ua.user.volWorkOther).toBe('');
+    expect(ua.user.volWorkPrefs).toBe(ua.selectedWorks);
+
+    done();
+  });
+
+  it('should change other talent type', (done) => {
+    //volops.activate();
+    ua.selectedTalents = ['other'];
+    ua.app.selectPickedChange(ua.user, ua, "selectedTalents", 'volTalentOther', 'talentOther', true, 'volTalents');
+    expect(ua.talentOther).toBe(true);
+    expect(ua.user.volTalents).toBe(ua.selectedTalents);
+    ua.selectedTalents = ['somethingelse'];
+    ua.user.volTalentOther = "Teststring";
+    ua.app.selectPickedChange(ua.user, ua, "selectedTalents", 'volTalentOther', 'talentOther', true, 'volTalents');
+    expect(ua.talentOther).toBe(false);
+    expect(ua.user.volTalentOther).toBe('');
+    expect(ua.user.volTalents).toBe(ua.selectedTalents);
+
+    done();
+  });
+
   // it('causePicked without attributes', (done) => {
   //   ua.app.appState = new AppStateStub();
   //   ua.activate().then(() => {
@@ -105,22 +157,6 @@ describe('the UserAccount Module', () => {
   //   });
   // });
 
-  // it('talentPicked without attributes', (done) => {
-  //   ua.app.appState = new AppStateStub();
-  //   ua.activate().then(() => {
-  //     ua.talentPicked();
-  //     done();
-  //   });
-  // });
-
-  // it('talentPicked with attributes', (done) => {
-  //   ua.app.appState = new AppStateStub();
-  //   ua.app.auth.setToken({sub: '1'});
-  //   ua.activate().then(() => {
-  //     ua.talentPicked();
-  //     done();
-  //   });
-  // });
 
   // it('workPicked without attributes', (done) => {
   //   ua.app.appState = new AppStateStub();

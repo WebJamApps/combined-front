@@ -215,36 +215,6 @@ export class UserAccount {
     });
   }
 
-  causePicked(){
-    this.user.volCauses = this.selectedCauses;
-    if (this.selectedCauses.includes('other')){
-      this.causeOther = true;
-    } else {
-      this.causeOther = false;
-      this.user.volCauseOther = '';
-    }
-  }
-
-  talentPicked(){
-    this.user.volTalents = this.selectedTalents;
-    if (this.selectedTalents.includes('other')){
-      this.talentOther = true;
-    } else {
-      this.talentOther = false;
-      this.user.volTalentOther = '';
-    }
-  }
-
-  workPicked(){
-    this.user.volWorkPrefs = this.selectedWorks;
-    if (this.selectedWorks.includes('other')){
-      this.workOther = true;
-    } else {
-      this.workOther = false;
-      this.user.volWorkOther = '';
-    }
-  }
-
   async deleteUser(){
     await fetch;
     this.app.httpClient.fetch('/user/' + this.uid, {

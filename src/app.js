@@ -308,4 +308,28 @@ export class App {
       object[l][objectStoreResult] = typeHtml;
     }
   }
+
+  selectPickedChange(selector_obj, this_obj, main_selected_list, selector_other_variable, other_variable, selector_use_this=false, user_variable=undefined){
+    if (user_variable != undefined) {
+      selector_obj[user_variable] = this_obj[main_selected_list];
+    }
+    let exists = false;
+    console.log("Selector this: ");
+    console.log(selector_use_this);
+    if (selector_use_this == true){
+      if (this_obj[main_selected_list].includes('other')) {
+        exists = true;
+      }
+    }else {
+      if (selector_obj[main_selected_list].includes('other')){
+        exists = true;
+      }
+    }
+    if (exists == true){
+      this_obj[other_variable] = true;
+    } else {
+      this_obj[other_variable] = false;
+      selector_obj[selector_other_variable] = '';
+    }
+  }
 }

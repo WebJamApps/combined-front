@@ -107,7 +107,7 @@
           <div class="checkboxes-div" id="talents" horizontal-align="right" vertical-align="top">
             <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 300px; max-height: 362px;overflow:auto;border:1px #dadada solid">
               <label class="checkboxes-label" repeat.for="talent of talents" for="${talent}">
-                <input class="checkboxes-input" type="checkbox" value.bind="talent" id.bind="talent" checked.bind="voOpp.voTalentTypes" change.delegate="talentPicked()"> ${talent}
+                <input class="checkboxes-input" type="checkbox" value.bind="talent" id.bind="talent" checked.bind="voOpp.voTalentTypes" change.delegate="this.app.selectPickedChange(this.voOpp, this, "voTalentTypes", 'voTalentTypeOther', 'talentOther')"> ${talent}
               </label>
             </div>
           </div>
@@ -125,7 +125,7 @@
           <div class="checkboxes-div" id="work" horizontal-align="right" vertical-align="top">
             <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
               <label class="checkboxes-label" repeat.for="work of works" for="${work}">
-                <input class="checkboxes-input" type="checkbox" value.bind="work" id.bind="work" checked.bind="voOpp.voWorkTypes" change.delegate="workPicked()"> ${work}
+                <input class="checkboxes-input" type="checkbox" value.bind="work" id.bind="work" checked.bind="voOpp.voWorkTypes" change.delegate="this.app.selectPickedChange(this.voOpp, this, "voWorkTypes", 'voWorkTypeOther', 'workOther')"> ${work}
               </label>
             </div>
           </div>

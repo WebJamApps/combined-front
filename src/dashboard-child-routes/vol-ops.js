@@ -240,24 +240,6 @@ export class VolunteerOpps {
   //   }
   // }
 
-  talentPicked(){
-    if (this.voOpp.voTalentTypes.includes('other')){
-      this.talentOther = true;
-    } else {
-      this.talentOther = false;
-      this.voOpp.voTalentTypeOther = '';
-    }
-  }
-
-  workPicked(){
-    if (this.voOpp.voWorkTypes.includes('other')){
-      this.workOther = true;
-    } else {
-      this.workOther = false;
-      this.voOpp.voWorkTypeOther = '';
-    }
-  }
-
   scheduleEvent(){
     this.voOpp.voStatus = 'new';
     //console.log(this.voOpp);
@@ -279,8 +261,8 @@ export class VolunteerOpps {
       document.getElementById('topSection').style.display = 'none';
       this.voOpp = thisEvent;
     }
-    this.talentPicked();
-    this.workPicked();
+    this.app.selectPickedChange(this.voOpp, this, "voTalentTypes", 'voTalentTypeOther', 'talentOther');
+    this.app.selectPickedChange(this.voOpp, this, "voWorkTypes", 'voWorkTypeOther', 'workOther');
     //this.setupValidation2();
   }
 
