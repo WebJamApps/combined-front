@@ -29,12 +29,6 @@ export class UserAccount {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.role = this.user.userType;
-    this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
-      'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
-      'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
-      'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-    this.states.sort();
     this.causes.sort();
     this.causes.push('other');
     for (let i = 0; i < this.causes.length; i++) {
@@ -221,47 +215,6 @@ export class UserAccount {
     });
   }
 
-  showCheckboxes(id){
-    const checkboxes = document.getElementById(id);
-    if (!this.expanded) {
-      checkboxes.style.display = 'block';
-      this.expanded = true;
-    } else {
-      checkboxes.style.display = 'none';
-      this.expanded = false;
-    }
-  }
-
-  causePicked(){
-    this.user.volCauses = this.selectedCauses;
-    if (this.selectedCauses.includes('other')){
-      this.causeOther = true;
-    } else {
-      this.causeOther = false;
-      this.user.volCauseOther = '';
-    }
-  }
-
-  talentPicked(){
-    this.user.volTalents = this.selectedTalents;
-    if (this.selectedTalents.includes('other')){
-      this.talentOther = true;
-    } else {
-      this.talentOther = false;
-      this.user.volTalentOther = '';
-    }
-  }
-
-  workPicked(){
-    this.user.volWorkPrefs = this.selectedWorks;
-    if (this.selectedWorks.includes('other')){
-      this.workOther = true;
-    } else {
-      this.workOther = false;
-      this.user.volWorkOther = '';
-    }
-  }
-
   async deleteUser(){
     await fetch;
     this.app.httpClient.fetch('/user/' + this.uid, {
@@ -270,6 +223,18 @@ export class UserAccount {
     .then((data) => {
       this.app.logout();
     });
+  }
+
+  selectPickChange(type){
+    if (type === 'causes'){
+      this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
+    }
+    if (type === 'work'){
+      this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
+    }
+    if (type === 'talents'){
+      this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
+    }
   }
 
 }

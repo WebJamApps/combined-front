@@ -23,12 +23,6 @@ export class Charity {
     this.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
     this.types.sort();
     this.types.push('other');
-    this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
-      'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
-      'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
-      'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-    this.states.sort();
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
@@ -36,7 +30,7 @@ export class Charity {
     const res = await this.app.httpClient.fetch('/charity/' + this.uid);
     this.charities = await res.json();
     if (this.charities.length !== 0){
-      this.buildTypes();
+      this.app.buildPTag(this.charities, 'charityTypes', 'charityTypeOther', 'charityTypesHtml');
       this.buildManagers();
       this.checkEvents();
     }
@@ -109,17 +103,6 @@ export class Charity {
       document.getElementById('updateCharitySection').scrollIntoView();
     } else {
       document.getElementById('charityDash').scrollIntoView();
-    }
-  }
-
-  showCheckboxes(id){
-    const checkboxes = document.getElementById(id);
-    if (!this.expanded) {
-      checkboxes.style.display = 'block';
-      this.expanded = true;
-    } else {
-      checkboxes.style.display = 'none';
-      this.expanded = false;
     }
   }
 
@@ -204,26 +187,7 @@ export class Charity {
       this.createNewCharity();
     });
   }
-
-  buildTypes(){
-    for (let l = 0; l < this.charities.length; l++){
-      let typeHtml = '';
-      for (let i = 0; i < this.charities[l].charityTypes.length; i++) {
-        if (this.charities[l].charityTypes[i] !== ''){
-          if (this.charities[l].charityTypes[i] !== 'other'){
-            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.charities[l].charityTypes[i] + '</p>';
-          } else {
-            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.charities[l].charityTypeOther + '</p>';
-          }
-        }
-      }
-      if (typeHtml === ''){
-        typeHtml = '<p style="font-size:10pt">not specified</p>';
-      }
-      this.charities[l].charityTypesHtml = typeHtml;
-    }
-  }
-
+  
   buildManagers(){
     for (let l = 0; l < this.charities.length; l++){
       let manHtml = '';

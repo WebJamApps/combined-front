@@ -1,10 +1,10 @@
 machine:
   node:
-    version: 8.7.0
+    version: 8.9.1
 dependencies:
   pre:
     - curl -s https://raw.githubusercontent.com/chronogolf/circleci-google-chrome/master/use_chrome_stable_version.sh | bash
-    - npm install -g yarn codeclimate-test-reporter
+    - npm run installglobals && npm install -g codeclimate-test-reporter
   override:
     - yarn install
     - npm run postinstall:backend

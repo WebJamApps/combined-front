@@ -18,7 +18,6 @@ export class Volunteer {
   causes = [];
   filterby = ['keyword', 'zipcode', 'cause', 'future only'];
   // selectedFilter = [];
-  expanded = false;
   keyword = false;
   siteLocation = false;
   causeFilter = false;
@@ -33,25 +32,31 @@ export class Volunteer {
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
     this.app.role = this.user.userType;
-    let res2 = await this.app.httpClient.fetch('/signup/getall');
-    this.signups = await res2.json();
-    await this.fetchAllEvents();
+    if (this.user.userDetails === 'newUser'){
+      this.app.router.navigate('dashboard/user-account');
+    } else {
+      let res2 = await this.app.httpClient.fetch('/signup/getall');
+      this.signups = await res2.json();
+      await this.fetchAllEvents();
+      this.displayEvents();
+    }
+  }
+
+  async displayEvents(){
     if (this.events.length > 0){
       await this.checkSignups();
       this.fixZipcodes();
       this.fixDates();
-      this.buildWorkPrefs();
-      this.buildTalents();
+    //this.buildWorkPrefs();
+      this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
+      this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
       this.populateSites();
       this.populateCauses();
       await this.checkScheduled();
       if (this.selectedFilter.includes('future only')) {
         this.removePast();
       }
-      //this.showtable = true;
-    }
-    if (this.user.userDetails === 'newUser'){
-      this.app.router.navigate('dashboard/user-account');
+    //this.showtable = true;
     }
   }
 
@@ -212,104 +217,59 @@ export class Volunteer {
     }
   }
 
-  buildWorkPrefs(){
-    for (let l = 0; l < this.events.length; l++){
-      let workHtml = '';
-      for (let i = 0; i < this.events[l].voWorkTypes.length; i++) {
-        if (this.events[l].voWorkTypes[i] !== ''){
-          if (this.events[l].voWorkTypes[i] !== 'other'){
-            workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypes[i] + '</p>';
-          } else {
-            workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypeOther + '</p>';
-          }
-        }
-      }
-      if (workHtml === ''){
-        workHtml = '<p style="font-size:10pt">not specified</p>';
-      }
-      this.events[l].workHtml = workHtml;
-    }
-  }
+  // buildWorkPrefs(){
+  //   for (let l = 0; l < this.events.length; l++){
+  //     let workHtml = '';
+  //     for (let i = 0; i < this.events[l].voWorkTypes.length; i++) {
+  //       if (this.events[l].voWorkTypes[i] !== ''){
+  //         if (this.events[l].voWorkTypes[i] !== 'other'){
+  //           workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypes[i] + '</p>';
+  //         } else {
+  //           workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypeOther + '</p>';
+  //         }
+  //       }
+  //     }
+  //     if (workHtml === ''){
+  //       workHtml = '<p style="font-size:10pt">not specified</p>';
+  //     }
+  //     this.events[l].workHtml = workHtml;
+  //   }
+  // }
 
-  buildTalents(){
-    for (let l = 0; l < this.events.length; l++){
-      let talentHtml = '';
-      for (let i = 0; i < this.events[l].voTalentTypes.length; i++) {
-        if (this.events[l].voTalentTypes[i] !== ''){
-          if (this.events[l].voTalentTypes[i] !== 'other'){
-            talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypes[i] + '</p>';
-          } else {
-            talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypeOther + '</p>';
-          }
-        }
-      }
-      if (talentHtml === ''){
-        talentHtml = '<p style="font-size:10pt">not specified</p>';
-      }
-      this.events[l].talentHtml = talentHtml;
-    }
-  }
+  // buildTalents(){
+  //   for (let l = 0; l < this.events.length; l++){
+  //     let talentHtml = '';
+  //     for (let i = 0; i < this.events[l].voTalentTypes.length; i++) {
+  //       if (this.events[l].voTalentTypes[i] !== ''){
+  //         if (this.events[l].voTalentTypes[i] !== 'other'){
+  //           talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypes[i] + '</p>';
+  //         } else {
+  //           talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypeOther + '</p>';
+  //         }
+  //       }
+  //     }
+  //     if (talentHtml === ''){
+  //       talentHtml = '<p style="font-size:10pt">not specified</p>';
+  //     }
+  //     this.events[l].talentHtml = talentHtml;
+  //   }
+  // }
 
-  buildUserCauses(){
-    let causesHtml = '';
-    for (let i = 0; i < this.user.volCauses.length; i++) {
-      if (this.user.volCauses[i] !== ''){
-        if (this.user.volCauses[i] !== 'other'){
-          causesHtml = causesHtml + '<p style="font-size:10pt">' + this.user.volCauses[i] + '</p>';
+  buildVolunteerPTag(objectSelector, objectSelectorOther, elementId){
+    let returnHtml = '';
+    for (let i = 0; i < this.user[objectSelector].length; i++) {
+      if (this.user[objectSelector][i] !== ''){
+        if (this.user[objectSelector][i] !== 'other'){
+          returnHtml = returnHtml + '<p style="font-size:10pt">' + this.user[objectSelector][i] + '</p>';
         } else {
-          causesHtml = causesHtml + '<p style="font-size:10pt">' + this.user.volCauseOther + '</p>';
+          returnHtml = returnHtml + '<p style="font-size:10pt">' + this.user[objectSelectorOther] + '</p>';
         }
       }
     }
-    if (causesHtml === ''){
-      causesHtml = '<p style="font-size:10pt">not specified</p>';
+    if (returnHtml === ''){
+      returnHtml = '<p style="font-size:10pt">not specified</p>';
     }
-    document.getElementById('causes').innerHTML = causesHtml;
-  }
-
-  buildUserTalents(){
-    let talentsHtml = '';
-    for (let i = 0; i < this.user.volTalents.length; i++) {
-      if (this.user.volTalents[i] !== ''){
-        if (this.user.volTalents[i] !== 'other'){
-          talentsHtml = talentsHtml + '<p style="font-size:10pt">' + this.user.volTalents[i] + '</p>';
-        } else {
-          talentsHtml = talentsHtml + '<p style="font-size:10pt">' + this.user.volTalentOther + '</p>';
-        }
-      }
-    }
-    if (talentsHtml === ''){
-      talentsHtml = '<p style="font-size:10pt">not specified</p>';
-    }
-    document.getElementById('talents').innerHTML = talentsHtml;
-  }
-
-  buildUserWorks(){
-    let worksHtml = '';
-    for (let i = 0; i < this.user.volWorkPrefs.length; i++) {
-      if (this.user.volWorkPrefs[i] !== ''){
-        if (this.user.volWorkPrefs[i] !== 'other'){
-          worksHtml = worksHtml + '<p style="font-size:10pt">' + this.user.volWorkPrefs[i] + '</p>';
-        } else {
-          worksHtml = worksHtml + '<p style="font-size:10pt">' + this.user.volWorkOther + '</p>';
-        }
-      }
-    }
-    if (worksHtml === ''){
-      worksHtml = '<p style="font-size:10pt">not specified</p>';
-    }
-    document.getElementById('works').innerHTML = worksHtml;
-  }
-
-  showCheckboxes(){
-    const checkboxes = document.getElementById('checkboxes-iron');
-    if (!this.expanded) {
-      checkboxes.style.display = 'block';
-      this.expanded = true;
-    } else {
-      checkboxes.style.display = 'none';
-      this.expanded = false;
-    }
+    document.getElementById(elementId).innerHTML = returnHtml;
   }
 
   async signupEvent(thisevent){
@@ -347,8 +307,8 @@ export class Volunteer {
   }
 
   attached(){
-    this.buildUserCauses();
-    this.buildUserTalents();
-    this.buildUserWorks();
+    this.buildVolunteerPTag('volCauses', 'volCauseOther', 'causes');
+    this.buildVolunteerPTag('volTalents', 'volTalentOther', 'talents');
+    this.buildVolunteerPTag('volWorkPrefs', 'volWorkOther', 'works');
   }
 }

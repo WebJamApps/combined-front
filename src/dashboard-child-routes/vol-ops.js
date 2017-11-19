@@ -9,6 +9,7 @@ export class VolunteerOpps {
   controller = null;
   validator = null;
   constructor(app, controllerFactory, validator){
+    //this.validationRules = ValidationRules;
     this.app = app;
     this.selectedTalents = [];
     this.selectedWorks = [];
@@ -38,8 +39,10 @@ export class VolunteerOpps {
     // console.log(this.signups);
     if (this.events.length > 0){
       this.fixDates();
-      this.buildWorkPrefs();
-      this.buildTalents();
+      //this.buildWorkPrefs();
+      this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
+      this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
+      //this.buildTalents();
       this.checkScheduled();
       this.markPast();
     }
@@ -53,12 +56,8 @@ export class VolunteerOpps {
     this.today = new Date().toISOString().split('T')[0];
     this.minEndDate = this.today;
     this.maxStartDate = '';
-    this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
-      'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
-      'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
-      'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-    this.states.sort();
+    this.showNewEvent();
+    this.setupValidation2();
   }
 
   async fixUserSignups(){
@@ -137,9 +136,8 @@ export class VolunteerOpps {
     let today = new Date();
     let mm = today.getMonth() + 1; // getMonth() is zero-based
     let dd = today.getDate();
-    today = [today.getFullYear(),
-      (mm > 9 ? '' : '0') + mm,
-      (dd > 9 ? '' : '0') + dd].join('');
+      /* istanbul ignore next */
+    today = [today.getFullYear(), (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('');
     for (let i = 0; i < this.events.length; i++){
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
         //console.log('undefined date');
@@ -204,72 +202,43 @@ export class VolunteerOpps {
     }
   }
 
-  buildWorkPrefs(){
-    for (let l = 0; l < this.events.length; l++){
-      let workHtml = '';
-      for (let i = 0; i < this.events[l].voWorkTypes.length; i++) {
-        if (this.events[l].voWorkTypes[i] !== ''){
-          if (this.events[l].voWorkTypes[i] !== 'other'){
-            workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypes[i] + '</p>';
-          } else {
-            workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypeOther + '</p>';
-          }
-        }
-      }
-      if (workHtml === ''){
-        workHtml = '<p style="font-size:10pt">not specified</p>';
-      }
-      this.events[l].workHtml = workHtml;
-    }
-  }
+  // buildWorkPrefs(){
+  //   for (let l = 0; l < this.events.length; l++){
+  //     let workHtml = '';
+  //     for (let i = 0; i < this.events[l].voWorkTypes.length; i++) {
+  //       if (this.events[l].voWorkTypes[i] !== ''){
+  //         if (this.events[l].voWorkTypes[i] !== 'other'){
+  //           workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypes[i] + '</p>';
+  //         } else {
+  //           workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypeOther + '</p>';
+  //         }
+  //       }
+  //     }
+  //     if (workHtml === ''){
+  //       workHtml = '<p style="font-size:10pt">not specified</p>';
+  //     }
+  //     this.events[l].workHtml = workHtml;
+  //   }
+  // }
 
-  buildTalents(){
-    for (let l = 0; l < this.events.length; l++){
-      let talentHtml = '';
-      for (let i = 0; i < this.events[l].voTalentTypes.length; i++) {
-        if (this.events[l].voTalentTypes[i] !== ''){
-          if (this.events[l].voTalentTypes[i] !== 'other'){
-            talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypes[i] + '</p>';
-          } else {
-            talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypeOther + '</p>';
-          }
-        }
-      }
-      if (talentHtml === ''){
-        talentHtml = '<p style="font-size:10pt">not specified</p>';
-      }
-      this.events[l].talentHtml = talentHtml;
-    }
-  }
-
-  showCheckboxes(id){
-    const checkboxes = document.getElementById(id);
-    if (!this.expanded) {
-      checkboxes.style.display = 'block';
-      this.expanded = true;
-    } else {
-      checkboxes.style.display = 'none';
-      this.expanded = false;
-    }
-  }
-
-  talentPicked(){
-    if (this.voOpp.voTalentTypes.includes('other')){
-      this.talentOther = true;
-    } else {
-      this.talentOther = false;
-      this.voOpp.voTalentTypeOther = '';
-    }
-  }
-
-  workPicked(){
-    if (this.voOpp.voWorkTypes.includes('other')){
-      this.workOther = true;
-    } else {
-      this.workOther = false;
-      this.voOpp.voWorkTypeOther = '';
-    }
-  }
+  // buildTalents(){
+  //   for (let l = 0; l < this.events.length; l++){
+  //     let talentHtml = '';
+  //     for (let i = 0; i < this.events[l].voTalentTypes.length; i++) {
+  //       if (this.events[l].voTalentTypes[i] !== ''){
+  //         if (this.events[l].voTalentTypes[i] !== 'other'){
+  //           talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypes[i] + '</p>';
+  //         } else {
+  //           talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypeOther + '</p>';
+  //         }
+  //       }
+  //     }
+  //     if (talentHtml === ''){
+  //       talentHtml = '<p style="font-size:10pt">not specified</p>';
+  //     }
+  //     this.events[l].talentHtml = talentHtml;
+  //   }
+  // }
 
   scheduleEvent(){
     this.voOpp.voStatus = 'new';
@@ -292,9 +261,9 @@ export class VolunteerOpps {
       document.getElementById('topSection').style.display = 'none';
       this.voOpp = thisEvent;
     }
-    this.talentPicked();
-    this.workPicked();
-    this.setupValidation2();
+    this.app.selectPickedChange(this.voOpp, this, 'voTalentTypes', 'voTalentTypeOther', 'talentOther');
+    this.app.selectPickedChange(this.voOpp, this, 'voWorkTypes', 'voWorkTypeOther', 'workOther');
+    //this.setupValidation2();
   }
 
   showNewEvent(){
@@ -368,7 +337,7 @@ export class VolunteerOpps {
     .then((response) => response.json())
     .then((data) => {
       this.activate();
-      this.showNewEvent();
+      //this.showNewEvent();
     });
   }
 
@@ -431,8 +400,16 @@ export class VolunteerOpps {
     }
   }
 
-  attached(){
-    this.showNewEvent();
+  selectPickChange(type){
+    // if (type === 'causes'){
+    //   this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
+    // }
+    if (type === 'work'){
+      this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
+    }
+    if (type === 'talents'){
+      this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
+    }
   }
 
 }

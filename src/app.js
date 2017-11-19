@@ -20,7 +20,7 @@ export class App {
   password = '';
   authenticated = false;
   token = '';
-
+  expanded = false;
   @bindable
   drawerWidth = '175px';
 
@@ -31,6 +31,13 @@ export class App {
     this.configHttpClient();
     this.appState = new AppState(this.httpClient);
     this.userAccess = new UserAccess(this.appState);
+    this.states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
+      'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
+      'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+      'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
+      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+    this.states.sort();
+
     await this.checkUser();
   }
 
@@ -265,5 +272,64 @@ export class App {
       }
     }
     return result;
+  }
+
+  showCheckboxes(id = null){
+    let checkboxes = null;
+    if (id !== null){
+      checkboxes = document.getElementById(id);
+    }    else {
+      checkboxes = document.getElementById('checkboxes-iron');
+    }
+    if (!this.expanded) {
+      checkboxes.style.display = 'block';
+      this.expanded = true;
+    } else {
+      checkboxes.style.display = 'none';
+      this.expanded = false;
+    }
+  }
+
+  buildPTag(object, objectSelector, objectSelectorOther, objectStoreResult){
+    for (let l = 0; l < object.length; l++){
+      let typeHtml = '';
+      for (let i = 0; i < object[l][objectSelector].length; i++) {
+        if (object[l][objectSelector][i] !== ''){
+          if (object[l][objectSelector][i] !== 'other'){
+            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + object[l][objectSelector][i] + '</p>';
+          } else {
+            typeHtml = typeHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + object[l][objectSelectorOther] + '</p>';
+          }
+        }
+      }
+      if (typeHtml === ''){
+        typeHtml = '<p style="font-size:10pt">not specified</p>';
+      }
+      object[l][objectStoreResult] = typeHtml;
+    }
+  }
+
+  selectPickedChange(selectorObj, thisObj, mainSelectedList, selectorOtherVariable, otherVariable, selectorUseThis = false, userVariable = undefined){
+    if (userVariable !== undefined) {
+      selectorObj[userVariable] = thisObj[mainSelectedList];
+    }
+    let exists = false;
+    //console.log('Selector this: ');
+    //console.log(selector_use_this);
+    if (selectorUseThis === true){
+      if (thisObj[mainSelectedList].includes('other')) {
+        exists = true;
+      }
+    } else {
+      if (selectorObj[mainSelectedList].includes('other')){
+        exists = true;
+      }
+    }
+    if (exists === true){
+      thisObj[otherVariable] = true;
+    } else {
+      thisObj[otherVariable] = false;
+      selectorObj[selectorOtherVariable] = '';
+    }
   }
 }

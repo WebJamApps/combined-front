@@ -10,17 +10,16 @@
   "author": "HandlersAndKickers",
   "license": "MIT",
   "engines": {
-    "node": "8.7.0",
-    "npm": "5.5.1",
-    "yarn": "1.2.1"
+    "node": "8.9.1",
+    "npm": "5.5.1"
   },
   "scripts": {
     "start": "nps",
     "test": "npm run test:karma && nps e2e",
     "test:karma": "cross-env NODE_ENV=test nps test.lint && nps test.karma",
     "test:debug": "cross-env NODE_ENV=test nps test.karma.debug",
-    "preinstall": "npm i -g npm@latest && npm i -g yarn@latest && npm i -g bower@latest",
-    "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && yarn cache clean && yarn install && npm run postinstall:backend",
+    "installglobals": "npm i -g yarn@latest && npm i -g bower@latest",
+    "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && yarn cache clean && npm run installglobals && yarn install && npm run postinstall:backend",
     "postinstall:backend": "bower install && npm run vulc && npm start -- build",
     "vulc": "rm -rf static/includes.html && polymer-bundler --inline-scripts --inline-css includes.html > static/includes.html",
     "prod": "npm run vulc && npm start -- build && npm start -- serve",
@@ -86,7 +85,7 @@
     "polymer-bundler": "^2.0.1",
     "postcss-loader": "^2.0.6",
     "pushstate-server": "^3.0.0",
-    "snyk": "^1.41.1",
+    "snyk": "^1.49.3",
     "style-loader": "^0.18.2",
     "url-loader": "^0.6.2",
     "wait-on": "^2.0.2",
