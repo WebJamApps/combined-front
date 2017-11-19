@@ -56,8 +56,7 @@ export class VolunteerOpps {
     this.today = new Date().toISOString().split('T')[0];
     this.minEndDate = this.today;
     this.maxStartDate = '';
-    this.showNewEvent();
-    this.setupValidation2();
+    //this.showNewEvent();
   }
 
   async fixUserSignups(){
@@ -81,9 +80,9 @@ export class VolunteerOpps {
     this.app.httpClient.fetch('/signup/remove/' + userid, {
       method: 'delete'
     })
-      .then((data) => {
-        //console.log('removed signup attached to a nonexisting user');
-      });
+    .then((data) => {
+      //console.log('removed signup attached to a nonexisting user');
+    });
   }
 
   async checkScheduled(){
@@ -136,7 +135,7 @@ export class VolunteerOpps {
     let today = new Date();
     let mm = today.getMonth() + 1; // getMonth() is zero-based
     let dd = today.getDate();
-      /* istanbul ignore next */
+    /* istanbul ignore next */
     today = [today.getFullYear(), (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('');
     for (let i = 0; i < this.events.length; i++){
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
@@ -151,7 +150,7 @@ export class VolunteerOpps {
     }
   }
 
-//TODO display a clock UI
+  //TODO display a clock UI
   // showTime(type){
   //   //console.log('show time picker here');
   // }
@@ -410,6 +409,11 @@ export class VolunteerOpps {
     if (type === 'talents'){
       this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
     }
+  }
+
+  attached(){
+    this.showNewEvent();
+    this.setupValidation2();
   }
 
 }
