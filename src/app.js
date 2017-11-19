@@ -309,27 +309,27 @@ export class App {
     }
   }
 
-  selectPickedChange(selector_obj, this_obj, main_selected_list, selector_other_variable, other_variable, selector_use_this=false, user_variable=undefined){
-    if (user_variable != undefined) {
-      selector_obj[user_variable] = this_obj[main_selected_list];
+  selectPickedChange(selectorObj, thisObj, mainSelectedList, selectorOtherVariable, otherVariable, selectorUseThis = false, userVariable = undefined){
+    if (userVariable !== undefined) {
+      selectorObj[userVariable] = thisObj[mainSelectedList];
     }
     let exists = false;
-    console.log("Selector this: ");
-    console.log(selector_use_this);
-    if (selector_use_this == true){
-      if (this_obj[main_selected_list].includes('other')) {
+    //console.log('Selector this: ');
+    //console.log(selector_use_this);
+    if (selectorUseThis === true){
+      if (thisObj[mainSelectedList].includes('other')) {
         exists = true;
       }
-    }else {
-      if (selector_obj[main_selected_list].includes('other')){
+    } else {
+      if (selectorObj[mainSelectedList].includes('other')){
         exists = true;
       }
     }
-    if (exists == true){
-      this_obj[other_variable] = true;
+    if (exists === true){
+      thisObj[otherVariable] = true;
     } else {
-      this_obj[other_variable] = false;
-      selector_obj[selector_other_variable] = '';
+      thisObj[otherVariable] = false;
+      selectorObj[selectorOtherVariable] = '';
     }
   }
 }

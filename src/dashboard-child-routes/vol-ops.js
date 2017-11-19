@@ -261,8 +261,8 @@ export class VolunteerOpps {
       document.getElementById('topSection').style.display = 'none';
       this.voOpp = thisEvent;
     }
-    this.app.selectPickedChange(this.voOpp, this, "voTalentTypes", 'voTalentTypeOther', 'talentOther');
-    this.app.selectPickedChange(this.voOpp, this, "voWorkTypes", 'voWorkTypeOther', 'workOther');
+    this.app.selectPickedChange(this.voOpp, this, 'voTalentTypes', 'voTalentTypeOther', 'talentOther');
+    this.app.selectPickedChange(this.voOpp, this, 'voWorkTypes', 'voWorkTypeOther', 'workOther');
     //this.setupValidation2();
   }
 
