@@ -242,11 +242,15 @@ describe('the Volunteer Opps Module', () => {
     volops.voOpp = {
       'voTalentTypes': ['other']
     };
-    volops.talentPicked();
+    volops.app.selectPickedChange(volops.voOpp, volops, "voTalentTypes", 'voTalentTypeOther', 'talentOther');
+    expect(volops.talentOther).toBe(true);
     volops.voOpp = {
       'voTalentTypes': ['swimming']
     };
-    volops.talentPicked();
+    volops.voOpp.voTalentTypeOther = "teststring";
+    volops.app.selectPickedChange(volops.voOpp, volops, "voTalentTypes", 'voTalentTypeOther', 'talentOther');
+    expect(volops.talentOther).toBe(false);
+    expect(volops.voOpp.voTalentTypeOther).toBe('');
     done();
   });
 
@@ -255,11 +259,15 @@ describe('the Volunteer Opps Module', () => {
     volops.voOpp = {
       'voWorkTypes': ['other']
     };
-    volops.workPicked();
+    volops.app.selectPickedChange(volops.voOpp, volops, "voWorkTypes", 'voWorkTypeOther', 'workOther');
+    expect(volops.workOther).toBe(true);
     volops.voOpp = {
       'voWorkTypes': ['swimming']
     };
-    volops.workPicked();
+    volops.voOpp.voWorkTypeOther = "teststring";
+    volops.app.selectPickedChange(volops.voOpp, volops, "voWorkTypes", 'voWorkTypeOther', 'workOther');
+    expect(volops.workOther).toBe(false);
+    expect(volops.voOpp.voWorkTypeOther).toBe('');
     done();
   });
 
