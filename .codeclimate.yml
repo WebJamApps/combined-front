@@ -7,6 +7,9 @@ checks:
   method-lines:
     config:
       threshold: 30
+  method-complexity:
+    config:
+      threshold: 8
 engines:
   duplication:
     enabled: true
