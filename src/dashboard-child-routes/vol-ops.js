@@ -3,6 +3,7 @@ import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
+import {fixDates} from '../commons/utils.js';
 const Inputmask = require('inputmask');
 @inject(App, ValidationControllerFactory, Validator)
 export class VolunteerOpps {
@@ -14,6 +15,7 @@ export class VolunteerOpps {
     this.selectedTalents = [];
     this.selectedWorks = [];
     this.newEvent = true;
+    //this.utils = utils;
     this.validator2 = new FormValidator(validator, (results) => this.updateCanSubmit2(results));
     this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
@@ -22,6 +24,7 @@ export class VolunteerOpps {
     this.charity = {};
     this.voOpp = {};
     this.showVolunteers = false;
+    this.events = [];
   }
   async activate(){
     this.canSubmit2 = false;
@@ -37,8 +40,12 @@ export class VolunteerOpps {
     this.signups = await res2.json();
     // console.log('here are all of the signups from the database');
     // console.log(this.signups);
+    await this.makeDataTable();
+  }
+
+  makeDataTable(){
     if (this.events.length > 0){
-      this.fixDates();
+      this.events = fixDates(this.events);
       //this.buildWorkPrefs();
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
@@ -56,8 +63,8 @@ export class VolunteerOpps {
     this.today = new Date().toISOString().split('T')[0];
     this.minEndDate = this.today;
     this.maxStartDate = '';
-    //this.showNewEvent();
   }
+
 
   async fixUserSignups(){
     let allSignups = [];
@@ -183,23 +190,23 @@ export class VolunteerOpps {
     }
   }
 
-  fixDates(){
-    //TODO put into util class with fixDates(array)();
-    for (let i = 0; i < this.events.length; i++){
-      let startDate = this.events[i].voStartDate;
-      let endDate = this.events[i].voEndDate;
-      if (startDate !== null){
-        if (startDate.indexOf('T') !== -1){
-          this.events[i].voStartDate = startDate.substr(0, startDate.indexOf('T'));
-        }
-      }
-      if (endDate !== null){
-        if (endDate.indexOf('T') !== -1){
-          this.events[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
-        }
-      }
-    }
-  }
+  // fixDates(){
+  //   // put into util class with fixDates(array)();
+  //   for (let i = 0; i < this.events.length; i++){
+  //     let startDate = this.events[i].voStartDate;
+  //     let endDate = this.events[i].voEndDate;
+  //     if (startDate !== null){
+  //       if (startDate.indexOf('T') !== -1){
+  //         this.events[i].voStartDate = startDate.substr(0, startDate.indexOf('T'));
+  //       }
+  //     }
+  //     if (endDate !== null){
+  //       if (endDate.indexOf('T') !== -1){
+  //         this.events[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
+  //       }
+  //     }
+  //   }
+  // }
 
   // buildWorkPrefs(){
   //   for (let l = 0; l < this.events.length; l++){
@@ -336,7 +343,6 @@ export class VolunteerOpps {
     .then((response) => response.json())
     .then((data) => {
       this.activate();
-      //this.showNewEvent();
     });
   }
 
@@ -375,7 +381,7 @@ export class VolunteerOpps {
   validate2() {
     return this.validator2.validateObject(this.voOpp);
   }
-
+/* istanbul ignore next */
   setupValidation2() {
     ValidationRules
     .ensure('voContactPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
@@ -400,9 +406,6 @@ export class VolunteerOpps {
   }
 
   selectPickChange(type){
-    // if (type === 'causes'){
-    //   this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
-    // }
     if (type === 'work'){
       this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
     }

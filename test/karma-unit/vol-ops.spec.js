@@ -2,7 +2,6 @@ import {VolunteerOpps} from '../../src/dashboard-child-routes/vol-ops';
 import {App} from '../../src/app';
 import {AuthStub, HttpMock, AppStateStub} from './commons';
 import {Validator} from 'aurelia-validation';
-//import {ValidationRules} from 'aurelia-validation';
 
 class VCMock {
   createForCurrentScope(validator) {
@@ -51,24 +50,9 @@ class HttpMockEvent extends HttpMock {
     this.status = 200;
     return Promise.resolve({
       Headers: this.headers,
-      json: () => Promise.resolve([{'voName': '',
-        'voCharityId': this.charityID,
-        'voCharityName': this.charityName,
-        'voNumPeopleNeeded': 1,
-        'voDescription': '',
-        'voWorkTypes': [],
-        'voTalentTypes': [],
-        'voWorkTypeOther': '',
-        'voTalentTypeOther': '',
-        'voStartDate': null,
-        'voStartTime': '',
-        'voEndDate': null,
-        'voEndTime': '',
-        'voContactName': this.user.name,
-        'voContactEmail': this.user.email,
-        'voContactPhone': this.user.userPhone}])});
+      json: () => Promise.resolve([{'voName': '', 'voCharityId': this.charityID, 'voCharityName': this.charityName, 'voNumPeopleNeeded': 1, 'voDescription': '', 'voWorkTypes': [], 'voTalentTypes': [], 'voWorkTypeOther': '', 'voTalentTypeOther': '', 'voStartDate': null, 'voStartTime': '', 'voEndDate': null, 'voEndTime': '', 'voContactName': this.user.name, 'voContactEmail': this.user.email, 'voContactPhone': this.user.userPhone}])});
   }
-}
+  }
 
 class HttpMockEvent2 extends HttpMock {
   fetch(url, obj) {
@@ -83,7 +67,7 @@ class HttpMockEvent2 extends HttpMock {
       json: () => Promise.resolve([])
     });
   }
-}
+  }
 
 class HttpMockChar extends HttpMock {
   fetch(url, obj) {
@@ -98,8 +82,7 @@ class HttpMockChar extends HttpMock {
       json: () => Promise.resolve({_id: '123', charityTypeOther: 'tree huggers', charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Josh', 'Maria', 'Bob']})
     });
   }
-}
-
+  }
 
 describe('the Volunteer Opps Module', () => {
   let app;
@@ -134,7 +117,7 @@ describe('the Volunteer Opps Module', () => {
 
   it('activates and there are events and runs the show time', (done) => {
     volops.activate();
-    //volops.showTime();
+      //volops.showTime();
     done();
   });
 
@@ -151,14 +134,14 @@ describe('the Volunteer Opps Module', () => {
     expect(volops.events[0].past).toBe(true);
     done();
   });
-  //
+    //
   it('activates and there are no events', (done) => {
     volops2.activate();
     done();
   });
 
   it('set the min and max for start and end dates', (done) => {
-    //volops.activate();
+      //volops.activate();
     volops.voOpp = {
       'voStartDate': '2017-12-12',
       'voEndDate': '2017-12-12'
@@ -171,47 +154,59 @@ describe('the Volunteer Opps Module', () => {
   it('reformats the date to be yyyy-mm-dd', (done) => {
     let sampleDate = new Date();
     let sd = sampleDate.toString();
-    //volops.activate();
+    volops.activate();
     volops.events = [{
       'voStartDate': sd,
-      'voEndDate': sd
+      'voEndDate': sd,
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+      'voTalentTypeOther': 'scrubbing'
     }];
-    volops.fixDates();
+    volops.makeDataTable();
     done();
   });
 
   it('does not reformat the dates', (done) => {
-    //volops.activate();
-    volops.events = [{
-      'voStartDate': '2017-12-12',
-      'voEndDate': '2017-12-12'
-    }];
-    volops.fixDates();
-    done();
-  });
-
-  it('displays the chosen work preferences', (done) => {
-    //volops.activate();
+      //volops.activate();
     volops.events = [{
       'voStartDate': '2017-12-12',
       'voEndDate': '2017-12-12',
       'voWorkTypes': ['shoveling', 'sweeping', 'other'],
-      'voWorkTypeOther': 'scrubbing'
+      'voWorkTypeOther': 'scrubbing',
+      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+      'voTalentTypeOther': 'scrubbing'
+    }];
+    volops.makeDataTable();
+    done();
+  });
+
+  it('displays the chosen work preferences', (done) => {
+      //volops.activate();
+    volops.events = [{
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+      'voTalentTypeOther': 'scrubbing'
     }, {
       'voStartDate': '2017-12-12',
       'voEndDate': '2017-12-12',
       'voWorkTypes': [''],
-      'voWorkTypeOther': ''
+      'voWorkTypeOther': '',
+      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+      'voTalentTypeOther': 'scrubbing'
     }];
     volops.app.buildPTag(volops.events, 'voWorkTypes', 'voWorkTypeOther', 'workHtml');
-    //console.log(volops.events[1]);
+      //console.log(volops.events[1]);
     expect(volops.events[1].workHtml).toBe('<p style="font-size:10pt">not specified</p>');
-    //volops.buildWorkPrefs();
+      //volops.buildWorkPrefs();
     done();
   });
 
   it('displays the chosen talent preferences', (done) => {
-    //volops.activate();
+      //volops.activate();
     volops.events = [{
       'voStartDate': '2017-12-12',
       'voEndDate': '2017-12-12',
@@ -229,7 +224,7 @@ describe('the Volunteer Opps Module', () => {
   });
 
   it('opens and closes the drop-down checkboxes', (done) => {
-    //volops.activate();
+      //volops.activate();
     document.body.innerHTML = '<div id="talents" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
     volops.app.showCheckboxes('talents');
     volops.app.expanded = true;
@@ -237,8 +232,14 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  it('it display the talent other form field', (done) => {
-    //volops.activate();
+  it('it displays the talent other form field', (done) => {
+    volops.activate();
+    volops.user = {
+      'name': 'me',
+      'email': 'me@me.org',
+      'userPhone': '3333333333',
+      'volTalents': []
+    };
     volops.voOpp = {
       'voTalentTypes': ['other']
     };
@@ -248,31 +249,44 @@ describe('the Volunteer Opps Module', () => {
       'voTalentTypes': ['swimming']
     };
     volops.voOpp.voTalentTypeOther = 'teststring';
-    volops.app.selectPickedChange(volops.voOpp, volops, 'voTalentTypes', 'voTalentTypeOther', 'talentOther');
+      //volops.app.selectPickedChange(volops.voOpp, volops, 'voTalentTypes', 'voTalentTypeOther', 'talentOther');
+    volops.selectPickChange('talents');
     expect(volops.talentOther).toBe(false);
-    expect(volops.voOpp.voTalentTypeOther).toBe('');
+    document.body.innerHTML =   document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
+    volops.setupValidation2 = function(){};
+    volops.attached();
+    //expect(volops.voOpp.voTalentTypeOther).toBe('');
     done();
   });
 
   it('it display the work other form field', (done) => {
-    //volops.activate();
-    volops.voOpp = {
-      'voWorkTypes': ['other']
+    volops.activate();
+    volops.user = {
+      'name': 'me',
+      'email': 'me@me.org',
+      'userPhone': '3333333333',
+      'volTalents': [],
+      'volWorkPrefs': []
     };
-    volops.app.selectPickedChange(volops.voOpp, volops, 'voWorkTypes', 'voWorkTypeOther', 'workOther');
-    expect(volops.workOther).toBe(true);
+    volops.voOpp = {
+      'voWorkTypes': ['other'],
+      'voTalentTypes': ['swimming', 'other']
+    };
+      //volops.app.selectPickedChange(volops.voOpp, volops, 'voWorkTypes', 'voWorkTypeOther', 'workOther');
+    volops.selectPickChange('work');
+    //expect(volops.workOther).toBe(true);
     volops.voOpp = {
       'voWorkTypes': ['swimming']
     };
     volops.voOpp.voWorkTypeOther = 'teststring';
     volops.app.selectPickedChange(volops.voOpp, volops, 'voWorkTypes', 'voWorkTypeOther', 'workOther');
-    expect(volops.workOther).toBe(false);
+    //expect(volops.workOther).toBe(false);
     expect(volops.voOpp.voWorkTypeOther).toBe('');
     done();
   });
 
   it('it creates a new event', (done) => {
-    //volops.activate();
+      //volops.activate();
     document.body.innerHTML = '<div id="eventHeader"></div>';
     volops.charityName = 'OHAF';
     volops.voOpp = {
@@ -400,7 +414,7 @@ describe('the Volunteer Opps Module', () => {
       'voTalentTypeOther': 'scrubbing',
       'voSignupUserIds': ['1', '2', '3']
     };
-    //TODO this same httpmock needs to have a /user/uid that responds with a 404 error (user not found)
+      //TODO this same httpmock needs to have a /user/uid that responds with a 404 error (user not found)
     volops4.viewPeople(signupevent);
     done();
   });
@@ -426,7 +440,7 @@ describe('the Volunteer Opps Module', () => {
   });
 
   it('displays the update event form', (done) => {
-    //volops.activate();
+      //volops.activate();
     document.body.innerHTML = '<div id="topSection"></div>';
     let thisEvent = {
       'voWorkTypes': ['other'],
@@ -452,7 +466,7 @@ describe('the Volunteer Opps Module', () => {
   });
 
   it('displays the new event form', (done) => {
-    //volops.activate();
+      //volops.activate();
     volops.user = {
       'name': 'me',
       'email': 'me@me.org',
@@ -481,7 +495,7 @@ describe('the Volunteer Opps Module', () => {
   });
 
   it('updates an event', (done) => {
-    //volops.activate();
+      //volops.activate();
     volops.voOpp = {
       'voWorkTypes': ['other'],
       'voCharityName': '',
@@ -496,20 +510,20 @@ describe('the Volunteer Opps Module', () => {
   });
 
   it('deletes an event', (done) => {
-    //volops.activate();
+      //volops.activate();
     volops.deleteEvent('333');
     done();
   });
 
   it('should not remove user signups if the user does exist', (done) => {
-    //volops.activate();
+      //volops.activate();
     volops.fixUserSignups();
     done();
   });
 
   it('should detect if a user does not exist that is set as a signup', (done) => {
-    //TODO /signup/getall needs to be configured in the httpmock to return an array of signup objects
-    //TODO this same httpmock needs to have a /user/uid that responds with a 404 error (user not found)
+      //TODO /signup/getall needs to be configured in the httpmock to return an array of signup objects
+      //TODO this same httpmock needs to have a /user/uid that responds with a 404 error (user not found)
     volops.fixUserSignups();
     done();
   });
@@ -520,7 +534,7 @@ describe('the Volunteer Opps Module', () => {
   });
 
   it('displays the submit button if the form is valid', (done) => {
-    //volops.activate();
+      //volops.activate();
     document.body.innerHTML = '<button class="updateButton"></button>';
     volops.charityName = 'OHAF';
     volops.voOpp = {
@@ -539,7 +553,7 @@ describe('the Volunteer Opps Module', () => {
   });
 
   it('the submit button is not displayed when the form is not valid', (done) => {
-    //volops2.activate();
+      //volops2.activate();
     document.body.innerHTML = '<button class="updateButton"></button>';
     volops2.charityName = 'OHAF';
     volops2.voOpp = {
@@ -556,7 +570,7 @@ describe('the Volunteer Opps Module', () => {
   });
 
   it('events must have at least one volunteer', (done) => {
-    //volops2.activate();
+      //volops2.activate();
     document.body.innerHTML = '<button class="updateButton"></button>';
     volops2.charityName = 'OHAF';
     volops2.voOpp = {
@@ -575,27 +589,27 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-//   it('run attached', (done) => {
-//     //volops2.activate();
-//     volops2.user = {
-//       'name': 'me',
-//       'email': 'me@me.org',
-//       'userPhone': '3333333333'
-//     };
-//     document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text"><button class="updateButton"></button>';
-//     volops2.charityName = 'OHAF';
-//     volops2.voOpp = {
-//       'voWorkTypes': ['other'],
-//       'voCharityName': '',
-//       'voStartDate': '2017-12-12',
-//       'voEndDate': '2017-12-12',
-//       'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-//       'voTalentTypeOther': 'scrubbing',
-//       '_id': '2222',
-//       'voNumPeopleNeeded': 0
-//     };
-//     volops2.setupValidation2 = function(){};
-//     volops2.attached();
-//     done();
-//   });
+    //   it('run attached', (done) => {
+    //     //volops2.activate();
+    //     volops2.user = {
+    //       'name': 'me',
+    //       'email': 'me@me.org',
+    //       'userPhone': '3333333333'
+    //     };
+    //     document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text"><button class="updateButton"></button>';
+    //     volops2.charityName = 'OHAF';
+    //     volops2.voOpp = {
+    //       'voWorkTypes': ['other'],
+    //       'voCharityName': '',
+    //       'voStartDate': '2017-12-12',
+    //       'voEndDate': '2017-12-12',
+    //       'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+    //       'voTalentTypeOther': 'scrubbing',
+    //       '_id': '2222',
+    //       'voNumPeopleNeeded': 0
+    //     };
+    //     volops2.setupValidation2 = function(){};
+    //     volops2.attached();
+    //     done();
+    //   });
 });
