@@ -406,6 +406,8 @@ export class VolunteerOpps {
   }
 
   selectPickChange(type){
+    this.selectedTalents = this.voOpp.voTalentTypes;
+    this.selectedWorks = this.voOpp.voWorkTypes;
     if (type === 'work'){
       this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
     }
