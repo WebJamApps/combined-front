@@ -69,6 +69,11 @@ describe('the UserAccount Module', () => {
   //   });
   // });
 
+  it('should validate property', (done) => {
+    ua.validator.validateProperty({}, 'school', 'schoolRules');
+    done();
+  });
+
   it('setup volunteer', (done) => {
     ua.app.appState = new AppStateStub();
     ua.setupVolunteer().then(() => {
