@@ -29,6 +29,22 @@ export class UserAccount {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.role = this.user.userType;
+    this.setupVolunteerUser();
+    this.checkChangeUserType();
+    if (this.user.userDetails === 'newUser'){
+      this.setNolongerNew();
+    }
+    if (this.user.isOhafUser && this.user.userType === 'Volunteer'){
+      this.userTypes = ['Charity', 'Volunteer'];
+    }
+    if (process.env.NODE_ENV === 'development' || this.user.userType === 'Developer'){
+      this.userTypes.push('Developer');
+    }
+    this.userTypes.sort();
+    this.setupValidation();
+  }
+
+  setupVolunteerUser(){
     this.causes.sort();
     this.causes.push('other');
     for (let i = 0; i < this.causes.length; i++) {
@@ -71,18 +87,6 @@ export class UserAccount {
     } else {
       this.causeOther = false;
     }
-    this.checkChangeUserType();
-    if (this.user.userDetails === 'newUser'){
-      this.setNolongerNew();
-    }
-    if (this.user.isOhafUser && this.user.userType === 'Volunteer'){
-      this.userTypes = ['Charity', 'Volunteer'];
-    }
-    if (process.env.NODE_ENV === 'development' || this.user.userType === 'Developer'){
-      this.userTypes.push('Developer');
-    }
-    this.userTypes.sort();
-    this.setupValidation();
   }
 
   setupValidation() {
@@ -95,9 +99,9 @@ export class UserAccount {
     .on(this.user);
   }
 
-  validate() {
-    this.validator.validateObject(this.user);
-  }
+  // validate() {
+  //   this.validator.validateObject(this.user);
+  // }
 
   updateCanSubmit(validationResults) {
     let valid = true;
