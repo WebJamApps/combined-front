@@ -1,8 +1,8 @@
 # combined-front
 [![CircleCI](https://circleci.com/gh/WebJamApps/combined-front.svg?style=svg)](https://circleci.com/gh/WebJamApps/combined-front)
-[![Code Climate](https://codeclimate.com/github/WebJamApps/combined-front/badges/gpa.svg)](https://codeclimate.com/github/WebJamApps/combined-front)
 [![Test Coverage](https://codeclimate.com/github/WebJamApps/combined-front/badges/coverage.svg)](https://codeclimate.com/github/WebJamApps/combined-front/coverage)
 [![Issue Count](https://codeclimate.com/github/WebJamApps/combined-front/badges/issue_count.svg)](https://codeclimate.com/github/WebJamApps/combined-front/issues)
+[![Maintainability](https://api.codeclimate.com/v1/badges/cd44da430d179188ea8e/maintainability)](https://codeclimate.com/github/WebJamApps/combined-front/maintainability)
 [![Known Vulnerabilities](https://snyk.io/test/github/webjamapps/combined-front/badge.svg)](https://snyk.io/test/github/webjamapps/combined-front)
 
 This is the front end for the following apps:
