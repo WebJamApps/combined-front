@@ -39,7 +39,7 @@ To get the latest version of code, <b>git pull origin dev</b> and then switch to
 You will no be able to push directly to the dev branch, rather we would appreciate if you pushed to your own branch and then submit a pull request to the <b>dev</b> branch.
 
 Since we are running some alpha and beta node packages, there will be times when the developer will need to reinstall all dependencies.
-We have found that is can be necessary to delete the entire Node_Modules folder and then clean the cache by running this script:<br>
+It may be necessary to delete the entire Node_Modules folder and then clean the cache by running this script:<br>
 <b>npm run cleaninstall</b><br>
 
 <br>
