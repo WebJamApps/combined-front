@@ -47,34 +47,31 @@ export class UserAccount {
   setupVolunteerUser(){
     this.causes.sort();
     this.causes.push('other');
-    for (let cause of this.causes) {
-      if (this.user.volCauses.includes(cause)) {
-        this.selectedCauses.push(cause);
+    for (let i = 0; i < this.causes.length; i++) {
+      if (this.user.volCauses.indexOf(this.causes[i]) > -1){
+        this.selectedCauses.push(this.causes[i]);
       } else {
         this.selectedCauses.push('');
       }
     }
-
     this.talents.sort();
     this.talents.push('other');
-    for (let talent of this.talents) {
-      if (this.user.volTalents.includes(talent)) {
-        this.selectedTalents.push(talent);
+    for (let i = 0; i < this.talents.length; i++) {
+      if (this.user.volTalents.indexOf(this.talents[i]) > -1){
+        this.selectedTalents.push(this.talents[i]);
       } else {
         this.selectedTalents.push('');
       }
     }
-
     this.works.sort();
     this.works.push('other');
-    for (let work of this.works) {
-      if (this.user.volWorkPrefs.includes(work)) {
-        this.selectedWorks.push(work);
+    for (let i = 0; i < this.works.length; i++) {
+      if (this.user.volWorkPrefs.indexOf(this.works[i]) > -1){
+        this.selectedWorks.push(this.works[i]);
       } else {
         this.selectedWorks.push('');
       }
     }
-
     if (this.selectedWorks.includes('other')){
       this.workOther = true;
     } else {
