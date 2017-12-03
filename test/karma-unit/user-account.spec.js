@@ -145,6 +145,22 @@ describe('the UserAccount Module', () => {
     done();
   });
 
+  it('should set charity', (done) => {
+    ua.setCharity();
+    done();
+  });
+
+  it('should update user', (done) => {
+    ua.updateUser();
+    done();
+  });
+
+  it('should select picked type', (done) => {
+    ua.selectPickChange('causes');
+    ua.selectPickChange('work');
+    ua.selectPickChange('talents');
+    done();
+  });
   // it('causePicked without attributes', (done) => {
   //   ua.app.appState = new AppStateStub();
   //   ua.activate().then(() => {
