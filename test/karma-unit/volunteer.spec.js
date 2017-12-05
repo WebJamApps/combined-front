@@ -66,19 +66,34 @@ describe('the Volunteer Module', () => {
   });
 
   it('displays the events', (done) => {
-    volunteer2.activate();
+    // volunteer2.activate();
     volunteer2.events = [{
-      'voStartDate': '2017-12-12',
+      'voStartDate': '2017-12-12T',
       'voEndDate': '2017-12-12',
       'voWorkTypes': ['shoveling', 'sweeping', 'other'],
-      'voWorkTypeOther': 'scrubbing'
+      'voWorkTypeOther': 'scrubbing',
+      '_id': 1,
+      'scheduled': false,
+      'voNumPeopleScheduled': 10,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voCharityTypes': ['ages', 'in', 'the', 'wake']
     }, {
       'voStartDate': '2017-12-12',
-      'voEndDate': '2017-12-12',
+      'voEndDate': '2017-12-12T',
       'voWorkTypes': [''],
-      'voWorkTypeOther': ''
+      'voWorkTypeOther': '',
+      '_id': 2,
+      'scheduled': false,
+      'voNumPeopleScheduled': 10,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voCharityTypes': ['ages', 'in', 'the', 'wake']
     }];
-    volunteer2.displayEvents(volunteer2.events);
+    volunteer2.signups = [{'voloppId': 1, 'numPeople': 25, 'userId': 123445}, {'voloppId': 3, 'numPeople': 25, 'userId': 123445}];
+    volunteer2.doubleCheckSignups = true;
+    volunteer2.selectedFilter = ['future only', 'hello'];
+    volunteer2.displayEvents();
     //console.log(volunteer2.events);
     //expect(volunteer2.events[1].workHtml).toBe('<p style="font-size:10pt">not specified</p>');
     done();
@@ -103,6 +118,64 @@ describe('the Volunteer Module', () => {
     expect(document.getElementById('causes').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
     expect(document.getElementById('talents').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
     expect(document.getElementById('works').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
+    done();
+  });
+
+  it('should check scheduled', (done) => {
+    volunteer.events = [{
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      '_id': 1,
+      'scheduled': false,
+      'voNumPeopleScheduled': 10,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel'
+    }, {
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': [''],
+      'voWorkTypeOther': '',
+      '_id': 2,
+      'scheduled': false,
+      'voNumPeopleScheduled': 10,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel'
+    }];
+    volunteer.signups = [{'voloppId': 1, 'numPeople': 25, 'userId': 123445}, {'voloppId': 3, 'numPeople': 25, 'userId': 123445}];
+    volunteer.doubleCheckSignups = true;
+    volunteer.checkScheduled();
+    volunteer.doubleCheckSignups = false;
+    volunteer.checkScheduled();
+    done();
+  });
+
+  it('should filter picks', (done) => {
+    volunteer.events = [{
+      'voStartDate': '',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing'
+    }];
+    volunteer.selectedFilter = ['keywords', 'zipcode', 'cause', 'future only'];
+    volunteer.filterPicked();
+    volunteer.selectedFilter = ['keyword', 'zpcode', 'case', 'futures onlies'];
+    volunteer.filterPicked();
+    volunteer.selectedFilter = [];
+    volunteer.filterPicked();
+    done();
+  });
+
+  it('should cancel signup', (done) => {
+    volunteer.cancelSignup('120980592048243099824324');
+    done();
+  });
+
+  it('should check signup event', (done) => {
+    volunteer.canSignup = true;
+    volunteer.uid = 1298471410910974;
+    volunteer.signupEvent({_id: 1298471058100});
     done();
   });
 });
