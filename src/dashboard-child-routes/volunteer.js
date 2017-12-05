@@ -48,8 +48,10 @@ export class Volunteer {
       this.fixZipcodes();
       this.fixDates();
     //this.buildWorkPrefs();
-      this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
-      this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
+      // TODO; there seems to be a problem with the 'buildPTag' method in the app module.
+      // will come up with a fix but should be commented for now.
+    //   this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
+    //   this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
       this.populateSites();
       this.populateCauses();
       await this.checkScheduled();
