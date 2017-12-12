@@ -47,27 +47,27 @@ export class UserAccount {
   setupVolunteerUser(){
     this.causes.sort();
     this.causes.push('other');
-    for (let i = 0; i < this.causes.length; i++) {
-      if (this.user.volCauses.indexOf(this.causes[i]) > -1){
-        this.selectedCauses.push(this.causes[i]);
+    for (let i of this.causes) {
+      if (this.user.volCauses.includes(i)){
+        this.selectedCauses.push(i);
       } else {
         this.selectedCauses.push('');
       }
     }
     this.talents.sort();
     this.talents.push('other');
-    for (let i = 0; i < this.talents.length; i++) {
-      if (this.user.volTalents.indexOf(this.talents[i]) > -1){
-        this.selectedTalents.push(this.talents[i]);
+    for (let i of this.talents) {
+      if (this.user.volTalents.includes(i)){
+        this.selectedTalents.push(i);
       } else {
         this.selectedTalents.push('');
       }
     }
     this.works.sort();
     this.works.push('other');
-    for (let i = 0; i < this.works.length; i++) {
-      if (this.user.volWorkPrefs.indexOf(this.works[i]) > -1){
-        this.selectedWorks.push(this.works[i]);
+    for (let i of this.works) {
+      if (this.user.volWorkPrefs.includes(i)){
+        this.selectedWorks.push(i);
       } else {
         this.selectedWorks.push('');
       }
