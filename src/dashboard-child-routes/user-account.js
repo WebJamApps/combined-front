@@ -44,34 +44,22 @@ export class UserAccount {
     this.setupValidation();
   }
 
+  changeCauses(item, vol, container) {
+    item.sort();
+    item.push('other');
+    for (let i of item) {
+      if (vol.includes(i)) {
+        container.push(i);
+      } else {
+        container.push('');
+      }
+    }
+  }
+
   setupVolunteerUser(){
-    this.causes.sort();
-    this.causes.push('other');
-    for (let i of this.causes) {
-      if (this.user.volCauses.includes(i)){
-        this.selectedCauses.push(i);
-      } else {
-        this.selectedCauses.push('');
-      }
-    }
-    this.talents.sort();
-    this.talents.push('other');
-    for (let i of this.talents) {
-      if (this.user.volTalents.includes(i)){
-        this.selectedTalents.push(i);
-      } else {
-        this.selectedTalents.push('');
-      }
-    }
-    this.works.sort();
-    this.works.push('other');
-    for (let i of this.works) {
-      if (this.user.volWorkPrefs.includes(i)){
-        this.selectedWorks.push(i);
-      } else {
-        this.selectedWorks.push('');
-      }
-    }
+    this.changeCauses(this.causes, this.user.volCauses, this.selectedCauses);
+    this.changeCauses(this.talents, this.user.volTalents, this.selectedTalents);
+    this.changeCauses(this.works, this.user.volWorkPrefs, this.selectedWorks);
     if (this.selectedWorks.includes('other')){
       this.workOther = true;
     } else {
