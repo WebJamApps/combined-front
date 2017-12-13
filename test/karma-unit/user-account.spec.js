@@ -9,14 +9,14 @@ class VCMock {
   }
 }
 
-// class HttpStub extends HttpMock {
-//   fetch(url) {
-//     console.log(url);
-//     return Promise.resolve({
-//       json: () => Promise.resolve([{name: 'in the jungle'}])
-//     });
-//   }
-// }
+class HttpStub extends HttpMock {
+  fetch(url) {
+    console.log(url);
+    return Promise.resolve({
+      json: () => [{name: 'in the jungle'}]
+    });
+  }
+}
 
 class ValidatorMock extends Validator {
   constructor(a, b) {
@@ -32,42 +32,35 @@ class ValidatorMock extends Validator {
   }
 }
 
+class AppStateMock extends AppStateStub{
+  getUser(uid) {
+    this.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
+
+    return new Promise((resolve) => {
+      resolve(this.user);
+    });
+  }
+}
+
 describe('the UserAccount Module', () => {
   let ua;
   let app;
   let auth;
-  //let http;
 
   beforeEach(() => {
     auth = new AuthStub();
     auth.setToken({sub: 'aowifjawifhiawofjo'});
-    app = new App(auth, new HttpMock());
+    app = new App(auth, new HttpStub());
     app.router = new RouterStub();
     app.activate();
     ua = new UserAccount(app, new VCMock(), new ValidatorMock());
     ua.app.appState = new AppStateStub();
-    //us.app.appState = new AppStateStub();
-    ua.selectedCauses = ['other'];
-    ua.selectedWorks = ['other'];
-    ua.selectedTalents = ['other'];
+    ua.selectedCauses = [];
+    ua.selectedWorks = [];
+    ua.selectedTalents = [];
     ua.activate();
     ua.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
   });
-
-  // it('should activate user account', (done) => {
-  //   ua.app.appState = new AppStateStub();
-  //   ua.activate().then(() => {
-  //     done();
-  //   });
-  // });
-
-  // it('should activate user account with preselected attributes', (done) => {
-  //   ua.app.appState = new AppStateStub();
-  //   ua.app.auth.setToken({sub: '1'});
-  //   ua.activate().then(() => {
-  //     done();
-  //   });
-  // });
 
   it('should validate property', (done) => {
     ua.validator.validateProperty({}, 'school', 'schoolRules');
@@ -76,9 +69,16 @@ describe('the UserAccount Module', () => {
 
   it('setup volunteer', (done) => {
     ua.app.appState = new AppStateStub();
-    ua.setupVolunteer().then(() => {
-      done();
-    });
+    ua.setupVolunteer();
+    done();
+  });
+
+  it('setup volunteer with other selected works', (done) => {
+    let ua2 = new UserAccount(app, new VCMock(), new ValidatorMock());
+    ua2.app.appState = new AppStateMock();
+    ua2.activate();
+    ua2.setupVolunteer();
+    done();
   });
 
   it('checkboxes app.expanded', (done) => {
@@ -161,40 +161,11 @@ describe('the UserAccount Module', () => {
     ua.selectPickChange('talents');
     done();
   });
-  // it('causePicked without attributes', (done) => {
-  //   ua.app.appState = new AppStateStub();
-  //   ua.activate().then(() => {
-  //     ua.causePicked();
-  //     done();
-  //   });
-  // });
 
-  // it('causePicked with attributes', (done) => {
-  //   ua.app.appState = new AppStateStub();
-  //   ua.app.auth.setToken({sub: '1'});
-  //   ua.activate().then(() => {
-  //     ua.causePicked();
-  //     done();
-  //   });
-  // });
-
-
-  // it('workPicked without attributes', (done) => {
-  //   ua.app.appState = new AppStateStub();
-  //   ua.activate().then(() => {
-  //     ua.workPicked();
-  //     done();
-  //   });
-  // });
-
-  // it('workPicked with attributes', (done) => {
-  //   ua.app.appState = new AppStateStub();
-  //   ua.app.auth.setToken({sub: '1'});
-  //   ua.activate().then(() => {
-  //     ua.workPicked();
-  //     done();
-  //   });
-  // });
+  it('should check whether update can submit', (done) => {
+    ua.updateCanSubmit([{valid: false}]);
+    done();
+  });
 
   it('deletes the user', (done) => {
     ua.deleteUser();

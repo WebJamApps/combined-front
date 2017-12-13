@@ -44,34 +44,22 @@ export class UserAccount {
     this.setupValidation();
   }
 
+  changeCauses(item, vol, container) {
+    item.sort();
+    item.push('other');
+    for (let i of item) {
+      if (vol.includes(i)) {
+        container.push(i);
+      } else {
+        container.push('');
+      }
+    }
+  }
+
   setupVolunteerUser(){
-    this.causes.sort();
-    this.causes.push('other');
-    for (let i = 0; i < this.causes.length; i++) {
-      if (this.user.volCauses.indexOf(this.causes[i]) > -1){
-        this.selectedCauses.push(this.causes[i]);
-      } else {
-        this.selectedCauses.push('');
-      }
-    }
-    this.talents.sort();
-    this.talents.push('other');
-    for (let i = 0; i < this.talents.length; i++) {
-      if (this.user.volTalents.indexOf(this.talents[i]) > -1){
-        this.selectedTalents.push(this.talents[i]);
-      } else {
-        this.selectedTalents.push('');
-      }
-    }
-    this.works.sort();
-    this.works.push('other');
-    for (let i = 0; i < this.works.length; i++) {
-      if (this.user.volWorkPrefs.indexOf(this.works[i]) > -1){
-        this.selectedWorks.push(this.works[i]);
-      } else {
-        this.selectedWorks.push('');
-      }
-    }
+    this.changeCauses(this.causes, this.user.volCauses, this.selectedCauses);
+    this.changeCauses(this.talents, this.user.volTalents, this.selectedTalents);
+    this.changeCauses(this.works, this.user.volWorkPrefs, this.selectedWorks);
     if (this.selectedWorks.includes('other')){
       this.workOther = true;
     } else {
