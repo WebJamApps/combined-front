@@ -16,6 +16,7 @@ class HttpMockEvent extends HttpMock {
       json: () => Promise.resolve([{'_id': '234', 'voName': 'run the swamp',
         'voCharityId': '123',
         'voCharityName': 'howdy',
+        'voloppId': 1,
         'voNumPeopleNeeded': 1,
         'voDescription': '',
         'voWorkTypes': [],
@@ -33,6 +34,7 @@ class HttpMockEvent extends HttpMock {
   }
 }
 
+
 describe('the Volunteer Module', () => {
   let volunteer;
   let volunteer2;
@@ -49,12 +51,14 @@ describe('the Volunteer Module', () => {
     volunteer = new Volunteer(app);
     app2 = new App(auth, new HttpMockEvent());
     app2.appState = new AppStateStub();
-    app2.appState.user = {_id: '1', name: 'billy', email: 'billy@billy.com', volCauses: ['', '']};
+    app2.appState.user = { name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
     app2.activate();
     volunteer2 = new Volunteer(app2);
   });
 
   it('should active so it can display the volunteer settings', (done) => {
+    volunteer.activate();
+    volunteer.app.appState.user = { name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
     volunteer.activate();
     console.log(volunteer.user);
     done();
@@ -62,6 +66,12 @@ describe('the Volunteer Module', () => {
 
   it('should active and get all events', (done) => {
     volunteer2.activate();
+    done();
+  });
+
+  it('should have the same id as events id', (done) => {
+    volunteer.events = [{_id: '2124', voloppId: '123', userId: '3', numPeople: 1, scheduled: false}];
+    volunteer.checkSignups();
     done();
   });
 
@@ -169,6 +179,13 @@ describe('the Volunteer Module', () => {
 
   it('should cancel signup', (done) => {
     volunteer.cancelSignup('120980592048243099824324');
+    done();
+  });
+
+  it('should return without moving on with the code', (done) => {
+    volunteer.canSignup = false;
+    volunteer.uid = 1298471410910974;
+    volunteer.signupEvent({_id: 1298471058100});
     done();
   });
 
