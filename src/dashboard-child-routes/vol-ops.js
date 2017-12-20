@@ -38,8 +38,6 @@ export class VolunteerOpps {
     this.events = await res.json();
     let res2 = await this.app.httpClient.fetch('/signup/getall');
     this.signups = await res2.json();
-    // console.log('here are all of the signups from the database');
-    // console.log(this.signups);
     await this.makeDataTable();
   }
 
@@ -65,18 +63,14 @@ export class VolunteerOpps {
     this.maxStartDate = '';
   }
 
-
   async fixUserSignups(){
     let allSignups = [];
     let res = await this.app.httpClient.fetch('/signup/getall');
     allSignups = await res.json();
-    // console.log('here are all of the signups');
-    // console.log(allSignups);
     for (let i = 0; i < allSignups.length; i++){
       try {
         await this.app.httpClient.fetch('/user/' + allSignups[i].userId);
       } catch (err) {
-        // console.log('the user does not exist');
         await this.removeSignup(allSignups[i].userId);
       }
     }
@@ -157,11 +151,6 @@ export class VolunteerOpps {
     }
   }
 
-  //TODO display a clock UI
-  // showTime(type){
-  //   //console.log('show time picker here');
-  // }
-
   selectDate(dtype){
     if (dtype === 'start-date'){
       this.minEndDate = this.voOpp.voStartDate;
@@ -189,62 +178,6 @@ export class VolunteerOpps {
       this.voOpp.voCharityTypes.push(this.charity.charityTypeOther);
     }
   }
-
-  // fixDates(){
-  //   // put into util class with fixDates(array)();
-  //   for (let i = 0; i < this.events.length; i++){
-  //     let startDate = this.events[i].voStartDate;
-  //     let endDate = this.events[i].voEndDate;
-  //     if (startDate !== null){
-  //       if (startDate.indexOf('T') !== -1){
-  //         this.events[i].voStartDate = startDate.substr(0, startDate.indexOf('T'));
-  //       }
-  //     }
-  //     if (endDate !== null){
-  //       if (endDate.indexOf('T') !== -1){
-  //         this.events[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
-  //       }
-  //     }
-  //   }
-  // }
-
-  // buildWorkPrefs(){
-  //   for (let l = 0; l < this.events.length; l++){
-  //     let workHtml = '';
-  //     for (let i = 0; i < this.events[l].voWorkTypes.length; i++) {
-  //       if (this.events[l].voWorkTypes[i] !== ''){
-  //         if (this.events[l].voWorkTypes[i] !== 'other'){
-  //           workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypes[i] + '</p>';
-  //         } else {
-  //           workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypeOther + '</p>';
-  //         }
-  //       }
-  //     }
-  //     if (workHtml === ''){
-  //       workHtml = '<p style="font-size:10pt">not specified</p>';
-  //     }
-  //     this.events[l].workHtml = workHtml;
-  //   }
-  // }
-
-  // buildTalents(){
-  //   for (let l = 0; l < this.events.length; l++){
-  //     let talentHtml = '';
-  //     for (let i = 0; i < this.events[l].voTalentTypes.length; i++) {
-  //       if (this.events[l].voTalentTypes[i] !== ''){
-  //         if (this.events[l].voTalentTypes[i] !== 'other'){
-  //           talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypes[i] + '</p>';
-  //         } else {
-  //           talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypeOther + '</p>';
-  //         }
-  //       }
-  //     }
-  //     if (talentHtml === ''){
-  //       talentHtml = '<p style="font-size:10pt">not specified</p>';
-  //     }
-  //     this.events[l].talentHtml = talentHtml;
-  //   }
-  // }
 
   scheduleEvent(){
     this.voOpp.voStatus = 'new';

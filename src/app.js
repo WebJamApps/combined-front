@@ -165,7 +165,7 @@ export class App {
     }
   }
 
-  setNavMenu(){
+  checkNavMenu(){
     this.Menu = 'wj';
     if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') {
       this.Menu = 'ohaf';
@@ -206,13 +206,35 @@ export class App {
     }
   }
 
+  setFooter(style){
+    let footer = document.getElementById('wjfooter');
+    let color = '';
+    if (footer !== null){
+      footer.style.backgroundColor = '#2a222a';
+      if (style === 'ohaf'){
+        footer.style.backgroundColor = '#565656';
+        color = '#c09580';
+      }
+      footer.innerHTML = '<div style="text-align: center"><span>&nbsp;&nbsp;</span>' +
+      '<a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>' +
+      '<span style="color:white; font-size: 9pt; padding-left:18px;">Powered by ' +
+      '<a class="wjllc" target="_blank" onMouseOver="this.style.color=\'gray\'" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
+    }
+  }
+
   get currentStyles() {
     let result = {};
-    let footer = document.getElementById('wjfooter');
+    let style = 'wj';
+    //let footer = document.getElementById('wjfooter');
     let mobilemenutoggle = document.getElementById('mobilemenutoggle');
-    let color = '';
-    this.setNavMenu();
+    //let color = '';
+    this.checkNavMenu();
     if (this.Menu === 'charity' || this.Menu === 'ohaf' || this.Menu === 'volunteer' || this.role === 'Charity' || this.role === 'Volunteer'){
+      style = 'ohaf';
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',
         headerText1: 'Our',
@@ -224,19 +246,6 @@ export class App {
         menuToggleClass: 'ohaf-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/ohaf/butterfly.png';
-      if (footer !== null){
-        footer.style.backgroundColor = '#565656';
-        color = '#c09580';
-      //   footer.innerHTML = '<div style="text-align: center">' +
-      //   '<a style="margin-left:10px;padding-right:10px; color:#c09580" target="_blank" href="https://www.facebook.com/WebJamLLC/">' +
-      //   '<i class="ohaf-social-media fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>' +
-      //   '<a style="padding-right:10px; color:#c09580" target="_blank" href="https://twitter.com/WebJamLLC">' +
-      //   '<i class="ohaf-social-media fa fa-twitter fa-2x" aria-hidden="true"></i></a>' +
-      //   '<a style="padding-right:10px; color:#c09580" target="_blank" href="https://plus.google.com/u/1/109586499331294076292">' +
-      //   '<i class="ohaf-social-media fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a><br>' +
-      //   '<span style="color:white; font-size: 9pt;margin:auto">Powered by ' +
-      //   '<a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
-      }
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#565656';
       }
@@ -250,23 +259,14 @@ export class App {
         menuToggleClass: 'home-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
-      if (footer !== null){
-        footer.style.backgroundColor = '#2a222a';
-      }
+      // if (footer !== null){
+      //
+      // }
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#2a222a';
       }
     }
-    if (footer !== null){
-      footer.innerHTML = '<div style="text-align: center"><span>&nbsp;&nbsp;</span>' +
-    '<a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>' +
-    '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>' +
-    '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>' +
-    '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>' +
-    '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>' +
-    '<span style="color:white; font-size: 9pt; padding-left:18px;">Powered by ' +
-    '<a class="wjllc" target="_blank" onMouseOver="this.style.color=\'gray\'" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
-    }
+    this.setFooter(style);
     return result;
   }
 

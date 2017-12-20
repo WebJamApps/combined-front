@@ -47,18 +47,12 @@ export class Volunteer {
       await this.checkSignups();
       this.fixZipcodes();
       this.fixDates();
-    //this.buildWorkPrefs();
-      // there seems to be a problem with the 'buildPTag' method in the app module.
-      // will come up with a fix but should be commented for now.
-    //   this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
-    //   this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
       this.populateSites();
       this.populateCauses();
       await this.checkScheduled();
       if (this.selectedFilter.includes('future only')) {
-        this.removePast();
+        this.markPast();
       }
-    //this.showtable = true;
     }
   }
 
@@ -151,7 +145,7 @@ export class Volunteer {
     }
     if (this.selectedFilter.includes('future only')) {
       console.log('you selected the starting date filter');
-      this.removePast();
+      this.markPast();
       this.showPast = false;
     } else {
       this.showPast = true;
@@ -167,7 +161,7 @@ export class Volunteer {
     return today;
   }
 
-  removePast() {
+  markPast() {
     let testDate;
     let today = new Date();
     today = this.formatDate(today);
@@ -223,44 +217,6 @@ export class Volunteer {
       }
     }
   }
-
-  // buildWorkPrefs(){
-  //   for (let l = 0; l < this.events.length; l++){
-  //     let workHtml = '';
-  //     for (let i = 0; i < this.events[l].voWorkTypes.length; i++) {
-  //       if (this.events[l].voWorkTypes[i] !== ''){
-  //         if (this.events[l].voWorkTypes[i] !== 'other'){
-  //           workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypes[i] + '</p>';
-  //         } else {
-  //           workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypeOther + '</p>';
-  //         }
-  //       }
-  //     }
-  //     if (workHtml === ''){
-  //       workHtml = '<p style="font-size:10pt">not specified</p>';
-  //     }
-  //     this.events[l].workHtml = workHtml;
-  //   }
-  // }
-
-  // buildTalents(){
-  //   for (let l = 0; l < this.events.length; l++){
-  //     let talentHtml = '';
-  //     for (let i = 0; i < this.events[l].voTalentTypes.length; i++) {
-  //       if (this.events[l].voTalentTypes[i] !== ''){
-  //         if (this.events[l].voTalentTypes[i] !== 'other'){
-  //           talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypes[i] + '</p>';
-  //         } else {
-  //           talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypeOther + '</p>';
-  //         }
-  //       }
-  //     }
-  //     if (talentHtml === ''){
-  //       talentHtml = '<p style="font-size:10pt">not specified</p>';
-  //     }
-  //     this.events[l].talentHtml = talentHtml;
-  //   }
-  // }
 
   buildVolunteerPTag(objectSelector, objectSelectorOther, elementId){
     let returnHtml = '';
