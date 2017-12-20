@@ -157,15 +157,20 @@ export class Volunteer {
       this.showPast = true;
     }
   }
-
-  removePast() {
-    let testDate;
-    let today = new Date();
+  formatDate(today){
+    console.log(today);
     let mm = today.getMonth() + 1; // getMonth() is zero-based
     let dd = today.getDate();
     today = [today.getFullYear(),
       (mm > 9 ? '' : '0') + mm,
       (dd > 9 ? '' : '0') + dd].join('');
+    return today;
+  }
+
+  removePast() {
+    let testDate;
+    let today = new Date();
+    today = this.formatDate(today);
     for (let i = 0; i < this.events.length; i++){
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
         this.events[i].voStartDate = today;
@@ -206,12 +211,12 @@ export class Volunteer {
     for (let i = 0; i < this.events.length; i++){
       let startDate = this.events[i].voStartDate;
       let endDate = this.events[i].voEndDate;
-      if (startDate !== null){
+      if (startDate !== null && startDate !== undefined){
         if (startDate.indexOf('T') !== -1){
           this.events[i].voStartDate = startDate.substr(0, startDate.indexOf('T'));
         }
       }
-      if (endDate !== null){
+      if (endDate !== null && endDate !== undefined){
         if (endDate.indexOf('T') !== -1){
           this.events[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
         }

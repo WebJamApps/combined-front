@@ -42,6 +42,26 @@ class AppStateMock extends AppStateStub{
   }
 }
 
+class AppStateMock2 extends AppStateStub{
+  getUser(uid) {
+    this.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: '', isOhafUser: true};
+
+    return new Promise((resolve) => {
+      resolve(this.user);
+    });
+  }
+}
+
+// class AppStateMock3 extends AppStateStub{
+//   getUser(uid) {
+//     this.user = {name: 'Iddris Elba', userType: 'Developer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: '', isOhafUser: true};
+//
+//     return new Promise((resolve) => {
+//       resolve(this.user);
+//     });
+//   }
+// }
+
 describe('the UserAccount Module', () => {
   let ua;
   let app;
@@ -80,6 +100,22 @@ describe('the UserAccount Module', () => {
     ua2.setupVolunteer();
     done();
   });
+
+  it('setup volunteer not as a new user', (done) => {
+    let ua2 = new UserAccount(app, new VCMock(), new ValidatorMock());
+    ua2.app.appState = new AppStateMock2();
+    ua2.activate();
+    ua2.setupVolunteer();
+    done();
+  });
+
+  // it('setup Developer not as a new user', (done) => {
+  //   let ua2 = new UserAccount(app, new VCMock(), new ValidatorMock());
+  //   ua2.app.appState = new AppStateMock3();
+  //   ua2.activate();
+  //   ua2.setupVolunteer();
+  //   done();
+  // });
 
   it('checkboxes app.expanded', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
@@ -152,6 +188,27 @@ describe('the UserAccount Module', () => {
 
   it('should update user', (done) => {
     ua.updateUser();
+    done();
+  });
+
+  it('should allow Librarian user to change their user type', (done) => {
+    ua.user.userType = 'Librarian';
+    //ua.
+    ua.checkChangeUserType();
+    expect(ua.canChangeUserType).toBe(true);
+    done();
+  });
+
+  it('should allow Volunteer user to change their user type when not signedup', (done) => {
+    ua.user.userType = 'Volunteer';
+    ua.checkSignups = function(){
+      return new Promise((resolve) => {
+        resolve({});
+      });
+    };
+    ua.userSignups = [];
+    ua.checkChangeUserType();
+    expect(ua.canChangeUserType).toBe(true);
     done();
   });
 
