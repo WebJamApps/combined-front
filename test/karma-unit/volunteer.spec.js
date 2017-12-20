@@ -109,6 +109,40 @@ describe('the Volunteer Module', () => {
     done();
   });
 
+  it('displays the events including past events', (done) => {
+    // volunteer2.activate();
+    volunteer2.events = [{
+      'voStartDate': '2017-12-12T',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      '_id': 1,
+      'scheduled': false,
+      'voNumPeopleScheduled': 10,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voCharityTypes': ['ages', 'in', 'the', 'wake']
+    }, {
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12T',
+      'voWorkTypes': [''],
+      'voWorkTypeOther': '',
+      '_id': 2,
+      'scheduled': false,
+      'voNumPeopleScheduled': 10,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voCharityTypes': ['ages', 'in', 'the', 'wake']
+    }];
+    volunteer2.signups = [{'voloppId': 1, 'numPeople': 25, 'userId': 123445}, {'voloppId': 3, 'numPeople': 25, 'userId': 123445}];
+    volunteer2.doubleCheckSignups = true;
+    volunteer2.selectedFilter = [];
+    volunteer2.displayEvents();
+    //console.log(volunteer2.events);
+    //expect(volunteer2.events[1].workHtml).toBe('<p style="font-size:10pt">not specified</p>');
+    done();
+  });
+
   it('should run attached to populate the table when no prefs are set', (done) => {
     volunteer.activate();
     document.body.innerHTML = '<p id="causes"></p><p id="talents"></p><p id="works"></p>';
@@ -179,6 +213,35 @@ describe('the Volunteer Module', () => {
 
   it('should cancel signup', (done) => {
     volunteer.cancelSignup('120980592048243099824324');
+    done();
+  });
+
+  it('should not change the zipcode if defined', (done) => {
+    volunteer.events = [{voZipCode: '24153'}];
+    volunteer.fixZipcodes();
+    expect(volunteer.events[0].voZipCode).toBe('24153');
+    done();
+  });
+
+  it('should not try to fix dates that do not exist', (done) => {
+    volunteer.events = [{voZipCode: '24153'}];
+    volunteer.fixDates();
+    expect(volunteer.events[0].voStartDate).toBe(undefined);
+    expect(volunteer.events[0].voEndDate).toBe(undefined);
+    done();
+  });
+
+  it('should format the date of January 1, 2017', (done) => {
+    let date = new Date();
+    date.setMonth(0);
+    date.setDate(1);
+    date.setFullYear(2017);
+    const newDate = volunteer.formatDate(date);
+    //console.log(newDate);
+    expect(newDate).toBe('20170101');
+    //console.log(new Date());
+    // volunteer.fixZipcodes();
+    // expect(volunteer.events[0].voZipCode).toBe('24153');
     done();
   });
 
