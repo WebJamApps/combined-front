@@ -46,7 +46,8 @@ export class Volunteer {
     if (this.events.length > 0){
       await this.checkSignups();
       this.fixZipcodes();
-      this.fixDates();
+      this.fixDates('voStartDate');
+      this.fixDates('voEndDate');
       this.populateSites();
       this.populateCauses();
       await this.checkScheduled();
@@ -201,20 +202,20 @@ export class Volunteer {
     }
   }
 
-  fixDates(){
+  fixDates(key){
     for (let i = 0; i < this.events.length; i++){
-      let startDate = this.events[i].voStartDate;
-      let endDate = this.events[i].voEndDate;
-      if (startDate !== null && startDate !== undefined){
-        if (startDate.indexOf('T') !== -1){
-          this.events[i].voStartDate = startDate.substr(0, startDate.indexOf('T'));
+      let fixDate = this.events[i][key];
+      //let endDate = this.events[i].voEndDate;
+      if (fixDate !== null && fixDate !== undefined){
+        if (fixDate.indexOf('T') !== -1){
+          this.events[i][key] = fixDate.substr(0, fixDate.indexOf('T'));
         }
       }
-      if (endDate !== null && endDate !== undefined){
-        if (endDate.indexOf('T') !== -1){
-          this.events[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
-        }
-      }
+      // if (endDate !== null && endDate !== undefined){
+      //   if (endDate.indexOf('T') !== -1){
+      //     this.events[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
+      //   }
+      // }
     }
   }
 
