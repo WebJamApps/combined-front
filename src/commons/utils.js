@@ -15,3 +15,17 @@ exports.fixDates = function(myevents){
   }
   return myevents;
 };
+
+exports.makeFilterDropdown = function(filterName, model, attrib){
+  filterName.push('');
+  for (let next of model){
+    let nextType = next[attrib];
+    if (filterName.indexOf(nextType) === -1){
+      filterName.push(nextType);
+      console.log('I did it!');
+      console.log(filterName);
+      console.log(model);
+      console.log(attrib);
+    }
+  }
+};
