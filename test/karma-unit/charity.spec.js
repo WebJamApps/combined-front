@@ -108,6 +108,14 @@ describe('the Charity Module', () => {
     done();
   });
 
+  it('scrolls the charity dashboard into view after update', (done) => {
+    document.body.innerHTML = '  <div id="charityDash" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
+    charity.setupValidation2 = function(){};
+    charity.afterUpdate();
+    //expect(charity.app.expanded).toBe(true);
+    done();
+  });
+
   it('it does not display the charities table when there are no charities', (done) => {
     charity2.activate();
     expect(charity2.charities.length).toBe(0);

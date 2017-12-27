@@ -187,7 +187,7 @@ export class Charity {
       this.createNewCharity();
     });
   }
-  
+
   buildManagers(){
     for (let l = 0; l < this.charities.length; l++){
       let manHtml = '';
@@ -237,25 +237,29 @@ export class Charity {
     this.putCharity();
   }
 
+  afterUpdate(){
+    this.updateCharity = {};
+    document.getElementById('charityDash').scrollIntoView();
+    this.activate();
+    this.createNewCharity();
+  }
+
   async putCharity(){
-    console.log('this is the update charity');
-    console.log(this.updateCharity);
-    await fetch;
-    this.app.httpClient.fetch('/charity/' + this.updateCharity._id, {
-      method: 'put',
-      body: json(this.updateCharity)
-    })
-    .then((response) => response.json())
-    .then((data) => {
+    await this.app.updateById('/charity/', this.updateCharity._id, this.updateCharity, this.afterUpdate);
+    //console.log('this is the update charity');
+    //console.log(this.updateCharity);
+    //await fetch;
+    // this.app.httpClient.fetch('/charity/' + this.updateCharity._id, {
+    //   method: 'put',
+    //   body: json(this.updateCharity)
+    // })
+    // .then((response) => response.json())
+    // .then((data) => {
       // let updateDiv = document.getElementById('updateCharitySection');
       // if (updateDiv !== null){
       //   updateDiv.style.display = 'none';
       // }
-      this.updateCharity = {};
-      document.getElementById('charityDash').scrollIntoView();
-      this.activate();
-      this.createNewCharity();
-    });
+    //});
   }
 
   async findUserByEmail(thenDo){

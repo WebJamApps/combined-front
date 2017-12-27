@@ -5,7 +5,7 @@ import {inject, bindable} from 'aurelia-framework';
 import {AuthorizeStep} from 'aurelia-auth';
 import {UserAccess} from './classes/UserAccess.js';
 import {AuthService} from 'aurelia-auth';
-import {HttpClient} from 'aurelia-fetch-client';
+import {json, HttpClient} from 'aurelia-fetch-client';
 import {AppState} from './classes/AppState.js';
 @inject(AuthService, HttpClient)
 export class App {
@@ -327,5 +327,17 @@ export class App {
       thisObj[otherVariable] = false;
       selectorObj[selectorOtherVariable] = '';
     }
+  }
+
+  async updateById(route, id, dataObj, afterFunction){
+    await fetch;
+    this.httpClient.fetch(route + id, {
+      method: 'put',
+      body: json(dataObj)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      afterFunction();
+    });
   }
 }
