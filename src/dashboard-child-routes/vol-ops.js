@@ -268,15 +268,16 @@ export class VolunteerOpps {
       this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
       this.voOpp.voDescription = '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>' + this.voOpp.voDescription;
     }
-    await fetch;
-    this.app.httpClient.fetch('/volopp/' + this.voOpp._id, {
-      method: 'put',
-      body: json(this.voOpp)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      this.activate();
-    });
+    await this.app.updateById('/volopp/', this.voOpp._id, this.voOpp, this.activate);
+    //await fetch;
+    // this.app.httpClient.fetch('/volopp/' + this.voOpp._id, {
+    //   method: 'put',
+    //   body: json(this.voOpp)
+    // })
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   this.activate();
+    // });
   }
 
   async deleteEvent(thisEventId){

@@ -126,8 +126,11 @@ class HttpMock {
       //console.log(return_value);
     } else if (url === '/user/1' || url === '/user/2' || url === '/user/3'){
       returnValue = this.getSpecificUser(url.substring(-1));
+    } else if (url === '/volopp/'){
+      returnValue = {message: 'success'};
     }
     if (returnValue !== null){
+      console.log('i am here');
       return Promise.resolve({
         Headers: this.headers,
         json: () => Promise.resolve(returnValue)
