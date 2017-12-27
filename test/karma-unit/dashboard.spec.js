@@ -119,17 +119,17 @@ describe('the Dashboard Module', () => {
       done();
     });
 
-    it('should confirm 200 http status after updateUser call', (done) => {
-      http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
-      app = new App(auth, http);
-      dashboard = new Dashboard(app);
-      dashboard.app.appState = new AppStateStub();
-      setTimeout(function() {
-        dashboard.updateUser();
-        //expect(http.status).toBe(200)
-        done();
-      }, 5);
-    });
+    // it('should confirm 200 http status after updateUser call', (done) => {
+    //   http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
+    //   app = new App(auth, http);
+    //   dashboard = new Dashboard(app);
+    //   dashboard.app.appState = new AppStateStub();
+    //   setTimeout(function() {
+    //     dashboard.updateUser();
+    //     //expect(http.status).toBe(200)
+    //     done();
+    //   }, 5);
+    // });
 
     // it('should validate', (done) => {
     //   dashboard.user = {name: 'Ray Smith', userType: 'Reader'};
