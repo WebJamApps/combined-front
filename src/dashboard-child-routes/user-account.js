@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {App} from '../app';
-import {json} from 'aurelia-fetch-client';
+//import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
 @inject(App, ValidationControllerFactory, Validator)
@@ -31,9 +31,16 @@ export class UserAccount {
     this.app.role = this.user.userType;
     this.setupVolunteerUser();
     this.checkChangeUserType();
-    if (this.user.userDetails === 'newUser'){
-      this.setNolongerNew();
-    }
+    this.setUserTypes();
+    // if (this.user.userDetails === 'newUser'){
+    //   this.user.userDetails
+    //   this.app.appstate.setUser(this.user);
+    // }
+
+    this.setupValidation();
+  }
+
+  setUserTypes(){
     if (this.user.isOhafUser && this.user.userType === 'Volunteer'){
       this.userTypes = ['Charity', 'Volunteer'];
     }
@@ -42,7 +49,6 @@ export class UserAccount {
       this.userTypes.push('Developer');
     }
     this.userTypes.sort();
-    this.setupValidation();
   }
 
   changeCauses(item, vol, container) {
@@ -150,62 +156,71 @@ export class UserAccount {
     this.userSignups = await resp.json();
   }
 
-  async setNolongerNew(){
-    await fetch;
-    this.user.userDetails = '';
-    this.app.httpClient.fetch('/user/' + this.uid, {
-      method: 'put',
-      body: json(this.user)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      this.app.appState.setUser(this.user);
-      console.log('set no longer new ' +  this.user.userDetails);
-    });
-  }
+  // async setNolongerNew(){
+  //   await fetch;
+  //   this.user.userDetails = '';
+  //   this.app.httpClient.fetch('/user/' + this.uid, {
+  //     method: 'put',
+  //     body: json(this.user)
+  //   })
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     this.app.appState.setUser(this.user);
+  //     console.log('set no longer new ' +  this.user.userDetails);
+  //   });
+  // }
 
   async setCharity(){
-    await fetch;
+    //await fetch;
     this.user.userDetails = '';
     this.user.userType = 'Charity';
-    this.app.httpClient.fetch('/user/' + this.uid, {
-      method: 'put',
-      body: json(this.user)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      this.app.appState.setUser(this.user);
-      this.app.appState.checkUserRole();
-      this.app.router.navigate('dashboard');
-    });
+    await this.app.updateById('/user/', this.uid, this.user, this.afterUpdateUser);
+    // this.app.httpClient.fetch('/user/' + this.uid, {
+    //   method: 'put',
+    //   body: json(this.user)
+    // })
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   this.app.appState.setUser(this.user);
+    //   this.app.appState.checkUserRole();
+    //   this.app.router.navigate('dashboard');
+    // });
   }
 
-  async setupVolunteer(){
-    await fetch;
-    this.app.httpClient.fetch('/user/' + this.uid, {
-      method: 'put',
-      body: json(this.user)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      this.app.appState.setUser(this.user);
-      this.app.router.navigate('dashboard/volunteer');
-    });
+  afterUpdateUser(){
+    this.app.appState.setUser(this.user);
+    this.app.appState.checkUserRole();
+    this.app.router.navigate('dashboard');
   }
+
+  // async setupVolunteer(){
+  //   await this.app.updateById('/user/', this.uid, this.user, this.afterUpdateUser);
+  //   // await fetch;
+  //   // this.app.httpClient.fetch('/user/' + this.uid, {
+  //   //   method: 'put',
+  //   //   body: json(this.user)
+  //   // })
+  //   // .then((response) => response.json())
+  //   // .then((data) => {
+  //   //   this.app.appState.setUser(this.user);
+  //   //   this.app.router.navigate('dashboard/volunteer');
+  //   // });
+  // }
 
   async updateUser(){
-    await fetch;
-    this.app.httpClient.fetch('/user/' + this.uid, {
-      method: 'put',
-      body: json(this.user)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      this.app.appState.setUser(this.user);
-      this.app.appState.checkUserRole();
-      this.app.router.navigate('dashboard/' + this.user.userType.toLowerCase());
-      console.log('dashboard/' + this.user.userType.toLowerCase());
-    });
+    await this.app.updateById('/user/', this.uid, this.user, this.afterUpdateUser);
+    // await fetch;
+    // this.app.httpClient.fetch('/user/' + this.uid, {
+    //   method: 'put',
+    //   body: json(this.user)
+    // })
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   this.app.appState.setUser(this.user);
+    //   this.app.appState.checkUserRole();
+    //   this.app.router.navigate('dashboard/' + this.user.userType.toLowerCase());
+    //   console.log('dashboard/' + this.user.userType.toLowerCase());
+    // });
   }
 
   async deleteUser(){

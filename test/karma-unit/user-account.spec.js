@@ -32,25 +32,25 @@ class ValidatorMock extends Validator {
   }
 }
 
-class AppStateMock extends AppStateStub{
-  getUser(uid) {
-    this.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
+// class AppStateMock extends AppStateStub{
+//   getUser(uid) {
+//     this.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
+//
+//     return new Promise((resolve) => {
+//       resolve(this.user);
+//     });
+//   }
+// }
 
-    return new Promise((resolve) => {
-      resolve(this.user);
-    });
-  }
-}
-
-class AppStateMock2 extends AppStateStub{
-  getUser(uid) {
-    this.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: '', isOhafUser: true};
-
-    return new Promise((resolve) => {
-      resolve(this.user);
-    });
-  }
-}
+// class AppStateMock2 extends AppStateStub{
+//   getUser(uid) {
+//     this.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: '', isOhafUser: true};
+//
+//     return new Promise((resolve) => {
+//       resolve(this.user);
+//     });
+//   }
+// }
 
 // class AppStateMock3 extends AppStateStub{
 //   getUser(uid) {
@@ -87,27 +87,36 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  it('setup volunteer', (done) => {
+  it('sets up the user type drop down for a new volunteer user', (done) => {
     ua.app.appState = new AppStateStub();
-    ua.setupVolunteer();
+    ua.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', isOhafUser: true};
+    ua.setUserTypes();
+    expect(ua.userTypes[0]).toBe('Charity');
     done();
   });
 
-  it('setup volunteer with other selected works', (done) => {
-    let ua2 = new UserAccount(app, new VCMock(), new ValidatorMock());
-    ua2.app.appState = new AppStateMock();
-    ua2.activate();
-    ua2.setupVolunteer();
+  it('routes back to dashboard after update user', (done) => {
+    ua.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    ua.afterUpdateUser();
     done();
   });
 
-  it('setup volunteer not as a new user', (done) => {
-    let ua2 = new UserAccount(app, new VCMock(), new ValidatorMock());
-    ua2.app.appState = new AppStateMock2();
-    ua2.activate();
-    ua2.setupVolunteer();
+  //
+  it('setup volunteer with other not selected', (done) => {
+    //let ua2 = new UserAccount(app, new VCMock(), new ValidatorMock());
+    //ua2.app.appState = new AppStateMock();
+    ua.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    ua.setupVolunteerUser();
     done();
   });
+
+  // it('setup volunteer not as a new user', (done) => {
+  //   let ua2 = new UserAccount(app, new VCMock(), new ValidatorMock());
+  //   ua2.app.appState = new AppStateMock2();
+  //   ua2.activate();
+  //   ua2.setupVolunteer();
+  //   done();
+  // });
 
   // it('setup Developer not as a new user', (done) => {
   //   let ua2 = new UserAccount(app, new VCMock(), new ValidatorMock());

@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {App} from './app';
-import {json} from 'aurelia-fetch-client';
+//import {json} from 'aurelia-fetch-client';
 //import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 //import {FormValidator} from './classes/FormValidator';
 //@inject(App, ValidationControllerFactory, Validator)
@@ -59,11 +59,13 @@ export class Dashboard {
 
   childRoute(){
     if (this.user.userType === undefined || this.user.userType === ''){
+      this.user.userDetails = 'newUser';
       if (this.user.isOhafUser){
         this.user.userType = 'Volunteer';
-        this.user.userDetails = 'newUser';
-        return this.updateUser();
+      } else {
+        this.user.userType = 'user-account';
       }
+      this.app.appState.setUser(this.user);
       this.app.router.navigate('dashboard/user-account');
     } else {
       /* istanbul ignore else */
@@ -98,20 +100,20 @@ export class Dashboard {
   //   this.validator.validateObject(this.user);
   // }
 
-  async updateUser(){
-    await fetch;
-    this.app.httpClient.fetch('/user/' + this.uid, {
-      method: 'put',
-      body: json(this.user)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      this.app.appState.setUser(this.user);
-      this.app.appState.checkUserRole();
-      //this.app.appState.newUser = false;
-      this.activate();
-    });
-  }
+  // async updateUser(){
+  //   await fetch;
+  //   this.app.httpClient.fetch('/user/' + this.uid, {
+  //     method: 'put',
+  //     body: json(this.user)
+  //   })
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     this.app.appState.setUser(this.user);
+  //     this.app.appState.checkUserRole();
+  //     //this.app.appState.newUser = false;
+  //     this.activate();
+  //   });
+  //  }
 
   // attached(){
   //   this.setupValidation();
