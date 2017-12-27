@@ -116,16 +116,16 @@ export class Librarian {
   }
 
   createBook(){
-    if (this.newBook.type !== 0){
-      this.newBook.type = this.types[this.newBook.type - 1];
-    } else {
-      this.newBook.type = 'paperback';
-    }
-    if (this.newBook.access !== 0){
-      this.newBook.access = this.accessArray[this.newBook.access - 1];
-    } else {
-      this.newBook.access = 'Public';
-    }
+    // if (this.newBook.type !== 0){
+    //   this.newBook.type = this.types[this.newBook.type - 1];
+    // } else {
+    //   this.newBook.type = 'paperback';
+    // }
+    // if (this.newBook.access !== 0){
+    //   this.newBook.access = this.accessArray[this.newBook.access - 1];
+    // } else {
+    //   this.newBook.access = 'Public';
+    // }
     this.app.httpClient.fetch('/book/create', {
       method: 'post',
       body: json(this.newBook)
