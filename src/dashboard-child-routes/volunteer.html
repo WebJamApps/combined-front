@@ -96,8 +96,8 @@
       <!-- DO NOT DELETE the following "p" line; it is to slow down the rendering of the filter by box -->
       <p style="color: white">selected filter: ${selectedFilter}</p>
     </div>
-    <p>&nbsp;</p>
-    <div class="elevation2" style="margin:auto; padding:10px; max-width:600px">
+    <!-- <p>&nbsp;</p> -->
+    <!-- <div class="elevation2" style="margin:auto; padding:10px; max-width:600px">
       <p style="font-weight:bold; text-align:center">Your Volunteering Preferences</p>
       <div class="search-table-outer" style="position:relative;overflow-x:auto;">
         <table>
@@ -125,12 +125,11 @@
           </tbody>
         </table>
       </div>
-      <!-- <p style="margin-top:10px; text-align:center">Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences.</p> -->
-    </div>
+      <p style="margin-top:10px; text-align:center">Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences.</p>
+    </div> -->
     <p>&nbsp;</p>
     <div class="material-content elevation3" style="max-width:5in; margin:auto" if.bind="user.userType === 'Volunteer' || user.userType === 'Developer'">
-      <p style="font-weight:bold; text-align:center">Set Volunteering Preferences</p>
-      <!-- <h4 class="material-header-h4">Set Volunteering Preferences</h4> -->
+      <p style="font-weight:bold; text-align:center">Volunteering Preferences</p>
       <form>
         <div class="multiselect" style="width:170px; margin-top:40px">
           <div class="selectBox" click.delegate="app.showCheckboxes('selectCauses')">
