@@ -32,36 +32,6 @@ class ValidatorMock extends Validator {
   }
 }
 
-// class AppStateMock extends AppStateStub{
-//   getUser(uid) {
-//     this.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
-//
-//     return new Promise((resolve) => {
-//       resolve(this.user);
-//     });
-//   }
-// }
-
-// class AppStateMock2 extends AppStateStub{
-//   getUser(uid) {
-//     this.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: '', isOhafUser: true};
-//
-//     return new Promise((resolve) => {
-//       resolve(this.user);
-//     });
-//   }
-// }
-
-// class AppStateMock3 extends AppStateStub{
-//   getUser(uid) {
-//     this.user = {name: 'Iddris Elba', userType: 'Developer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: '', isOhafUser: true};
-//
-//     return new Promise((resolve) => {
-//       resolve(this.user);
-//     });
-//   }
-// }
-
 describe('the UserAccount Module', () => {
   let ua;
   let app;
@@ -102,13 +72,13 @@ describe('the UserAccount Module', () => {
   });
 
   //
-  it('setup volunteer with other not selected', (done) => {
-    //let ua2 = new UserAccount(app, new VCMock(), new ValidatorMock());
-    //ua2.app.appState = new AppStateMock();
-    ua.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
-    ua.setupVolunteerUser();
-    done();
-  });
+  // it('setup volunteer with other not selected', (done) => {
+  //   //let ua2 = new UserAccount(app, new VCMock(), new ValidatorMock());
+  //   //ua2.app.appState = new AppStateMock();
+  //   ua.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+  //   ua.setupVolunteerUser();
+  //   done();
+  // });
 
   // it('setup volunteer not as a new user', (done) => {
   //   let ua2 = new UserAccount(app, new VCMock(), new ValidatorMock());
@@ -221,12 +191,12 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  it('should select picked type', (done) => {
-    ua.selectPickChange('causes');
-    ua.selectPickChange('work');
-    ua.selectPickChange('talents');
-    done();
-  });
+  // it('should select picked type', (done) => {
+  //   ua.selectPickChange('causes');
+  //   ua.selectPickChange('work');
+  //   ua.selectPickChange('talents');
+  //   done();
+  // });
 
   it('should check whether update can submit', (done) => {
     ua.updateCanSubmit([{valid: false}]);
