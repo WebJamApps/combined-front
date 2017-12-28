@@ -103,6 +103,7 @@ describe('the Volunteer Module', () => {
     volunteer2.signups = [{'voloppId': 1, 'numPeople': 25, 'userId': 123445}, {'voloppId': 3, 'numPeople': 25, 'userId': 123445}];
     volunteer2.doubleCheckSignups = true;
     volunteer2.selectedFilter = ['future only', 'hello'];
+    volunteer2.app.buildPTag = function(){};
     volunteer2.displayEvents();
     //console.log(volunteer2.events);
     //expect(volunteer2.events[1].workHtml).toBe('<p style="font-size:10pt">not specified</p>');

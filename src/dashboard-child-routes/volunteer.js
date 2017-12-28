@@ -50,6 +50,8 @@ export class Volunteer {
       this.fixZipcodes();
       this.fixDates('voStartDate');
       this.fixDates('voEndDate');
+      this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
+      this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
       this.populateSites();
       this.populateCauses();
       await this.checkScheduled();
@@ -115,38 +117,6 @@ export class Volunteer {
 
   filterPicked(){
     filterSelected(this);
-    // let arrayLength = this.selectedFilter.length;
-    // this.keyword = false;
-    // this.siteLocation = false;
-    // if (arrayLength === 0){
-    //   this.filters[0].value = '';
-    //   this.filters[1].value = '';
-    //   this.filters[2].value = '';
-    //   this.causeFilter = false;
-    //   this.siteFilter = false;
-    //   this.keyword = false;
-    //   this.hidePast = false;
-    //   return;
-    // }
-    // if (this.selectedFilter.includes('keyword')) {
-    //   this.keyword = true;
-    // } else {
-    //   console.log('you unchecked the keyword filter');
-    //   this.filters[0].value = '';
-    //   this.keyword = false;
-    // }
-    // if (this.selectedFilter.includes('zipcode')) {
-    //   this.siteLocation = true;
-    // } else {
-    //   this.filters[1].value = '';
-    //   this.siteLocation = false;
-    // }
-    // if (this.selectedFilter.includes('cause')) {
-    //   this.causeFilter = true;
-    // } else {
-    //   this.filters[2].value = '';
-    //   this.causeFilter = false;
-    // }
     if (this.selectedFilter.includes('future only')) {
       console.log('you selected the starting date filter');
       this.markPast();
@@ -216,11 +186,6 @@ export class Volunteer {
           this.events[i][key] = fixDate.substr(0, fixDate.indexOf('T'));
         }
       }
-      // if (endDate !== null && endDate !== undefined){
-      //   if (endDate.indexOf('T') !== -1){
-      //     this.events[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
-      //   }
-      // }
     }
   }
 
