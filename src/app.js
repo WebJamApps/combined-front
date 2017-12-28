@@ -339,7 +339,16 @@ export class App {
     .then((data) => {
       if (afterFunction !== null){
         afterFunction();
+      } else {
+        this.afterUpdateUser();
       }
     });
   }
+
+  afterUpdateUser(){
+    this.appState.setUser(this.user);
+    this.appState.checkUserRole();
+    this.router.navigate('dashboard');
+  }
+
 }

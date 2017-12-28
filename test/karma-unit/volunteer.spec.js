@@ -88,11 +88,11 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  it('reloads page after update user', (done) => {
-    volunteer.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
-    volunteer.afterUpdateUser();
-    done();
-  });
+  // it('reloads page after update user', (done) => {
+  //   volunteer.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+  //   volunteer.afterUpdateUser();
+  //   done();
+  // });
 
   it('should active and get all events', (done) => {
     volunteer2.activate();
