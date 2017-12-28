@@ -197,22 +197,22 @@ export class Volunteer {
     }
   }
 
-  buildVolunteerPTag(objectSelector, objectSelectorOther, elementId){
-    let returnHtml = '';
-    for (let i = 0; i < this.user[objectSelector].length; i++) {
-      if (this.user[objectSelector][i] !== ''){
-        if (this.user[objectSelector][i] !== 'other'){
-          returnHtml = returnHtml + '<p style="font-size:10pt">' + this.user[objectSelector][i] + '</p>';
-        } else {
-          returnHtml = returnHtml + '<p style="font-size:10pt">' + this.user[objectSelectorOther] + '</p>';
-        }
-      }
-    }
-    if (returnHtml === ''){
-      returnHtml = '<p style="font-size:10pt">not specified</p>';
-    }
-    document.getElementById(elementId).innerHTML = returnHtml;
-  }
+  // buildVolunteerPTag(objectSelector, objectSelectorOther, elementId){
+  //   let returnHtml = '';
+  //   for (let i = 0; i < this.user[objectSelector].length; i++) {
+  //     if (this.user[objectSelector][i] !== ''){
+  //       if (this.user[objectSelector][i] !== 'other'){
+  //         returnHtml = returnHtml + '<p style="font-size:10pt">' + this.user[objectSelector][i] + '</p>';
+  //       } else {
+  //         returnHtml = returnHtml + '<p style="font-size:10pt">' + this.user[objectSelectorOther] + '</p>';
+  //       }
+  //     }
+  //   }
+  //   if (returnHtml === ''){
+  //     returnHtml = '<p style="font-size:10pt">not specified</p>';
+  //   }
+  //   document.getElementById(elementId).innerHTML = returnHtml;
+  // }
 
   async signupEvent(thisevent){
     //doublecheck that someone else has not already signedup to hit the max volunteers needed
@@ -308,9 +308,9 @@ export class Volunteer {
   // }
 
   attached(){
-    this.buildVolunteerPTag('volCauses', 'volCauseOther', 'causes');
-    this.buildVolunteerPTag('volTalents', 'volTalentOther', 'talents');
-    this.buildVolunteerPTag('volWorkPrefs', 'volWorkOther', 'works');
+    // this.buildVolunteerPTag('volCauses', 'volCauseOther', 'causes');
+    // this.buildVolunteerPTag('volTalents', 'volTalentOther', 'talents');
+    // this.buildVolunteerPTag('volWorkPrefs', 'volWorkOther', 'works');
     this.setupVolunteerUser();
   }
 }

@@ -174,16 +174,16 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  it('should run attached to populate the table when no prefs are set', (done) => {
-    volunteer.activate();
-    document.body.innerHTML = '<p id="causes"></p><p id="talents"></p><p id="works"></p>';
-    volunteer.user = {volCauses: [''], volTalents: [''], volWorkPrefs: [''] };
-    volunteer.attached();
-    expect(document.getElementById('causes').innerHTML).toBe('<p style="font-size:10pt">not specified</p>');
-    expect(document.getElementById('talents').innerHTML).toBe('<p style="font-size:10pt">not specified</p>');
-    expect(document.getElementById('works').innerHTML).toBe('<p style="font-size:10pt">not specified</p>');
-    done();
-  });
+  // it('should run attached to populate the table when no prefs are set', (done) => {
+  //   volunteer.activate();
+  //   document.body.innerHTML = '<p id="causes"></p><p id="talents"></p><p id="works"></p>';
+  //   volunteer.user = {volCauses: [''], volTalents: [''], volWorkPrefs: [''] };
+  //   volunteer.attached();
+  //   expect(document.getElementById('causes').innerHTML).toBe('<p style="font-size:10pt">not specified</p>');
+  //   expect(document.getElementById('talents').innerHTML).toBe('<p style="font-size:10pt">not specified</p>');
+  //   expect(document.getElementById('works').innerHTML).toBe('<p style="font-size:10pt">not specified</p>');
+  //   done();
+  // });
 
   it('should run attached to populate the table when all prefs are set', (done) => {
     volunteer.activate();
