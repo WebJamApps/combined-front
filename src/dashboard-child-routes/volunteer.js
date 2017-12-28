@@ -1,6 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
+import {filterSelected} from '../commons/utils';
 @inject(App)
 export class Volunteer {
   constructor(app){
@@ -10,21 +11,22 @@ export class Volunteer {
     this.selectedFilter = ['future only'];
     this.doubleCheckSignups = false;
     this.canSignup = true;
-    this.showPast = false;
-    //this.showtable = false;
+    this.hidePast = true;
+    this.zipcode = false;
+    this.cause = false;
+    this.keyword = false;
   }
 
   siteLocations = [];
   causes = [];
   filterby = ['keyword', 'zipcode', 'cause', 'future only'];
-  // selectedFilter = [];
   keyword = false;
   siteLocation = false;
   causeFilter = false;
   filters = [
-    {value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState']},
-    {value: '', keys: ['voZipCode']},
-    {value: '', keys: ['voCharityTypes']}
+    {filterby: 'keyword', value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState']},
+    {filterby: 'zipcode', value: '', keys: ['voZipCode']},
+    {filterby: 'cause', value: '', keys: ['voCharityTypes']}
   ];
 
   async activate() {
@@ -51,9 +53,9 @@ export class Volunteer {
       this.populateSites();
       this.populateCauses();
       await this.checkScheduled();
-      if (this.selectedFilter.includes('future only')) {
-        this.markPast();
-      }
+      //if (this.selectedFilter.includes('future only')) {
+      this.markPast();
+    //  }
     }
   }
 
@@ -112,46 +114,49 @@ export class Volunteer {
   }
 
   filterPicked(){
-    let arrayLength = this.selectedFilter.length;
-    this.keyword = false;
-    this.siteLocation = false;
-    if (arrayLength === 0){
-      this.filters[0].value = '';
-      this.filters[1].value = '';
-      this.filters[2].value = '';
-      this.causeFilter = false;
-      this.siteFilter = false;
-      this.keyword = false;
-      this.showPast = true;
-      return;
-    }
-    if (this.selectedFilter.includes('keyword')) {
-      this.keyword = true;
-    } else {
-      console.log('you unchecked the keyword filter');
-      this.filters[0].value = '';
-      this.keyword = false;
-    }
-    if (this.selectedFilter.includes('zipcode')) {
-      this.siteLocation = true;
-    } else {
-      this.filters[1].value = '';
-      this.siteLocation = false;
-    }
-    if (this.selectedFilter.includes('cause')) {
-      this.causeFilter = true;
-    } else {
-      this.filters[2].value = '';
-      this.causeFilter = false;
-    }
+    filterSelected(this);
+    // let arrayLength = this.selectedFilter.length;
+    // this.keyword = false;
+    // this.siteLocation = false;
+    // if (arrayLength === 0){
+    //   this.filters[0].value = '';
+    //   this.filters[1].value = '';
+    //   this.filters[2].value = '';
+    //   this.causeFilter = false;
+    //   this.siteFilter = false;
+    //   this.keyword = false;
+    //   this.hidePast = false;
+    //   return;
+    // }
+    // if (this.selectedFilter.includes('keyword')) {
+    //   this.keyword = true;
+    // } else {
+    //   console.log('you unchecked the keyword filter');
+    //   this.filters[0].value = '';
+    //   this.keyword = false;
+    // }
+    // if (this.selectedFilter.includes('zipcode')) {
+    //   this.siteLocation = true;
+    // } else {
+    //   this.filters[1].value = '';
+    //   this.siteLocation = false;
+    // }
+    // if (this.selectedFilter.includes('cause')) {
+    //   this.causeFilter = true;
+    // } else {
+    //   this.filters[2].value = '';
+    //   this.causeFilter = false;
+    // }
     if (this.selectedFilter.includes('future only')) {
       console.log('you selected the starting date filter');
       this.markPast();
-      this.showPast = false;
+      this.hidePast = true;
     } else {
-      this.showPast = true;
+      console.log('show past now!');
+      this.hidePast = false;
     }
   }
+
   formatDate(today){
     console.log(today);
     let mm = today.getMonth() + 1; // getMonth() is zero-based

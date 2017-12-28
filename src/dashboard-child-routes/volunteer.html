@@ -25,13 +25,13 @@
     <div class="form-group" if.bind="keyword" style="max-width: 4in; margin:auto; padding:5px">
       <input type="text" value.bind="filters[0].value" placeholder="Enter Keyword" class="form-control"/>
     </div>
-    <div class="form-group" if.bind="siteLocation" style="max-width: 4in; margin:auto; padding:5px">
+    <div class="form-group" if.bind="zipcode" style="max-width: 4in; margin:auto; padding:5px">
       <select id="site" class="form-control" value.bind="filters[1].value">
         <option value="">Choose Zipcode...</option>
         <option repeat.for="siteLocation of siteLocations" model.bind="siteLocation">${siteLocation}</option>
       </select>
     </div>
-    <div class="form-group" if.bind="causeFilter" style="max-width: 4in; margin:auto; padding:5px">
+    <div class="form-group" if.bind="cause" style="max-width: 4in; margin:auto; padding:5px">
       <select id="cause" class="form-control" value.bind="filters[2].value">
         <option value="">Choose Cause...</option>
         <option repeat.for="cause of causes" model.bind="cause">${cause}</option>
@@ -63,7 +63,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr repeat.for="event of $displayData" if.bind="(!event.past || (event.past && showPast)) && !event.full">
+          <tr repeat.for="event of $displayData" if.bind="(!event.past || (event.past && !hidePast)) && !event.full">
             <td style="padding:8px; text-align:center">
               <button if.bind="!event.scheduled && !event.past" class="button-checkout" raised click.delegate="signupEvent(event)" style="margin-bottom:10px">
                 Sign Up

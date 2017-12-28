@@ -174,7 +174,8 @@ export class UserAccount {
     //await fetch;
     this.user.userDetails = '';
     this.user.userType = 'Charity';
-    await this.app.updateById('/user/', this.uid, this.user, this.afterUpdateUser);
+    await this.app.updateById('/user/', this.uid, this.user, null);
+    //this.afterUpdateUser();
     // this.app.httpClient.fetch('/user/' + this.uid, {
     //   method: 'put',
     //   body: json(this.user)
@@ -208,7 +209,8 @@ export class UserAccount {
   // }
 
   async updateUser(){
-    await this.app.updateById('/user/', this.uid, this.user, this.afterUpdateUser);
+    await this.app.updateById('/user/', this.uid, this.user, null);
+    this.afterUpdateUser();
     // await fetch;
     // this.app.httpClient.fetch('/user/' + this.uid, {
     //   method: 'put',

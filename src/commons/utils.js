@@ -22,10 +22,41 @@ exports.makeFilterDropdown = function(filterName, model, attrib){
     let nextType = next[attrib];
     if (filterName.indexOf(nextType) === -1){
       filterName.push(nextType);
-      console.log('I did it!');
-      console.log(filterName);
-      console.log(model);
-      console.log(attrib);
     }
   }
+};
+
+exports.filterSelected = function(myModule){
+  console.log('trying to filter please');
+  if (myModule.selectedFilter.length === 0){
+    console.log('no filters');
+    for (let i = 0; i < myModule.filters.length; i++){
+      myModule.filters[i].value = '';
+      myModule[myModule.filters[i].filterby] = false;
+      //myModule.filters[i].showFilter = false;
+    }
+    return;
+  }
+  for (let s = 0; s < myModule.filters.length; s++){
+    console.log('I picked a filter:');
+    console.log(myModule.selectedFilter[0]);
+    for (let u = 0; u < myModule.selectedFilter.length; u++){
+      console.log('inside this loop');
+      console.log(myModule.filters[s].filterby);
+      console.log(myModule.selectedFilter[u]);
+      //arrayFilters[u].showFilter = false;
+      if (myModule.filters[s].filterby === myModule.selectedFilter[u]){
+        console.log('I have a match');
+        myModule[myModule.filters[s].filterby] = true;
+      } else {
+        myModule.filters[s].value = '';
+        myModule[myModule.filters[s].filterby] = false;
+      }
+    }
+  }
+  // for (let t = 0; t < arrayFilters.length; t++){
+  //   if (arrayFilters[t].showFilters === false){
+  //     arrayFilters[t].value = '';
+  //   }
+  // }
 };

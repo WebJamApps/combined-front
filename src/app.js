@@ -337,7 +337,9 @@ export class App {
     })
     .then((response) => response.json())
     .then((data) => {
-      afterFunction();
+      if (afterFunction !== null){
+        afterFunction();
+      }
     });
   }
 }
