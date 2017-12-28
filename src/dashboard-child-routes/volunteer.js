@@ -298,14 +298,14 @@ export class Volunteer {
 
   async updateUser(){
     await this.app.updateById('/user/', this.uid, this.user, null);
-    this.afterUpdateUser();
+    //this.afterUpdateUser();
   }
 
-  afterUpdateUser(){
-    this.app.appState.setUser(this.user);
-    this.app.appState.checkUserRole();
-    this.app.router.navigate('dashboard');
-  }
+  // afterUpdateUser(){
+  //   this.app.appState.setUser(this.user);
+  //   this.app.appState.checkUserRole();
+  //   this.app.router.navigate('dashboard');
+  // }
 
   attached(){
     this.buildVolunteerPTag('volCauses', 'volCauseOther', 'causes');

@@ -65,11 +65,11 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  it('routes back to dashboard after update user', (done) => {
-    ua.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
-    ua.afterUpdateUser();
-    done();
-  });
+  // it('routes back to dashboard after update user', (done) => {
+  //   ua.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+  //   ua.afterUpdateUser();
+  //   done();
+  // });
 
   //
   // it('setup volunteer with other not selected', (done) => {
