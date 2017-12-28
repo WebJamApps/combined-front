@@ -1,6 +1,6 @@
 import {Volunteer} from '../../src/dashboard-child-routes/volunteer';
 import {App} from '../../src/app';
-import {AuthStub, HttpMock, AppStateStub} from './commons';
+import {AuthStub, HttpMock, AppStateStub, RouterStub} from './commons';
 
 class HttpMockEvent extends HttpMock {
   fetch(url, obj) {
@@ -46,11 +46,13 @@ describe('the Volunteer Module', () => {
     auth.setToken({sub: '1'});
     app = new App(auth, new HttpMock());
     app.appState = new AppStateStub();
+    app.router = new RouterStub();
     app.activate();
     app.appState.user = {_id: '1', name: 'billy', email: 'billy@billy.com', volCauses: ['', '']};
     volunteer = new Volunteer(app);
     app2 = new App(auth, new HttpMockEvent());
     app2.appState = new AppStateStub();
+    app2.router = new RouterStub();
     app2.appState.user = { name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
     app2.activate();
     volunteer2 = new Volunteer(app2);
@@ -61,6 +63,34 @@ describe('the Volunteer Module', () => {
     volunteer.app.appState.user = { name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
     volunteer.activate();
     console.log(volunteer.user);
+    done();
+  });
+
+  it('setup volunteer with other not selected', (done) => {
+    volunteer.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    volunteer.setupVolunteerUser();
+    expect(volunteer.talentOther).toBe(false);
+    expect(volunteer.workOther).toBe(false);
+    expect(volunteer.causeOther).toBe(false);
+    done();
+  });
+
+  it('should select picked type', (done) => {
+    volunteer.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    volunteer.selectPickChange('causes');
+    volunteer.selectPickChange('work');
+    volunteer.selectPickChange('talents');
+    done();
+  });
+
+  it('should update user', (done) => {
+    volunteer.updateUser();
+    done();
+  });
+
+  it('reloads page after update user', (done) => {
+    volunteer.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    volunteer.afterUpdateUser();
     done();
   });
 

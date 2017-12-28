@@ -29,14 +29,9 @@ export class UserAccount {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     this.app.role = this.user.userType;
-    this.setupVolunteerUser();
+    //this.setupVolunteerUser();
     this.checkChangeUserType();
     this.setUserTypes();
-    // if (this.user.userDetails === 'newUser'){
-    //   this.user.userDetails
-    //   this.app.appstate.setUser(this.user);
-    // }
-
     this.setupValidation();
   }
 
@@ -51,38 +46,38 @@ export class UserAccount {
     this.userTypes.sort();
   }
 
-  changeCauses(item, vol, container) {
-    item.sort();
-    item.push('other');
-    for (let i of item) {
-      if (vol.includes(i)) {
-        container.push(i);
-      } else {
-        container.push('');
-      }
-    }
-  }
+  // changeCauses(item, vol, container) {
+  //   item.sort();
+  //   item.push('other');
+  //   for (let i of item) {
+  //     if (vol.includes(i)) {
+  //       container.push(i);
+  //     } else {
+  //       container.push('');
+  //     }
+  //   }
+  // }
 
-  setupVolunteerUser(){
-    this.changeCauses(this.causes, this.user.volCauses, this.selectedCauses);
-    this.changeCauses(this.talents, this.user.volTalents, this.selectedTalents);
-    this.changeCauses(this.works, this.user.volWorkPrefs, this.selectedWorks);
-    if (this.selectedWorks.includes('other')){
-      this.workOther = true;
-    } else {
-      this.workOther = false;
-    }
-    if (this.selectedTalents.includes('other')){
-      this.talentOther = true;
-    } else {
-      this.talentOther = false;
-    }
-    if (this.selectedCauses.includes('other')){
-      this.causeOther = true;
-    } else {
-      this.causeOther = false;
-    }
-  }
+  // setupVolunteerUser(){
+  //   this.changeCauses(this.causes, this.user.volCauses, this.selectedCauses);
+  //   this.changeCauses(this.talents, this.user.volTalents, this.selectedTalents);
+  //   this.changeCauses(this.works, this.user.volWorkPrefs, this.selectedWorks);
+  //   if (this.selectedWorks.includes('other')){
+  //     this.workOther = true;
+  //   } else {
+  //     this.workOther = false;
+  //   }
+  //   if (this.selectedTalents.includes('other')){
+  //     this.talentOther = true;
+  //   } else {
+  //     this.talentOther = false;
+  //   }
+  //   if (this.selectedCauses.includes('other')){
+  //     this.causeOther = true;
+  //   } else {
+  //     this.causeOther = false;
+  //   }
+  // }
 
   setupValidation() {
     ValidationRules
@@ -123,9 +118,9 @@ export class UserAccount {
         this.canChangeUserType = false;
         this.reasons = this.reasons + '<li>You signed up to work at a charity event.</li>';
       }
-      console.log('the user signups inside the check function');
-      console.log(this.userSignups);
-      console.log('I can change the user type: ' + this.canChangeUserType);
+      // console.log('the user signups inside the check function');
+      // console.log(this.userSignups);
+      // console.log('I can change the user type: ' + this.canChangeUserType);
     }
     if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
       // Do not allow user to change their primary userType away from Charity if they have created a charity
@@ -156,36 +151,10 @@ export class UserAccount {
     this.userSignups = await resp.json();
   }
 
-  // async setNolongerNew(){
-  //   await fetch;
-  //   this.user.userDetails = '';
-  //   this.app.httpClient.fetch('/user/' + this.uid, {
-  //     method: 'put',
-  //     body: json(this.user)
-  //   })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     this.app.appState.setUser(this.user);
-  //     console.log('set no longer new ' +  this.user.userDetails);
-  //   });
-  // }
-
   async setCharity(){
-    //await fetch;
     this.user.userDetails = '';
     this.user.userType = 'Charity';
     await this.app.updateById('/user/', this.uid, this.user, null);
-    //this.afterUpdateUser();
-    // this.app.httpClient.fetch('/user/' + this.uid, {
-    //   method: 'put',
-    //   body: json(this.user)
-    // })
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   this.app.appState.setUser(this.user);
-    //   this.app.appState.checkUserRole();
-    //   this.app.router.navigate('dashboard');
-    // });
   }
 
   afterUpdateUser(){
@@ -194,35 +163,9 @@ export class UserAccount {
     this.app.router.navigate('dashboard');
   }
 
-  // async setupVolunteer(){
-  //   await this.app.updateById('/user/', this.uid, this.user, this.afterUpdateUser);
-  //   // await fetch;
-  //   // this.app.httpClient.fetch('/user/' + this.uid, {
-  //   //   method: 'put',
-  //   //   body: json(this.user)
-  //   // })
-  //   // .then((response) => response.json())
-  //   // .then((data) => {
-  //   //   this.app.appState.setUser(this.user);
-  //   //   this.app.router.navigate('dashboard/volunteer');
-  //   // });
-  // }
-
   async updateUser(){
     await this.app.updateById('/user/', this.uid, this.user, null);
     this.afterUpdateUser();
-    // await fetch;
-    // this.app.httpClient.fetch('/user/' + this.uid, {
-    //   method: 'put',
-    //   body: json(this.user)
-    // })
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   this.app.appState.setUser(this.user);
-    //   this.app.appState.checkUserRole();
-    //   this.app.router.navigate('dashboard/' + this.user.userType.toLowerCase());
-    //   console.log('dashboard/' + this.user.userType.toLowerCase());
-    // });
   }
 
   async deleteUser(){
@@ -233,18 +176,6 @@ export class UserAccount {
     .then((data) => {
       this.app.logout();
     });
-  }
-
-  selectPickChange(type){
-    if (type === 'causes'){
-      this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
-    }
-    if (type === 'work'){
-      this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
-    }
-    if (type === 'talents'){
-      this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
-    }
   }
 
 }

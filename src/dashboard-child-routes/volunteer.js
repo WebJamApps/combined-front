@@ -15,6 +15,12 @@ export class Volunteer {
     this.zipcode = false;
     this.cause = false;
     this.keyword = false;
+    this.allCauses = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
+    this.allTalents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
+    this.allWorks = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
+    this.selectedCauses = [];
+    this.selectedTalents = [];
+    this.selectedWorks = [];
   }
 
   siteLocations = [];
@@ -28,6 +34,7 @@ export class Volunteer {
     {filterby: 'zipcode', value: '', keys: ['voZipCode']},
     {filterby: 'cause', value: '', keys: ['voCharityTypes']}
   ];
+
 
   async activate() {
     this.uid = this.app.auth.getTokenPayload().sub;
@@ -54,6 +61,7 @@ export class Volunteer {
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
       this.populateSites();
       this.populateCauses();
+
       await this.checkScheduled();
       //if (this.selectedFilter.includes('future only')) {
       this.markPast();
@@ -240,9 +248,69 @@ export class Volunteer {
       });
   }
 
+  selectPickChange(type){
+    console.log('I picked something:');
+    console.log(type);
+    if (type === 'causes'){
+      this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
+    }
+    if (type === 'work'){
+      this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
+    }
+    if (type === 'talents'){
+      console.log('you picked talents');
+      this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
+    }
+  }
+
+  setupVolunteerUser(){
+    this.changeCauses(this.allCauses, this.user.volCauses, this.selectedCauses);
+    this.changeCauses(this.allTalents, this.user.volTalents, this.selectedTalents);
+    this.changeCauses(this.allWorks, this.user.volWorkPrefs, this.selectedWorks);
+    if (this.selectedWorks.includes('other')){
+      this.workOther = true;
+    } else {
+      this.workOther = false;
+    }
+    if (this.selectedTalents.includes('other')){
+      this.talentOther = true;
+    } else {
+      this.talentOther = false;
+    }
+    if (this.selectedCauses.includes('other')){
+      this.causeOther = true;
+    } else {
+      this.causeOther = false;
+    }
+  }
+
+  changeCauses(item, vol, container) {
+    item.sort();
+    item.push('other');
+    for (let i of item) {
+      if (vol.includes(i)) {
+        container.push(i);
+      } else {
+        container.push('');
+      }
+    }
+  }
+
+  async updateUser(){
+    await this.app.updateById('/user/', this.uid, this.user, null);
+    this.afterUpdateUser();
+  }
+
+  afterUpdateUser(){
+    this.app.appState.setUser(this.user);
+    this.app.appState.checkUserRole();
+    this.app.router.navigate('dashboard');
+  }
+
   attached(){
     this.buildVolunteerPTag('volCauses', 'volCauseOther', 'causes');
     this.buildVolunteerPTag('volTalents', 'volTalentOther', 'talents');
     this.buildVolunteerPTag('volWorkPrefs', 'volWorkOther', 'works');
+    this.setupVolunteerUser();
   }
 }

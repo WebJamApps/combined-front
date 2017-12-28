@@ -38,7 +38,7 @@
       </select>
     </div>
     <!-- <div if.bind="showtable" class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px"> -->
-      <div class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px">
+    <div class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px">
       <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
         <thead>
           <tr>
@@ -82,7 +82,7 @@
             <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
             <td style="padding:8px" innerhtml.bind="event.voEndTime"></td>
             <td style="padding:8px" innerhtml.bind="event.voNumPeopleNeeded"></td>
-              <td style="padding:8px" innerhtml.bind="event.voNumPeopleScheduled"></td>
+            <td style="padding:8px" innerhtml.bind="event.voNumPeopleScheduled"></td>
             <td style="padding:8px" innerhtml.bind="event.talentHtml"></td>
             <td style="padding:8px" innerhtml.bind="event.workHtml"></td>
             <td style="padding:8px" innerhtml.bind="event.voCharityName"></td>
@@ -125,8 +125,71 @@
           </tbody>
         </table>
       </div>
-      <p style="margin-top:10px; text-align:center">Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences.</p>
+      <!-- <p style="margin-top:10px; text-align:center">Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences.</p> -->
     </div>
     <p>&nbsp;</p>
-  </div>
-</template>
+    <div class="material-content elevation3" style="max-width:5in; margin:auto" if.bind="user.userType === 'Volunteer' || user.userType === 'Developer'">
+      <p style="font-weight:bold; text-align:center">Set Volunteering Preferences</p>
+      <!-- <h4 class="material-header-h4">Set Volunteering Preferences</h4> -->
+      <form>
+        <div class="multiselect" style="width:170px; margin-top:40px">
+          <div class="selectBox" click.delegate="app.showCheckboxes('selectCauses')">
+            <select>
+              <option style="font-weight:normal">Cause(s) to support</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <div class="checkboxes-div" id="selectCauses" horizontal-align="right" vertical-align="top">
+            <div class="dropdown-content">
+              <label class="checkboxes-label" repeat.for="cause of allCauses" for="${cause}">
+                <input class="checkboxes-input" type="checkbox" value.bind="cause" id.bind="cause" checked.bind="selectedCauses" change.delegate="selectPickChange('causes')"> ${cause}
+              </label>
+            </div>
+          </div>
+        </div>
+        <label if.bind="causeOther">Other Causes</label>
+        <input if.bind="causeOther" value.two-way="user.volCauseOther">
+        <div class="multiselect" style="width:170px; margin-top:50px">
+          <div class="selectBox" click.delegate="app.showCheckboxes('selectTalents')">
+            <select>
+              <option style="font-weight:normal">Your talent(s)</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <div class="checkboxes-div" id="selectTalents" horizontal-align="right" vertical-align="top">
+            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 300px; max-height: 362px;overflow:auto;border:1px #dadada solid">
+              <label class="checkboxes-label" repeat.for="talent of allTalents" for="${talent}">
+                <input class="checkboxes-input" type="checkbox" value.bind="talent" id.bind="talent" checked.bind="selectedTalents" change.delegate="selectPickChange('talents')"> ${talent}
+              </label>
+            </div>
+          </div>
+        </div>
+        <label if.bind="talentOther">Other Talent</label>
+        <input if.bind="talentOther" value.two-way="user.volTalentOther">
+        <div class="multiselect" style="width:170px; margin-top:50px">
+          <div class="selectBox" click.delegate="app.showCheckboxes('selectWork')">
+            <select>
+              <option style="font-weight:normal">Can work doing...</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <div class="checkboxes-div" id="selectWork" horizontal-align="right" vertical-align="top">
+            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
+              <label class="checkboxes-label" repeat.for="work of allWorks" for="${work}" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
+                <input class="checkboxes-input" type="checkbox" value.bind="work" id.bind="work" checked.bind="selectedWorks" change.delegate="selectPickChange('work')"> ${work}
+              </label>
+            </div>
+          </div>
+        </div>
+        <label if.bind="workOther">Other Work</label>
+        <input if.bind="workOther" value.two-way="user.volWorkOther">
+        <p>&nbsp;</p>
+        <label>Furthest distance willing to travel (miles)</label>
+        <input style="margin-top:0" value.two-way="user.volTravelDistMiles">
+        <button class="button-lib" raised click.trigger="updateUser()">
+          Submit</button>
+        </form>
+      </div>
+      <p>&nbsp;</p>
+    </div>
+  </template>
