@@ -229,45 +229,35 @@ export class Volunteer {
   }
 
   selectPickChange(type){
-    // console.log('I picked something:');
-    // console.log(type);
     this.showButton();
     if (type === 'causes'){
       this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
       this.selectedCauses = this.selectedCauses.filter((e) => e !== '');
-      // console.log(this.selectedCauses.length);
-      // console.log(this.selectedCauses);
     }
     if (type === 'work'){
       this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
       this.selectedWorks = this.selectedWorks.filter((e) => e !== '');
-      // console.log(this.selectedWorks.length);
-      // console.log(this.selectedWorks);
     }
     if (type === 'talents'){
       console.log('you picked talents');
       this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
       this.selectedTalents = this.selectedTalents.filter((e) => e !== '');
-      // console.log(this.selectedTalents.length);
-      // console.log(this.selectedTalents);
     }
     if (this.selectedCauses.length === 0){
-      let checkboxes = document.getElementById('selectCauses');
-      if (checkboxes.style.display === 'block') {
-        checkboxes.style.display = 'none';
-      }
+      this.hideCheckBoxes('selectCauses');
     }
     if (this.selectedTalents.length === 0){
-      let checkboxes = document.getElementById('selectTalents');
-      if (checkboxes.style.display === 'block') {
-        checkboxes.style.display = 'none';
-      }
+      this.hideCheckBoxes('selectTalents');
     }
     if (this.selectedWorks.length === 0){
-      let checkboxes = document.getElementById('selectWork');
-      if (checkboxes.style.display === 'block') {
-        checkboxes.style.display = 'none';
-      }
+      this.hideCheckBoxes('selectWork');
+    }
+  }
+
+  hideCheckBoxes(id){
+    let checkboxes = document.getElementById(id);
+    if (checkboxes.style.display === 'block') {
+      checkboxes.style.display = 'none';
     }
   }
 
