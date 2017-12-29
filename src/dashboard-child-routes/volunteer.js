@@ -54,9 +54,10 @@ export class Volunteer {
   async displayEvents(){
     if (this.events.length > 0){
       await this.checkSignups();
-      this.fixZipcodes();
+      this.fixZipcodesAndTypes();
       this.fixDates('voStartDate');
       this.fixDates('voEndDate');
+      //this.fixCharityTypes();
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
       this.populateSites();
@@ -102,13 +103,25 @@ export class Volunteer {
     }
   }
 
-  fixZipcodes(){
+  fixZipcodesAndTypes(){
     for (let i = 0; i < this.events.length; i++){
       if (this.events[i].voZipCode === undefined || this.events[i].voZipCode === '' || this.events[i].voZipCode === null){
         this.events[i].voZipCode = '00000';
       }
+      if (this.events[i].voCharityTypes === undefined || this.events[i].voCharityTypes === null || this.events[i].voCharityTypes.length === 0){
+        console.log('we have a missing charity type');
+        this.events[i].voCharityTypes = ['not specified'];
+      }
     }
   }
+
+  // fixZipcodes(){
+  //   for (let i = 0; i < this.events.length; i++){
+  //     if (this.events[i].voZipCode === undefined || this.events[i].voZipCode === '' || this.events[i].voZipCode === null){
+  //       this.events[i].voZipCode = '00000';
+  //     }
+  //   }
+  // }
 
   async checkSignups(){
     const resp = await this.app.httpClient.fetch('/signup/' + this.uid);

@@ -283,7 +283,7 @@ describe('the Volunteer Module', () => {
 
   it('should not change the zipcode if defined', (done) => {
     volunteer.events = [{voZipCode: '24153'}];
-    volunteer.fixZipcodes();
+    volunteer.fixZipcodesAndTypes();
     expect(volunteer.events[0].voZipCode).toBe('24153');
     done();
   });
@@ -302,11 +302,7 @@ describe('the Volunteer Module', () => {
     date.setDate(1);
     date.setFullYear(2017);
     const newDate = volunteer.formatDate(date);
-    //console.log(newDate);
     expect(newDate).toBe('20170101');
-    //console.log(new Date());
-    // volunteer.fixZipcodes();
-    // expect(volunteer.events[0].voZipCode).toBe('24153');
     done();
   });
 
