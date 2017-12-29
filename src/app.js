@@ -270,19 +270,21 @@ export class App {
     return result;
   }
 
-  showCheckboxes(id = null){
-    let checkboxes = null;
-    if (id !== null){
-      checkboxes = document.getElementById(id);
-    }    else {
-      checkboxes = document.getElementById('checkboxes-iron');
-    }
-    if (!this.expanded) {
-      checkboxes.style.display = 'block';
-      this.expanded = true;
-    } else {
+  showCheckboxes(id){
+    //let checkboxes = null;
+    //if (id !== null){
+    let checkboxes = document.getElementById(id);
+    // }    else {
+    //   checkboxes = document.getElementById('checkboxes-iron');
+    // }
+    //console.log('what is this expanded?');
+    //console.log(this.expanded);
+    if (checkboxes.style.display === 'block') {
       checkboxes.style.display = 'none';
-      this.expanded = false;
+      //this.expanded = true;
+    } else {
+      checkboxes.style.display = 'block';
+      //this.expanded = false;
     }
   }
 
@@ -340,15 +342,15 @@ export class App {
       if (afterFunction !== null){
         afterFunction();
       } else {
-        this.afterUpdateUser();
+        //this.afterUpdateUser();
       }
     });
   }
 
-  afterUpdateUser(){
-    this.appState.setUser(this.user);
-    this.appState.checkUserRole();
-    this.router.navigate('dashboard');
-  }
+  // afterUpdateUser(){
+  //   this.appState.setUser(this.user);
+  //   this.appState.checkUserRole();
+  //   this.router.navigate('dashboard');
+  // }
 
 }
