@@ -37,23 +37,30 @@ exports.filterSelected = function(myModule){
     }
     return;
   }
-  for (let s = 0; s < myModule.filters.length; s++){
+  for (let s = 0; s < myModule.selectedFilter.length; s++){
     console.log('I picked a filter:');
-    console.log(myModule.selectedFilter[0]);
-    for (let u = 0; u < myModule.selectedFilter.length; u++){
+    //console.log(myModule.selectedFilter[0]);
+    for (let u = 0; u < myModule.filters.length; u++){
       console.log('inside this loop');
-      console.log(myModule.filters[s].filterby);
-      console.log(myModule.selectedFilter[u]);
-      //arrayFilters[u].showFilter = false;
-      if (myModule.filters[s].filterby === myModule.selectedFilter[u]){
+      console.log(myModule.filters[u].filterby);
+      console.log(myModule.selectedFilter[s]);
+      //myModule[myModule.filters[u].filterby] = false;
+      if (myModule.filters[u].filterby === myModule.selectedFilter[s]){
         console.log('I have a match');
-        myModule[myModule.filters[s].filterby] = true;
-      } else {
-        myModule.filters[s].value = '';
-        myModule[myModule.filters[s].filterby] = false;
+        myModule[myModule.filters[u].filterby] = true;
       }
     }
   }
+  console.log('these are the selected filters');
+  console.log(myModule.selectedFilter);
+  for (let a = 0; a < myModule.filters.length; a++){
+    if (myModule.selectedFilter.indexOf(myModule.filters[a].filterby) === -1){
+      myModule[myModule.filters[a].filterby] = false;
+      myModule.filters[a].value = '';
+    }
+  }
+  // for (let z = 0; z < myModule.filters.length; z++){
+  //   if(myModule[myModule.filters[z].filterby] = true;)
   // for (let t = 0; t < arrayFilters.length; t++){
   //   if (arrayFilters[t].showFilters === false){
   //     arrayFilters[t].value = '';
