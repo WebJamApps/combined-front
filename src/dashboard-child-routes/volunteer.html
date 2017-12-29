@@ -132,7 +132,7 @@
       <p style="font-weight:bold; text-align:center">Volunteering Preferences</p>
       <form>
         <div class="multiselect" style="width:170px; margin-top:40px">
-          <div class="selectBox" click.delegate="app.showCheckboxes('selectCauses')">
+          <div id="causesSelector" class="selectBox" click.delegate="app.showCheckboxes('selectCauses')">
             <select>
               <option style="font-weight:normal">Cause(s) to support</option>
             </select>
@@ -149,7 +149,7 @@
         <label if.bind="causeOther">Other Causes</label>
         <input if.bind="causeOther" value.two-way="user.volCauseOther">
         <div class="multiselect" style="width:170px; margin-top:50px">
-          <div class="selectBox" click.delegate="app.showCheckboxes('selectTalents')">
+          <div id="talentsSelector" class="selectBox" click.delegate="app.showCheckboxes('selectTalents')">
             <select>
               <option style="font-weight:normal">Your talent(s)</option>
             </select>
@@ -166,7 +166,7 @@
         <label if.bind="talentOther">Other Talent</label>
         <input if.bind="talentOther" value.two-way="user.volTalentOther">
         <div class="multiselect" style="width:170px; margin-top:50px">
-          <div class="selectBox" click.delegate="app.showCheckboxes('selectWork')">
+          <div id="worksSelector" class="selectBox" click.delegate="app.showCheckboxes('selectWork')">
             <select>
               <option style="font-weight:normal">Can work doing...</option>
             </select>

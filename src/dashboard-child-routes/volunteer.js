@@ -253,20 +253,69 @@ export class Volunteer {
     console.log(type);
     if (type === 'causes'){
       this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
+      this.selectedCauses = this.selectedCauses.filter((e) => e !== '');
+      console.log(this.selectedCauses.length);
+      console.log(this.selectedCauses);
     }
     if (type === 'work'){
       this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
+      this.selectedWorks = this.selectedWorks.filter((e) => e !== '');
+      console.log(this.selectedWorks.length);
+      console.log(this.selectedWorks);
     }
     if (type === 'talents'){
       console.log('you picked talents');
       this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
+      this.selectedTalents = this.selectedTalents.filter((e) => e !== '');
+      console.log(this.selectedTalents.length);
+      console.log(this.selectedTalents);
+    }
+    if (this.selectedCauses.length === 0){
+      // console.log('is it empty?');
+      // console.log(this.selectedCauses.length);
+      // console.log(this.selectedCauses);
+      // let causesSelector = document.getElementById('causesSelector');
+      // console.log(causesSelector);
+      // causesSelector.click();
+      let checkboxes = document.getElementById('selectCauses');
+      if (checkboxes.style.display === 'block') {
+        checkboxes.style.display = 'none';
+        //this.expanded = true;
+      }
+    }
+    if (this.selectedTalents.length === 0){
+          // console.log('is it empty?');
+          // console.log(this.selectedCauses.length);
+          // console.log(this.selectedCauses);
+      //let talentsSelector = document.getElementById('causesSelector');
+      //console.log(causesSelector);
+      let checkboxes = document.getElementById('selectTalents');
+      if (checkboxes.style.display === 'block') {
+        checkboxes.style.display = 'none';
+        //this.expanded = true;
+      }
+    }
+    if (this.selectedWorks.length === 0){
+          // console.log('is it empty?');
+      // console.log(this.selectedWorks.length);
+      // console.log(this.selectedWorks);
+      //let worksSelector = document.getElementById('worksSelector');
+      //console.log(causesSelector);
+      let checkboxes = document.getElementById('selectWork');
+      if (checkboxes.style.display === 'block') {
+        checkboxes.style.display = 'none';
+        //this.expanded = true;
+      }
     }
   }
 
   setupVolunteerUser(){
     this.changeCauses(this.allCauses, this.user.volCauses, this.selectedCauses);
+    this.selectedCauses = this.selectedCauses.filter((e) => e !== '');
     this.changeCauses(this.allTalents, this.user.volTalents, this.selectedTalents);
+    this.selectedTalents = this.selectedTalents.filter((e) => e !== '');
     this.changeCauses(this.allWorks, this.user.volWorkPrefs, this.selectedWorks);
+    this.selectedWorks = this.selectedWorks.filter((e) => e !== '');
     if (this.selectedWorks.includes('other')){
       this.workOther = true;
     } else {
@@ -281,6 +330,24 @@ export class Volunteer {
       this.causeOther = true;
     } else {
       this.causeOther = false;
+    }
+    if (this.selectedCauses.length > 0){
+      console.log('I have selected a cause');
+      let causesSelector = document.getElementById('causesSelector');
+      console.log(causesSelector);
+      causesSelector.click();
+    }
+    if (this.selectedTalents.length > 0){
+      console.log('I have selected a talent');
+      let talentsSelector = document.getElementById('talentsSelector');
+      console.log(talentsSelector);
+      talentsSelector.click();
+    }
+    if (this.selectedWorks.length > 0){
+      console.log('I have selected a work pref');
+      let worksSelector = document.getElementById('worksSelector');
+      //console.log(causesSelector);
+      worksSelector.click();
     }
   }
 
@@ -298,14 +365,14 @@ export class Volunteer {
 
   async updateUser(){
     await this.app.updateById('/user/', this.uid, this.user, null);
-    //this.afterUpdateUser();
+    this.afterUpdateUser();
   }
 
-  // afterUpdateUser(){
-  //   this.app.appState.setUser(this.user);
-  //   this.app.appState.checkUserRole();
-  //   this.app.router.navigate('dashboard');
-  // }
+  afterUpdateUser(){
+    this.app.appState.setUser(this.user);
+    this.app.appState.checkUserRole();
+    this.app.router.navigate('dashboard');
+  }
 
   attached(){
     // this.buildVolunteerPTag('volCauses', 'volCauseOther', 'causes');

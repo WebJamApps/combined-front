@@ -62,12 +62,13 @@ describe('the Volunteer Module', () => {
     volunteer.activate();
     volunteer.app.appState.user = { name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
     volunteer.activate();
-    console.log(volunteer.user);
+    //console.log(volunteer.user);
     done();
   });
 
   it('setup volunteer with other not selected', (done) => {
     volunteer.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div>';
     volunteer.setupVolunteerUser();
     expect(volunteer.talentOther).toBe(false);
     expect(volunteer.workOther).toBe(false);
@@ -77,6 +78,7 @@ describe('the Volunteer Module', () => {
 
   it('should select picked type', (done) => {
     volunteer.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    document.body.innerHTML = '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div>';
     volunteer.selectPickChange('causes');
     volunteer.selectPickChange('work');
     volunteer.selectPickChange('talents');
@@ -88,11 +90,11 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  // it('reloads page after update user', (done) => {
-  //   volunteer.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
-  //   volunteer.afterUpdateUser();
-  //   done();
-  // });
+  it('navigates to dashboard after update user', (done) => {
+    volunteer.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    volunteer.afterUpdateUser();
+    done();
+  });
 
   it('should active and get all events', (done) => {
     volunteer2.activate();
@@ -174,25 +176,57 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  // it('should run attached to populate the table when no prefs are set', (done) => {
-  //   volunteer.activate();
-  //   document.body.innerHTML = '<p id="causes"></p><p id="talents"></p><p id="works"></p>';
-  //   volunteer.user = {volCauses: [''], volTalents: [''], volWorkPrefs: [''] };
-  //   volunteer.attached();
-  //   expect(document.getElementById('causes').innerHTML).toBe('<p style="font-size:10pt">not specified</p>');
-  //   expect(document.getElementById('talents').innerHTML).toBe('<p style="font-size:10pt">not specified</p>');
-  //   expect(document.getElementById('works').innerHTML).toBe('<p style="font-size:10pt">not specified</p>');
-  //   done();
-  // });
-
-  it('should run attached to populate the table when all prefs are set', (done) => {
+  it('should run attached to setup the volunteer user', (done) => {
     volunteer.activate();
-    document.body.innerHTML = '<p id="causes"></p><p id="talents"></p><p id="works"></p>';
+    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div>';
     volunteer.user = {volCauses: ['Hunger', 'other'], volTalents: ['Cooking', 'other'], volWorkPrefs: ['Chopping', 'other'], volCauseOther: 'Thirst', volTalentOther: 'Singing', volWorkOther: 'Cleaning' };
     volunteer.attached();
-    expect(document.getElementById('causes').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
-    expect(document.getElementById('talents').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
-    expect(document.getElementById('works').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
+    // expect(document.getElementById('causes').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
+    // expect(document.getElementById('talents').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
+    // expect(document.getElementById('works').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
+    done();
+  });
+
+  it('should not display the checkboxes', (done) => {
+    volunteer.activate();
+    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div><div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div>';
+    volunteer.user = {volCauses: [], volTalents: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: '' };
+    volunteer.setupVolunteerUser();
+    expect(document.getElementById('selectWork').style.display).not.toBe('block');
+    expect(document.getElementById('selectTalents').style.display).not.toBe('block');
+    expect(document.getElementById('selectCauses').style.display).not.toBe('block');
+    done();
+  });
+
+  it('removes double quote empty string array elements', (done) => {
+    volunteer.activate();
+    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div><div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div>';
+    volunteer.user = {volCauses: [], volTalents: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: '' };
+    volunteer.selectedCauses = ['', 'hunger'];
+    volunteer.selectedWorks = ['', 'scrubbing'];
+    volunteer.selectedTalents = ['', 'beer drinking'];
+    volunteer.selectPickChange('causes');
+    volunteer.selectPickChange('work');
+    volunteer.selectPickChange('talents');
+    expect(volunteer.selectedCauses[0]).toBe('hunger');
+    expect(volunteer.selectedWorks[0]).toBe('scrubbing');
+    expect(volunteer.selectedTalents[0]).toBe('beer drinking');
+    done();
+  });
+
+  it('hides the checkboxes when all are unchecked', (done) => {
+    volunteer.activate();
+    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div><div id="selectTalents" style="display:block"></div><div id="selectCauses" style="display:block"></div><div id="selectWork" style="display:block"></div>';
+    volunteer.user = {volCauses: [], volTalents: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: '' };
+    volunteer.selectedCauses = [];
+    volunteer.selectedWorks = [];
+    volunteer.selectedTalents = [];
+    volunteer.selectPickChange('causes');
+    volunteer.selectPickChange('work');
+    volunteer.selectPickChange('talents');
+    expect(document.getElementById('selectTalents').style.display).toBe('none');
+    expect(document.getElementById('selectCauses').style.display).toBe('none');
+    expect(document.getElementById('selectWork').style.display).toBe('none');
     done();
   });
 
