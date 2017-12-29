@@ -184,9 +184,9 @@
         <input if.bind="workOther" value.two-way="user.volWorkOther">
         <p>&nbsp;</p>
         <label>Furthest distance willing to travel (miles)</label>
-        <input style="margin-top:0" value.two-way="user.volTravelDistMiles">
-        <button class="button-lib" raised click.trigger="updateUser()">
-          Submit</button>
+        <input id="distanceInput" style="margin-top:0" value.two-way="user.volTravelDistMiles" change.delegate="showButton()">
+        <button id="updateUserButton" style="display:none" class="button-lib" raised click.trigger="updateUser()">
+          Update</button>
         </form>
       </div>
       <p>&nbsp;</p>
