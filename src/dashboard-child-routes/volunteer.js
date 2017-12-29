@@ -188,7 +188,6 @@ export class Volunteer {
   fixDates(key){
     for (let i = 0; i < this.events.length; i++){
       let fixDate = this.events[i][key];
-      //let endDate = this.events[i].voEndDate;
       if (fixDate !== null && fixDate !== undefined){
         if (fixDate.indexOf('T') !== -1){
           this.events[i][key] = fixDate.substr(0, fixDate.indexOf('T'));
@@ -196,23 +195,6 @@ export class Volunteer {
       }
     }
   }
-
-  // buildVolunteerPTag(objectSelector, objectSelectorOther, elementId){
-  //   let returnHtml = '';
-  //   for (let i = 0; i < this.user[objectSelector].length; i++) {
-  //     if (this.user[objectSelector][i] !== ''){
-  //       if (this.user[objectSelector][i] !== 'other'){
-  //         returnHtml = returnHtml + '<p style="font-size:10pt">' + this.user[objectSelector][i] + '</p>';
-  //       } else {
-  //         returnHtml = returnHtml + '<p style="font-size:10pt">' + this.user[objectSelectorOther] + '</p>';
-  //       }
-  //     }
-  //   }
-  //   if (returnHtml === ''){
-  //     returnHtml = '<p style="font-size:10pt">not specified</p>';
-  //   }
-  //   document.getElementById(elementId).innerHTML = returnHtml;
-  // }
 
   async signupEvent(thisevent){
     //doublecheck that someone else has not already signedup to hit the max volunteers needed
@@ -231,7 +213,6 @@ export class Volunteer {
     })
       .then((data) => {
         console.log(data);
-        //this.showtable = false;
         this.activate();
       });
   }
@@ -243,14 +224,14 @@ export class Volunteer {
     })
       .then((data) => {
         console.log('no longer volunteering for that event');
-        //this.showtable = false;
         this.activate();
       });
   }
 
   selectPickChange(type){
-    console.log('I picked something:');
-    console.log(type);
+    // console.log('I picked something:');
+    // console.log(type);
+    this.showButton();
     if (type === 'causes'){
       this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
       this.selectedCauses = this.selectedCauses.filter((e) => e !== '');
@@ -271,40 +252,21 @@ export class Volunteer {
       console.log(this.selectedTalents);
     }
     if (this.selectedCauses.length === 0){
-      // console.log('is it empty?');
-      // console.log(this.selectedCauses.length);
-      // console.log(this.selectedCauses);
-      // let causesSelector = document.getElementById('causesSelector');
-      // console.log(causesSelector);
-      // causesSelector.click();
       let checkboxes = document.getElementById('selectCauses');
       if (checkboxes.style.display === 'block') {
         checkboxes.style.display = 'none';
-        //this.expanded = true;
       }
     }
     if (this.selectedTalents.length === 0){
-          // console.log('is it empty?');
-          // console.log(this.selectedCauses.length);
-          // console.log(this.selectedCauses);
-      //let talentsSelector = document.getElementById('causesSelector');
-      //console.log(causesSelector);
       let checkboxes = document.getElementById('selectTalents');
       if (checkboxes.style.display === 'block') {
         checkboxes.style.display = 'none';
-        //this.expanded = true;
       }
     }
     if (this.selectedWorks.length === 0){
-          // console.log('is it empty?');
-      // console.log(this.selectedWorks.length);
-      // console.log(this.selectedWorks);
-      //let worksSelector = document.getElementById('worksSelector');
-      //console.log(causesSelector);
       let checkboxes = document.getElementById('selectWork');
       if (checkboxes.style.display === 'block') {
         checkboxes.style.display = 'none';
-        //this.expanded = true;
       }
     }
   }
@@ -374,7 +336,13 @@ export class Volunteer {
     this.app.router.navigate('dashboard');
   }
 
+  showButton(){
+    console.log('show button!');
+    document.getElementById('updateUserButton').style.display = 'block';
+  }
+
   attached(){
+    document.getElementById('distanceInput').addEventListener('keydown', this.showButton);
     // this.buildVolunteerPTag('volCauses', 'volCauseOther', 'causes');
     // this.buildVolunteerPTag('volTalents', 'volTalentOther', 'talents');
     // this.buildVolunteerPTag('volWorkPrefs', 'volWorkOther', 'works');

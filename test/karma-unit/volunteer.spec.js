@@ -78,7 +78,7 @@ describe('the Volunteer Module', () => {
 
   it('should select picked type', (done) => {
     volunteer.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
-    document.body.innerHTML = '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div>';
+    document.body.innerHTML = '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div><button id="updateUserButton"></button>';
     volunteer.selectPickChange('causes');
     volunteer.selectPickChange('work');
     volunteer.selectPickChange('talents');
@@ -178,7 +178,7 @@ describe('the Volunteer Module', () => {
 
   it('should run attached to setup the volunteer user', (done) => {
     volunteer.activate();
-    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div>';
+    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div><input id="distanceInput"><button id="updateUserButton"></button>';
     volunteer.user = {volCauses: ['Hunger', 'other'], volTalents: ['Cooking', 'other'], volWorkPrefs: ['Chopping', 'other'], volCauseOther: 'Thirst', volTalentOther: 'Singing', volWorkOther: 'Cleaning' };
     volunteer.attached();
     // expect(document.getElementById('causes').innerHTML).not.toBe('<p style="font-size:10pt">not specified</p>');
@@ -200,7 +200,7 @@ describe('the Volunteer Module', () => {
 
   it('removes double quote empty string array elements', (done) => {
     volunteer.activate();
-    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div><div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div>';
+    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div><div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div><button id="updateUserButton"></button>';
     volunteer.user = {volCauses: [], volTalents: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: '' };
     volunteer.selectedCauses = ['', 'hunger'];
     volunteer.selectedWorks = ['', 'scrubbing'];
@@ -216,7 +216,7 @@ describe('the Volunteer Module', () => {
 
   it('hides the checkboxes when all are unchecked', (done) => {
     volunteer.activate();
-    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div><div id="selectTalents" style="display:block"></div><div id="selectCauses" style="display:block"></div><div id="selectWork" style="display:block"></div>';
+    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div><div id="selectTalents" style="display:block"></div><div id="selectCauses" style="display:block"></div><div id="selectWork" style="display:block"></div><button id="updateUserButton"></button>';
     volunteer.user = {volCauses: [], volTalents: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: '' };
     volunteer.selectedCauses = [];
     volunteer.selectedWorks = [];
