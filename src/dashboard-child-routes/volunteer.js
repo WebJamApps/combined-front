@@ -235,21 +235,21 @@ export class Volunteer {
     if (type === 'causes'){
       this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
       this.selectedCauses = this.selectedCauses.filter((e) => e !== '');
-      console.log(this.selectedCauses.length);
-      console.log(this.selectedCauses);
+      // console.log(this.selectedCauses.length);
+      // console.log(this.selectedCauses);
     }
     if (type === 'work'){
       this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
       this.selectedWorks = this.selectedWorks.filter((e) => e !== '');
-      console.log(this.selectedWorks.length);
-      console.log(this.selectedWorks);
+      // console.log(this.selectedWorks.length);
+      // console.log(this.selectedWorks);
     }
     if (type === 'talents'){
       console.log('you picked talents');
       this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
       this.selectedTalents = this.selectedTalents.filter((e) => e !== '');
-      console.log(this.selectedTalents.length);
-      console.log(this.selectedTalents);
+      // console.log(this.selectedTalents.length);
+      // console.log(this.selectedTalents);
     }
     if (this.selectedCauses.length === 0){
       let checkboxes = document.getElementById('selectCauses');
