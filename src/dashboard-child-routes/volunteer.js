@@ -89,11 +89,11 @@ export class Volunteer {
       this.events[i].voSignupUserIds = signupUserIds;
       if (this.events[i].voNumPeopleScheduled - this.events[i].voNumPeopleNeeded >= 0 && !this.events[i].scheduled){
         this.events[i].full = true;
-        if (this.doubleCheckSignups){
-          alert('someone else signed up for the last spot to volunteer at this event');
-          this.doubleCheckSignups = false;
-          return this.canSignup = false;
-        }
+        // if (this.doubleCheckSignups){
+        //   alert('someone else signed up for the last spot to volunteer at this event');
+        //   this.doubleCheckSignups = false;
+        //   return this.canSignup = false;
+        // }
       }
       if (this.events[i].voStatus === 'cancel' && !this.events[i].scheduled){
         this.events[i].full = true;
@@ -114,14 +114,6 @@ export class Volunteer {
       }
     }
   }
-
-  // fixZipcodes(){
-  //   for (let i = 0; i < this.events.length; i++){
-  //     if (this.events[i].voZipCode === undefined || this.events[i].voZipCode === '' || this.events[i].voZipCode === null){
-  //       this.events[i].voZipCode = '00000';
-  //     }
-  //   }
-  // }
 
   async checkSignups(){
     const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
@@ -211,9 +203,10 @@ export class Volunteer {
 
   async signupEvent(thisevent){
     //doublecheck that someone else has not already signedup to hit the max volunteers needed
-    this.doubleCheckSignups = true;
+    //this.doubleCheckSignups = true;
     await this.checkScheduled();
-    if (!this.canSignup){
+    if (thisevent.full){
+      alert('Sorry, this event has now reached its max volunteers needed.');
       return;
     }
     this.signup.voloppId = thisevent._id;
@@ -230,16 +223,25 @@ export class Volunteer {
       });
   }
 
-  async cancelSignup(eId){
-    await fetch;
-    this.app.httpClient.fetch('/signup/' + eId, {
-      method: 'delete'
-    })
-      .then((data) => {
-        console.log('no longer volunteering for that event');
-        this.activate();
-      });
-  }
+  // async cancelSignup(thisevent){
+  //   await fetch;
+  //   this.app.httpClient.fetch('/signup/' + thisevent._id, {
+  //     method: 'delete'
+  //   })
+  //     .then((data) => {
+  //       console.log('no longer volunteering for that event');
+  //       console.log(data);
+  //       console.log(thisevent);
+  //       thisevent.scheduled = false;
+  //       thisevent.voNumPeopleScheduled = thisevent.voNumPeopleScheduled - 1;
+  //       thisevent.voSignupUserIds = thisevent.voSignupUserIds.filter((e) => e !== this.uid);
+  //       this.app.updateById('/volopp/', thisevent._id, thisevent, null);
+  //       this.activate();
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
   selectPickChange(type){
     this.showButton();

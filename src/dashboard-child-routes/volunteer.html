@@ -68,7 +68,7 @@
               <button if.bind="!event.scheduled && !event.past" class="button-checkout" raised click.delegate="signupEvent(event)" style="margin-bottom:10px">
                 Sign Up
               </button>
-              <button if.bind="event.scheduled && !event.past" class="button-checkout" raised click.delegate="cancelSignup(event._id)" style="color:black; margin-bottom:10px; background-color: red">
+              <button if.bind="event.scheduled && !event.past" class="button-checkout" raised click.delegate="cancelSignup(event)" style="color:black; margin-bottom:10px; background-color: red">
                 Cancel
               </button>
               <p if.bind="event.past">This event has past</p>

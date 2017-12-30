@@ -339,18 +339,20 @@ export class App {
     })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       if (afterFunction !== null){
         afterFunction();
       } else {
         //this.afterUpdateUser();
       }
+    }).catch((error) => {
+      console.log(error);
     });
-  }
 
   // afterUpdateUser(){
   //   this.appState.setUser(this.user);
   //   this.appState.checkUserRole();
   //   this.router.navigate('dashboard');
   // }
-
+  }
 }
