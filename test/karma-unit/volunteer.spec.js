@@ -276,10 +276,10 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  it('should cancel signup', (done) => {
-    volunteer.cancelSignup('120980592048243099824324');
-    done();
-  });
+  // it('should cancel signup', (done) => {
+  //   volunteer.cancelSignup('120980592048243099824324');
+  //   done();
+  // });
 
   it('should not change the zipcode if defined', (done) => {
     volunteer.events = [{voZipCode: '24153'}];
@@ -306,17 +306,19 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  it('should return without moving on with the code', (done) => {
-    volunteer.canSignup = false;
+  it('should not signup when event is full', (done) => {
+    //volunteer.canSignup = false;
     volunteer.uid = 1298471410910974;
-    volunteer.signupEvent({_id: 1298471058100});
+    volunteer.signupEvent({_id: 1298471058100, full: true});
+    //expect signup user id array to be length of zero
     done();
   });
 
-  it('should check signup event', (done) => {
-    volunteer.canSignup = true;
+  it('should signup event', (done) => {
+    //volunteer.canSignup = true;
     volunteer.uid = 1298471410910974;
     volunteer.signupEvent({_id: 1298471058100});
+    //expect signup user id array to contain this user id
     done();
   });
 });
