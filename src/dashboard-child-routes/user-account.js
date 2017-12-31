@@ -146,9 +146,10 @@ export class UserAccount {
   }
 
   async checkSignups(){
-    this.userSignups = [];
-    const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
-    this.userSignups = await resp.json();
+    alert('need to get events and check signups there, also if event is in the past then allow the user to disable their account rather than delete their user account');
+    // this.userSignups = [];
+    // const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
+    // this.userSignups = await resp.json();
   }
 
   async setCharity(){

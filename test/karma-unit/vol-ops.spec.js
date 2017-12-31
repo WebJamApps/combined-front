@@ -151,35 +151,35 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  it('reformats the date to be yyyy-mm-dd', (done) => {
-    let sampleDate = new Date();
-    let sd = sampleDate.toString();
-    volops.activate();
-    volops.events = [{
-      'voStartDate': sd,
-      'voEndDate': sd,
-      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
-      'voWorkTypeOther': 'scrubbing',
-      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-      'voTalentTypeOther': 'scrubbing'
-    }];
-    volops.makeDataTable();
-    done();
-  });
+  // it('reformats the date to be yyyy-mm-dd', (done) => {
+  //   let sampleDate = new Date();
+  //   let sd = sampleDate.toString();
+  //   volops.activate();
+  //   volops.events = [{
+  //     'voStartDate': sd,
+  //     'voEndDate': sd,
+  //     'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+  //     'voWorkTypeOther': 'scrubbing',
+  //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+  //     'voTalentTypeOther': 'scrubbing'
+  //   }];
+  //   volops.makeDataTable();
+  //   done();
+  // });
 
-  it('does not reformat the dates', (done) => {
-      //volops.activate();
-    volops.events = [{
-      'voStartDate': '2017-12-12',
-      'voEndDate': '2017-12-12',
-      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
-      'voWorkTypeOther': 'scrubbing',
-      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-      'voTalentTypeOther': 'scrubbing'
-    }];
-    volops.makeDataTable();
-    done();
-  });
+  // it('does not reformat the dates', (done) => {
+  //     //volops.activate();
+  //   volops.events = [{
+  //     'voStartDate': '2017-12-12',
+  //     'voEndDate': '2017-12-12',
+  //     'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+  //     'voWorkTypeOther': 'scrubbing',
+  //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+  //     'voTalentTypeOther': 'scrubbing'
+  //   }];
+  //   volops.makeDataTable();
+  //   done();
+  // });
 
   it('displays the chosen work preferences', (done) => {
       //volops.activate();
@@ -419,10 +419,10 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  it('remove any signups where the user no longer exists', (done) => {
-    volops4.fixUserSignups();
-    done();
-  });
+  // it('remove any signups where the user no longer exists', (done) => {
+  //   volops4.fixUserSignups();
+  //   done();
+  // });
 
   it('it reactivates a cancelled event', (done) => {
     let signupevent = {
@@ -515,23 +515,21 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  it('should not remove user signups if the user does exist', (done) => {
-      //volops.activate();
-    volops.fixUserSignups();
-    done();
-  });
+  // it('should not remove user signups if the user does exist', (done) => {
+  //     //volops.activate();
+  //   volops.fixUserSignups();
+  //   done();
+  // });
 
-  it('should detect if a user does not exist that is set as a signup', (done) => {
-      //TODO /signup/getall needs to be configured in the httpmock to return an array of signup objects
-      //TODO this same httpmock needs to have a /user/uid that responds with a 404 error (user not found)
-    volops.fixUserSignups();
-    done();
-  });
+  // it('should detect if a user does not exist that is set as a signup', (done) => {
+  //   volops.fixUserSignups();
+  //   done();
+  // });
 
-  it('should delete any signups where the user does not exist', (done) => {
-    volops.removeSignup('badid');
-    done();
-  });
+  // it('should delete any signups where the user does not exist', (done) => {
+  //   volops.removeSignup('badid');
+  //   done();
+  // });
 
   it('displays the submit button if the form is valid', (done) => {
       //volops.activate();
