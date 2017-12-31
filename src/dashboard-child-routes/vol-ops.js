@@ -36,8 +36,8 @@ export class VolunteerOpps {
     this.charityID = currentUrl.substring(currentUrl.indexOf('vol-ops/') + 8);
     let res = await this.app.httpClient.fetch('/volopp/' + this.charityID);
     this.events = await res.json();
-    let res2 = await this.app.httpClient.fetch('/signup/getall');
-    this.signups = await res2.json();
+    //let res2 = await this.app.httpClient.fetch('/signup/getall');
+    //this.signups = await res2.json();
     await this.makeDataTable();
   }
 
@@ -63,46 +63,46 @@ export class VolunteerOpps {
     this.maxStartDate = '';
   }
 
-  async fixUserSignups(){
-    let allSignups = [];
-    let res = await this.app.httpClient.fetch('/signup/getall');
-    allSignups = await res.json();
-    for (let i = 0; i < allSignups.length; i++){
-      try {
-        await this.app.httpClient.fetch('/user/' + allSignups[i].userId);
-      } catch (err) {
-        await this.removeSignup(allSignups[i].userId);
-      }
-    }
-  }
+  // async fixUserSignups(){
+  //   let allSignups = [];
+  //   let res = await this.app.httpClient.fetch('/signup/getall');
+  //   allSignups = await res.json();
+  //   for (let i = 0; i < allSignups.length; i++){
+  //     try {
+  //       await this.app.httpClient.fetch('/user/' + allSignups[i].userId);
+  //     } catch (err) {
+  //       await this.removeSignup(allSignups[i].userId);
+  //     }
+  //   }
+  // }
 
-  async removeSignup(userid){
-    await fetch;
-    this.app.httpClient.fetch('/signup/remove/' + userid, {
-      method: 'delete'
-    })
-    .then((data) => {
-      //console.log('removed signup attached to a nonexisting user');
-    });
-  }
+  // async removeSignup(userid){
+  //   await fetch;
+  //   this.app.httpClient.fetch('/signup/remove/' + userid, {
+  //     method: 'delete'
+  //   })
+  //   .then((data) => {
+  //     //console.log('removed signup attached to a nonexisting user');
+  //   });
+  // }
 
-  async checkScheduled(){
-    let total = 0;
-    let signupUserIds = [];
-    for (let i = 0; i < this.events.length; i++){
-      for (let e = 0; e < this.signups.length; e++){
-        /* istanbul ignore else */
-        if (this.events[i]._id === this.signups[e].voloppId){
-          total = total + this.signups[e].numPeople;
-          signupUserIds.push(this.signups[e].userId);
-        }
-      }
-      this.events[i].voNumPeopleScheduled = total;
-      this.events[i].voSignupUserIds = signupUserIds;
-      total = 0;
-      signupUserIds = [];
-    }
-  }
+  // async checkScheduled(){
+  //   let total = 0;
+  //   let signupUserIds = [];
+  //   for (let i = 0; i < this.events.length; i++){
+  //     for (let e = 0; e < this.signups.length; e++){
+  //       /* istanbul ignore else */
+  //       if (this.events[i]._id === this.signups[e].voloppId){
+  //         total = total + this.signups[e].numPeople;
+  //         signupUserIds.push(this.signups[e].userId);
+  //       }
+  //     }
+  //     this.events[i].voNumPeopleScheduled = total;
+  //     this.events[i].voSignupUserIds = signupUserIds;
+  //     total = 0;
+  //     signupUserIds = [];
+  //   }
+  // }
 
   async viewPeople(thisevent){
     this.showVolunteers = true;

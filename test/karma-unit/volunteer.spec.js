@@ -2,6 +2,12 @@ import {Volunteer} from '../../src/dashboard-child-routes/volunteer';
 import {App} from '../../src/app';
 import {AuthStub, HttpMock, AppStateStub, RouterStub} from './commons';
 
+function testAsync(runAsync) {
+  return (done) => {
+    runAsync().then(done, (e) => { fail(e); done(); });
+  };
+}
+
 class HttpMockEvent extends HttpMock {
   fetch(url, obj) {
     //console.log(url);
@@ -24,7 +30,7 @@ class HttpMockEvent extends HttpMock {
         'voWorkTypeOther': '',
         'voTalentTypeOther': '',
         'voStartDate': null,
-        'voStartTime': '',
+        'voStartTime': '2017-01-01',
         'voEndDate': null,
         'voEndTime': '',
         'voContactName': '',
@@ -101,11 +107,11 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  it('should have the same id as events id', (done) => {
-    volunteer.events = [{_id: '2124', voloppId: '123', userId: '3', numPeople: 1, scheduled: false}];
-    volunteer.checkSignups();
-    done();
-  });
+  // it('should have the same id as events id', (done) => {
+  //   volunteer.events = [{_id: '2124', voloppId: '123', userId: '3', numPeople: 1, scheduled: false}];
+  //   volunteer.checkSignups();
+  //   done();
+  // });
 
   it('displays the events', (done) => {
     // volunteer2.activate();
@@ -132,8 +138,8 @@ describe('the Volunteer Module', () => {
       'voStatus': 'cancel',
       'voCharityTypes': ['ages', 'in', 'the', 'wake']
     }];
-    volunteer2.signups = [{'voloppId': 1, 'numPeople': 25, 'userId': 123445}, {'voloppId': 3, 'numPeople': 25, 'userId': 123445}];
-    volunteer2.doubleCheckSignups = true;
+    //volunteer2.signups = [{'voloppId': 1, 'numPeople': 25, 'userId': 123445}, {'voloppId': 3, 'numPeople': 25, 'userId': 123445}];
+    //volunteer2.doubleCheckSignups = true;
     volunteer2.selectedFilter = ['future only', 'hello'];
     volunteer2.app.buildPTag = function(){};
     volunteer2.displayEvents();
@@ -167,8 +173,8 @@ describe('the Volunteer Module', () => {
       'voStatus': 'cancel',
       'voCharityTypes': ['ages', 'in', 'the', 'wake']
     }];
-    volunteer2.signups = [{'voloppId': 1, 'numPeople': 25, 'userId': 123445}, {'voloppId': 3, 'numPeople': 25, 'userId': 123445}];
-    volunteer2.doubleCheckSignups = true;
+    //volunteer2.signups = [{'voloppId': 1, 'numPeople': 25, 'userId': 123445}, {'voloppId': 3, 'numPeople': 25, 'userId': 123445}];
+    //volunteer2.doubleCheckSignups = true;
     volunteer2.selectedFilter = [];
     volunteer2.displayEvents();
     //console.log(volunteer2.events);
@@ -230,7 +236,7 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  it('should check scheduled', (done) => {
+  it('should check scheduled and set to zero', (done) => {
     volunteer.events = [{
       'voStartDate': '2017-12-12',
       'voEndDate': '2017-12-12',
@@ -252,11 +258,51 @@ describe('the Volunteer Module', () => {
       'voNumPeopleNeeded': 5,
       'voStatus': 'cancel'
     }];
-    volunteer.signups = [{'voloppId': 1, 'numPeople': 25, 'userId': 123445}, {'voloppId': 3, 'numPeople': 25, 'userId': 123445}];
-    volunteer.doubleCheckSignups = true;
+    //volunteer.signups = [{'voloppId': 1, 'numPeople': 25, 'userId': 123445}, {'voloppId': 3, 'numPeople': 25, 'userId': 123445}];
+    //volunteer.doubleCheckSignups = true;
     volunteer.checkScheduled();
-    volunteer.doubleCheckSignups = false;
+    // volunteer.doubleCheckSignups = false;
+    // volunteer.checkScheduled();
+    expect(volunteer.events[0].voNumPeopleScheduled).toBe(0);
+    done();
+  });
+
+  it('should check scheduled and set to correct number, full, and scheduled', (done) => {
+    volunteer.events = [{
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      '_id': 1,
+      'scheduled': false,
+      'voNumPeopleScheduled': 10,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voPeopleScheduled': ['12', '13', '14', '15', '16']
+    }, {
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': [''],
+      'voWorkTypeOther': '',
+      '_id': 2,
+      'scheduled': false,
+      'voNumPeopleScheduled': 10,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel'
+    }];
+    //volunteer.signups = [{'voloppId': 1, 'numPeople': 25, 'userId': 123445}, {'voloppId': 3, 'numPeople': 25, 'userId': 123445}];
+    //volunteer.doubleCheckSignups = true;
+    volunteer.uid = '15';
     volunteer.checkScheduled();
+    // volunteer.doubleCheckSignups = false;
+    // volunteer.checkScheduled();
+    expect(volunteer.events[0].voNumPeopleScheduled).toBe(5);
+    expect(volunteer.events[0].full).toBe(true);
+    expect(volunteer.events[0].scheduled).toBe(true);
+    volunteer.uid = '155';
+    volunteer.checkScheduled(() => {
+      expect(volunteer.events[0].scheduled).toBe(false);
+    });
     done();
   });
 
@@ -276,10 +322,123 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  // it('should cancel signup', (done) => {
-  //   volunteer.cancelSignup('120980592048243099824324');
-  //   done();
-  // });
+  it('should cancel signup', (done) => {
+    volunteer.uid = '15';
+    let myEvent = {
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      '_id': 1,
+      'scheduled': false,
+      'voNumPeopleScheduled': 10,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voPeopleScheduled': ['12', '13', '14', '15', '16']
+    };
+    volunteer.cancelSignup(myEvent);
+    expect(myEvent.voPeopleScheduled.indexOf('15')).toBe(-1);
+    done();
+    //console.log(myEvent);
+  });
+
+  it('should signup', testAsync(async function(){
+    volunteer.uid = '155';
+    let myEvent = {
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      '_id': 1,
+      'scheduled': false,
+      'voNumPeopleScheduled': 10,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voPeopleScheduled': ['12', '13', '14', '15']
+    };
+    //volunteer.doubleCheckSignups = function(){};
+    await volunteer.signupEvent(myEvent);
+    expect(myEvent.voPeopleScheduled.indexOf('155')).not.toBe(-1);
+    // done();
+    //console.log(myEvent);
+  }));
+
+  it('should not signup if date has past', testAsync(async function(){
+    volunteer.activate();
+    volunteer.uid = '155';
+    let myEvent = {
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      '_id': '234',
+      'scheduled': false,
+      'voNumPeopleScheduled': 10,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voPeopleScheduled': ['12', '13', '14', '15']
+    };
+    //volunteer.doubleCheckSignups = function(){};
+    await volunteer.signupEvent(myEvent);
+    expect(myEvent.voPeopleScheduled.indexOf('155')).toBe(-1);
+    // done();
+    //console.log(myEvent);
+  }));
+
+  it('should not signup if already at max volunteers needed', testAsync(async function(){
+    volunteer.activate();
+    volunteer.uid = '155';
+    let myEvent = {
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      '_id': '2345',
+      'scheduled': false,
+      'voNumPeopleScheduled': 10,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voPeopleScheduled': ['12', '13', '14', '15']
+    };
+    //volunteer.doubleCheckSignups = function(){};
+    await volunteer.signupEvent(myEvent);
+    expect(myEvent.voPeopleScheduled.indexOf('155')).toBe(-1);
+    // done();
+    //console.log(myEvent);
+  }));
+
+  it('should signup', testAsync(async function(){
+    volunteer.activate();
+    volunteer.uid = '155';
+    let myEvent = {
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      '_id': '23456',
+      'scheduled': false,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voPeopleScheduled': ['12']
+    };
+    //volunteer.doubleCheckSignups = function(){};
+    let thisevent = await volunteer.signupEvent(myEvent);
+    expect(thisevent.voPeopleScheduled.indexOf('155')).not.toBe(-1);
+    // done();
+    //console.log(thisevent);
+  }));
+
+  it('should catch error on doubleCheckSignups', testAsync(async function(){
+    volunteer.doubleCheckSignups({_id: '234567'}).then((isError) => {
+      console.log('is this an error?');
+      console.log(isError);
+      //expect(isError).toBe(Error{});
+    });
+    //await volunteer.signupEvent(myEvent).then(done).catch((error) => {
+    //   console.log(error);
+    // });
+    //expect(await volunteer.signupEvent(myEvent)).toThrow(new Error('fail'));
+  }));
 
   it('should not change the zipcode if defined', (done) => {
     volunteer.events = [{voZipCode: '24153'}];
@@ -288,13 +447,13 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  it('should not try to fix dates that do not exist', (done) => {
-    volunteer.events = [{voZipCode: '24153'}];
-    volunteer.fixDates();
-    expect(volunteer.events[0].voStartDate).toBe(undefined);
-    expect(volunteer.events[0].voEndDate).toBe(undefined);
-    done();
-  });
+  // it('should not try to fix dates that do not exist', (done) => {
+  //   volunteer.events = [{voZipCode: '24153'}];
+  //   volunteer.fixDates();
+  //   expect(volunteer.events[0].voStartDate).toBe(undefined);
+  //   expect(volunteer.events[0].voEndDate).toBe(undefined);
+  //   done();
+  // });
 
   it('should format the date of January 1, 2017', (done) => {
     let date = new Date();

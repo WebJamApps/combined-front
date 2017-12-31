@@ -118,27 +118,92 @@ class HttpMock {
       this.user = obj.body;
     }
     this.status = 200;
-
     let returnValue = this.user;
+    console.log('this is url:');
     console.log(url);
-    if (url === '/signup/getall') {
-      returnValue = this.getSignUpAll();
+    // if (url === '/signup/getall') {
+    //   returnValue = this.getSignUpAll();
       //console.log(return_value);
-    } else if (url === '/user/1' || url === '/user/2' || url === '/user/3'){
+    // }
+    if (url === '/user/1' || url === '/user/2' || url === '/user/3'){
       returnValue = this.getSpecificUser(url.substring(-1));
     } else if (url === '/volopp/'){
       returnValue = {message: 'success'};
+    } else if (url === '/volopp/get/234'){
+      //console.log('i am in the correct route!');
+      returnValue = {'_id': '234', 'voName': 'run the swamp',
+        'voCharityId': '123',
+        'voCharityName': 'howdy',
+        'voloppId': 1,
+        'voNumPeopleNeeded': 1,
+        'voDescription': '',
+        'voWorkTypes': [],
+        'voTalentTypes': [],
+        'voWorkTypeOther': '',
+        'voTalentTypeOther': '',
+        'voStartDate': '2017-01-01',
+        'voStartTime': null,
+        'voEndDate': null,
+        'voEndTime': '',
+        'voContactName': '',
+        'voContactEmail': '',
+        'voContactPhone': ''};
+    } else if (url === '/volopp/get/2345'){
+      //console.log('i am in the correct route!');
+      returnValue = {'_id': '2345', 'voName': 'run the swamp',
+        'voCharityId': '123',
+        'voCharityName': 'howdy',
+        'voloppId': 1,
+        'voNumPeopleNeeded': 1,
+        'voPeopleScheduled': ['123'],
+        'voDescription': '',
+        'voWorkTypes': [],
+        'voTalentTypes': [],
+        'voWorkTypeOther': '',
+        'voTalentTypeOther': '',
+        'voStartDate': null,
+        'voStartTime': null,
+        'voEndDate': null,
+        'voEndTime': '',
+        'voContactName': '',
+        'voContactEmail': '',
+        'voContactPhone': ''};
+    } else if (url === '/volopp/get/23456'){
+      console.log('i am in the correct route!');
+      returnValue = {'_id': '23456', 'voName': 'run the swamp',
+        'voCharityId': '123',
+        'voCharityName': 'howdy',
+        'voloppId': 1,
+        'voNumPeopleNeeded': 3,
+        'voPeopleScheduled': ['1234'],
+        'voDescription': '',
+        'voWorkTypes': [],
+        'voTalentTypes': [],
+        'voWorkTypeOther': '',
+        'voTalentTypeOther': '',
+        'voStartDate': '2055-12-12',
+        'voStartTime': null,
+        'voEndDate': null,
+        'voEndTime': '',
+        'voContactName': '',
+        'voContactEmail': '',
+        'voContactPhone': ''};
+    } else if (url === '/volopp/get/234567'){
+      returnValue = null;
     }
     if (returnValue !== null){
-      console.log('i am here');
+      //console.log('i am here');
       return Promise.resolve({
         Headers: this.headers,
         json: () => Promise.resolve(returnValue)
       });
     }
-
-    return Promise.reject(new Error('fail'));
+    return Promise.resolve({
+      Headers: this.headers,
+      json: () => Promise.reject(new Error('fail'))
+    });
   }
+
   getSpecificUser(id){
     if (id === '1') {
       return [
@@ -151,7 +216,6 @@ class HttpMock {
           {name: 'Test Elba', userType: 'Volunteer', _id: '3', volTalents: [], volCauses: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''}
       ];
     }
-
     return null;
   }
 
