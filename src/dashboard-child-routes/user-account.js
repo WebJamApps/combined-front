@@ -30,7 +30,7 @@ export class UserAccount {
     this.user = await this.app.appState.getUser(this.uid);
     this.app.role = this.user.userType;
     //this.setupVolunteerUser();
-    this.checkChangeUserType();
+    //this.checkChangeUserType();
     this.setUserTypes();
     this.setupValidation();
   }
@@ -109,48 +109,48 @@ export class UserAccount {
     return this.canSubmit;
   }
 
-  async checkChangeUserType(){
-    this.reasons = '';
-    console.log('check change user type');
-    if (this.user.userType === 'Volunteer' || this.user.userType === 'Developer'){
-      await this.checkSignups();
-      if (this.userSignups.length > 0){
-        this.canChangeUserType = false;
-        this.reasons = this.reasons + '<li>You signed up to work at a charity event.</li>';
-      }
-      // console.log('the user signups inside the check function');
-      // console.log(this.userSignups);
-      // console.log('I can change the user type: ' + this.canChangeUserType);
-    }
-    if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
-      // Do not allow user to change their primary userType away from Charity if they have created a charity
-      const res = await this.app.httpClient.fetch('/charity/' + this.uid);
-      this.charities = await res.json();
-      /* istanbul ignore else */
-      if (this.charities.length > 0){
-        //this.canDelete = false;
-        this.canChangeUserType = false;
-        this.reasons = this.reasons + '<li>You are the manager of a charity.</li>';
-      }
-    }
-    /* istanbul ignore else */
-    if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
-      const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
-      this.books = await res.json();
-      /* istanbul ignore else */
-      if (this.books.length > 0){
-        this.canChangeUserType = false;
-        this.reasons = this.reasons + '<li>You have a book checked out.</li>';
-      }
-    }
-  }
+  // async checkChangeUserType(){
+  //   this.reasons = '';
+  //   console.log('check change user type');
+  //   if (this.user.userType === 'Volunteer' || this.user.userType === 'Developer'){
+  //     await this.checkSignups();
+  //     if (this.userSignups.length > 0){
+  //       this.canChangeUserType = false;
+  //       this.reasons = this.reasons + '<li>You signed up to work at a charity event.</li>';
+  //     }
+  //     // console.log('the user signups inside the check function');
+  //     // console.log(this.userSignups);
+  //     // console.log('I can change the user type: ' + this.canChangeUserType);
+  //   }
+  //   if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
+  //     // Do not allow user to change their primary userType away from Charity if they have created a charity
+  //     const res = await this.app.httpClient.fetch('/charity/' + this.uid);
+  //     this.charities = await res.json();
+  //     /* istanbul ignore else */
+  //     if (this.charities.length > 0){
+  //       //this.canDelete = false;
+  //       this.canChangeUserType = false;
+  //       this.reasons = this.reasons + '<li>You are the manager of a charity.</li>';
+  //     }
+  //   }
+  //   /* istanbul ignore else */
+  //   if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
+  //     const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
+  //     this.books = await res.json();
+  //     /* istanbul ignore else */
+  //     if (this.books.length > 0){
+  //       this.canChangeUserType = false;
+  //       this.reasons = this.reasons + '<li>You have a book checked out.</li>';
+  //     }
+  //   }
+  // }
 
-  async checkSignups(){
-    alert('need to get events and check signups there, also if event is in the past then allow the user to disable their account rather than delete their user account');
-    // this.userSignups = [];
-    // const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
-    // this.userSignups = await resp.json();
-  }
+  // async checkSignups(){
+  //   alert('need to get events and check signups there, also if event is in the past then allow the user to disable their account rather than delete their user account');
+  //   // this.userSignups = [];
+  //   // const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
+  //   // this.userSignups = await resp.json();
+  // }
 
   async setCharity(){
     this.user.userDetails = '';

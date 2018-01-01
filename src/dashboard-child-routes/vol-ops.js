@@ -49,7 +49,7 @@ export class VolunteerOpps {
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
       //this.buildTalents();
       this.checkScheduled();
-      this.markPast();
+      //this.markPast();
     }
     this.findCharity();
     this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
@@ -104,52 +104,52 @@ export class VolunteerOpps {
   //   }
   // }
 
-  async viewPeople(thisevent){
-    this.showVolunteers = true;
-    let res;
-    let person;
-    this.allPeople = [];
-    for (let i = 0; i < thisevent.voSignupUserIds.length; i++){
-      try {
-        res = await this.app.httpClient.fetch('/user/' + thisevent.voSignupUserIds[i]);
-      } catch (err) {
-        //console.log('the user does not exist');
-        await this.fixUserSignups();
-      }
-      /* istanbul ignore else */
-      if (res !== undefined && res !== ''){
-        person = await res.json();
-        this.allPeople.push(person);
-        res = '';
-      }
-    }
-    this.eventTitle = thisevent.voName;
-    let display = document.getElementById('showvolunteers');
-    /* istanbul ignore else */
-    if (display !== null){
-      display.scrollIntoView();
-    }
-  }
+  // async viewPeople(thisevent){
+  //   this.showVolunteers = true;
+  //   let res;
+  //   let person;
+  //   this.allPeople = [];
+  //   for (let i = 0; i < thisevent.voSignupUserIds.length; i++){
+  //     try {
+  //       res = await this.app.httpClient.fetch('/user/' + thisevent.voSignupUserIds[i]);
+  //     } catch (err) {
+  //       //console.log('the user does not exist');
+  //       await this.fixUserSignups();
+  //     }
+  //     /* istanbul ignore else */
+  //     if (res !== undefined && res !== ''){
+  //       person = await res.json();
+  //       this.allPeople.push(person);
+  //       res = '';
+  //     }
+  //   }
+  //   this.eventTitle = thisevent.voName;
+  //   let display = document.getElementById('showvolunteers');
+  //   /* istanbul ignore else */
+  //   if (display !== null){
+  //     display.scrollIntoView();
+  //   }
+  // }
 
-  markPast() {
-    let testDate;
-    let today = new Date();
-    let mm = today.getMonth() + 1; // getMonth() is zero-based
-    let dd = today.getDate();
-    /* istanbul ignore next */
-    today = [today.getFullYear(), (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('');
-    for (let i = 0; i < this.events.length; i++){
-      if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
-        //console.log('undefined date');
-        this.events[i].voStartDate = today;
-      }
-      testDate = this.events[i].voStartDate.replace('-', '');
-      testDate = testDate.replace('-', '');
-      if (testDate < today){
-        this.events[i].past = true;
-      }
-    }
-  }
+  // markPast() {
+  //   let testDate;
+  //   let today = new Date();
+  //   let mm = today.getMonth() + 1; // getMonth() is zero-based
+  //   let dd = today.getDate();
+  //   /* istanbul ignore next */
+  //   today = [today.getFullYear(), (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('');
+  //   for (let i = 0; i < this.events.length; i++){
+  //     if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
+  //       //console.log('undefined date');
+  //       this.events[i].voStartDate = today;
+  //     }
+  //     testDate = this.events[i].voStartDate.replace('-', '');
+  //     testDate = testDate.replace('-', '');
+  //     if (testDate < today){
+  //       this.events[i].past = true;
+  //     }
+  //   }
+  // }
 
   selectDate(dtype){
     if (dtype === 'start-date'){
