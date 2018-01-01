@@ -164,6 +164,8 @@ export class Volunteer {
     if (this.canSignup){
       thisevent.voPeopleScheduled.push(this.uid);
       this.app.updateById('/volopp/', thisevent._id, thisevent, null);
+      await this.fetchAllEvents();
+      this.checkScheduled();
       this.app.router.navigate('dashboard');
       return thisevent;
     }
