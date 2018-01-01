@@ -30,7 +30,7 @@ export class UserAccount {
     this.user = await this.app.appState.getUser(this.uid);
     this.app.role = this.user.userType;
     //this.setupVolunteerUser();
-    //this.checkChangeUserType();
+    this.checkChangeUserType();
     this.userTypes.sort();
     this.setupValidation();
   }
@@ -109,7 +109,7 @@ export class UserAccount {
     return this.canSubmit;
   }
 
-  // async checkChangeUserType(){
+  async checkChangeUserType(){
   //   this.reasons = '';
   //   console.log('check change user type');
   //   if (this.user.userType === 'Volunteer' || this.user.userType === 'Developer'){
@@ -134,16 +134,16 @@ export class UserAccount {
   //     }
   //   }
   //   /* istanbul ignore else */
-  //   if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
-  //     const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
-  //     this.books = await res.json();
-  //     /* istanbul ignore else */
-  //     if (this.books.length > 0){
-  //       this.canChangeUserType = false;
-  //       this.reasons = this.reasons + '<li>You have a book checked out.</li>';
-  //     }
-  //   }
-  // }
+    if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
+      const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
+      this.books = await res.json();
+      /* istanbul ignore else */
+      if (this.books.length > 0){
+        this.canChangeUserType = false;
+        this.reasons = this.reasons + '<li>You have a book checked out.</li>';
+      }
+    }
+  }
 
   // async checkSignups(){
   //   alert('need to get events and check signups there, also if event is in the past then allow the user to disable their account rather than delete their user account');

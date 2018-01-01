@@ -170,13 +170,12 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  // it('should allow Librarian user to change their user type', (done) => {
-  //   ua.user.userType = 'Librarian';
-  //   //ua.
-  //   ua.checkChangeUserType();
-  //   expect(ua.canChangeUserType).toBe(true);
-  //   done();
-  // });
+  it('should allow Librarian user to change their user type', (done) => {
+    ua.user.userType = 'Librarian';
+    ua.checkChangeUserType();
+    expect(ua.canChangeUserType).toBe(true);
+    done();
+  });
 
   // it('should allow Volunteer user to change their user type when not signedup', (done) => {
   //   ua.user.userType = 'Volunteer';
