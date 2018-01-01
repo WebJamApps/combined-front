@@ -57,13 +57,13 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  it('sets up the user type drop down for a new volunteer user', (done) => {
-    ua.app.appState = new AppStateStub();
-    ua.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', isOhafUser: true};
-    ua.setUserTypes();
-    expect(ua.userTypes[0]).toBe('Charity');
-    done();
-  });
+  // it('sets up the user type drop down for a new volunteer user', (done) => {
+  //   ua.app.appState = new AppStateStub();
+  //   ua.user = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', isOhafUser: true};
+  //   ua.setUserTypes();
+  //   expect(ua.userTypes[0]).toBe('Charity');
+  //   done();
+  // });
 
   // it('routes back to dashboard after update user', (done) => {
   //   ua.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};

@@ -31,20 +31,20 @@ export class UserAccount {
     this.app.role = this.user.userType;
     //this.setupVolunteerUser();
     //this.checkChangeUserType();
-    this.setUserTypes();
+    this.userTypes.sort();
     this.setupValidation();
   }
 
-  setUserTypes(){
-    if (this.user.isOhafUser && this.user.userType === 'Volunteer'){
-      this.userTypes = ['Charity', 'Volunteer'];
-    }
-    /* istanbul ignore next */
-    if (process.env.NODE_ENV === 'development' || this.user.userType === 'Developer'){
-      this.userTypes.push('Developer');
-    }
-    this.userTypes.sort();
-  }
+  // setUserTypes(){
+  //   if (this.user.isOhafUser && this.user.userType === 'Volunteer'){
+  //     this.userTypes = ['Charity', 'Volunteer'];
+  //   }
+  //   /* istanbul ignore next */
+  //   if (process.env.NODE_ENV === 'development' || this.user.userType === 'Developer'){
+  //     this.userTypes.push('Developer');
+  //   }
+  //   this.userTypes.sort();
+  // }
 
   // changeCauses(item, vol, container) {
   //   item.sort();
@@ -158,15 +158,17 @@ export class UserAccount {
     await this.app.updateById('/user/', this.uid, this.user, null);
   }
 
-  // afterUpdateUser(){
-  //   this.app.appState.setUser(this.user);
-  //   this.app.appState.checkUserRole();
-  //   this.app.router.navigate('dashboard');
-  // }
+  afterUpdateUser(){
+    this.app.appState.setUser(this.user);
+    this.app.appState.checkUserRole();
+    this.app.router.navigate('dashboard');
+  }
 
   async updateUser(){
     await this.app.updateById('/user/', this.uid, this.user, null);
-    //this.afterUpdateUser();
+    // this.app.appState.updateUser(this.user)
+    // this.app.router.navigate('dashboard');
+    this.afterUpdateUser();
   }
 
   async deleteUser(){
