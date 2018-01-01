@@ -333,7 +333,7 @@ export class App {
 
   async updateById(route, id, dataObj, afterFunction){
     await fetch;
-    this.httpClient.fetch(route + id, {
+    return this.httpClient.fetch(route + id, {
       method: 'put',
       body: json(dataObj)
     })
