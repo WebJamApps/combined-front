@@ -170,26 +170,26 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  it('should allow Librarian user to change their user type', (done) => {
-    ua.user.userType = 'Librarian';
-    //ua.
-    ua.checkChangeUserType();
-    expect(ua.canChangeUserType).toBe(true);
-    done();
-  });
+  // it('should allow Librarian user to change their user type', (done) => {
+  //   ua.user.userType = 'Librarian';
+  //   //ua.
+  //   ua.checkChangeUserType();
+  //   expect(ua.canChangeUserType).toBe(true);
+  //   done();
+  // });
 
-  it('should allow Volunteer user to change their user type when not signedup', (done) => {
-    ua.user.userType = 'Volunteer';
-    ua.checkSignups = function(){
-      return new Promise((resolve) => {
-        resolve({});
-      });
-    };
-    ua.userSignups = [];
-    ua.checkChangeUserType();
-    expect(ua.canChangeUserType).toBe(true);
-    done();
-  });
+  // it('should allow Volunteer user to change their user type when not signedup', (done) => {
+  //   ua.user.userType = 'Volunteer';
+  //   ua.checkSignups = function(){
+  //     return new Promise((resolve) => {
+  //       resolve({});
+  //     });
+  //   };
+  //   ua.userSignups = [];
+  //   ua.checkChangeUserType();
+  //   expect(ua.canChangeUserType).toBe(true);
+  //   done();
+  // });
 
   // it('should select picked type', (done) => {
   //   ua.selectPickChange('causes');
