@@ -65,12 +65,13 @@
         <tbody>
           <tr repeat.for="event of $displayData" if.bind="(!event.past || (event.past && !hidePast)) && (!event.full || (event.full && event.scheduled))">
             <td style="padding:8px; text-align:center">
-              <button if.bind="!event.scheduled && !event.past" class="button-checkout" raised click.delegate="signupEvent(event)" style="margin-bottom:10px">
+              <button if.bind="!event.scheduled && !event.past && event.voStatus !== 'cancel'" class="button-checkout" raised click.delegate="signupEvent(event)" style="margin-bottom:10px">
                 Sign Up
               </button>
               <button if.bind="event.scheduled && !event.past" class="button-checkout" raised click.delegate="cancelSignup(event)" style="color:black; margin-bottom:10px; background-color: red">
                 Cancel
               </button>
+              <p if.bind="event.voStatus === 'cancel' && !event.scheduled">This event has been cancelled.</p>
               <p if.bind="event.past">This event has past</p>
             </td>
             <td style="padding:8px" innerhtml.bind="event.voName"></td>
