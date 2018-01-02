@@ -36,7 +36,7 @@
                 <p><a if.bind="event.voStatus !=='cancel' && !event.past" click.delegate="showUpdateEvent(event, 'update')">Update</a></p>
                 <p if.bind="event.voStatus ==='cancel'"><strong>This event has been cancelled</strong></p>
                 <p if.bind="event.past">Event has past.</p>
-                <button if.bind="event.voStatus ==='cancel'" class="button-checkout" raised click.delegate="reactivateEvent(event)" style="margin-bottom:10px">
+                <button if.bind="event.voStatus ==='cancel' && !event.past" class="button-checkout" raised click.delegate="reactivateEvent(event)" style="margin-bottom:10px">
                   Reactivate
                 </button>
               </td>
