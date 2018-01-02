@@ -268,6 +268,7 @@ export class VolunteerOpps {
       this.voOpp.voDescription = '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>' + this.voOpp.voDescription;
     }
     await this.app.updateById('/volopp/', this.voOpp._id, this.voOpp, null);
+    this.activate();
   }
 
   async deleteEvent(thisEventId){
