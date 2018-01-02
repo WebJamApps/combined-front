@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {App} from '../app';
-import {fixDates, formatDate} from '../commons/utils.js';
+import {fixDates, formatDate, markPast} from '../commons/utils.js';
 //import {json} from 'aurelia-fetch-client';
 import {filterSelected} from '../commons/utils';
 @inject(App)
@@ -59,7 +59,7 @@ export class Volunteer {
       this.populateSites();
       this.populateCauses();
       this.checkScheduled();
-      this.markPast();
+      markPast(this.events, formatDate);
     }
   }
 
@@ -101,7 +101,7 @@ export class Volunteer {
     filterSelected(this);
     if (this.selectedFilter.includes('future only')) {
       console.log('you selected the starting date filter');
-      this.markPast();
+      markPast(this.events, formatDate);
       this.hidePast = true;
     } else {
       console.log('show past now!');
@@ -119,23 +119,23 @@ export class Volunteer {
   //   return today;
   // }
 
-  markPast() {
-    let testDate;
-    let today = new Date();
-    today = formatDate(today);
-    for (let i = 0; i < this.events.length; i++){
-      if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
-        this.events[i].voStartDate = today;
-      }
-      testDate = this.events[i].voStartDate.replace('-', '');
-      testDate = testDate.replace('-', '');
-      if (testDate <= today){
-        this.events[i].past = true;
-      } else {
-        this.events[i].past = false;
-      }
-    }
-  }
+  // markPast() {
+  //   let testDate;
+  //   let today = new Date();
+  //   today = formatDate(today);
+  //   for (let i = 0; i < this.events.length; i++){
+  //     if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
+  //       this.events[i].voStartDate = today;
+  //     }
+  //     testDate = this.events[i].voStartDate.replace('-', '');
+  //     testDate = testDate.replace('-', '');
+  //     if (testDate <= today){
+  //       this.events[i].past = true;
+  //     } else {
+  //       this.events[i].past = false;
+  //     }
+  //   }
+  // }
 
   populateSites(){
     this.siteLocations.push('');

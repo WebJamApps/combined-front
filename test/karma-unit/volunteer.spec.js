@@ -1,6 +1,7 @@
 import {Volunteer} from '../../src/dashboard-child-routes/volunteer';
 import {App} from '../../src/app';
 import {AuthStub, HttpMock, AppStateStub, RouterStub} from './commons';
+import {formatDate, markPast} from '../../src/commons/utils.js';
 
 function testAsync(runAsync) {
   return (done) => {
@@ -450,7 +451,7 @@ describe('the Volunteer Module', () => {
       'voStatus': 'cancel',
       'voPeopleScheduled': ['12']
     }];
-    volunteer.markPast();
+    markPast(volunteer.events, formatDate);
     expect(volunteer.events[0].past).toBe(true);
   }));
 
@@ -468,7 +469,7 @@ describe('the Volunteer Module', () => {
       'voStatus': 'cancel',
       'voPeopleScheduled': ['12']
     }];
-    volunteer.markPast();
+    markPast(volunteer.events, formatDate);
     expect(volunteer.events[0].past).toBe(false);
   }));
 

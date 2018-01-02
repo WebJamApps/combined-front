@@ -26,6 +26,24 @@ exports.formatDate = function(today){
   return today;
 };
 
+exports.markPast = function(myEvents, formatDate) {
+  let testDate;
+  let today = new Date();
+  today = formatDate(today);
+  for (let i = 0; i < myEvents.length; i++){
+    if (myEvents[i].voStartDate === undefined || myEvents[i].voStartDate === null || myEvents[i].voStartDate === ''){
+      myEvents[i].voStartDate = today;
+    }
+    testDate = myEvents[i].voStartDate.replace('-', '');
+    testDate = testDate.replace('-', '');
+    if (testDate <= today){
+      myEvents[i].past = true;
+    } else {
+      myEvents[i].past = false;
+    }
+  }
+};
+
 exports.makeFilterDropdown = function(filterName, model, attrib){
   filterName.push('');
   for (let next of model){

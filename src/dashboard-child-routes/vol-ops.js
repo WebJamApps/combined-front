@@ -3,7 +3,7 @@ import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
-import {fixDates, formatDate} from '../commons/utils.js';
+import {fixDates, formatDate, markPast} from '../commons/utils.js';
 const Inputmask = require('inputmask');
 @inject(App, ValidationControllerFactory, Validator)
 export class VolunteerOpps {
@@ -49,7 +49,7 @@ export class VolunteerOpps {
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
       //this.buildTalents();
       this.checkScheduled();
-      this.markPast();
+      markPast(this.events, formatDate);
     }
     this.findCharity();
     this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
@@ -133,23 +133,23 @@ export class VolunteerOpps {
   //   return today;
   // }
 
-  markPast() {
-    let testDate;
-    let today = new Date();
-    today = formatDate(today);
-    for (let i = 0; i < this.events.length; i++){
-      if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
-        this.events[i].voStartDate = today;
-      }
-      testDate = this.events[i].voStartDate.replace('-', '');
-      testDate = testDate.replace('-', '');
-      if (testDate <= today){
-        this.events[i].past = true;
-      } else {
-        this.events[i].past = false;
-      }
-    }
-  }
+  // markPast() {
+  //   let testDate;
+  //   let today = new Date();
+  //   today = formatDate(today);
+  //   for (let i = 0; i < this.events.length; i++){
+  //     if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
+  //       this.events[i].voStartDate = today;
+  //     }
+  //     testDate = this.events[i].voStartDate.replace('-', '');
+  //     testDate = testDate.replace('-', '');
+  //     if (testDate <= today){
+  //       this.events[i].past = true;
+  //     } else {
+  //       this.events[i].past = false;
+  //     }
+  //   }
+  // }
 
   selectDate(dtype){
     if (dtype === 'start-date'){
