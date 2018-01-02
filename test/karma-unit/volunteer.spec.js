@@ -434,10 +434,42 @@ describe('the Volunteer Module', () => {
       console.log(isError);
       //expect(isError).toBe(Error{});
     });
-    //await volunteer.signupEvent(myEvent).then(done).catch((error) => {
-    //   console.log(error);
-    // });
-    //expect(await volunteer.signupEvent(myEvent)).toThrow(new Error('fail'));
+  }));
+
+  it('should mark past dates', testAsync(async function(){
+    volunteer.activate();
+    volunteer.uid = '155';
+    volunteer.events = [{
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      '_id': '23456',
+      'scheduled': false,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voPeopleScheduled': ['12']
+    }];
+    volunteer.markPast();
+    expect(volunteer.events[0].past).toBe(true);
+  }));
+
+  it('should mark not past', testAsync(async function(){
+    volunteer.activate();
+    volunteer.uid = '155';
+    volunteer.events = [{
+      'voStartDate': '2517-12-12',
+      'voEndDate': '2517-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      '_id': '23456',
+      'scheduled': false,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voPeopleScheduled': ['12']
+    }];
+    volunteer.markPast();
+    expect(volunteer.events[0].past).toBe(false);
   }));
 
   it('should not change the zipcode if defined', (done) => {
@@ -446,14 +478,6 @@ describe('the Volunteer Module', () => {
     expect(volunteer.events[0].voZipCode).toBe('24153');
     done();
   });
-
-  // it('should not try to fix dates that do not exist', (done) => {
-  //   volunteer.events = [{voZipCode: '24153'}];
-  //   volunteer.fixDates();
-  //   expect(volunteer.events[0].voStartDate).toBe(undefined);
-  //   expect(volunteer.events[0].voEndDate).toBe(undefined);
-  //   done();
-  // });
 
   it('should format the date of January 1, 2017', (done) => {
     let date = new Date();
