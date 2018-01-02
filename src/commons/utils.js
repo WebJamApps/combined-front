@@ -16,6 +16,16 @@ exports.fixDates = function(myevents){
   return myevents;
 };
 
+exports.formatDate = function(today){
+  //console.log(today);
+  let mm = today.getMonth() + 1; // getMonth() is zero-based
+  let dd = today.getDate();
+  today = [today.getFullYear(),
+    (mm > 9 ? '' : '0') + mm,
+    (dd > 9 ? '' : '0') + dd].join('');
+  return today;
+};
+
 exports.makeFilterDropdown = function(filterName, model, attrib){
   filterName.push('');
   for (let next of model){

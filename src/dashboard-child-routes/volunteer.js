@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {App} from '../app';
-import {fixDates} from '../commons/utils.js';
+import {fixDates, formatDate} from '../commons/utils.js';
 //import {json} from 'aurelia-fetch-client';
 import {filterSelected} from '../commons/utils';
 @inject(App)
@@ -109,20 +109,20 @@ export class Volunteer {
     }
   }
 
-  formatDate(today){
-    console.log(today);
-    let mm = today.getMonth() + 1; // getMonth() is zero-based
-    let dd = today.getDate();
-    today = [today.getFullYear(),
-      (mm > 9 ? '' : '0') + mm,
-      (dd > 9 ? '' : '0') + dd].join('');
-    return today;
-  }
+  // formatDate(today){
+  //   console.log(today);
+  //   let mm = today.getMonth() + 1; // getMonth() is zero-based
+  //   let dd = today.getDate();
+  //   today = [today.getFullYear(),
+  //     (mm > 9 ? '' : '0') + mm,
+  //     (dd > 9 ? '' : '0') + dd].join('');
+  //   return today;
+  // }
 
   markPast() {
     let testDate;
     let today = new Date();
-    today = this.formatDate(today);
+    today = formatDate(today);
     for (let i = 0; i < this.events.length; i++){
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
         this.events[i].voStartDate = today;
@@ -187,7 +187,7 @@ export class Volunteer {
       console.log(data);
       if (data.voStartDate){
         let today = new Date();
-        today = this.formatDate(today);
+        today = formatDate(today);
         let testDate = data.voStartDate.replace('-', '');
         testDate = testDate.replace('-', '');
         if (testDate < today){

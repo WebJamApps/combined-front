@@ -3,7 +3,7 @@ import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
-import {fixDates} from '../commons/utils.js';
+import {fixDates, formatDate} from '../commons/utils.js';
 const Inputmask = require('inputmask');
 @inject(App, ValidationControllerFactory, Validator)
 export class VolunteerOpps {
@@ -123,20 +123,20 @@ export class VolunteerOpps {
     // }
   }
 
-  formatDate(today){
-    console.log(today);
-    let mm = today.getMonth() + 1; // getMonth() is zero-based
-    let dd = today.getDate();
-    today = [today.getFullYear(),
-      (mm > 9 ? '' : '0') + mm,
-      (dd > 9 ? '' : '0') + dd].join('');
-    return today;
-  }
+  // formatDate(today){
+  //   console.log(today);
+  //   let mm = today.getMonth() + 1; // getMonth() is zero-based
+  //   let dd = today.getDate();
+  //   today = [today.getFullYear(),
+  //     (mm > 9 ? '' : '0') + mm,
+  //     (dd > 9 ? '' : '0') + dd].join('');
+  //   return today;
+  // }
 
   markPast() {
     let testDate;
     let today = new Date();
-    today = this.formatDate(today);
+    today = formatDate(today);
     for (let i = 0; i < this.events.length; i++){
       if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
         this.events[i].voStartDate = today;
