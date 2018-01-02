@@ -3,6 +3,12 @@ import {App} from '../../src/app';
 import {AuthStub, HttpMock, AppStateStub} from './commons';
 import {Validator} from 'aurelia-validation';
 
+function testAsync(runAsync) {
+  return (done) => {
+    runAsync().then(done, (e) => { fail(e); done(); });
+  };
+}
+
 class VCMock {
   createForCurrentScope(validator) {
     return {validateTrigger: null};
@@ -120,6 +126,44 @@ describe('the Volunteer Opps Module', () => {
       //volops.showTime();
     done();
   });
+
+  it('it counts signups if the user exists', testAsync(async function(){
+    volops4.events = [{_id: '123', voPeopleScheduled: ['1', '2'] }];
+    await volops4.checkScheduled();
+    expect(volops4.events[0].voNumPeopleScheduled).toBe(2);
+  }));
+
+  it('it sets signups to zero', testAsync(async function(){
+    volops4.events = [{_id: '123', voStartDate: null, voEndDate: null}];
+    await volops4.checkScheduled();
+    expect(volops4.events[0].voNumPeopleScheduled).toBe(0);
+  }));
+
+  it('it removes signups if the user does not exist', testAsync(async function(){
+    volops4.events = [{_id: '123', voPeopleScheduled: ['14444', '244444'], voStartDate: null, voEndDate: null, voWorkTypes: [], voTalentTypes: [] }];
+    volops4.app.httpClient.fetch = function(){
+      return Promise.reject(new Error('fail'));
+    };
+    await volops4.checkScheduled().then((isError) => {
+      // console.log('is this an error?');
+      // console.log(isError);
+    });
+    expect(volops4.events[0].voNumPeopleScheduled).toBe(0);
+  }));
+
+  it('it displays the list of volunteers', testAsync(async function(){
+    volops4.events = [{_id: '123', voPeopleScheduled: ['14444', '244444'], voStartDate: null, voEndDate: null, voWorkTypes: [], voTalentTypes: [] }];
+    let fakeVolunteer = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
+    volops4.app.httpClient.fetch = function(){
+      return Promise.resolve({
+        // Headers: this.headers,
+        json: () => Promise.resolve(fakeVolunteer)
+      });
+    };
+    document.body.innerHTML = '<div id="showvolunteers"></div>';
+    await volops4.viewPeople(volops4.events[0]);
+    expect(volops4.allPeople[0].name).toBe('Iddris Elba');
+  }));
 
   // it('Mark past date', (done) => {
   //   volops.events = [{
