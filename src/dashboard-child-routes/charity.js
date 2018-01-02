@@ -245,7 +245,8 @@ export class Charity {
   }
 
   async putCharity(){
-    await this.app.updateById('/charity/', this.updateCharity._id, this.updateCharity, this.afterUpdate);
+    await this.app.updateById('/charity/', this.updateCharity._id, this.updateCharity, null);
+    this.afterUpdate();
     //console.log('this is the update charity');
     //console.log(this.updateCharity);
     //await fetch;
