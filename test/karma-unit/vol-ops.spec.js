@@ -145,8 +145,8 @@ describe('the Volunteer Opps Module', () => {
       return Promise.reject(new Error('fail'));
     };
     await volops4.checkScheduled().then((isError) => {
-      // console.log('is this an error?');
-      // console.log(isError);
+        // console.log('is this an error?');
+        // console.log(isError);
     });
     expect(volops4.events[0].voNumPeopleScheduled).toBe(0);
   }));
@@ -156,7 +156,7 @@ describe('the Volunteer Opps Module', () => {
     let fakeVolunteer = {name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
     volops4.app.httpClient.fetch = function(){
       return Promise.resolve({
-        // Headers: this.headers,
+          // Headers: this.headers,
         json: () => Promise.resolve(fakeVolunteer)
       });
     };
@@ -165,19 +165,51 @@ describe('the Volunteer Opps Module', () => {
     expect(volops4.allPeople[0].name).toBe('Iddris Elba');
   }));
 
-  // it('Mark past date', (done) => {
-  //   volops.events = [{
-  //     'voStartDate': '2016-12-12',
-  //     'voEndDate': '2016-12-12'
-  //   },
-  //   {
-  //     'voStartDate': '2016-12-12',
-  //     'voEndDate': '2016-12-12'
-  //   }];
-  //   volops.markPast();
-  //   expect(volops.events[0].past).toBe(true);
-  //   done();
-  // });
+  it('should mark past dates', testAsync(async function(){
+    volops4.activate();
+    volops4.uid = '155';
+    volops4.events = [{
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      '_id': '23456',
+      'scheduled': false,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voPeopleScheduled': ['12']
+    }];
+    volops4.markPast();
+    expect(volops4.events[0].past).toBe(true);
+  }));
+
+  it('should mark not past', testAsync(async function(){
+    volops4.activate();
+    volops4.uid = '155';
+    volops4.events = [{
+      'voStartDate': '2517-12-12',
+      'voEndDate': '2517-12-12',
+      'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+      'voWorkTypeOther': 'scrubbing',
+      '_id': '23456',
+      'scheduled': false,
+      'voNumPeopleNeeded': 5,
+      'voStatus': 'cancel',
+      'voPeopleScheduled': ['12']
+    }];
+    volops4.markPast();
+    expect(volops4.events[0].past).toBe(false);
+  }));
+
+  it('should format the date of December 12, 2017', (done) => {
+    let date = new Date();
+    date.setMonth(11);
+    date.setDate(12);
+    date.setFullYear(2017);
+    const newDate = volops4.formatDate(date);
+    expect(newDate).toBe('20171212');
+    done();
+  });
 
   it('activates and there are no events', (done) => {
     volops2.activate();
@@ -195,35 +227,35 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  // it('reformats the date to be yyyy-mm-dd', (done) => {
-  //   let sampleDate = new Date();
-  //   let sd = sampleDate.toString();
-  //   volops.activate();
-  //   volops.events = [{
-  //     'voStartDate': sd,
-  //     'voEndDate': sd,
-  //     'voWorkTypes': ['shoveling', 'sweeping', 'other'],
-  //     'voWorkTypeOther': 'scrubbing',
-  //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-  //     'voTalentTypeOther': 'scrubbing'
-  //   }];
-  //   volops.makeDataTable();
-  //   done();
-  // });
+    // it('reformats the date to be yyyy-mm-dd', (done) => {
+    //   let sampleDate = new Date();
+    //   let sd = sampleDate.toString();
+    //   volops.activate();
+    //   volops.events = [{
+    //     'voStartDate': sd,
+    //     'voEndDate': sd,
+    //     'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+    //     'voWorkTypeOther': 'scrubbing',
+    //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+    //     'voTalentTypeOther': 'scrubbing'
+    //   }];
+    //   volops.makeDataTable();
+    //   done();
+    // });
 
-  // it('does not reformat the dates', (done) => {
-  //     //volops.activate();
-  //   volops.events = [{
-  //     'voStartDate': '2017-12-12',
-  //     'voEndDate': '2017-12-12',
-  //     'voWorkTypes': ['shoveling', 'sweeping', 'other'],
-  //     'voWorkTypeOther': 'scrubbing',
-  //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-  //     'voTalentTypeOther': 'scrubbing'
-  //   }];
-  //   volops.makeDataTable();
-  //   done();
-  // });
+    // it('does not reformat the dates', (done) => {
+    //     //volops.activate();
+    //   volops.events = [{
+    //     'voStartDate': '2017-12-12',
+    //     'voEndDate': '2017-12-12',
+    //     'voWorkTypes': ['shoveling', 'sweeping', 'other'],
+    //     'voWorkTypeOther': 'scrubbing',
+    //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+    //     'voTalentTypeOther': 'scrubbing'
+    //   }];
+    //   volops.makeDataTable();
+    //   done();
+    // });
 
   it('displays the chosen work preferences', (done) => {
       //volops.activate();
@@ -299,7 +331,7 @@ describe('the Volunteer Opps Module', () => {
     document.body.innerHTML =   document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
     volops.setupValidation2 = function(){};
     volops.attached();
-    //expect(volops.voOpp.voTalentTypeOther).toBe('');
+      //expect(volops.voOpp.voTalentTypeOther).toBe('');
     done();
   });
 
@@ -318,13 +350,13 @@ describe('the Volunteer Opps Module', () => {
     };
       //volops.app.selectPickedChange(volops.voOpp, volops, 'voWorkTypes', 'voWorkTypeOther', 'workOther');
     volops.selectPickChange('work');
-    //expect(volops.workOther).toBe(true);
+      //expect(volops.workOther).toBe(true);
     volops.voOpp = {
       'voWorkTypes': ['swimming']
     };
     volops.voOpp.voWorkTypeOther = 'teststring';
     volops.app.selectPickedChange(volops.voOpp, volops, 'voWorkTypes', 'voWorkTypeOther', 'workOther');
-    //expect(volops.workOther).toBe(false);
+      //expect(volops.workOther).toBe(false);
     expect(volops.voOpp.voWorkTypeOther).toBe('');
     done();
   });
@@ -429,43 +461,43 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  // it('should display the users who signed up for the event', (done) => {
-  //   let signupevent = {
-  //     '_id': '123',
-  //     'voWorkTypes': ['other'],
-  //     'voWorkTypeOther': '',
-  //     'voCharityName': '',
-  //     'voStartDate': '2017-12-12',
-  //     'voEndDate': '2017-12-12',
-  //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-  //     'voTalentTypeOther': 'scrubbing',
-  //     'voSignupUserIds': ['1', '2', '3']
-  //   };
-  //   document.body.innerHTML = '<div id="showvolunteers"></div>';
-  //   volops.viewPeople(signupevent);
-  //   done();
-  // });
+    // it('should display the users who signed up for the event', (done) => {
+    //   let signupevent = {
+    //     '_id': '123',
+    //     'voWorkTypes': ['other'],
+    //     'voWorkTypeOther': '',
+    //     'voCharityName': '',
+    //     'voStartDate': '2017-12-12',
+    //     'voEndDate': '2017-12-12',
+    //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+    //     'voTalentTypeOther': 'scrubbing',
+    //     'voSignupUserIds': ['1', '2', '3']
+    //   };
+    //   document.body.innerHTML = '<div id="showvolunteers"></div>';
+    //   volops.viewPeople(signupevent);
+    //   done();
+    // });
 
-  // it('should display the users who signed up for the event', (done) => {
-  //   let signupevent = {
-  //     '_id': '123',
-  //     'voWorkTypes': ['other'],
-  //     'voWorkTypeOther': '',
-  //     'voCharityName': '',
-  //     'voStartDate': '2017-12-12',
-  //     'voEndDate': '2017-12-12',
-  //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-  //     'voTalentTypeOther': 'scrubbing',
-  //     'voSignupUserIds': ['1', '2', '3']
-  //   };
-  //   volops4.viewPeople(signupevent);
-  //   done();
-  // });
+    // it('should display the users who signed up for the event', (done) => {
+    //   let signupevent = {
+    //     '_id': '123',
+    //     'voWorkTypes': ['other'],
+    //     'voWorkTypeOther': '',
+    //     'voCharityName': '',
+    //     'voStartDate': '2017-12-12',
+    //     'voEndDate': '2017-12-12',
+    //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+    //     'voTalentTypeOther': 'scrubbing',
+    //     'voSignupUserIds': ['1', '2', '3']
+    //   };
+    //   volops4.viewPeople(signupevent);
+    //   done();
+    // });
 
-  // it('remove any signups where the user no longer exists', (done) => {
-  //   volops4.fixUserSignups();
-  //   done();
-  // });
+    // it('remove any signups where the user no longer exists', (done) => {
+    //   volops4.fixUserSignups();
+    //   done();
+    // });
 
   it('it reactivates a cancelled event', (done) => {
     let signupevent = {
@@ -558,21 +590,21 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  // it('should not remove user signups if the user does exist', (done) => {
-  //     //volops.activate();
-  //   volops.fixUserSignups();
-  //   done();
-  // });
+    // it('should not remove user signups if the user does exist', (done) => {
+    //     //volops.activate();
+    //   volops.fixUserSignups();
+    //   done();
+    // });
 
-  // it('should detect if a user does not exist that is set as a signup', (done) => {
-  //   volops.fixUserSignups();
-  //   done();
-  // });
+    // it('should detect if a user does not exist that is set as a signup', (done) => {
+    //   volops.fixUserSignups();
+    //   done();
+    // });
 
-  // it('should delete any signups where the user does not exist', (done) => {
-  //   volops.removeSignup('badid');
-  //   done();
-  // });
+    // it('should delete any signups where the user does not exist', (done) => {
+    //   volops.removeSignup('badid');
+    //   done();
+    // });
 
   it('displays the submit button if the form is valid', (done) => {
       //volops.activate();

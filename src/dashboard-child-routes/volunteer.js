@@ -129,7 +129,7 @@ export class Volunteer {
       }
       testDate = this.events[i].voStartDate.replace('-', '');
       testDate = testDate.replace('-', '');
-      if (testDate < today){
+      if (testDate <= today){
         this.events[i].past = true;
       } else {
         this.events[i].past = false;

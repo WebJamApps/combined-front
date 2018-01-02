@@ -49,7 +49,7 @@ export class VolunteerOpps {
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
       //this.buildTalents();
       this.checkScheduled();
-      //this.markPast();
+      this.markPast();
     }
     this.findCharity();
     this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
@@ -123,25 +123,33 @@ export class VolunteerOpps {
     // }
   }
 
-  // markPast() {
-  //   let testDate;
-  //   let today = new Date();
-  //   let mm = today.getMonth() + 1; // getMonth() is zero-based
-  //   let dd = today.getDate();
-  //   /* istanbul ignore next */
-  //   today = [today.getFullYear(), (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('');
-  //   for (let i = 0; i < this.events.length; i++){
-  //     if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
-  //       //console.log('undefined date');
-  //       this.events[i].voStartDate = today;
-  //     }
-  //     testDate = this.events[i].voStartDate.replace('-', '');
-  //     testDate = testDate.replace('-', '');
-  //     if (testDate < today){
-  //       this.events[i].past = true;
-  //     }
-  //   }
-  // }
+  formatDate(today){
+    console.log(today);
+    let mm = today.getMonth() + 1; // getMonth() is zero-based
+    let dd = today.getDate();
+    today = [today.getFullYear(),
+      (mm > 9 ? '' : '0') + mm,
+      (dd > 9 ? '' : '0') + dd].join('');
+    return today;
+  }
+
+  markPast() {
+    let testDate;
+    let today = new Date();
+    today = this.formatDate(today);
+    for (let i = 0; i < this.events.length; i++){
+      if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
+        this.events[i].voStartDate = today;
+      }
+      testDate = this.events[i].voStartDate.replace('-', '');
+      testDate = testDate.replace('-', '');
+      if (testDate <= today){
+        this.events[i].past = true;
+      } else {
+        this.events[i].past = false;
+      }
+    }
+  }
 
   selectDate(dtype){
     if (dtype === 'start-date'){
@@ -252,7 +260,6 @@ export class VolunteerOpps {
   }
 
   async updateEvent(updateType){
-    //console.log('update Event');
     this.voOpp.voStatus = updateType;
     if (updateType === 'update'){
       this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
@@ -261,15 +268,6 @@ export class VolunteerOpps {
       this.voOpp.voDescription = '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>' + this.voOpp.voDescription;
     }
     await this.app.updateById('/volopp/', this.voOpp._id, this.voOpp, null);
-    //await fetch;
-    // this.app.httpClient.fetch('/volopp/' + this.voOpp._id, {
-    //   method: 'put',
-    //   body: json(this.voOpp)
-    // })
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   this.activate();
-    // });
   }
 
   async deleteEvent(thisEventId){
