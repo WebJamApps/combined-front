@@ -86,50 +86,50 @@ export class VolunteerOpps {
   //   });
   // }
 
-  // async checkScheduled(){
-  //   let total = 0;
-  //   let signupUserIds = [];
-  //   for (let i = 0; i < this.events.length; i++){
-  //     for (let e = 0; e < this.signups.length; e++){
-  //       /* istanbul ignore else */
-  //       if (this.events[i]._id === this.signups[e].voloppId){
-  //         total = total + this.signups[e].numPeople;
-  //         signupUserIds.push(this.signups[e].userId);
-  //       }
-  //     }
-  //     this.events[i].voNumPeopleScheduled = total;
-  //     this.events[i].voSignupUserIds = signupUserIds;
-  //     total = 0;
-  //     signupUserIds = [];
-  //   }
-  // }
+  checkScheduled(){
+    for (let i = 0; i < this.events.length; i++){
+      this.events[i].voNumPeopleScheduled = 0;
+      //this.events[i].scheduled = false;
+      //this.events[i].full = false;
+      if (this.events[i].voPeopleScheduled !== null && this.events[i].voPeopleScheduled !== undefined){
+        this.events[i].voNumPeopleScheduled = this.events[i].voPeopleScheduled.length;
+        //if (this.events[i].voPeopleScheduled.includes(this.uid)){
+          //this.events[i].scheduled = true;
+        //}
+      }
+      // if (this.events[i].voNumPeopleScheduled >= this.events[i].voNumPeopleNeeded){
+      //   this.events[i].full = true;
+      // }
+    }
+  }
 
-  // async viewPeople(thisevent){
-  //   this.showVolunteers = true;
-  //   let res;
-  //   let person;
-  //   this.allPeople = [];
-  //   for (let i = 0; i < thisevent.voSignupUserIds.length; i++){
-  //     try {
-  //       res = await this.app.httpClient.fetch('/user/' + thisevent.voSignupUserIds[i]);
-  //     } catch (err) {
-  //       //console.log('the user does not exist');
-  //       await this.fixUserSignups();
-  //     }
-  //     /* istanbul ignore else */
-  //     if (res !== undefined && res !== ''){
-  //       person = await res.json();
-  //       this.allPeople.push(person);
-  //       res = '';
-  //     }
-  //   }
-  //   this.eventTitle = thisevent.voName;
-  //   let display = document.getElementById('showvolunteers');
-  //   /* istanbul ignore else */
-  //   if (display !== null){
-  //     display.scrollIntoView();
-  //   }
-  // }
+  async viewPeople(thisevent){
+    this.showVolunteers = true;
+    let res;
+    let person;
+    this.allPeople = [];
+    for (let i = 0; i < thisevent.voPeopleScheduled.length; i++){
+      try {
+        res = await this.app.httpClient.fetch('/user/' + thisevent.voPeopleScheduled[i]);
+      } catch (err) {
+        console.log('this user does not exist');
+        console.log(thisevent.voPeopleScheduled[i]);
+        //await this.fixUserSignups();
+      }
+      /* istanbul ignore else */
+      if (res !== undefined && res !== ''){
+        person = await res.json();
+        this.allPeople.push(person);
+        res = '';
+      }
+    }
+    this.eventTitle = thisevent.voName;
+    let display = document.getElementById('showvolunteers');
+    /* istanbul ignore else */
+    if (display !== null){
+      display.scrollIntoView();
+    }
+  }
 
   // markPast() {
   //   let testDate;
