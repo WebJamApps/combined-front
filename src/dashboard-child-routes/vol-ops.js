@@ -63,10 +63,7 @@ export class VolunteerOpps {
     this.maxStartDate = '';
   }
 
-  // async fixUserSignups(){
-  //   let allSignups = [];
-  //   let res = await this.app.httpClient.fetch('/signup/getall');
-  //   allSignups = await res.json();
+  // async checkOhafUsers(){
   //   for (let i = 0; i < allSignups.length; i++){
   //     try {
   //       await this.app.httpClient.fetch('/user/' + allSignups[i].userId);
@@ -86,20 +83,23 @@ export class VolunteerOpps {
   //   });
   // }
 
-  checkScheduled(){
+  async checkScheduled(){
     for (let i = 0; i < this.events.length; i++){
       this.events[i].voNumPeopleScheduled = 0;
-      //this.events[i].scheduled = false;
-      //this.events[i].full = false;
       if (this.events[i].voPeopleScheduled !== null && this.events[i].voPeopleScheduled !== undefined){
+        for (let j = 0; j < this.events[i].voPeopleScheduled.length; j++){
+          try {
+            await this.app.httpClient.fetch('/user/' + this.events[i].voPeopleScheduled[j]);
+          } catch (err) {
+            //user does not exist, remove it from voPeopleScheduled and update this event, then run make data makeDataTable
+            console.log('user does not exist');
+            this.events[i].voPeopleScheduled = this.events[i].voPeopleScheduled.filter((e) => e !== this.events[i].voPeopleScheduled[j]);
+            await this.app.updateById('/volopp/', this.events[i]._id, this.events[i], null);
+            return this.makeDataTable();
+          }
+        }
         this.events[i].voNumPeopleScheduled = this.events[i].voPeopleScheduled.length;
-        //if (this.events[i].voPeopleScheduled.includes(this.uid)){
-          //this.events[i].scheduled = true;
-        //}
       }
-      // if (this.events[i].voNumPeopleScheduled >= this.events[i].voNumPeopleNeeded){
-      //   this.events[i].full = true;
-      // }
     }
   }
 
@@ -109,26 +109,18 @@ export class VolunteerOpps {
     let person;
     this.allPeople = [];
     for (let i = 0; i < thisevent.voPeopleScheduled.length; i++){
-      try {
-        res = await this.app.httpClient.fetch('/user/' + thisevent.voPeopleScheduled[i]);
-      } catch (err) {
-        console.log('this user does not exist');
-        console.log(thisevent.voPeopleScheduled[i]);
-        //await this.fixUserSignups();
-      }
-      /* istanbul ignore else */
-      if (res !== undefined && res !== ''){
-        person = await res.json();
-        this.allPeople.push(person);
-        res = '';
-      }
+      res = await this.app.httpClient.fetch('/user/' + thisevent.voPeopleScheduled[i]);
+      //if (res !== null && res !== undefined && res !== ''){
+      person = await res.json();
+      this.allPeople.push(person);
+        //res = '';
+      // }
     }
     this.eventTitle = thisevent.voName;
     let display = document.getElementById('showvolunteers');
-    /* istanbul ignore else */
-    if (display !== null){
-      display.scrollIntoView();
-    }
+    // if (display !== null){
+    display.scrollIntoView();
+    // }
   }
 
   // markPast() {
