@@ -2,6 +2,7 @@ import {VolunteerOpps} from '../../src/dashboard-child-routes/vol-ops';
 import {App} from '../../src/app';
 import {AuthStub, HttpMock, AppStateStub} from './commons';
 import {Validator} from 'aurelia-validation';
+import {formatDate} from '../../src/commons/utils.js';
 
 function testAsync(runAsync) {
   return (done) => {
@@ -206,7 +207,7 @@ describe('the Volunteer Opps Module', () => {
     date.setMonth(11);
     date.setDate(12);
     date.setFullYear(2017);
-    const newDate = volops4.formatDate(date);
+    const newDate = formatDate(date);
     expect(newDate).toBe('20171212');
     done();
   });
