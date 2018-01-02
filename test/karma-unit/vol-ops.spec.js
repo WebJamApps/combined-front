@@ -2,7 +2,7 @@ import {VolunteerOpps} from '../../src/dashboard-child-routes/vol-ops';
 import {App} from '../../src/app';
 import {AuthStub, HttpMock, AppStateStub} from './commons';
 import {Validator} from 'aurelia-validation';
-import {formatDate} from '../../src/commons/utils.js';
+import {formatDate, markPast} from '../../src/commons/utils.js';
 
 function testAsync(runAsync) {
   return (done) => {
@@ -180,7 +180,7 @@ describe('the Volunteer Opps Module', () => {
       'voStatus': 'cancel',
       'voPeopleScheduled': ['12']
     }];
-    volops4.markPast();
+    markPast(volops4.events, formatDate);
     expect(volops4.events[0].past).toBe(true);
   }));
 
@@ -198,7 +198,7 @@ describe('the Volunteer Opps Module', () => {
       'voStatus': 'cancel',
       'voPeopleScheduled': ['12']
     }];
-    volops4.markPast();
+    markPast(volops4.events, formatDate);
     expect(volops4.events[0].past).toBe(false);
   }));
 
