@@ -112,13 +112,20 @@
       </div> -->
       <!-- <p>&nbsp;</p> -->
       <div class="elevation2" style="padding:5px;max-width:5in; margin:auto">
-        <h4 style="text-align:center;">Delete Account</h4>
+        <h4 style="text-align:center;">Delete/Disable Account</h4>
         <button if.bind="canChangeUserType" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">
           Delete User
         </button>
         <p style="padding:10px" if.bind="!canChangeUserType"><i>You are not allowed to delete your user account for the following reasons:</i></p>
         <ul if.bind="!canChangeUserType" innerhtml.bind="reasons"></ul>
+        <button if.bind="!canChangeUserType && user.userStatus !== 'disabled'" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="disableUser('disabled')">
+          Disable User
+        </button>
+        <button if.bind="user.userStatus === 'disabled'" style="width:1.2in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="disableUser('enabled')">
+          Re-enable User
+        </button>
       </div>
       <p>&nbsp;</p>
+
     </div>
   </template>

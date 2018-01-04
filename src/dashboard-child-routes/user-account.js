@@ -115,6 +115,11 @@ export class UserAccount {
     this.afterUpdateUser();
   }
 
+  disableUser(status){
+    this.user.userStatus = status;
+    this.updateUser();
+  }
+
   async deleteUser(){
     await fetch;
     this.app.httpClient.fetch('/user/' + this.uid, {

@@ -110,6 +110,12 @@ describe('the Dashboard Module', () => {
       done();
     });
 
+    it('should route to user-account when user is disabled', (done) => {
+      dashboard.user = {_id: '1', name: 'Iddris Elba', userType: 'Volunteer', userStatus: 'disabled'};
+      dashboard.childRoute();
+      done();
+    });
+
     it('should not route a user if they do not have any user type defined', (done) => {
       // let userTypes = [''];
       // for (let i of userTypes) {

@@ -1,6 +1,7 @@
 export class UserAccess {
   constructor(appState){
     this.appState = appState;
+    //this.userStatus = this.appState.getUser().status;
   }
 
   run(routingContext, next) {
@@ -42,9 +43,9 @@ export class UserAccess {
           // console.log(routingContext.params.childRoute);
           // console.log(userRoles[i].toLowerCase());
           // in this case the user is only in one role at a time.
-          if (routingContext.params.childRoute === userRoles[i].toLowerCase() || (routingContext.params.childRoute.indexOf('vol-ops/') !== -1 && userRoles[i].toLowerCase() === 'charity')){
-            //console.log('YAY! authorized.');
-            //routingContext.getAllInstructions();
+          if (userRoles.indexOf('disabled') === -1 && (routingContext.params.childRoute === userRoles[i].toLowerCase() || (routingContext.params.childRoute.indexOf('vol-ops/') !== -1 && userRoles[i].toLowerCase() === 'charity'))){
+            console.log('YAY! authorized.');
+            console.log();
             return next();
           }
           // if (routingContext.params.childRoute.indexOf('vol-ops/') !== -1 && userRoles[i].toLowerCase() === 'charity') {

@@ -58,6 +58,9 @@ export class Dashboard {
   // }
 
   childRoute(){
+    if (this.user.userStatus === 'disabled'){
+      return this.app.router.navigate('dashboard/user-account');
+    }
     if (this.user.userType === undefined || this.user.userType === ''){
       this.user.userDetails = 'newUser';
       if (this.user.isOhafUser){
