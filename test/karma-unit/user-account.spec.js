@@ -111,6 +111,12 @@ describe('the UserAccount Module', () => {
     done();
   });
 
+  it('should set the user status', (done) => {
+    ua.disableUser('disabled');
+    expect(ua.user.userStatus).toBe('disabled');
+    done();
+  });
+
   it('should update user', (done) => {
     ua.updateUser();
     done();

@@ -70,6 +70,11 @@ export class AppState {
 
   setRoles(input){
     this.roles = input;
+    if (this.user.userStatus === 'disabled'){
+      this.roles.push('disabled');
+    } else {
+      this.roles = this.roles.filter((e) => e !== 'disabled');
+    }
     //console.log('user roles are ' + this.roles);
   }
 }
