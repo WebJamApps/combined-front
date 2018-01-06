@@ -2,6 +2,7 @@ import {inject} from 'aurelia-framework';
 import {App} from '../app';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
+import {fixDates, formatDate, markPast} from '../commons/utils.js';
 @inject(App, ValidationControllerFactory, Validator)
 export class UserAccount {
   controller = null;
@@ -13,6 +14,8 @@ export class UserAccount {
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;
+    this.canDelete = true;
+    this.canDisable = false;
   }
 
   async activate() {
@@ -83,19 +86,24 @@ export class UserAccount {
   async fetchAllEvents(){
     const res = await this.app.httpClient.fetch('/volopp/getall');
     this.events2 = await res.json();
+    fixDates(this.events2);
+    markPast(this.events2, formatDate);
   }
 
   checkScheduled(){
     for (let i = 0; i < this.events2.length; i++){
       if (this.events2[i].voPeopleScheduled !== null && this.events2[i].voPeopleScheduled !== undefined){
         if (this.events2[i].voPeopleScheduled.includes(this.uid)){
-          this.canChangeUserType = false;
-          this.reasons = this.reasons + '<li>You signed up to work at a charity event.</li>';
+          this.deleteReasons = this.deleteReasons + '<li>You signed up to work at a charity event.</li>';
+        }
+        if (this.events2[i].past){
+          this.canDisable = true;
+          this.canChangeUserType = true;
         }
       }
     }
   }
-
+  
   async setCharity(){
     this.user.userDetails = '';
     this.user.userType = 'Charity';
