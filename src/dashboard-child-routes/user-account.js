@@ -15,17 +15,26 @@ export class UserAccount {
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;
     this.canDelete = true;
-    this.canDisable = false;
+    this.status = ['enabled', 'disabled'];
   }
 
   async activate() {
     this.userTypes = JSON.parse(process.env.userRoles).roles;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
+    //console.log(this.user.userStatus);
+    this.checkUserStatus();
     this.app.role = this.user.userType;
     this.checkChangeUserType();
     this.userTypes.sort();
     this.setupValidation();
+  }
+
+  checkUserStatus(){
+    if (this.user.userStatus === undefined || this.user.userStatus === null || this.user.userStatus === ''){
+      console.log(this.user.userStatus);
+      this.user.userStatus = 'enabled';
+    }
   }
 
   setupValidation() {
@@ -43,6 +52,8 @@ export class UserAccount {
   // }
 
   updateCanSubmit(validationResults) {
+    let nub = document.getElementById('updateUserButton');
+    nub.style.display = 'none';
     let valid = true;
     for (let result of validationResults) {
       if (result.valid === false){
@@ -52,14 +63,14 @@ export class UserAccount {
     }
     this.canSubmit = valid;
     if (this.user.userType !== '' && this.canSubmit){
-      let nub = document.getElementById('updateUserButton');
+      //let nub = document.getElementById('updateUserButton');
       nub.style.display = 'block';
     }
     return this.canSubmit;
   }
 
   async checkChangeUserType(){
-    this.reasons = '';
+    this.changeReasons = '';
     if (this.user.userType === 'Volunteer' || this.user.userType === 'Developer'){
       await this.fetchAllEvents();
       this.checkScheduled();
@@ -70,7 +81,8 @@ export class UserAccount {
       this.charities = await res.json();
       if (this.charities.length > 0){
         this.canChangeUserType = false;
-        this.reasons = this.reasons + '<li>You are the manager of a charity.</li>';
+        this.canDelete = false;
+        this.changeReasons = this.changeReasons + '<li>You are the manager of a charity.</li>';
       }
     }
     if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
@@ -78,7 +90,8 @@ export class UserAccount {
       this.books = await res.json();
       if (this.books.length > 0){
         this.canChangeUserType = false;
-        this.reasons = this.reasons + '<li>You have a book checked out.</li>';
+        this.canDelete = false;
+        this.changeReasons = this.changeReasons + '<li>You have a book checked out.</li>';
       }
     }
   }
@@ -94,16 +107,19 @@ export class UserAccount {
     for (let i = 0; i < this.events2.length; i++){
       if (this.events2[i].voPeopleScheduled !== null && this.events2[i].voPeopleScheduled !== undefined){
         if (this.events2[i].voPeopleScheduled.includes(this.uid)){
-          this.deleteReasons = this.deleteReasons + '<li>You signed up to work at a charity event.</li>';
-        }
-        if (this.events2[i].past){
-          this.canDisable = true;
-          this.canChangeUserType = true;
+          this.canDelete = false;
+          if (!this.events2[i].past){
+            this.canChangeUserType = false;
+            console.log(this.events2[i]);
+            if (this.changeReasons.indexOf('<li>You are scheduled to work an event.</li>') === -1){
+              this.changeReasons = this.changeReasons + '<li>You are scheduled to work an event.</li>';
+            }
+          }
         }
       }
     }
   }
-  
+
   async setCharity(){
     this.user.userDetails = '';
     this.user.userType = 'Charity';
@@ -136,6 +152,10 @@ export class UserAccount {
     .then((data) => {
       this.app.logout();
     });
+  }
+  showUpdateButton(){
+    let nub = document.getElementById('updateUserButton');
+    nub.style.display = 'block';
   }
 
 }
