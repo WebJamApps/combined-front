@@ -63,49 +63,6 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  // it('should change other cause type', (done) => {
-  //   ua.selectedCauses = ['other'];
-  //   ua.app.selectPickedChange(ua.user, ua, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
-  //   expect(ua.causeOther).toBe(true);
-  //   expect(ua.user.volCauses).toBe(ua.selectedCauses);
-  //   ua.selectedCauses = ['somethingelse'];
-  //   ua.user.volCauseOther = 'Teststring';
-  //   ua.app.selectPickedChange(ua.user, ua, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
-  //   expect(ua.causeOther).toBe(false);
-  //   expect(ua.user.volCauseOther).toBe('');
-  //   expect(ua.user.volCauses).toBe(ua.selectedCauses);
-  //
-  //   done();
-  // });
-
-  // it('should change other work type', (done) => {
-  //   ua.selectedWorks = ['other'];
-  //   ua.app.selectPickedChange(ua.user, ua, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
-  //   expect(ua.workOther).toBe(true);
-  //   expect(ua.user.volWorkPrefs).toBe(ua.selectedWorks);
-  //   ua.selectedWorks = ['somethingelse'];
-  //   ua.user.volWorkPrefs = 'Teststring';
-  //   ua.app.selectPickedChange(ua.user, ua, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
-  //   expect(ua.workOther).toBe(false);
-  //   expect(ua.user.volWorkOther).toBe('');
-  //   expect(ua.user.volWorkPrefs).toBe(ua.selectedWorks);
-  //   done();
-  // });
-
-  // it('should change other talent type', (done) => {
-  //   ua.selectedTalents = ['other'];
-  //   ua.app.selectPickedChange(ua.user, ua, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
-  //   expect(ua.talentOther).toBe(true);
-  //   expect(ua.user.volTalents).toBe(ua.selectedTalents);
-  //   ua.selectedTalents = ['somethingelse'];
-  //   ua.user.volTalentOther = 'Teststring';
-  //   ua.app.selectPickedChange(ua.user, ua, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
-  //   expect(ua.talentOther).toBe(false);
-  //   expect(ua.user.volTalentOther).toBe('');
-  //   expect(ua.user.volTalents).toBe(ua.selectedTalents);
-  //   done();
-  // });
-
   it('should set charity', (done) => {
     ua.setCharity();
     done();
@@ -142,11 +99,54 @@ describe('the UserAccount Module', () => {
     done();
   });
 
+  it('should not allow Charity user to change their user type if they have charities', testAsync(async function(){
+    ua.user.userType = 'Charity';
+    ua.app.httpClient.fetch = function(){
+      return Promise.resolve({
+        json: () => Promise.resolve([{_id: '1'}])
+      });
+    };
+    await ua.checkChangeUserType();
+    expect(ua.canChangeUserType).toBe(false);
+    //done();
+  }));
+
   it('does not allow change user type or delete if signed up for an event', testAsync(async function(){
     ua.uid = '123';
     ua.events2 = [{voPeopleScheduled: ['123']}];
+    ua.changeReasons = '';
     await ua.checkScheduled();
     expect(ua.canChangeUserType).toBe(false);
+  }));
+
+  it('checks scheduled when nothing is scheduled', testAsync(async function(){
+    ua.uid = '123';
+    ua.events2 = [{_id: '123'}];
+    ua.changeReasons = '';
+    await ua.checkScheduled();
+    expect(ua.canChangeUserType).toBe(true);
+  }));
+
+  it('allows change user type when scheduled event is in the past', testAsync(async function(){
+    ua.uid = '123';
+    ua.events2 = [{voPeopleScheduled: ['123'], past: true}];
+    ua.changeReasons = '';
+    await ua.checkScheduled();
+    expect(ua.canChangeUserType).toBe(true);
+  }));
+
+  it('does not allow change user type and we already have the reason', testAsync(async function(){
+    ua.uid = '123';
+    ua.events2 = [{voPeopleScheduled: ['123'], past: false}];
+    ua.changeReasons = '<li>You are scheduled to work an event.</li>';
+    await ua.checkScheduled();
+    expect(ua.canChangeUserType).toBe(false);
+  }));
+
+  it('it shows the update button after we change the user status', testAsync(async function(){
+    document.body.innerHTML = '<button id="updateUserButton" style="display:none">Update</button>';
+    ua.showUpdateButton();
+    expect(document.getElementById('updateUserButton').style.display).toBe('block');
   }));
 
   it('allow change user type or delete if not signed up for an event', testAsync(async function(){
@@ -156,28 +156,24 @@ describe('the UserAccount Module', () => {
     expect(ua.canChangeUserType).toBe(true);
   }));
 
-  // it('should allow Volunteer user to change their user type when not signedup', (done) => {
-  //   ua.user.userType = 'Volunteer';
-  //   ua.checkSignups = function(){
-  //     return new Promise((resolve) => {
-  //       resolve({});
-  //     });
-  //   };
-  //   ua.userSignups = [];
-  //   ua.checkChangeUserType();
-  //   expect(ua.canChangeUserType).toBe(true);
-  //   done();
-  // });
-
-  // it('should select picked type', (done) => {
-  //   ua.selectPickChange('causes');
-  //   ua.selectPickChange('work');
-  //   ua.selectPickChange('talents');
-  //   done();
-  // });
-
   it('should check whether update can submit', (done) => {
+    document.body.innerHTML = '<button id="updateUserButton">Update</button>';
     ua.updateCanSubmit([{valid: false}]);
+    expect(document.getElementById('updateUserButton').style.display).toBe('none');
+    done();
+  });
+
+  it('should check whether update can submit when valid', (done) => {
+    document.body.innerHTML = '<button id="updateUserButton">Update</button>';
+    ua.updateCanSubmit([{valid: true}]);
+    expect(document.getElementById('updateUserButton').style.display).toBe('block');
+    done();
+  });
+
+  it('not set user status to enabled if not already defined', (done) => {
+    ua.user.userStatus = 'disabled';
+    ua.checkUserStatus();
+    expect(ua.user.userStatus).toBe('disabled');
     done();
   });
 
