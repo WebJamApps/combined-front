@@ -102,16 +102,17 @@ describe('The Bookshelf Module', () => {
 
   it('call app.showCheckboxes', (done) => {
     document.body.innerHTML = '<div id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    shelf.app.showCheckboxes();
+    shelf.app.showCheckboxes('checkboxes-iron');
+    expect(document.getElementById('checkboxes-iron').style.display).toBe('block');
     done();
   });
 
-  it('call app.showCheckboxes', (done) => {
-    document.body.innerHTML = '<div id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    shelf.app.expanded = true;
-    shelf.app.showCheckboxes();
-    done();
-  });
+  // it('call app.showCheckboxes', (done) => {
+  //   document.body.innerHTML = '<div id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
+  //   shelf.app.expanded = true;
+  //   shelf.app.showCheckboxes();
+  //   done();
+  // });
 
   // it('should expect change in http status after getUser call', (done) => {
   //   shelf.setFilter(2);

@@ -92,19 +92,27 @@ describe('the Charity Module', () => {
     charity2.app.appState = new AppStateStub();
   });
 
-  it('checkboxes app.expanded', (done) => {
+  it('displays the checkboxes inside a select box', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    charity.app.expanded = true;
+    //charity.app.expanded = true;
     charity.app.showCheckboxes('types');
-    expect(charity.app.expanded).toBe(false);
+    expect(document.getElementById('types').style.display).toBe('block');
     done();
   });
 
   it('checkboxes closed', (done) => {
-    document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    charity.app.expanded = false;
+    document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;display:block"></div>';
+    //charity.app.expanded = false;
     charity.app.showCheckboxes('types');
-    expect(charity.app.expanded).toBe(true);
+    expect(document.getElementById('types').style.display).toBe('none');
+    done();
+  });
+
+  it('scrolls the charity dashboard into view after update', (done) => {
+    document.body.innerHTML = '  <div id="charityDash" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
+    charity.setupValidation2 = function(){};
+    charity.afterUpdate();
+    //expect(charity.app.expanded).toBe(true);
     done();
   });
 

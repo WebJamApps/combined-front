@@ -6,119 +6,70 @@
     </div>
     <!-- <div class="material-content elevation3" style="max-width:5in; margin:auto" ">
 
-      <button style="margin-right:20px" click.delegate="setCharity()">Charity</button><button click.delegate="setNolongerNew()">Volunteer</button>
-    </div> -->
-    <!-- <p if.bind="user.userDetails ==='newUser'">&nbsp;</p> -->
-    <div class="material-content elevation3" style="max-width:5in; margin:auto">
-      <h4 class="material-header-h4">Update User Account</h4>
-      <p>&nbsp;</p>
-      <form>
-        <p><strong>User Name:</strong> <i>${user.name}</i></p>
-        <p><strong>Email:</strong> <i>${user.email}</i></p>
-        <label style="margin-top:0; padding-top:0;max-height:30px">Primary User Type (required)<span if.bind="!canChangeUserType">:<i style="font-weight:normal;"> ${user.userType}</i><br><br></span></label>
-        <select if.bind="canChangeUserType" id="type" class="form-control" value.bind="user.userType & validate" style="width: 2.35in">
-          <option value="">Primary User Type (required)</option>
-          <option repeat.for="type of userTypes" model.bind="type">${type}</option>
-        </select>
-        <p if.bind="!canChangeUserType"><i>You are not allowed to change your primary user type for the following reasons:</i></p>
-        <ul if.bind="!canChangeUserType" innerhtml.bind="reasons"></ul>
-        <label>Street Address</label>
-        <input value.two-way="user.userStreetAddress & validate">
-        <label>City (required)</label>
-        <input value.two-way="user.userCity & validate">
-        <label>State (required)</label>
-        <select id="updateState" class="form-control" value.bind="user.userState & validate" style="width: 2.35in">
-          <option value=""> </option>
-          <option repeat.for="state of app.states" model.bind="state">${state}</option>
-        </select>
-        <label>Zipcode (required)</label>
-        <input value.two-way="user.userZip & validate">
-        <label style="margin-top:20px;font-weight:normal;">10 Digit Phone # (optional)</label>
-        <input type="number" style="max-width: 1.25in; margin:auto; padding:5px" class="newUserForm" value.bind="user.userPhone & validate" required>
-        <label>Short Bio</label>
-        <textarea value.two-way="user.userDetails & validate" rows="5" cols="33"></textarea>
-        <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
-          <ul if.bind="controller.errors">
-            <li repeat.for="error of controller.errors" style="margin-left:-24px; color:red">
-              ${error.message}
-            </li>
-          </ul>
-        </div>
-        <button id="updateUserButton" class="button-lib" raised click.trigger="updateUser()" style="display:none">
-          update</button>
-        </form>
+    <button style="margin-right:20px" click.delegate="setCharity()">Charity</button><button click.delegate="setNolongerNew()">Volunteer</button>
+  </div> -->
+  <!-- <p if.bind="user.userDetails ==='newUser'">&nbsp;</p> -->
+  <div class="material-content elevation3" style="max-width:5in; margin:auto">
+    <h4 class="material-header-h4">Update User Account</h4>
+    <p>&nbsp;</p>
+    <form>
+      <p><strong>User Name:</strong> <i>${user.name}</i></p>
+      <p><strong>Email:</strong> <i>${user.email}</i></p>
+      <label style="margin-top:0; padding-top:0;max-height:30px">Primary User Type (required)<span if.bind="!canChangeUserType">:<i style="font-weight:normal;"> ${user.userType}</i><br><br></span></label>
+      <select if.bind="canChangeUserType" id="type" class="form-control" value.bind="user.userType & validate" style="width: 2.35in; margin-bottom:20px">
+        <option value="">Primary User Type (required)</option>
+        <option repeat.for="type of userTypes" model.bind="type">${type}</option>
+      </select>
+      <label if.bind="canChangeUserType" style="display: inline;margin-right:20px" repeat.for="stat of status">
+        <input style="min-width:10px;" type="radio" name="uStat" value.bind="stat" checked.bind="user.userStatus" change.delegate="showUpdateButton()" />
+        ${stat}
+      </label>
+      <p if.bind="!canChangeUserType"><i>You are not allowed to change or disable your primary user type for the following reasons:</i></p>
+      <ul if.bind="!canChangeUserType" innerhtml.bind="changeReasons"></ul>
+      <label style="margin-top:10px">Street Address</label>
+      <input value.two-way="user.userStreetAddress & validate">
+      <label>City (required)</label>
+      <input value.two-way="user.userCity & validate">
+      <label>State (required)</label>
+      <select id="updateState" class="form-control" value.bind="user.userState & validate" style="width: 2.35in">
+        <option value=""> </option>
+        <option repeat.for="state of app.states" model.bind="state">${state}</option>
+      </select>
+      <label>Zipcode (required)</label>
+      <input value.two-way="user.userZip & validate">
+      <label style="margin-top:20px;font-weight:normal;">10 Digit Phone # (optional)</label>
+      <input type="number" style="max-width: 1.25in; margin:auto; padding:5px" class="newUserForm" value.bind="user.userPhone & validate" required>
+      <label>Short Bio</label>
+      <textarea value.two-way="user.userDetails & validate" rows="5" cols="33"></textarea>
+      <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
+        <ul if.bind="controller.errors">
+          <li repeat.for="error of controller.errors" style="margin-left:-24px; color:red">
+            ${error.message}
+          </li>
+        </ul>
       </div>
-        <p>&nbsp;</p>
-    <div class="material-content elevation3" style="max-width:5in; margin:auto" if.bind="user.userType === 'Volunteer' || user.userType === 'Developer'">
-      <h4 class="material-header-h4">Set Volunteering Preferences</h4>
-      <form>
-        <div class="multiselect" style="width:170px; margin-top:40px">
-          <div class="selectBox" click.delegate="app.showCheckboxes('causes')">
-            <select>
-              <option style="font-weight:normal">Cause(s) to support</option>
-            </select>
-            <div class="overSelect"></div>
-          </div>
-          <div class="checkboxes-div" id="causes" horizontal-align="right" vertical-align="top">
-            <div class="dropdown-content">
-              <label class="checkboxes-label" repeat.for="cause of causes" for="${cause}">
-                <input class="checkboxes-input" type="checkbox" value.bind="cause" id.bind="cause" checked.bind="selectedCauses" change.delegate="selectPickChange('causes')"> ${cause}
-              </label>
-            </div>
-          </div>
-        </div>
-        <label if.bind="causeOther">Other Causes</label>
-        <input if.bind="causeOther" value.two-way="user.volCauseOther">
-        <div class="multiselect" style="width:170px; margin-top:50px">
-          <div class="selectBox" click.delegate="app.showCheckboxes('talents')">
-            <select>
-              <option style="font-weight:normal">Your talent(s)</option>
-            </select>
-            <div class="overSelect"></div>
-          </div>
-          <div class="checkboxes-div" id="talents" horizontal-align="right" vertical-align="top">
-            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 300px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-              <label class="checkboxes-label" repeat.for="talent of talents" for="${talent}">
-                <input class="checkboxes-input" type="checkbox" value.bind="talent" id.bind="talent" checked.bind="selectedTalents" change.delegate="selectPickChange('talents')"> ${talent}
-              </label>
-            </div>
-          </div>
-        </div>
-        <label if.bind="talentOther">Other Talent</label>
-        <input if.bind="talentOther" value.two-way="user.volTalentOther">
-        <div class="multiselect" style="width:170px; margin-top:50px">
-          <div class="selectBox" click.delegate="app.showCheckboxes('work')">
-            <select>
-              <option style="font-weight:normal">Can work doing...</option>
-            </select>
-            <div class="overSelect"></div>
-          </div>
-          <div class="checkboxes-div" id="work" horizontal-align="right" vertical-align="top">
-            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
-              <label class="checkboxes-label" repeat.for="work of works" for="${work}" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
-                <input class="checkboxes-input" type="checkbox" value.bind="work" id.bind="work" checked.bind="selectedWorks" change.delegate="selectPickChange('work')"> ${work}
-              </label>
-            </div>
-          </div>
-        </div>
-        <label if.bind="workOther">Other Work</label>
-        <input if.bind="workOther" value.two-way="user.volWorkOther">
-        <p>&nbsp;</p>
-        <label>Furthest distance willing to travel (miles)</label>
-        <input style="margin-top:0" value.two-way="user.volTravelDistMiles">
-        <button class="button-lib" raised click.trigger="updateUser()">
-          Submit</button>
-        </form>
-      </div>
-      <p>&nbsp;</p>
-      <div class="elevation2" style="padding:5px;max-width:5in; margin:auto">
-        <h4 style="text-align:center;">Delete Account</h4>
-        <button if.bind="canChangeUserType" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="deleteUser()">
-          Delete User
-        </button>
-        <p style="padding:10px" if.bind="!canChangeUserType"><i>You are not allowed to delete your user account for the following reasons:</i></p>
-        <ul if.bind="!canChangeUserType" innerhtml.bind="reasons"></ul>
-      </div>
-      <p>&nbsp;</p>
+      <button id="updateUserButton" class="button-lib" raised click.trigger="updateUser()" style="display:none">
+        update</button>
+      </form>
     </div>
-  </template>
+    <p>&nbsp;</p>
+    <div if.bind="canDelete" class="elevation2" style="padding:5px;max-width:5in; margin:auto">
+      <h4 style="text-align:center;">Delete Your User Account</h4>
+      <div style="margin:auto; text-align:center">
+      <button style="width:1in;margin:auto; text-align:center" class="button-lib" raised click.trigger="deleteUser()">
+        Delete User
+      </button>
+    </div>
+      <!-- <p style="padding:10px" if.bind="!canDelete"><i>You are not allowed to delete your user account for the following reasons:</i></p>
+      <ul if.bind="!canDelete" innerhtml.bind="deleteReasons"></ul> -->
+      <!-- <button if.bind="!canChangeUserType && user.userStatus !== 'disabled' && canDisable" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="disableUser('disabled')">
+      Disable User
+    </button>
+    <button if.bind="user.userStatus === 'disabled'" style="width:1.2in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="disableUser('enabled')">
+    Re-enable User
+  </button> -->
+</div>
+<p>&nbsp;</p>
+
+</div>
+</template>

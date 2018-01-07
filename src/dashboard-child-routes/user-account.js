@@ -1,88 +1,40 @@
 import {inject} from 'aurelia-framework';
 import {App} from '../app';
-import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
+import {fixDates, formatDate, markPast} from '../commons/utils.js';
 @inject(App, ValidationControllerFactory, Validator)
 export class UserAccount {
   controller = null;
   validator = null;
   constructor(app, controllerFactory, validator){
     this.app = app;
-    this.selectedCauses = [];
-    this.selectedTalents = [];
-    this.selectedWorks = [];
     this.canChangeUserType = true;
     this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results));
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;
+    this.canDelete = true;
+    this.status = ['enabled', 'disabled'];
   }
-
-  causes = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
-  talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
-  works = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
-
 
   async activate() {
     this.userTypes = JSON.parse(process.env.userRoles).roles;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
+    //console.log(this.user.userStatus);
+    this.checkUserStatus();
     this.app.role = this.user.userType;
-    this.causes.sort();
-    this.causes.push('other');
-    for (let i = 0; i < this.causes.length; i++) {
-      if (this.user.volCauses.indexOf(this.causes[i]) > -1){
-        this.selectedCauses.push(this.causes[i]);
-      } else {
-        this.selectedCauses.push('');
-      }
-    }
-    this.talents.sort();
-    this.talents.push('other');
-    for (let i = 0; i < this.talents.length; i++) {
-      if (this.user.volTalents.indexOf(this.talents[i]) > -1){
-        this.selectedTalents.push(this.talents[i]);
-      } else {
-        this.selectedTalents.push('');
-      }
-    }
-    this.works.sort();
-    this.works.push('other');
-    for (let i = 0; i < this.works.length; i++) {
-      if (this.user.volWorkPrefs.indexOf(this.works[i]) > -1){
-        this.selectedWorks.push(this.works[i]);
-      } else {
-        this.selectedWorks.push('');
-      }
-    }
-    if (this.selectedWorks.includes('other')){
-      this.workOther = true;
-    } else {
-      this.workOther = false;
-    }
-    if (this.selectedTalents.includes('other')){
-      this.talentOther = true;
-    } else {
-      this.talentOther = false;
-    }
-    if (this.selectedCauses.includes('other')){
-      this.causeOther = true;
-    } else {
-      this.causeOther = false;
-    }
     this.checkChangeUserType();
-    if (this.user.userDetails === 'newUser'){
-      this.setNolongerNew();
-    }
-    if (this.user.isOhafUser && this.user.userType === 'Volunteer'){
-      this.userTypes = ['Charity', 'Volunteer'];
-    }
-    if (process.env.NODE_ENV === 'development' || this.user.userType === 'Developer'){
-      this.userTypes.push('Developer');
-    }
     this.userTypes.sort();
     this.setupValidation();
+  }
+
+  checkUserStatus(){
+    if (this.user.userStatus === undefined || this.user.userStatus === null || this.user.userStatus === ''){
+      console.log(this.user.userStatus);
+      this.user.userStatus = 'enabled';
+    }
   }
 
   setupValidation() {
@@ -95,11 +47,13 @@ export class UserAccount {
     .on(this.user);
   }
 
-  validate() {
-    this.validator.validateObject(this.user);
-  }
+  // validate() {
+  //   this.validator.validateObject(this.user);
+  // }
 
   updateCanSubmit(validationResults) {
+    let nub = document.getElementById('updateUserButton');
+    nub.style.display = 'none';
     let valid = true;
     for (let result of validationResults) {
       if (result.valid === false){
@@ -109,110 +63,85 @@ export class UserAccount {
     }
     this.canSubmit = valid;
     if (this.user.userType !== '' && this.canSubmit){
-      let nub = document.getElementById('updateUserButton');
+      //let nub = document.getElementById('updateUserButton');
       nub.style.display = 'block';
     }
     return this.canSubmit;
   }
 
   async checkChangeUserType(){
-    this.reasons = '';
-    console.log('check change user type');
+    this.changeReasons = '';
     if (this.user.userType === 'Volunteer' || this.user.userType === 'Developer'){
-      await this.checkSignups();
-      if (this.userSignups.length > 0){
-        this.canChangeUserType = false;
-        this.reasons = this.reasons + '<li>You signed up to work at a charity event.</li>';
-      }
-      console.log('the user signups inside the check function');
-      console.log(this.userSignups);
-      console.log('I can change the user type: ' + this.canChangeUserType);
+      await this.fetchAllEvents();
+      this.checkScheduled();
     }
     if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
       // Do not allow user to change their primary userType away from Charity if they have created a charity
       const res = await this.app.httpClient.fetch('/charity/' + this.uid);
       this.charities = await res.json();
-      /* istanbul ignore else */
       if (this.charities.length > 0){
-        //this.canDelete = false;
         this.canChangeUserType = false;
-        this.reasons = this.reasons + '<li>You are the manager of a charity.</li>';
+        this.canDelete = false;
+        this.changeReasons = this.changeReasons + '<li>You are the manager of a charity.</li>';
       }
     }
-    /* istanbul ignore else */
     if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
       const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
       this.books = await res.json();
-      /* istanbul ignore else */
       if (this.books.length > 0){
         this.canChangeUserType = false;
-        this.reasons = this.reasons + '<li>You have a book checked out.</li>';
+        this.canDelete = false;
+        this.changeReasons = this.changeReasons + '<li>You have a book checked out.</li>';
       }
     }
   }
 
-  async checkSignups(){
-    this.userSignups = [];
-    const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
-    this.userSignups = await resp.json();
+  async fetchAllEvents(){
+    const res = await this.app.httpClient.fetch('/volopp/getall');
+    this.events2 = await res.json();
+    fixDates(this.events2);
+    markPast(this.events2, formatDate);
   }
 
-  async setNolongerNew(){
-    await fetch;
-    this.user.userDetails = '';
-    this.app.httpClient.fetch('/user/' + this.uid, {
-      method: 'put',
-      body: json(this.user)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      this.app.appState.setUser(this.user);
-      console.log('set no longer new ' +  this.user.userDetails);
-    });
+  checkScheduled(){
+    for (let i = 0; i < this.events2.length; i++){
+      if (this.events2[i].voPeopleScheduled !== null && this.events2[i].voPeopleScheduled !== undefined){
+        if (this.events2[i].voPeopleScheduled.includes(this.uid)){
+          this.canDelete = false;
+          if (!this.events2[i].past){
+            this.canChangeUserType = false;
+            console.log(this.events2[i]);
+            if (this.changeReasons.indexOf('<li>You are scheduled to work an event.</li>') === -1){
+              this.changeReasons = this.changeReasons + '<li>You are scheduled to work an event.</li>';
+            }
+          }
+        }
+      }
+    }
   }
 
   async setCharity(){
-    await fetch;
     this.user.userDetails = '';
     this.user.userType = 'Charity';
-    this.app.httpClient.fetch('/user/' + this.uid, {
-      method: 'put',
-      body: json(this.user)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      this.app.appState.setUser(this.user);
-      this.app.appState.checkUserRole();
-      this.app.router.navigate('dashboard');
-    });
+    await this.app.updateById('/user/', this.uid, this.user, null);
   }
 
-  async setupVolunteer(){
-    await fetch;
-    this.app.httpClient.fetch('/user/' + this.uid, {
-      method: 'put',
-      body: json(this.user)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      this.app.appState.setUser(this.user);
-      this.app.router.navigate('dashboard/volunteer');
-    });
+  afterUpdateUser(){
+    this.app.appState.setUser(this.user);
+    this.app.appState.checkUserRole();
+    this.app.router.navigate('dashboard');
   }
 
   async updateUser(){
-    await fetch;
-    this.app.httpClient.fetch('/user/' + this.uid, {
-      method: 'put',
-      body: json(this.user)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      this.app.appState.setUser(this.user);
-      this.app.appState.checkUserRole();
-      this.app.router.navigate('dashboard/' + this.user.userType.toLowerCase());
-      console.log('dashboard/' + this.user.userType.toLowerCase());
-    });
+    await this.app.updateById('/user/', this.uid, this.user, null);
+    // this.app.appState.updateUser(this.user)
+    // this.app.router.navigate('dashboard');
+    this.afterUpdateUser();
+  }
+
+  disableUser(status){
+    this.user.userStatus = status;
+    this.updateUser();
   }
 
   async deleteUser(){
@@ -224,17 +153,9 @@ export class UserAccount {
       this.app.logout();
     });
   }
-
-  selectPickChange(type){
-    if (type === 'causes'){
-      this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
-    }
-    if (type === 'work'){
-      this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
-    }
-    if (type === 'talents'){
-      this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
-    }
+  showUpdateButton(){
+    let nub = document.getElementById('updateUserButton');
+    nub.style.display = 'block';
   }
 
 }

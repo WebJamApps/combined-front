@@ -12,7 +12,7 @@ function testAsync(runAsync) {
 describe('The AppState module unit tests', () => {
   let appState;
   //let auth = '12345678agdgfhjajsagj';
-  let roles = ['developer', 'Volunteer'];
+  let roles = ['developer', 'volunteer'];
   let user = {'userName': 'John Doe', '_id': 'foo'};
   let userDeveloper = {'userName': 'John Doe', '_id': 'foo', 'userType': 'Developer'};
 
@@ -40,7 +40,20 @@ describe('The AppState module unit tests', () => {
     appState.setRoles(roles);
     let returnedRoles = appState.getRoles();
     returnedRoles.then((userRoles) => {
-      expect(userRoles).toBe(roles);
+      expect(userRoles.indexOf('developer')).toBe(0);
+      expect(userRoles.indexOf('volunteer')).toBe(1);
+      expect(returnedRoles.isFulfilled()).toBeTruthy();
+      done();
+    });
+  });
+  it('should set the role for disabled', (done) => {
+    appState.user.userStatus = 'disabled';
+    appState.setRoles(roles);
+    let returnedRoles = appState.getRoles();
+    returnedRoles.then((userRoles) => {
+      expect(userRoles.indexOf('developer')).toBe(0);
+      expect(userRoles.indexOf('volunteer')).toBe(1);
+      expect(userRoles.indexOf('disabled')).toBe(2);
       expect(returnedRoles.isFulfilled()).toBeTruthy();
       done();
     });

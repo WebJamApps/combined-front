@@ -1,8 +1,8 @@
 # combined-front
 [![CircleCI](https://circleci.com/gh/WebJamApps/combined-front.svg?style=svg)](https://circleci.com/gh/WebJamApps/combined-front)
-[![Code Climate](https://codeclimate.com/github/WebJamApps/combined-front/badges/gpa.svg)](https://codeclimate.com/github/WebJamApps/combined-front)
 [![Test Coverage](https://codeclimate.com/github/WebJamApps/combined-front/badges/coverage.svg)](https://codeclimate.com/github/WebJamApps/combined-front/coverage)
 [![Issue Count](https://codeclimate.com/github/WebJamApps/combined-front/badges/issue_count.svg)](https://codeclimate.com/github/WebJamApps/combined-front/issues)
+[![Maintainability](https://api.codeclimate.com/v1/badges/cd44da430d179188ea8e/maintainability)](https://codeclimate.com/github/WebJamApps/combined-front/maintainability)
 [![Known Vulnerabilities](https://snyk.io/test/github/webjamapps/combined-front/badge.svg)](https://snyk.io/test/github/webjamapps/combined-front)
 
 This is the front end for the following apps:
@@ -36,10 +36,10 @@ This will run the tests in continuous mode and launch a Chrome browser with Karm
 
 To get the latest version of code, <b>git pull origin dev</b> and then switch to your own branch.
 
-You will no be able top push directly to the dev branch, rather we would appreciate if you pushed to your own branch and then submit a pull request to the <b>dev</b> branch.
+You will no be able to push directly to the dev branch, rather we would appreciate if you pushed to your own branch and then submit a pull request to the <b>dev</b> branch.
 
 Since we are running some alpha and beta node packages, there will be times when the developer will need to reinstall all dependencies.
-We have found that is can be necessary to delete the entire Node_Modules folder and then clean the cache by running this script:<br>
+It may be necessary to delete the entire Node_Modules folder and then clean the cache by running this script:<br>
 <b>npm run cleaninstall</b><br>
 
 <br>

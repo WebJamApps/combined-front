@@ -10,15 +10,15 @@
   "author": "HandlersAndKickers",
   "license": "MIT",
   "engines": {
-    "node": "8.9.1",
-    "npm": "5.5.1"
+    "node": "8.9.3",
+    "npm": "5.6.0"
   },
   "scripts": {
     "start": "nps",
     "test": "npm run test:karma && nps e2e",
     "test:karma": "cross-env NODE_ENV=test nps test.lint && nps test.karma",
     "test:debug": "cross-env NODE_ENV=test nps test.karma.debug",
-    "installglobals": "npm i -g yarn@latest && npm i -g bower@latest",
+    "installglobals": "npm i -g npm@latest && npm i -g yarn@latest && npm i -g bower@latest",
     "cleaninstall": "rm -rf bower_components && rm -rf yarn.lock && rm -rf node_modules && yarn cache clean && npm run installglobals && yarn install && npm run postinstall:backend",
     "postinstall:backend": "bower install && npm run vulc && npm start -- build",
     "vulc": "rm -rf static/includes.html && polymer-bundler --inline-scripts --inline-css includes.html > static/includes.html",
@@ -26,9 +26,7 @@
     "snyk-protect": "snyk protect",
     "eslint-fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
-    "postinstall": "npm run fix:aurelia-val",
-    "prepare": "npm run snyk-protect",
-    "prepublish": "npm run snyk-protect"
+    "postinstall": "npm run fix:aurelia-val"
   },
   "dependencies": {
     "au-table": "^0.1.12",
@@ -83,8 +81,8 @@
     "nps": "^5.6.0",
     "nps-utils": "^1.2.0",
     "polymer-bundler": "^2.0.1",
+    "postcss": "^6.0.14",
     "postcss-loader": "^2.0.6",
-    "pushstate-server": "^3.0.0",
     "snyk": "^1.49.3",
     "style-loader": "^0.18.2",
     "url-loader": "^0.6.2",
@@ -112,8 +110,10 @@
     "karma-mocha-reporter": "^2.2.3",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.4",
+    "postcss-sass": "^0.2.0",
     "protractor": "^5.1.2",
-    "stylelint": "^8.1.1",
+    "pushstate-server": "^3.0.0",
+    "stylelint": "^8.4.0",
     "stylelint-config-standard": "^17.0.0",
     "webpack-dev-server": "^2.6.1"
   },

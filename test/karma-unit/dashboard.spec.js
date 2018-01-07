@@ -2,30 +2,30 @@ import {Dashboard} from '../../src/dashboard';
 import {App} from '../../src/app';
 import {StageComponent} from 'aurelia-testing';
 import {AuthStub, HttpMock, AppStateStub, RouterStub} from './commons';
-import {Validator} from 'aurelia-validation';
+//import {Validator} from 'aurelia-validation';
 
-class VCMock {
-  createForCurrentScope(validator) {
-    return {validateTrigger: null};
-  }
-}
+// class VCMock {
+//   createForCurrentScope(validator) {
+//     return {validateTrigger: null};
+//   }
+// }
 
-class ValidatorMock extends Validator {
-  constructor(a, b) {
-    super();
-    this.a = a;
-    this.b = b;
-  }
-  validateObject(obj, rules) {
-    if (obj.userType.indexOf('True') > -1){
-      return Promise.resolve([{rule: Object, object: Object, propertyName: 'userType', valid: true, message: 'good'}]);
-    }
-    return Promise.resolve([{rule: Object, object: Object, propertyName: 'userType', valid: false, message: 'bad'}]);
-  }
-  validateProperty(prop, val, rules) {
-    return Promise.resolve({});
-  }
-}
+// class ValidatorMock extends Validator {
+//   constructor(a, b) {
+//     super();
+//     this.a = a;
+//     this.b = b;
+//   }
+//   validateObject(obj, rules) {
+//     if (obj.userType.indexOf('True') > -1){
+//       return Promise.resolve([{rule: Object, object: Object, propertyName: 'userType', valid: true, message: 'good'}]);
+//     }
+//     return Promise.resolve([{rule: Object, object: Object, propertyName: 'userType', valid: false, message: 'bad'}]);
+//   }
+//   validateProperty(prop, val, rules) {
+//     return Promise.resolve({});
+//   }
+// }
 
 describe('the Dashboard Module', () => {
   let dashboard;
@@ -34,8 +34,8 @@ describe('the Dashboard Module', () => {
     let auth;
     let http;
     let app;
-    let vc;
-    let val;
+    //let vc;
+    //let val;
 
     beforeEach(() => {
       auth = new AuthStub();
@@ -43,9 +43,9 @@ describe('the Dashboard Module', () => {
       app = new App(auth, new HttpMock());
       app.router = new RouterStub();
       app.activate();
-      vc = new VCMock();
-      val = new ValidatorMock();
-      dashboard = new Dashboard(app, vc, val);
+      //vc = new VCMock();
+      //val = new ValidatorMock();
+      dashboard = new Dashboard(app);
       dashboard.app.appState = new AppStateStub();
       //dahsboard.activate();
     });
@@ -63,11 +63,11 @@ describe('the Dashboard Module', () => {
       }, 10);
     });
 
-    it('should check if updateCanSubmit', (done) => {
-      dashboard.user = {userType: ''};
-      dashboard.updateCanSubmit([{valid: false}]);
-      done();
-    });
+    // it('should check if updateCanSubmit', (done) => {
+    //   dashboard.user = {userType: ''};
+    //   dashboard.updateCanSubmit([{valid: false}]);
+    //   done();
+    // });
 
     it('should default to Volunteer only when a new ohaf user', (done) => {
       dashboard.user = {userType: '', isOhafUser: true};
@@ -92,7 +92,7 @@ describe('the Dashboard Module', () => {
     it('should expect change in http status after Volunteer activate call', (done) => {
       http = new HttpMock({name: 'Iddris Elba', userType: 'Volunteer'});
       app = new App(auth, http);
-      dashboard = new Dashboard(app, vc, val);
+      dashboard = new Dashboard(app);
       dashboard.app.appState = new AppStateStub();
       dashboard.activate();
       setTimeout(function() {
@@ -110,6 +110,12 @@ describe('the Dashboard Module', () => {
       done();
     });
 
+    it('should route to user-account when user is disabled', (done) => {
+      dashboard.user = {_id: '1', name: 'Iddris Elba', userType: 'Volunteer', userStatus: 'disabled'};
+      dashboard.childRoute();
+      done();
+    });
+
     it('should not route a user if they do not have any user type defined', (done) => {
       // let userTypes = [''];
       // for (let i of userTypes) {
@@ -119,50 +125,50 @@ describe('the Dashboard Module', () => {
       done();
     });
 
-    it('should confirm 200 http status after updateUser call', (done) => {
-      http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
-      app = new App(auth, http);
-      dashboard = new Dashboard(app, vc, val);
-      dashboard.app.appState = new AppStateStub();
-      setTimeout(function() {
-        dashboard.updateUser();
-        //expect(http.status).toBe(200)
-        done();
-      }, 5);
-    });
+    // it('should confirm 200 http status after updateUser call', (done) => {
+    //   http = new HttpMock({name: 'John Fitzgerald', userType: 'Developer'});
+    //   app = new App(auth, http);
+    //   dashboard = new Dashboard(app);
+    //   dashboard.app.appState = new AppStateStub();
+    //   setTimeout(function() {
+    //     dashboard.updateUser();
+    //     //expect(http.status).toBe(200)
+    //     done();
+    //   }, 5);
+    // });
 
-    it('should validate', (done) => {
-      dashboard.user = {name: 'Ray Smith', userType: 'Reader'};
-      dashboard.canSubmit = true;
-      document.body.innerHTML = '<div id=\'newUserButton\'></div>';
-      dashboard.validate();
-      let validationResults = [{
-        result: {valid: true}}];
-      dashboard.updateCanSubmit(validationResults);
-      //dashboard.dropdownChanged();
-      //dashboard.canSubmit = true;
-      //dashboard.dropdownChanged();
-      done();
-    });
+    // it('should validate', (done) => {
+    //   dashboard.user = {name: 'Ray Smith', userType: 'Reader'};
+    //   dashboard.canSubmit = true;
+    //   document.body.innerHTML = '<div id=\'newUserButton\'></div>';
+    //   dashboard.validate();
+    //   let validationResults = [{
+    //     result: {valid: true}}];
+    //   dashboard.updateCanSubmit(validationResults);
+    //   //dashboard.dropdownChanged();
+    //   //dashboard.canSubmit = true;
+    //   //dashboard.dropdownChanged();
+    //   done();
+    // });
 
-    it('should setup the validation', (done) => {
-      dashboard.user = {name: 'Ray Smith', userType: 'Reader'};
-      dashboard.canSubmit = true;
-      document.body.innerHTML = '<div id=\'newUserButton\'></div>';
-      dashboard.validate();
-      let validationResults = [{
-        result: {valid: true}}];
-      dashboard.updateCanSubmit(validationResults);
-      //dashboard.dropdownChanged();
-      //dashboard.canSubmit = true;
-      //dashboard.dropdownChanged();
-      done();
-    });
+    // it('should setup the validation', (done) => {
+    //   dashboard.user = {name: 'Ray Smith', userType: 'Reader'};
+    //   dashboard.canSubmit = true;
+    //   document.body.innerHTML = '<div id=\'newUserButton\'></div>';
+    //   dashboard.validate();
+    //   let validationResults = [{
+    //     result: {valid: true}}];
+    //   dashboard.updateCanSubmit(validationResults);
+    //   //dashboard.dropdownChanged();
+    //   //dashboard.canSubmit = true;
+    //   //dashboard.dropdownChanged();
+    //   done();
+    // });
 
-    it('should validate property', (done) => {
-      dashboard.validator.validateProperty({}, 'school', 'schoolRules');
-      done();
-    });
+  //   it('should validate property', (done) => {
+  //     dashboard.validator.validateProperty({}, 'school', 'schoolRules');
+  //     done();
+  //   });
   });
 
   describe('Staging Dashboard', () => {

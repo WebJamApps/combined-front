@@ -3,12 +3,23 @@ prepare:
   fetch:
   - url: https://raw.githubusercontent.com/aurelia/tools/master/.eslintrc.json
     path: node_modules/aurelia-tools/.eslintrc.json
+checks:
+  method-lines:
+    config:
+      threshold: 30
+  method-complexity:
+    config:
+      threshold: 8
 engines:
   duplication:
     enabled: true
+    checks:
+      Similar Code:
+        enabled: true
     config:
       languages:
         javascript:
+          mass_threshold: 60
   eslint:
     enabled: true
   stylelint:

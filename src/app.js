@@ -5,7 +5,7 @@ import {inject, bindable} from 'aurelia-framework';
 import {AuthorizeStep} from 'aurelia-auth';
 import {UserAccess} from './classes/UserAccess.js';
 import {AuthService} from 'aurelia-auth';
-import {HttpClient} from 'aurelia-fetch-client';
+import {json, HttpClient} from 'aurelia-fetch-client';
 import {AppState} from './classes/AppState.js';
 @inject(AuthService, HttpClient)
 export class App {
@@ -165,22 +165,13 @@ export class App {
     }
   }
 
-  get currentStyles() {
-    let result = {};
-    let footer = document.getElementById('wjfooter');
-    let mobilemenutoggle = document.getElementById('mobilemenutoggle');
+  checkNavMenu(){
     this.Menu = 'wj';
     if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') {
       this.Menu = 'ohaf';
     } else if (this.currentRoute === 'music-router') {
-      // if (this.role === 'Volunteer'){
-      //   this.role = '';
-      // }
       this.Menu = 'music';
     } else if (this.currentRoute === 'library') {
-      // if (this.role === 'Volunteer'){
-      //   this.role = '';
-      // }
       this.Menu = 'library';
     } else if (this.currentRoute === 'login') {
       if (this.appState.isOhafLogin){
@@ -191,9 +182,6 @@ export class App {
     } else if (this.currentRouteFrag === '/dashboard'){
       this.Menu = 'dashboard';
     } else if (this.currentRouteFrag === '/bookshelf'){
-      // if (this.role === 'Volunteer'){
-      //   this.role = '';
-      // }
       this.Menu = 'bookshelf';
     } else if (this.currentRouteFrag === '/dashboard/developer'){
       this.Menu = 'developer';
@@ -216,8 +204,37 @@ export class App {
     } else {
       this.Menu = 'wj';
     }
+  }
 
+  setFooter(style){
+    let footer = document.getElementById('wjfooter');
+    let color = '';
+    if (footer !== null){
+      footer.style.backgroundColor = '#2a222a';
+      if (style === 'ohaf'){
+        footer.style.backgroundColor = '#565656';
+        color = '#c09580';
+      }
+      footer.innerHTML = '<div style="text-align: center"><span>&nbsp;&nbsp;</span>' +
+      '<a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>' +
+      '<span style="color:white; font-size: 9pt; padding-left:18px;">Powered by ' +
+      '<a class="wjllc" target="_blank" onMouseOver="this.style.color=\'gray\'" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
+    }
+  }
+
+  get currentStyles() {
+    let result = {};
+    let style = 'wj';
+    //let footer = document.getElementById('wjfooter');
+    let mobilemenutoggle = document.getElementById('mobilemenutoggle');
+    //let color = '';
+    this.checkNavMenu();
     if (this.Menu === 'charity' || this.Menu === 'ohaf' || this.Menu === 'volunteer' || this.role === 'Charity' || this.role === 'Volunteer'){
+      style = 'ohaf';
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',
         headerText1: 'Our',
@@ -229,19 +246,6 @@ export class App {
         menuToggleClass: 'ohaf-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/ohaf/butterfly.png';
-      //footer = document.getElementById('wjfooter');
-      if (footer !== null){
-        footer.style.backgroundColor = '#565656';
-        footer.innerHTML = '<div style="text-align: center">' +
-        '<a style="margin-left:10px;padding-right:10px; color:#c09580" target="_blank" href="https://www.facebook.com/WebJamLLC/">' +
-        '<i class="ohaf-social-media fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>' +
-        '<a style="padding-right:10px; color:#c09580" target="_blank" href="https://twitter.com/WebJamLLC">' +
-        '<i class="ohaf-social-media fa fa-twitter fa-2x" aria-hidden="true"></i></a>' +
-        '<a style="padding-right:10px; color:#c09580" target="_blank" href="https://plus.google.com/u/1/109586499331294076292">' +
-        '<i class="ohaf-social-media fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a><br>' +
-        '<span style="color:white; font-size: 9pt;margin:auto">Powered by ' +
-        '<a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
-      }
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#565656';
       }
@@ -255,38 +259,32 @@ export class App {
         menuToggleClass: 'home-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
-      //footer = document.getElementById('wjfooter');
-      if (footer !== null){
-        footer.style.backgroundColor = '#2a222a';
-        footer.innerHTML = '<div style="text-align: center"><span>&nbsp;&nbsp;</span>' +
-        '<a target="_blank" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>' +
-        '<span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>' +
-        '<span>&nbsp;&nbsp;</span><a target="_blank" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>' +
-        '<span>&nbsp;&nbsp;</span><a target="_blank" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>' +
-        '<span>&nbsp;&nbsp;</span><a target="_blank" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>' +
-        '<span style="color:white; font-size: 9pt; padding-left:18px;">Powered by ' +
-        '<a target="_blank" style="color:white; font-size:9pt;font-weight: bold;" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
-      }
+      // if (footer !== null){
+      //
+      // }
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#2a222a';
       }
     }
+    this.setFooter(style);
     return result;
   }
 
-  showCheckboxes(id = null){
-    let checkboxes = null;
-    if (id !== null){
-      checkboxes = document.getElementById(id);
-    }    else {
-      checkboxes = document.getElementById('checkboxes-iron');
-    }
-    if (!this.expanded) {
-      checkboxes.style.display = 'block';
-      this.expanded = true;
-    } else {
+  showCheckboxes(id){
+    //let checkboxes = null;
+    //if (id !== null){
+    let checkboxes = document.getElementById(id);
+    // }    else {
+    //   checkboxes = document.getElementById('checkboxes-iron');
+    // }
+    //console.log('what is this expanded?');
+    //console.log(this.expanded);
+    if (checkboxes.style.display === 'block') {
       checkboxes.style.display = 'none';
-      this.expanded = false;
+      //this.expanded = true;
+    } else {
+      checkboxes.style.display = 'block';
+      //this.expanded = false;
     }
   }
 
@@ -331,5 +329,30 @@ export class App {
       thisObj[otherVariable] = false;
       selectorObj[selectorOtherVariable] = '';
     }
+  }
+
+  async updateById(route, id, dataObj, afterFunction){
+    await fetch;
+    return this.httpClient.fetch(route + id, {
+      method: 'put',
+      body: json(dataObj)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (afterFunction !== null){
+        afterFunction();
+      } else {
+        //this.afterUpdateUser();
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+
+  // afterUpdateUser(){
+  //   this.appState.setUser(this.user);
+  //   this.appState.checkUserRole();
+  //   this.router.navigate('dashboard');
+  // }
   }
 }

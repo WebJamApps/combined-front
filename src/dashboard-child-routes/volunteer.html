@@ -5,7 +5,7 @@
       <h4 class="ohaf" style="margin-bottom: 20px; text-align:center"><strong>Volunteer Dashboard</strong>
         <span style="font-size: 14px; float:right; margin-right: 132px; margin-top: 0">
           <div class="multiselect">
-            <div class="selectBox" click.delegate="app.showCheckboxes()">
+            <div class="selectBox" click.delegate="app.showCheckboxes('checkboxes-iron')">
               <select>
                 <option>Filter by</option>
               </select>
@@ -25,20 +25,20 @@
     <div class="form-group" if.bind="keyword" style="max-width: 4in; margin:auto; padding:5px">
       <input type="text" value.bind="filters[0].value" placeholder="Enter Keyword" class="form-control"/>
     </div>
-    <div class="form-group" if.bind="siteLocation" style="max-width: 4in; margin:auto; padding:5px">
+    <div class="form-group" if.bind="zipcode" style="max-width: 4in; margin:auto; padding:5px">
       <select id="site" class="form-control" value.bind="filters[1].value">
         <option value="">Choose Zipcode...</option>
         <option repeat.for="siteLocation of siteLocations" model.bind="siteLocation">${siteLocation}</option>
       </select>
     </div>
-    <div class="form-group" if.bind="causeFilter" style="max-width: 4in; margin:auto; padding:5px">
+    <div class="form-group" if.bind="cause" style="max-width: 4in; margin:auto; padding:5px">
       <select id="cause" class="form-control" value.bind="filters[2].value">
         <option value="">Choose Cause...</option>
         <option repeat.for="cause of causes" model.bind="cause">${cause}</option>
       </select>
     </div>
     <!-- <div if.bind="showtable" class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px"> -->
-      <div class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px">
+    <div class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px">
       <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
         <thead>
           <tr>
@@ -63,14 +63,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr repeat.for="event of $displayData" if.bind="(!event.past || (event.past && showPast)) && !event.full">
+          <tr repeat.for="event of $displayData" if.bind="(!event.past || (event.past && !hidePast)) && (!event.full || (event.full && event.scheduled))">
             <td style="padding:8px; text-align:center">
-              <button if.bind="!event.scheduled && !event.past" class="button-checkout" raised click.delegate="signupEvent(event)" style="margin-bottom:10px">
+              <button if.bind="!event.scheduled && !event.past && event.voStatus !== 'cancel'" class="button-checkout" raised click.delegate="signupEvent(event)" style="margin-bottom:10px">
                 Sign Up
               </button>
-              <button if.bind="event.scheduled && !event.past" class="button-checkout" raised click.delegate="cancelSignup(event._id)" style="color:black; margin-bottom:10px; background-color: red">
+              <button if.bind="event.scheduled && !event.past" class="button-checkout" raised click.delegate="cancelSignup(event)" style="color:black; margin-bottom:10px; background-color: red">
                 Cancel
               </button>
+              <p if.bind="event.voStatus === 'cancel' && !event.scheduled">This event has been cancelled.</p>
               <p if.bind="event.past">This event has past</p>
             </td>
             <td style="padding:8px" innerhtml.bind="event.voName"></td>
@@ -82,7 +83,7 @@
             <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
             <td style="padding:8px" innerhtml.bind="event.voEndTime"></td>
             <td style="padding:8px" innerhtml.bind="event.voNumPeopleNeeded"></td>
-              <td style="padding:8px" innerhtml.bind="event.voNumPeopleScheduled"></td>
+            <td style="padding:8px" innerhtml.bind="event.voNumPeopleScheduled"></td>
             <td style="padding:8px" innerhtml.bind="event.talentHtml"></td>
             <td style="padding:8px" innerhtml.bind="event.workHtml"></td>
             <td style="padding:8px" innerhtml.bind="event.voCharityName"></td>
@@ -96,8 +97,8 @@
       <!-- DO NOT DELETE the following "p" line; it is to slow down the rendering of the filter by box -->
       <p style="color: white">selected filter: ${selectedFilter}</p>
     </div>
-    <p>&nbsp;</p>
-    <div class="elevation2" style="margin:auto; padding:10px; max-width:600px">
+    <!-- <p>&nbsp;</p> -->
+    <!-- <div class="elevation2" style="margin:auto; padding:10px; max-width:600px">
       <p style="font-weight:bold; text-align:center">Your Volunteering Preferences</p>
       <div class="search-table-outer" style="position:relative;overflow-x:auto;">
         <table>
@@ -126,7 +127,69 @@
         </table>
       </div>
       <p style="margin-top:10px; text-align:center">Go to your <a href="/dashboard/user-account">User Account</a> page to set your preferences.</p>
-    </div>
+    </div> -->
     <p>&nbsp;</p>
-  </div>
-</template>
+    <div class="material-content elevation3" style="max-width:5in; margin:auto" if.bind="user.userType === 'Volunteer' || user.userType === 'Developer'">
+      <p style="font-weight:bold; text-align:center">Volunteering Preferences</p>
+      <form>
+        <div class="multiselect" style="width:170px; margin-top:40px">
+          <div id="causesSelector" class="selectBox" click.delegate="app.showCheckboxes('selectCauses')">
+            <select>
+              <option style="font-weight:normal">Cause(s) to support</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <div class="checkboxes-div" id="selectCauses" horizontal-align="right" vertical-align="top">
+            <div class="dropdown-content">
+              <label class="checkboxes-label" repeat.for="cause of allCauses" for="${cause}">
+                <input class="checkboxes-input" type="checkbox" value.bind="cause" id.bind="cause" checked.bind="selectedCauses" change.delegate="selectPickChange('causes')"> ${cause}
+              </label>
+            </div>
+          </div>
+        </div>
+        <label if.bind="causeOther">Other Causes</label>
+        <input if.bind="causeOther" value.two-way="user.volCauseOther">
+        <div class="multiselect" style="width:170px; margin-top:50px">
+          <div id="talentsSelector" class="selectBox" click.delegate="app.showCheckboxes('selectTalents')">
+            <select>
+              <option style="font-weight:normal">Your talent(s)</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <div class="checkboxes-div" id="selectTalents" horizontal-align="right" vertical-align="top">
+            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 300px; max-height: 362px;overflow:auto;border:1px #dadada solid">
+              <label class="checkboxes-label" repeat.for="talent of allTalents" for="${talent}">
+                <input class="checkboxes-input" type="checkbox" value.bind="talent" id.bind="talent" checked.bind="selectedTalents" change.delegate="selectPickChange('talents')"> ${talent}
+              </label>
+            </div>
+          </div>
+        </div>
+        <label if.bind="talentOther">Other Talent</label>
+        <input if.bind="talentOther" value.two-way="user.volTalentOther">
+        <div class="multiselect" style="width:170px; margin-top:50px">
+          <div id="worksSelector" class="selectBox" click.delegate="app.showCheckboxes('selectWork')">
+            <select>
+              <option style="font-weight:normal">Can work doing...</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <div class="checkboxes-div" id="selectWork" horizontal-align="right" vertical-align="top">
+            <div class="dropdown-content" style="background-color:white;box-sizing: border-box; max-width: 270px; max-height: 362px;overflow:auto;border:1px #dadada solid">
+              <label class="checkboxes-label" repeat.for="work of allWorks" for="${work}" style="display:block;text-align:left;margin-left:5px;margin-right:5px; width:160px">
+                <input class="checkboxes-input" type="checkbox" value.bind="work" id.bind="work" checked.bind="selectedWorks" change.delegate="selectPickChange('work')"> ${work}
+              </label>
+            </div>
+          </div>
+        </div>
+        <label if.bind="workOther">Other Work</label>
+        <input if.bind="workOther" value.two-way="user.volWorkOther">
+        <p>&nbsp;</p>
+        <label>Furthest distance willing to travel (miles)</label>
+        <input id="distanceInput" style="margin-top:0" value.two-way="user.volTravelDistMiles" change.delegate="showButton()">
+        <button id="updateUserButton" style="display:none" class="button-lib" raised click.trigger="updateUser()">
+          Update</button>
+        </form>
+      </div>
+      <p>&nbsp;</p>
+    </div>
+  </template>

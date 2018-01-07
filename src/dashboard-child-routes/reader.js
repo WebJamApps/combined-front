@@ -30,33 +30,47 @@ export class Reader {
       this.book.checkedOutBy = this.uid;
       console.log('user id of checkout by: ' + this.book.checkedOutBy);
       this.book.checkedOutByName = this.user.name;
-      this.app.httpClient.fetch('/book/' + this.book._id, {
-        method: 'put',
-        body: json(this.book)
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        //fetch a new list of all books
-        this.activate();
-      });
+      this.updateBook(this.book);
+      // this.app.httpClient.fetch('/book/' + this.book._id, {
+      //   method: 'put',
+      //   body: json(this.book)
+      // })
+      // .then((response) => response.json())
+      // .then((data) => {
+      //   //fetch a new list of all books
+      //   this.activate();
+      // });
     } else {
       console.log('book is already checked out');
       this.activate();
     }
   }
 
+  updateBook(book){
+    this.app.httpClient.fetch('/book/' + this.book._id, {
+      method: 'put',
+      body: json(book)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      //fetch a new list of all books
+      this.activate();
+    });
+  }
+
   checkInBook(book){
     this.book = book;
     this.book.checkedOutBy = '';
     this.book.checkedOutByName = '';
-    this.app.httpClient.fetch('/book/' + this.book._id, {
-      method: 'put',
-      body: json(this.book)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      //fetch a fresh new list of all books
-      this.activate();
-    });
+    this.updateBook(this.book);
+    // this.app.httpClient.fetch('/book/' + this.book._id, {
+    //   method: 'put',
+    //   body: json(this.book)
+    // })
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   //fetch a fresh new list of all books
+    //   this.activate();
+    // });
   }
 }

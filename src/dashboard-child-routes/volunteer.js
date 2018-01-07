@@ -1,6 +1,8 @@
 import {inject} from 'aurelia-framework';
 import {App} from '../app';
-import {json} from 'aurelia-fetch-client';
+import {fixDates, formatDate, markPast} from '../commons/utils.js';
+//import {json} from 'aurelia-fetch-client';
+import {filterSelected} from '../commons/utils';
 @inject(App)
 export class Volunteer {
   constructor(app){
@@ -8,24 +10,32 @@ export class Volunteer {
     this.events = [];
     this.signup = {};
     this.selectedFilter = ['future only'];
-    this.doubleCheckSignups = false;
+    //this.doubleCheckSignups = false;
     this.canSignup = true;
-    this.showPast = false;
-    //this.showtable = false;
+    this.hidePast = true;
+    this.zipcode = false;
+    this.cause = false;
+    this.keyword = false;
+    this.allCauses = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
+    this.allTalents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
+    this.allWorks = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
+    this.selectedCauses = [];
+    this.selectedTalents = [];
+    this.selectedWorks = [];
   }
 
   siteLocations = [];
   causes = [];
   filterby = ['keyword', 'zipcode', 'cause', 'future only'];
-  // selectedFilter = [];
   keyword = false;
   siteLocation = false;
   causeFilter = false;
   filters = [
-    {value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState']},
-    {value: '', keys: ['voZipCode']},
-    {value: '', keys: ['voCharityTypes']}
+    {filterby: 'keyword', value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState']},
+    {filterby: 'zipcode', value: '', keys: ['voZipCode']},
+    {filterby: 'cause', value: '', keys: ['voCharityTypes']}
   ];
+
 
   async activate() {
     this.uid = this.app.auth.getTokenPayload().sub;
@@ -35,8 +45,6 @@ export class Volunteer {
     if (this.user.userDetails === 'newUser'){
       this.app.router.navigate('dashboard/user-account');
     } else {
-      let res2 = await this.app.httpClient.fetch('/signup/getall');
-      this.signups = await res2.json();
       await this.fetchAllEvents();
       this.displayEvents();
     }
@@ -44,19 +52,14 @@ export class Volunteer {
 
   async displayEvents(){
     if (this.events.length > 0){
-      await this.checkSignups();
-      this.fixZipcodes();
-      this.fixDates();
-    //this.buildWorkPrefs();
+      this.fixZipcodesAndTypes();
+      fixDates(this.events);
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
       this.populateSites();
       this.populateCauses();
-      await this.checkScheduled();
-      if (this.selectedFilter.includes('future only')) {
-        this.removePast();
-      }
-    //this.showtable = true;
+      this.checkScheduled();
+      markPast(this.events, formatDate);
     }
   }
 
@@ -65,118 +68,74 @@ export class Volunteer {
     this.events = await res.json();
   }
 
-  async checkScheduled(){
-    let total = 0;
-    let signupUserIds = [];
+  checkScheduled(){
     for (let i = 0; i < this.events.length; i++){
-      for (let e = 0; e < this.signups.length; e++){
-        if (this.events[i]._id === this.signups[e].voloppId){
-          total = total + this.signups[e].numPeople;
-          signupUserIds.push(this.signups[e].userId);
+      this.events[i].voNumPeopleScheduled = 0;
+      this.events[i].scheduled = false;
+      this.events[i].full = false;
+      if (this.events[i].voPeopleScheduled !== null && this.events[i].voPeopleScheduled !== undefined){
+        this.events[i].voNumPeopleScheduled = this.events[i].voPeopleScheduled.length;
+        if (this.events[i].voPeopleScheduled.includes(this.uid)){
+          this.events[i].scheduled = true;
         }
       }
-      this.events[i].voNumPeopleScheduled = total;
-      this.events[i].voSignupUserIds = signupUserIds;
-      if (this.events[i].voNumPeopleScheduled - this.events[i].voNumPeopleNeeded >= 0 && !this.events[i].scheduled){
-        this.events[i].full = true;
-        if (this.doubleCheckSignups){
-          alert('someone else signed up for the last spot to volunteer at this event');
-          this.doubleCheckSignups = false;
-          return this.canSignup = false;
-        }
-      }
-      if (this.events[i].voStatus === 'cancel' && !this.events[i].scheduled){
+      if (this.events[i].voNumPeopleScheduled >= this.events[i].voNumPeopleNeeded){
         this.events[i].full = true;
       }
-      total = 0;
-      signupUserIds = [];
     }
   }
 
-  fixZipcodes(){
+  fixZipcodesAndTypes(){
     for (let i = 0; i < this.events.length; i++){
       if (this.events[i].voZipCode === undefined || this.events[i].voZipCode === '' || this.events[i].voZipCode === null){
         this.events[i].voZipCode = '00000';
       }
-    }
-  }
-
-  async checkSignups(){
-    const resp = await this.app.httpClient.fetch('/signup/' + this.uid);
-    this.userSignups = await resp.json();
-    for (let next of this.userSignups){
-      let nextEventId = next.voloppId;
-      for (let i = 0; i < this.events.length; i++){
-        if (this.events[i]._id === nextEventId){
-          this.events[i].scheduled = true;
-        }
+      if (this.events[i].voCharityTypes === undefined || this.events[i].voCharityTypes === null || this.events[i].voCharityTypes.length === 0){
+        console.log('we have a missing charity type');
+        this.events[i].voCharityTypes = ['not specified'];
       }
     }
   }
 
   filterPicked(){
-    let arrayLength = this.selectedFilter.length;
-    this.keyword = false;
-    this.siteLocation = false;
-    if (arrayLength === 0){
-      this.filters[0].value = '';
-      this.filters[1].value = '';
-      this.filters[2].value = '';
-      this.causeFilter = false;
-      this.siteFilter = false;
-      this.keyword = false;
-      this.showPast = true;
-      return;
-    }
-    if (this.selectedFilter.includes('keyword')) {
-      this.keyword = true;
-    } else {
-      console.log('you unchecked the keyword filter');
-      this.filters[0].value = '';
-      this.keyword = false;
-    }
-    if (this.selectedFilter.includes('zipcode')) {
-      this.siteLocation = true;
-    } else {
-      this.filters[1].value = '';
-      this.siteLocation = false;
-    }
-    if (this.selectedFilter.includes('cause')) {
-      this.causeFilter = true;
-    } else {
-      this.filters[2].value = '';
-      this.causeFilter = false;
-    }
+    filterSelected(this);
     if (this.selectedFilter.includes('future only')) {
       console.log('you selected the starting date filter');
-      this.removePast();
-      this.showPast = false;
+      markPast(this.events, formatDate);
+      this.hidePast = true;
     } else {
-      this.showPast = true;
+      console.log('show past now!');
+      this.hidePast = false;
     }
   }
 
-  removePast() {
-    let testDate;
-    let today = new Date();
-    let mm = today.getMonth() + 1; // getMonth() is zero-based
-    let dd = today.getDate();
-    today = [today.getFullYear(),
-      (mm > 9 ? '' : '0') + mm,
-      (dd > 9 ? '' : '0') + dd].join('');
-    for (let i = 0; i < this.events.length; i++){
-      if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
-        this.events[i].voStartDate = today;
-      }
-      testDate = this.events[i].voStartDate.replace('-', '');
-      testDate = testDate.replace('-', '');
-      if (testDate < today){
-        this.events[i].past = true;
-      } else {
-        this.events[i].past = false;
-      }
-    }
-  }
+  // formatDate(today){
+  //   console.log(today);
+  //   let mm = today.getMonth() + 1; // getMonth() is zero-based
+  //   let dd = today.getDate();
+  //   today = [today.getFullYear(),
+  //     (mm > 9 ? '' : '0') + mm,
+  //     (dd > 9 ? '' : '0') + dd].join('');
+  //   return today;
+  // }
+
+  // markPast() {
+  //   let testDate;
+  //   let today = new Date();
+  //   today = formatDate(today);
+  //   for (let i = 0; i < this.events.length; i++){
+  //     if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
+  //       this.events[i].voStartDate = today;
+  //     }
+  //     testDate = this.events[i].voStartDate.replace('-', '');
+  //     testDate = testDate.replace('-', '');
+  //     if (testDate <= today){
+  //       this.events[i].past = true;
+  //     } else {
+  //       this.events[i].past = false;
+  //     }
+  //   }
+  // }
 
   populateSites(){
     this.siteLocations.push('');
@@ -200,115 +159,165 @@ export class Volunteer {
     }
   }
 
-  fixDates(){
-    for (let i = 0; i < this.events.length; i++){
-      let startDate = this.events[i].voStartDate;
-      let endDate = this.events[i].voEndDate;
-      if (startDate !== null){
-        if (startDate.indexOf('T') !== -1){
-          this.events[i].voStartDate = startDate.substr(0, startDate.indexOf('T'));
-        }
-      }
-      if (endDate !== null){
-        if (endDate.indexOf('T') !== -1){
-          this.events[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
-        }
-      }
-    }
-  }
-
-  // buildWorkPrefs(){
-  //   for (let l = 0; l < this.events.length; l++){
-  //     let workHtml = '';
-  //     for (let i = 0; i < this.events[l].voWorkTypes.length; i++) {
-  //       if (this.events[l].voWorkTypes[i] !== ''){
-  //         if (this.events[l].voWorkTypes[i] !== 'other'){
-  //           workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypes[i] + '</p>';
-  //         } else {
-  //           workHtml = workHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voWorkTypeOther + '</p>';
-  //         }
-  //       }
-  //     }
-  //     if (workHtml === ''){
-  //       workHtml = '<p style="font-size:10pt">not specified</p>';
-  //     }
-  //     this.events[l].workHtml = workHtml;
-  //   }
-  // }
-
-  // buildTalents(){
-  //   for (let l = 0; l < this.events.length; l++){
-  //     let talentHtml = '';
-  //     for (let i = 0; i < this.events[l].voTalentTypes.length; i++) {
-  //       if (this.events[l].voTalentTypes[i] !== ''){
-  //         if (this.events[l].voTalentTypes[i] !== 'other'){
-  //           talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypes[i] + '</p>';
-  //         } else {
-  //           talentHtml = talentHtml + '<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">' + this.events[l].voTalentTypeOther + '</p>';
-  //         }
-  //       }
-  //     }
-  //     if (talentHtml === ''){
-  //       talentHtml = '<p style="font-size:10pt">not specified</p>';
-  //     }
-  //     this.events[l].talentHtml = talentHtml;
-  //   }
-  // }
-
-  buildVolunteerPTag(objectSelector, objectSelectorOther, elementId){
-    let returnHtml = '';
-    for (let i = 0; i < this.user[objectSelector].length; i++) {
-      if (this.user[objectSelector][i] !== ''){
-        if (this.user[objectSelector][i] !== 'other'){
-          returnHtml = returnHtml + '<p style="font-size:10pt">' + this.user[objectSelector][i] + '</p>';
-        } else {
-          returnHtml = returnHtml + '<p style="font-size:10pt">' + this.user[objectSelectorOther] + '</p>';
-        }
-      }
-    }
-    if (returnHtml === ''){
-      returnHtml = '<p style="font-size:10pt">not specified</p>';
-    }
-    document.getElementById(elementId).innerHTML = returnHtml;
-  }
-
   async signupEvent(thisevent){
-    //doublecheck that someone else has not already signedup to hit the max volunteers needed
-    this.doubleCheckSignups = true;
-    await this.checkScheduled();
-    if (!this.canSignup){
-      return;
+    let result =  await this.doubleCheckSignups(thisevent);
+    if (this.canSignup){
+      thisevent.voPeopleScheduled.push(this.uid);
+      this.app.updateById('/volopp/', thisevent._id, thisevent, null);
+      await this.fetchAllEvents();
+      this.checkScheduled();
+      this.app.router.navigate('dashboard');
+      return thisevent;
     }
-    this.signup.voloppId = thisevent._id;
-    this.signup.userId = this.uid;
-    this.signup.numPeople = 1;
-    this.signup.groupName = '';
-    await this.app.httpClient.fetch('/signup/create', {
-      method: 'post',
-      body: json(this.signup)
-    })
-      .then((data) => {
-        console.log(data);
-        //this.showtable = false;
-        this.activate();
-      });
+    return result;
   }
 
-  async cancelSignup(eId){
-    await fetch;
-    this.app.httpClient.fetch('/signup/' + eId, {
-      method: 'delete'
-    })
-      .then((data) => {
-        console.log('no longer volunteering for that event');
-        //this.showtable = false;
-        this.activate();
-      });
+  async cancelSignup(thisevent){
+    thisevent.voPeopleScheduled = thisevent.voPeopleScheduled.filter((e) => e !== this.uid);
+    await this.app.updateById('/volopp/', thisevent._id, thisevent, null);
+    this.app.router.navigate('dashboard');
+  }
+
+  doubleCheckSignups(thisevent){
+    console.log('double checking...');
+    //get this event, check if start date is in past, check if max signups are already reached
+    return this.app.httpClient.fetch('/volopp/get/' + thisevent._id)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.voStartDate){
+        let today = new Date();
+        today = formatDate(today);
+        let testDate = data.voStartDate.replace('-', '');
+        testDate = testDate.replace('-', '');
+        if (testDate < today){
+          alert('this event has already started');
+          this.canSignup = false;
+        }
+      }
+      if (data.voPeopleScheduled){
+        if (data.voPeopleScheduled.length >= data.voNumPeopleNeeded){
+          console.log(data.voPeopleScheduled.length);
+          alert('this event has already reached max volunteers needed');
+          this.canSignup = false;
+        }
+      }
+      //let user = data;
+    }).catch((error) => {
+      this.canSignup = false;
+      console.log('inside volunteer module with error');
+      console.log(error);
+      return error;
+    });
+  }
+  selectPickChange(type){
+    this.showButton();
+    if (type === 'causes'){
+      this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
+      this.selectedCauses = this.selectedCauses.filter((e) => e !== '');
+    }
+    if (type === 'work'){
+      this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
+      this.selectedWorks = this.selectedWorks.filter((e) => e !== '');
+    }
+    if (type === 'talents'){
+      console.log('you picked talents');
+      this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
+      this.selectedTalents = this.selectedTalents.filter((e) => e !== '');
+    }
+    if (this.selectedCauses.length === 0){
+      this.hideCheckBoxes('selectCauses');
+    }
+    if (this.selectedTalents.length === 0){
+      this.hideCheckBoxes('selectTalents');
+    }
+    if (this.selectedWorks.length === 0){
+      this.hideCheckBoxes('selectWork');
+    }
+  }
+
+  hideCheckBoxes(id){
+    let checkboxes = document.getElementById(id);
+    if (checkboxes.style.display === 'block') {
+      checkboxes.style.display = 'none';
+    }
+  }
+
+  setupVolunteerUser(){
+    this.changeCauses(this.allCauses, this.user.volCauses, this.selectedCauses);
+    this.selectedCauses = this.selectedCauses.filter((e) => e !== '');
+    this.changeCauses(this.allTalents, this.user.volTalents, this.selectedTalents);
+    this.selectedTalents = this.selectedTalents.filter((e) => e !== '');
+    this.changeCauses(this.allWorks, this.user.volWorkPrefs, this.selectedWorks);
+    this.selectedWorks = this.selectedWorks.filter((e) => e !== '');
+    if (this.selectedWorks.includes('other')){
+      this.workOther = true;
+    } else {
+      this.workOther = false;
+    }
+    if (this.selectedTalents.includes('other')){
+      this.talentOther = true;
+    } else {
+      this.talentOther = false;
+    }
+    if (this.selectedCauses.includes('other')){
+      this.causeOther = true;
+    } else {
+      this.causeOther = false;
+    }
+    if (this.selectedCauses.length > 0){
+      console.log('I have selected a cause');
+      let causesSelector = document.getElementById('causesSelector');
+      console.log(causesSelector);
+      causesSelector.click();
+    }
+    if (this.selectedTalents.length > 0){
+      console.log('I have selected a talent');
+      let talentsSelector = document.getElementById('talentsSelector');
+      console.log(talentsSelector);
+      talentsSelector.click();
+    }
+    if (this.selectedWorks.length > 0){
+      console.log('I have selected a work pref');
+      let worksSelector = document.getElementById('worksSelector');
+      //console.log(causesSelector);
+      worksSelector.click();
+    }
+  }
+
+  changeCauses(item, vol, container) {
+    item.sort();
+    item.push('other');
+    for (let i of item) {
+      if (vol.includes(i)) {
+        container.push(i);
+      } else {
+        container.push('');
+      }
+    }
+  }
+
+  async updateUser(){
+    await this.app.updateById('/user/', this.uid, this.user, null);
+    this.afterUpdateUser();
+  }
+
+  afterUpdateUser(){
+    this.app.appState.setUser(this.user);
+    this.app.appState.checkUserRole();
+    this.app.router.navigate('dashboard');
+  }
+
+  showButton(){
+    console.log('show button!');
+    document.getElementById('updateUserButton').style.display = 'block';
   }
 
   attached(){
-    this.buildVolunteerPTag('volCauses', 'volCauseOther', 'causes');
-    this.buildVolunteerPTag('volTalents', 'volTalentOther', 'talents');
-    this.buildVolunteerPTag('volWorkPrefs', 'volWorkOther', 'works');
+    document.getElementById('distanceInput').addEventListener('keydown', this.showButton);
+    // this.buildVolunteerPTag('volCauses', 'volCauseOther', 'causes');
+    // this.buildVolunteerPTag('volTalents', 'volTalentOther', 'talents');
+    // this.buildVolunteerPTag('volWorkPrefs', 'volWorkOther', 'works');
+    this.setupVolunteerUser();
   }
 }

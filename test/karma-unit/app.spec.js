@@ -62,6 +62,16 @@ describe('the App module', () => {
     done();
   });
 
+  it('updates by id', testAsync(async function(){
+    //let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+    let afterF = function(){console.log('howdy');};
+    await app1.updateById('/volopp/', '123', {}, afterF);
+    //console.log('this is the response');
+    //console.log(response);
+    //expect(app1.router).toBeDefined;
+    //done();
+  }));
+
   it('should find a user when authenticated', (done) => {
     //let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
     app1.checkUser();
