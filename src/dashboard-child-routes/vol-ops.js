@@ -27,6 +27,7 @@ export class VolunteerOpps {
     this.events = [];
   }
   async activate(){
+    this.counter = 1;
     this.canSubmit2 = false;
     this.showVolunteers = false;
     this.uid = this.app.auth.getTokenPayload().sub;
@@ -239,16 +240,17 @@ export class VolunteerOpps {
   updateCanSubmit2(validationResults) {
     let valid = true;
     //console.log('Running updateCanSubmit2');
-    let createButton = document.getElementById('scheduleEvent');
-    let updateButton = document.getElementById('updateScheduleEvent');
-    if (createButton !== null){
-      createButton.style.display = 'none';
-    }
-    if (updateButton !== null){
-      updateButton.style.display = 'none';
-    }
+    let nub = document.getElementsByClassName('updateButton')[0];
+    nub.style.display = 'none';
+    // let updateButton = document.getElementById('updateScheduleEvent');
+    // if (createButton !== null){
+    //   createButton.style.display = 'none';
+    // }
+    // if (updateButton !== null){
+    //   updateButton.style.display = 'none';
+    // }
     /* istanbul ignore else */
-    if (createButton !== null || updateButton !== null) {
+    if (nub) {
       for (let result of validationResults) {
         if (result.valid === false){
           //nub.style.display = 'none';
@@ -258,12 +260,14 @@ export class VolunteerOpps {
       }
       this.canSubmit2 = valid;
       if (this.canSubmit2){
-        if (this.newEvent === false && updateButton !== null){
-          updateButton.style.display = 'block';
-        } else {
-          createButton.style.display = 'block';
+        // if (this.newEvent === false && updateButton !== null){
+        //   updateButton.style.display = 'block';
+        // } else {
+        //   createButton.style.display = 'block';
+        if (this.counter !== 1 || !this.updateEvent){
+          nub.style.display = 'block';
         }
-        //nub.style.display = 'block';
+        this.counter ++;
       }
       return this.canSubmit2;
     }
