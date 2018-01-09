@@ -27,6 +27,7 @@ export class VolunteerOpps {
     this.events = [];
   }
   async activate(){
+    this.counter = 1;
     this.canSubmit2 = false;
     this.showVolunteers = false;
     this.uid = this.app.auth.getTokenPayload().sub;
@@ -36,8 +37,6 @@ export class VolunteerOpps {
     this.charityID = currentUrl.substring(currentUrl.indexOf('vol-ops/') + 8);
     let res = await this.app.httpClient.fetch('/volopp/' + this.charityID);
     this.events = await res.json();
-    //let res2 = await this.app.httpClient.fetch('/signup/getall');
-    //this.signups = await res2.json();
     await this.makeDataTable();
   }
 
@@ -62,26 +61,6 @@ export class VolunteerOpps {
     this.minEndDate = this.today;
     this.maxStartDate = '';
   }
-
-  // async checkOhafUsers(){
-  //   for (let i = 0; i < allSignups.length; i++){
-  //     try {
-  //       await this.app.httpClient.fetch('/user/' + allSignups[i].userId);
-  //     } catch (err) {
-  //       await this.removeSignup(allSignups[i].userId);
-  //     }
-  //   }
-  // }
-
-  // async removeSignup(userid){
-  //   await fetch;
-  //   this.app.httpClient.fetch('/signup/remove/' + userid, {
-  //     method: 'delete'
-  //   })
-  //   .then((data) => {
-  //     //console.log('removed signup attached to a nonexisting user');
-  //   });
-  // }
 
   async checkScheduled(){
     for (let i = 0; i < this.events.length; i++){
@@ -123,34 +102,6 @@ export class VolunteerOpps {
     // }
   }
 
-  // formatDate(today){
-  //   console.log(today);
-  //   let mm = today.getMonth() + 1; // getMonth() is zero-based
-  //   let dd = today.getDate();
-  //   today = [today.getFullYear(),
-  //     (mm > 9 ? '' : '0') + mm,
-  //     (dd > 9 ? '' : '0') + dd].join('');
-  //   return today;
-  // }
-
-  // markPast() {
-  //   let testDate;
-  //   let today = new Date();
-  //   today = formatDate(today);
-  //   for (let i = 0; i < this.events.length; i++){
-  //     if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
-  //       this.events[i].voStartDate = today;
-  //     }
-  //     testDate = this.events[i].voStartDate.replace('-', '');
-  //     testDate = testDate.replace('-', '');
-  //     if (testDate <= today){
-  //       this.events[i].past = true;
-  //     } else {
-  //       this.events[i].past = false;
-  //     }
-  //   }
-  // }
-
   selectDate(dtype){
     if (dtype === 'start-date'){
       this.minEndDate = this.voOpp.voStartDate;
@@ -181,13 +132,12 @@ export class VolunteerOpps {
 
   scheduleEvent(){
     this.voOpp.voStatus = 'new';
-    //console.log(this.voOpp);
     this.app.httpClient.fetch('/volopp/create', {
       method: 'post',
       body: json(this.voOpp)
     })
     .then((data) => {
-      //console.log(data);
+      this.voOpp = {};
       document.getElementById('eventHeader').scrollIntoView();
       this.activate();
     });
@@ -196,13 +146,18 @@ export class VolunteerOpps {
   showUpdateEvent(thisEvent, type){
     if (type === 'update'){
       this.newEvent = false;
-      this.canSubmit2 = true;
+      this.canSubmit2 = false;
       document.getElementById('topSection').style.display = 'none';
       this.voOpp = thisEvent;
     }
     this.app.selectPickedChange(this.voOpp, this, 'voTalentTypes', 'voTalentTypeOther', 'talentOther');
     this.app.selectPickedChange(this.voOpp, this, 'voWorkTypes', 'voWorkTypeOther', 'workOther');
-    //this.setupValidation2();
+    //this.updateCanSubmit2([{result: {valid: false}}]);
+    let nub = document.getElementById('updateScheduleEvent');
+    if (nub !== null){
+      nub.style.display = 'none';
+    }
+    this.setupValidation2();
   }
 
   showNewEvent(){
@@ -286,18 +241,33 @@ export class VolunteerOpps {
     let valid = true;
     //console.log('Running updateCanSubmit2');
     let nub = document.getElementsByClassName('updateButton')[0];
+    nub.style.display = 'none';
+    // let updateButton = document.getElementById('updateScheduleEvent');
+    // if (createButton !== null){
+    //   createButton.style.display = 'none';
+    // }
+    // if (updateButton !== null){
+    //   updateButton.style.display = 'none';
+    // }
     /* istanbul ignore else */
     if (nub) {
       for (let result of validationResults) {
         if (result.valid === false){
-          nub.style.display = 'none';
+          //nub.style.display = 'none';
           valid = false;
           break;
         }
       }
       this.canSubmit2 = valid;
       if (this.canSubmit2){
-        nub.style.display = 'block';
+        // if (this.newEvent === false && updateButton !== null){
+        //   updateButton.style.display = 'block';
+        // } else {
+        //   createButton.style.display = 'block';
+        if (this.counter !== 1 || !this.updateEvent){
+          nub.style.display = 'block';
+        }
+        this.counter ++;
       }
       return this.canSubmit2;
     }
