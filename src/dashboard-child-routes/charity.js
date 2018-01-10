@@ -130,6 +130,7 @@ export class Charity {
 
   setupValidation2() {
     ValidationRules
+    .ensure('charityTypes').required().minLength(1).withMessage('charity type is required')
     .ensure('charityPhoneNumber').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
     .ensure('charityName').required().maxLength(40).withMessage('Charity name please')
     .ensure('charityEmail').email()
