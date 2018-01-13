@@ -194,6 +194,7 @@ describe('the Charity Module', () => {
 
   it('detects when the charity type is changed in the update form', (done) => {
     charity.activate();
+    charity.controller2 = {errors: []};
     charity.updateCharity = {
       'charityName': 'test charity',
       'charityCity': '',
@@ -281,6 +282,7 @@ describe('the Charity Module', () => {
 
   it('displays the submit button when a type has been selected and the rest of the form is valid', (done) => {
     charity2.activate();
+    charity2.controller2 = {errors: []};
     charity2.updateCharity = {
       'charityTypes': [ 'Christian', 'Homeless']
     };
@@ -321,6 +323,7 @@ describe('the Charity Module', () => {
   });
 
   it('validate2', (done) => {
+    charity.controller2 = {errors: []};
     charity.updateCharity = {charityTypes: ['Hunger', 'other'], charityName: 'okay'};
     charity.validate2();
     done();
