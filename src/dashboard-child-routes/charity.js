@@ -16,6 +16,7 @@ export class Charity {
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit2 = false;
     this.validType2 = false;
+    this.charityTypeValid = false;
   }
 
   async activate(){
@@ -106,6 +107,13 @@ export class Charity {
     }
   }
 
+  openCheckboxAndValidate(e) {
+    let open = this.app.showCheckboxes(e);
+    if (open === false) {
+      this.validate2();
+    }
+  }
+
   updateTypePicked(){
     this.validType2 = false;
     let nub = document.getElementsByClassName('updateButton')[0];
@@ -119,7 +127,7 @@ export class Charity {
       }
     }
     this.validate2();
-    console.log('the charity types picked are: ' + this.updateCharity.charityTypes);
+    //console.log('the charity types picked are: ' + this.updateCharity.charityTypes);
     if (this.updateCharity.charityTypes.includes('other')){
       this.typeOther = true;
     } else {
@@ -142,7 +150,13 @@ export class Charity {
   }
 
   validate2() {
-    return this.validator2.validateObject(this.updateCharity);
+    if (this.updateCharity.charityTypes.join(',') === '' && !this.charityTypeValid) {
+      this.controller2.errors.push({ id: '_charityType', message: 'Charity Type is required', valid: false, __observer__: {} });
+      this.charityTypeValid = true;
+    } else if (this.updateCharity.charityTypes.join(',') !== '') {
+      this.controller2.errors = [...this.controller2.errors.filter( (x) => x.id !== '_charityType')];
+      this.charityTypeValid = false;
+    }
   }
 
   updateCanSubmit2(validationResults) {
