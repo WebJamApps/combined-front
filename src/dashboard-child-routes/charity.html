@@ -53,7 +53,7 @@
           <h4 if.bind = "!update" class="material-header-h4">Create a New Charity</h4>
           <form>
             <div class="multiselect" style="width:200px; margin-top:30px">
-              <div class="selectBox" click.delegate="app.showCheckboxes('typesUpdate')">
+              <div class="selectBox" click.delegate="openCheckboxAndValidate('typesUpdate')">
                 <select>
                   <option style="font-weight:normal">Type of Charity (required)</option>
                 </select>
@@ -62,7 +62,7 @@
               <div class="checkboxes-div" id="typesUpdate" horizontal-align="right" vertical-align="top" style="position:relative;margin-top:0">
                 <div class="dropdown-content">
                   <label class="checkboxes-label" repeat.for="type of types" for="${type}">
-                    <input class="checkboxes-input" type="checkbox" value.bind="type" id.bind="type" checked.bind="updateCharity.charityTypes & validate:controller2" change.delegate="updateTypePicked()"> ${type}
+                    <input class="checkboxes-input" type="checkbox" value.bind="type" id.bind="type" checked.bind="updateCharity.charityTypes" change.delegate="updateTypePicked()"> ${type}
                   </label>
                 </div>
               </div>
