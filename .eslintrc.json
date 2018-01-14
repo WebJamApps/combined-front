@@ -9,7 +9,7 @@
     "no-empty": [0, "never"],
       "new-cap": [0, "never"],
     "arrow-spacing": ["error", { "before": true, "after": true }],
-    "arrow-parens": ["error", "always"]
-
+    "arrow-parens": ["error", "always"],
+    "no-else-return": [0, "never"]
   }
 }

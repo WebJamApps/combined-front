@@ -282,9 +282,11 @@ export class App {
     if (checkboxes.style.display === 'block') {
       checkboxes.style.display = 'none';
       //this.expanded = true;
+      return false;
     } else {
       checkboxes.style.display = 'block';
       //this.expanded = false;
+      return true;
     }
   }
 
