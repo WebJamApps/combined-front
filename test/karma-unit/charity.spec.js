@@ -194,13 +194,14 @@ describe('the Charity Module', () => {
 
   it('detects when the charity type is changed in the update form', (done) => {
     charity.activate();
-    charity.controller2 = {errors: []};
+    charity.controller2 = {errors: [{_id: 123}]};
+    charity.charityTypeValid = false;
     charity.updateCharity = {
       'charityName': 'test charity',
       'charityCity': '',
       'charityState': '',
       'charityZipCode': '',
-      'charityTypes': ['other'],
+      'charityTypes': [],
       'charityManagers': [],
       'charityMngIds': [],
       'charityTypeOther': '',
@@ -214,7 +215,7 @@ describe('the Charity Module', () => {
       'charityCity': '',
       'charityState': '',
       'charityZipCode': '',
-      'charityTypes': ['Christian'],
+      'charityTypes': ['Christian', 'other'],
       'charityManagers': [],
       'charityMngIds': [],
       'charityTypeOther': '',
@@ -236,9 +237,9 @@ describe('the Charity Module', () => {
   it('it does not try to display the submit or update button if it does not exist', (done) => {
     charity.activate();
     charity.validType2 = true;
-    document.body.innerHTML = '<button class="blah"></button>';
+    document.body.innerHTML = '<button class="updateButton"></button>';
     let validationResults = [{
-      result: {valid: true}}];
+      result: {valid: false}}];
     charity.updateCanSubmit2(validationResults);
     done();
   });
@@ -353,6 +354,15 @@ describe('the Charity Module', () => {
   it('removes manager', (done) => {
     charity.user = {name: 'Dev Patel'};
     charity.removeManager(updatedCharity);
+    done();
+  });
+
+  it('should open checkbox', (done) => {
+    document.getElementsByTagName('body')[0].innerHTML = '<div id="typesUpdate"></div>';
+    charity.openCheckboxAndValidate('typesUpdate');
+    let el = document.getElementById('typesUpdate');
+    el.style.display = 'none';
+    charity.openCheckboxAndValidate('typesUpdate');
     done();
   });
 });
