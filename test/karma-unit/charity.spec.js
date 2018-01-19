@@ -88,6 +88,7 @@ describe('the Charity Module', () => {
     app2.activate();
     charity = new Charity(app, vc, val);
     charity.app.appState = new AppStateStub();
+    charity.validator2.cb([]);
     charity2 = new Charity(app2, vc, val);
     charity2.app.appState = new AppStateStub();
   });
@@ -228,8 +229,7 @@ describe('the Charity Module', () => {
   it('it displays the submit or update button on the form if the form is valid', (done) => {
     charity.activate();
     charity.validType2 = true;
-    let validationResults = [{
-      result: {valid: true}}];
+    let validationResults = [{valid: true}];
     charity.updateCanSubmit2(validationResults);
     done();
   });
@@ -238,8 +238,8 @@ describe('the Charity Module', () => {
     charity.activate();
     charity.validType2 = true;
     document.body.innerHTML = '<button class="updateButton"></button>';
-    let validationResults = [{
-      result: {valid: false}}];
+    let validationResults = [{valid: false}, {valid: true}, {valid: false}];
+    // let validationResults = [];
     charity.updateCanSubmit2(validationResults);
     done();
   });
@@ -358,10 +358,11 @@ describe('the Charity Module', () => {
   });
 
   it('should open checkbox', (done) => {
-    document.getElementsByTagName('body')[0].innerHTML = '<div id="typesUpdate"></div>';
-    charity.openCheckboxAndValidate('typesUpdate');
+    document.body.innerHTML = '<div id="typesUpdate"></div>';
     let el = document.getElementById('typesUpdate');
-    el.style.display = 'none';
+    el.style.display = 'block';
+    charity.updateCharity = {charityTypes: ['other']};
+    charity.controller2 = {errors: []};
     charity.openCheckboxAndValidate('typesUpdate');
     done();
   });
