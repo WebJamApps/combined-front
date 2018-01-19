@@ -88,9 +88,13 @@ describe('the Charity Module', () => {
     app2.activate();
     charity = new Charity(app, vc, val);
     charity.app.appState = new AppStateStub();
-    charity.validator2.cb([]);
     charity2 = new Charity(app2, vc, val);
     charity2.app.appState = new AppStateStub();
+  });
+
+  it('should call submit callback', (done) => {
+    charity.validator2.cb([]);
+    done();
   });
 
   it('displays the checkboxes inside a select box', (done) => {
