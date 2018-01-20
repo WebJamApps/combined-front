@@ -2,7 +2,9 @@
 
 import config from './authConfig';
 import 'font-awesome/css/font-awesome.css';
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap-reboot.min.css';
+// import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import '../static/styles.css';
 import * as Bluebird from 'bluebird';
 import 'babel-polyfill';

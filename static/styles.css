@@ -458,7 +458,7 @@ audio::-webkit-media-controls-panel {
 .mobile-menu-toggle {
   position: fixed;
   top: 32px;
-  right: 14px;
+  right: 16px;
   background-color: #2a222a;
   color: white;
   padding: 6px;
@@ -467,17 +467,6 @@ audio::-webkit-media-controls-panel {
 
 .multiselect {
   width: 100px;
-}
-
-.nav-link {
-  display: block !important;
-  color: #23527c;
-  outline: none !important;
-}
-
-.nav-item {
-  padding-right: 0;
-  margin-right: 0;
 }
 
 .newUserForm {
@@ -497,7 +486,7 @@ audio::-webkit-media-controls-panel {
 .ohaf-header-image {
   width: 85px;
   left: 2px;
-  margin-top: -62px;
+  margin-top: -10px;
 }
 
 .ohaf-menu-toggle {
@@ -633,4 +622,18 @@ audio::-webkit-media-controls-panel {
     opacity: 1;
     transform: none;
   }
+}
+
+.nav-link {
+  padding-left: 0;
+  display: block !important;
+  color: #23527c;
+  outline: none !important;
+}
+
+.nav-item {
+  color: #23527c;
+  text-decoration: underline;
+  padding-right: 0;
+  margin-right: 0;
 }

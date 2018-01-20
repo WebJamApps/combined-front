@@ -22,7 +22,7 @@
           </div>
           <div class="menu-item" if.bind="!authenticated && Menu === 'ohaf'">
             <a paper-drawer-toggle click.delegate="(close() || 1) && ohafLogin()" class="nav-link">
-              <span class="fa fa-sign-in"></span>
+              <span class="fa fa-sign-in nav-item" style="text-decoration:none"></span>
               <span if.bind="fullmenu" class="nav-item">Login</span>
             </a>
           </div>
@@ -147,7 +147,7 @@
           </div>
 
           <div id="ohaflogo" if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'" class="headercontent" style="top:-23px; left:3px">
-            <img src="${currentStyles.headerImagePath}" class="${currentStyles.headerImageClass}" style="margin-top:0">
+            <img src="${currentStyles.headerImagePath}" class="${currentStyles.headerImageClass}">
           </div>
           <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:5px; height:50px"
           if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'">
@@ -156,7 +156,7 @@
           </h3>
         </div>
 
-        <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:8px; height:81px; padding-left:2px"
+        <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:7px; height:81px; padding-left:2px"
         if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
         <h3 class="header-text" style="margin-top:0">
           ${currentStyles.headerText1}
