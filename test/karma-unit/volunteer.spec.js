@@ -480,15 +480,15 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  // it('should format the date of January 1, 2017', (done) => {
-  //   let date = new Date();
-  //   date.setMonth(0);
-  //   date.setDate(1);
-  //   date.setFullYear(2017);
-  //   const newDate = volunteer.formatDate(date);
-  //   expect(newDate).toBe('20170101');
-  //   done();
-  // });
+  it('should format the date of January 1, 2017', (done) => {
+    let date = new Date();
+    date.setMonth(0);
+    date.setDate(1);
+    date.setFullYear(2017);
+    const newDate = formatDate(date);
+    expect(newDate).toBe('20170101');
+    done();
+  });
   //
   // it('should format the date of December 12, 2017', (done) => {
   //   let date = new Date();

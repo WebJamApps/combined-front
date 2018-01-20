@@ -24,7 +24,7 @@
     "vulc": "rm -rf static/includes.html && polymer-bundler --inline-scripts --inline-css includes.html > static/includes.html",
     "prod": "npm run vulc && npm start -- build && npm start -- serve",
     "snyk-protect": "snyk protect",
-    "eslint-fix": "./node_modules/eslint/bin/eslint.js --fix .",
+    "eslint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
     "postinstall": "npm run fix:aurelia-val"
   },
