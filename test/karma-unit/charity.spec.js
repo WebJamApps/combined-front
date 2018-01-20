@@ -370,4 +370,23 @@ describe('the Charity Module', () => {
     charity.openCheckboxAndValidate('typesUpdate');
     done();
   });
+  it('should not validate the charity type', (done) => {
+    document.body.innerHTML = '<div id="typesUpdate"></div>';
+    let el = document.getElementById('typesUpdate');
+    el.style.display = 'none';
+    charity.updateCharity = {charityTypes: ['other']};
+    charity.controller2 = {errors: []};
+    charity.openCheckboxAndValidate('typesUpdate');
+    done();
+  });
+  it('does not validate if charity types are selected on initial load', (done) => {
+    document.body.innerHTML = '<div id="typesUpdate"></div>';
+    let el = document.getElementById('typesUpdate');
+    el.style.display = 'none';
+    charity.charityTypeValid = true;
+    charity.updateCharity = {charityTypes: []};
+    //charity.controller2 = {errors: []};
+    charity.validate2();
+    done();
+  });
 });

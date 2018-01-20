@@ -283,11 +283,10 @@ export class App {
       checkboxes.style.display = 'none';
       //this.expanded = true;
       return false;
-    } else {
-      checkboxes.style.display = 'block';
-      //this.expanded = false;
-      return true;
     }
+    checkboxes.style.display = 'block';
+      //this.expanded = false;
+    return true;
   }
 
   buildPTag(object, objectSelector, objectSelectorOther, objectStoreResult){
