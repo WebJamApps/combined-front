@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.8.0
+version: v1.10.1
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   'npm:shelljs:20140723':
@@ -9,6 +9,9 @@ ignore:
     - aurelia-validation > typedoc > shelljs:
         reason: None given
         expires: '2017-07-07T10:34:15.083Z'
+    - jquery > shelljs:
+        reason: None given
+        expires: '2018-02-19T02:24:07.190Z'
   'npm:tough-cookie:20170905':
     - aurelia-pal-nodejs > jsdom > tough-cookie:
         reason: None given
@@ -40,6 +43,14 @@ ignore:
     - pushstate-server > serve-static > send > mime:
         reason: None given
         expires: '2017-12-18T20:09:03.237Z'
+  'npm:content-type-parser:20170905':
+    - aurelia-pal-nodejs > jsdom > content-type-parser:
+        reason: None given
+        expires: '2018-02-19T02:24:07.190Z'
+  'npm:tunnel-agent:20170305':
+    - jquery > npm > request > tunnel-agent:
+        reason: None given
+        expires: '2018-02-19T02:24:07.190Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:marked:20170112':

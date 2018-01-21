@@ -31,7 +31,7 @@
                     <button if.bind="charity.charityMngIds.length > 1" class="button-checkout" raised click.delegate="removeManager(charity)" style="margin-bottom:10px; background-color:darkorange; color:black">
                       Remove
                     </button>
-                    <p><a click.delegate="updateCharityFunction(charity)">Update</a></p>
+                    <p><a class="regularLink" click.delegate="updateCharityFunction(charity)">Update</a></p>
                     <p><a route-href="route: vol-ops; params.bind: {id:charity._id}">Schedule</a></p>
                   </td>
                   <td style="padding:8px" innerhtml.bind="charity.charityName"></td>
@@ -52,7 +52,7 @@
           <h4 if.bind = "update" class="material-header-h4">Update ${charityName}</h4>
           <h4 if.bind = "!update" class="material-header-h4">Create a New Charity</h4>
           <form>
-            <div class="multiselect" style="width:200px; margin-top:30px">
+            <div class="multiselect" style="width:220px; margin-top:30px">
               <div class="selectBox" click.delegate="openCheckboxAndValidate('typesUpdate')">
                 <select>
                   <option style="font-weight:normal">Type of Charity (required)</option>
@@ -87,13 +87,13 @@
             <input value.two-way="updateCharity.charityEmail & validate:controller2">
             <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
               <ul if.bind="controller2.errors">
-                <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red">
+                <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red; width:2in">
                   ${error.message}
                 </li>
               </ul>
             </div>
-            <button if.bind = "update" id="updateCharityButton" class="updateButton" raised click.trigger="updateCharityFunct()" style="margin-bottom:40px">Update</button>
-            <button if.bind = "update" id="cancelUpdateCharityButton" class="updateButton" raised click.trigger="createNewCharity()" style="margin-bottom:40px">Cancel</button>
+            <button if.bind = "update" id="updateCharityButton" class="updateButton" raised click.trigger="updateCharityFunct()" style="margin-bottom:40px; display:none">Update</button>
+            <button if.bind = "update" id="cancelUpdateCharityButton" class="updateButton" raised click.trigger="activate() && createNewCharity()" style="margin-bottom:40px">Cancel</button>
             <button if.bind = "!update" id="createNewCharityButton" class="updateButton" raised click.trigger="createCharity()" style="display: none; margin-bottom:40px">Submit</button>
             <p>&nbsp;</p>
           </form>

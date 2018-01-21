@@ -2,7 +2,7 @@
   <div class="page-content">
     <div style="width: 4.5in; margin:auto">
       <!-- <h2>${widescreen}</h2> -->
-      <h4 class="ohaf" style="margin-bottom: 20px; text-align:center"><strong>Volunteer Dashboard</strong>
+      <h4 class="ohaf" style="margin-bottom: 20px; text-align:center; margin-top:10px"><strong>Volunteer Dashboard</strong>
         <span style="font-size: 14px; float:right; margin-right: 132px; margin-top: 0">
           <div class="multiselect">
             <div class="selectBox" click.delegate="app.showCheckboxes('checkboxes-iron')">
@@ -72,7 +72,8 @@
                 Cancel
               </button>
               <p if.bind="event.voStatus === 'cancel' && !event.scheduled">This event has been cancelled.</p>
-              <p if.bind="event.past">This event has past</p>
+              <p if.bind="event.past && !event.scheduled">This event has past</p>
+                <p if.bind="event.past && event.scheduled" style="background-color:green">Thank you for your service!</p>
             </td>
             <td style="padding:8px" innerhtml.bind="event.voName"></td>
             <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
@@ -135,7 +136,7 @@
         <div class="multiselect" style="width:170px; margin-top:40px">
           <div id="causesSelector" class="selectBox" click.delegate="app.showCheckboxes('selectCauses')">
             <select>
-              <option style="font-weight:normal">Cause(s) to support</option>
+              <option style="font-weight:normal; font-size:10pt">Cause(s) to support</option>
             </select>
             <div class="overSelect"></div>
           </div>

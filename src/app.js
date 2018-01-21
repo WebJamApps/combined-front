@@ -222,7 +222,7 @@ export class App {
       '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>' +
       '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>' +
       '<span style="color:white; font-size: 9pt; padding-left:18px;">Powered by ' +
-      '<a class="wjllc" target="_blank" onMouseOver="this.style.color=\'gray\'" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
+      '<a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
     }
   }
 
@@ -270,7 +270,11 @@ export class App {
     return result;
   }
 
-  showCheckboxes(id){
+  showCheckboxes(id, forceOpen){
+    let fo = false;
+    if (forceOpen !== null && forceOpen !== undefined){
+      fo = forceOpen;
+    }
     //let checkboxes = null;
     //if (id !== null){
     let checkboxes = document.getElementById(id);
@@ -279,15 +283,14 @@ export class App {
     // }
     //console.log('what is this expanded?');
     //console.log(this.expanded);
-    if (checkboxes.style.display === 'block') {
+    if (checkboxes.style.display === 'block' && !fo) {
       checkboxes.style.display = 'none';
       //this.expanded = true;
       return false;
-    } else {
-      checkboxes.style.display = 'block';
-      //this.expanded = false;
-      return true;
     }
+    checkboxes.style.display = 'block';
+      //this.expanded = false;
+    return true;
   }
 
   buildPTag(object, objectSelector, objectSelectorOther, objectStoreResult){
