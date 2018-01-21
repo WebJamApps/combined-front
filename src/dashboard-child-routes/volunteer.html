@@ -72,7 +72,8 @@
                 Cancel
               </button>
               <p if.bind="event.voStatus === 'cancel' && !event.scheduled">This event has been cancelled.</p>
-              <p if.bind="event.past">This event has past</p>
+              <p if.bind="event.past && !event.scheduled">This event has past</p>
+                <p if.bind="event.past && event.scheduled" style="background-color:green">Thank you for your service!</p>
             </td>
             <td style="padding:8px" innerhtml.bind="event.voName"></td>
             <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
