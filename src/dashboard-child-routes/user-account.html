@@ -43,7 +43,7 @@
       <textarea value.two-way="user.userDetails & validate" rows="5" cols="33"></textarea>
       <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
         <ul if.bind="controller.errors">
-          <li repeat.for="error of controller.errors" style="margin-left:-24px; color:red">
+          <li repeat.for="error of controller.errors" style="margin-left:-24px; color:red; width:2in">
             ${error.message}
           </li>
         </ul>
@@ -56,7 +56,7 @@
     <div if.bind="canDelete" class="elevation2" style="padding:5px;max-width:5in; margin:auto">
       <h4 style="text-align:center;">Delete Your User Account</h4>
       <div style="margin:auto; text-align:center">
-      <button style="width:1in;margin:auto; text-align:center" class="button-lib" raised click.trigger="deleteUser()">
+      <button style="width:1in;margin:auto; text-align:center; font-size:10pt" class="button-lib" raised click.trigger="deleteUser()">
         Delete User
       </button>
     </div>

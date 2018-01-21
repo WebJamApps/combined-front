@@ -150,7 +150,7 @@ describe('the Charity Module', () => {
       'charityTypesHtml': ''
     };
     charity.update = true;
-    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button></div><div id="scheduleCharitySection"></div>';
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="typesUpdate"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button></div><div id="scheduleCharitySection"></div>';
     charity.updateCharityFunction(charity1);
     expect(charity.charityName).toBe('test charity');
     charity.update = false;
@@ -235,6 +235,38 @@ describe('the Charity Module', () => {
     charity.validType2 = true;
     let validationResults = [{valid: true}];
     charity.updateCanSubmit2(validationResults);
+    done();
+  });
+
+  it('displays the create new charity webform with hidden submit button and the charities table', (done) => {
+    charity.activate();
+    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div><button id="createNewCharityButton" style="display:block">Create</button>';
+    //charity.setUpValidation2 = function() {};
+    charity.showUpdateCharity = function() {};
+    charity.createNewCharity();
+    expect(document.getElementById('createNewCharityButton').style.display).toBe('none');
+    expect(document.getElementById('charTable').style.display).toBe('block');
+    done();
+  });
+
+  it('hides the update charity button if it was displayed', (done) => {
+    charity.activate();
+    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection"></div><div><button id="updateCharityButton" style="display:block">Create</button>';
+    charity.setupValidation2 = function() {};
+    charity.update = true;
+    const myCharity = {
+      'charityName': 'test charity',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': ['Christian', 'other'],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': ''
+    };
+    charity.showUpdateCharity(myCharity);
+    expect(document.getElementById('updateCharityButton').style.display).toBe('none');
     done();
   });
 

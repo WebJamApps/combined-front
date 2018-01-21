@@ -86,20 +86,6 @@ h5 {
   font-family: 'PT Sans Caption';
 }
 
-p,
-a {
-  font-family: 'Habibi';
-  font-size: 12pt;
-}
-
-a {
-  text-decoration: underline;
-  text-align: center;
-  cursor: pointer;
-  cursor: hand;
-  border: none !important;
-}
-
 input {
   min-width: 250px;
   padding-left: 5px;
@@ -624,6 +610,39 @@ audio::-webkit-media-controls-panel {
   }
 }
 
+a:not([href]):not([tabindex]) {
+  text-decoration: underline;
+  color: #007bff;
+}
+
+a:not([href]):not([tabindex]):hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+p,
+a {
+  font-family: 'Habibi';
+  font-size: 12pt;
+}
+
+a {
+  text-decoration: underline;
+  text-align: center;
+  cursor: pointer;
+  cursor: hand;
+  border: none !important;
+}
+
+button {
+  cursor: pointer;
+  cursor: hand;
+}
+
+a:hover {
+  color: #0056b3;
+}
+
 .nav-link {
   padding-left: 0;
   display: block !important;
@@ -636,4 +655,12 @@ audio::-webkit-media-controls-panel {
   text-decoration: underline;
   padding-right: 0;
   margin-right: 0;
+}
+
+.regularLink {
+  text-decoration: underline;
+}
+
+.selectBox select {
+  font-weight: normal;
 }
