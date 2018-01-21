@@ -129,10 +129,10 @@
             </a>
           </div>
           <div class="menu-item" if.bind="authenticated">
-            <a paper-drawer-toggle class="nav-link" click.delegate="logout()">
-              <span class="fa fa-sign-out" style="cursor: pointer; cursor: hand;"></span>
+            <a paper-drawer-toggle class="nav-link" click.delegate="logout()" style=" padding-right:4px">
+              <span class="fa fa-sign-out nav-item" style="cursor: pointer; cursor: hand;"></span>
             </a>
-            <span if.bind="fullmenu">&nbsp;</span>
+            <!-- <span if.bind="fullmenu">&nbsp;</span> -->
             <button if.bind="fullmenu" click.delegate="logout()" class="material-content-button">
               Logout
             </button>

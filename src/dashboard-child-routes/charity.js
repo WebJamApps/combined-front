@@ -20,6 +20,7 @@ export class Charity {
   }
 
   async activate(){
+    // this.counter = 1;
     this.update = false;
     this.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
     this.types.sort();
@@ -77,10 +78,12 @@ export class Charity {
   }
 
   updateCharityFunction(charity){
+    //this.counter = 1;
     this.update = true;
     this.canSubmit2 = true;
     this.validType2 = true;
     this.showUpdateCharity(charity);
+    this.openCheckboxAndValidate('typesUpdate', true);
   }
 
   showUpdateCharity(charity){
@@ -102,13 +105,17 @@ export class Charity {
     this.setupValidation2();
     if (this.update === true){
       document.getElementById('updateCharitySection').scrollIntoView();
+      let udb = document.getElementById('updateCharityButton');
+      if (udb !== null && udb !== undefined){
+        udb.style.display = 'none';
+      }
     } else {
       document.getElementById('charityDash').scrollIntoView();
     }
   }
 
-  openCheckboxAndValidate(e) {
-    let open = this.app.showCheckboxes(e);
+  openCheckboxAndValidate(e, forceOpen) {
+    let open = this.app.showCheckboxes(e, forceOpen);
     if (open === false) {
       this.validate2();
     }
