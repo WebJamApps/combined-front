@@ -664,3 +664,7 @@ a:hover {
 .selectBox select {
   font-weight: normal;
 }
+
+.footerIcon:hover {
+  color: white;
+}
