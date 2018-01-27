@@ -215,12 +215,12 @@ export class App {
         footer.style.backgroundColor = '#565656';
         color = '#c09580';
       }
-      footer.innerHTML = '<div style="text-align: center"><span>&nbsp;&nbsp;</span>' +
-      '<a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>' +
-      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>' +
-      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>' +
-      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>' +
-      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>' +
+      footer.innerHTML = '<div style="text-align: center">' +
+      '<a target="_blank" style="color:' + color + '"  href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a><br>' +
       '<span style="color:white; font-size: 9pt; padding-left:18px;">Powered by ' +
       '<a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
     }
