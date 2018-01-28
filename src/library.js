@@ -5,18 +5,18 @@ export class Library {
   @bindable
   columnWidth = '450px';
 
-  slideshow_images = ['../static/imgs/library/books1.jpg',
-                      '../static/imgs/library/books2.jpg',
-                      '../static/imgs/library/books3.jpg'];
+  slideshowImages = ['../static/imgs/library/books1.jpg',
+    '../static/imgs/library/books2.jpg',
+    '../static/imgs/library/books3.jpg'];
 
   constructor(){
     this.slideshow_data = {
-      id : "libslideshow1",
-      slideshow_images: this.slideshow_images
+      id: 'libslideshow1',
+      slideshow_images: this.slideshowImages
     };
     this.slideshow_data2 = {
-      id : "libslideshow",
-      slideshow_images: this.slideshow_images
+      id: 'libslideshow',
+      slideshow_images: this.slideshowImages
     };
   }
 
@@ -26,7 +26,7 @@ export class Library {
 
   attached() {
     setInterval(function(){
-      showSlides(["libslideshow1", "libslideshow"]);
+      showSlides(['libslideshow1', 'libslideshow']);
     }, 5400);
   }
 

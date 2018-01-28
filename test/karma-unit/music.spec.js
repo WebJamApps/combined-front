@@ -14,10 +14,10 @@ describe('the Music module', () => {
     done();
   });
 
-  it('runs showSlides to display the slideshow', (done) => {
-    document.body.innerHTML = '<div id="slideshow"><div></div><div>';
-    music1.attached();
-    music1.showSlides();
-    done();
-  });
+  // it('runs showSlides to display the slideshow', (done) => {
+  //   document.body.innerHTML = '<div id="slideshow"><div></div><div>';
+  //   music1.attached();
+  //   music1.showSlides();
+  //   done();
+  // });
 });
