@@ -29,7 +29,8 @@
     "eslint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
     "postinstall": "npm run fix:aurelia-val",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "jsdom": "11.5.1",
@@ -89,7 +90,7 @@
     "popper.js": "^1.12.9",
     "postcss": "^6.0.14",
     "postcss-loader": "^2.0.6",
-    "snyk": "^1.69.1",
+    "snyk": "^1.69.3",
     "style-loader": "^0.18.2",
     "url-loader": "^0.6.2",
     "wait-on": "^2.0.2",
