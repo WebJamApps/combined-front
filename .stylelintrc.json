@@ -3,6 +3,7 @@
   "extends": "stylelint-config-standard",
   "rules": {
     "no-eol-whitespace": null,
+    "color-hex-length": null,
     "rule-empty-line-before": [ "always", {
       "ignore": ["after-comment", "inside-block"]
     } ],
