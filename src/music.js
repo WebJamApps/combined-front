@@ -9,8 +9,8 @@ export class Music {
 
   constructor(){
     this.slideshow_data = {
-      id : "slideshowMusic",
-      slideshow_images : ['../../static/imgs/hiddenValleyTalentShow.png', '../../static/imgs/ourWedding.png', '../../static/imgs/prom2015.png']
+      id: 'slideshowMusic',
+      slideshow_images: ['../../static/imgs/hiddenValleyTalentShow.png', '../../static/imgs/ourWedding.png', '../../static/imgs/prom2015.png']
     };
   }
 
@@ -69,7 +69,7 @@ export class Music {
     //this.slideIndex = 0;
     //$('#slideshow > div:gt(0)').hide();
     setInterval(function(){
-      showSlides(["slideshowMusic"]);
+      showSlides(['slideshowMusic']);
     }, 5400);
   }
 }
