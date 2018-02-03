@@ -13,11 +13,11 @@ class Register_ {
     this.appName = appName;
     const regform = document.createElement('div');
     regform.className = 'RegistrationForm';
-    regform.innerHTML = '<h2 style="margin-top:20px;padding:4px;font-size:1.2em;text-align:center;background:#eee;"><span class="appName"></span>User Registration</h2>' + '<form class=""><div style="padding:2px; margin:10px;"><table><tbody>' +
-    '<tr class="primApSel"><td><label style="display:inline">Primary App </label><select class="pas"><option value=""> </option><option value="PATRIC">PATRIC</option></select></td></tr>' +
+    regform.innerHTML = '<h2 style="margin-top:20px;padding:4px;font-size:1.2em;text-align:center;background:#eee;margin-left:30px"><span class="appName" style="text-align:center"></span>User Registration</h2>' + '<form class=""><div style="padding:2px; margin:10px;"><table style=""><tbody class="regformtbody">' +
+    '<tr class="primApSel" style="height:1px"><td><label class="primapplabel" style="display:none">Primary App </label><select class="pas" style="display:none"><option value=""> </option><option value="PATRIC">PATRIC</option></select></td></tr>' +
     '<tr><th>First Name <span style="color:red">*</span></th><th>Last Name <span style="color:red">*</span></th></tr><tr><td width="50%">' +
-    '<input class="firstname" type="text" name="first_name" style="width:100%;" required>' +
-    '</td><td><input class="lastname" type="text" name="last_name" style="width:100%;" required>' +
+    '<input class="firstname" type="text" name="first_name" style="width:50%;" required>' +
+    '</td><td><input class="lastname" type="text" name="last_name" style="width:50%;" required>' +
     '</td></tr><tr><th colspan="1">Email Address <span style="color:red">*</span></th><th colspan="1">Password <span style="color:red">*</span></th></tr><tr><td colspan="1">' +
     '<input class="email" type="email" name="email" style="width:100%;" required></td>' + '<td><input style="width:100%" class="password" pattern=".{8,}" title="8 characters minimum" type="password" name="password" style="width:100%;" required>' +
     '</td></tr><tr class="userIdRow">' + '<th colspan="2">Userid (optional)</th></tr><tr class="useridinput"><td colspan="2"><div style="width:100%"><input class="userid" type="text" name="userid" value=""></div></td>' + '</tr>' +
