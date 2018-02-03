@@ -159,7 +159,8 @@ tbody.regformtbody td {
 }
 
 div.RegistrationForm {
-  max-width: 90%;
+  /* max-width: 90%; */
+  margin: auto;
 }
 
 audio::-internal-media-controls-download-button {

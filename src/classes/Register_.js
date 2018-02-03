@@ -12,8 +12,8 @@ class Register_ {
     this.patric.nevermind('RegistrationForm');
     this.appName = appName;
     const regform = document.createElement('div');
-    regform.className = 'RegistrationForm';
-    regform.innerHTML = '<h2 style="margin-top:20px;padding:4px;font-size:1.2em;text-align:center;background:#eee;margin-left:30px"><span class="appName" style="text-align:center"></span>User Registration</h2>' + '<form class=""><div style="padding:2px; margin:10px;"><table style=""><tbody class="regformtbody">' +
+    regform.className = 'RegistrationForm elevation2';
+    regform.innerHTML = '<h4 style="margin-top:20px;padding:4px;text-align:center;background:#eee;font-weight:bold"><span class="appName" style="text-align:center"></span>User Registration</h2>' + '<form class=""><div style=""><table style=""><tbody class="regformtbody">' +
     '<tr class="primApSel" style="height:1px"><td><label class="primapplabel" style="display:none">Primary App </label><select class="pas" style="display:none"><option value=""> </option><option value="PATRIC">PATRIC</option></select></td></tr>' +
     '<tr><th>First Name <span style="color:red">*</span></th><th>Last Name <span style="color:red">*</span></th></tr><tr><td width="50%">' +
     '<input class="firstname" type="text" name="first_name" style="width:50%;" required>' +
@@ -21,13 +21,14 @@ class Register_ {
     '</td></tr><tr><th colspan="1">Email Address <span style="color:red">*</span></th><th colspan="1">Password <span style="color:red">*</span></th></tr><tr><td colspan="1">' +
     '<input class="email" type="email" name="email" style="width:100%;" required></td>' + '<td><input style="width:100%" class="password" pattern=".{8,}" title="8 characters minimum" type="password" name="password" style="width:100%;" required>' +
     '</td></tr><tr class="userIdRow">' + '<th colspan="2">Userid (optional)</th></tr><tr class="useridinput"><td colspan="2"><div style="width:100%"><input class="userid" type="text" name="userid" value=""></div></td>' + '</tr>' +
-    '<tr><th colspan="2">Organization</th></tr><tr><td colspan="2"><input style="width:100%" class="organization" type="text" name="affiliation" value=""></td></tr>' +
-    '<tr><th colspan="2">Organisms</th></tr><tr><td colspan="2"><div><input style="width:100%;" class="organisms" type="text" name="organisms" value=""></div></td></tr>' +
-    '<tr><th colspan="2">Interests</th></tr><tr><td colspan="2"><div><textarea style="width:100%;" class="interests" rows="5" cols="50" name="interests" style="height:75px;" value=""></textarea></div></td></tr>' +
-    '</tbody></table><p><span style="color:red">*</span> <i>Indicates required field</i></p></div><div style="text-align:center;padding:2px;margin:10px;">' +
-    '<div class="registererror" style="color:red"></div>' +
-    '<div><button type="button" class="registerbutton" style="display:none; margin-bottom:-22px">Register New User</button>' +
-    '<button class="nevermind" type="button" style="margin-top:2px">Cancel</button></div></div></form>';
+    '<tr><th colspan="2" style="display:none">Organization</th></tr><tr style="display:none"><td colspan="2"><input style="width:100%" class="organization" type="text" name="affiliation" value=""></td></tr>' +
+    '<tr><th colspan="2" style="display:none">Organisms</th></tr><tr style="display:none"><td colspan="2"><div><input style="width:100%;" class="organisms" type="text" name="organisms" value=""></div></td></tr>' +
+    '<tr><th colspan="2" style="display:none">Short Bio</th></tr><tr style="display:none"><td colspan="2"><div style="display:none"><textarea style="width:100%;" class="interests" rows="5" cols="50" name="interests" style="height:75px;" value=""></textarea></div></td></tr>' +
+    '<tr><td><p"><span style="color:red">*</span> <i>Required field</i></p></td>' +
+    '<td style="vertical-align:top"><button type="button" class="registerbutton" style="display:none; margin-bottom:-22px; margin-left:76px">Register</button></td></tr></tbody></table></div><div style="text-align:center;margin-top:-20px">' +
+    '<div class="registererror" style="color:red; margin:0; padding:6px; text-align:left"></div>' +
+    '<div style="min-height:60px; text-align:left">' +
+    '<button class="nevermind" type="button" style="margin-top:10px">Cancel</button></div></div></form>';
     const home = document.getElementsByClassName('home');
     home[0].insertBefore(regform, home[0].childNodes[0]);
     document.getElementsByClassName('appName')[0].innerHTML = appName + ' ';
@@ -151,13 +152,13 @@ class Register_ {
       registbutton.style.display = 'none';
     }
     if (googleAccount) {
-      regError.innerHTML = '<p>Please scroll up and click the Login with Google button</p>';
+      regError.innerHTML = '<p>The email address you entered indicates that you already have a Google account. To use this email address with our apps, please click <a><strong>Login with Google</strong></a></p>';
     } else if (nameError) {
       regError.innerHTML = '<p>Name format is not valid</p>';
     } else if (emError) {
       regError.innerHTML = '<p>Email format is not valid</p>';
     } else if (pwError) {
-      regError.innerHTML = '<p>Password format is not valid</p>';
+      regError.innerHTML = '<p>Password must be minimum 8 characters</p>';
     } else {regError.innerHTML = '';}
   }
 
