@@ -145,11 +145,6 @@ class Register_ {
     }
     if (googleAccount) {
       regError.innerHTML = '<p>The email address entered indicates that you already have a Google account. Please click the above <strong>Register with Google</strong> button.</p>';
-      //let regformform = document.getElementsByClassName('regformform');
-      // console.log(regformform);
-      // regformform[0].style.display = 'none';
-      // regformform[1].style.display = 'none';
-      // regformform[2].style.display = 'none';
     } else if (nameError) {
       regError.innerHTML = '<p>Name format is not valid</p>';
     } else if (emError) {
@@ -193,11 +188,15 @@ class Register_ {
     .then((response) => response.json())
     .then((data) => {
       if (data.message) {
-        messagediv.innerHTML = '<p style="text-align:left;padding-left:12px">' + data.message + '</p>';
+        messagediv.innerHTML = '<p style="text-align:left;padding-left:12px">' + data.message + ' Click <a>here</a> if you forgot your password.</p>';
       } else {
         document.getElementsByClassName('RegistrationForm')[0].style.display = 'none';
         if (data.email) {
-          window.location.href = process.env.FrontendUrl + '/userutil/?email=' + data.email;
+          console.log('howdy');
+          let front = window.location.href;
+          front = front.replace('/register', '');
+          console.log(front);
+          window.location.assign(front + '/userutil?email=' + data.email);
         }
       }
     })
