@@ -20,6 +20,12 @@
               <span if.bind="fullmenu" class="nav-item">Login</span>
             </a>
           </div>
+          <div class="menu-item" if.bind="!authenticated">
+            <a paper-drawer-toggle href="/register" class="nav-link" click.delegate="(close() || 1)">
+              <span class="fa fa-user-plus"></span>
+              <span if.bind="fullmenu" class="nav-item">Register</span>
+            </a>
+          </div>
           <div class="menu-item" if.bind="!authenticated && Menu === 'ohaf'">
             <a paper-drawer-toggle click.delegate="(close() || 1) && ohafLogin()" class="nav-link">
               <span class="fa fa-sign-in nav-item" style="text-decoration:none"></span>

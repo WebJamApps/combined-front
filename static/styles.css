@@ -87,7 +87,7 @@ h5 {
 }
 
 input {
-  min-width: 250px;
+  min-width: 150px;
   padding-left: 5px;
 }
 
@@ -132,12 +132,35 @@ tbody tr:nth-child(odd) {
   background-color: #d8ecf3;
 }
 
+tbody.regformtbody tr:nth-child(odd) {
+  background-color: white;
+}
+
 th,
 td {
   border-collapse: collapse;
   border: 1px solid #777;
   padding: 8px;
   text-align: left;
+}
+
+tbody.regformtbody td,
+tbody.regformtbody th {
+  border: none;
+}
+
+tbody.regformtbody th {
+  padding-bottom: 0;
+}
+
+tbody.regformtbody td {
+  padding: 10px;
+  padding-top: 4px;
+}
+
+div.RegistrationForm {
+  /* max-width: 90%; */
+  margin: auto;
 }
 
 audio::-internal-media-controls-download-button {
