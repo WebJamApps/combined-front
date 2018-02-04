@@ -18,17 +18,17 @@ class Login_ {
     let useridrow = '<tr class="uidheader"><th style="border:none">Email or Userid</th></tr><tr class="uidinput"><td>' +
     '<input class="userid" name="userid" style="width:300px;" value="" required></tr></td>';
     let loginform = document.createElement('div');
-    loginform.className = 'LoginForm';
+    loginform.className = 'LoginForm elevation2';
     loginform.innerHTML = '<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;"><span class="patric">PATRIC</span>User Login</h2>' +
-    '<form><div style="padding:2px; margin:10px;"><table><tbody>' + useridrow +
-    '<tr><td>&nbsp;</td></tr>' + useremailinput +
-    '<tr><td>&nbsp;</td></tr><tr><th style="border:none">Password</th></tr><tr><td>' +
+    '<form><div style="padding:2px; margin:10px;"><table><tbody class="regformtbody">' + useridrow +
+    '' + useremailinput +
+    '<tr><th style="border:none">Password</th></tr><tr><td>' +
     '<input class="loginpass" pattern=".{8,}" title="8 characters minimum" type="password" name="password" style="width:300px;" value="" required></td></tr>' +
     '</tbody></table></div><div style="text-align:center;padding:2px;margin:10px;">' +
     '<div class="loginerror" style="color:red"></div>' +
-    '<div><button style="display:none; margin-bottom:-22px;" type="button" class="loginbutton">Login</button>' +
-    '<button style="display:none;margin-top:34px" class="resetpass" type="button">Reset Password</button></div></div></form>' +
-    '<button class="nevermind" style="margin-left:12px;margin-top:20px" type="button">Cancel</button></div></div></form>';
+    '<div><button style="display:none; margin-bottom:-22px; margin-left:10px" type="button" class="loginbutton">Login</button>' +
+    '<button style="display:none;margin-top:34px; margin-left:10px" class="resetpass" type="button">Reset Password</button></div></div></form>' +
+    '<button class="nevermind" style="margin-left:86px;margin-top:8px; margin-bottom:15px" type="button">Cancel</button></div></div></form>';
     let home = document.getElementsByClassName('home');
     home[0].insertBefore(loginform, home[0].childNodes[0]);
     // let pArr = ['uidheader', 'uidinput', 'nevermind'];
@@ -149,7 +149,6 @@ class Login_ {
     let fetchClient = evt.target.fetchClient;
     let runFetch = evt.target.runFetch;
     let appName = evt.target.appName;
-    //let checkIfLoggedIn = evt.target.checkIfLoggedIn;
     let generateSession = evt.target.generateSession;
     let useridValue = '';
     let emailValue = '';
@@ -173,24 +172,28 @@ class Login_ {
   runFetch(fetchClient, url, route, fetchData, generateSession, appName, loginEmail) {
     let loginform1 = document.getElementsByClassName('LoginForm');
     let messagediv = document.getElementsByClassName('loginerror')[0];
-    let feurl = 'http://localhost:7000';
-    /* istanbul ignore if */
-    if (process.env.FrontendUrl !== undefined) {
-      feurl = process.env.FrontendUrl;
-    }
+    //let feurl = 'http://localhost:7000';
+
+    // if (process.env.FrontendUrl !== undefined) {
+    //   feurl = process.env.FrontendUrl;
+    // }
     return fetchClient(url + route, fetchData)
     .then((response) => response.json())
     .then((data) => {
       if (data.token !== undefined) {
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('aurelia_id_token', data.token);
         localStorage.setItem('useremail', data.email);
         //Login.app.auth.setToken(data.token);
-        if (appName === 'PATRIC') {
-          //checkIfLoggedIn();
-          generateSession(data.email);
-        }
+        // if (appName === 'PATRIC') {
+        //   //checkIfLoggedIn();
+        //   generateSession(data.email);
+        // }
         loginform1[0].style.display = 'none';
-        window.location.href = feurl + '/login/?token=true';
+        let front = window.location.href;
+        front = front.replace('/login', '');
+        console.log(front);
+        window.location.assign(front + '/login/?token=true');
+        //window.location.href = feurl + '/login/?token=true';
       }
       if (data.message) {
         messagediv.innerHTML = '<p style="text-align:left; padding-left:12px">' + data.message + '</p>';
@@ -205,23 +208,23 @@ class Login_ {
     });
   }
 
-  generateSession(useremail) {
-    console.log('put some cool code here for session and cookie and storage or something for this user: ' + useremail);
-    let bodyData = {'email': useremail };
-    let fetchData = {
-      method: 'POST',
-      body: JSON.stringify(bodyData),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      }
-    };
-    return this.fetch(process.env.BackendUrl + '/user/', fetchData)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    });
-  }
+  // generateSession(useremail) {
+  //   console.log('put some cool code here for session and cookie and storage or something for this user: ' + useremail);
+  //   let bodyData = {'email': useremail };
+  //   let fetchData = {
+  //     method: 'POST',
+  //     body: JSON.stringify(bodyData),
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer ' + localStorage.getItem('token')
+  //     }
+  //   };
+  //   return this.fetch(process.env.BackendUrl + '/user/', fetchData)
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     console.log(data);
+  //   });
+  // }
 }
 module.exports = Login_;
