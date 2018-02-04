@@ -355,22 +355,22 @@ test('catches any login errors', () => {
   .catch((e) => expect(e).toBeTruthy());
 });
 
-test('Generates a session for PATRIC', () => {
-  const mockfetch = function(url, data) {
-    this.headers = {};
-    this.headers.url = url;
-    this.headers.method = data.method;
-    return Promise.resolve({
-      Headers: this.headers,
-      json: () => Promise.resolve({ message: 'success' })
-    });
-  };
-  reg.fetch = mockfetch;
-  const mockStorage = {getItem: function(item, value) {
-    //do nothing
-  }};
-  window.localStorage = mockStorage;
-  reg.generateSession('joe@smith.com').then((data) => {
-    expect(data.message).toBe('success');
-  });
-});
+// test('Generates a session for PATRIC', () => {
+//   const mockfetch = function(url, data) {
+//     this.headers = {};
+//     this.headers.url = url;
+//     this.headers.method = data.method;
+//     return Promise.resolve({
+//       Headers: this.headers,
+//       json: () => Promise.resolve({ message: 'success' })
+//     });
+//   };
+//   reg.fetch = mockfetch;
+//   const mockStorage = {getItem: function(item, value) {
+//     //do nothing
+//   }};
+//   window.localStorage = mockStorage;
+//   reg.generateSession('joe@smith.com').then((data) => {
+//     expect(data.message).toBe('success');
+//   });
+// });
