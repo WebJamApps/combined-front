@@ -33,6 +33,7 @@
     "prepare": "npm run snyk-protect"
   },
   "dependencies": {
+    "bower": "^1.8.2",
     "au-table": "^0.1.12",
     "aurelia-api": "^3.1.1",
     "aurelia-auth": "^3.0.5",
