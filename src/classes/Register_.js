@@ -28,7 +28,7 @@ class Register_ {
     '<td style="vertical-align:top"><button type="button" class="registerbutton" style="display:none; margin-bottom:-22px; margin-left:76px">Register</button></td></tr></tbody></table></div><div style="text-align:center;margin-top:-20px">' +
     '<div class="registererror" style="color:red; margin:0; padding:6px; text-align:left"></div>' +
     '<div style="min-height:60px; text-align:left" class="regformform">' +
-    '<button class="nevermind" type="button" style="margin-top:0">Cancel</button></div></div></form>';
+    '<button class="resetpass" type="button" style="display:none">Reset Password</button><button class="nevermind" type="button" style="margin-top:8px; margin-bottom:8px">Cancel</button></div></div></form>';
     const home = document.getElementsByClassName('home');
     home[0].insertBefore(regform, home[0].childNodes[0]);
     //document.getElementsByClassName('appName')[0].innerHTML = appName + ' ';
@@ -51,6 +51,11 @@ class Register_ {
     registerEventButton.fetchClient = this.fetch;
     registerEventButton.runFetch = this.runFetch;
     registerEventButton.addEventListener('click', this.createUser);
+    let resetPB = document.getElementsByClassName('resetpass')[0];
+    resetPB.fetchClient = this.fetch;
+    //resetPB.appName = appName;
+    resetPB.runFetch = this.runFetch;
+    resetPB.addEventListener('click', this.resetpass);
     let cancelButton = document.getElementsByClassName('nevermind')[0];
     cancelButton.addEventListener('click', function() {
       document.getElementsByClassName('RegistrationForm')[0].style.display = 'none';
@@ -188,7 +193,8 @@ class Register_ {
     .then((response) => response.json())
     .then((data) => {
       if (data.message) {
-        messagediv.innerHTML = '<p style="text-align:left;padding-left:12px">' + data.message + ' Click <a>here</a> if you forgot your password.</p>';
+        messagediv.innerHTML = '<p style="text-align:left;padding-left:12px; margin-bottom:0">' + data.message + ' Did you forget your password?';
+        document.getElementsByClassName('resetpass')[0].style.display = 'block';
       } else {
         document.getElementsByClassName('RegistrationForm')[0].style.display = 'none';
         if (data.email) {
@@ -196,13 +202,40 @@ class Register_ {
           let front = window.location.href;
           front = front.replace('/register', '');
           console.log(front);
-          window.location.assign(front + '/userutil?email=' + data.email);
+          if (url === process.env.BackendUrl + '/auth/resetpass'){
+            window.location.assign(front + '/userutil/?email=' + data.email + '&form=reset');
+          } else {
+            window.location.assign(front + '/userutil?email=' + data.email);
+          }
         }
       }
     })
     .catch((error) => {
       console.log(error);
     });
+  }
+
+  resetpass(evt) {
+    //let appName = evt.target.appName;
+    let fetchClient = evt.target.fetchClient;
+    let runFetch = evt.target.runFetch;
+    let loginEmail = '';
+    // if (appName !== 'PATRIC') {
+    loginEmail = document.getElementsByClassName('email')[0].value;
+    console.log(loginEmail);
+    // } else {
+    //   loginEmail = document.getElementsByClassName('userid')[0].value;
+    // }
+    let bodyData = {'email': loginEmail };
+    let fetchData = {
+      method: 'PUT',
+      body: JSON.stringify(bodyData),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    };
+    return runFetch(fetchClient, process.env.BackendUrl + '/auth/resetpass', fetchData);
   }
 
   logout() {

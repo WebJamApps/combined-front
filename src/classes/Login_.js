@@ -180,17 +180,12 @@ class Login_ {
     return fetchClient(url + route, fetchData)
     .then((response) => response.json())
     .then((data) => {
+      let front = window.location.href;
+      front = front.replace('/login', '');
       if (data.token !== undefined) {
         localStorage.setItem('aurelia_id_token', data.token);
         localStorage.setItem('useremail', data.email);
-        //Login.app.auth.setToken(data.token);
-        // if (appName === 'PATRIC') {
-        //   //checkIfLoggedIn();
-        //   generateSession(data.email);
-        // }
         loginform1[0].style.display = 'none';
-        let front = window.location.href;
-        front = front.replace('/login', '');
         console.log(front);
         window.location.assign(front + '/login/?token=true');
         //window.location.href = feurl + '/login/?token=true';
@@ -200,7 +195,8 @@ class Login_ {
       }
       if (!data.message && !data.token && data.email) {
         loginform1[0].style.display = 'none';
-        window.location.href = feurl + '/userutil/?email=' + data.email + '&form=reset';
+        window.location.assign(front + '/userutil/?email=' + data.email + '&form=reset');
+        //window.location.href = feurl + '/userutil/?email=' + data.email + '&form=reset';
       }
     })
     .catch((error) => {
@@ -208,23 +204,5 @@ class Login_ {
     });
   }
 
-  // generateSession(useremail) {
-  //   console.log('put some cool code here for session and cookie and storage or something for this user: ' + useremail);
-  //   let bodyData = {'email': useremail };
-  //   let fetchData = {
-  //     method: 'POST',
-  //     body: JSON.stringify(bodyData),
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer ' + localStorage.getItem('token')
-  //     }
-  //   };
-  //   return this.fetch(process.env.BackendUrl + '/user/', fetchData)
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log(data);
-  //   });
-  // }
 }
 module.exports = Login_;
