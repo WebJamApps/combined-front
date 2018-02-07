@@ -180,7 +180,11 @@ audio::-webkit-media-controls-panel {
 #libslideshow1,
 #slideshowMusic,
 #slideshow1,
-#slideshow {
+#slideshow,
+#musicSlide1,
+#musicSlide2,
+#lSlide1,
+#lSlide2 {
   max-width: 1000px;
   position: relative;
   margin: auto;
@@ -190,7 +194,11 @@ audio::-webkit-media-controls-panel {
 #libslideshow1 img,
 #slideshowMusic img,
 #slideshow1 img,
-#slideshow img {
+#slideshow img,
+#musicSlide1 img,
+#musicSlide2 img,
+#lSlide1 img,
+#lSlide2 img {
   width: 100%;
 }
 
@@ -701,4 +709,3 @@ a:hover {
 .mySlides {
   display: none;
 }
-

@@ -10,7 +10,7 @@ export class Music {
   constructor(){
     this.slideshow_data = {
       id: 'slideshowMusic',
-      slideshow_images: ['../../static/imgs/hiddenValleyTalentShow.png', '../../static/imgs/ourWedding.png', '../../static/imgs/prom2015.png']
+      slideshow_images: ['../../static/imgs/prom2015.png', '../../static/imgs/ourWedding.png', '../../static/imgs/hiddenValleyTalentShow.png']
     };
   }
 
@@ -68,7 +68,14 @@ export class Music {
   attached() {
     //this.slideIndex = 0;
     //$('#slideshow > div:gt(0)').hide();
-    setInterval(function(){
+    let musicTimer = setInterval(function(){
+      let ms1 = document.getElementById('musicSlide1');
+      if (ms1 !== null && ms1 !== undefined){
+        ms1.style.display = 'none';
+      } else {
+        console.log('you left the music page');
+        return clearInterval(musicTimer);
+      }
       showSlides(['slideshowMusic']);
     }, 5400);
   }

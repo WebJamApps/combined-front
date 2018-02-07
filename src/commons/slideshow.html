@@ -1,6 +1,6 @@
 <template>
   <div id="${data.id}" style="padding:1px">
-      <div repeat.for="image of data.slideshow_images" style="${$first? 'display:block' : 'display:none'}" class="mySlides" >
+      <div repeat.for="image of data.slideshow_images" class="mySlides" >
         <img src="${image}">
       </div>
     </div>
