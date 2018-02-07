@@ -25,6 +25,9 @@
           </div>
           <!-- The dimensions of the images are 950x300 -->
           <div class="col-md-6" style="padding:1px">
+            <div id="musicSlide1">
+                <img src="../static/imgs/ohaf/slideshow1.png">
+            </div>
             <compose view-model="./commons/slideshow" containerless model.bind="slideshow_data"></compose>
           </div>
         </div>
@@ -63,6 +66,9 @@
     </div>
     <!-- The dimensions of the images are 950x300 -->
     <div if.bind="!widescreen">
+      <div id="musicSlide2">
+          <img src="../static/imgs/ohaf/slideshow1.png">
+      </div>
       <compose view-model="./commons/slideshow" containerless model.bind="slideshow_data2"></compose>
       <h3 class="material-content-h3" style="margin-left:10px">Connecting Volunteers with Charities</h3>
       <p class="material-content-p">Our Hands And Feet (OHAF) helps find the right volunteer positions for you by
