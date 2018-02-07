@@ -82,7 +82,8 @@ export class App {
     config.map([
       { route: 'dashboard', name: 'dashboard-router', moduleId: PLATFORM.moduleName('./dashboard-router'), nav: false, title: '', auth: true, settings: 'fa fa-tachometer'},
       { route: 'login', name: 'login', moduleId: PLATFORM.moduleName('./login'), nav: false, title: 'Login', settings: 'fa fa-sign-in'},
-      //{ route: 'news', name: 'news', moduleId: PLATFORM.moduleName('./news'), nav: true, title: 'News', settings: 'fa fa-file-text-o' },
+      { route: 'register', name: 'register', moduleId: PLATFORM.moduleName('./register'), nav: false, title: 'Register', settings: 'fa fa-user-plus'},
+     { route: 'userutil', name: 'userutil', moduleId: PLATFORM.moduleName('./userutil'), nav: false, title: '' },
       { route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./ohaf-home'), nav: false, title: 'OHAF', settings: 'fa fa-handshake-o' },
       { route: 'sc2rs', name: 'sc2rs', moduleId: PLATFORM.moduleName('./sc2rs'), nav: false, title: 'SC2RS', settings: 'fa fa-microphone' },
       // { route: 'sc2rs', name: 'sc2rs', moduleId: './sc2rs-home', nav: true, title: 'SC2RS', settings: 'fa fa-star-o' },
@@ -132,6 +133,8 @@ export class App {
   logout() {
     this.appState.setUser({});
     this.authenticated = false;
+    window.localStorage.removeItem('useremail');
+    window.localStorage.removeItem('aurelia_id_token');
     if (this.role !== 'Charity' && this.role !== 'Volunteer'){
       this.auth.logout('/')
       .then(() => {
@@ -215,12 +218,12 @@ export class App {
         footer.style.backgroundColor = '#565656';
         color = '#c09580';
       }
-      footer.innerHTML = '<div style="text-align: center"><span>&nbsp;&nbsp;</span>' +
-      '<a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>' +
-      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>' +
-      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>' +
-      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i></a>' +
-      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '" onMouseOver="this.style.color=\'white\'" href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a><br>' +
+      footer.innerHTML = '<div style="text-align: center">' +
+      '<a target="_blank" style="color:' + color + '"  href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a><br>' +
       '<span style="color:white; font-size: 9pt; padding-left:18px;">Powered by ' +
       '<a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
     }

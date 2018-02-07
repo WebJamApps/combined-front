@@ -2,9 +2,18 @@
 // import {App} from './app';
 // import {Router} from 'aurelia-router';
 //import {activationStrategy} from 'aurelia-router';
+import {showSlides} from './commons/utils.js';
 // @inject(App, Router)
 // @inject(App)
 export class Music {
+
+  constructor(){
+    this.slideshow_data = {
+      id: 'slideshowMusic',
+      slideshow_images: ['../../static/imgs/prom2015.png', '../../static/imgs/ourWedding.png', '../../static/imgs/hiddenValleyTalentShow.png']
+    };
+  }
+
   // constructor(app){
   //   //this.auth = authService;
   //   this.app = app;
@@ -27,14 +36,14 @@ export class Music {
     document.getElementById(h).scrollIntoView();
   }
   // slideIndex = 0;
-  showSlides() {
-    $('#slideshowMusic > div:first')
-      .hide()
-      .next()
-      .fadeIn(1500)
-      .end()
-      .appendTo('#slideshowMusic');
-  }
+  // showSlides(id) {
+  //   $('#slideshowMusic > div:first')
+  //     .hide()
+  //     .next()
+  //     .fadeIn(1500)
+  //     .end()
+  //     .appendTo('#slideshowMusic');
+  // }
   // showSlides(){
   //   if (this.slideIndex === undefined){
   //     this.slideIndex = 1;
@@ -59,6 +68,15 @@ export class Music {
   attached() {
     //this.slideIndex = 0;
     //$('#slideshow > div:gt(0)').hide();
-    setInterval(this.showSlides, 5500);
+    let musicTimer = setInterval(function(){
+      let ms1 = document.getElementById('musicSlide1');
+      if (ms1 !== null && ms1 !== undefined){
+        ms1.style.display = 'none';
+      } else {
+        console.log('you left the music page');
+        return clearInterval(musicTimer);
+      }
+      showSlides(['slideshowMusic']);
+    }, 5400);
   }
 }

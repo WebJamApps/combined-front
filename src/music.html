@@ -1,17 +1,10 @@
 <template>
   <div class="page-content">
     <!-- The dimensions of the images are 950x300 -->
-    <div id="slideshowMusic" style="padding:1px">
-      <div style="display:block" class="mySlides">
-        <img src="../static/imgs/hiddenValleyTalentShow.png">
-      </div>
-      <div style="display:none" class="mySlides">
-        <img src="../static/imgs/ourWedding.png">
-      </div>
-      <div style="display:none" class="mySlides">
+    <div id="musicSlide1">
         <img src="../static/imgs/prom2015.png">
-      </div>
     </div>
+    <compose view-model="./commons/slideshow" containerless model.bind="slideshow_data"></compose>
     <div class="material-content elevation2">
       <p style="margin-top:10px;">Josh and Maria were married in July of 2012 and have been singing together
         for even longer. Whether it is at church, at the Rescue Mission, in a public venue or in the

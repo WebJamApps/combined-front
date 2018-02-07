@@ -1,37 +1,55 @@
 // import {Router} from 'aurelia-router';
 // import {inject} from 'aurelia-framework';
+import {showSlides} from './commons/utils.js';
 // @inject(Router)
 export class OhafHome {
   // constructor(router) {
   //   this.router = router;
   // }
+  slideshowImages = [
+    '../static/imgs/ohaf/slideshow2.png',
+    '../static/imgs/ohaf/slideshow3.png',
+    '../static/imgs/ohaf/slideshow4.png',
+    '../static/imgs/ohaf/slideshow5.png',
+    '../static/imgs/ohaf/slideshow6.png',
+    '../static/imgs/ohaf/slideshow7.png',
+    '../static/imgs/ohaf/slideshow8.png',
+    '../static/imgs/ohaf/slideshow9.png',
+    '../static/imgs/ohaf/slideshow10.png',
+    '../static/imgs/ohaf/slideshow11.png',
+    '../static/imgs/ohaf/slideshow12.png', '../static/imgs/ohaf/slideshow1.png'];
+
+  constructor(){
+    this.slideshow_data = {
+      id: 'slideshow1',
+      slideshow_images: this.slideshowImages
+    };
+    this.slideshow_data2 = {
+      id: 'slideshow',
+      slideshow_images: this.slideshowImages
+    };
+  }
 
   get widescreen() {
     return document.documentElement.clientWidth > 1100;
   }
 
-  showSlides() {
-    let slides;
-    slides = document.getElementById('slideshow1');
-    if (slides !== null){
-      $('#slideshow1 > div:first')
-      .hide()
-      .next()
-      .fadeIn(1500)
-      .end()
-      .appendTo('#slideshow1');
-    } else {
-      $('#slideshow > div:first')
-      .hide()
-      .next()
-      .fadeIn(1500)
-      .end()
-      .appendTo('#slideshow');
-    }
-  }
-
   attached() {
-    setInterval(this.showSlides, 4000);
+    let ohafTimer = setInterval(function(){
+      let ms1 = document.getElementById('musicSlide1');
+      let ms2 = document.getElementById('musicSlide2');
+      if (ms1 !== null && ms1 !== undefined){
+        ms1.style.display = 'none';
+      }
+      if (ms2 !== null && ms1 !== undefined){
+        ms2.style.display = 'none';
+      }
+      if ((ms1 === undefined || ms1 === null) && (ms2 === undefined || ms2 === null)) {
+        console.log('you left the ohaf page');
+        return clearInterval(ohafTimer);
+      }
+      showSlides(['slideshow1', 'slideshow']);
+    }, 5400);
   }
 
 }

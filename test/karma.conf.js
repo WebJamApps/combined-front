@@ -46,9 +46,9 @@ module.exports = function (config) {
     reporters: [ 'mocha', 'coverage' ],
 
     coverageReporter: {
-      reporters: [ { type: 'html' }, { type: 'lcovonly' }, { type: 'text-summary' } ],
+      reporters: [ { type: 'html' }, { type: 'lcovonly' }, { type: 'text-summary' }, { type: 'json' } ],
       dir: 'coverage/',
-      subdir: '.'
+      subdir: 'karma/'
     },
 
     // Webpack please don't spam the console when running in karma!

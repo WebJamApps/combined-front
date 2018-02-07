@@ -1,13 +1,13 @@
 import {inject} from 'aurelia-framework';
 import {App} from './app';
-//const Register_ = require('./classes/Register_.js');
-const Login_ = require('./classes/Login_.js');
+const Register_ = require('./classes/Register_.js');
+//const Login_ = require('./classes/Login_.js');
 @inject(App)
-export class Login {
+export class Register {
   constructor(app){
     this.app = app;
-    //this.registerClass = new Register_();
-    this.login_Class = new Login_();
+    this.registerClass = new Register_();
+    //this.login_Class = new Login_();
   }
 
   attached() {
@@ -16,16 +16,16 @@ export class Login {
     this.checkIfLoggedIn();
   }
 
-  // showRegister(app) {
-  //   this.registerClass.register(app);
-  // }
-
-  showLogin(app) {
-    this.login_Class.loginUser(app);
+  showRegister(app) {
+    this.registerClass.register(app);
   }
 
+  // showLogin(app) {
+  //   this.login_Class.loginUser(app);
+  // }
+
   checkIfLoggedIn() {
-    let token = localStorage.getItem('aurelia_id_token');
+    let token = localStorage.getItem('token');
     console.log(token);
     if (token !== null) {
       this.app.auth.setToken(token);

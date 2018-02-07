@@ -25,20 +25,10 @@
           </div>
           <!-- The dimensions of the images are 950x300 -->
           <div class="col-md-6" style="padding:1px">
-            <div id="slideshow1">
-              <div style="display:block"><img src="../static/imgs/ohaf/slideshow1.png"></div>
-              <div style="display:none"><img src="../static/imgs/ohaf/slideshow2.png"></div>
-              <div style="display:none"><img src="../static/imgs/ohaf/slideshow3.png"></div>
-              <div style="display:none"><img src="../static/imgs/ohaf/slideshow4.png"></div>
-              <div style="display:none"><img src="../static/imgs/ohaf/slideshow5.png"></div>
-              <div style="display:none"><img src="../static/imgs/ohaf/slideshow6.png"></div>
-              <div style="display:none"><img src="../static/imgs/ohaf/slideshow7.png"></div>
-              <div style="display:none"><img src="../static/imgs/ohaf/slideshow8.png"></div>
-              <div style="display:none"><img src="../static/imgs/ohaf/slideshow9.png"></div>
-              <div style="display:none"><img src="../static/imgs/ohaf/slideshow10.png"></div>
-              <div style="display:none"><img src="../static/imgs/ohaf/slideshow11.png"></div>
-              <div style="display:none"><img src="../static/imgs/ohaf/slideshow12.png"></div>
+            <div id="musicSlide1">
+                <img src="../static/imgs/ohaf/slideshow1.png">
             </div>
+            <compose view-model="./commons/slideshow" containerless model.bind="slideshow_data"></compose>
           </div>
         </div>
       </div>
@@ -76,20 +66,10 @@
     </div>
     <!-- The dimensions of the images are 950x300 -->
     <div if.bind="!widescreen">
-      <div id="slideshow" style="top:1px">
-        <div style="display:block"><img src="../static/imgs/ohaf/slideshow1.png"></div>
-        <div style="display:none"><img src="../static/imgs/ohaf/slideshow2.png"></div>
-        <div style="display:none"><img src="../static/imgs/ohaf/slideshow3.png"></div>
-        <div style="display:none"><img src="../static/imgs/ohaf/slideshow4.png"></div>
-        <div style="display:none"><img src="../static/imgs/ohaf/slideshow5.png"></div>
-        <div style="display:none"><img src="../static/imgs/ohaf/slideshow6.png"></div>
-        <div style="display:none"><img src="../static/imgs/ohaf/slideshow7.png"></div>
-        <div style="display:none"><img src="../static/imgs/ohaf/slideshow8.png"></div>
-        <div style="display:none"><img src="../static/imgs/ohaf/slideshow9.png"></div>
-        <div style="display:none"><img src="../static/imgs/ohaf/slideshow10.png"></div>
-        <div style="display:none"><img src="../static/imgs/ohaf/slideshow11.png"></div>
-        <div style="display:none"><img src="../static/imgs/ohaf/slideshow12.png"></div>
+      <div id="musicSlide2">
+          <img src="../static/imgs/ohaf/slideshow1.png">
       </div>
+      <compose view-model="./commons/slideshow" containerless model.bind="slideshow_data2"></compose>
       <h3 class="material-content-h3" style="margin-left:10px">Connecting Volunteers with Charities</h3>
       <p class="material-content-p">Our Hands And Feet (OHAF) helps find the right volunteer positions for you by
         matching people with opportunities to help our local charities.
