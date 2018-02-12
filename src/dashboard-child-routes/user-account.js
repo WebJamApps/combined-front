@@ -159,8 +159,9 @@ export class UserAccount {
         let messagediv = document.getElementsByClassName('formErrors')[0];
         messagediv.innerHTML = '<p style="text-align:left; padding-left:12px">' + data.message + '</p>';
       } else {
-        window.location.assign('/userutil/?changeemail=' + this.user.changeemail);
-        //window.location.href = feurl + '/userutil/?changeemail=' + document.getElementsByClassName('uprofEmail')[0].value;
+        if (process.env.NODE_ENV !== 'test'){
+          window.location.assign('/userutil/?changeemail=' + this.user.changeemail);
+        }
       }
     })
     .catch((error) => {
