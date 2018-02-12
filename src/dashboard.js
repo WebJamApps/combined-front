@@ -21,6 +21,7 @@ export class Dashboard {
     this.userTypes = JSON.parse(process.env.userRoles).roles;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
+    window.localStorage.setItem('userEmail', this.user.email);
     /* istanbul ignore else */
     if (this.user.userType === 'Developer'){
       this.userTypes.push('Developer');

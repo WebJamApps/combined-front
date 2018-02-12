@@ -240,7 +240,7 @@ class Register_ {
 
   logout() {
     localStorage.removeItem('token');
-    localStorage.removeItem('useremail');
+    localStorage.removeItem('userEmail');
     let feurl = 'http://localhost:7000';
       /* istanbul ignore if */
     if (process.env.FrontendUrl !== undefined) {
