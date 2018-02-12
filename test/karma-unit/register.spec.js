@@ -62,4 +62,17 @@ describe('the Register module', () => {
     expect(register.title).toBe('Howdy is cool');
     done();
   });
+
+  it('should check if user is logged in', (done) => {
+    window.localStorage.setItem('token', '109842sdhgsgfhjsfoi4124');
+    register.checkIfLoggedIn();
+    expect(register.app.auth.getTokenPayload()).toBe(window.localStorage.getItem('token'));
+    done();
+  });
+
+  it('should show login with appName', (done) => {
+    document.body.innerHTML = '<div class="home"></div>';
+    register.showRegister('webjam llc');
+    done();
+  });
 });
