@@ -133,7 +133,7 @@ export class App {
   logout() {
     this.appState.setUser({});
     this.authenticated = false;
-    window.localStorage.removeItem('useremail');
+    window.localStorage.removeItem('userEmail');
     window.localStorage.removeItem('aurelia_id_token');
     if (this.role !== 'Charity' && this.role !== 'Volunteer'){
       this.auth.logout('/')

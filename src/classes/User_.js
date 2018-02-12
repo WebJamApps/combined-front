@@ -145,7 +145,7 @@ class User_ {
         let messagediv = document.getElementsByClassName('loginerror')[0];
         messagediv.innerHTML = '<p style="text-align:left; padding-left:12px">' + data.message + '</p>';
       } else {
-        localStorage.setItem('useremail', document.getElementsByClassName('email')[0].value);
+        localStorage.setItem('userEmail', document.getElementsByClassName('email')[0].value);
         let regform1 = document.getElementsByClassName('RegistrationForm');
         regform1[0].style.display = 'none';
         let feurl = 'http://localhost:7000';
@@ -177,7 +177,7 @@ class User_ {
     let fetchClient = evt.target.fetchClient;
     let runFetch = evt.target.runFetch;
     console.log('using your pin to validate your new email address now ...');
-    let bodyData = {'changeemail': document.getElementsByClassName('email')[0].value, 'resetCode': document.getElementsByClassName('code')[0].value, 'email': localStorage.getItem('useremail') };
+    let bodyData = {'changeemail': document.getElementsByClassName('email')[0].value, 'resetCode': document.getElementsByClassName('code')[0].value, 'email': localStorage.getItem('userEmail') };
     let fetchData = {
       method: 'PUT',
       body: JSON.stringify(bodyData),
@@ -187,19 +187,6 @@ class User_ {
       }
     };
     return runFetch(fetchClient, process.env.BackendUrl, '/auth/updateemail', fetchData);
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     if (data.message) {
-  //       let messagediv = document.getElementsByClassName('loginerror')[0];
-  //       messagediv.innerHTML = '<p style="text-align:left; padding-left:12px">' + data.message + '</p>';
-  //     } else {
-  //       localStorage.setItem('useremail', document.getElementsByClassName('email')[0].value);
-  //       this.nevermind('RegistrationForm');
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
   }
 }
 

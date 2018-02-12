@@ -184,7 +184,7 @@ class Login_ {
       front = front.replace('/login', '');
       if (data.token !== undefined) {
         localStorage.setItem('aurelia_id_token', data.token);
-        localStorage.setItem('useremail', data.email);
+        localStorage.setItem('userEmail', data.email);
         loginform1[0].style.display = 'none';
         console.log(front);
         window.location.assign(front + '/login/?token=true');
