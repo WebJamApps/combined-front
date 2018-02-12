@@ -62,4 +62,17 @@ describe('the Login module', () => {
     expect(login.title).toBe('Howdy is cool');
     done();
   });
+
+  it('should check if user is logged in', (done) => {
+    window.localStorage.setItem('aurelia_id_token', '109842sdhgsgfhjsfoi4124');
+    login.checkIfLoggedIn();
+    expect(login.app.auth.getTokenPayload()).toBe(window.localStorage.getItem('aurelia_id_token'));
+    done();
+  });
+
+  it('should show login with appName', (done) => {
+    document.body.innerHTML = '<div class="home"></div>';
+    login.showLogin('webjam llc');
+    done();
+  });
 });
