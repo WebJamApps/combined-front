@@ -16,13 +16,14 @@ export class UserAccount {
     this.canSubmit = false;
     this.canDelete = true;
     this.status = ['enabled', 'disabled'];
+    this.originalEmail = '';
   }
 
   async activate() {
     this.userTypes = JSON.parse(process.env.userRoles).roles;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
-    //console.log(this.user.userStatus);
+    this.originalEmail = this.user.email;
     this.checkUserStatus();
     this.app.role = this.user.userType;
     this.checkChangeUserType();
@@ -44,6 +45,7 @@ export class UserAccount {
     .ensure('userZip').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
     .ensure('userCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
     .ensure('userState').required()
+    .ensure('email').required().email()
     .on(this.user);
   }
 
@@ -127,15 +129,52 @@ export class UserAccount {
   }
 
   afterUpdateUser(){
-    this.app.appState.setUser(this.user);
-    this.app.appState.checkUserRole();
-    this.app.router.navigate('dashboard');
+    if (this.user.changeemail !== ''){
+      console.log('email address was changed!');
+      this.changeUserEmail();
+    } else {
+      this.app.appState.setUser(this.user);
+      this.app.appState.checkUserRole();
+      this.app.router.navigate('dashboard');
+    }
+  }
+
+  changeUserEmail() {
+    let bodyData = {'changeemail': this.user.changeemail, 'email': this.user.email };
+    let fetchData = {
+      method: 'PUT',
+      body: JSON.stringify(bodyData),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    };
+    //const res = await this.app.httpClient.fetch('/auth/changeemail', fetchData);
+    //let responseFromUPE = await res.json();
+    return this.app.httpClient.fetch('/auth/changeemail', fetchData)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.message) {
+        //console.log(data.message);
+        let messagediv = document.getElementsByClassName('formErrors')[0];
+        messagediv.innerHTML = '<p style="text-align:left; padding-left:12px">' + data.message + '</p>';
+      } else {
+        window.location.assign('/userutil/?changeemail=' + this.user.changeemail);
+        //window.location.href = feurl + '/userutil/?changeemail=' + document.getElementsByClassName('uprofEmail')[0].value;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   async updateUser(){
+    this.user.changeemail = '';
+    if (this.originalEmail !== this.user.email){
+      this.user.changeemail = this.user.email;
+      this.user.email = this.originalEmail;
+    }
     await this.app.updateById('/user/', this.uid, this.user, null);
-    // this.app.appState.updateUser(this.user)
-    // this.app.router.navigate('dashboard');
     this.afterUpdateUser();
   }
 

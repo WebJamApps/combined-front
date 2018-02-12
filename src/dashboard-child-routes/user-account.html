@@ -14,8 +14,10 @@
     <p>&nbsp;</p>
     <form>
       <p><strong>User Name:</strong> <i>${user.name}</i></p>
-      <p><strong>Email:</strong> <i>${user.email}</i></p>
-      <label style="margin-top:0; padding-top:0;max-height:30px">Primary User Type (required)<span if.bind="!canChangeUserType">:<i style="font-weight:normal;"> ${user.userType}</i><br><br></span></label>
+      <label style="margin-top:0;padding-top:0">Email (required)</label>
+      <input value.two-way="user.email & validate">
+      <!-- <p><strong>Email:</strong> <i>${user.email}</i></p> -->
+      <label style="margin-top:15px; padding-top:0;max-height:30px">Primary User Type (required)<span if.bind="!canChangeUserType">:<i style="font-weight:normal;"> ${user.userType}</i><br><br></span></label>
       <select if.bind="canChangeUserType" id="type" class="form-control" value.bind="user.userType & validate" style="width: 2in; margin-bottom:20px">
         <option value=""> </option>
         <option repeat.for="type of userTypes" model.bind="type">${type}</option>
@@ -47,6 +49,7 @@
             ${error.message}
           </li>
         </ul>
+        <div class="formErrors" style="color:red"></div>
       </div>
       <button id="updateUserButton" class="button-lib" raised click.trigger="updateUser()" style="display:none">
         update</button>
