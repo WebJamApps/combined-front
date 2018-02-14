@@ -14,10 +14,18 @@ describe('the Music module', () => {
     done();
   });
 
-  // it('runs showSlides to display the slideshow', (done) => {
-  //   document.body.innerHTML = '<div id="slideshow"><div></div><div>';
-  //   music1.attached();
-  //   music1.showSlides();
-  //   done();
-  // });
+  it('show slides when component is attached and there is no slide', (done) => {
+    music1.attached();
+    setTimeout(() => {
+      done();
+    }, 5500);
+  }, 5550);
+
+  it('shows slides when component is attached', (done) => {
+    document.body.innerHTML = '<div id="musicSlide1"><div></div></div>';
+    music1.attached();
+    setTimeout(() => {
+      done();
+    }, 5500);
+  }, 5550);
 });
