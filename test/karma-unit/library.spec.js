@@ -25,6 +25,7 @@ describe('the Library module', () => {
     // this would cause the function to not get called immediately.
     // to tests it, I have to block the runtime till the function for the slideshow gets called..
     setTimeout(() => {
+      expect(document.getElementById('lSlide1')).not.toBe(null);
       done();
     }, 5500);
   }, 5550);
@@ -36,6 +37,7 @@ describe('the Library module', () => {
     // this would cause the function to not get called immediately.
     // to tests it, I have to block the runtime till the function for the slideshow gets called..
     setTimeout(() => {
+      expect(document.body.innerText).toBe('');
       done();
     }, 5500);
   }, 5550);
