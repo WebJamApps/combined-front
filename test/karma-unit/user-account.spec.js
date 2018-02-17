@@ -17,7 +17,11 @@ class VCMock {
 
 class HttpStub extends HttpMock {
   fetch(url) {
-    console.log(url);
+    if (url === '/auth/changeemail') {
+      return Promise.resolve({
+        json: () => ({message: 'in the jungle'})
+      });
+    }
     return Promise.resolve({
       json: () => [{name: 'in the jungle'}]
     });
@@ -56,6 +60,7 @@ describe('the UserAccount Module', () => {
     ua.selectedTalents = [];
     ua.activate();
     ua.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    spyOn(ua, 'deleteUser');
   });
 
   it('should validate property', (done) => {
@@ -177,8 +182,23 @@ describe('the UserAccount Module', () => {
     done();
   });
 
+  it('should call after update user when changeemail is null', (done) => {
+    ua.user.changeemail = '';
+    ua.afterUpdateUser();
+    expect(ua.app.appState.user).toBe(ua.user);
+    done();
+  });
+
+  it('should change user email', (done) => {
+    document.body.innerHTML = '<div class="formErrors"></div>';
+    ua.changeUserEmail();
+    expect(document.getElementsByClassName('formErrors')[0].innerText.trim()).toBe('');
+    done();
+  });
+
   it('deletes the user', (done) => {
     ua.deleteUser();
+    expect(ua.deleteUser).toHaveBeenCalled();
     done();
   });
 });

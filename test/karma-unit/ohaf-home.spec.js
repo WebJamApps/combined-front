@@ -8,7 +8,8 @@ describe('the OhafHome Module', () => {
   });
 
   it('gets widescreen', (done) => {
-    ohaf.widescreen;
+    let truth = ohaf.widescreen;
+    expect(typeof truth).toBe('boolean');
     done();
   });
 
@@ -16,6 +17,7 @@ describe('the OhafHome Module', () => {
     ohaf.attached();
     document.body.innerHTML = '';
     setTimeout(() => {
+      expect(document.body.innerText).toBe('');
       done();
     }, 5500);
   }, 5550);
@@ -24,6 +26,7 @@ describe('the OhafHome Module', () => {
     document.body.innerHTML = '<div id="musicSlide1"><div></div></div><div id="musicSlide2"><div></div></div>';
     ohaf.attached();
     setTimeout(() => {
+      expect(document.getElementById('musicSlide1')).not.toBe(null);
       done();
     }, 5500);
   }, 5550);
