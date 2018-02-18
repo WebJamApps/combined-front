@@ -10,12 +10,15 @@
   </div> -->
   <!-- <p if.bind="user.userDetails ==='newUser'">&nbsp;</p> -->
   <div class="material-content elevation3" style="max-width:5in; margin:auto">
-    <h4 class="material-header-h4">Update User Account</h4>
-    <p>&nbsp;</p>
+    <h4 class="material-header-h4"><strong><i>Update Your Info</i></strong></h4>
     <form>
-      <p><strong>User Name:</strong> <i>${user.name}</i></p>
+      <p if.bind="isGoogleEmail"><strong>User Name:</strong> <i>${user.name}</i></p>
+      <div show.bind="!isGoogleEmail">
+        <label style="margin-top:0;padding-top:0">First & Last Name (required)</label>
+        <input value.two-way="user.name & validate" style="margin-bottom:12px; min-width:3in">
+      </div>
       <label style="margin-top:0;padding-top:0">Email (required)</label>
-      <input value.two-way="user.email & validate">
+      <input value.two-way="user.email & validate" style="min-width:3in">
       <!-- <p><strong>Email:</strong> <i>${user.email}</i></p> -->
       <label style="margin-top:15px; padding-top:0;max-height:30px">Primary User Type (required)<span if.bind="!canChangeUserType">:<i style="font-weight:normal;"> ${user.userType}</i><br><br></span></label>
       <select if.bind="canChangeUserType" id="type" class="form-control" value.bind="user.userType & validate" style="width: 2in; margin-bottom:20px">
@@ -59,10 +62,10 @@
     <div if.bind="canDelete" class="elevation2" style="padding:5px;max-width:5in; margin:auto">
       <h4 style="text-align:center;">Delete Your User Account</h4>
       <div style="margin:auto; text-align:center">
-      <button style="width:1in;margin:auto; text-align:center; font-size:10pt" class="button-lib" raised click.trigger="deleteUser()">
-        Delete User
-      </button>
-    </div>
+        <button style="width:1in;margin:auto; text-align:center; font-size:10pt" class="button-lib" raised click.trigger="deleteUser()">
+          Delete User
+        </button>
+      </div>
       <!-- <p style="padding:10px" if.bind="!canDelete"><i>You are not allowed to delete your user account for the following reasons:</i></p>
       <ul if.bind="!canDelete" innerhtml.bind="deleteReasons"></ul> -->
       <!-- <button if.bind="!canChangeUserType && user.userStatus !== 'disabled' && canDisable" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="disableUser('disabled')">
