@@ -17,6 +17,7 @@ export class UserAccount {
     this.canDelete = true;
     this.status = ['enabled', 'disabled'];
     this.originalEmail = '';
+    this.isGoogleEmail = false;
   }
 
   async activate() {
@@ -29,7 +30,20 @@ export class UserAccount {
     this.checkChangeUserType();
     this.userTypes.sort();
     this.setupValidation();
+    this.checkUserEmail();
   }
+
+  checkUserEmail(){
+    //validateGoogle(email, appName) {
+      //let googleAccount = false;
+    if (this.user.email.split('@gmail').length > 1 || this.user.email.split('@vt.edu').length > 1 || this.user.email.split('@bi.vt.edu').length > 1) {
+        //if (appName !== 'PATRIC') {
+      this.isGoogleEmail = true;
+        //}
+    }
+      //return googleAccount;
+  }
+
 
   checkUserStatus(){
     if (this.user.userStatus === undefined || this.user.userStatus === null || this.user.userStatus === ''){
@@ -45,6 +59,7 @@ export class UserAccount {
     .ensure('userZip').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
     .ensure('userCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
     .ensure('userState').required()
+    .ensure('name').required()
     .ensure('email').required().email()
     .on(this.user);
   }
