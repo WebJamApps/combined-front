@@ -50,6 +50,9 @@ ignore:
     - jsdom > content-type-parser:
         reason: None given
         expires: '2018-02-27T21:24:13.095Z'
+    - aurelia-pal-nodejs > jsdom > content-type-parser:
+        reason: None given
+        expires: '2018-03-22T01:37:45.450Z'
   'npm:tunnel-agent:20170305':
     - jquery > npm > request > tunnel-agent:
         reason: None given
@@ -79,6 +82,10 @@ ignore:
     - webpack > watchpack > chokidar > fsevents > node-pre-gyp > request > hawk > hoek:
         reason: None given
         expires: '2018-03-20T22:05:07.574Z'
+  'npm:braces:20180219':
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces:
+        reason: None given
+        expires: '2018-03-22T01:37:45.449Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:marked:20170112':
