@@ -16,10 +16,10 @@ class Register_ {
     regform.innerHTML = '<form><div style="" class="regformform"><table style=""><tbody class="regformtbody">' +
     '<tr class="primApSel" style="height:1px"><td><label class="primapplabel" style="display:none">Primary App </label><select class="pas" style="display:none"><option value=""> </option><option value="PATRIC">PATRIC</option></select></td></tr>' +
     '<tr><th>First Name <span style="color:red">*</span></th><th>Last Name <span style="color:red">*</span></th></tr><tr><td width="50%">' +
-    '<input class="firstname" type="text" name="first_name" style="width:50%;" required>' +
-    '</td><td><input class="lastname" type="text" name="last_name" style="width:50%;" required>' +
+    '<input class="firstname" type="text" name="first_name" style="width:100%;min-width:0" required>' +
+    '</td><td><input class="lastname" type="text" name="last_name" style="width:100%;min-width:0" required>' +
     '</td></tr><tr><th colspan="1">Email Address <span style="color:red">*</span></th><th colspan="1">Password <span style="color:red">*</span></th></tr><tr><td colspan="1">' +
-    '<input class="email" type="email" name="email" style="width:100%;" required></td>' + '<td><input style="width:100%" class="password" pattern=".{8,}" title="8 characters minimum" type="password" name="password" style="width:100%;" required>' +
+    '<input class="email" type="email" name="email" style="width:100%;min-width:0" required></td>' + '<td><input class="password" pattern=".{8,}" title="8 characters minimum" type="password" name="password" style="width:100%;min-width:0" required>' +
     '</td></tr><tr class="userIdRow">' + '<th colspan="2">Userid (optional)</th></tr><tr class="useridinput"><td colspan="2"><div style="width:100%"><input class="userid" type="text" name="userid" value=""></div></td>' + '</tr>' +
     '<tr><th colspan="2" style="display:none">Organization</th></tr><tr style="display:none"><td colspan="2"><input style="width:100%" class="organization" type="text" name="affiliation" value=""></td></tr>' +
     '<tr><th colspan="2" style="display:none">Organisms</th></tr><tr style="display:none"><td colspan="2"><div><input style="width:100%;" class="organisms" type="text" name="organisms" value=""></div></td></tr>' +
