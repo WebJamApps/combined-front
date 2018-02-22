@@ -100,8 +100,20 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  it('should update user', (done) => {
+  it('updates a user when email has changed', (done) => {
+    ua.originalEmail = 'yo@yo.com';
+    ua.user.email = 'bye@bye.com';
     ua.updateUser();
+    expect(ua.user.changeemail).toBe('bye@bye.com');
+    done();
+  });
+
+  it('updates a user when email has not changed', (done) => {
+    ua.user.changeemail = '';
+    ua.originalEmail = 'bye@bye.com';
+    ua.user.email = 'bye@bye.com';
+    ua.updateUser();
+    expect(ua.user.changeemail).toBe('');
     done();
   });
 
@@ -230,9 +242,9 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  it('deletes the user', (done) => {
-    ua.deleteUser();
-    expect(ua.deleteUser).toHaveBeenCalled();
-    done();
-  });
+  it('deletes the user', testAsync(async function(){
+    ua.app.logout = function(){};
+    await ua.deleteUser();
+    //expect(ua.deleteUser).toHaveBeenCalled();
+  }));
 });
