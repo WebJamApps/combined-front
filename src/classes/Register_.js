@@ -201,12 +201,12 @@ class Register_ {
           console.log('howdy');
           let front = window.location.href;
           front = front.replace('/register', '');
-          console.log(front);
-          if (url === process.env.BackendUrl + '/auth/resetpass'){
-            window.location.assign(front + '/userutil/?email=' + data.email + '&form=reset');
-          } else {
-            window.location.assign(front + '/userutil?email=' + data.email);
-          }
+          // console.log(front);
+          // if (url === process.env.BackendUrl + '/auth/resetpass'){
+          //   window.location.assign(front + '/userutil/?email=' + data.email + '&form=reset');
+          // } else {
+          window.location.assign(front + '/userutil?email=' + data.email);
+          // }
         }
       }
     })
@@ -215,28 +215,28 @@ class Register_ {
     });
   }
 
-  resetpass(evt) {
-    //let appName = evt.target.appName;
-    let fetchClient = evt.target.fetchClient;
-    let runFetch = evt.target.runFetch;
-    let loginEmail = '';
-    // if (appName !== 'PATRIC') {
-    loginEmail = document.getElementsByClassName('email')[0].value;
-    console.log(loginEmail);
-    // } else {
-    //   loginEmail = document.getElementsByClassName('userid')[0].value;
-    // }
-    let bodyData = {'email': loginEmail };
-    let fetchData = {
-      method: 'PUT',
-      body: JSON.stringify(bodyData),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    };
-    return runFetch(fetchClient, process.env.BackendUrl + '/auth/resetpass', fetchData);
-  }
+  // resetpass(evt) {
+  //   //let appName = evt.target.appName;
+  //   let fetchClient = evt.target.fetchClient;
+  //   let runFetch = evt.target.runFetch;
+  //   let loginEmail = '';
+  //   // if (appName !== 'PATRIC') {
+  //   loginEmail = document.getElementsByClassName('email')[0].value;
+  //   console.log(loginEmail);
+  //   // } else {
+  //   //   loginEmail = document.getElementsByClassName('userid')[0].value;
+  //   // }
+  //   let bodyData = {'email': loginEmail };
+  //   let fetchData = {
+  //     method: 'PUT',
+  //     body: JSON.stringify(bodyData),
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     }
+  //   };
+  //   return runFetch(fetchClient, process.env.BackendUrl + '/auth/resetpass', fetchData);
+  // }
 
   logout() {
     localStorage.removeItem('token');
