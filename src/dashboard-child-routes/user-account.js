@@ -26,11 +26,11 @@ export class UserAccount {
     this.user = await this.app.appState.getUser(this.uid);
     this.originalEmail = this.user.email;
     this.checkUserStatus();
+    this.checkUserEmail();
     this.app.role = this.user.userType;
     this.checkChangeUserType();
     this.userTypes.sort();
     this.setupValidation();
-    this.checkUserEmail();
   }
 
   checkUserEmail(){
@@ -164,16 +164,14 @@ export class UserAccount {
         'Content-Type': 'application/json'
       }
     };
-    //const res = await this.app.httpClient.fetch('/auth/changeemail', fetchData);
-    //let responseFromUPE = await res.json();
     return this.app.httpClient.fetch('/auth/changeemail', fetchData)
     .then((response) => response.json())
     .then((data) => {
       if (data.message) {
-        //console.log(data.message);
         let messagediv = document.getElementsByClassName('formErrors')[0];
         messagediv.innerHTML = '<p style="text-align:left; padding-left:12px">' + data.message + '</p>';
       } else {
+        /* istanbul ignore if */
         if (process.env.NODE_ENV !== 'test'){
           window.location.assign('/userutil/?changeemail=' + this.user.changeemail);
         }
