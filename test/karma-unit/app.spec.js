@@ -54,7 +54,15 @@ describe('the App module', () => {
       }
     })());
   });
-
+  it('check if user is logged in', (done) => {
+    window.localStorage.setItem('token', '109842sdhgsgfhjsfoi4124');
+    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
+    app1.configureRouter(configStub, RouterStub);
+    app1.router.navigate = function(){};
+    app1.checkIfLoggedIn();
+    expect(app1.auth.getTokenPayload()).toBe(window.localStorage.getItem('token'));
+    done();
+  });
   it('configures the router', (done) => {
     let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
     app1.configureRouter(configStub, RouterStub);
