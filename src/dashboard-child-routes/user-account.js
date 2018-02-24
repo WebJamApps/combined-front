@@ -206,6 +206,7 @@ export class UserAccount {
       this.app.logout();
     });
   }
+
   showUpdateButton(){
     let nub = document.getElementById('updateUserButton');
     nub.style.display = 'block';
