@@ -73,7 +73,6 @@ describe('the UserAccount Module', () => {
     ua.selectedTalents = [];
     ua.activate();
     ua.user = {name: 'Iddris Elba', email: 'yo@yo.com', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
-    spyOn(ua, 'deleteUser');
   });
 
   it('should validate property', (done) => {
@@ -243,8 +242,10 @@ describe('the UserAccount Module', () => {
   });
 
   it('deletes the user', testAsync(async function(){
-    ua.app.logout = function(){};
+    ua.check = true;
+    ua.app.logout = function(){ua.check = false; return true;};
     await ua.deleteUser();
-    //expect(ua.deleteUser).toHaveBeenCalled();
+    expect(ua.check).toBe(false);
   }));
+
 });
