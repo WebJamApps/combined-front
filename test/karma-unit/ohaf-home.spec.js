@@ -8,20 +8,26 @@ describe('the OhafHome Module', () => {
   });
 
   it('gets widescreen', (done) => {
-    ohaf.widescreen;
+    let truth = ohaf.widescreen;
+    expect(typeof truth).toBe('boolean');
     done();
   });
 
-  it('runs showslides with widescreen slideshow', (done) => {
-    document.body.innerHTML = '<div id="slideshow1"><div></div><div>';
-    ohaf.showSlides();
-    done();
-  });
-
-  it('runs showSlides with mobile slideshow', (done) => {
-    document.body.innerHTML = '<div id="slideshow"><div></div><div>';
+  it('show slides when component is attached and there is no slide', (done) => {
     ohaf.attached();
-    ohaf.showSlides();
-    done();
-  });
+    document.body.innerHTML = '';
+    setTimeout(() => {
+      expect(document.body.innerText).toBe('');
+      done();
+    }, 5500);
+  }, 5550);
+
+  it('shows slides when component is attached', (done) => {
+    document.body.innerHTML = '<div id="musicSlide1"><div></div></div><div id="musicSlide2"><div></div></div>';
+    ohaf.attached();
+    setTimeout(() => {
+      expect(document.getElementById('musicSlide1')).not.toBe(null);
+      done();
+    }, 5500);
+  }, 5550);
 });

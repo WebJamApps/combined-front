@@ -47,10 +47,45 @@ ignore:
     - aurelia-pal-nodejs > jsdom > content-type-parser:
         reason: None given
         expires: '2018-02-19T02:24:07.190Z'
+    - jsdom > content-type-parser:
+        reason: None given
+        expires: '2018-02-27T21:24:13.095Z'
+    - aurelia-pal-nodejs > jsdom > content-type-parser:
+        reason: None given
+        expires: '2018-03-22T01:37:45.450Z'
   'npm:tunnel-agent:20170305':
     - jquery > npm > request > tunnel-agent:
         reason: None given
         expires: '2018-02-19T02:24:07.190Z'
+  'npm:hoek:20180212':
+    - webpack > watchpack > chokidar > fsevents > node-pre-gyp > hawk > hoek:
+        reason: None given
+        expires: '2018-03-20T22:05:07.572Z'
+    - webpack > watchpack > chokidar > fsevents > node-pre-gyp > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T22:05:07.572Z'
+    - webpack > watchpack > chokidar > fsevents > node-pre-gyp > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T22:05:07.574Z'
+    - webpack > watchpack > chokidar > fsevents > node-pre-gyp > request > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T22:05:07.574Z'
+    - webpack > watchpack > chokidar > fsevents > node-pre-gyp > request > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T22:05:07.574Z'
+    - webpack > watchpack > chokidar > fsevents > node-pre-gyp > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-03-20T22:05:07.574Z'
+    - webpack > watchpack > chokidar > fsevents > node-pre-gyp > request > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-03-20T22:05:07.574Z'
+    - webpack > watchpack > chokidar > fsevents > node-pre-gyp > request > hawk > hoek:
+        reason: None given
+        expires: '2018-03-20T22:05:07.574Z'
+  'npm:braces:20180219':
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces:
+        reason: None given
+        expires: '2018-03-22T01:37:45.449Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:marked:20170112':

@@ -87,7 +87,7 @@ h5 {
 }
 
 input {
-  min-width: 250px;
+  min-width: 3in;
   padding-left: 5px;
 }
 
@@ -97,12 +97,13 @@ input.checkboxes-input {
 }
 
 label {
-  font-size: 11pt;
+  /* font-size: 11pt; */
   padding-top: 20px;
   margin-bottom: 0;
   padding-bottom: 1px;
   display: block;
   width: 100%;
+  font-weight: bold;
 }
 
 label.checkboxes-label {
@@ -132,12 +133,35 @@ tbody tr:nth-child(odd) {
   background-color: #d8ecf3;
 }
 
+tbody.regformtbody tr:nth-child(odd) {
+  background-color: white;
+}
+
 th,
 td {
   border-collapse: collapse;
   border: 1px solid #777;
   padding: 8px;
   text-align: left;
+}
+
+tbody.regformtbody td,
+tbody.regformtbody th {
+  border: none;
+}
+
+tbody.regformtbody th {
+  padding-bottom: 0;
+}
+
+tbody.regformtbody td {
+  padding: 10px;
+  padding-top: 4px;
+}
+
+div.RegistrationForm {
+  /* max-width: 90%; */
+  margin: auto;
 }
 
 audio::-internal-media-controls-download-button {
@@ -156,7 +180,11 @@ audio::-webkit-media-controls-panel {
 #libslideshow1,
 #slideshowMusic,
 #slideshow1,
-#slideshow {
+#slideshow,
+#musicSlide1,
+#musicSlide2,
+#lSlide1,
+#lSlide2 {
   max-width: 1000px;
   position: relative;
   margin: auto;
@@ -166,7 +194,11 @@ audio::-webkit-media-controls-panel {
 #libslideshow1 img,
 #slideshowMusic img,
 #slideshow1 img,
-#slideshow img {
+#slideshow img,
+#musicSlide1 img,
+#musicSlide2 img,
+#lSlide1 img,
+#lSlide2 img {
   width: 100%;
 }
 
@@ -621,7 +653,8 @@ a:not([href]):not([tabindex]):hover {
 }
 
 p,
-a {
+a,
+label {
   font-family: 'Habibi';
   font-size: 12pt;
 }
@@ -637,6 +670,10 @@ a {
 button {
   cursor: pointer;
   cursor: hand;
+}
+
+button:hover {
+  background-color: #ddffcc;
 }
 
 a:hover {
@@ -663,4 +700,12 @@ a:hover {
 
 .selectBox select {
   font-weight: normal;
+}
+
+.footerIcon:hover {
+  color: white;
+}
+
+.mySlides {
+  display: none;
 }

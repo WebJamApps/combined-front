@@ -1,4 +1,4 @@
-import {Login} from '../../src/login';
+import {Register} from '../../src/register';
 import {RouterStub, AuthStub, HttpMock, AppStateStub} from './commons';
 import {App} from '../../src/app';
 
@@ -15,8 +15,8 @@ class AppStub extends App{
   authenticated = false;
 }
 
-describe('the Login module', () => {
-  let login;
+describe('the Register module', () => {
+  let register;
   let app1;
   let auth;
 
@@ -26,23 +26,23 @@ describe('the Login module', () => {
     app1 = new AppStub(auth, new HttpMock());
     app1.router = new RouterStub();
     app1.activate();
-    login = new Login(app1);
-    login.app.appState = new AppStateStub();
+    register = new Register(app1);
+    register.app.appState = new AppStateStub();
     //login.activate();
     //sut.app.appState = new AppStateStub();
     //sut.app.authenticated = false;
   });
 
   it('should authentication when not from OHAF', (done) => {
-    login.authenticate('google').then((data) => {
+    register.authenticate('google').then((data) => {
       //console.log(data); // disable this if you want to.
       done();
     }, null);
   });
 
   it('should authentication when from OHAF', (done) => {
-    login.app.appState.isOhafLogin = true;
-    login.authenticate('google').then((data) => {
+    register.app.appState.isOhafLogin = true;
+    register.authenticate('google').then((data) => {
       //console.log(data); // disable this if you want to.
       done();
     }, null);
@@ -57,22 +57,22 @@ describe('the Login module', () => {
   // });
   //
   it('should be attached to router', (done) => {
-    login.attached();
+    register.attached();
     //console.log(sut.title);
-    expect(login.title).toBe('Howdy is cool');
+    expect(register.title).toBe('Howdy is cool');
     done();
   });
 
   it('should check if user is logged in', (done) => {
-    window.localStorage.setItem('aurelia_id_token', '109842sdhgsgfhjsfoi4124');
-    login.checkIfLoggedIn();
-    expect(login.app.auth.getTokenPayload()).toBe(window.localStorage.getItem('aurelia_id_token'));
+    window.localStorage.setItem('token', '109842sdhgsgfhjsfoi4124');
+    register.checkIfLoggedIn();
+    expect(register.app.auth.getTokenPayload()).toBe(window.localStorage.getItem('token'));
     done();
   });
 
   it('should show login with appName', (done) => {
     document.body.innerHTML = '<div class="home"></div>';
-    login.showLogin('webjam llc');
+    register.showRegister('webjam llc');
     done();
   });
 });

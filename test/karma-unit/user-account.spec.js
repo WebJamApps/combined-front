@@ -17,7 +17,24 @@ class VCMock {
 
 class HttpStub extends HttpMock {
   fetch(url) {
-    console.log(url);
+    if (url === '/auth/changeemail') {
+      return Promise.resolve({
+        json: () => ({message: 'in the jungle'})
+      });
+    }
+    return Promise.resolve({
+      json: () => [{name: 'in the jungle'}]
+    });
+  }
+}
+
+class HttpStub2 extends HttpMock {
+  fetch(url) {
+    if (url === '/auth/changeemail') {
+      return Promise.resolve({
+        json: () => ({email: 'yo@yo.com'})
+      });
+    }
     return Promise.resolve({
       json: () => [{name: 'in the jungle'}]
     });
@@ -55,7 +72,8 @@ describe('the UserAccount Module', () => {
     ua.selectedWorks = [];
     ua.selectedTalents = [];
     ua.activate();
-    ua.user = {name: 'Iddris Elba', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    ua.user = {name: 'Iddris Elba', email: 'yo@yo.com', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    spyOn(ua, 'deleteUser');
   });
 
   it('should validate property', (done) => {
@@ -74,8 +92,28 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  it('should update user', (done) => {
+  it('should check the user email when it is a google account', (done) => {
+    ua.isGoogleEmail = false;
+    ua.user = {name: 'Iddris Elba', email: 'j@gmail.com', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''};
+    ua.checkUserEmail();
+    expect(ua.isGoogleEmail).toBe(true);
+    done();
+  });
+
+  it('updates a user when email has changed', (done) => {
+    ua.originalEmail = 'yo@yo.com';
+    ua.user.email = 'bye@bye.com';
     ua.updateUser();
+    expect(ua.user.changeemail).toBe('bye@bye.com');
+    done();
+  });
+
+  it('updates a user when email has not changed', (done) => {
+    ua.user.changeemail = '';
+    ua.originalEmail = 'bye@bye.com';
+    ua.user.email = 'bye@bye.com';
+    ua.updateUser();
+    expect(ua.user.changeemail).toBe('');
     done();
   });
 
@@ -177,8 +215,36 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  it('deletes the user', (done) => {
-    ua.deleteUser();
+  it('should call after update user when changeemail is null', (done) => {
+    ua.user.changeemail = '';
+    ua.afterUpdateUser();
+    expect(ua.app.appState.user).toBe(ua.user);
     done();
   });
+
+  it('should change user email and have an error message', (done) => {
+    document.body.innerHTML = '<div class="formErrors"></div>';
+    ua.user = {name: 'Iddris Elba', email: 'j@gmail.com', userType: 'Charity', _id: '3333333', changeemail: 'yo@yo.com'};
+    ua.changeUserEmail();
+    //expect(document.getElementsByClassName('formErrors')[0].innerHTML).not.toBe('');
+    done();
+  });
+
+  it('should change user email and not have an error message', (done) => {
+    document.body.innerHTML = '<div class="formErrors"></div>';
+    app = new App(auth, new HttpStub2());
+    app.router = new RouterStub();
+    app.activate();
+    ua = new UserAccount(app, new VCMock(), new ValidatorMock());
+    ua.user = {name: 'Iddris Elba', email: 'j@gmail.com', userType: 'Charity', _id: '3333333', changeemail: 'yo@yo.com'};
+    ua.changeUserEmail();
+    expect(document.getElementsByClassName('formErrors')[0].innerHTML).toBe('');
+    done();
+  });
+
+  it('deletes the user', testAsync(async function(){
+    ua.app.logout = function(){};
+    await ua.deleteUser();
+    //expect(ua.deleteUser).toHaveBeenCalled();
+  }));
 });
