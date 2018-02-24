@@ -11,7 +11,7 @@ export class Home {
 
 
   get widescreen(){
-    return document.documentElement.clientWidth > 1400;
+    return document.documentElement.clientWidth > 1300;
   }
 
   // showSlides() {
