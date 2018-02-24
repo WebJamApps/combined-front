@@ -247,5 +247,4 @@ describe('the UserAccount Module', () => {
     await ua.deleteUser();
     expect(ua.check).toBe(false);
   }));
-
 });
