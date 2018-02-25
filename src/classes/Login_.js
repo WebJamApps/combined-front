@@ -141,7 +141,12 @@ class Login_ {
         'Content-Type': 'application/json'
       }
     };
-    return runFetch(fetchClient, process.env.BackendUrl, '/auth/resetpass', fetchData, null, null, loginEmail);
+    let backend = '';
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production'){
+      backend = process.env.BackendUrl;
+    }
+    return runFetch(fetchClient, backend, '/auth/resetpass', fetchData, null, null, loginEmail);
   }
 
   logMeIn(evt) {

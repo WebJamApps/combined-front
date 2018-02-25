@@ -117,13 +117,13 @@ exports.startSlides = function(idArray1, errorMsg, idArray2){
     let foundElement = false;
     idArray1.forEach(function(id){
       let tempMS = document.getElementById(id);
-      if(tempMS !== null && tempMS !== undefined){
+      if (tempMS !== null && tempMS !== undefined){
         tempMS.style.display = 'none';
-      }else{
+      } else {
         foundElement = true;
       }
     });
-    if(!(foundElement)){
+    if (!(foundElement)){
       console.log(errorMsg);
       return clearInterval(slideshowTimer);
     }

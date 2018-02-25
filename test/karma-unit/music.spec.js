@@ -24,7 +24,7 @@ describe('the Music module', () => {
   }, 5550);
 
   it('shows slides when component is attached', (done) => {
-  document.body.innerHTML = '<div id="musicSlide1"><div></div></div><div id="slideshowMusic"><div class="mySlides"><img src="https://static.pexels.com/photos/2422/sky-earth-galaxy-universe.jpg" /></div></div>';
+    document.body.innerHTML = '<div id="musicSlide1"><div></div></div><div id="slideshowMusic"><div class="mySlides"><img src="https://static.pexels.com/photos/2422/sky-earth-galaxy-universe.jpg" /></div></div>';
     music1.attached();
     setTimeout(() => {
       expect(document.getElementById('musicSlide1')).not.toBe(null);
