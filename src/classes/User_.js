@@ -160,8 +160,8 @@ class User_ {
         regform1[0].style.display = 'none';
         let feurl = 'http://localhost:9000';
           /* istanbul ignore if */
-        if (process.env.FrontendUrl !== undefined) {
-          feurl = process.env.FrontendUrl;
+        if (process.env.frontURL !== undefined) {
+          feurl = process.env.frontURL;
         }
         window.location.href = feurl + '/';
       }
@@ -177,8 +177,8 @@ class User_ {
     regform1[0].style.display = 'none';
     let feurl = 'http://localhost:9000';
       /* istanbul ignore if */
-    if (process.env.FrontendUrl !== undefined) {
-      feurl = process.env.FrontendUrl;
+    if (process.env.frontURL !== undefined) {
+      feurl = process.env.frontURL;
     }
     window.location.href = feurl + '/';
   }
