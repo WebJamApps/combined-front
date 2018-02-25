@@ -166,7 +166,12 @@ class Login_ {
         'Content-Type': 'application/json'
       }
     };
-    return runFetch(fetchClient, process.env.BackendUrl, '/auth/login', fetchData, generateSession, appName, null);
+    let backend = '';
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production'){
+      backend = process.env.BackendUrl;
+    }
+    return runFetch(fetchClient, backend, '/auth/login', fetchData, generateSession, appName, null);
   }
 
   runFetch(fetchClient, url, route, fetchData, generateSession, appName, loginEmail) {
