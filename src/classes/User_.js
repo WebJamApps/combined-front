@@ -8,7 +8,7 @@ class User_ {
     this.changeEmail = this.searchParams.get('changeemail');
     this.formType = '';
     this.formType += this.searchParams.get('form');
-    this.userToken = localStorage.getItem('token');
+    this.userToken = localStorage.getItem('aurelia_id_token');
     this.verifyEmail();
   }
 

@@ -26,12 +26,12 @@ export class Dashboard {
     if (this.user.userType === 'Developer'){
       this.userTypes.push('Developer');
     }
-    if (localStorage.getItem('token') === null) {
-      let newToken = localStorage.getItem('aurelia_id_token');
-      if (newToken !== null) {
-        localStorage.setItem('token', newToken);
-      }
-    }
+    // if (localStorage.getItem('token') === null) {
+    //   let newToken = localStorage.getItem('aurelia_id_token');
+    //   if (newToken !== null) {
+    //     localStorage.setItem('token', newToken);
+    //   }
+    // }
     this.childRoute();
   }
 
