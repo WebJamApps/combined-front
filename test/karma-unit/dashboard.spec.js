@@ -72,9 +72,9 @@ describe('the Dashboard Module', () => {
     });
 
     it('does not set the token if it already exists', (done) => {
-      localStorage.setItem('token', '123');
+      localStorage.setItem('aurelia_id_token', '123');
       dashboard.activate();
-      expect(localStorage.getItem('token')).toBe('123');
+      expect(localStorage.getItem('aurelia_id_token')).toBe('123');
       done();
     });
 

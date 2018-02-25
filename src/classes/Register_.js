@@ -238,29 +238,29 @@ class Register_ {
   //   return runFetch(fetchClient, process.env.BackendUrl + '/auth/resetpass', fetchData);
   // }
 
-  logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userEmail');
-    let feurl = 'http://localhost:7000';
-      /* istanbul ignore if */
-    if (process.env.FrontendUrl !== undefined) {
-      feurl = process.env.FrontendUrl;
-    }
-    let hideWithAuth = document.getElementsByClassName('HideWAuth')[0];
-    hideWithAuth.style.display = 'block';
-    let showWithAuth = document.getElementsByClassName('ShowWAuth')[0];
-    showWithAuth.style.display = 'none';
-    window.location.href = feurl + '/';
-  }
+  // logout() {
+  //   localStorage.removeItem('token');
+  //   localStorage.removeItem('userEmail');
+  //   let feurl = 'http://localhost:7000';
+  //     /* istanbul ignore if */
+  //   if (process.env.FrontendUrl !== undefined) {
+  //     feurl = process.env.FrontendUrl;
+  //   }
+  //   let hideWithAuth = document.getElementsByClassName('HideWAuth')[0];
+  //   hideWithAuth.style.display = 'block';
+  //   let showWithAuth = document.getElementsByClassName('ShowWAuth')[0];
+  //   showWithAuth.style.display = 'none';
+  //   window.location.href = feurl + '/';
+  // }
 
-  userAccount() {
-    let feurl = 'http://localhost:7000';
-      /* istanbul ignore if */
-    if (process.env.FrontendUrl !== undefined) {
-      feurl = process.env.FrontendUrl;
-    }
-    window.location.href = feurl + '/userutil/?form=prefs';
-  }
+  // userAccount() {
+  //   let feurl = 'http://localhost:7000';
+  //     /* istanbul ignore if */
+  //   if (process.env.FrontendUrl !== undefined) {
+  //     feurl = process.env.FrontendUrl;
+  //   }
+  //   window.location.href = feurl + '/userutil/?form=prefs';
+  // }
 
 }
 

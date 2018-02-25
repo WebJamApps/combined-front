@@ -41,7 +41,7 @@ export class App {
   }
 
   checkIfLoggedIn() {
-    let token = localStorage.getItem('token');
+    let token = localStorage.getItem('aurelia_id_token');
     //console.log(token);
     if (token !== null) {
       this.auth.setToken(token);
