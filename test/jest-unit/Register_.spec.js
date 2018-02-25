@@ -264,18 +264,18 @@ test('it does not initiates an email varification', () => {
   });
 });
 
-test('logs out the user', () => {
-  const mockStorage = {setItem: function(item, value) {
-    //do nothing
-  }, removeItem: function(item) {
-    //do nothing
-  }};
-  window.localStorage = mockStorage;
-  document.body.innerHTML += '<div class="loginerror"></div><div class="ShowWAuth"></div><div class="HideWAuth"></div>';
-  reg.logout();
-  let showA = document.getElementsByClassName('ShowWAuth')[0];
-  expect(showA.style.display).toBe('none');
-});
+// test('logs out the user', () => {
+//   const mockStorage = {setItem: function(item, value) {
+//     //do nothing
+//   }, removeItem: function(item) {
+//     //do nothing
+//   }};
+//   window.localStorage = mockStorage;
+//   document.body.innerHTML += '<div class="loginerror"></div><div class="ShowWAuth"></div><div class="HideWAuth"></div>';
+//   reg.logout();
+//   let showA = document.getElementsByClassName('ShowWAuth')[0];
+//   expect(showA.style.display).toBe('none');
+// });
 
 // test('it displays account and logout buttons when the user is logged in', () => {
 //   const mockStorage = {getItem: function(item, value) {
@@ -316,9 +316,9 @@ test('logs out the user', () => {
 //   expect(document.getElementsByClassName('HideWAuth')[0].style.display).toBe('block');
 // });
 
-test('it navigates to the user preferences page', () => {
-  reg.userAccount();
-});
+// test('it navigates to the user preferences page', () => {
+//   reg.userAccount();
+// });
 
 test('it hides the registration form', () => {
   document.body.innerHTML = '<div><div class="RegistrationForm" style="display:block"></div></div>';

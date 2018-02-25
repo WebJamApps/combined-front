@@ -37,8 +37,17 @@ export class App {
       'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
       'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     this.states.sort();
-
     await this.checkUser();
+  }
+
+  checkIfLoggedIn() {
+    let token = localStorage.getItem('aurelia_id_token');
+    //console.log(token);
+    if (token !== null) {
+      this.auth.setToken(token);
+      this.authenticated = true;
+      this.router.navigate('dashboard');
+    }
   }
 
   async checkUser(){
@@ -133,8 +142,9 @@ export class App {
   logout() {
     this.appState.setUser({});
     this.authenticated = false;
-    window.localStorage.removeItem('userEmail');
-    window.localStorage.removeItem('aurelia_id_token');
+    localStorage.clear();
+    // window.localStorage.removeItem('userEmail');
+    // window.localStorage.removeItem('aurelia_id_token');
     if (this.role !== 'Charity' && this.role !== 'Volunteer'){
       this.auth.logout('/')
       .then(() => {

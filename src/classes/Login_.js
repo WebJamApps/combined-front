@@ -141,7 +141,12 @@ class Login_ {
         'Content-Type': 'application/json'
       }
     };
-    return runFetch(fetchClient, process.env.BackendUrl, '/auth/resetpass', fetchData, null, null, loginEmail);
+    let backend = '';
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production'){
+      backend = process.env.BackendUrl;
+    }
+    return runFetch(fetchClient, backend, '/auth/resetpass', fetchData, null, null, loginEmail);
   }
 
   logMeIn(evt) {
@@ -166,7 +171,12 @@ class Login_ {
         'Content-Type': 'application/json'
       }
     };
-    return runFetch(fetchClient, process.env.BackendUrl, '/auth/login', fetchData, generateSession, appName, null);
+    let backend = '';
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production'){
+      backend = process.env.BackendUrl;
+    }
+    return runFetch(fetchClient, backend, '/auth/login', fetchData, generateSession, appName, null);
   }
 
   runFetch(fetchClient, url, route, fetchData, generateSession, appName, loginEmail) {
@@ -184,6 +194,7 @@ class Login_ {
       front = front.replace('/login', '');
       if (data.token !== undefined) {
         localStorage.setItem('aurelia_id_token', data.token);
+        //localStorage.setItem('token', data.token);
         localStorage.setItem('userEmail', data.email);
         loginform1[0].style.display = 'none';
         console.log(front);

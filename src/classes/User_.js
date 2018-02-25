@@ -8,7 +8,7 @@ class User_ {
     this.changeEmail = this.searchParams.get('changeemail');
     this.formType = '';
     this.formType += this.searchParams.get('form');
-    this.userToken = localStorage.getItem('token');
+    this.userToken = localStorage.getItem('aurelia_id_token');
     this.verifyEmail();
   }
 
@@ -126,7 +126,12 @@ class User_ {
         'Content-Type': 'application/json'
       }
     };
-    return runFetch(fetchClient, process.env.BackendUrl, '/auth/validemail', fetchData);
+    let backend = '';
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production'){
+      backend = process.env.BackendUrl;
+    }
+    return runFetch(fetchClient, backend, '/auth/validemail', fetchData);
   }
 
   resetPasswd(evt) {
@@ -134,7 +139,12 @@ class User_ {
     let runFetch = evt.target.runFetch;
     let bodyData = {'email': document.getElementsByClassName('email')[0].value, 'resetCode': document.getElementsByClassName('code')[0].value, 'password': document.getElementsByClassName('loginpass')[0].value };
     let fetchData = { method: 'PUT', body: JSON.stringify(bodyData), headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}};
-    return runFetch(fetchClient, process.env.BackendUrl, '/auth/passwdreset', fetchData);
+    let backend = '';
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production'){
+      backend = process.env.BackendUrl;
+    }
+    return runFetch(fetchClient, backend, '/auth/passwdreset', fetchData);
   }
 
   runFetch(fetchClient, url, route, fetchData) {
@@ -148,10 +158,10 @@ class User_ {
         localStorage.setItem('userEmail', document.getElementsByClassName('email')[0].value);
         let regform1 = document.getElementsByClassName('RegistrationForm');
         regform1[0].style.display = 'none';
-        let feurl = 'http://localhost:7000';
+        let feurl = 'http://localhost:9000';
           /* istanbul ignore if */
-        if (process.env.FrontendUrl !== undefined) {
-          feurl = process.env.FrontendUrl;
+        if (process.env.frontURL !== undefined) {
+          feurl = process.env.frontURL;
         }
         window.location.href = feurl + '/';
       }
@@ -165,10 +175,10 @@ class User_ {
     let regform1 = [];
     regform1 = document.getElementsByClassName(className);
     regform1[0].style.display = 'none';
-    let feurl = 'http://localhost:7000';
+    let feurl = 'http://localhost:9000';
       /* istanbul ignore if */
-    if (process.env.FrontendUrl !== undefined) {
-      feurl = process.env.FrontendUrl;
+    if (process.env.frontURL !== undefined) {
+      feurl = process.env.frontURL;
     }
     window.location.href = feurl + '/';
   }
@@ -186,7 +196,12 @@ class User_ {
         'Content-Type': 'application/json'
       }
     };
-    return runFetch(fetchClient, process.env.BackendUrl, '/auth/updateemail', fetchData);
+    let backend = '';
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production'){
+      backend = process.env.BackendUrl;
+    }
+    return runFetch(fetchClient, backend, '/auth/updateemail', fetchData);
   }
 }
 

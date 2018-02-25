@@ -63,11 +63,20 @@ describe('the Dashboard Module', () => {
       }, 10);
     });
 
-    // it('should check if updateCanSubmit', (done) => {
-    //   dashboard.user = {userType: ''};
-    //   dashboard.updateCanSubmit([{valid: false}]);
-    //   done();
-    // });
+    it('sets the token to be the aurelia token', (done) => {
+      localStorage.setItem('aurelia_id_token', '123');
+      //localStorage.removeItem('token');
+      dashboard.activate();
+      //expect(localStorage.getItem('token')).toBe('123');
+      done();
+    });
+
+    it('does not set the token if it already exists', (done) => {
+      localStorage.setItem('aurelia_id_token', '123');
+      dashboard.activate();
+      expect(localStorage.getItem('aurelia_id_token')).toBe('123');
+      done();
+    });
 
     it('should default to Volunteer only when a new ohaf user', (done) => {
       dashboard.user = {userType: '', isOhafUser: true};
