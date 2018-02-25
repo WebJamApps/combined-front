@@ -111,3 +111,22 @@ exports.showSlides = function(idArray) {
     }
   });
 };
+
+exports.startSlides = function(idArray1, errorMsg, idArray2){
+  let slideshowTimer = setInterval(function(){
+    let foundElement = false;
+    idArray1.forEach(function(id){
+      let tempMS = document.getElementById(id);
+      if(tempMS !== null && tempMS !== undefined){
+        tempMS.style.display = 'none';
+      }else{
+        foundElement = true;
+      }
+    });
+    if(!(foundElement)){
+      console.log(errorMsg);
+      return clearInterval(slideshowTimer);
+    }
+    exports.showSlides(idArray2);
+  }, 5400);
+};
