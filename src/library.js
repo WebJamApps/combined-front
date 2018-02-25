@@ -1,5 +1,5 @@
 import {bindable} from 'aurelia-framework';
-import {showSlides} from './commons/utils.js';
+import {startSlides} from './commons/utils.js';
 export class Library {
 
   @bindable
@@ -25,21 +25,7 @@ export class Library {
   }
 
   attached() {
-    let lTimer = setInterval(function(){
-      let ms1 = document.getElementById('lSlide1');
-      let ms2 = document.getElementById('lSlide2');
-      if (ms1 !== null && ms1 !== undefined){
-        ms1.style.display = 'none';
-      }
-      if (ms2 !== null && ms1 !== undefined){
-        ms2.style.display = 'none';
-      }
-      if ((ms1 === undefined || ms1 === null) && (ms2 === undefined || ms2 === null)) {
-        console.log('you left the library page');
-        return clearInterval(lTimer);
-      }
-      showSlides(['libslideshow1', 'libslideshow']);
-    }, 5400);
+    startSlides(['lSlide1', 'lSlide2'], 'you left the library page', ['libslideshow1', 'libslideshow']);
   }
 
 }

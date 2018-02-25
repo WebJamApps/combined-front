@@ -23,7 +23,7 @@ describe('the OhafHome Module', () => {
   }, 5550);
 
   it('shows slides when component is attached', (done) => {
-    document.body.innerHTML = '<div id="musicSlide1"><div></div></div><div id="musicSlide2"><div></div></div>';
+    document.body.innerHTML = '<div id="musicSlide1"><div></div></div><div id="slideshow1"><div class="mySlides"><img src="https://static.pexels.com/photos/2422/sky-earth-galaxy-universe.jpg" /></div></div> <div id="musicSlide2"><div></div></div><div id="slideshow"><div class="mySlides"><img src="https://static.pexels.com/photos/2422/sky-earth-galaxy-universe.jpg" /></div></div>';
     ohaf.attached();
     setTimeout(() => {
       expect(document.getElementById('musicSlide1')).not.toBe(null);

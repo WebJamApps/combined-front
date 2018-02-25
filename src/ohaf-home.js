@@ -1,6 +1,6 @@
 // import {Router} from 'aurelia-router';
 // import {inject} from 'aurelia-framework';
-import {showSlides} from './commons/utils.js';
+import {startSlides} from './commons/utils.js';
 // @inject(Router)
 export class OhafHome {
   // constructor(router) {
@@ -35,21 +35,7 @@ export class OhafHome {
   }
 
   attached() {
-    let ohafTimer = setInterval(function(){
-      let ms1 = document.getElementById('musicSlide1');
-      let ms2 = document.getElementById('musicSlide2');
-      if (ms1 !== null && ms1 !== undefined){
-        ms1.style.display = 'none';
-      }
-      if (ms2 !== null && ms1 !== undefined){
-        ms2.style.display = 'none';
-      }
-      if ((ms1 === undefined || ms1 === null) && (ms2 === undefined || ms2 === null)) {
-        console.log('you left the ohaf page');
-        return clearInterval(ohafTimer);
-      }
-      showSlides(['slideshow1', 'slideshow']);
-    }, 5400);
+    startSlides(['musicSlide1', 'musicSlide2'], 'you left the ohaf page', ['slideshow1', 'slideshow']);
   }
 
 }
