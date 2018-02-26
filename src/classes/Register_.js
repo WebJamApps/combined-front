@@ -228,7 +228,11 @@ class Register_ {
           console.log('howdy');
           let front = window.location.href;
           front = front.replace('/register', '');
+          if(route === '/auth/resetpass'){
+            window.location.assign(front + '/userutil?email=' + data.email + '&form=reset');
+          } else {
           window.location.assign(front + '/userutil?email=' + data.email);
+          }
         }
       }
     })
