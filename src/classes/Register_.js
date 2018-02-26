@@ -191,6 +191,28 @@ class Register_ {
     }
     return runFetch(fetchClient, backend + '/auth/signup', fetchData);
   }
+  
+    resetpass(evt) {
+    let fetchClient = evt.target.fetchClient;
+    let runFetch = evt.target.runFetch;
+    let loginEmail = '';
+    loginEmail = document.getElementsByClassName('email')[0].value;
+    let bodyData = {'email': loginEmail };
+    let fetchData = {
+      method: 'PUT',
+      body: JSON.stringify(bodyData),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    };
+       let backend = '';
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production'){
+      backend = process.env.BackendUrl;
+    }
+    return runFetch(fetchClient, backend + '/auth/resetpass', fetchData);
+  }
 
   runFetch(fetchClient, url, route, fetchData) {
     let messagediv = document.getElementsByClassName('registererror')[0];
