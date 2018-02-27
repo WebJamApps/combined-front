@@ -2,7 +2,7 @@
 // import {App} from './app';
 // import {Router} from 'aurelia-router';
 //import {activationStrategy} from 'aurelia-router';
-import {startSlides} from './commons/utils.js';
+import {showSlides} from './commons/utils.js';
 // @inject(App, Router)
 // @inject(App)
 export class Music {
@@ -66,6 +66,17 @@ export class Music {
   // }
 
   attached() {
-    startSlides(['musicSlide1'], 'you left the music page', ['slideshowMusic']);
+    //this.slideIndex = 0;
+    //$('#slideshow > div:gt(0)').hide();
+    let musicTimer = setInterval(function(){
+      let ms1 = document.getElementById('musicSlide1');
+      if (ms1 !== null && ms1 !== undefined){
+        ms1.style.display = 'none';
+      } else {
+        console.log('you left the music page');
+        return clearInterval(musicTimer);
+      }
+      showSlides(['slideshowMusic']);
+    }, 5400);
   }
 }

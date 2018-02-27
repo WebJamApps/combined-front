@@ -63,6 +63,16 @@ describe('the App module', () => {
     expect(app1.auth.getTokenPayload()).toBe(window.localStorage.getItem('aurelia_id_token'));
     done();
   });
+  it('check if user is logged in when token is not in local storage', (done) => {
+    window.localStorage.clear();
+    //app1.authenticated = true;
+    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
+    app1.configureRouter(configStub, RouterStub);
+    app1.router.navigate = function(){};
+    app1.checkIfLoggedIn();
+    //expect(app1.authenticated).toBe(false);
+    done();
+  });
   it('configures the router', (done) => {
     let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
     app1.configureRouter(configStub, RouterStub);
