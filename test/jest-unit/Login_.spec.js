@@ -27,7 +27,7 @@ test('generates a login form without userid', () => {
 
 test('initiates a reset password request', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('PATRIC');
+  reg.loginUser('');
   document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
   const mockfetch = function(url, data) {
     this.headers = {};
