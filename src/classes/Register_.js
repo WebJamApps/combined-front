@@ -189,12 +189,34 @@ class Register_ {
     if (process.env.NODE_ENV !== 'production'){
       backend = process.env.BackendUrl;
     }
-    return runFetch(fetchClient, backend + '/auth/signup', fetchData);
+    return runFetch(fetchClient, backend, '/auth/signup', fetchData);
+  }
+
+  resetpass(evt) {
+    let fetchClient = evt.target.fetchClient;
+    let runFetch = evt.target.runFetch;
+    let loginEmail = '';
+    loginEmail = document.getElementsByClassName('email')[0].value;
+    let bodyData = {'email': loginEmail };
+    let fetchData = {
+      method: 'PUT',
+      body: JSON.stringify(bodyData),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    };
+    let backend = '';
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production'){
+      backend = process.env.BackendUrl;
+    }
+    return runFetch(fetchClient, backend, '/auth/resetpass', fetchData);
   }
 
   runFetch(fetchClient, url, route, fetchData) {
     let messagediv = document.getElementsByClassName('registererror')[0];
-    return fetchClient(url, route, fetchData)
+    return fetchClient(url + route, fetchData)
     .then((response) => response.json())
     .then((data) => {
       if (data.message) {
@@ -206,7 +228,12 @@ class Register_ {
           console.log('howdy');
           let front = window.location.href;
           front = front.replace('/register', '');
-          window.location.assign(front + '/userutil?email=' + data.email);
+          if (route === '/auth/resetpass'){
+            console.log('am i here?');
+            window.location.assign(front + '/userutil?email=' + data.email + '&form=reset');
+          } else {
+            window.location.assign(front + '/userutil?email=' + data.email);
+          }
         }
       }
     })

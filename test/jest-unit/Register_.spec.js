@@ -264,6 +264,25 @@ test('it does not initiates an email varification', () => {
   });
 });
 
+test('initiates a reset password request', () => {
+  //document.body.innerHTML = '<div class="home"></div>';
+  //reg.loginUser('');
+  document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
+  const mockfetch = function(url, data) {
+    this.headers = {};
+    this.headers.url = url;
+    this.headers.method = data.method;
+    return Promise.resolve({
+      Headers: this.headers,
+      json: () => Promise.resolve({email: 'joe@smith.com'})
+    });
+  };
+  let evt = {target: {fetchClient: mockfetch, appName: 'PATRIC', runFetch: reg.runFetch}};
+  reg.resetpass(evt).then((data) => {
+    expect(data.message).toBe(null);
+  });
+});
+
 // test('logs out the user', () => {
 //   const mockStorage = {setItem: function(item, value) {
 //     //do nothing
