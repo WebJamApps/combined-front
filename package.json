@@ -28,7 +28,7 @@
     "snyk-protect": "snyk protect",
     "eslint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
-    "postinstall": "npm run fix:aurelia-val && npm run eslint:fix && npm run postinstall:backend",
+    "postinstall": "npm run fix:aurelia-val && npm run postinstall:backend",
     "prepublish": "npm run snyk-protect",
     "prepare": "npm run snyk-protect"
   },
