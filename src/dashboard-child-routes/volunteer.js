@@ -42,12 +42,12 @@ export class Volunteer {
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
     this.app.role = this.user.userType;
-    if (this.user.userDetails === 'newUser'){
-      this.app.router.navigate('dashboard/user-account');
-    } else {
-      await this.fetchAllEvents();
-      this.displayEvents();
-    }
+    // if (this.user.userDetails === 'newUser'){
+    //   this.app.router.navigate('dashboard/user-account');
+    // } else {
+    await this.fetchAllEvents();
+    this.displayEvents();
+    // }
   }
 
   async displayEvents(){

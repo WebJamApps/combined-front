@@ -18,6 +18,7 @@ export class UserAccount {
     this.status = ['enabled', 'disabled'];
     this.originalEmail = '';
     this.isGoogleEmail = false;
+    this.newUserType = '';
   }
 
   async activate() {
@@ -31,6 +32,7 @@ export class UserAccount {
     this.checkChangeUserType();
     this.userTypes.sort();
     this.setupValidation();
+    this.newUserType = this.user.userType;
   }
 
   checkUserEmail(){
@@ -188,6 +190,7 @@ export class UserAccount {
       this.user.changeemail = this.user.email;
       this.user.email = this.originalEmail;
     }
+    this.user.userType = this.newUserType;
     await this.app.updateById('/user/', this.uid, this.user, null);
     this.afterUpdateUser();
   }
