@@ -18,14 +18,14 @@ export class Dashboard {
   }
 
   async activate() {
-    this.userTypes = JSON.parse(process.env.userRoles).roles;
+    //this.userTypes = JSON.parse(process.env.userRoles).roles;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     window.localStorage.setItem('userEmail', this.user.email);
     /* istanbul ignore else */
-    if (this.user.userType === 'Developer'){
-      this.userTypes.push('Developer');
-    }
+    // if (this.user.userType === 'Developer'){
+    //   this.userTypes.push('Developer');
+    // }
     // if (localStorage.getItem('token') === null) {
     //   let newToken = localStorage.getItem('aurelia_id_token');
     //   if (newToken !== null) {
