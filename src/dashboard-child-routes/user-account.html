@@ -21,8 +21,8 @@
       <input value.two-way="user.email & validate" style="min-width:3in">
       <!-- <p><strong>Email:</strong> <i>${user.email}</i></p> -->
       <label style="margin-top:15px; padding-top:0;max-height:30px">Primary User Type (required)<span if.bind="!canChangeUserType">:<i style="font-weight:normal;"> ${user.userType}</i><br><br></span></label>
-      <select if.bind="canChangeUserType" id="type" class="form-control" value.bind="user.userType & validate" style="width: 2in; margin-bottom:20px">
-        <option value=""> </option>
+      <select if.bind="canChangeUserType" id="type" class="form-control" value.two-way="newUserType & validate" style="width: 2in; margin-bottom:20px">
+        <!-- <option value=""> </option> -->
         <option repeat.for="type of userTypes" model.bind="type">${type}</option>
       </select>
       <label if.bind="canChangeUserType" style="display: inline;margin-right:20px" repeat.for="stat of status">
