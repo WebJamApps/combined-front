@@ -80,6 +80,18 @@ describe('the UserAccount Module', () => {
     done();
   });
 
+  it('should activate and get the user type from appState', testAsync(async function(){
+    ua.app.appState.getUser = function(){
+      console.log('did I call this?');
+      return new Promise((resolve) => {
+        resolve({userType: 'monster', email: 'yo@yo.com'});
+      });
+    };
+    ua.setupValidation = function(){};
+    await ua.activate();
+    expect(ua.newUserType).toBe('monster');
+  }));
+
   it('should set charity', (done) => {
     ua.setCharity();
     done();
