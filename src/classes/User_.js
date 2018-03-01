@@ -28,10 +28,11 @@ class User_ {
     }
     emailVarifyForm.className = 'RegistrationForm elevation2';
     emailVarifyForm.style.maxWidth = '3in';
-    emailVarifyForm.innerHTML = '<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;">' + formTitle + '</h2><form style="min-height:2.5in">' +
+    emailVarifyForm.innerHTML = '<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;">' + formTitle + '</h2><form style="min-height:3.25in">' +
     '<div style="padding:2px; margin:10px;"><table><tbody class="regformtbody"><tr><th style="text-align:left">Email</th></tr><tr><td>' +
     '<input class="email" type="email" name="email" style="width:250px;min-width:0" value="" required>' +
-    '</td></tr>' + passInput + '<tr><td style="padding-bottom:0"><p class="codeNote" style="margin-bottom:0; font-size:10pt"><i>Check your email for a verification code.</i></p></td></tr>' + '<tr><th style="text-align:left; padding-top:0">Code</th></tr><tr><td>' +
+    '</td></tr>' + passInput + '<tr><td style="padding-bottom:0"><p class="codeNote" style="margin-bottom:0; font-size:10pt"><i>Check your email for a verification code.</i></p></td></tr>' +
+    '<tr><th style="text-align:left; padding-top:0">5-digit Code</th></tr><tr><td>' +
     '<input type="number" title="5 digit code" name="code" class="code" style="width:150px;min-width:0" required" value=""></td></tr>' +
     '</tbody></table></div><div style="text-align:center;padding:2px;margin:10px;">' +
     '<div><button style="display:none; margin-bottom:-30px;margin-left:12px" type="button" class="regbutton">Submit</button></div></div></form>' +
