@@ -28,14 +28,15 @@ class User_ {
     }
     emailVarifyForm.className = 'RegistrationForm elevation2';
     emailVarifyForm.style.maxWidth = '3in';
-    emailVarifyForm.innerHTML = '<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;">' + formTitle + '</h2><form style="min-height:2.5in">' +
+    emailVarifyForm.innerHTML = '<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;">' + formTitle + '</h2><form style="min-height:3.25in">' +
     '<div style="padding:2px; margin:10px;"><table><tbody class="regformtbody"><tr><th style="text-align:left">Email</th></tr><tr><td>' +
     '<input class="email" type="email" name="email" style="width:250px;min-width:0" value="" required>' +
-    '</td></tr>' + passInput + '<tr><td style="padding-bottom:0"><p class="codeNote" style="margin-bottom:0; font-size:10pt"><i>Check your email for a verification code.</i></p></td></tr>' + '<tr><th style="text-align:left; padding-top:0">Code</th></tr><tr><td>' +
+    '</td></tr>' + passInput + '<tr><td style="padding-bottom:0"><p class="codeNote" style="margin-bottom:0; font-size:10pt"><i>Check your email for a verification code.</i></p></td></tr>' +
+    '<tr><th style="text-align:left; padding-top:0">5-digit Code</th></tr><tr><td>' +
     '<input type="number" title="5 digit code" name="code" class="code" style="width:150px;min-width:0" required" value=""></td></tr>' +
     '</tbody></table></div><div style="text-align:center;padding:2px;margin:10px;">' +
     '<div><button style="display:none; margin-bottom:-30px;margin-left:12px" type="button" class="regbutton">Submit</button></div></div></form>' +
-    '<div class="loginerror" style="color:red"></div>';
+    '<div class="loginerror" style="color:red"></div><p>&nbsp;</p>';
     let home = document.getElementsByClassName('home');
     home[0].insertBefore(emailVarifyForm, home[0].childNodes[0]);
     this.fillInEmail(this.userEmail, this.changeEmail);
@@ -86,6 +87,7 @@ class User_ {
   }
 
   validateForm(evt) {
+    document.getElementsByClassName('loginerror')[0].innerHTML = '';
     this.formType = evt.target.formType;
     let newpasswd = document.getElementsByClassName('loginpass')[0];
     let isemailvalid = document.getElementsByClassName('email')[0].checkValidity();
@@ -98,17 +100,40 @@ class User_ {
     console.log(edot.length);
     console.log(this.formType);
     if (this.formType === 'reset') {
-      if (newpasswd.checkValidity() && isemailvalid && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
+      let validPassword = newpasswd.checkValidity();
+      if (validPassword && isemailvalid && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
         submitbutton.style.display = 'block';
+        document.getElementsByClassName('loginerror')[0].innerHTML = '';
       } else {
         submitbutton.style.display = 'none';
+        let errorMessage = '<ul style="margin-right:20px; margin-top:-30px; margin-bottom:20px">';
+        if (!validPassword){
+          errorMessage += '<li style="font-size:9.5pt">password must be at least 8 characters</li>';
+        }
+        if (!(isemailvalid && (edot.length > 1))){
+          errorMessage +=  '<li style="font-size:9.5pt">email address is not valid</li>';
+        }
+        if (!(isvalidcode > 9999 && isvalidcode < 100000)){
+          errorMessage += '<li style="font-size:9.5pt">invalid passcode</li>';
+        }
+        errorMessage += '</ul><p>&nbsp;</p>';
+        document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
       }
     } else {
       if (isemailvalid && isvalidcode !== '' && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
         submitbutton.style.display = 'block';
         document.getElementsByClassName('loginerror')[0].innerHTML = '';
       } else {
+        let errorMessage = '<ul style="margin-right:20px">';
         submitbutton.style.display = 'none';
+        if (!(isvalidcode > 9999 && isvalidcode < 100000)){
+          errorMessage += '<li>invalid passcode</li>';
+        }
+        if (!isemailvalid || !(edot.length > 1)){
+          errorMessage += '<li>invalid email address</li>';
+        }
+        errorMessage += '</ul><p>&nbsp;</p>';
+        document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
       }
     }
   }
