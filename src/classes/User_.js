@@ -3,7 +3,6 @@ class User_ {
   constructor() {
     this.fetch = Fetch;
     this.searchParams = new URLSearchParams(window.location.search);
-    // this.uid = '';
     this.userEmail = this.searchParams.get('email');
     this.changeEmail = this.searchParams.get('changeemail');
     this.formType = '';
@@ -35,8 +34,8 @@ class User_ {
     '<tr><th style="text-align:left; padding-top:0">5-digit Code</th></tr><tr><td>' +
     '<input type="number" title="5 digit code" name="code" class="code" style="width:150px;min-width:0" required" value=""></td></tr>' +
     '</tbody></table></div><div style="text-align:center;padding:2px;margin:10px;">' +
-    '<div><button style="display:none; margin-bottom:-30px;margin-left:12px" type="button" class="regbutton">Submit</button></div></div></form>' +
-    '<div class="loginerror" style="color:red"></div><p>&nbsp;</p>';
+    '<div class="loginerror" style="color:red"></div>' +
+    '<div><button style="display:none; margin-bottom:-30px;margin-left:12px" type="button" class="regbutton">Submit</button></div></div></form>';
     let home = document.getElementsByClassName('home');
     home[0].insertBefore(emailVarifyForm, home[0].childNodes[0]);
     this.fillInEmail(this.userEmail, this.changeEmail);
@@ -106,7 +105,7 @@ class User_ {
         document.getElementsByClassName('loginerror')[0].innerHTML = '';
       } else {
         submitbutton.style.display = 'none';
-        let errorMessage = '<ul style="margin-right:20px; margin-top:-30px; margin-bottom:20px">';
+        let errorMessage = '<ul style="margin-right:0; margin-top:0; margin-bottom:20px;text-align:left">';
         if (!validPassword){
           errorMessage += '<li style="font-size:9.5pt">password must be at least 8 characters</li>';
         }
@@ -124,7 +123,7 @@ class User_ {
         submitbutton.style.display = 'block';
         document.getElementsByClassName('loginerror')[0].innerHTML = '';
       } else {
-        let errorMessage = '<ul style="margin-right:20px">';
+        let errorMessage = '<ul style="margin-right:20px;text-align:left">';
         submitbutton.style.display = 'none';
         if (!(isvalidcode > 9999 && isvalidcode < 100000)){
           errorMessage += '<li>invalid passcode</li>';
