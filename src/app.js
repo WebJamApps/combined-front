@@ -50,6 +50,19 @@ export class App {
     }
   }
 
+  authenticate(name){
+    let ret;
+    if (this.appState.isOhafLogin){
+      ret = this.auth.authenticate(name, false, {'isOhafUser': true });
+    } else {
+      ret = this.auth.authenticate(name, false, {'isOhafUser': false });
+    }
+    ret.then((data) => {
+      this.auth.setToken(data.token);
+    }, undefined);
+    return ret;
+  }
+
   async checkUser(){
     if (this.auth.isAuthenticated()) {
       this.authenticated = true; //Logout element is reliant upon a local var;
