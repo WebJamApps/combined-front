@@ -215,4 +215,10 @@ export class UserAccount {
     nub.style.display = 'block';
   }
 
+  attached(){
+    console.log(this.controller);
+    console.log(this.validator);
+    this.controller.validate();
+  }
+
 }

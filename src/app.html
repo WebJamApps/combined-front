@@ -44,7 +44,7 @@
               <span if.bind="fullmenu" class="nav-item">User Account</span>
             </a>
           </div>
-          <div class="menu-item" if.bind="(Menu == 'wj' && currentRoute !=='sc2rs') || Menu =='user-account' || Menu =='volunteer' || Menu =='charity' || Menu =='user-account'">
+          <div class="menu-item" if.bind="(Menu == 'wj' && currentRoute !=='sc2rs') || Menu =='volunteer' || Menu =='charity' || (Menu =='user-account' && (role =='Charity' || role =='Volunteer'))">
             <a paper-drawer-toggle href="/ohaf" class="nav-link" click.delegate="close()">
               <span class="fa fa-handshake-o"></span>
               <span class="nav-item" if.bind="fullmenu">OHAF</span>
@@ -56,13 +56,13 @@
               <span class="nav-item" if.bind="fullmenu">SC2RS</span>
             </a>
           </div>
-          <div class="menu-item" if.bind="(Menu=='wj' && curentRoute !=='library' && currentRoute !=='sc2rs') || Menu=='reader' || Menu=='librarian' || Menu=='bookshelf'">
+          <div class="menu-item" if.bind="(Menu=='wj' && curentRoute !=='library' && currentRoute !=='sc2rs') || Menu=='reader' || Menu=='librarian' || Menu=='bookshelf' || (currentRouteFrag =='/dashboard/user-account' && (role == 'Librarian' || role == 'Reader'))">
             <a paper-drawer-toggle href="/library" class="nav-link" click.delegate="close()">
               <span class="fa fa-book"></span>
               <span class="nav-item" if.bind="fullmenu">Library</span>
             </a>
           </div>
-          <div class="menu-item" if.bind="Menu=='bookshelf' || Menu=='reader' || Menu=='librarian' || Menu=='developer' || Menu=='library'">
+          <div class="menu-item" if.bind="Menu=='reader' || Menu=='librarian' || Menu=='developer' || Menu=='library'">
             <a paper-drawer-toggle href="/bookshelf" class="nav-link" click.delegate="close()">
               <span class="fa fa-book"></span>
               <span class="nav-item" if.bind="fullmenu">Bookshelf</span>
@@ -122,13 +122,7 @@
               <span class="nav-item" if.bind="fullmenu">Buy Music</span>
             </a>
           </div>
-          <!-- <div class="menu-item" if.bind="Menu =='music'">
-            <a paper-drawer-toggle href="/music/band" class="nav-link" click.delegate="close()">
-              <span class="fa fa-bus"></span>
-              <span class="nav-item" if.bind="fullmenu">Band</span>
-            </a>
-          </div> -->
-          <div class="menu-item" if.bind="Menu !='wj' || currentRoute=='login' || currentRoute=='register' || currentRoute=='sc2rs'">
+          <div class="menu-item" if.bind="(Menu !='wj' && currentRouteFrag !='/dashboard/charity' && currentRouteFrag !='/dashboard/volunteer' && currentRouteFrag !='/dashboard/librarian' && currentRouteFrag !='/dashboard/reader' && currentRouteFrag !='/dashboard/user-account')|| currentRoute=='login' || currentRoute=='register' || currentRoute=='sc2rs'">
             <a paper-drawer-toggle href="/" class="nav-link" click.delegate="close()">
               <span class="fa fa-home"></span>
               <span class="nav-item" if.bind="fullmenu">Web Jam LLC</span>
@@ -138,7 +132,6 @@
             <a paper-drawer-toggle class="nav-link" click.delegate="logout()" style=" padding-right:4px">
               <span class="fa fa-sign-out nav-item" style="cursor: pointer; cursor: hand;"></span>
             </a>
-            <!-- <span if.bind="fullmenu">&nbsp;</span> -->
             <button if.bind="fullmenu" click.delegate="logout()" class="material-content-button">
               Logout
             </button>

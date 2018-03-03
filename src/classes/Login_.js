@@ -1,13 +1,10 @@
-//import {inject} from 'aurelia-framework';
 const Fetch = require('isomorphic-fetch');
 const patric = require('../commons/patric.js');
-//import {App} from '../app';
-//@inject(App)
+
 class Login_ {
   constructor() {
     this.fetch = Fetch;
     this.appName = '';
-    //this.app = App;
   }
 
   createLoginForm(appName) {
@@ -31,9 +28,6 @@ class Login_ {
     '<button class="nevermind" style="margin-left:86px;margin-top:8px; margin-bottom:15px" type="button">Cancel</button></div></div></form>';
     let home = document.getElementsByClassName('home');
     home[0].insertBefore(loginform, home[0].childNodes[0]);
-    // let pArr = ['uidheader', 'uidinput', 'nevermind'];
-    // let nArr = ['emailheader', 'emailinput'];
-    // patric.showHideElements(appName, pArr, nArr);
     let elementsObj = {'PATRIC': ['patric', 'uidheader', 'uidinput'], 'nArr': ['emailheader', 'emailinput']};
     patric.showHideElements2(appName, elementsObj);
   }
@@ -50,7 +44,6 @@ class Login_ {
     loginButton.appName = appName;
     loginButton.fetchClient = this.fetch;
     loginButton.runFetch = this.runFetch;
-    //loginButton.checkIfLoggedIn = this.checkIfLoggedIn;
     loginButton.generateSession = this.generateSession;
     loginButton.addEventListener('click', this.logMeIn);
     let resetPB = document.getElementsByClassName('resetpass')[0];
