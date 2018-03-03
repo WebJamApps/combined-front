@@ -7,7 +7,6 @@ export class Register {
   constructor(app){
     this.app = app;
     this.registerClass = new Register_();
-    //this.login_Class = new Login_();
   }
 
   showRegister(app) {
@@ -17,33 +16,5 @@ export class Register {
   attached() {
     this.app.checkIfLoggedIn();
   }
-  // showLogin(app) {
-  //   this.login_Class.loginUser(app);
-  // }
 
-  // checkIfLoggedIn() {
-  //   let token = localStorage.getItem('token');
-  //   console.log(token);
-  //   if (token !== null) {
-  //     this.app.auth.setToken(token);
-  //     this.app.authenticated = true;
-  //     this.app.router.navigate('dashboard');
-  //   }
-  // }
-
-  authenticate(name){
-    //delete all login database objects
-    //create a new login database object, set isOhafLogin attribute
-    //console.log('in auth');
-    let ret;
-    if (this.app.appState.isOhafLogin){
-      ret = this.app.auth.authenticate(name, false, {'isOhafUser': true });
-    } else {
-      ret = this.app.auth.authenticate(name, false, {'isOhafUser': false });
-    }
-    ret.then((data) => {
-      this.app.auth.setToken(data.token);
-    }, undefined);
-    return ret;
-  }
 }
