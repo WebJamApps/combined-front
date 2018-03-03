@@ -66,6 +66,12 @@ test('it hides submit button if the email varification form is invalid', () => {
   user.validateForm(evt);
   let sbutton = document.getElementsByClassName('regbutton')[0];
   expect(sbutton.style.display).toBe('none');
+  document.getElementsByClassName('email')[0].value = 'joesmith@joe.com';
+  document.getElementsByClassName('email')[0].checkValidity = function() {return true;};
+  document.getElementsByClassName('code')[0].checkValidity = function() {return false;};
+  document.getElementsByClassName('code')[0].value = '123459';
+  user.validateForm(evt);
+  expect(sbutton.style.display).toBe('none');
 });
 
 test('it hides submit button if the reset password form is invalid', () => {
@@ -73,11 +79,21 @@ test('it hides submit button if the reset password form is invalid', () => {
   let evt = {target: {formType: 'reset'}};
   document.getElementsByClassName('email')[0].value = 'joesmith.com';
   document.getElementsByClassName('code')[0].value = '12345';
-  document.getElementsByClassName('email')[0].checkValidity = function() {return true;};
-  document.getElementsByClassName('code')[0].checkValidity = function() {return true;};
+  document.getElementsByClassName('email')[0].checkValidity = function() {return false;};
+  document.getElementsByClassName('code')[0].checkValidity = function() {return false;};
   document.getElementsByClassName('loginpass')[0].checkValidity = function() {return false;};
   user.validateForm(evt);
   let sbutton = document.getElementsByClassName('regbutton')[0];
+  expect(sbutton.style.display).toBe('none');
+  document.getElementsByClassName('email')[0].value = 'joesmith@.com';
+  document.getElementsByClassName('email')[0].checkValidity = function() {return true;};
+  document.getElementsByClassName('code')[0].checkValidity = function() {return true;};
+  document.getElementsByClassName('code')[0].value = '123459';
+  user.validateForm(evt);
+  expect(sbutton.style.display).toBe('none');
+  document.getElementsByClassName('loginpass')[0].checkValidity = function() {return true;};
+  document.getElementsByClassName('email')[0].checkValidity = function() {return false;};
+  user.validateForm(evt);
   expect(sbutton.style.display).toBe('none');
 });
 

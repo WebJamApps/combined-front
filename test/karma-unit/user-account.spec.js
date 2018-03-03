@@ -259,4 +259,17 @@ describe('the UserAccount Module', () => {
     await ua.deleteUser();
     expect(ua.check).toBe(false);
   }));
+
+  it('validates the update user form after page loads', (done) => {
+    document.body.innerHTML = '<div class="formErrors"></div>';
+    app = new App(auth, new HttpStub2());
+    app.router = new RouterStub();
+    app.activate();
+    ua = new UserAccount(app, new VCMock(), new ValidatorMock());
+    ua.user = {name: 'Iddris Elba', email: 'j@gmail.com', userType: 'Charity', _id: '3333333', changeemail: 'yo@yo.com'};
+    ua.controller.validate = function(){};
+    ua.attached();
+    //expect(document.getElementsByClassName('formErrors')[0].innerHTML).not.toBe('');
+    done();
+  });
 });
