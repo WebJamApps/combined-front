@@ -4,7 +4,7 @@ let reg = new Register_();
 
 test('generates a registration form for PATRIC', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('PATRIC');
+  reg.startup('PATRIC');
   let regform = document.getElementsByClassName('RegistrationForm');
   expect(regform[0]).toBeDefined();
   expect(document.getElementsByClassName('userIdRow')[0].style.display).toBe('block');
@@ -12,7 +12,7 @@ test('generates a registration form for PATRIC', () => {
 
 test('generates a registration form for another app', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register();
+  reg.startup();
   let regform = document.getElementsByClassName('RegistrationForm');
   expect(regform[0]).toBeDefined();
   expect(document.getElementsByClassName('userIdRow')[0].style.display).toBe('none');
@@ -20,7 +20,7 @@ test('generates a registration form for another app', () => {
 
 test('hides a registration form with click Cancel button', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register();
+  reg.startup();
   document.getElementsByClassName('nevermind')[0].click();
   let regform = document.getElementsByClassName('RegistrationForm');
   expect(regform[0].style.display).toBe('none');
@@ -28,7 +28,7 @@ test('hides a registration form with click Cancel button', () => {
 
 test('updates the registration form after selection of primary app is PATRIC', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('');
+  reg.startup('');
   document.getElementsByClassName('pas')[0].value = 'PATRIC';
   reg.updateRegForm();
   let uidRowStuff = document.getElementsByClassName('userIdRow')[0];
@@ -37,7 +37,7 @@ test('updates the registration form after selection of primary app is PATRIC', (
 
 test('updates the registration form after selection of primary app is not PATRIC', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('');
+  reg.startup('');
   document.getElementsByClassName('pas')[0].value = '';
   reg.updateRegForm();
   let uidRowStuff = document.getElementsByClassName('userIdRow')[0];
@@ -46,14 +46,14 @@ test('updates the registration form after selection of primary app is not PATRIC
 
 test('generates a registration form without userid', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('DifferentApp');
+  reg.startup('DifferentApp');
   let userIdRow = document.getElementsByClassName('userIdRow')[0];
   expect(userIdRow.style.display).toBe('none');
 });
 
 test('hides the submit button when registration form is not valid email', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('');
+  reg.startup('');
   document.getElementsByClassName('pas')[0].value = 'other';
   document.getElementsByClassName('pas')[0].style.display = 'block';
   document.getElementsByClassName('email')[0].value = 'google.@gmail.com';
@@ -67,7 +67,7 @@ test('hides the submit button when registration form is not valid email', () => 
 
 test('hides the submit button when registration form is not valid name', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('password')[0].checkValidity = function() {return true;};
   document.getElementsByClassName('email')[0].checkValidity = function() {return true;};
   document.getElementsByClassName('firstname')[0].value = '';
@@ -79,7 +79,7 @@ test('hides the submit button when registration form is not valid name', () => {
 
 test('hides the submit button when registration form is not valid password', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('email')[0].value = 'google.@gb.com';
   document.getElementsByClassName('firstname')[0].value = 'Bob';
   document.getElementsByClassName('lastname')[0].value = 'Smith';
@@ -93,7 +93,7 @@ test('hides the submit button when registration form is not valid password', () 
 
 test('shows the submit button when registration form is valid', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('firstname')[0].value = 'Joe';
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
@@ -112,7 +112,7 @@ test('shows the submit button when registration form is valid', () => {
 
 test('shows the submit button when registration form uses a Google email with PATRIC', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('firstname')[0].value = 'Joe';
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@gmail.com';
@@ -132,7 +132,7 @@ test('shows the submit button when registration form uses a Google email with PA
 
 test('hides register button when email format is not valid', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('firstname')[0].value = 'Joe';
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
@@ -152,7 +152,7 @@ test('hides register button when email format is not valid', () => {
 test('create a new user for another app', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.appName = '';
-  reg.register();
+  reg.startup();
   document.getElementsByClassName('firstname')[0].value = 'Joe';
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
@@ -177,7 +177,7 @@ test('create a new user for another app', () => {
 
 test('it does not create a new user when there is an response error message from post', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('firstname')[0].value = 'Joe';
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
@@ -201,7 +201,7 @@ test('it does not create a new user when there is an response error message from
 
 test('it catches error on create a new user', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('firstname')[0].value = 'Joe';
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
@@ -222,7 +222,7 @@ test('it catches error on create a new user', () => {
 
 test('it initiates an email varification', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('firstname')[0].value = 'Joe';
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
@@ -244,7 +244,7 @@ test('it initiates an email varification', () => {
 
 test('it does not initiates an email varification', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.register('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('firstname')[0].value = 'Joe';
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
@@ -265,8 +265,6 @@ test('it does not initiates an email varification', () => {
 });
 
 test('initiates a reset password request', () => {
-  //document.body.innerHTML = '<div class="home"></div>';
-  //reg.loginUser('');
   document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
   const mockfetch = function(url, data) {
     this.headers = {};
@@ -341,7 +339,7 @@ test('initiates a reset password request', () => {
 
 test('it hides the registration form', () => {
   document.body.innerHTML = '<div><div class="RegistrationForm" style="display:block"></div></div>';
-  //reg.register('otherapp');
+  //reg.startup('otherapp');
   reg.patric.nevermind('RegistrationForm');
   expect(document.getElementsByClassName('RegistrationForm')[0].style.display).toBe('none');
 });

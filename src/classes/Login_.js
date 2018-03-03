@@ -32,7 +32,7 @@ class Login_ {
     patric.showHideElements2(appName, elementsObj);
   }
 
-  loginUser(appName) {
+  startup(appName) {
     this.createLoginForm(appName);
     let emailInput = document.getElementsByClassName('loginemail')[0];
     this.setEvents(emailInput, appName);
