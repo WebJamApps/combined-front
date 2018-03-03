@@ -36,7 +36,7 @@ class Register_ {
     patric.showHideElements2(this.appName, elementsObj);
   }
 
-  register(appName) {
+  startup(appName) {
     this.appName = appName;
     this.createRegistrationForm(this.appName);
     let firstNameInput = document.getElementsByClassName('firstname')[0];

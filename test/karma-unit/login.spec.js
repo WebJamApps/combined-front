@@ -54,9 +54,10 @@ describe('the Login module', () => {
     done();
   });
 
-  it('should show login with appName', (done) => {
+  it('displays login form with appName', (done) => {
     document.body.innerHTML = '<div class="home"></div>';
-    login.showLogin('webjam llc');
+    login.app.showForm('webjam llc', login.login_Class);
+    expect(document.getElementsByClassName('home')[0].innerHTML).not.toBe('');
     done();
   });
 });

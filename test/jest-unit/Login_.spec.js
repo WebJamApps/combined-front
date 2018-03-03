@@ -5,14 +5,14 @@ let reg = new Login_();
 
 test('generates a login form', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('PATRIC');
+  reg.startup('PATRIC');
   let regform = document.getElementsByClassName('LoginForm');
   expect(regform[0]).toBeDefined();
 });
 
 test('hides a login form with click Cancel button', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser();
+  reg.startup();
   document.getElementsByClassName('nevermind')[0].click();
   let regform = document.getElementsByClassName('LoginForm');
   expect(regform[0].style.display).toBe('none');
@@ -20,14 +20,14 @@ test('hides a login form with click Cancel button', () => {
 
 test('generates a login form without userid', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('AdifferentApp');
+  reg.startup('AdifferentApp');
   let useridInput = document.getElementsByClassName('uidinput')[0];
   expect(useridInput.style.display).toBe('none');
 });
 
 test('initiates a reset password request', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('');
+  reg.startup('');
   document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
   const mockfetch = function(url, data) {
     this.headers = {};
@@ -46,7 +46,7 @@ test('initiates a reset password request', () => {
 
 test('initiates a reset password request for other app', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('otherapp');
+  reg.startup('otherapp');
   document.getElementsByClassName('loginemail')[0].value = 'joe@smith.com';
   const mockfetch = function(url, data) {
     this.headers = {};
@@ -65,7 +65,7 @@ test('initiates a reset password request for other app', () => {
 
 test('Does not initiates a reset password request with invalid email', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
   const mockfetch = function(url, data) {
     this.headers = {};
@@ -84,7 +84,7 @@ test('Does not initiates a reset password request with invalid email', () => {
 
 test('it catches error on reset password', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
   const mockfetch = function(url, data) {
     this.headers = {};
@@ -102,7 +102,7 @@ test('it catches error on reset password', () => {
 
 test('validates a login form with userid and no email', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('userid')[0].value = 'user123';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   document.getElementsByClassName('loginpass')[0].checkValidity = function() {return true;};
@@ -115,7 +115,7 @@ test('validates a login form with userid and no email', () => {
 
 test('validates a login form without userid', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('OtherApp');
+  reg.startup('OtherApp');
   document.getElementsByClassName('loginemail')[0].value = 'joe@smith.com';
   document.getElementsByClassName('loginemail')[0].checkValidity = function() {return true;};
   document.getElementsByClassName('loginpass')[0].value = '123456789';
@@ -130,7 +130,7 @@ test('validates a login form without userid', () => {
 
 test('validates a login form without userid and invalid email (missing period)', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('OtherApp');
+  reg.startup('OtherApp');
   document.getElementsByClassName('loginemail')[0].value = 'joe@smithcom';
   document.getElementsByClassName('loginemail')[0].checkValidity = function() {return true;};
   document.getElementsByClassName('loginpass')[0].value = '123456789';
@@ -145,7 +145,7 @@ test('validates a login form without userid and invalid email (missing period)',
 
 test('validates a login form without userid and invalid email (Google)', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('OtherApp');
+  reg.startup('OtherApp');
   document.getElementsByClassName('loginemail')[0].value = 'joe@gmail.com';
   document.getElementsByClassName('loginemail')[0].checkValidity = function() {return true;};
   document.getElementsByClassName('loginpass')[0].value = '123456789';
@@ -160,7 +160,7 @@ test('validates a login form without userid and invalid email (Google)', () => {
 
 test('validates a login form without userid and invalid email (missing @)', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('OtherApp');
+  reg.startup('OtherApp');
   document.getElementsByClassName('loginemail')[0].value = 'joegma.com';
   document.getElementsByClassName('loginemail')[0].checkValidity = function() {return false;};
   document.getElementsByClassName('loginpass')[0].value = '123456789';
@@ -175,7 +175,7 @@ test('validates a login form without userid and invalid email (missing @)', () =
 
 test('validates a login form without useremail and invalid password', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('userid')[0].value = 'joesmith';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   document.getElementsByClassName('loginpass')[0].checkValidity = function() {return false;};
@@ -190,7 +190,7 @@ test('validates a login form without useremail and invalid password', () => {
 
 test('does not display the login button with invalid password and valid email', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('OtherApp');
+  reg.startup('OtherApp');
   document.getElementsByClassName('userid')[0].value = 'joesmith';
   document.getElementsByClassName('loginemail')[0].value = 'joe@smith.com';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
@@ -206,7 +206,7 @@ test('does not display the login button with invalid password and valid email', 
 
 test('It displays reset password button', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   document.getElementsByClassName('loginpass')[0].checkValidity = function() {return true;};
@@ -221,7 +221,7 @@ test('It displays reset password button', () => {
 
 test('It does not displays reset password button', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('userid')[0].value = '';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   document.getElementsByClassName('loginpass')[0].checkValidity = function() {return true;};
@@ -236,7 +236,7 @@ test('It does not displays reset password button', () => {
 
 test('login and reset buttons do not display when email is not valid format', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('OtherApp');
+  reg.startup('OtherApp');
   document.getElementsByClassName('loginemail')[0].value = '33333';
   document.getElementsByClassName('loginemail')[0].checkValidity = function() {return false;};
   document.getElementsByClassName('loginpass')[0].value = '123456789';
@@ -252,7 +252,7 @@ test('login and reset buttons do not display when email is not valid format', ()
 
 test('login the PATRIC user', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('userid')[0].value = 'joe@smith';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   const mockfetch = function(url, data) {
@@ -281,7 +281,7 @@ test('login the PATRIC user', () => {
 
 test('login the other app user', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('OtherApp');
+  reg.startup('OtherApp');
   document.getElementsByClassName('loginemail')[0].value = 'joe@smith';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   const mockfetch = function(url, data) {
@@ -310,7 +310,7 @@ test('login the other app user', () => {
 
 test('displays error message if login fails', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('userid')[0].value = 'joe@smith';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   const mockfetch = function(url, data) {
@@ -334,7 +334,7 @@ test('displays error message if login fails', () => {
 
 test('catches any login errors', () => {
   document.body.innerHTML = '<div class="home"></div>';
-  reg.loginUser('PATRIC');
+  reg.startup('PATRIC');
   document.getElementsByClassName('userid')[0].value = 'joe@smith';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   const mockfetch = function(url, data) {

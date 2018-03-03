@@ -50,6 +50,10 @@ export class App {
     }
   }
 
+  showForm(appName, className){
+    className.startup(appName);
+  }
+
   authenticate(name){
     let ret;
     if (this.appState.isOhafLogin){
