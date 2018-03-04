@@ -123,6 +123,7 @@ export class UserAccount {
   }
 
   checkScheduled(){
+    let isScheduled = false;
     for (let i = 0; i < this.events2.length; i++){
       if (this.events2[i].voPeopleScheduled !== null && this.events2[i].voPeopleScheduled !== undefined){
         if (this.events2[i].voPeopleScheduled.includes(this.uid)){
@@ -130,12 +131,13 @@ export class UserAccount {
           if (!this.events2[i].past){
             this.canChangeUserType = false;
             console.log(this.events2[i]);
-            if (this.changeReasons.indexOf('<li>You are scheduled to work an event.</li>') === -1){
-              this.changeReasons = this.changeReasons + '<li>You are scheduled to work an event.</li>';
-            }
+            isScheduled = true;
           }
         }
       }
+    }
+    if (isScheduled && this.changeReasons.indexOf('<li>You are scheduled to work an event.</li>') === -1){
+      this.changeReasons = this.changeReasons + '<li>You are scheduled to work an event.</li>';
     }
   }
 
