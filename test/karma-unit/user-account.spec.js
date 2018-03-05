@@ -168,13 +168,13 @@ describe('the UserAccount Module', () => {
     expect(ua.canChangeUserType).toBe(false);
   }));
 
-  it('checks scheduled when nothing is scheduled', testAsync(async function(){
-    ua.uid = '123';
-    ua.events2 = [{_id: '123'}];
-    ua.changeReasons = '';
-    await ua.checkScheduled();
-    expect(ua.canChangeUserType).toBe(true);
-  }));
+  // it('checks scheduled when nothing is scheduled', testAsync(async function(){
+  //   ua.uid = '123';
+  //   ua.events2 = [{_id: '123'}];
+  //   ua.changeReasons = '';
+  //   await ua.checkScheduled();
+  //   expect(ua.canChangeUserType).toBe(true);
+  // }));
 
   it('allows change user type when scheduled event is in the past', testAsync(async function(){
     ua.uid = '123';
