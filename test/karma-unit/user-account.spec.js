@@ -135,6 +135,26 @@ describe('the UserAccount Module', () => {
     done();
   });
 
+  it('fixes events that are not configured with people scheduled', (done) => {
+    ua.events2 = [{voPeopleScheduled: ['123', '234']}];
+    let checker = ua.events2;
+    ua.fixPeopleScheduled(ua.events2);
+    expect(ua.events2).toBe(checker);
+    ua.events2 = [{id: '123'}];
+    //checker
+    ua.fixPeopleScheduled(ua.events2);
+    expect(ua.events2[0].voPeopleScheduled.length).toBe(0);
+    done();
+  });
+
+  it('checks for scheduled events by a volunteer user', (done) => {
+    ua.user.userType = 'Volunteer';
+    ua.fetchAllEvents = function(){return Promise.resolve();};
+    ua.checkChangeUserType();
+    //expect(ua.canChangeUserType).toBe(true);
+    done();
+  });
+
   it('should allow Charity user to change their user type if they have no charities', (done) => {
     ua.user.userType = 'Charity';
     ua.app.httpClient.fetch = function(){
