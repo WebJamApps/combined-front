@@ -10,6 +10,9 @@ checks:
   method-complexity:
     config:
       threshold: 8
+  similar-code:
+    config:
+      threshold: 50
 engines:
   duplication:
     enabled: true
