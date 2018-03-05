@@ -89,6 +89,13 @@ ignore:
     - webpack > watchpack > chokidar > anymatch > micromatch > braces:
         reason: None given
         expires: '2018-03-22T01:37:45.449Z'
+  'npm:nwmatcher:20180305':
+    - jsdom > nwmatcher:
+        reason: None given
+        expires: '2018-04-04T18:08:03.406Z'
+    - aurelia-pal-nodejs > jsdom > nwmatcher:
+        reason: None given
+        expires: '2018-04-04T18:08:03.406Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:marked:20170112':
