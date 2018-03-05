@@ -12,7 +12,7 @@ checks:
       threshold: 8
   similar-code:
     config:
-      threshold: 50
+      threshold: 70
 engines:
   duplication:
     enabled: true
