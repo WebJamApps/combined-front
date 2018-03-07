@@ -96,23 +96,23 @@ class User_ {
     let submitbutton = document.getElementsByClassName('regbutton')[0];
     submitbutton.style.display = 'none';
     document.getElementsByClassName('loginerror')[0].innerHTML = '';
-    let errorMessage = '<ul style="margin-right:0; margin-top:0; margin-bottom:20px;text-align:left">';
+    let errorMessage = '<ul style="margin-right:0; margin-top:0; margin-bottom:20px;text-align:left; padding-left:20px;font-size:10pt">';
     if (this.formType === 'reset') {
       let validPassword = newpasswd.checkValidity();
       if (validPassword && isemailvalid && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
         return submitbutton.style.display = 'block';
       }
       if (!validPassword){
-        errorMessage += '<li style="font-size:9.5pt">password must be at least 8 characters</li>';
+        errorMessage += '<li>Password is not >= 8 characters</li>';
       }
     }
     if (!(isvalidcode > 9999 && isvalidcode < 100000)){
-      errorMessage += '<li>invalid passcode</li>';
+      errorMessage += '<li>Invalid passcode</li>';
     }
     if (!isemailvalid || !(edot.length > 1)){
-      errorMessage += '<li>invalid email address</li>';
+      errorMessage += '<li>Invalid email address</li>';
     }
-    if (errorMessage !== '<ul style="margin-right:0; margin-top:0; margin-bottom:20px;text-align:left">'){
+    if (errorMessage !== '<ul style="margin-right:0; margin-top:0; margin-bottom:20px;text-align:left; padding-left:20px;font-size:9.5pt">'){
       errorMessage += '</ul><p>&nbsp;</p>';
       return document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
     }
