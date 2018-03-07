@@ -102,17 +102,9 @@ class User_ {
       if (validPassword && isemailvalid && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
         submitbutton.style.display = 'block';
       } else {
-        submitbutton.style.display = 'none';
         if (!validPassword){
           errorMessage += '<li style="font-size:9.5pt">password must be at least 8 characters</li>';
         }
-        if (!(isemailvalid && (edot.length > 1))){
-          errorMessage +=  '<li style="font-size:9.5pt">email address is not valid</li>';
-        }
-        if (!(isvalidcode > 9999 && isvalidcode < 100000)){
-          errorMessage += '<li style="font-size:9.5pt">invalid passcode</li>';
-        }
-        errorMessage += '</ul><p>&nbsp;</p>';
       }
     } else {
       if (isemailvalid && isvalidcode !== '' && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
@@ -124,10 +116,12 @@ class User_ {
         if (!isemailvalid || !(edot.length > 1)){
           errorMessage += '<li>invalid email address</li>';
         }
-        errorMessage += '</ul><p>&nbsp;</p>';
       }
     }
-    document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
+    if (errorMessage !== '<ul style="margin-right:0; margin-top:0; margin-bottom:20px;text-align:left">'){
+      errorMessage += '</ul><p>&nbsp;</p>';
+      document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
+    }
   }
 
   updateUser(evt) {
