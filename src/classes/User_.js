@@ -94,18 +94,15 @@ class User_ {
     let edot = emValue.split('.');
     let isvalidcode = document.getElementsByClassName('code')[0].value;
     let submitbutton = document.getElementsByClassName('regbutton')[0];
-    console.log(isemailvalid);
-    console.log(isvalidcode);
-    console.log(edot.length);
-    console.log(this.formType);
+    submitbutton.style.display = 'none';
+    document.getElementsByClassName('loginerror')[0].innerHTML = '';
+    let errorMessage = '<ul style="margin-right:0; margin-top:0; margin-bottom:20px;text-align:left">';
     if (this.formType === 'reset') {
       let validPassword = newpasswd.checkValidity();
       if (validPassword && isemailvalid && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
         submitbutton.style.display = 'block';
-        document.getElementsByClassName('loginerror')[0].innerHTML = '';
       } else {
         submitbutton.style.display = 'none';
-        let errorMessage = '<ul style="margin-right:0; margin-top:0; margin-bottom:20px;text-align:left">';
         if (!validPassword){
           errorMessage += '<li style="font-size:9.5pt">password must be at least 8 characters</li>';
         }
@@ -116,15 +113,11 @@ class User_ {
           errorMessage += '<li style="font-size:9.5pt">invalid passcode</li>';
         }
         errorMessage += '</ul><p>&nbsp;</p>';
-        document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
       }
     } else {
       if (isemailvalid && isvalidcode !== '' && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
         submitbutton.style.display = 'block';
-        document.getElementsByClassName('loginerror')[0].innerHTML = '';
       } else {
-        let errorMessage = '<ul style="margin-right:20px;text-align:left">';
-        submitbutton.style.display = 'none';
         if (!(isvalidcode > 9999 && isvalidcode < 100000)){
           errorMessage += '<li>invalid passcode</li>';
         }
@@ -132,9 +125,9 @@ class User_ {
           errorMessage += '<li>invalid email address</li>';
         }
         errorMessage += '</ul><p>&nbsp;</p>';
-        document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
       }
     }
+    document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
   }
 
   updateUser(evt) {
