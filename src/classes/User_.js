@@ -100,28 +100,23 @@ class User_ {
     if (this.formType === 'reset') {
       let validPassword = newpasswd.checkValidity();
       if (validPassword && isemailvalid && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
-        submitbutton.style.display = 'block';
-      } else {
-        if (!validPassword){
-          errorMessage += '<li style="font-size:9.5pt">password must be at least 8 characters</li>';
-        }
+        return submitbutton.style.display = 'block';
       }
-    } else {
-      if (isemailvalid && isvalidcode !== '' && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
-        submitbutton.style.display = 'block';
-      } else {
-        if (!(isvalidcode > 9999 && isvalidcode < 100000)){
-          errorMessage += '<li>invalid passcode</li>';
-        }
-        if (!isemailvalid || !(edot.length > 1)){
-          errorMessage += '<li>invalid email address</li>';
-        }
+      if (!validPassword){
+        errorMessage += '<li style="font-size:9.5pt">password must be at least 8 characters</li>';
       }
+    }
+    if (!(isvalidcode > 9999 && isvalidcode < 100000)){
+      errorMessage += '<li>invalid passcode</li>';
+    }
+    if (!isemailvalid || !(edot.length > 1)){
+      errorMessage += '<li>invalid email address</li>';
     }
     if (errorMessage !== '<ul style="margin-right:0; margin-top:0; margin-bottom:20px;text-align:left">'){
       errorMessage += '</ul><p>&nbsp;</p>';
-      document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
+      return document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
     }
+    submitbutton.style.display = 'block';
   }
 
   updateUser(evt) {
