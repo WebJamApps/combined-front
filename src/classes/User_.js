@@ -96,7 +96,7 @@ class User_ {
     let submitbutton = document.getElementsByClassName('regbutton')[0];
     submitbutton.style.display = 'none';
     document.getElementsByClassName('loginerror')[0].innerHTML = '';
-    let errorMessage = '<ul style="margin-right:0; margin-top:0; margin-bottom:20px;text-align:left; padding-left:20px;font-size:10pt">';
+    let errorMessage = '<ul style="margin-right:0; margin-top:0; margin-bottom:20px; text-align:left; padding-left:20px; font-size:10pt">';
     if (this.formType === 'reset') {
       let validPassword = newpasswd.checkValidity();
       if (validPassword && isemailvalid && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
@@ -112,7 +112,7 @@ class User_ {
     if (!isemailvalid || !(edot.length > 1)){
       errorMessage += '<li>Invalid email address</li>';
     }
-    if (errorMessage !== '<ul style="margin-right:0; margin-top:0; margin-bottom:20px;text-align:left; padding-left:20px;font-size:9.5pt">'){
+    if (errorMessage !== '<ul style="margin-right:0; margin-top:0; margin-bottom:20px; text-align:left; padding-left:20px; font-size:10pt">'){
       errorMessage += '</ul><p>&nbsp;</p>';
       return document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
     }
