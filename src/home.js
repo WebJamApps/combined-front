@@ -11,7 +11,9 @@ export class Home {
 
 
   get widescreen(){
+    //document.getElementById('top').scrollIntoView();
     return document.documentElement.clientWidth > 1300;
+    //document.getElementById('top').scrollIntoView();
   }
 
   // showSlides() {
@@ -23,8 +25,11 @@ export class Home {
   //     .appendTo('#slideshow');
   // }
 
-  // attached() {
-  //   $('#slideshow > div:gt(0)').hide();
-  //   setInterval(this.showSlides, 5000);
-  // }
+  attached() {
+    let top = document.getElementsByClassName('material-header')[0];
+    //let top = document.getElementById('top');
+    if (top !== null && top !== undefined){
+      top.scrollIntoView();
+    }
+  }
 }

@@ -5,6 +5,7 @@ export class UserAccess {
   }
 
   run(routingContext, next) {
+    // document.getElementById('top').scrollIntoView();
     // if we need to authenticate / authorize, verify the logged in users roles here.
     return this.appState.getRoles().then((userRoles) => {
       if (routingContext.config.auth){

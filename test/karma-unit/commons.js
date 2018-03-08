@@ -13,6 +13,9 @@ class RouterStub {
   addPipelineStep(param1, AuthorizeStep) {
       //do nothing
   }
+  addPostRenderStep(param1, next){
+      //do nothing
+  }
   options() {
       //do nothing
   }
