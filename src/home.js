@@ -25,7 +25,11 @@ export class Home {
   //     .appendTo('#slideshow');
   // }
 
-  // attached() {
-  //   document.getElementById('top').scrollIntoView();
-  // }
+  attached() {
+    let top = document.getElementsByClassName('material-header')[0];
+    //let top = document.getElementById('top');
+    if (top !== null && top !== undefined){
+      top.scrollIntoView();
+    }
+  }
 }

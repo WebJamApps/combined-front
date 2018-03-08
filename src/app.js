@@ -110,8 +110,13 @@ export class App {
         console.log(routingContext);
         if (!routingContext.config.settings.noScrollToTop) {
           console.log('scroll to top damnit!');
-          $('.page-host').scrollTop(0);
-          window.scrollTo(0, 0);
+          // $('.page-host').scrollTop(0);
+          // window.scrollTo(0, 0);
+          let top = document.getElementsByClassName('material-header')[0];
+          //let top = document.getElementById('top');
+          if (top !== null && top !== undefined){
+            top.scrollIntoView();
+          }
         }
         return next();
       }
