@@ -56,7 +56,7 @@ describe('the App module', () => {
   });
   it('check if user is logged in', (done) => {
     window.localStorage.setItem('aurelia_id_token', '109842sdhgsgfhjsfoi4124');
-    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
+    let configStub = {options: {pushState: true}, addPipelineStep(){}, addPostRenderStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
     app1.configureRouter(configStub, RouterStub);
     app1.router.navigate = function(){};
     app1.checkIfLoggedIn();
@@ -66,7 +66,7 @@ describe('the App module', () => {
   it('check if user is logged in when token is not in local storage', (done) => {
     window.localStorage.clear();
     //app1.authenticated = true;
-    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
+    let configStub = {options: {pushState: true}, addPipelineStep(){},  addPostRenderStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
     app1.configureRouter(configStub, RouterStub);
     app1.router.navigate = function(){};
     app1.checkIfLoggedIn();
@@ -74,7 +74,7 @@ describe('the App module', () => {
     done();
   });
   it('configures the router', (done) => {
-    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+    let configStub = {options: {pushState: true}, addPipelineStep(){},  addPostRenderStep(){}, map(){}, fallbackRoute(){}};
     app1.configureRouter(configStub, RouterStub);
     expect(app1.router).toBeDefined;
     done();
@@ -128,7 +128,7 @@ describe('the App module', () => {
   it('gets the current route', testAsync(async function() {
     //console.log(app1);
     await app1.activate();
-    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+    let configStub = {options: {pushState: true}, addPipelineStep(){},  addPostRenderStep(){}, map(){}, fallbackRoute(){}};
     //let routerStub = {};
     await app1.configureRouter(configStub, RouterStub);
     //console.log('current instruction ' + app1.router.currentInstruction);

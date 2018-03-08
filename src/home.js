@@ -11,7 +11,9 @@ export class Home {
 
 
   get widescreen(){
+    //document.getElementById('top').scrollIntoView();
     return document.documentElement.clientWidth > 1300;
+    //document.getElementById('top').scrollIntoView();
   }
 
   // showSlides() {
@@ -24,7 +26,6 @@ export class Home {
   // }
 
   // attached() {
-  //   $('#slideshow > div:gt(0)').hide();
-  //   setInterval(this.showSlides, 5000);
+  //   document.getElementById('top').scrollIntoView();
   // }
 }

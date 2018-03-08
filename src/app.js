@@ -105,20 +105,27 @@ export class App {
     config.options.root = '/';
     config.addPipelineStep('authorize', AuthorizeStep);//Is the actually Authorization to get into the /dashboard
     config.addPipelineStep('authorize', this.userAccess);// provides access controls to prevent users from certain /dashboard child routes when not their userType (role)
+    config.addPostRenderStep({
+      run(routingContext, next) {
+        console.log(routingContext);
+        if (!routingContext.config.settings.noScrollToTop) {
+          console.log('scroll to top damnit!');
+          $('.page-host').scrollTop(0);
+          window.scrollTo(0, 0);
+        }
+        return next();
+      }
+    });
     config.map([
       { route: 'dashboard', name: 'dashboard-router', moduleId: PLATFORM.moduleName('./dashboard-router'), nav: false, title: '', auth: true, settings: 'fa fa-tachometer'},
       { route: 'login', name: 'login', moduleId: PLATFORM.moduleName('./login'), nav: false, title: 'Login', settings: 'fa fa-sign-in'},
       { route: 'register', name: 'register', moduleId: PLATFORM.moduleName('./register'), nav: false, title: 'Register', settings: 'fa fa-user-plus'},
-     { route: 'userutil', name: 'userutil', moduleId: PLATFORM.moduleName('./userutil'), nav: false, title: '' },
+      { route: 'userutil', name: 'userutil', moduleId: PLATFORM.moduleName('./userutil'), nav: false, title: '' },
       { route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./ohaf-home'), nav: false, title: 'OHAF', settings: 'fa fa-handshake-o' },
       { route: 'sc2rs', name: 'sc2rs', moduleId: PLATFORM.moduleName('./sc2rs'), nav: false, title: 'SC2RS', settings: 'fa fa-microphone' },
-      // { route: 'sc2rs', name: 'sc2rs', moduleId: './sc2rs-home', nav: true, title: 'SC2RS', settings: 'fa fa-star-o' },
-      //      { route: 'librarian', name: 'librarian', moduleId: PLATFORM.moduleName('./librarian'), nav: true, title: 'Librarian', settings: 'fa fa-book' },
       { route: 'library', name: 'library', moduleId: PLATFORM.moduleName('./library'), nav: false, title: 'Library', settings: 'fa fa-book' },
       { route: 'bookshelf', name: 'bookshelf', moduleId: PLATFORM.moduleName('./bookshelf'), nav: false, title: 'Bookshelf', settings: 'fa fa-book' },
-      //  { route: 'reader', name: 'reader', moduleId: PLATFORM.moduleName('./reader'), nav: true, title: 'Reader', settings: 'fa fa-file-pdf-o' },
       { route: 'music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: false, title: '', settings: 'fa fa-music'},
-      // { route: 'textadventure', name: 'textadventure', moduleId: './textadventure-home', nav: true, title: 'Text Adventure', settings: 'fa fa-shield' },
       { route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: false, title: '', settings: 'fa fa-home' }
     ]);
     config.fallbackRoute('/');
@@ -319,7 +326,7 @@ export class App {
       return false;
     }
     checkboxes.style.display = 'block';
-      //this.expanded = false;
+    //this.expanded = false;
     return true;
   }
 
@@ -384,10 +391,20 @@ export class App {
       console.log(error);
     });
 
-  // afterUpdateUser(){
-  //   this.appState.setUser(this.user);
-  //   this.appState.checkUserRole();
-  //   this.router.navigate('dashboard');
-  // }
+    // afterUpdateUser(){
+    //   this.appState.setUser(this.user);
+    //   this.appState.checkUserRole();
+    //   this.router.navigate('dashboard');
+    // }
   }
 }
+
+// class PostCompleteStep {
+//   run(instruction: NavigationInstruction, next: Next) {
+//     if (!instruction.config.settings.noScrollToTop) {
+//       window.scrollTo(0, 0);
+//     }
+//
+//     return next();
+//   }
+// }
