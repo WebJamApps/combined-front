@@ -1,22 +1,17 @@
 <template>
   <div style="padding-bottom:0">
-      <!-- <p style="margin:0">&nbsp;</p> -->
-    <!-- <h4 class="ohaf" style="margin:auto; padding:20px;text-align:center"><strong>Our ${title} Page</strong></h4> -->
     <div class="material-content elevation2" style="max-width:5in; margin:auto">
-      <!-- <p>If you have a Google account, please click this button. New users will be registered automatically.</p> -->
       <div style="text-align:center">
-        <button click.delegate="authenticate('google')">Login with Google</button>
+        <button click.delegate="app.authenticate('google')">Login with Google</button>
       </div>
       <div style="margin:auto; text-align:center; padding-top:6px">
-      <p style="padding-top:4px;margin-bottom:2px"><strong>or</strong></p>
-      <p><a click.delegate="showLogin('')">Login</a> without a Google account.</p>
+        <p style="padding-top:4px;margin-bottom:2px"><strong>or</strong></p>
+        <p><a click.delegate="app.showForm('', login_Class)">Login</a> without a Google account.</p>
+      </div>
     </div>
-    </div>
-    <!-- <div class="" style="max-width:5in; margin:auto; padding-left:8px; margin-top:0; margin-bottom:6px">
-    </div> -->
     <p style="margin:0">&nbsp;</p>
     <div class="home" style="max-width:5in; margin:auto"></div>
-        <p style="margin:0">&nbsp;</p>
+    <p style="margin:0">&nbsp;</p>
     <div class="material-content elevation2" style="max-width:5in; margin:auto">
       <p style="text-align:left; margin-bottom:0">By logging into this app, you certify that you are at least 13 years of age or older, and that you agree to the terms and conditions in the Privacy Policy and the Rights and Use policy.
       </p>

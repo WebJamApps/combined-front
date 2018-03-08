@@ -36,16 +36,10 @@ export class UserAccount {
   }
 
   checkUserEmail(){
-    //validateGoogle(email, appName) {
-      //let googleAccount = false;
     if (this.user.email.split('@gmail').length > 1 || this.user.email.split('@vt.edu').length > 1 || this.user.email.split('@bi.vt.edu').length > 1) {
-        //if (appName !== 'PATRIC') {
       this.isGoogleEmail = true;
-        //}
     }
-      //return googleAccount;
   }
-
 
   checkUserStatus(){
     if (this.user.userStatus === undefined || this.user.userStatus === null || this.user.userStatus === ''){
@@ -82,7 +76,6 @@ export class UserAccount {
     }
     this.canSubmit = valid;
     if (this.user.userType !== '' && this.canSubmit){
-      //let nub = document.getElementById('updateUserButton');
       nub.style.display = 'block';
     }
     return this.canSubmit;
@@ -120,22 +113,33 @@ export class UserAccount {
     this.events2 = await res.json();
     fixDates(this.events2);
     markPast(this.events2, formatDate);
+    fixPeopleScheduled(this.events2);
+  }
+
+  fixPeopleScheduled(events){
+    for (let i = 0; i < events.length; i++){
+      if (events[i].voPeopleScheduled === null || events[i].voPeopleScheduled === undefined){
+        events[i].voPeopleScheduled = [];
+      }
+    }
   }
 
   checkScheduled(){
+    //let isScheduled = false;
     for (let i = 0; i < this.events2.length; i++){
-      if (this.events2[i].voPeopleScheduled !== null && this.events2[i].voPeopleScheduled !== undefined){
-        if (this.events2[i].voPeopleScheduled.includes(this.uid)){
-          this.canDelete = false;
-          if (!this.events2[i].past){
-            this.canChangeUserType = false;
-            console.log(this.events2[i]);
-            if (this.changeReasons.indexOf('<li>You are scheduled to work an event.</li>') === -1){
-              this.changeReasons = this.changeReasons + '<li>You are scheduled to work an event.</li>';
-            }
-          }
+      // if (this.events2[i].voPeopleScheduled !== null && this.events2[i].voPeopleScheduled !== undefined){
+      if (this.events2[i].voPeopleScheduled.includes(this.uid)){
+        this.canDelete = false;
+        if (!this.events2[i].past){
+          this.canChangeUserType = false;
+            //console.log(this.events2[i]);
+            //isScheduled = true;
         }
       }
+      // }
+    }
+    if (!this.canChangeUserType && this.changeReasons.indexOf('<li>You are scheduled to work an event.</li>') === -1){
+      this.changeReasons = this.changeReasons + '<li>You are scheduled to work an event.</li>';
     }
   }
 
@@ -213,6 +217,10 @@ export class UserAccount {
   showUpdateButton(){
     let nub = document.getElementById('updateUserButton');
     nub.style.display = 'block';
+  }
+
+  attached(){
+    this.controller.validate();
   }
 
 }

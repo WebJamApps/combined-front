@@ -36,7 +36,7 @@ class Register_ {
     patric.showHideElements2(this.appName, elementsObj);
   }
 
-  register(appName) {
+  startup(appName) {
     this.appName = appName;
     this.createRegistrationForm(this.appName);
     let firstNameInput = document.getElementsByClassName('firstname')[0];
@@ -220,7 +220,7 @@ class Register_ {
     .then((response) => response.json())
     .then((data) => {
       if (data.message) {
-        messagediv.innerHTML = '<p style="text-align:left;padding-left:12px; margin-bottom:0">' + data.message + ' Did you forget your password?';
+        messagediv.innerHTML = '<p style="text-align:left;padding-left:12px; margin-bottom:0">' + data.message;
         document.getElementsByClassName('resetpass')[0].style.display = 'block';
       } else {
         document.getElementsByClassName('RegistrationForm')[0].style.display = 'none';

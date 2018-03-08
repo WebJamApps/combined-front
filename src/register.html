@@ -1,25 +1,18 @@
 <template>
   <div style="padding-bottom:0">
-      <!-- <p style="margin:0">&nbsp;</p> -->
-    <!-- <h4 class="ohaf" style="margin:auto; padding:20px;text-align:center"><strong>Our ${title} Page</strong></h4> -->
     <div class="material-content elevation2" style="max-width:5in; margin:auto">
       <p>If you have a Google account, please click this button to register.</p>
       <div style="text-align:center">
-        <button click.delegate="authenticate('google')">Register with Google</button>
+        <button click.delegate="app.authenticate('google')">Register with Google</button>
       </div>
       <div style="margin:auto; text-align:center; padding-top:6px">
-      <p style="margin-bottom:2px"><strong>or</strong></p>
-      <p style="margin-bottom:0"><a click.delegate="showRegister('')">Register</a> without a Google account</p>
+        <p style="margin-bottom:2px"><strong>or</strong></p>
+        <p style="margin-bottom:0"><a click.delegate="app.showForm('', registerClass)">Register</a> without a Google account</p>
+      </div>
     </div>
-
-    </div>
-
-    <!-- <div class="" style="max-width:5in; margin:auto; padding-left:8px; margin-top:0; margin-bottom:6px"> -->
-
-    <!-- </div> -->
     <p style="margin:0; font-size:6pt">&nbsp;</p>
     <div class="home" style="max-width:5in; margin:auto"></div>
-      <p style="margin:0; font-size:6pt">&nbsp;</p>
+    <p style="margin:0; font-size:6pt">&nbsp;</p>
     <div class="material-content elevation2" style="max-width:5in; margin:auto">
       <p style="text-align:left; margin-bottom:0">By creating an account, you certify that you are at least 13 years of age or older, and that you agree to the terms and conditions in the Privacy Policy and the Rights and Use policy.
       </p>

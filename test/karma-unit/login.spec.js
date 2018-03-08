@@ -28,51 +28,36 @@ describe('the Login module', () => {
     app1.activate();
     login = new Login(app1);
     login.app.appState = new AppStateStub();
-    //login.activate();
-    //sut.app.appState = new AppStateStub();
-    //sut.app.authenticated = false;
   });
 
   it('should authentication when not from OHAF', (done) => {
-    login.authenticate('google').then((data) => {
-      //console.log(data); // disable this if you want to.
+    login.app.authenticate('google').then((data) => {
       done();
     }, null);
   });
 
   it('should authentication when from OHAF', (done) => {
     login.app.appState.isOhafLogin = true;
-    login.authenticate('google').then((data) => {
-      //console.log(data); // disable this if you want to.
+    login.app.authenticate('google').then((data) => {
       done();
     }, null);
   });
-  // it('runs the authenticate function', (done) => {
-  //   sut.authenticate('google');
-  //   //expect isAuthenticated to be called after the sut.authenticate is done calling to register change in authentication.
-  //   setTimeout(function() {
-  //     expect(sut.app.authenticated).toBe(true);
-  //     done();
-  //   }, 5);
-  // });
-  //
   it('should be attached to router', (done) => {
     login.attached();
-    //console.log(sut.title);
-    //expect(login.title).toBe('Howdy is cool');
     done();
   });
 
-  // it('should check if user is logged in', (done) => {
-  //   window.localStorage.setItem('aurelia_id_token', '109842sdhgsgfhjsfoi4124');
-  //   login.checkIfLoggedIn();
-  //   expect(login.app.auth.getTokenPayload()).toBe(window.localStorage.getItem('aurelia_id_token'));
-  //   done();
-  // });
+  it('should check if user is logged in', (done) => {
+    window.localStorage.setItem('aurelia_id_token', '109842sdhgsgfhjsfoi4124');
+    login.app.checkIfLoggedIn();
+    expect(login.app.auth.getTokenPayload()).toBe(window.localStorage.getItem('aurelia_id_token'));
+    done();
+  });
 
-  it('should show login with appName', (done) => {
+  it('displays login form with appName', (done) => {
     document.body.innerHTML = '<div class="home"></div>';
-    login.showLogin('webjam llc');
+    login.app.showForm('webjam llc', login.login_Class);
+    expect(document.getElementsByClassName('home')[0].innerHTML).not.toBe('');
     done();
   });
 });

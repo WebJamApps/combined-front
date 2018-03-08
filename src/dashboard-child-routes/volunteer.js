@@ -109,34 +109,6 @@ export class Volunteer {
     }
   }
 
-  // formatDate(today){
-  //   console.log(today);
-  //   let mm = today.getMonth() + 1; // getMonth() is zero-based
-  //   let dd = today.getDate();
-  //   today = [today.getFullYear(),
-  //     (mm > 9 ? '' : '0') + mm,
-  //     (dd > 9 ? '' : '0') + dd].join('');
-  //   return today;
-  // }
-
-  // markPast() {
-  //   let testDate;
-  //   let today = new Date();
-  //   today = formatDate(today);
-  //   for (let i = 0; i < this.events.length; i++){
-  //     if (this.events[i].voStartDate === undefined || this.events[i].voStartDate === null || this.events[i].voStartDate === ''){
-  //       this.events[i].voStartDate = today;
-  //     }
-  //     testDate = this.events[i].voStartDate.replace('-', '');
-  //     testDate = testDate.replace('-', '');
-  //     if (testDate <= today){
-  //       this.events[i].past = true;
-  //     } else {
-  //       this.events[i].past = false;
-  //     }
-  //   }
-  // }
-
   populateSites(){
     this.siteLocations.push('');
     for (let next of this.events){
@@ -299,13 +271,7 @@ export class Volunteer {
 
   async updateUser(){
     await this.app.updateById('/user/', this.uid, this.user, null);
-    this.afterUpdateUser();
-  }
-
-  afterUpdateUser(){
-    this.app.appState.setUser(this.user);
-    this.app.appState.checkUserRole();
-    this.app.router.navigate('dashboard');
+    this.activate();
   }
 
   showButton(){

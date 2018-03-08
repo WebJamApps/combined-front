@@ -3,7 +3,6 @@ class User_ {
   constructor() {
     this.fetch = Fetch;
     this.searchParams = new URLSearchParams(window.location.search);
-    // this.uid = '';
     this.userEmail = this.searchParams.get('email');
     this.changeEmail = this.searchParams.get('changeemail');
     this.formType = '';
@@ -28,14 +27,15 @@ class User_ {
     }
     emailVarifyForm.className = 'RegistrationForm elevation2';
     emailVarifyForm.style.maxWidth = '3in';
-    emailVarifyForm.innerHTML = '<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;">' + formTitle + '</h2><form>' +
+    emailVarifyForm.innerHTML = '<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;">' + formTitle + '</h2><form style="min-height:3.25in">' +
     '<div style="padding:2px; margin:10px;"><table><tbody class="regformtbody"><tr><th style="text-align:left">Email</th></tr><tr><td>' +
     '<input class="email" type="email" name="email" style="width:250px;min-width:0" value="" required>' +
-    '</td></tr>' + passInput + '<tr><td style="padding-bottom:0"><p class="codeNote" style="margin-bottom:0; font-size:10pt"><i>Check your email for a verification code.</i></p></td></tr>' + '<tr><th style="text-align:left; padding-top:0">Code</th></tr><tr><td>' +
+    '</td></tr>' + passInput + '<tr><td style="padding-bottom:0"><p class="codeNote" style="margin-bottom:0; font-size:10pt"><i>Check your email for a verification code.</i></p></td></tr>' +
+    '<tr><th style="text-align:left; padding-top:0">5-digit Code</th></tr><tr><td>' +
     '<input type="number" title="5 digit code" name="code" class="code" style="width:150px;min-width:0" required" value=""></td></tr>' +
     '</tbody></table></div><div style="text-align:center;padding:2px;margin:10px;">' +
-    '<div><button style="display:none; margin-bottom:-30px;margin-left:12px" type="button" class="regbutton">Submit</button><button style="margin-right:-180px" type="button" onclick="userClass.nevermind(&apos;RegistrationForm&apos;)">Cancel</button></div></div></form>' +
-    '<div class="loginerror" style="color:red"></div>';
+    '<div class="loginerror" style="color:red"></div>' +
+    '<div><button style="display:none; margin-bottom:-30px;margin-left:12px" type="button" class="regbutton">Submit</button></div></div></form>';
     let home = document.getElementsByClassName('home');
     home[0].insertBefore(emailVarifyForm, home[0].childNodes[0]);
     this.fillInEmail(this.userEmail, this.changeEmail);
@@ -86,6 +86,7 @@ class User_ {
   }
 
   validateForm(evt) {
+    document.getElementsByClassName('loginerror')[0].innerHTML = '';
     this.formType = evt.target.formType;
     let newpasswd = document.getElementsByClassName('loginpass')[0];
     let isemailvalid = document.getElementsByClassName('email')[0].checkValidity();
@@ -93,24 +94,29 @@ class User_ {
     let edot = emValue.split('.');
     let isvalidcode = document.getElementsByClassName('code')[0].value;
     let submitbutton = document.getElementsByClassName('regbutton')[0];
-    console.log(isemailvalid);
-    console.log(isvalidcode);
-    console.log(edot.length);
-    console.log(this.formType);
+    submitbutton.style.display = 'none';
+    document.getElementsByClassName('loginerror')[0].innerHTML = '';
+    let errorMessage = '<ul style="margin-right:0; margin-top:0; margin-bottom:20px; text-align:left; padding-left:20px; font-size:10pt">';
     if (this.formType === 'reset') {
-      if (newpasswd.checkValidity() && isemailvalid && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
-        submitbutton.style.display = 'block';
-      } else {
-        submitbutton.style.display = 'none';
+      let validPassword = newpasswd.checkValidity();
+      if (validPassword && isemailvalid && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
+        return submitbutton.style.display = 'block';
       }
-    } else {
-      if (isemailvalid && isvalidcode !== '' && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
-        submitbutton.style.display = 'block';
-        document.getElementsByClassName('loginerror')[0].innerHTML = '';
-      } else {
-        submitbutton.style.display = 'none';
+      if (!validPassword){
+        errorMessage += '<li>Password is not >= 8 characters</li>';
       }
     }
+    if (!(isvalidcode > 9999 && isvalidcode < 100000)){
+      errorMessage += '<li>Invalid passcode</li>';
+    }
+    if (!isemailvalid || !(edot.length > 1)){
+      errorMessage += '<li>Invalid email address</li>';
+    }
+    if (errorMessage !== '<ul style="margin-right:0; margin-top:0; margin-bottom:20px; text-align:left; padding-left:20px; font-size:10pt">'){
+      errorMessage += '</ul><p>&nbsp;</p>';
+      return document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
+    }
+    submitbutton.style.display = 'block';
   }
 
   updateUser(evt) {
