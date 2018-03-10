@@ -112,6 +112,7 @@ export class Charity {
     } else {
       document.getElementById('charityDash').scrollIntoView();
     }
+    this.controller2.validate();
   }
 
   openCheckboxAndValidate(e, forceOpen) {
@@ -319,15 +320,6 @@ export class Charity {
       }
     });
   }
-
-  // removeHyphen(){
-  //   console.log('running remove hyphen');
-  //   let charityPhone = document.getElementById('charity-phone').value;
-  //   console.log(charityPhone);
-  //   if (charityPhone.indexOf('-') !== -1){
-  //     charityPhone.replace('-', '');
-  //   }
-  // }
 
   attached(){
     this.createNewCharity();
