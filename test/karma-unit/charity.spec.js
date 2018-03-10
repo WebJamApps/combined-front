@@ -116,6 +116,7 @@ describe('the Charity Module', () => {
   it('scrolls the charity dashboard into view after update', (done) => {
     document.body.innerHTML = '  <div id="charityDash" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
     charity.setupValidation2 = function(){};
+    charity.controller2 = {validate: function(){}};
     charity.afterUpdate();
     //expect(charity.app.expanded).toBe(true);
     done();
@@ -130,6 +131,7 @@ describe('the Charity Module', () => {
   it('it displays the new charity form on page load', (done) => {
     charity2.activate();
     charity2.setupValidation2 = function(){};
+    charity2.controller2 = {validate: function(){}};
     document.body.innerHTML = '<div id="charityDash"></div><div id="updateCharitySection"></div>';
     charity2.attached();
     done();
@@ -150,6 +152,7 @@ describe('the Charity Module', () => {
       'charityTypesHtml': ''
     };
     charity.update = true;
+    charity.controller2 = {validate: function(){}};
     document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="typesUpdate"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button></div><div id="scheduleCharitySection"></div>';
     charity.updateCharityFunction(charity1);
     expect(charity.charityName).toBe('test charity');
@@ -265,6 +268,7 @@ describe('the Charity Module', () => {
       'charityTypeOther': '',
       'charityTypesHtml': ''
     };
+    charity.controller2 = {validate: function(){}};
     charity.showUpdateCharity(myCharity);
     expect(document.getElementById('updateCharityButton').style.display).toBe('none');
     done();
