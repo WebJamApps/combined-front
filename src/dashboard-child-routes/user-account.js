@@ -60,10 +60,6 @@ export class UserAccount {
     .on(this.user);
   }
 
-  // validate() {
-  //   this.validator.validateObject(this.user);
-  // }
-
   updateCanSubmit(validationResults) {
     let nub = document.getElementById('updateUserButton');
     nub.style.display = 'none';
@@ -161,7 +157,7 @@ export class UserAccount {
   }
 
   changeUserEmail() {
-    let bodyData = {'changeemail': this.user.changeemail, 'email': this.user.email };
+    let bodyData = {'changeemail': this.user.changeemail.toLowerCase(), 'email': this.user.email.toLowerCase() };
     let fetchData = {
       method: 'PUT',
       body: JSON.stringify(bodyData),
@@ -179,7 +175,7 @@ export class UserAccount {
       } else {
         /* istanbul ignore if */
         if (process.env.NODE_ENV !== 'test'){
-          window.location.assign('/userutil/?changeemail=' + this.user.changeemail);
+          window.location.assign('/userutil/?changeemail=' + this.user.changeemail.toLowerCase());
         }
       }
     })
@@ -191,8 +187,8 @@ export class UserAccount {
   async updateUser(){
     this.user.changeemail = '';
     if (this.originalEmail !== this.user.email){
-      this.user.changeemail = this.user.email;
-      this.user.email = this.originalEmail;
+      this.user.changeemail = this.user.email.toLowerCase();
+      this.user.email = this.originalEmail.toLowerCase();
     }
     this.user.userType = this.newUserType;
     await this.app.updateById('/user/', this.uid, this.user, null);

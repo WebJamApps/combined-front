@@ -174,7 +174,7 @@ class Register_ {
     let userdetString = document.getElementsByClassName('interests')[0].value;
     //let useridValue = '';
     let useridValue = document.getElementsByClassName('userid')[0].value;
-    let bodyData = {'name': firstname + ' ' + lastname, 'email': document.getElementsByClassName('email')[0].value, 'password': document.getElementsByClassName('password')[0].value,
+    let bodyData = {'name': firstname + ' ' + lastname, 'email': document.getElementsByClassName('email')[0].value.toLowerCase(), 'password': document.getElementsByClassName('password')[0].value,
       'first_name': firstname, 'last_name': lastname, 'affiliation': orgString, 'organisms': organismString, 'interests': userdetString, 'id': useridValue, 'primaryApp': primaryAppValue};
     let fetchData = {
       method: 'POST',
@@ -196,7 +196,7 @@ class Register_ {
     let fetchClient = evt.target.fetchClient;
     let runFetch = evt.target.runFetch;
     let loginEmail = '';
-    loginEmail = document.getElementsByClassName('email')[0].value;
+    loginEmail = document.getElementsByClassName('email')[0].value.toLowerCase();
     let bodyData = {'email': loginEmail };
     let fetchData = {
       method: 'PUT',
