@@ -63,6 +63,20 @@ describe('the App module', () => {
     expect(app1.auth.getTokenPayload()).toBe(window.localStorage.getItem('aurelia_id_token'));
     done();
   });
+  it('scrolls page to top after route changes', (done) => {
+    document.body.innerHTML = '<div class="material-header"></div>';
+    //let configStub = {options: {pushState: true}, addPipelineStep(){}, addPostRenderStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
+    app1.activate();
+
+    let config = {fallbackRoute: function(){}, map: function(){}, title: '', options: {pushstate: '', root: ''}, addPipelineStep: function(){}, addPostRenderStep: function(funObj){funObj.run({config: {settings: {noScrollToTop: false}}}, function(){});}};
+    let router;
+    app2.configureRouter(config, router);
+    document.body.innerHTML = '';
+    app2.configureRouter(config, router);
+    config = {fallbackRoute: function(){}, map: function(){}, title: '', options: {pushstate: '', root: ''}, addPipelineStep: function(){}, addPostRenderStep: function(funObj){funObj.run({config: {settings: {noScrollToTop: true}}}, function(){});}};
+    app2.configureRouter(config, router);
+    done();
+  });
   it('check if user is logged in when token is not in local storage', (done) => {
     window.localStorage.clear();
     //app1.authenticated = true;

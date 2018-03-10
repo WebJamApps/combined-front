@@ -107,9 +107,9 @@ export class App {
     config.addPipelineStep('authorize', this.userAccess);// provides access controls to prevent users from certain /dashboard child routes when not their userType (role)
     config.addPostRenderStep({
       run(routingContext, next) {
-        console.log(routingContext);
+        //console.log(routingContext);
         if (!routingContext.config.settings.noScrollToTop) {
-          console.log('scroll to top damnit!');
+          //console.log('scroll to top damnit!');
           // $('.page-host').scrollTop(0);
           // window.scrollTo(0, 0);
           let top = document.getElementsByClassName('material-header')[0];
