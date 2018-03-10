@@ -5,9 +5,9 @@
 //@inject(Router)
 export class Home {
 
-  //constructor(router) {
-    //this.router = router;
-  //}
+  constructor() {
+    this.top;
+  }
 
 
   get widescreen(){
@@ -26,10 +26,10 @@ export class Home {
   // }
 
   attached() {
-    let top = document.getElementsByClassName('material-header')[0];
+    this.top = document.getElementsByClassName('material-header')[0];
     //let top = document.getElementById('top');
-    if (top !== null && top !== undefined){
-      top.scrollIntoView();
+    if (this.top !== null && this.top !== undefined){
+      this.top.scrollIntoView();
     }
   }
 }
