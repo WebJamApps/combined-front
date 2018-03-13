@@ -1,8 +1,8 @@
 <template>
   <div class="page-host">
-      <!-- <a id="top"></a> -->
+    <!-- <a id="top"></a> -->
     <paper-drawer-panel id="drawerPanel" disable-edge-swipe right-drawer drawer-width.bind="drawerWidth">
-      <paper-header-panel drawer class="${currentStyles.sidebarClass}">
+      <div drawer class="${currentStyles.sidebarClass}">
         <div if.bind="fullmenu">
           <img id="webjamwidelogo" src="${currentStyles.sidebarImagePath}" style="width:182px"
           if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'">
@@ -138,24 +138,21 @@
             </button>
           </div>
         </div>
-      </paper-header-panel>
+      </div>
       <paper-header-panel main class="main-panel">
         <div class="material-header ${currentStyles.headerClass}">
-
           <div if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'" class="headercontent">
             <img src="${currentStyles.headerImagePath}" class="${currentStyles.headerImageClass}">
           </div>
-
           <div id="ohaflogo" if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'" class="headercontent" style="top:-23px; left:3px">
             <img src="${currentStyles.headerImagePath}" class="${currentStyles.headerImageClass}">
           </div>
-          <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:5px; height:50px"
+          <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:7px; height:10px;bottom:0px"
           if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'">
           <h3 class="header-text">
             ${currentStyles.headerText1}
           </h3>
         </div>
-
         <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:7px; height:81px; padding-left:2px"
         if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
         <h3 class="header-text" style="margin-top:0">
