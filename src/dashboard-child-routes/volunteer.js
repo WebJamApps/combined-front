@@ -182,6 +182,7 @@ export class Volunteer {
       return error;
     });
   }
+
   selectPickChange(type){
     this.showButton();
     if (type === 'causes'){
@@ -222,38 +223,18 @@ export class Volunteer {
     this.selectedTalents = this.selectedTalents.filter((e) => e !== '');
     this.changeCauses(this.allWorks, this.user.volWorkPrefs, this.selectedWorks);
     this.selectedWorks = this.selectedWorks.filter((e) => e !== '');
-    if (this.selectedWorks.includes('other')){
-      this.workOther = true;
-    } else {
-      this.workOther = false;
-    }
-    if (this.selectedTalents.includes('other')){
-      this.talentOther = true;
-    } else {
-      this.talentOther = false;
-    }
-    if (this.selectedCauses.includes('other')){
-      this.causeOther = true;
-    } else {
-      this.causeOther = false;
-    }
-    if (this.selectedCauses.length > 0){
-      console.log('I have selected a cause');
-      let causesSelector = document.getElementById('causesSelector');
-      console.log(causesSelector);
-      causesSelector.click();
-    }
-    if (this.selectedTalents.length > 0){
-      console.log('I have selected a talent');
-      let talentsSelector = document.getElementById('talentsSelector');
-      console.log(talentsSelector);
-      talentsSelector.click();
-    }
-    if (this.selectedWorks.length > 0){
-      console.log('I have selected a work pref');
-      let worksSelector = document.getElementById('worksSelector');
-      //console.log(causesSelector);
-      worksSelector.click();
+    this.workOther = this.selectedWorks.includes('other');
+    this.talentOther = this.selectedTalents.includes('other');
+    this.causeOther = this.selectedCauses.includes('other');
+    this.clickSelector(this.selectedCauses, 'causesSelector');
+    this.clickSelector(this.selectedTalents, 'talentsSelector');
+    this.clickSelector(this.selectedWorks, 'worksSelector');
+  }
+
+  clickSelector(selected, selector) {
+    if (selected.length > 0) {
+      let element = document.getElementById(selector);
+      element.click();
     }
   }
 
@@ -281,9 +262,6 @@ export class Volunteer {
 
   attached(){
     document.getElementById('distanceInput').addEventListener('keydown', this.showButton);
-    // this.buildVolunteerPTag('volCauses', 'volCauseOther', 'causes');
-    // this.buildVolunteerPTag('volTalents', 'volTalentOther', 'talents');
-    // this.buildVolunteerPTag('volWorkPrefs', 'volWorkOther', 'works');
     this.setupVolunteerUser();
   }
 }
