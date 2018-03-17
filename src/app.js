@@ -14,6 +14,7 @@ export class App {
     this.httpClient = httpClient;
     this.dashboardTitle = 'Dashboard';
     this.role = '';
+    this.menuToggled = false;
   }
 
   email = '';
@@ -138,7 +139,47 @@ export class App {
   }
 
   get widescreen() {
-    return document.documentElement.clientWidth > 766;
+    let isWide = document.documentElement.clientWidth > 766;
+    let drawer = document.getElementsByClassName('drawer')[0];
+    let mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
+    // if (drawer !== null && drawer !== undefined){
+    //   drawer.style.display = 'none';
+    // }
+    if (!this.menuToggled){
+      if (!isWide){
+        if (drawer !== null && drawer !== undefined){
+          drawer.style.display = 'none';
+          mobileMenuToggle.style.display = 'block';
+        }
+      } else {
+        if (drawer !== null && drawer !== undefined){
+          drawer.style.display = 'block';
+          mobileMenuToggle.style.display = 'none';
+        }
+      }
+    }
+    if (isWide){
+      if (drawer !== null && drawer !== undefined){
+        drawer.style.display = 'block';
+        mobileMenuToggle.style.display = 'none';
+      }
+    }
+    return isWide;
+  }
+
+  toggleMobileMenu(toggle){
+    if (!this.widescreen){
+      this.menuToggled = true;
+      let drawer = document.getElementsByClassName('drawer')[0];
+      let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+      if (drawer.style.display === 'none' && toggle !== 'close'){
+        drawer.style.display = 'block';
+        toggleIcon.style.display = 'none';
+      } else {
+        drawer.style.display = 'none';
+        toggleIcon.style.display = 'block';
+      }
+    }
   }
 
   toggleMenu() {
@@ -190,8 +231,7 @@ export class App {
   }
 
   close() {
-    let drawer = document.getElementById('drawerPanel');
-    drawer.closeDrawer();
+    this.toggleMobileMenu('close');
   }
 
   get currentRoute() {

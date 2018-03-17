@@ -1,15 +1,14 @@
 <template>
   <div class="page-host">
-    <!-- <a id="top"></a> -->
-    <paper-drawer-panel id="drawerPanel" disable-edge-swipe right-drawer drawer-width.bind="drawerWidth">
-      <div drawer class="${currentStyles.sidebarClass}">
+    <!-- <paper-drawer-panel id="drawerPanel" disable-edge-swipe right-drawer drawer-width.bind="drawerWidth"> -->
+      <div class="${currentStyles.sidebarClass} drawer" style="float:right; width:drawerWidth; background-color: #c0c0c0; height:100%; display:none">
         <div if.bind="fullmenu">
           <img id="webjamwidelogo" src="${currentStyles.sidebarImagePath}" style="width:182px"
           if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'">
           <img id="ohafbutterflies" src="${currentStyles.sidebarImagePath}" style="width:175px"
           if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
         </div>
-        <div if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 50px; height:91px"></div>
+        <div if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 63px; height:91px"></div>
         <div class="nav-list">
           <p if.bind="fullmenu" style="font-size:1px">&nbsp;</p>
           <div class="menu-item" if.bind="widescreen">
@@ -139,7 +138,11 @@
           </div>
         </div>
       </div>
+
       <paper-header-panel main class="main-panel">
+        <i click.delegate="toggleMobileMenu()" id="mobilemenutoggle" class="fa fa-bars pull-right fa-1.5x mobile-menu-toggle" paper-drawer-toggle aria-hidden="true" show.bind="!widescreen"></i>
+
+        <div class="mainPanel" click.delegate="toggleMobileMenu('close')">
         <div class="material-header ${currentStyles.headerClass}">
           <div if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'" class="headercontent">
             <img src="${currentStyles.headerImagePath}" class="${currentStyles.headerImageClass}">
@@ -161,11 +164,13 @@
           <br>${currentStyles.headerText3}
         </h3>
       </div>
-    </div>
-    <i id="mobilemenutoggle" class="fa fa-bars pull-right fa-1.5x mobile-menu-toggle" paper-drawer-toggle aria-hidden="true"></i>
+
+</div>
     <router-view></router-view>
     <div id="wjfooter" class="footer" style="padding:8px;"></div>
+    </div>
   </paper-header-panel>
-</paper-drawer-panel>
+
+<!-- </paper-drawer-panel> -->
 </div>
 </template>
