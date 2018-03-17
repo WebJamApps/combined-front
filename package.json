@@ -1,6 +1,6 @@
 {
   "name": "combined-front",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "Front End of web-jam.com App",
   "main": "dist/index.html",
   "repository": {
@@ -10,8 +10,7 @@
   "author": "HandlersAndKickers",
   "license": "MIT",
   "engines": {
-    "node": "8.9.4",
-    "npm": "5.6.0"
+    "node": "8.10.0"
   },
   "scripts": {
     "start": "nps",
