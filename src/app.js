@@ -24,6 +24,7 @@ export class App {
   expanded = false;
   @bindable
   drawerWidth = '175px';
+  contentWidth = '0px';
 
   @bindable
   fullmenu = true;
@@ -148,19 +149,30 @@ export class App {
     if (!this.menuToggled){
       if (!isWide){
         if (drawer !== null && drawer !== undefined){
+          this.contentWidth = '0px';
           drawer.style.display = 'none';
+          $(drawer).parent().css('display', 'none');
           mobileMenuToggle.style.display = 'block';
         }
       } else {
         if (drawer !== null && drawer !== undefined){
+          this.contentWidth = '0px';
           drawer.style.display = 'block';
+          $(drawer).parent().css('display', 'block');
           mobileMenuToggle.style.display = 'none';
         }
       }
     }
     if (isWide){
       if (drawer !== null && drawer !== undefined){
+        if (this.fullmenu){
+          this.contentWidth = '181px';
+        } else {
+          this.contentWidth = '62px';
+        }
+
         drawer.style.display = 'block';
+        $(drawer).parent().css('display', 'block');
         mobileMenuToggle.style.display = 'none';
       }
     }
@@ -168,16 +180,25 @@ export class App {
   }
 
   toggleMobileMenu(toggle){
-    if (!this.widescreen){
-      this.menuToggled = true;
-      let drawer = document.getElementsByClassName('drawer')[0];
-      let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
-      if (drawer.style.display === 'none' && toggle !== 'close'){
-        drawer.style.display = 'block';
-        toggleIcon.style.display = 'none';
-      } else {
-        drawer.style.display = 'none';
-        toggleIcon.style.display = 'block';
+    let isWide = document.documentElement.clientWidth > 766;
+    let valid = true;
+    if (!isWide && toggle === 'close' && event.target.className !== 'au-target home-sidebar drawer-container' && event.target.className !== 'au-target drawer-container ohaf-sidebar'){
+      valid = false;
+    }
+    if (valid){
+      if (!this.widescreen){
+        this.menuToggled = true;
+        let drawer = document.getElementsByClassName('drawer')[0];
+        let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+        if (drawer.style.display === 'none' && toggle !== 'close'){
+          drawer.style.display = 'block';
+          $(drawer).parent().css('display', 'block');
+          toggleIcon.style.display = 'none';
+        } else {
+          drawer.style.display = 'none';
+          $(drawer).parent().css('display', 'none');
+          toggleIcon.style.display = 'block';
+        }
       }
     }
   }
@@ -187,9 +208,11 @@ export class App {
     if (this.fullmenu) {
       this.fullmenu = false;
       this.drawerWidth = '50px';
+      this.contentWidth = '62px';
     } else {
       this.fullmenu = true;
       this.drawerWidth = '175px';
+      this.contentWidth = '181px';
     }
   }
 

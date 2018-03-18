@@ -18,7 +18,7 @@ export async function configure(aurelia) {
   .developmentLogging()
   .plugin(PLATFORM.moduleName('au-table'))
   .plugin(PLATFORM.moduleName('aurelia-validation'))
-  .plugin(PLATFORM.moduleName('aurelia-polymer'))
+  // .plugin(PLATFORM.moduleName('aurelia-polymer'))
   .plugin(PLATFORM.moduleName('aurelia-auth'), (baseConfig) => {
     baseConfig.configure(config);
   });
@@ -30,9 +30,9 @@ export async function configure(aurelia) {
   // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
   // aurelia.use.plugin(PLATFORM.moduleName('aurelia-html-import-template-loader'));
 
-  document.addEventListener('WebComponentsReady', function() {
-    aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));
-  });
+
+  aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));
+  
 
   // await aurelia.start();
   // await aurelia.setRoot(PLATFORM.moduleName('app'));
