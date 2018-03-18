@@ -311,6 +311,7 @@ export class App {
   get currentStyles() {
     let result = {};
     let style = 'wj';
+    let menuDrawer = document.getElementsByClassName('drawer')[0];
     //let footer = document.getElementById('wjfooter');
     let mobilemenutoggle = document.getElementById('mobilemenutoggle');
     //let color = '';
@@ -328,6 +329,7 @@ export class App {
         menuToggleClass: 'ohaf-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/ohaf/butterfly.png';
+      menuDrawer.style.backgroundColor = '#c09580';
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#565656';
       }
@@ -341,9 +343,9 @@ export class App {
         menuToggleClass: 'home-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
-      // if (footer !== null){
-      //
-      // }
+      if (menuDrawer !== null && menuDrawer !== undefined){
+        menuDrawer.style.backgroundColor = '#c0c0c0';
+      }
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#2a222a';
       }
