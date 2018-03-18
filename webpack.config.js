@@ -11,14 +11,12 @@ const webpack = require('webpack');
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
 const when = (condition, config, negativeConfig) =>
 condition ? ensureArray(config) : ensureArray(negativeConfig);
-
 // primary config:
 const title = 'Web Jam LLC';
 const outDir = path.resolve(__dirname, 'dist');
 const srcDir = path.resolve(__dirname, 'src');
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 const baseUrl = '/';
-
 const cssRules = [
   { loader: 'css-loader' },
   {
@@ -49,8 +47,6 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     historyApiFallback: true,
     port: parseInt(process.env.PORT, 10)
   },
-  //devtool: (process.env.NODE_ENV !== 'production') ? 'inline-source-map' : false,
-  // server: {port: parseInt(process.env.PORT, 10)},
   module: {
     rules: [
       // CSS required in JS/TS files should use the style-loader that auto-injects it into the website
@@ -91,7 +87,6 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     new AureliaPlugin(),
     new ModuleDependenciesPlugin({
       'aurelia-auth': ['./auth-filter'],
-      'aurelia-polymer': ['./au-select-custom-attribute'],
       'aurelia-config': ['./aurelia-config'],
       'au-table': ['./au-table', './au-table-select', './au-table-sort', './au-table-pagination'],
       'aurelia-validation': [
@@ -111,39 +106,6 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
         './validation-renderer',
         './validator'
       ]
-      // ,
-      // 'aurelia-form': [ './aurelia-form', './metadata',
-      //   './attribute/prefixed',
-      //   './component/aurelia-form',
-      //   './component/form-association',
-      //   './component/form-checkbox',
-      //   './component/form-error',
-      //   './component/form-help',
-      //   './component/form-label',
-      //   './component/form-select',
-      //   './component/entity-form',
-      //   './component/form-button',
-      //   './component/form-element',
-      //   './component/form-group',
-      //   './component/form-input',
-      //   './component/form-radio',
-      //   './component/form-textarea',
-      //   './component/view/bootstrap/aurelia-form.html',
-      //   './component/view/bootstrap/form-association.html',
-      //   './component/view/bootstrap/form-checkbox.html',
-      //   './component/view/bootstrap/form-error.html',
-      //   './component/view/bootstrap/form-help.html',
-      //   './component/view/bootstrap/form-label.html',
-      //   './component/view/bootstrap/form-select.html',
-      //   './component/view/bootstrap/entity-form.html',
-      //   './component/view/bootstrap/form-button.html',
-      //   './component/view/bootstrap/form-element.html',
-      //   './component/view/bootstrap/form-group.html',
-      //   './component/view/bootstrap/form-input.html',
-      //   './component/view/bootstrap/form-radio.html',
-      //   './component/view/bootstrap/form-textarea.html',
-      //   './decorator'
-      // ]
     }),
     new ProvidePlugin({
       'Promise': 'bluebird',
@@ -165,7 +127,6 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     }),
     new CopyWebpackPlugin(
       [{ from: 'static/favicon.ico', to: 'favicon.ico' },
-    { from: 'static/includes.html', to: 'includes.html' },
     { from: 'static/imgs', to: 'static/imgs' }]
   ),
     new webpack.EnvironmentPlugin(['NODE_ENV', 'AuthProductionBaseURL', 'PORT', 'BackendUrl', 'GoogleClientId', 'userRoles']),
@@ -174,28 +135,12 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       return o;
     }, {})}
 ),
-// new HtmlWebpackPlugin({
-//   filename: 'polymer.html',
-//   template: 'bower_components/polymer/polymer.html'
-// }),
-// new HtmlWebpackPlugin({
-//   filename: 'polymer-mini.html',
-//   template: 'bower_components/polymer/polymer-mini.html'
-// }),
-// new HtmlWebpackPlugin({
-//   filename: 'polymer-micro.html',
-//   template: 'bower_components/polymer/polymer-micro.html'
-// }),
     new CopyWebpackPlugin([
-  { from: 'bower_components/webcomponentsjs/webcomponents.min.js', to: 'webcomponents.min.js' },
   { from: 'static/music/DG.mp3', to: 'DG.mp3' },
   { from: 'static/music/MRM.mp3', to: 'MRM.mp3' },
   { from: 'static/music/AT.mp3', to: 'AT.mp3' },
   { from: 'static/music/TTGA.mp3', to: 'TTGA.mp3' },
   { from: 'static/WebJamLLC_FactSheet.pdf', to: 'WebJamLLC_FactSheet.pdf' }
-  // { from: 'node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js', to: 'mdDateTimePicker.min.js' },
-  // { from: 'node_modules/md-date-time-picker/dist/js/draggabilly.pkgd.min.js', to: 'draggabilly.pkgd.min.js' },
-  // { from: 'node_modules/md-date-time-picker/dist/js/moment.min.js', to: 'moment.min.js' }
     ]),
     ...when(extractCss, new ExtractTextPlugin({
       filename: production ? '[contenthash].css' : '[id].css',
@@ -206,7 +151,6 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     })),
     ...when(production, new CopyWebpackPlugin([
   { from: 'static/favicon.ico', to: 'favicon.ico' }
-  // { from: 'static/includes.html', to: 'includes.html' }
     ]))
   ]
 });
