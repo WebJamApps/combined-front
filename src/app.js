@@ -180,9 +180,17 @@ export class App {
   }
 
   toggleMobileMenu(toggle){
+    event.stopImmediatePropagation();
+    if (toggle !== 'close'){
+      document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
+      //document.getElementsByClassName('main-panel')[0].position = 'fixed';
+    } else {
+      document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
+    }
+    console.log(event);
     let isWide = document.documentElement.clientWidth > 766;
     let valid = true;
-    if (!isWide && toggle === 'close' && event.target.className !== 'au-target home-sidebar drawer-container' && event.target.className !== 'au-target drawer-container ohaf-sidebar'){
+    if (!isWide && toggle === 'close' && (event.target.className === 'nav-list' || event.target.className === 'menu-item')){
       valid = false;
     }
     if (valid){
@@ -254,6 +262,7 @@ export class App {
   }
 
   close() {
+    console.log('going to close the menu');
     this.toggleMobileMenu('close');
   }
 
@@ -335,6 +344,7 @@ export class App {
     let result = {};
     let style = 'wj';
     let menuDrawer = document.getElementsByClassName('drawer')[0];
+    let navList = document.getElementsByClassName('nav-list')[0];
     //let footer = document.getElementById('wjfooter');
     let mobilemenutoggle = document.getElementById('mobilemenutoggle');
     //let color = '';
@@ -353,6 +363,8 @@ export class App {
       };
       result.sidebarImagePath = '../static/imgs/ohaf/butterfly.png';
       menuDrawer.style.backgroundColor = '#c09580';
+      navList.style.backgroundColor = '#c09580';
+      navList.style.width = '175px';
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#565656';
       }
@@ -368,6 +380,8 @@ export class App {
       result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
       if (menuDrawer !== null && menuDrawer !== undefined){
         menuDrawer.style.backgroundColor = '#c0c0c0';
+        navList.style.backgroundColor = '#c0c0c0';
+        navList.style.width = '182px';
       }
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#2a222a';

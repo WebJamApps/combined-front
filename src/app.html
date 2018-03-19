@@ -3,7 +3,7 @@
     <!-- <paper-drawer-panel id="drawerPanel" disable-edge-swipe right-drawer drawer-width.bind="drawerWidth"> -->
       <div click.delegate="toggleMobileMenu('close')" class="${currentStyles.sidebarClass} drawer-container" style=" width:drawerWidth; display:none">
         <div class="drawer" style="background-color: #c0c0c0">
-          <div if.bind="fullmenu">
+          <div if.bind="fullmenu" class="navImage">
             <img id="webjamwidelogo" src="${currentStyles.sidebarImagePath}" style="width:182px"
             if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'">
             <img id="ohafbutterflies" src="${currentStyles.sidebarImagePath}" style="width:175px"
@@ -28,7 +28,7 @@
               </a>
             </div>
             <div class="menu-item" if.bind="!authenticated && Menu === 'ohaf'">
-              <a paper-drawer-toggle click.delegate="(close() || 1) && ohafLogin()" class="nav-link">
+              <a click.delegate="(close() || 1) && ohafLogin()" class="nav-link">
                 <span class="fa fa-sign-in nav-item" style="text-decoration:none"></span>
                 <span if.bind="fullmenu" class="nav-item">Login</span>
               </a>
