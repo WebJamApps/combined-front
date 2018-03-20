@@ -159,29 +159,29 @@ describe('the App module', () => {
     done();
   });
 
-  it('should provide the correct /login page styles for WJ or OHAF', (done) => {
-    let routre = new RouterStub();
-    routre.currentInstruction.config.name = 'login';
-    app1.router = routre;
-    app1.appState.isOhafLogin = true;
-    //app1.currentRoute = 'login';
-    app1.currentStyles;
-    //app1.logout();
-    expect(app1.Menu).toBe('ohaf');
-    app1.appState.isOhafLogin = false;
-    app1.currentStyles;
-    expect(app1.Menu).toBe('wj');
-    done();
-  });
+  // it('provides the correct /login page styles for WJ or OHAF', (done) => {
+  //   let routre = new RouterStub();
+  //   routre.currentInstruction.config.name = 'login';
+  //   app1.router = routre;
+  //   app1.appState.isOhafLogin = true;
+  //   //app1.currentRoute = 'login';
+  //   app1.currentStyles;
+  //   //app1.logout();
+  //   expect(app1.Menu).toBe('ohaf');
+  //   app1.appState.isOhafLogin = false;
+  //   app1.currentStyles;
+  //   expect(app1.Menu).toBe('wj');
+  //   done();
+  // });
 
-  it('gets the current styles with ohaf route', (done) => {
-    let routre = new RouterStub();
-    routre.currentInstruction.config.name = 'ohaf';
-    document.body.innerHTML = '<div id="wjfooter" class="footer"><i id="mobilemenutoggle"></i></div>';
-    app1.router = routre;
-    app1.currentStyles;
-    done();
-  });
+  // it('gets the current styles with ohaf route', (done) => {
+  //   let routre = new RouterStub();
+  //   routre.currentInstruction.config.name = 'ohaf';
+  //   document.body.innerHTML = '<div id="wjfooter" class="footer"><i id="mobilemenutoggle"></i></div>';
+  //   app1.router = routre;
+  //   app1.currentStyles;
+  //   done();
+  // });
 
   it('gets the current styles with library route', (done) => {
     let routre = new RouterStub();
@@ -216,23 +216,23 @@ describe('the App module', () => {
     done();
   });
 
-  it('gets the current styles dashboard/volunteer route', (done) => {
-    let routre = new RouterStub();
-    document.body.innerHTML = '<div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div>';
-    routre.currentInstruction.fragment = '/dashboard/volunteer';
-    app1.router = routre;
-    app1.currentStyles;
-    done();
-  });
+  // it('gets the current styles dashboard/volunteer route', (done) => {
+  //   let routre = new RouterStub();
+  //   document.body.innerHTML = '<div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div>';
+  //   routre.currentInstruction.fragment = '/dashboard/volunteer';
+  //   app1.router = routre;
+  //   app1.currentStyles;
+  //   done();
+  // });
 
-  it('gets the current styles with dashboard/charity route', (done) => {
-    document.body.innerHTML = '<div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div>';
-    let routre = new RouterStub();
-    routre.currentInstruction.fragment = '/dashboard/charity';
-    app1.router = routre;
-    app1.currentStyles;
-    done();
-  });
+  // it('gets the current styles with dashboard/charity route', (done) => {
+  //   document.body.innerHTML = '<div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div>';
+  //   let routre = new RouterStub();
+  //   routre.currentInstruction.fragment = '/dashboard/charity';
+  //   app1.router = routre;
+  //   app1.currentStyles;
+  //   done();
+  // });
 
   it('gets the current styles with dashboard/reader route', (done) => {
     let routre = new RouterStub();
@@ -281,13 +281,13 @@ describe('the App module', () => {
     done();
   });
 
-  it('it sets the style to be charity for vol-ops', (done) => {
-    let routre = new RouterStub();
-    routre.currentInstruction.fragment = '/dashboard/vol-ops/12434';
-    app1.router = routre;
-    app1.currentStyles;
-    done();
-  });
+  // it('sets the style to be charity for vol-ops', (done) => {
+  //   let routre = new RouterStub();
+  //   routre.currentInstruction.fragment = '/dashboard/vol-ops/12434';
+  //   app1.router = routre;
+  //   app1.currentStyles;
+  //   done();
+  // });
 
   it('closes the menu on cellphone display', (done) => {
     //console.log(app1);

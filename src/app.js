@@ -14,6 +14,7 @@ export class App {
     this.httpClient = httpClient;
     this.dashboardTitle = 'Dashboard';
     this.role = '';
+    this.menuToggled = false;
   }
 
   email = '';
@@ -23,6 +24,7 @@ export class App {
   expanded = false;
   @bindable
   drawerWidth = '175px';
+  contentWidth = '0px';
 
   @bindable
   fullmenu = true;
@@ -138,7 +140,75 @@ export class App {
   }
 
   get widescreen() {
-    return document.documentElement.clientWidth > 766;
+    let isWide = document.documentElement.clientWidth > 766;
+    let drawer = document.getElementsByClassName('drawer')[0];
+    let mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
+    // if (drawer !== null && drawer !== undefined){
+    //   drawer.style.display = 'none';
+    // }
+    if (!this.menuToggled){
+      if (!isWide){
+        if (drawer !== null && drawer !== undefined){
+          this.contentWidth = '0px';
+          drawer.style.display = 'none';
+          $(drawer).parent().css('display', 'none');
+          mobileMenuToggle.style.display = 'block';
+        }
+      } else {
+        if (drawer !== null && drawer !== undefined){
+          this.contentWidth = '0px';
+          drawer.style.display = 'block';
+          $(drawer).parent().css('display', 'block');
+          mobileMenuToggle.style.display = 'none';
+        }
+      }
+    }
+    if (isWide){
+      if (drawer !== null && drawer !== undefined){
+        if (this.fullmenu){
+          this.contentWidth = '181px';
+        } else {
+          this.contentWidth = '62px';
+        }
+
+        drawer.style.display = 'block';
+        $(drawer).parent().css('display', 'block');
+        mobileMenuToggle.style.display = 'none';
+      }
+    }
+    return isWide;
+  }
+
+  toggleMobileMenu(toggle){
+    event.stopImmediatePropagation();
+    if (toggle !== 'close'){
+      document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
+      //document.getElementsByClassName('main-panel')[0].position = 'fixed';
+    } else {
+      document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
+    }
+    console.log(event);
+    let isWide = document.documentElement.clientWidth > 766;
+    let valid = true;
+    if (!isWide && toggle === 'close' && (event.target.className === 'nav-list' || event.target.className === 'menu-item')){
+      valid = false;
+    }
+    if (valid){
+      if (!this.widescreen){
+        this.menuToggled = true;
+        let drawer = document.getElementsByClassName('drawer')[0];
+        let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+        if (drawer.style.display === 'none' && toggle !== 'close'){
+          drawer.style.display = 'block';
+          $(drawer).parent().css('display', 'block');
+          toggleIcon.style.display = 'none';
+        } else {
+          drawer.style.display = 'none';
+          $(drawer).parent().css('display', 'none');
+          toggleIcon.style.display = 'block';
+        }
+      }
+    }
   }
 
   toggleMenu() {
@@ -146,9 +216,11 @@ export class App {
     if (this.fullmenu) {
       this.fullmenu = false;
       this.drawerWidth = '50px';
+      this.contentWidth = '62px';
     } else {
       this.fullmenu = true;
       this.drawerWidth = '175px';
+      this.contentWidth = '181px';
     }
   }
 
@@ -190,8 +262,8 @@ export class App {
   }
 
   close() {
-    let drawer = document.getElementById('drawerPanel');
-    drawer.closeDrawer();
+    console.log('going to close the menu');
+    this.toggleMobileMenu('close');
   }
 
   get currentRoute() {
@@ -271,6 +343,8 @@ export class App {
   get currentStyles() {
     let result = {};
     let style = 'wj';
+    let menuDrawer = document.getElementsByClassName('drawer')[0];
+    let navList = document.getElementsByClassName('nav-list')[0];
     //let footer = document.getElementById('wjfooter');
     let mobilemenutoggle = document.getElementById('mobilemenutoggle');
     //let color = '';
@@ -288,6 +362,9 @@ export class App {
         menuToggleClass: 'ohaf-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/ohaf/butterfly.png';
+      menuDrawer.style.backgroundColor = '#c09580';
+      navList.style.backgroundColor = '#c09580';
+      navList.style.width = '175px';
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#565656';
       }
@@ -301,9 +378,11 @@ export class App {
         menuToggleClass: 'home-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
-      // if (footer !== null){
-      //
-      // }
+      if (menuDrawer !== null && menuDrawer !== undefined){
+        menuDrawer.style.backgroundColor = '#c0c0c0';
+        navList.style.backgroundColor = '#c0c0c0';
+        navList.style.width = '182px';
+      }
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#2a222a';
       }
