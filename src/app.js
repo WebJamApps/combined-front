@@ -183,9 +183,23 @@ export class App {
     event.stopImmediatePropagation();
     if (toggle !== 'close'){
       document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
-      //document.getElementsByClassName('main-panel')[0].position = 'fixed';
+      document.getElementsByClassName('page-host')[0].addEventListener('click', function(){
+        console.log('howdy');
+        let drawer = document.getElementsByClassName('drawer')[0];
+        let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+        console.log(event);
+        if (event.target.className !== 'nav-list' && event.target.className !== 'menu-item'){
+          drawer.style.display = 'none';
+          $(drawer).parent().css('display', 'none');
+          toggleIcon.style.display = 'block';
+          document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
+        }
+      });
     } else {
       document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
+      // document.getElementsByClassName('page-host')[0].removeEventListener('click', function(){
+      //   console.log('howdy');
+      // });
     }
     console.log(event);
     let isWide = document.documentElement.clientWidth > 766;
