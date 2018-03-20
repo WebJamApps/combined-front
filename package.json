@@ -20,16 +20,12 @@
     "test:karma": "cross-env NODE_ENV=test nps test.karma",
     "test:debug": "cross-env NODE_ENV=test nps test.karma.debug",
     "installglobals": "npm i -g npm@latest",
-    "cleaninstall": "rm -rf yarn.lock && rm -rf node_modules && yarn cache clean && npm run installglobals && yarn install && npm run postinstall:backend",
-    "postinstall:backend": "npm start -- build",
-    "vulc": "rm -rf static/includes.html && polymer-bundler --inline-scripts --inline-css includes.html > static/includes.html",
-    "prod": "npm run vulc && npm start -- build && npm start -- serve",
+    "cleaninstall": "rm -rf yarn.lock && rm -rf node_modules && yarn cache clean && npm run installglobals && yarn install",
     "snyk-protect": "snyk protect",
     "eslint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
-    "postinstall": "npm run fix:aurelia-val && npm run postinstall:backend",
-    "prepublish": "npm run snyk-protect",
-    "prepare": "npm run snyk-protect"
+    "postinstall": "npm run fix:aurelia-val && npm start -- build",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "minimatch": "^3.0.2",
