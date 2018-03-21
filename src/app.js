@@ -176,6 +176,10 @@ export class App {
         mobileMenuToggle.style.display = 'none';
       }
     }
+    let mainP = document.getElementsByClassName('main-panel')[0];
+    if (mainP !== null && mainP !== undefined){
+      mainP.style.marginRight = this.contentWidth;
+    }
     return isWide;
   }
 
@@ -236,6 +240,7 @@ export class App {
       this.drawerWidth = '175px';
       this.contentWidth = '181px';
     }
+    document.getElementsByClassName('main-panel')[0].style.marginRight = this.contentWidth;
   }
 
   ohafLogin(){
