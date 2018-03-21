@@ -96,8 +96,8 @@ describe('the App module', () => {
 
   it('updates by id', testAsync(async function(){
     //let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
-    let afterF = function(){console.log('howdy');};
-    await app1.updateById('/volopp/', '123', {}, afterF);
+    //let afterF = function(){console.log('howdy');};
+    await app1.updateById('/volopp/', '123', {});
     //console.log('this is the response');
     //console.log(response);
     //expect(app1.router).toBeDefined;
@@ -308,7 +308,7 @@ describe('the App module', () => {
   it('should toggle menu to be icons only', () => {
     app2.activate();
     app2.fullmenu = true;
-    //console.log(app1);
+    document.body.innerHTML = '<div class="main-panel"></div>';
     app2.toggleMenu();
     expect(app2.fullmenu).toBe(false);
     expect(app2.drawerWidth).toBe('50px');

@@ -142,7 +142,7 @@ export class UserAccount {
   async setCharity(){
     this.user.userDetails = '';
     this.user.userType = 'Charity';
-    await this.app.updateById('/user/', this.uid, this.user, null);
+    await this.app.updateById('/user/', this.uid, this.user);
   }
 
   afterUpdateUser(){
@@ -191,7 +191,7 @@ export class UserAccount {
       this.user.email = this.originalEmail.toLowerCase();
     }
     this.user.userType = this.newUserType;
-    await this.app.updateById('/user/', this.uid, this.user, null);
+    await this.app.updateById('/user/', this.uid, this.user);
     this.afterUpdateUser();
   }
 
