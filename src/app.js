@@ -378,7 +378,7 @@ export class App {
       result.sidebarImagePath = '../static/imgs/ohaf/butterfly.png';
       menuDrawer.style.backgroundColor = '#c09580';
       navList.style.backgroundColor = '#c09580';
-      navList.style.width = '175px';
+      navList.style.width = '180px';
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#565656';
       }
