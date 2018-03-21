@@ -21,10 +21,13 @@ export class App {
   password = '';
   authenticated = false;
   token = '';
-  expanded = false;
+  //expanded = false;
+
   @bindable
-  drawerWidth = '175px';
-  contentWidth = '0px';
+  drawerWidth = '182px';
+
+  @bindable
+  contentWidth = '62px';
 
   @bindable
   fullmenu = true;
@@ -184,7 +187,7 @@ export class App {
   }
 
   toggleMobileMenu(toggle){
-    event.stopImmediatePropagation();
+    //event.stopImmediatePropagation();
     if (toggle !== 'close'){
       document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
       document.getElementsByClassName('page-host')[0].addEventListener('click', function(){
@@ -230,17 +233,20 @@ export class App {
   }
 
   toggleMenu() {
-    //console.debug(this.fullmenu);
+    let dc = document.getElementsByClassName('drawer-container')[0];
+    let nl = document.getElementsByClassName('nav-list')[0];
     if (this.fullmenu) {
       this.fullmenu = false;
       this.drawerWidth = '50px';
-      this.contentWidth = '62px';
+      //this.contentWidth = '62px';
     } else {
       this.fullmenu = true;
-      this.drawerWidth = '175px';
-      this.contentWidth = '181px';
+      this.drawerWidth = '182px';
+      //this.contentWidth = '181px';
     }
-    document.getElementsByClassName('main-panel')[0].style.marginRight = this.contentWidth;
+    //document.getElementsByClassName('main-panel')[0].style.marginRight = this.contentWidth;
+    dc.style.width = this.drawerWidth;
+    nl.style.width = this.drawerWidth;
   }
 
   ohafLogin(){
@@ -383,7 +389,7 @@ export class App {
       result.sidebarImagePath = '../static/imgs/ohaf/butterfly.png';
       menuDrawer.style.backgroundColor = '#c09580';
       navList.style.backgroundColor = '#c09580';
-      navList.style.width = '180px';
+      //navList.style.width = '180px';
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#565656';
       }
@@ -400,7 +406,7 @@ export class App {
       if (menuDrawer !== null && menuDrawer !== undefined){
         menuDrawer.style.backgroundColor = '#c0c0c0';
         navList.style.backgroundColor = '#c0c0c0';
-        navList.style.width = '182px';
+        //navList.style.width = '182px';
       }
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#2a222a';
@@ -457,8 +463,6 @@ export class App {
       selectorObj[userVariable] = thisObj[mainSelectedList];
     }
     let exists = false;
-    //console.log('Selector this: ');
-    //console.log(selector_use_this);
     if (selectorUseThis === true){
       if (thisObj[mainSelectedList].includes('other')) {
         exists = true;
@@ -476,7 +480,7 @@ export class App {
     }
   }
 
-  async updateById(route, id, dataObj, afterFunction){
+  async updateById(route, id, dataObj){
     await fetch;
     return this.httpClient.fetch(route + id, {
       method: 'put',
@@ -485,29 +489,8 @@ export class App {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      if (afterFunction !== null){
-        afterFunction();
-      } else {
-        //this.afterUpdateUser();
-      }
     }).catch((error) => {
       console.log(error);
     });
-
-    // afterUpdateUser(){
-    //   this.appState.setUser(this.user);
-    //   this.appState.checkUserRole();
-    //   this.router.navigate('dashboard');
-    // }
   }
 }
-
-// class PostCompleteStep {
-//   run(instruction: NavigationInstruction, next: Next) {
-//     if (!instruction.config.settings.noScrollToTop) {
-//       window.scrollTo(0, 0);
-//     }
-//
-//     return next();
-//   }
-// }

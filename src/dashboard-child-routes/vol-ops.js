@@ -73,7 +73,7 @@ export class VolunteerOpps {
             //user does not exist, remove it from voPeopleScheduled and update this event, then run make data makeDataTable
             console.log('user does not exist');
             this.events[i].voPeopleScheduled = this.events[i].voPeopleScheduled.filter((e) => e !== this.events[i].voPeopleScheduled[j]);
-            await this.app.updateById('/volopp/', this.events[i]._id, this.events[i], null);
+            await this.app.updateById('/volopp/', this.events[i]._id, this.events[i]);
             return this.makeDataTable();
           }
         }
@@ -222,7 +222,7 @@ export class VolunteerOpps {
       this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
       this.voOpp.voDescription = '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>' + this.voOpp.voDescription;
     }
-    await this.app.updateById('/volopp/', this.voOpp._id, this.voOpp, null);
+    await this.app.updateById('/volopp/', this.voOpp._id, this.voOpp);
     this.activate();
   }
 

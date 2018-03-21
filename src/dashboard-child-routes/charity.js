@@ -225,7 +225,7 @@ export class Charity {
   }
 
   async putCharity(){
-    await this.app.updateById('/charity/', this.updateCharity._id, this.updateCharity, null);
+    await this.app.updateById('/charity/', this.updateCharity._id, this.updateCharity);
     this.updateCharity = {};
     document.getElementById('charityDash').scrollIntoView();
     this.activate();

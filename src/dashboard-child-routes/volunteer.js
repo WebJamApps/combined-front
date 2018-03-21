@@ -135,7 +135,7 @@ export class Volunteer {
     let result =  await this.doubleCheckSignups(thisevent);
     if (this.canSignup){
       thisevent.voPeopleScheduled.push(this.uid);
-      this.app.updateById('/volopp/', thisevent._id, thisevent, null);
+      this.app.updateById('/volopp/', thisevent._id, thisevent);
       await this.fetchAllEvents();
       this.checkScheduled();
       this.app.router.navigate('dashboard');
@@ -146,7 +146,7 @@ export class Volunteer {
 
   async cancelSignup(thisevent){
     thisevent.voPeopleScheduled = thisevent.voPeopleScheduled.filter((e) => e !== this.uid);
-    await this.app.updateById('/volopp/', thisevent._id, thisevent, null);
+    await this.app.updateById('/volopp/', thisevent._id, thisevent);
     this.app.router.navigate('dashboard');
   }
 
@@ -251,7 +251,7 @@ export class Volunteer {
   }
 
   async updateUser(){
-    await this.app.updateById('/user/', this.uid, this.user, null);
+    await this.app.updateById('/user/', this.uid, this.user);
     this.activate();
   }
 
