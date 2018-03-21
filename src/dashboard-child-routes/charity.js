@@ -111,7 +111,7 @@ export class Charity {
     .ensure('charityTypes').required().minLength(1).withMessage('charity type is required')
     .ensure('charityPhoneNumber').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
     .ensure('charityName').required().maxLength(40).withMessage('Charity name please')
-    .ensure('charityEmail').matches(/^[a-z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)*$/).withMessage('Valid Email in lowercase.')
+    .ensure('charityEmail').email()
     .ensure('charityZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
     .ensure('charityCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
     .ensure('charityStreet').required().maxLength(40).withMessage('Charity street address please')
@@ -152,7 +152,8 @@ export class Charity {
   createCharity(){
     this.updateCharity.charityManagers[0] = this.user.name;
     this.updateCharity.charityMngIds[0] = this.user._id;
-    console.log('this is the update charity email: ' + this.updateCharity.charityEmail);
+    this.updateCharity.charityEmail = this.updateCharity.charityEmail.toLowerCase();
+    console.log('this is the update charity email: ' + this.updateCharity);
     if (this.updateCharity.charityEmail !== '' && this.updateCharity.charityEmail !== null){
       this.findUserByEmail('post');
     } else {
@@ -201,6 +202,7 @@ export class Charity {
   }
 
   updateCharityFunct(){
+    this.updateCharity.charityEmail = this.updateCharity.charityEmail.toLowerCase();
     console.log('this is the update charity email: ' + this.updateCharity.charityEmail);
     if (this.updateCharity.charityEmail !== '' && this.updateCharity.charityEmail !== null){
       this.findUserByEmail('put');
