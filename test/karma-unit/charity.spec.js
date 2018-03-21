@@ -140,7 +140,8 @@ describe('the Charity Module', () => {
       'charityManagers': [],
       'charityMngIds': [],
       'charityTypeOther': '',
-      'charityTypesHtml': ''
+      'charityTypesHtml': '',
+      'charityEmail': ''
     };
     charity.update = true;
     charity.controller2 = {validate: function(){}};
@@ -180,7 +181,8 @@ describe('the Charity Module', () => {
       'charityManagers': [],
       'charityMngIds': [],
       'charityTypeOther': '',
-      'charityTypesHtml': ''
+      'charityTypesHtml': '',
+      'charityEmail': ''
     };
     document.body.innerHTML = '<div id="charityDash"></div>';
     charity.createCharity();
@@ -204,7 +206,8 @@ describe('the Charity Module', () => {
       'charityManagers': [],
       'charityMngIds': [],
       'charityTypeOther': '',
-      'charityTypesHtml': ''
+      'charityTypesHtml': '',
+      'charityEmail': ''
     };
     document.body.innerHTML = '<button class="updateButton"></button>';
     charity.updateTypePicked();
@@ -218,7 +221,8 @@ describe('the Charity Module', () => {
       'charityManagers': [],
       'charityMngIds': [],
       'charityTypeOther': '',
-      'charityTypesHtml': ''
+      'charityTypesHtml': '',
+      'charityEmail': ''
     };
     charity.updateTypePicked();
     done();
@@ -257,7 +261,8 @@ describe('the Charity Module', () => {
       'charityManagers': [],
       'charityMngIds': [],
       'charityTypeOther': '',
-      'charityTypesHtml': ''
+      'charityTypesHtml': '',
+      'charityEmail': ''
     };
     charity.controller2 = {validate: function(){}};
     charity.showUpdateCharity(myCharity);
@@ -366,6 +371,7 @@ describe('the Charity Module', () => {
     let node = document.createElement('div');
     node.id = 'charityDash';
     document.getElementsByTagName('body')[0].appendChild(node);
+    charity.updateCharity.charityEmail = 'dannyyean@me.com';
     charity.updateCharityFunct();
     charity.updateCharity.charityEmail = 'dannyyean@me.com';
     charity.updateCharityFunct();
@@ -377,7 +383,7 @@ describe('the Charity Module', () => {
     let node = document.createElement('div');
     node.id = 'charityDash';
     document.getElementsByTagName('body')[0].appendChild(node);
-    charity.updateCharity.charityEmail = null;
+    charity.updateCharity.charityEmail = '';
     charity.updateCharityFunct();
     done();
   });
