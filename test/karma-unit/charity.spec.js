@@ -113,15 +113,6 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('scrolls the charity dashboard into view after update', (done) => {
-    document.body.innerHTML = '  <div id="charityDash" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    charity.setupValidation2 = function(){};
-    charity.controller2 = {validate: function(){}};
-    charity.afterUpdate();
-    //expect(charity.app.expanded).toBe(true);
-    done();
-  });
-
   it('it does not display the charities table when there are no charities', (done) => {
     charity2.activate();
     expect(charity2.charities.length).toBe(0);
@@ -132,7 +123,7 @@ describe('the Charity Module', () => {
     charity2.activate();
     charity2.setupValidation2 = function(){};
     charity2.controller2 = {validate: function(){}};
-    document.body.innerHTML = '<div id="charityDash"></div><div id="updateCharitySection"></div>';
+    document.body.innerHTML = '<div id="charityDash"></div><div id="updateCharitySection"><div id="charTable"></div><button id="createNewCharityButton"></button></div>';
     charity2.attached();
     done();
   });
@@ -149,11 +140,12 @@ describe('the Charity Module', () => {
       'charityManagers': [],
       'charityMngIds': [],
       'charityTypeOther': '',
-      'charityTypesHtml': ''
+      'charityTypesHtml': '',
+      'charityEmail': ''
     };
     charity.update = true;
     charity.controller2 = {validate: function(){}};
-    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="typesUpdate"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button></div><div id="scheduleCharitySection"></div>';
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="typesUpdate"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button><button id="updateCharityButton"></button></div><div id="scheduleCharitySection"></div>';
     charity.updateCharityFunction(charity1);
     expect(charity.charityName).toBe('test charity');
     charity.update = false;
@@ -189,7 +181,8 @@ describe('the Charity Module', () => {
       'charityManagers': [],
       'charityMngIds': [],
       'charityTypeOther': '',
-      'charityTypesHtml': ''
+      'charityTypesHtml': '',
+      'charityEmail': ''
     };
     document.body.innerHTML = '<div id="charityDash"></div>';
     charity.createCharity();
@@ -213,7 +206,8 @@ describe('the Charity Module', () => {
       'charityManagers': [],
       'charityMngIds': [],
       'charityTypeOther': '',
-      'charityTypesHtml': ''
+      'charityTypesHtml': '',
+      'charityEmail': ''
     };
     document.body.innerHTML = '<button class="updateButton"></button>';
     charity.updateTypePicked();
@@ -227,7 +221,8 @@ describe('the Charity Module', () => {
       'charityManagers': [],
       'charityMngIds': [],
       'charityTypeOther': '',
-      'charityTypesHtml': ''
+      'charityTypesHtml': '',
+      'charityEmail': ''
     };
     charity.updateTypePicked();
     done();
@@ -266,7 +261,8 @@ describe('the Charity Module', () => {
       'charityManagers': [],
       'charityMngIds': [],
       'charityTypeOther': '',
-      'charityTypesHtml': ''
+      'charityTypesHtml': '',
+      'charityEmail': ''
     };
     charity.controller2 = {validate: function(){}};
     charity.showUpdateCharity(myCharity);
@@ -375,6 +371,7 @@ describe('the Charity Module', () => {
     let node = document.createElement('div');
     node.id = 'charityDash';
     document.getElementsByTagName('body')[0].appendChild(node);
+    charity.updateCharity.charityEmail = 'dannyyean@me.com';
     charity.updateCharityFunct();
     charity.updateCharity.charityEmail = 'dannyyean@me.com';
     charity.updateCharityFunct();
@@ -386,7 +383,7 @@ describe('the Charity Module', () => {
     let node = document.createElement('div');
     node.id = 'charityDash';
     document.getElementsByTagName('body')[0].appendChild(node);
-    charity.updateCharity.charityEmail = null;
+    charity.updateCharity.charityEmail = '';
     charity.updateCharityFunct();
     done();
   });
