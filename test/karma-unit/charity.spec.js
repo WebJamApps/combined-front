@@ -161,7 +161,6 @@ describe('the Charity Module', () => {
       'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
       'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     states.sort();
-    charity.activate();
     expect(charity.app.states).toContain(states[0]);
     expect(charity.app.states.length).toBe(states.length);
     done();
@@ -185,7 +184,6 @@ describe('the Charity Module', () => {
       'charityEmail': ''
     };
     document.body.innerHTML = '<div id="charityDash"></div>';
-    charity.createCharity();
     charity.updateCharity.charityEmail = '';
     charity.createCharity();
     charity.updateCharity.charityEmail = 'howdy@howdy.com';
@@ -237,17 +235,21 @@ describe('the Charity Module', () => {
   });
 
   it('displays the create new charity webform with hidden submit button and the charities table', (done) => {
+    jasmine.clock().install();
     charity.activate();
     document.body.innerHTML = '<div id="charTable" style="display:none"></div><div><button id="createNewCharityButton" style="display:block">Create</button>';
     //charity.setUpValidation2 = function() {};
     charity.showUpdateCharity = function() {};
     charity.createNewCharity();
+    jasmine.clock().tick(1);
     expect(document.getElementById('createNewCharityButton').style.display).toBe('none');
     expect(document.getElementById('charTable').style.display).toBe('block');
     done();
+    jasmine.clock().uninstall();
   });
 
   it('hides the update charity button if it was displayed', (done) => {
+    jasmine.clock().install();
     charity.activate();
     document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection"></div><div><button id="updateCharityButton" style="display:block">Create</button>';
     charity.setupValidation2 = function() {};
@@ -266,8 +268,10 @@ describe('the Charity Module', () => {
     };
     charity.controller2 = {validate: function(){}};
     charity.showUpdateCharity(myCharity);
+    jasmine.clock().tick(1);
     expect(document.getElementById('updateCharityButton').style.display).toBe('none');
     done();
+    jasmine.clock().uninstall();
   });
 
   it('it does not try to display the submit or update button if it does not exist', (done) => {
