@@ -357,7 +357,7 @@ audio::-webkit-media-controls-panel {
 
 .home-header {
   background-color: #2a222a;
-  margin: 0;
+  /* margin: 0; */
   height: 91px;
 }
 
@@ -504,7 +504,7 @@ audio::-webkit-media-controls-panel {
 .ohaf-header-image {
   width: 85px;
   left: 2px;
-  margin-top: -10px;
+  margin-top: -13px;
 }
 
 .ohaf-menu-toggle {
@@ -728,7 +728,7 @@ a:hover {
   .drawer-container {
     float: right;
     position: fixed;
-    right: 15px;
+    right: 0;
   }
 }
 
