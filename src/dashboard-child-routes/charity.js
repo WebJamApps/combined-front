@@ -55,7 +55,7 @@ export class Charity {
     document.getElementById('charTable').style.display = 'block';
     this.updateScheduledEvent = false;
     // the element is available in the template.
-    document.getElementById('createNewCharityButton').style.display = 'none';
+    setTimeout(() => {document.getElementById('createNewCharityButton').style.display = 'none';});
     this.showUpdateCharity(charity);
   }
 
@@ -71,17 +71,16 @@ export class Charity {
   showUpdateCharity(charity){
     this.charityName = charity.charityName;
     this.updateCharity = charity;
-    this.updateCharity.charityEmail = '';
     this.typeOther = this.updateCharity.charityTypes.includes('other');
     this.updateCharity.charityTypeOther = !this.typeOther ? '' : this.updateCharity.charityTypeOther;
     this.setupValidation2();
+    this.controller2.validate();
     if (this.update === true){
       document.getElementById('updateCharitySection').scrollIntoView();
       document.getElementById('updateCharityButton').style.display = 'none';
     } else {
       document.getElementById('charityDash').scrollIntoView();
     }
-    this.controller2.validate();
   }
 
   openCheckboxAndValidate(e, forceOpen) {
