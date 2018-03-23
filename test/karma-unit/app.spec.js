@@ -96,8 +96,8 @@ describe('the App module', () => {
 
   it('updates by id', testAsync(async function(){
     //let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
-    let afterF = function(){console.log('howdy');};
-    await app1.updateById('/volopp/', '123', {}, afterF);
+    //let afterF = function(){console.log('howdy');};
+    await app1.updateById('/volopp/', '123', {});
     //console.log('this is the response');
     //console.log(response);
     //expect(app1.router).toBeDefined;
@@ -281,25 +281,14 @@ describe('the App module', () => {
     done();
   });
 
-  // it('sets the style to be charity for vol-ops', (done) => {
-  //   let routre = new RouterStub();
-  //   routre.currentInstruction.fragment = '/dashboard/vol-ops/12434';
-  //   app1.router = routre;
-  //   app1.currentStyles;
-  //   done();
-  // });
-
   it('closes the menu on cellphone display', (done) => {
-    //console.log(app1);
     app1.activate().then(() => {
       app1.close();
-      //expect(app1.authenticated).toBe(false);
     });
     done();
   });
 
   it('should get widescreen', (done) => {
-    //console.log(app1);
     const app3 = new App(new AuthStub, new HttpMock);
     expect(app3.widescreen).toBe(true);
     done();
@@ -308,7 +297,7 @@ describe('the App module', () => {
   it('should toggle menu to be icons only', () => {
     app2.activate();
     app2.fullmenu = true;
-    //console.log(app1);
+    document.body.innerHTML = '<div class="main-panel"></div><div class="drawer-container"></div><div class="nav-list"></div>';
     app2.toggleMenu();
     expect(app2.fullmenu).toBe(false);
     expect(app2.drawerWidth).toBe('50px');
@@ -316,11 +305,11 @@ describe('the App module', () => {
   });
 
   it('should toggle menu to be icons with text', () => {
+    document.body.innerHTML = '<div class="main-panel"></div><div class="drawer-container"></div><div class="nav-list"></div>';
     app1.fullmenu = false;
-    //console.log(app1);
     app1.toggleMenu();
     expect(app1.fullmenu).toBe(true);
-    expect(app1.drawerWidth).toBe('175px');
+    expect(app1.drawerWidth).toBe('182px');
   });
   // done();
 });
