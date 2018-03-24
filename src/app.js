@@ -27,7 +27,7 @@ export class App {
   drawerWidth = '182px';
 
   @bindable
-  contentWidth = '62px';
+  contentWidth = '0px';
 
   @bindable
   fullmenu = true;
@@ -146,89 +146,63 @@ export class App {
     let isWide = document.documentElement.clientWidth > 766;
     let drawer = document.getElementsByClassName('drawer')[0];
     let mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
-    // if (drawer !== null && drawer !== undefined){
-    //   drawer.style.display = 'none';
-    // }
-    if (!this.menuToggled){
-      if (!isWide){
-        if (drawer !== null && drawer !== undefined){
-          this.contentWidth = '0px';
-          drawer.style.display = 'none';
-          $(drawer).parent().css('display', 'none');
-          mobileMenuToggle.style.display = 'block';
-        }
-      } else {
-        if (drawer !== null && drawer !== undefined){
-          this.contentWidth = '0px';
-          drawer.style.display = 'block';
-          $(drawer).parent().css('display', 'block');
-          mobileMenuToggle.style.display = 'none';
-        }
+    if (!this.menuToggled && !isWide) {
+      /* istanbul ignore else */
+      if (drawer !== null && drawer !== undefined) {
+        drawer.style.display = 'none';
+        $(drawer).parent().css('display', 'none');
+        mobileMenuToggle.style.display = 'block';
       }
     }
-    if (isWide){
-      if (drawer !== null && drawer !== undefined){
-        if (this.fullmenu){
-          this.contentWidth = '181px';
-        } else {
-          this.contentWidth = '62px';
-        }
-
+    if (isWide) {
+      if (drawer !== null && drawer !== undefined) {
+        if (this.contentWidth === '0px'){this.contentWidth = '182px';}
         drawer.style.display = 'block';
         $(drawer).parent().css('display', 'block');
         mobileMenuToggle.style.display = 'none';
       }
-    }
+    } else {this.contentWidth = '0px';}
     let mainP = document.getElementsByClassName('main-panel')[0];
-    if (mainP !== null && mainP !== undefined){
+    if (mainP !== null && mainP !== undefined) {
       mainP.style.marginRight = this.contentWidth;
     }
     return isWide;
   }
 
-  toggleMobileMenu(toggle){
-    //event.stopImmediatePropagation();
-    if (toggle !== 'close'){
+  toggleMobileMenu(toggle) {
+    document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
+    if (toggle !== 'close') {
       document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
-      document.getElementsByClassName('page-host')[0].addEventListener('click', function(){
-        console.log('howdy');
+      document.getElementsByClassName('page-host')[0].addEventListener('click', function() {
         let drawer = document.getElementsByClassName('drawer')[0];
         let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
-        console.log(event);
-        if (event.target.className !== 'nav-list' && event.target.className !== 'menu-item'){
+        /* istanbul ignore else */
+        if (event.target.className !== 'nav-list' && event.target.className !== 'menu-item') {
           drawer.style.display = 'none';
           $(drawer).parent().css('display', 'none');
           toggleIcon.style.display = 'block';
           document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
         }
       });
+    }
+    this.menuToggled = true;
+    let drawer = document.getElementsByClassName('drawer')[0];
+    let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+    if (drawer.style.display === 'none' && toggle !== 'close') {
+      drawer.style.display = 'block';
+      $(drawer).parent().css('display', 'block');
+      toggleIcon.style.display = 'none';
     } else {
-      document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
-      // document.getElementsByClassName('page-host')[0].removeEventListener('click', function(){
-      //   console.log('howdy');
-      // });
+      drawer.style.display = 'none';
+      $(drawer).parent().css('display', 'none');
+      toggleIcon.style.display = 'block';
     }
-    console.log(event);
-    let isWide = document.documentElement.clientWidth > 766;
-    let valid = true;
-    if (!isWide && toggle === 'close' && (event.target.className === 'nav-list' || event.target.className === 'menu-item')){
-      valid = false;
-    }
-    if (valid){
-      if (!this.widescreen){
-        this.menuToggled = true;
-        let drawer = document.getElementsByClassName('drawer')[0];
-        let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
-        if (drawer.style.display === 'none' && toggle !== 'close'){
-          drawer.style.display = 'block';
-          $(drawer).parent().css('display', 'block');
-          toggleIcon.style.display = 'none';
-        } else {
-          drawer.style.display = 'none';
-          $(drawer).parent().css('display', 'none');
-          toggleIcon.style.display = 'block';
-        }
-      }
+  }
+
+  close() {
+    console.log('going to close the menu if not widescreen');
+    if (!this.widescreen) {
+      this.toggleMobileMenu('close');
     }
   }
 
@@ -238,13 +212,13 @@ export class App {
     if (this.fullmenu) {
       this.fullmenu = false;
       this.drawerWidth = '50px';
-      //this.contentWidth = '62px';
+      this.contentWidth = '50px';
     } else {
       this.fullmenu = true;
       this.drawerWidth = '182px';
-      //this.contentWidth = '181px';
+      this.contentWidth = '182px';
     }
-    //document.getElementsByClassName('main-panel')[0].style.marginRight = this.contentWidth;
+    document.getElementsByClassName('main-panel')[0].style.marginRight = this.contentWidth;
     dc.style.width = this.drawerWidth;
     nl.style.width = this.drawerWidth;
   }
@@ -284,11 +258,6 @@ export class App {
     }
     this.role =  '';
     this.appState.isOhafLogin = false;
-  }
-
-  close() {
-    console.log('going to close the menu');
-    this.toggleMobileMenu('close');
   }
 
   get currentRoute() {
