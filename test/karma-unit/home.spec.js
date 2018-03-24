@@ -7,7 +7,7 @@ describe('the Home Module', () => {
   });
 
   it('checks that widescreen is boolean', (done) => {
-    expect(typeof home.widescreen).toBe('boolean');
+    expect(typeof home.widescreenHomepage).toBe('boolean');
     done();
   });
 
