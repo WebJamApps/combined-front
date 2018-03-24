@@ -9,10 +9,9 @@ export class Home {
     this.top;
   }
 
-
-  get widescreen(){
+  get widescreenHomepage(){
     //document.getElementById('top').scrollIntoView();
-    return document.documentElement.clientWidth > 1300;
+    return document.documentElement.clientWidth > 1200;
     //document.getElementById('top').scrollIntoView();
   }
 

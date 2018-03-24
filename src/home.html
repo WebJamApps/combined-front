@@ -1,14 +1,13 @@
 <template>
   <div class="page-content">
     <a id="top"></a>
-    <div if.bind="widescreen">
+    <div if.bind="widescreenHomepage">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-6" style="top:0;padding-right:0">
-            <p if.bind = "widescreen" style="margin-top:54px; margin-bottom:40px;font-size:18px">
-              Web Jam LLC helps businesses bring their web technologies into the <br>21st century! Let us
-              help make your website mobile-friendly and grow <br>your business by utilizing the power of online services.
-              <br>More information is available in our
+          <div class="col-md-6" style="top:0;padding-right:6px">
+            <p if.bind = "widescreenHomepage" style="margin-top:54px; margin-bottom:40px;font-size:18px">
+              Web Jam LLC helps businesses bring their web technologies into the 21st century! Let us
+              help make your website mobile-friendly and grow your business by utilizing the power of online services. More information is available in our
               <a href="WebJamLLC_FactSheet.pdf" target="_blank">Fact Sheet</a>.
             </p>
             <h3>FAQs</h3>
@@ -32,7 +31,7 @@
         </div>
       </div>
     </div>
-    <div if.bind = "!widescreen" style="margin-top:1px;">
+    <div if.bind = "!widescreenHomepage" style="margin-top:1px;">
       <div id="slideshow">
         <img src="../static/imgs/banner1.jpg">
       </div>
@@ -41,7 +40,7 @@
           Web Jam LLC helps businesses bring their web technologies into the 21st century! Let us
           help make your website mobile-friendly and grow your business by utilizing the power of online services.
           More information is available in our
-            <a href="WebJamLLC_FactSheet.pdf" target="_blank">Fact Sheet</a>.
+          <a href="WebJamLLC_FactSheet.pdf" target="_blank">Fact Sheet</a>.
         </p>
         <h3>FAQs</h3>
         <p style="font-size:18px"><b><i>Q:</i></b> How can I contact you?</p>
