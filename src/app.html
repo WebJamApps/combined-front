@@ -8,6 +8,12 @@
           <img id="ohafbutterflies" src="${currentStyles.sidebarImagePath}" style="width:182px; margin-right:0; margin-top:-4px"
           if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
         </div>
+        <div if.bind="!fullmenu && (Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer')" style="background-color:#2a222a;width:50px;height:91px" class="navImage">
+
+        </div>
+        <div if.bind="!fullmenu && (Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer')" style="background-color:#565656;width:50px;height:91px" class="navImage">
+
+        </div>
         <div if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 63px; height:91px"></div>
         <div class="nav-list">
           <p if.bind="fullmenu" style="font-size:1px">&nbsp;</p>
@@ -164,11 +170,13 @@
         </h3>
       </div>
     </div>
-    <div style="width:auto">
+    <div style="width:auto;" class="content-block">
       <router-view></router-view>
+      <div id="wjfooter" class="footer" style="padding:8px;"></div>
     </div>
-    <div id="wjfooter" class="footer" style="padding:8px;width:auto"></div>
+
   </div>
 </div>
+
 </div>
 </template>
