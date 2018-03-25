@@ -39,22 +39,22 @@
     </div>
     <!-- <div if.bind="showtable" class="search-table-outer" style="position:relative;overflow-x:auto;max-height:700px"> -->
     <div class="search-table-outer" style="position:relative;overflow-x:auto;width:auto;">
-      <table style="table-layout: fixed; border-collapse: separate;" aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
+      <table style="table-layout: fixed; border-collapse: collapse;font-size: 0.9em!important;" aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
         <thead style="display: block; position: relative;">
           <tr style="">
-            <th style="padding:8px;min-width:130px; text-align:center" aut-sort="key: past">Action</th>
-            <th style="padding:8px;min-width:130px" aut-sort="key: voName; default: asc">Event Name</th>
-            <th style="padding:8px;min-width:200px" aut-sort="key: voDescription">Description</th>
+            <th style="padding:8px; min-width:130px; text-align:center" aut-sort="key: past">Action</th>
+            <th style="padding:8px; min-width:130px" aut-sort="key: voName; default: asc">Event Name</th>
+            <th style="padding:8px; min-width:200px" aut-sort="key: voDescription">Description</th>
             <th style="padding:8px; min-width:150px" >Location</th>
             <th style="padding:8px; min-width:100px" aut-sort="key: voZipCode;">Zipcode</th>
-            <th style="padding:8px; max-width:100px" >Start Date</th>
-            <th style="padding:8px; max-width:100px" >Start Time</th>
-            <th style="padding:8px; max-width:100px">End Date</th>
-            <th style="padding:8px; max-width:100px">End Time</th>
-            <th style="padding:8px">People Needed</th>
-            <th style="padding:8px">People Scheduled</th>
+            <th style="padding:8px; min-width:120px" >Start Date</th>
+            <th style="padding:8px; min-width:120px" >Start Time</th>
+            <th style="padding:8px; min-width:120px">End Date</th>
+            <th style="padding:8px; min-width:120px">End Time</th>
+            <th style="padding:8px; min-width:150px">People Needed</th>
+            <th style="padding:8px; min-width:150px">People Scheduled</th>
             <th style="padding:8px; min-width:112px">Talents</th>
-            <th style="padding:8px; min-width:82px">Work</th>
+            <th style="padding:8px; min-width:100px">Work</th>
             <th style="padding:8px; min-width:120px">Charity Name</th>
             <th style="padding:8px; min-width:122px">Charity Type</th>
             <th style="padding:8px; min-width:117px;">Phone</th>
@@ -64,7 +64,7 @@
         </thead>
         <tbody style="overflow: auto!important;max-height: 700px!important;display: block;">
           <tr repeat.for="event of $displayData" if.bind="(!event.past || (event.past && !hidePast)) && (!event.full || (event.full && event.scheduled))">
-            <td style="padding:8px; text-align:center; min-width: 130px;">
+            <td style="padding:8px; text-align:center;overflow-wrap: break-word; max-width: 130px; min-width: 130px;">
               <button if.bind="!event.scheduled && !event.past && event.voStatus !== 'cancel'" class="button-checkout" raised click.delegate="signupEvent(event)" style="margin-bottom:10px">
                 Sign Up
               </button>
@@ -75,23 +75,23 @@
               <p if.bind="event.past && !event.scheduled">This event has past</p>
                 <p if.bind="event.past && event.scheduled" style="background-color:green">Thank you for your service!</p>
             </td>
-            <td style="padding:8px; min-width:130px;" innerhtml.bind="event.voName"></td>
-            <td style="padding:8px; min-width:200px;" innerhtml.bind="event.voDescription"></td>
-            <td style="padding:8px; min-width:150px;"><p>${event.voStreet}</p><p>${event.voCity}, ${event.voState}</p></td>
-            <td style="padding:8px; min-width:101px;" innerhtml.bind="event.voZipCode"></td>
-            <td style="padding:8px; min-width:98px;" innerhtml.bind="event.voStartDate"></td>
-            <td style="padding:8px; min-width:98px;" innerhtml.bind="event.voStartTime"></td>
-            <td style="padding:8px; min-width:88px;" innerhtml.bind="event.voEndDate"></td>
-            <td style="padding:8px; min-width:88px;" innerhtml.bind="event.voEndTime"></td>
-            <td style="padding:8px; min-width:134px;text-align: center;" innerhtml.bind="event.voNumPeopleNeeded"></td>
-            <td style="padding:8px; min-width:157px;text-align: center;" innerhtml.bind="event.voNumPeopleScheduled"></td>
-            <td style="padding:8px" innerhtml.bind="event.talentHtml"></td>
-            <td style="padding:8px" innerhtml.bind="event.workHtml"></td>
-            <td style="padding:8px; min-width:123px" innerhtml.bind="event.voCharityName"></td>
-            <td style="padding:8px; max-width:122px; overflow-wrap: break-word;" innerhtml.bind="event.voCharityTypes"></td>
-            <td style="padding:8px" innerhtml.bind="event.voContactPhone"></td>
-            <td style="padding:8px; width:130px; overflow-wrap: break-word;" innerhtml.bind="event.voContactEmail"></td>
-            <td style="padding:8px; min-width:162px" innerhtml.bind="event.voContactName"></td>
+            <td style="padding:8px; min-width:130px;overflow-wrap: break-word; max-width: 130px;" innerhtml.bind="event.voName"></td>
+            <td style="padding:8px; min-width:200px;overflow-wrap: break-word; max-width: 200px;" innerhtml.bind="event.voDescription"></td>
+            <td style="padding:8px; min-width:150px;overflow-wrap: break-word; max-width: 150px;"><p>${event.voStreet}</p><p>${event.voCity}, ${event.voState}</p></td>
+            <td style="padding:8px; min-width:100px;overflow-wrap: break-word; max-width: 100px;" innerhtml.bind="event.voZipCode"></td>
+            <td style="padding:8px; min-width:120px;overflow-wrap: break-word; max-width: 120px;" innerhtml.bind="event.voStartDate"></td>
+            <td style="padding:8px; min-width:120px;overflow-wrap: break-word; max-width: 120px;" innerhtml.bind="event.voStartTime"></td>
+            <td style="padding:8px; min-width:120px;overflow-wrap: break-word; max-width: 120px;" innerhtml.bind="event.voEndDate"></td>
+            <td style="padding:8px; min-width:120px;overflow-wrap: break-word; max-width: 120px;" innerhtml.bind="event.voEndTime"></td>
+            <td style="padding:8px; max-width:150px;text-align:center;overflow-wrap: break-word; min-width: 150px;" innerhtml.bind="event.voNumPeopleNeeded"></td>
+            <td style="padding:8px; min-width:150px;text-align:center;overflow-wrap: break-word; max-width: 150px;" innerhtml.bind="event.voNumPeopleScheduled"></td>
+            <td style="padding:8px;overflow-wrap:break-word;max-width:112px; min-width:112px;" innerhtml.bind="event.talentHtml"></td>
+            <td style="padding:8px;overflow-wrap:break-word;max-width:100px;min-width:100px;" innerhtml.bind="event.workHtml"></td>
+            <td style="padding:8px; min-width:120px;overflow-wrap: break-word;max-width:120px;" innerhtml.bind="event.voCharityName"></td>
+            <td style="padding:8px; min-width:122px;overflow-wrap: break-word;max-width:122px;" innerhtml.bind="event.voCharityTypes"></td>
+            <td style="padding:8px; overflow-wrap: break-word;max-width: 117px;min-width:117px;" innerhtml.bind="event.voContactPhone"></td>
+            <td style="padding:8px; min-width:250px;overflow-wrap: break-word; max-width: 250px;" innerhtml.bind="event.voContactEmail"></td>
+            <td style="padding:8px; min-width:162px; overflow-wrap: break-word; max-width: 162px;" innerhtml.bind="event.voContactName"></td>
           </tr>
         </tbody>
       </table>
