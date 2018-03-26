@@ -722,6 +722,9 @@ a:hover {
     position: fixed;
     width: 100%;
   }
+  .content-block {
+    overflow-x: hidden;
+  }
 }
 
 @media screen and (min-width: 766px) {
