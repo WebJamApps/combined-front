@@ -56,17 +56,31 @@ describe('the App module', () => {
   });
   it('check if user is logged in', (done) => {
     window.localStorage.setItem('aurelia_id_token', '109842sdhgsgfhjsfoi4124');
-    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
+    let configStub = {options: {pushState: true}, addPipelineStep(){}, addPostRenderStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
     app1.configureRouter(configStub, RouterStub);
     app1.router.navigate = function(){};
     app1.checkIfLoggedIn();
     expect(app1.auth.getTokenPayload()).toBe(window.localStorage.getItem('aurelia_id_token'));
     done();
   });
+  it('scrolls page to top after route changes', (done) => {
+    document.body.innerHTML = '<div class="material-header"></div>';
+    //let configStub = {options: {pushState: true}, addPipelineStep(){}, addPostRenderStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
+    app1.activate();
+
+    let config = {fallbackRoute: function(){}, map: function(){}, title: '', options: {pushstate: '', root: ''}, addPipelineStep: function(){}, addPostRenderStep: function(funObj){funObj.run({config: {settings: {noScrollToTop: false}}}, function(){});}};
+    let router;
+    app2.configureRouter(config, router);
+    document.body.innerHTML = '';
+    app2.configureRouter(config, router);
+    config = {fallbackRoute: function(){}, map: function(){}, title: '', options: {pushstate: '', root: ''}, addPipelineStep: function(){}, addPostRenderStep: function(funObj){funObj.run({config: {settings: {noScrollToTop: true}}}, function(){});}};
+    app2.configureRouter(config, router);
+    done();
+  });
   it('check if user is logged in when token is not in local storage', (done) => {
     window.localStorage.clear();
     //app1.authenticated = true;
-    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
+    let configStub = {options: {pushState: true}, addPipelineStep(){},  addPostRenderStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
     app1.configureRouter(configStub, RouterStub);
     app1.router.navigate = function(){};
     app1.checkIfLoggedIn();
@@ -74,7 +88,7 @@ describe('the App module', () => {
     done();
   });
   it('configures the router', (done) => {
-    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+    let configStub = {options: {pushState: true}, addPipelineStep(){},  addPostRenderStep(){}, map(){}, fallbackRoute(){}};
     app1.configureRouter(configStub, RouterStub);
     expect(app1.router).toBeDefined;
     done();
@@ -82,8 +96,8 @@ describe('the App module', () => {
 
   it('updates by id', testAsync(async function(){
     //let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
-    let afterF = function(){console.log('howdy');};
-    await app1.updateById('/volopp/', '123', {}, afterF);
+    //let afterF = function(){console.log('howdy');};
+    await app1.updateById('/volopp/', '123', {});
     //console.log('this is the response');
     //console.log(response);
     //expect(app1.router).toBeDefined;
@@ -128,7 +142,7 @@ describe('the App module', () => {
   it('gets the current route', testAsync(async function() {
     //console.log(app1);
     await app1.activate();
-    let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+    let configStub = {options: {pushState: true}, addPipelineStep(){},  addPostRenderStep(){}, map(){}, fallbackRoute(){}};
     //let routerStub = {};
     await app1.configureRouter(configStub, RouterStub);
     //console.log('current instruction ' + app1.router.currentInstruction);
@@ -145,29 +159,29 @@ describe('the App module', () => {
     done();
   });
 
-  it('should provide the correct /login page styles for WJ or OHAF', (done) => {
-    let routre = new RouterStub();
-    routre.currentInstruction.config.name = 'login';
-    app1.router = routre;
-    app1.appState.isOhafLogin = true;
-    //app1.currentRoute = 'login';
-    app1.currentStyles;
-    //app1.logout();
-    expect(app1.Menu).toBe('ohaf');
-    app1.appState.isOhafLogin = false;
-    app1.currentStyles;
-    expect(app1.Menu).toBe('wj');
-    done();
-  });
+  // it('provides the correct /login page styles for WJ or OHAF', (done) => {
+  //   let routre = new RouterStub();
+  //   routre.currentInstruction.config.name = 'login';
+  //   app1.router = routre;
+  //   app1.appState.isOhafLogin = true;
+  //   //app1.currentRoute = 'login';
+  //   app1.currentStyles;
+  //   //app1.logout();
+  //   expect(app1.Menu).toBe('ohaf');
+  //   app1.appState.isOhafLogin = false;
+  //   app1.currentStyles;
+  //   expect(app1.Menu).toBe('wj');
+  //   done();
+  // });
 
-  it('gets the current styles with ohaf route', (done) => {
-    let routre = new RouterStub();
-    routre.currentInstruction.config.name = 'ohaf';
-    document.body.innerHTML = '<div id="wjfooter" class="footer"><i id="mobilemenutoggle"></i></div>';
-    app1.router = routre;
-    app1.currentStyles;
-    done();
-  });
+  // it('gets the current styles with ohaf route', (done) => {
+  //   let routre = new RouterStub();
+  //   routre.currentInstruction.config.name = 'ohaf';
+  //   document.body.innerHTML = '<div id="wjfooter" class="footer"><i id="mobilemenutoggle"></i></div>';
+  //   app1.router = routre;
+  //   app1.currentStyles;
+  //   done();
+  // });
 
   it('gets the current styles with library route', (done) => {
     let routre = new RouterStub();
@@ -202,23 +216,23 @@ describe('the App module', () => {
     done();
   });
 
-  it('gets the current styles dashboard/volunteer route', (done) => {
-    let routre = new RouterStub();
-    document.body.innerHTML = '<div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div>';
-    routre.currentInstruction.fragment = '/dashboard/volunteer';
-    app1.router = routre;
-    app1.currentStyles;
-    done();
-  });
+  // it('gets the current styles dashboard/volunteer route', (done) => {
+  //   let routre = new RouterStub();
+  //   document.body.innerHTML = '<div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div>';
+  //   routre.currentInstruction.fragment = '/dashboard/volunteer';
+  //   app1.router = routre;
+  //   app1.currentStyles;
+  //   done();
+  // });
 
-  it('gets the current styles with dashboard/charity route', (done) => {
-    document.body.innerHTML = '<div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div>';
-    let routre = new RouterStub();
-    routre.currentInstruction.fragment = '/dashboard/charity';
-    app1.router = routre;
-    app1.currentStyles;
-    done();
-  });
+  // it('gets the current styles with dashboard/charity route', (done) => {
+  //   document.body.innerHTML = '<div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div>';
+  //   let routre = new RouterStub();
+  //   routre.currentInstruction.fragment = '/dashboard/charity';
+  //   app1.router = routre;
+  //   app1.currentStyles;
+  //   done();
+  // });
 
   it('gets the current styles with dashboard/reader route', (done) => {
     let routre = new RouterStub();
@@ -267,25 +281,14 @@ describe('the App module', () => {
     done();
   });
 
-  it('it sets the style to be charity for vol-ops', (done) => {
-    let routre = new RouterStub();
-    routre.currentInstruction.fragment = '/dashboard/vol-ops/12434';
-    app1.router = routre;
-    app1.currentStyles;
-    done();
-  });
-
   it('closes the menu on cellphone display', (done) => {
-    //console.log(app1);
     app1.activate().then(() => {
       app1.close();
-      //expect(app1.authenticated).toBe(false);
     });
     done();
   });
 
   it('should get widescreen', (done) => {
-    //console.log(app1);
     const app3 = new App(new AuthStub, new HttpMock);
     expect(app3.widescreen).toBe(true);
     done();
@@ -294,7 +297,7 @@ describe('the App module', () => {
   it('should toggle menu to be icons only', () => {
     app2.activate();
     app2.fullmenu = true;
-    //console.log(app1);
+    document.body.innerHTML = '<div class="main-panel"></div><div class="drawer-container"></div><div class="nav-list"></div>';
     app2.toggleMenu();
     expect(app2.fullmenu).toBe(false);
     expect(app2.drawerWidth).toBe('50px');
@@ -302,11 +305,11 @@ describe('the App module', () => {
   });
 
   it('should toggle menu to be icons with text', () => {
+    document.body.innerHTML = '<div class="main-panel"></div><div class="drawer-container"></div><div class="nav-list"></div>';
     app1.fullmenu = false;
-    //console.log(app1);
     app1.toggleMenu();
     expect(app1.fullmenu).toBe(true);
-    expect(app1.drawerWidth).toBe('175px');
+    expect(app1.drawerWidth).toBe('182px');
   });
   // done();
 });

@@ -253,25 +253,46 @@ describe('the UserAccount Module', () => {
     done();
   });
 
-  it('should change user email and have an error message', (done) => {
+  it('should change user email and catch an error', testAsync(async function(){
     document.body.innerHTML = '<div class="formErrors"></div>';
     ua.user = {name: 'Iddris Elba', email: 'j@gmail.com', userType: 'Charity', _id: '3333333', changeemail: 'yo@yo.com'};
-    ua.changeUserEmail();
+    ua.app.httpClient.fetch = function(){
+      return Promise.resolve({
+        // Headers: this.headers,
+        json: () => Promise.reject(new Error({error: 'you fail'}))
+      });
+    };
+    await ua.changeUserEmail();
     //expect(document.getElementsByClassName('formErrors')[0].innerHTML).not.toBe('');
-    done();
-  });
+    // done();
+  }));
 
-  it('should change user email and not have an error message', (done) => {
+  it('should change user email with and without error message', testAsync(async function(){
     document.body.innerHTML = '<div class="formErrors"></div>';
     app = new App(auth, new HttpStub2());
     app.router = new RouterStub();
     app.activate();
     ua = new UserAccount(app, new VCMock(), new ValidatorMock());
     ua.user = {name: 'Iddris Elba', email: 'j@gmail.com', userType: 'Charity', _id: '3333333', changeemail: 'yo@yo.com'};
-    ua.changeUserEmail();
+    ua.app.httpClient.fetch = function(){
+      return Promise.resolve({
+        // Headers: this.headers,
+        json: () => Promise.resolve({message: 'good job'})
+      });
+    };
+    await ua.changeUserEmail();
+    expect(document.getElementsByClassName('formErrors')[0].innerHTML).not.toBe('');
+    ua.app.httpClient.fetch = function(){
+      return Promise.resolve({
+        // Headers: this.headers,
+        json: () => Promise.resolve({})
+      });
+    };
+    document.getElementsByClassName('formErrors')[0].innerHTML = '';
+    await ua.changeUserEmail();
     expect(document.getElementsByClassName('formErrors')[0].innerHTML).toBe('');
-    done();
-  });
+    // done();
+  }));
 
   it('deletes the user', testAsync(async function(){
     ua.check = true;

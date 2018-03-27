@@ -36,7 +36,6 @@ export class Volunteer {
     {filterby: 'cause', value: '', keys: ['voCharityTypes']}
   ];
 
-
   async activate() {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
@@ -135,7 +134,7 @@ export class Volunteer {
     let result =  await this.doubleCheckSignups(thisevent);
     if (this.canSignup){
       thisevent.voPeopleScheduled.push(this.uid);
-      this.app.updateById('/volopp/', thisevent._id, thisevent, null);
+      this.app.updateById('/volopp/', thisevent._id, thisevent);
       await this.fetchAllEvents();
       this.checkScheduled();
       this.app.router.navigate('dashboard');
@@ -146,7 +145,7 @@ export class Volunteer {
 
   async cancelSignup(thisevent){
     thisevent.voPeopleScheduled = thisevent.voPeopleScheduled.filter((e) => e !== this.uid);
-    await this.app.updateById('/volopp/', thisevent._id, thisevent, null);
+    await this.app.updateById('/volopp/', thisevent._id, thisevent);
     this.app.router.navigate('dashboard');
   }
 
@@ -182,6 +181,7 @@ export class Volunteer {
       return error;
     });
   }
+
   selectPickChange(type){
     this.showButton();
     if (type === 'causes'){
@@ -222,39 +222,23 @@ export class Volunteer {
     this.selectedTalents = this.selectedTalents.filter((e) => e !== '');
     this.changeCauses(this.allWorks, this.user.volWorkPrefs, this.selectedWorks);
     this.selectedWorks = this.selectedWorks.filter((e) => e !== '');
-    if (this.selectedWorks.includes('other')){
-      this.workOther = true;
-    } else {
-      this.workOther = false;
+    this.workOther = this.selectedWorks.includes('other');
+    this.talentOther = this.selectedTalents.includes('other');
+    this.causeOther = this.selectedCauses.includes('other');
+    if (this.selectedCauses.length > 0) {
+      document.getElementById('causesSelector').click();
     }
-    if (this.selectedTalents.includes('other')){
-      this.talentOther = true;
-    } else {
-      this.talentOther = false;
+    if (this.selectedTalents.length > 0) {
+      document.getElementById('talentsSelector').click();
     }
-    if (this.selectedCauses.includes('other')){
-      this.causeOther = true;
-    } else {
-      this.causeOther = false;
+    if (this.selectedWorks.length > 0) {
+      document.getElementById('worksSelector').click();
     }
-    if (this.selectedCauses.length > 0){
-      console.log('I have selected a cause');
-      let causesSelector = document.getElementById('causesSelector');
-      console.log(causesSelector);
-      causesSelector.click();
-    }
-    if (this.selectedTalents.length > 0){
-      console.log('I have selected a talent');
-      let talentsSelector = document.getElementById('talentsSelector');
-      console.log(talentsSelector);
-      talentsSelector.click();
-    }
-    if (this.selectedWorks.length > 0){
-      console.log('I have selected a work pref');
-      let worksSelector = document.getElementById('worksSelector');
-      //console.log(causesSelector);
-      worksSelector.click();
-    }
+  }
+
+  /* istanbul ignore next */
+  reload() {
+    window.location.reload();
   }
 
   changeCauses(item, vol, container) {
@@ -270,8 +254,9 @@ export class Volunteer {
   }
 
   async updateUser(){
-    await this.app.updateById('/user/', this.uid, this.user, null);
-    this.activate();
+    await this.app.updateById('/user/', this.uid, this.user);
+    await this.activate();
+    this.reload();
   }
 
   showButton(){
@@ -281,9 +266,6 @@ export class Volunteer {
 
   attached(){
     document.getElementById('distanceInput').addEventListener('keydown', this.showButton);
-    // this.buildVolunteerPTag('volCauses', 'volCauseOther', 'causes');
-    // this.buildVolunteerPTag('volTalents', 'volTalentOther', 'talents');
-    // this.buildVolunteerPTag('volWorkPrefs', 'volWorkOther', 'works');
     this.setupVolunteerUser();
   }
 }

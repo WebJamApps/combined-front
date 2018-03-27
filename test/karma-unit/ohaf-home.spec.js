@@ -14,20 +14,22 @@ describe('the OhafHome Module', () => {
   });
 
   it('show slides when component is attached and there is no slide', (done) => {
+    jasmine.clock().install();
     ohaf.attached();
     document.body.innerHTML = '';
-    setTimeout(() => {
-      expect(document.body.innerText).toBe('');
-      done();
-    }, 5500);
-  }, 5550);
+    jasmine.clock().tick(5500);
+    expect(document.body.innerText).toBe('');
+    done();
+    jasmine.clock().uninstall();
+  });
 
   it('shows slides when component is attached', (done) => {
+    jasmine.clock().install();
     document.body.innerHTML = '<div id="musicSlide1"><div></div></div><div id="slideshow1"><div class="mySlides"><img src="https://static.pexels.com/photos/2422/sky-earth-galaxy-universe.jpg" /></div></div> <div id="musicSlide2"><div></div></div><div id="slideshow"><div class="mySlides"><img src="https://static.pexels.com/photos/2422/sky-earth-galaxy-universe.jpg" /></div></div>';
     ohaf.attached();
-    setTimeout(() => {
-      expect(document.getElementById('musicSlide1')).not.toBe(null);
-      done();
-    }, 5500);
-  }, 5550);
+    jasmine.clock().tick(5500);
+    expect(document.getElementById('musicSlide1')).not.toBe(null);
+    done();
+    jasmine.clock().uninstall();
+  });
 });

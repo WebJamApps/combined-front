@@ -11,6 +11,7 @@ describe('aurelia skeleton app', function() {
     //poWelcome = new PageObjectWelcome();
 
     await browser.loadAndWaitForAureliaPage(`http://localhost:${config.port}`);
+    browser.driver.manage().window().maximize();
   });
 
   it('should load the page and display the initial page title', async () => {

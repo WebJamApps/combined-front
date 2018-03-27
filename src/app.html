@@ -1,14 +1,20 @@
 <template>
   <div class="page-host">
-    <paper-drawer-panel id="drawerPanel" disable-edge-swipe right-drawer drawer-width.bind="drawerWidth">
-      <paper-header-panel drawer class="${currentStyles.sidebarClass}">
-        <div if.bind="fullmenu">
-          <img id="webjamwidelogo" src="${currentStyles.sidebarImagePath}" style="width:182px"
+    <div class="${currentStyles.sidebarClass} drawer-container" style="display:none">
+      <div class="drawer" style="background-color: #c0c0c0">
+        <div if.bind="fullmenu" class="navImage">
+          <img id="webjamwidelogo" src="${currentStyles.sidebarImagePath}" style="width:182px; margin-right:0"
           if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'">
-          <img id="ohafbutterflies" src="${currentStyles.sidebarImagePath}" style="width:175px"
+          <img id="ohafbutterflies" src="${currentStyles.sidebarImagePath}" style="width:182px; margin-right:0; margin-top:-4px"
           if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
         </div>
-        <div if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 50px; height:91px"></div>
+        <div if.bind="!fullmenu && (Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer')" style="background-color:#2a222a;width:50px;height:91px" class="navImage">
+
+        </div>
+        <div if.bind="!fullmenu && (Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer')" style="background-color:#565656;width:50px;height:91px" class="navImage">
+
+        </div>
+        <div if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 63px; height:91px"></div>
         <div class="nav-list">
           <p if.bind="fullmenu" style="font-size:1px">&nbsp;</p>
           <div class="menu-item" if.bind="widescreen">
@@ -27,7 +33,7 @@
             </a>
           </div>
           <div class="menu-item" if.bind="!authenticated && Menu === 'ohaf'">
-            <a paper-drawer-toggle click.delegate="(close() || 1) && ohafLogin()" class="nav-link">
+            <a click.delegate="(close() || 1) && ohafLogin()" class="nav-link">
               <span class="fa fa-sign-in nav-item" style="text-decoration:none"></span>
               <span if.bind="fullmenu" class="nav-item">Login</span>
             </a>
@@ -137,24 +143,24 @@
             </button>
           </div>
         </div>
-      </paper-header-panel>
-      <paper-header-panel main class="main-panel">
+      </div>
+    </div>
+    <div main class="main-panel">
+      <i click.delegate="toggleMobileMenu()" id="mobilemenutoggle" class="fa fa-bars pull-right fa-1.5x mobile-menu-toggle" paper-drawer-toggle aria-hidden="true" show.bind="!widescreen"></i>
+      <div class="mainPanel">
         <div class="material-header ${currentStyles.headerClass}">
-
           <div if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'" class="headercontent">
             <img src="${currentStyles.headerImagePath}" class="${currentStyles.headerImageClass}">
           </div>
-
           <div id="ohaflogo" if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'" class="headercontent" style="top:-23px; left:3px">
             <img src="${currentStyles.headerImagePath}" class="${currentStyles.headerImageClass}">
           </div>
-          <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:5px; height:50px"
+          <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:7px; height:10px;bottom:0px"
           if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'">
           <h3 class="header-text">
             ${currentStyles.headerText1}
           </h3>
         </div>
-
         <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:7px; height:81px; padding-left:2px"
         if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
         <h3 class="header-text" style="margin-top:0">
@@ -164,10 +170,13 @@
         </h3>
       </div>
     </div>
-    <i id="mobilemenutoggle" class="fa fa-bars pull-right fa-1.5x mobile-menu-toggle" paper-drawer-toggle aria-hidden="true"></i>
-    <router-view></router-view>
-    <div id="wjfooter" class="footer" style="padding:8px;"></div>
-  </paper-header-panel>
-</paper-drawer-panel>
+    <div style="width:auto;" class="content-block">
+      <router-view></router-view>
+      <div id="wjfooter" class="footer" style="padding:8px;"></div>
+    </div>
+
+  </div>
+</div>
+
 </div>
 </template>

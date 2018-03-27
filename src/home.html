@@ -1,14 +1,14 @@
 <template>
   <div class="page-content">
-    <div if.bind="widescreen">
+    <a id="top"></a>
+    <div if.bind="widescreenHomepage">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-6" style="top:0">
-            <p if.bind = "widescreen" style="margin-top:54px; margin-bottom:40px; margin-right:15px; width:640px; font-size:18px">
-              Web Jam LLC helps businesses bring their web technologies into the <br>21st century! Let us
-              help make your website mobile-friendly and grow <br>your business by utilizing the power of online services.
-              <br>More information is available in our
-              <a href="https://drive.google.com/file/d/0B3XmLSSHvCS7b29tNzcxeDEwNjA/view?usp=sharing">Fact Sheet</a>.
+          <div class="col-md-6" style="top:0;padding-right:6px">
+            <p if.bind = "widescreenHomepage" style="margin-top:45px; margin-bottom:40px;font-size:18px">
+              Web Jam LLC helps businesses bring their web technologies into the 21st century! Let us
+              help make your website mobile-friendly and grow your business by utilizing the power of online services. More information is available in our
+              <a href="WebJamLLC_FactSheet.pdf" target="_blank">Fact Sheet</a>.
             </p>
             <h3>FAQs</h3>
             <p style="font-size:18px"><b><i>Q:</i></b> How can I contact you?</p>
@@ -23,7 +23,7 @@
               providing new online services, empowering business owner, and training staff to use these new services effectively.
             </p>
           </div>
-          <div class="col-md-6" style="padding:1px">
+          <div class="col-md-6" style="padding:1px;right:0;">
             <div id="slideshow1">
               <img src="../static/imgs/banner1.jpg">
             </div>
@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <div if.bind = "!widescreen" style="margin-top:1px;">
+    <div if.bind = "!widescreenHomepage" style="margin-top:1px;">
       <div id="slideshow">
         <img src="../static/imgs/banner1.jpg">
       </div>
@@ -40,7 +40,7 @@
           Web Jam LLC helps businesses bring their web technologies into the 21st century! Let us
           help make your website mobile-friendly and grow your business by utilizing the power of online services.
           More information is available in our
-          <a href="https://drive.google.com/file/d/0B3XmLSSHvCS7b29tNzcxeDEwNjA/view?usp=sharing">Fact Sheet</a>.
+          <a href="WebJamLLC_FactSheet.pdf" target="_blank">Fact Sheet</a>.
         </p>
         <h3>FAQs</h3>
         <p style="font-size:18px"><b><i>Q:</i></b> How can I contact you?</p>

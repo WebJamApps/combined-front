@@ -14,15 +14,20 @@ export class App {
     this.httpClient = httpClient;
     this.dashboardTitle = 'Dashboard';
     this.role = '';
+    this.menuToggled = false;
   }
 
   email = '';
   password = '';
   authenticated = false;
   token = '';
-  expanded = false;
+  //expanded = false;
+
   @bindable
-  drawerWidth = '175px';
+  drawerWidth = '182px';
+
+  @bindable
+  contentWidth = '0px';
 
   @bindable
   fullmenu = true;
@@ -105,20 +110,32 @@ export class App {
     config.options.root = '/';
     config.addPipelineStep('authorize', AuthorizeStep);//Is the actually Authorization to get into the /dashboard
     config.addPipelineStep('authorize', this.userAccess);// provides access controls to prevent users from certain /dashboard child routes when not their userType (role)
+    config.addPostRenderStep({
+      run(routingContext, next) {
+        //console.log(routingContext);
+        if (!routingContext.config.settings.noScrollToTop) {
+          //console.log('scroll to top damnit!');
+          // $('.page-host').scrollTop(0);
+          // window.scrollTo(0, 0);
+          let top = document.getElementsByClassName('material-header')[0];
+          //let top = document.getElementById('top');
+          if (top !== null && top !== undefined){
+            top.scrollIntoView();
+          }
+        }
+        return next();
+      }
+    });
     config.map([
       { route: 'dashboard', name: 'dashboard-router', moduleId: PLATFORM.moduleName('./dashboard-router'), nav: false, title: '', auth: true, settings: 'fa fa-tachometer'},
       { route: 'login', name: 'login', moduleId: PLATFORM.moduleName('./login'), nav: false, title: 'Login', settings: 'fa fa-sign-in'},
       { route: 'register', name: 'register', moduleId: PLATFORM.moduleName('./register'), nav: false, title: 'Register', settings: 'fa fa-user-plus'},
-     { route: 'userutil', name: 'userutil', moduleId: PLATFORM.moduleName('./userutil'), nav: false, title: '' },
+      { route: 'userutil', name: 'userutil', moduleId: PLATFORM.moduleName('./userutil'), nav: false, title: '' },
       { route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./ohaf-home'), nav: false, title: 'OHAF', settings: 'fa fa-handshake-o' },
       { route: 'sc2rs', name: 'sc2rs', moduleId: PLATFORM.moduleName('./sc2rs'), nav: false, title: 'SC2RS', settings: 'fa fa-microphone' },
-      // { route: 'sc2rs', name: 'sc2rs', moduleId: './sc2rs-home', nav: true, title: 'SC2RS', settings: 'fa fa-star-o' },
-      //      { route: 'librarian', name: 'librarian', moduleId: PLATFORM.moduleName('./librarian'), nav: true, title: 'Librarian', settings: 'fa fa-book' },
       { route: 'library', name: 'library', moduleId: PLATFORM.moduleName('./library'), nav: false, title: 'Library', settings: 'fa fa-book' },
       { route: 'bookshelf', name: 'bookshelf', moduleId: PLATFORM.moduleName('./bookshelf'), nav: false, title: 'Bookshelf', settings: 'fa fa-book' },
-      //  { route: 'reader', name: 'reader', moduleId: PLATFORM.moduleName('./reader'), nav: true, title: 'Reader', settings: 'fa fa-file-pdf-o' },
       { route: 'music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: false, title: '', settings: 'fa fa-music'},
-      // { route: 'textadventure', name: 'textadventure', moduleId: './textadventure-home', nav: true, title: 'Text Adventure', settings: 'fa fa-shield' },
       { route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: false, title: '', settings: 'fa fa-home' }
     ]);
     config.fallbackRoute('/');
@@ -126,18 +143,84 @@ export class App {
   }
 
   get widescreen() {
-    return document.documentElement.clientWidth > 766;
+    let isWide = document.documentElement.clientWidth > 766;
+    let drawer = document.getElementsByClassName('drawer')[0];
+    let mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
+    if (!this.menuToggled && !isWide) {
+      /* istanbul ignore else */
+      if (drawer !== null && drawer !== undefined) {
+        drawer.style.display = 'none';
+        $(drawer).parent().css('display', 'none');
+        mobileMenuToggle.style.display = 'block';
+      }
+    }
+    if (isWide) {
+      if (drawer !== null && drawer !== undefined) {
+        if (this.contentWidth === '0px'){this.contentWidth = '182px';}
+        drawer.style.display = 'block';
+        $(drawer).parent().css('display', 'block');
+        mobileMenuToggle.style.display = 'none';
+      }
+    } else {this.contentWidth = '0px';}
+    let mainP = document.getElementsByClassName('main-panel')[0];
+    if (mainP !== null && mainP !== undefined) {
+      mainP.style.marginRight = this.contentWidth;
+    }
+    return isWide;
+  }
+
+  toggleMobileMenu(toggle) {
+    document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
+    if (toggle !== 'close') {
+      document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
+      document.getElementsByClassName('page-host')[0].addEventListener('click', function() {
+        let drawer = document.getElementsByClassName('drawer')[0];
+        let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+        /* istanbul ignore else */
+        if (event.target.className !== 'nav-list' && event.target.className !== 'menu-item') {
+          drawer.style.display = 'none';
+          $(drawer).parent().css('display', 'none');
+          toggleIcon.style.display = 'block';
+          document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
+        }
+      });
+    }
+    this.menuToggled = true;
+    let drawer = document.getElementsByClassName('drawer')[0];
+    let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+    if (drawer.style.display === 'none' && toggle !== 'close') {
+      drawer.style.display = 'block';
+      $(drawer).parent().css('display', 'block');
+      toggleIcon.style.display = 'none';
+    } else {
+      drawer.style.display = 'none';
+      $(drawer).parent().css('display', 'none');
+      toggleIcon.style.display = 'block';
+    }
+  }
+
+  close() {
+    console.log('going to close the menu if not widescreen');
+    if (!this.widescreen) {
+      this.toggleMobileMenu('close');
+    }
   }
 
   toggleMenu() {
-    //console.debug(this.fullmenu);
+    let dc = document.getElementsByClassName('drawer-container')[0];
+    let nl = document.getElementsByClassName('nav-list')[0];
     if (this.fullmenu) {
       this.fullmenu = false;
       this.drawerWidth = '50px';
+      this.contentWidth = '50px';
     } else {
       this.fullmenu = true;
-      this.drawerWidth = '175px';
+      this.drawerWidth = '182px';
+      this.contentWidth = '182px';
     }
+    document.getElementsByClassName('main-panel')[0].style.marginRight = this.contentWidth;
+    dc.style.width = this.drawerWidth;
+    nl.style.width = this.drawerWidth;
   }
 
   ohafLogin(){
@@ -175,11 +258,6 @@ export class App {
     }
     this.role =  '';
     this.appState.isOhafLogin = false;
-  }
-
-  close() {
-    let drawer = document.getElementById('drawerPanel');
-    drawer.closeDrawer();
   }
 
   get currentRoute() {
@@ -259,6 +337,8 @@ export class App {
   get currentStyles() {
     let result = {};
     let style = 'wj';
+    let menuDrawer = document.getElementsByClassName('drawer')[0];
+    let navList = document.getElementsByClassName('nav-list')[0];
     //let footer = document.getElementById('wjfooter');
     let mobilemenutoggle = document.getElementById('mobilemenutoggle');
     //let color = '';
@@ -276,6 +356,9 @@ export class App {
         menuToggleClass: 'ohaf-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/ohaf/butterfly.png';
+      menuDrawer.style.backgroundColor = '#c09580';
+      navList.style.backgroundColor = '#c09580';
+      //navList.style.width = '180px';
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#565656';
       }
@@ -289,9 +372,11 @@ export class App {
         menuToggleClass: 'home-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
-      // if (footer !== null){
-      //
-      // }
+      if (menuDrawer !== null && menuDrawer !== undefined){
+        menuDrawer.style.backgroundColor = '#c0c0c0';
+        navList.style.backgroundColor = '#c0c0c0';
+        //navList.style.width = '182px';
+      }
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#2a222a';
       }
@@ -319,7 +404,7 @@ export class App {
       return false;
     }
     checkboxes.style.display = 'block';
-      //this.expanded = false;
+    //this.expanded = false;
     return true;
   }
 
@@ -347,8 +432,6 @@ export class App {
       selectorObj[userVariable] = thisObj[mainSelectedList];
     }
     let exists = false;
-    //console.log('Selector this: ');
-    //console.log(selector_use_this);
     if (selectorUseThis === true){
       if (thisObj[mainSelectedList].includes('other')) {
         exists = true;
@@ -366,7 +449,7 @@ export class App {
     }
   }
 
-  async updateById(route, id, dataObj, afterFunction){
+  async updateById(route, id, dataObj){
     await fetch;
     return this.httpClient.fetch(route + id, {
       method: 'put',
@@ -375,19 +458,8 @@ export class App {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      if (afterFunction !== null){
-        afterFunction();
-      } else {
-        //this.afterUpdateUser();
-      }
     }).catch((error) => {
       console.log(error);
     });
-
-  // afterUpdateUser(){
-  //   this.appState.setUser(this.user);
-  //   this.appState.checkUserRole();
-  //   this.router.navigate('dashboard');
-  // }
   }
 }

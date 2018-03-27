@@ -5,13 +5,14 @@
 //@inject(Router)
 export class Home {
 
-  //constructor(router) {
-    //this.router = router;
-  //}
+  constructor() {
+    this.top;
+  }
 
-
-  get widescreen(){
-    return document.documentElement.clientWidth > 1300;
+  get widescreenHomepage(){
+    //document.getElementById('top').scrollIntoView();
+    return document.documentElement.clientWidth > 1200;
+    //document.getElementById('top').scrollIntoView();
   }
 
   // showSlides() {
@@ -23,8 +24,11 @@ export class Home {
   //     .appendTo('#slideshow');
   // }
 
-  // attached() {
-  //   $('#slideshow > div:gt(0)').hide();
-  //   setInterval(this.showSlides, 5000);
-  // }
+  attached() {
+    this.top = document.getElementsByClassName('material-header')[0];
+    //let top = document.getElementById('top');
+    if (this.top !== null && this.top !== undefined){
+      this.top.scrollIntoView();
+    }
+  }
 }

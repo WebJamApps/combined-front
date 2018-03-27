@@ -116,15 +116,15 @@ class Login_ {
   }
 
   resetpass(evt) {
-    let appName = evt.target.appName;
+    //let appName = evt.target.appName;
     let fetchClient = evt.target.fetchClient;
     let runFetch = evt.target.runFetch;
     let loginEmail = '';
-    if (appName !== 'PATRIC') {
-      loginEmail = document.getElementsByClassName('loginemail')[0].value;
-    } else {
-      loginEmail = document.getElementsByClassName('userid')[0].value;
-    }
+    // if (appName !== 'PATRIC') {
+    loginEmail = document.getElementsByClassName('loginemail')[0].value.toLowerCase();
+    // } else {
+    //   loginEmail = document.getElementsByClassName('userid')[0].value;
+    // }
     let bodyData = {'email': loginEmail };
     let fetchData = {
       method: 'PUT',
@@ -152,9 +152,9 @@ class Login_ {
     let emailValue = '';
     const passwordValue = document.getElementsByClassName('loginpass')[0].value;
     useridValue = document.getElementsByClassName('userid')[0].value;
-    if (appName !== 'PATRIC') {
-      emailValue = document.getElementsByClassName('loginemail')[0].value;
-    }
+    // if (appName !== 'PATRIC') {
+    emailValue = document.getElementsByClassName('loginemail')[0].value.toLowerCase();
+    // }
     let bodyData = {'email': emailValue, 'password': passwordValue, 'id': useridValue };
     let fetchData = {
       method: 'POST',
