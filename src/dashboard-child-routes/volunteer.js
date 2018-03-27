@@ -35,6 +35,8 @@ export class Volunteer {
     {filterby: 'zipcode', value: '', keys: ['voZipCode']},
     {filterby: 'cause', value: '', keys: ['voCharityTypes']}
   ];
+  /* istanbul ignore next */
+  reload = () => {window.location.reload();};
 
 
   async activate() {
@@ -252,7 +254,8 @@ export class Volunteer {
 
   async updateUser(){
     await this.app.updateById('/user/', this.uid, this.user);
-    this.activate();
+    await this.activate();
+    this.reload();
   }
 
   showButton(){
