@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "nps",
-    "test": "rm -rf coverage && npm run test:jest && npm run test:karma && nps e2e && npm run combine-coverage",
+    "test": "rm -rf coverage && npm run test:jest && npm run test:karma && npm run combine-coverage && npm run webdriver-update && nps e2e",
     "combine-coverage": "istanbul-combine -d coverage -p none -r lcov -r html coverage/jest/coverage-final.json coverage/karma/coverage-final.json",
     "test:jest": "cross-env NODE_ENV=test nps test.lint && jest --config jest.config.json --notify",
     "test:karma": "cross-env NODE_ENV=test nps test.karma",
@@ -25,7 +25,8 @@
     "eslint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
     "postinstall": "npm run fix:aurelia-val && npm start -- build",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
+    "webdriver-update": "webdriver-manager update"
   },
   "dependencies": {
     "minimatch": "^3.0.2",
