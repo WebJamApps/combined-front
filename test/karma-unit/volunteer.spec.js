@@ -48,6 +48,7 @@ describe('the Volunteer Module', () => {
   let app;
   let app2;
   let auth;
+
   beforeEach(() => {
     auth = new AuthStub();
     auth.setToken({sub: '1'});
@@ -63,6 +64,7 @@ describe('the Volunteer Module', () => {
     app2.appState.user = { name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
     app2.activate();
     volunteer2 = new Volunteer(app2);
+    spyOn(volunteer, 'reload').and.callFake(() => 'nope is nothn');
   });
 
   it('should active so it can display the volunteer settings', (done) => {
