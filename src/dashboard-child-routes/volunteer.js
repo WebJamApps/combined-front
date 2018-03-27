@@ -35,9 +35,6 @@ export class Volunteer {
     {filterby: 'zipcode', value: '', keys: ['voZipCode']},
     {filterby: 'cause', value: '', keys: ['voCharityTypes']}
   ];
-  /* istanbul ignore next */
-  reload = () => {window.location.reload();};
-
 
   async activate() {
     this.uid = this.app.auth.getTokenPayload().sub;
@@ -228,16 +225,20 @@ export class Volunteer {
     this.workOther = this.selectedWorks.includes('other');
     this.talentOther = this.selectedTalents.includes('other');
     this.causeOther = this.selectedCauses.includes('other');
-    this.clickSelector(this.selectedCauses, 'causesSelector');
-    this.clickSelector(this.selectedTalents, 'talentsSelector');
-    this.clickSelector(this.selectedWorks, 'worksSelector');
+    if (this.selectedCauses.length > 0) {
+      document.getElementById('causesSelector').click();
+    }
+    if (this.selectedTalents.length > 0) {
+      document.getElementById('talentsSelector').click();
+    }
+    if (this.selectedWorks.length > 0) {
+      document.getElementById('worksSelector').click();
+    }
   }
 
-  clickSelector(selected, selector) {
-    if (selected.length > 0) {
-      let element = document.getElementById(selector);
-      element.click();
-    }
+  /* istanbul ignore next */
+  reload() {
+    window.location.reload();
   }
 
   changeCauses(item, vol, container) {
