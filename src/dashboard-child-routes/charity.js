@@ -36,6 +36,7 @@ export class Charity {
       this.buildManagers();
       this.checkEvents();
     }
+    this.setupValidation2();
   }
 
   async checkEvents(){

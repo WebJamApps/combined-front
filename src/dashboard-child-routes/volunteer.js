@@ -36,7 +36,6 @@ export class Volunteer {
     {filterby: 'cause', value: '', keys: ['voCharityTypes']}
   ];
 
-
   async activate() {
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
@@ -226,16 +225,20 @@ export class Volunteer {
     this.workOther = this.selectedWorks.includes('other');
     this.talentOther = this.selectedTalents.includes('other');
     this.causeOther = this.selectedCauses.includes('other');
-    this.clickSelector(this.selectedCauses, 'causesSelector');
-    this.clickSelector(this.selectedTalents, 'talentsSelector');
-    this.clickSelector(this.selectedWorks, 'worksSelector');
+    if (this.selectedCauses.length > 0) {
+      document.getElementById('causesSelector').click();
+    }
+    if (this.selectedTalents.length > 0) {
+      document.getElementById('talentsSelector').click();
+    }
+    if (this.selectedWorks.length > 0) {
+      document.getElementById('worksSelector').click();
+    }
   }
 
-  clickSelector(selected, selector) {
-    if (selected.length > 0) {
-      let element = document.getElementById(selector);
-      element.click();
-    }
+  /* istanbul ignore next */
+  reload() {
+    window.location.reload();
   }
 
   changeCauses(item, vol, container) {
@@ -252,7 +255,8 @@ export class Volunteer {
 
   async updateUser(){
     await this.app.updateById('/user/', this.uid, this.user);
-    this.activate();
+    await this.activate();
+    this.reload();
   }
 
   showButton(){
