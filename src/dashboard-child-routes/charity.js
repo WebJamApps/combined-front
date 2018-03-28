@@ -35,7 +35,7 @@ export class Charity {
       this.app.buildPTag(this.charities, 'charityTypes', 'charityTypeOther', 'charityTypesHtml');
       this.buildManagers();
       this.checkEvents();
-      this.setupValidation2();
+      //this.setupValidation2();
     }
   }
 
