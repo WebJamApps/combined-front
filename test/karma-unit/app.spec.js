@@ -180,8 +180,8 @@ describe('the App module', () => {
     routre.currentInstruction.config.name = 'ohaf';
     document.body.innerHTML = '<div id="wjfooter" class="footer drawer nav-list"><i id="mobilemenutoggle"></i></div>';
     app1.router = routre;
-    this.Menu = 'charity';
     app1.currentStyles;
+    expect(app1.Menu).toBe('ohaf');
     done();
   });
 
@@ -191,6 +191,7 @@ describe('the App module', () => {
     document.body.innerHTML = '<div id="wjfooter" class="footer drawer nav-list"><i id="mobilemenutoggle"></i></div>';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('library');
     done();
   });
 
@@ -199,6 +200,7 @@ describe('the App module', () => {
     routre.currentInstruction.fragment = '/dashboard';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('dashboard');
     done();
   });
 
@@ -207,6 +209,7 @@ describe('the App module', () => {
     routre.currentInstruction.fragment = '/bookshelf';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('bookshelf');
     done();
   });
 
@@ -215,6 +218,7 @@ describe('the App module', () => {
     routre.currentInstruction.fragment = '/dashboard/user-account';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('user-account');
     done();
   });
 
@@ -224,6 +228,7 @@ describe('the App module', () => {
     routre.currentInstruction.fragment = '/dashboard/volunteer';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('volunteer');
     done();
   });
 
@@ -233,6 +238,7 @@ describe('the App module', () => {
     routre.currentInstruction.fragment = '/dashboard/charity';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('charity');
     done();
   });
 
@@ -241,6 +247,7 @@ describe('the App module', () => {
     routre.currentInstruction.fragment = '/dashboard/reader';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('reader');
     done();
   });
 
@@ -249,14 +256,16 @@ describe('the App module', () => {
     routre.currentInstruction.fragment = '/dashboard/librarian';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('librarian');
     done();
   });
-  
+
   it('gets the current styles with dashboard/developer route', (done) => {
     let routre = new RouterStub();
     routre.currentInstruction.fragment = '/dashboard/developer';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('developer');
     done();
   });
 
@@ -265,6 +274,7 @@ describe('the App module', () => {
     routre.currentInstruction.config.name = 'music-router';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('music');
     done();
   });
 
@@ -281,9 +291,18 @@ describe('the App module', () => {
     routre.currentInstruction.fragment = 'vol-ops/';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('charity');
     routre.currentInstruction.fragment = undefined;
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('wj');
+    done();
+  });
+
+  it('tests the listener function attached to the drawer', (done) => {
+    document.body.innerHTML = '<div class="drawer mobile-menu-toggle page-host"></div>';
+    app1.listener({target: {className: 'nothing'}});
+    expect(document.getElementsByClassName('page-host')[0].style.overflow).toBe('auto');
     done();
   });
 
@@ -305,9 +324,12 @@ describe('the App module', () => {
 
   it('should toggle mobile menu', () => {
     document.body.innerHTML = '<div class="page-host drawer mobile-menu-toggle main-panel"></div>';
+    let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
     app1.toggleMobileMenu();
+    expect(toggleIcon.style.display).toBe('block');
     document.getElementsByClassName('drawer')[0].style.display = 'none';
     app1.toggleMobileMenu();
+    expect(toggleIcon.style.display).toBe('none');
   });
 
   it('should toggle menu to be icons only', () => {
