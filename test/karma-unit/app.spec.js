@@ -159,36 +159,39 @@ describe('the App module', () => {
     done();
   });
 
-  // it('provides the correct /login page styles for WJ or OHAF', (done) => {
-  //   let routre = new RouterStub();
-  //   routre.currentInstruction.config.name = 'login';
-  //   app1.router = routre;
-  //   app1.appState.isOhafLogin = true;
-  //   //app1.currentRoute = 'login';
-  //   app1.currentStyles;
-  //   //app1.logout();
-  //   expect(app1.Menu).toBe('ohaf');
-  //   app1.appState.isOhafLogin = false;
-  //   app1.currentStyles;
-  //   expect(app1.Menu).toBe('wj');
-  //   done();
-  // });
+  it('provides the correct /login page styles for WJ or OHAF', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.config.name = 'login';
+    app1.router = routre;
+    app1.appState.isOhafLogin = true;
+    document.body.innerHTML = '<div id="wjfooter" class="footer drawer nav-list"><i id="mobilemenutoggle"></i></div>';
+    //app1.currentRoute = 'login';
+    app1.currentStyles;
+    //app1.logout();
+    expect(app1.Menu).toBe('ohaf');
+    app1.appState.isOhafLogin = false;
+    app1.currentStyles;
+    expect(app1.Menu).toBe('wj');
+    done();
+  });
 
-  // it('gets the current styles with ohaf route', (done) => {
-  //   let routre = new RouterStub();
-  //   routre.currentInstruction.config.name = 'ohaf';
-  //   document.body.innerHTML = '<div id="wjfooter" class="footer"><i id="mobilemenutoggle"></i></div>';
-  //   app1.router = routre;
-  //   app1.currentStyles;
-  //   done();
-  // });
+  it('gets the current styles with ohaf route', (done) => {
+    let routre = new RouterStub();
+    routre.currentInstruction.config.name = 'ohaf';
+    document.body.innerHTML = '<div id="wjfooter" class="footer drawer nav-list"><i id="mobilemenutoggle"></i></div>';
+    app1.router = routre;
+    app1.currentStyles;
+    expect(app1.Menu).toBe('ohaf');
+    done();
+  });
 
   it('gets the current styles with library route', (done) => {
     let routre = new RouterStub();
     routre.currentInstruction.config.name = 'library';
-    document.body.innerHTML = '<div id="wjfooter" class="footer"><i id="mobilemenutoggle"></i></div>';
+    document.body.innerHTML = '<div id="wjfooter" class="footer drawer nav-list"><i id="mobilemenutoggle"></i></div>';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('library');
     done();
   });
 
@@ -197,6 +200,7 @@ describe('the App module', () => {
     routre.currentInstruction.fragment = '/dashboard';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('dashboard');
     done();
   });
 
@@ -205,6 +209,7 @@ describe('the App module', () => {
     routre.currentInstruction.fragment = '/bookshelf';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('bookshelf');
     done();
   });
 
@@ -213,32 +218,36 @@ describe('the App module', () => {
     routre.currentInstruction.fragment = '/dashboard/user-account';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('user-account');
     done();
   });
 
-  // it('gets the current styles dashboard/volunteer route', (done) => {
-  //   let routre = new RouterStub();
-  //   document.body.innerHTML = '<div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div>';
-  //   routre.currentInstruction.fragment = '/dashboard/volunteer';
-  //   app1.router = routre;
-  //   app1.currentStyles;
-  //   done();
-  // });
+  it('gets the current styles dashboard/volunteer route', (done) => {
+    let routre = new RouterStub();
+    document.body.innerHTML = '<div id="ohaf-footer" class="footer drawer nav-list" elevation="4" style="padding:8px; background-color: #565656"></div>';
+    routre.currentInstruction.fragment = '/dashboard/volunteer';
+    app1.router = routre;
+    app1.currentStyles;
+    expect(app1.Menu).toBe('volunteer');
+    done();
+  });
 
-  // it('gets the current styles with dashboard/charity route', (done) => {
-  //   document.body.innerHTML = '<div id="ohaf-footer" class="footer" elevation="4" style="padding:8px; background-color: #565656"></div>';
-  //   let routre = new RouterStub();
-  //   routre.currentInstruction.fragment = '/dashboard/charity';
-  //   app1.router = routre;
-  //   app1.currentStyles;
-  //   done();
-  // });
+  it('gets the current styles with dashboard/charity route', (done) => {
+    document.body.innerHTML = '<div id="ohaf-footer" class="footer drawer nav-list" elevation="4" style="padding:8px; background-color: #565656"></div>';
+    let routre = new RouterStub();
+    routre.currentInstruction.fragment = '/dashboard/charity';
+    app1.router = routre;
+    app1.currentStyles;
+    expect(app1.Menu).toBe('charity');
+    done();
+  });
 
   it('gets the current styles with dashboard/reader route', (done) => {
     let routre = new RouterStub();
     routre.currentInstruction.fragment = '/dashboard/reader';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('reader');
     done();
   });
 
@@ -247,13 +256,16 @@ describe('the App module', () => {
     routre.currentInstruction.fragment = '/dashboard/librarian';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('librarian');
     done();
   });
+
   it('gets the current styles with dashboard/developer route', (done) => {
     let routre = new RouterStub();
     routre.currentInstruction.fragment = '/dashboard/developer';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('developer');
     done();
   });
 
@@ -262,6 +274,7 @@ describe('the App module', () => {
     routre.currentInstruction.config.name = 'music-router';
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('music');
     done();
   });
 
@@ -275,23 +288,48 @@ describe('the App module', () => {
 
   it('leaves the styles set to wj if undefined route frag', (done) => {
     let routre = new RouterStub();
+    routre.currentInstruction.fragment = 'vol-ops/';
+    app1.router = routre;
+    app1.currentStyles;
+    expect(app1.Menu).toBe('charity');
     routre.currentInstruction.fragment = undefined;
     app1.router = routre;
     app1.currentStyles;
+    expect(app1.Menu).toBe('wj');
+    done();
+  });
+
+  it('tests the listener function attached to the drawer', (done) => {
+    document.body.innerHTML = '<div class="drawer mobile-menu-toggle page-host"></div>';
+    app1.listener({target: {className: 'nothing'}});
+    expect(document.getElementsByClassName('page-host')[0].style.overflow).toBe('auto');
     done();
   });
 
   it('closes the menu on cellphone display', (done) => {
-    app1.activate().then(() => {
-      app1.close();
-    });
+    document.body.innerHTML = '<div class="page-host drawer mobile-menu-toggle main-panel"></div>';
+    app1.contentWidth = '0px';
+    app1.close();
     done();
   });
 
   it('should get widescreen', (done) => {
     const app3 = new App(new AuthStub, new HttpMock);
+    document.body.innerHTML = '<div class="drawer"></div> <div class="mobile-menu-toggle"></div><div class="main-panel"></div>';
+    window.$ = () => ({parent: () => ({css: (arg) = arg})});
+    app3.contentWidth = '0px';
     expect(app3.widescreen).toBe(true);
     done();
+  });
+
+  it('should toggle mobile menu', () => {
+    document.body.innerHTML = '<div class="page-host drawer mobile-menu-toggle main-panel"></div>';
+    let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+    app1.toggleMobileMenu();
+    expect(toggleIcon.style.display).toBe('block');
+    document.getElementsByClassName('drawer')[0].style.display = 'none';
+    app1.toggleMobileMenu();
+    expect(toggleIcon.style.display).toBe('none');
   });
 
   it('should toggle menu to be icons only', () => {

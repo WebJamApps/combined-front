@@ -169,21 +169,23 @@ export class App {
     return isWide;
   }
 
+  listener(event) {
+    let drawer = document.getElementsByClassName('drawer')[0];
+    let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+    /* istanbul ignore else */
+    if (event.target.className !== 'nav-list' && event.target.className !== 'menu-item') {
+      drawer.style.display = 'none';
+      $(drawer).parent().css('display', 'none');
+      toggleIcon.style.display = 'block';
+      document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
+    }
+  }
+
   toggleMobileMenu(toggle) {
     document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
     if (toggle !== 'close') {
       document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
-      document.getElementsByClassName('page-host')[0].addEventListener('click', function() {
-        let drawer = document.getElementsByClassName('drawer')[0];
-        let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
-        /* istanbul ignore else */
-        if (event.target.className !== 'nav-list' && event.target.className !== 'menu-item') {
-          drawer.style.display = 'none';
-          $(drawer).parent().css('display', 'none');
-          toggleIcon.style.display = 'block';
-          document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
-        }
-      });
+      document.getElementsByClassName('page-host')[0].addEventListener('click', this.listener);
     }
     this.menuToggled = true;
     let drawer = document.getElementsByClassName('drawer')[0];
@@ -199,6 +201,7 @@ export class App {
     }
   }
 
+  /* istanbul ignore next */
   close() {
     console.log('going to close the menu if not widescreen');
     if (!this.widescreen) {
