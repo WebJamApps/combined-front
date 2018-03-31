@@ -4,7 +4,7 @@ module.exports = {
     "transform-decorators-legacy",
     "transform-class-properties"
   ],
-  "presets": [
+  "presets": [ "react",
     [
       "env", {
         "targets": process.env.BABEL_TARGET === 'node' ? {
