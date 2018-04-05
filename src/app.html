@@ -161,22 +161,20 @@
             ${currentStyles.headerText1}
           </h3>
         </div>
-        <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:7px; height:81px; padding-left:2px"
-        if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
-        <h3 class="header-text" style="margin-top:0">
-          ${currentStyles.headerText1}
-          <br>${currentStyles.headerText2}
-          <br>${currentStyles.headerText3}
-        </h3>
+          <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:7px; height:81px; padding-left:2px"
+          if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
+            <h3 class="header-text" style="margin-top:0">
+              ${currentStyles.headerText1}
+              <br>${currentStyles.headerText2}
+              <br>${currentStyles.headerText3}
+            </h3>
+          </div>
+        </div>
+        <div style="width:auto;" class="content-block">
+          <router-view></router-view>
+          <div id="wjfooter" class="footer" style="padding:8px;"></div>
+        </div>
       </div>
     </div>
-    <div style="width:auto;" class="content-block">
-      <router-view></router-view>
-      <div id="wjfooter" class="footer" style="padding:8px;"></div>
-    </div>
-
   </div>
-</div>
-
-</div>
 </template>
