@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactElement from './react-element';
-import {noView, inject, customElement, bindable} from 'aurelia-framework';
+import {noView, inject, customElement} from 'aurelia-framework';
 
 @noView()
 @inject(Element)
@@ -16,6 +16,6 @@ export class ReactComponent {
   }
 
   bind() {
-    this.render()
+    this.render();
   }
 }
