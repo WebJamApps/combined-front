@@ -103,6 +103,7 @@
     "babel-eslint": "^7.2.3",
     "babel-plugin-istanbul": "^4.1.4",
     "eslint": "^3.19.0",
+    "eslint-plugin-react": "^7.7.0",
     "html-hint": "^0.2.4",
     "istanbul": "^0.4.5",
     "istanbul-combine": "^0.3.0",
