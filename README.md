@@ -12,7 +12,7 @@ This is the front end for the following apps:
 <li><a href="https://www.web-jam.com/library">Web Jam Library</a></li>
 </ul>
 
-<br> Here are the steps to get the development version running. First, read our <a href="https://docs.google.com/document/d/1_QDDbqmBrJuGqBoib59fmgYtls03dAXXuLqRR5roPO4/edit">Getting Started for Developers</a> gdoc to make sure you have all of the necessary prerequisites installed, including the correct version of NodeJS that matches the version specified in our package.json and yarn.
+<br> Here are the steps to get the development version running. First, read our <a href="https://docs.google.com/document/d/1_QDDbqmBrJuGqBoib59fmgYtls03dAXXuLqRR5roPO4/edit">Developer's Guide</a> gdoc to make sure you have all of the necessary prerequisites installed, including the correct version of NodeJS that matches the version specified in our package.json and yarn.
 
 Clone this repository into a directory of your choice from the terminal using <b>git clone [url of this repository]</b><br>
 Install and use the version of nodejs currently listing in our package.json<br>
