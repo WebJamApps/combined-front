@@ -114,11 +114,7 @@ export class App {
       run(routingContext, next) {
         //console.log(routingContext);
         if (!routingContext.config.settings.noScrollToTop) {
-          //console.log('scroll to top damnit!');
-          // $('.page-host').scrollTop(0);
-          // window.scrollTo(0, 0);
           let top = document.getElementsByClassName('material-header')[0];
-          //let top = document.getElementById('top');
           if (top !== null && top !== undefined){
             top.scrollIntoView();
           }
@@ -129,7 +125,7 @@ export class App {
     config.map([
       { route: 'dashboard', name: 'dashboard-router', moduleId: PLATFORM.moduleName('./dashboard-router'), nav: false, title: '', auth: true, settings: 'fa fa-tachometer'},
       { route: 'login', name: 'login', moduleId: PLATFORM.moduleName('./login'), nav: false, title: 'Login', settings: 'fa fa-sign-in'},
-      { route: 'react-test', name: 'react-test', moduleId: PLATFORM.moduleName('./react-test'), nav: false, title: 'React Test',  settings: ''},
+      { route: 'react-example', name: 'react-example', moduleId: PLATFORM.moduleName('./react-example'), nav: false, title: 'React Example',  settings: ''},
       { route: 'register', name: 'register', moduleId: PLATFORM.moduleName('./register'), nav: false, title: 'Register', settings: 'fa fa-user-plus'},
       { route: 'userutil', name: 'userutil', moduleId: PLATFORM.moduleName('./userutil'), nav: false, title: '' },
       { route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./ohaf-home'), nav: false, title: 'OHAF', settings: 'fa fa-handshake-o' },
