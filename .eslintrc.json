@@ -1,5 +1,5 @@
 {
-  "extends": "./node_modules/aurelia-tools/.eslintrc.json",
+  "extends": ["./node_modules/aurelia-tools/.eslintrc.json", "plugin:react/recommended"],
   "rules": {
     "space-before-function-paren": [0, "never"],
     "space-before-blocks": [ 0, "never"],
@@ -9,7 +9,6 @@
     "no-empty": [0, "never"],
     "new-cap": [0, "never"],
     "arrow-spacing": ["error", { "before": true, "after": true }],
-    "arrow-parens": ["error", "always"],
-    "no-unused-vars": [0, "never"]
+    "arrow-parens": ["error", "always"]
   }
 }
