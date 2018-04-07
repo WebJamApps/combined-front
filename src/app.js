@@ -7,6 +7,7 @@ import {UserAccess} from './classes/UserAccess.js';
 import {AuthService} from 'aurelia-auth';
 import {json, HttpClient} from 'aurelia-fetch-client';
 import {AppState} from './classes/AppState.js';
+const Hammer = require('hammerjs');
 @inject(AuthService, HttpClient)
 export class App {
   constructor(auth, httpClient) {
@@ -143,18 +144,21 @@ export class App {
     let isWide = document.documentElement.clientWidth > 766;
     let drawer = document.getElementsByClassName('drawer')[0];
     let mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
+    let swipeArea = document.getElementsByClassName('swipe-area')[0];
     if (!this.menuToggled && !isWide) {
       /* istanbul ignore else */
       if (drawer !== null && drawer !== undefined) {
         drawer.style.display = 'none';
         $(drawer).parent().css('display', 'none');
         mobileMenuToggle.style.display = 'block';
+        swipeArea.style.display = 'block';
       }
     }
     if (isWide) {
       if (drawer !== null && drawer !== undefined) {
         if (this.contentWidth === '0px'){this.contentWidth = '182px';}
         drawer.style.display = 'block';
+        swipeArea.style.display = 'none';
         $(drawer).parent().css('display', 'block');
         mobileMenuToggle.style.display = 'none';
       }
@@ -166,11 +170,13 @@ export class App {
     return isWide;
   }
 
-  listener(event) {
+  clickFunc() {
     let drawer = document.getElementsByClassName('drawer')[0];
     let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+    console.log(event.target.className);
     /* istanbul ignore else */
     if (event.target.className !== 'menu-item') {
+      document.getElementsByClassName('swipe-area')[0].style.display = 'none';
       drawer.style.display = 'none';
       $(drawer).parent().css('display', 'none');
       toggleIcon.style.display = 'block';
@@ -182,7 +188,9 @@ export class App {
     document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
     if (toggle !== 'close') {
       document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
-      document.getElementsByClassName('page-host')[0].addEventListener('click', this.listener);
+      document.getElementsByClassName('swipe-area')[0].style.display = 'block';
+      document.getElementsByClassName('page-host')[0].addEventListener('click', this.clickFunc);
+       //this.manager.on('swipe', this.close.bind(this));
     }
     this.menuToggled = true;
     let drawer = document.getElementsByClassName('drawer')[0];
@@ -191,14 +199,23 @@ export class App {
       drawer.style.display = 'block';
       $(drawer).parent().css('display', 'block');
       toggleIcon.style.display = 'none';
+       // document.getElementsByClassName('swipe-area')[0].style.display = 'block';
+       // this.manager.on('swipe', this.close.bind(this));
     } else {
       drawer.style.display = 'none';
       $(drawer).parent().css('display', 'none');
       toggleIcon.style.display = 'block';
+       //this.manager.off('swipe', this.close.bind(this));
+       //document.getElementsByClassName('page-host')[0].removeEventListener('click', clickFunc);
+       //document.getElementsByClassName('swipe-area')[0].style.display = 'none';
+    }
+    if (toggle === 'close') {
+      document.getElementsByClassName('page-host')[0].removeEventListener('click', this.clickFunc);
+      document.getElementsByClassName('swipe-area')[0].style.display = 'none';
+       //this.manager.off('swipe', this.close.bind(this));
     }
   }
 
-  /* istanbul ignore next */
   close() {
     console.log('going to close the menu if not widescreen');
     if (!this.widescreen) {
@@ -461,5 +478,21 @@ export class App {
     }).catch((error) => {
       console.log(error);
     });
+  }
+  attached() {
+    this.manager = new Hammer.Manager(document.getElementsByClassName('swipe-area')[0], {
+      recognizers: [
+              [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]
+      ]
+    });
+    this.manager.on('swipe', this.close.bind(this));
+    console.log(this.manager);
+    //document.getElementsByClassName('swipe-area')[0].style.display = 'none';
+  }
+  detached() {
+    this.manager.off('swipe', this.close.bind(this));
+    let ph = document.getElementsByClassName('page-host')[0];
+    ph.removeEventListener('click', this.clickFunc);
+    ph.setAttribute('hasEvent', false);
   }
 }

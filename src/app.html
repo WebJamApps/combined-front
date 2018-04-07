@@ -148,6 +148,7 @@
     <div main class="main-panel">
       <i click.delegate="toggleMobileMenu()" id="mobilemenutoggle" class="fa fa-bars pull-right fa-1.5x mobile-menu-toggle" paper-drawer-toggle aria-hidden="true" show.bind="!widescreen"></i>
       <div class="mainPanel">
+        <div class="swipe-area" style="display:block"></div>
         <div class="material-header ${currentStyles.headerClass}">
           <div if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'" class="headercontent">
             <img src="${currentStyles.headerImagePath}" class="${currentStyles.headerImageClass}">
