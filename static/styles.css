@@ -78,11 +78,7 @@ h5 {
   margin-top: 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
+h1, h2, h3, h4, h5 {
   font-family: 'PT Sans Caption';
 }
 
@@ -137,16 +133,14 @@ tbody.regformtbody tr:nth-child(odd) {
   background-color: white;
 }
 
-th,
-td {
+th, td {
   border-collapse: collapse;
   border: 1px solid #777;
   padding: 8px;
   text-align: left;
 }
 
-tbody.regformtbody td,
-tbody.regformtbody th {
+tbody.regformtbody td, tbody.regformtbody th {
   border: none;
 }
 
@@ -173,32 +167,19 @@ audio::-webkit-media-controls-enclosure {
 }
 
 audio::-webkit-media-controls-panel {
-  width: calc(100% + 30px); /* Adjust as needed */
+  width: calc(100% + 30px);
+  /* Adjust as needed */
 }
+
 /* Slideshow container */
-#libslideshow,
-#libslideshow1,
-#slideshowMusic,
-#slideshow1,
-#slideshow,
-#musicSlide1,
-#musicSlide2,
-#lSlide1,
-#lSlide2 {
+
+#libslideshow, #libslideshow1, #slideshowMusic, #slideshow1, #slideshow, #musicSlide1, #musicSlide2, #lSlide1, #lSlide2 {
   max-width: 1000px;
   position: relative;
   margin: auto;
 }
 
-#libslideshow img,
-#libslideshow1 img,
-#slideshowMusic img,
-#slideshow1 img,
-#slideshow img,
-#musicSlide1 img,
-#musicSlide2 img,
-#lSlide1 img,
-#lSlide2 img {
+#libslideshow img, #libslideshow1 img, #slideshowMusic img, #slideshow1 img, #slideshow img, #musicSlide1 img, #musicSlide2 img, #lSlide1 img, #lSlide2 img {
   width: 100%;
 }
 
@@ -233,6 +214,7 @@ audio::-webkit-media-controls-panel {
 }
 
 /* These are Aurelia animate page transitions */
+
 .au-enter-active {
   -webkit-animation: fadeInRight 1s;
   animation: fadeInRight 1s;
@@ -377,9 +359,7 @@ audio::-webkit-media-controls-panel {
   padding: 10px;
 }
 
-.material-content-h1,
-.material-content-h2,
-.material-content-h3 {
+.material-content-h1, .material-content-h2, .material-content-h3 {
   text-align: center;
   margin-top: 15px;
 }
@@ -534,6 +514,7 @@ audio::-webkit-media-controls-panel {
 }
 
 /* splash is in the index.ejs file, used for the initial page load animation */
+
 .splash {
   text-align: center;
   margin: 10% 0 0;
@@ -599,7 +580,6 @@ audio::-webkit-media-controls-panel {
     -ms-transform: translate3d(100%, 0, 0);
     transform: translate3d(100%, 0, 0);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: none;
@@ -624,13 +604,13 @@ audio::-webkit-media-controls-panel {
   0% {
     opacity: 0;
   }
-
   100% {
     opacity: 1;
   }
 }
 
 /* animation definitions */
+
 @-webkit-keyframes fadeInRight {
   0% {
     opacity: 0;
@@ -652,9 +632,7 @@ a:not([href]):not([tabindex]):hover {
   color: #0056b3;
 }
 
-p,
-a,
-label {
+p, a, label {
   font-family: 'Habibi';
   font-size: 12pt;
 }
@@ -733,35 +711,29 @@ a:hover {
     position: fixed;
     right: 0;
     /* display:inline-block; */
-
   }
-
-  .main-panel{
-    overflow:hidden;
-    position:relative;
-    height:100%;
-    display:block;
-    margin-right:182px;
-
+  .main-panel {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    display: block;
+    margin-right: 182px;
   }
-
-  .content-block{
-    position:absolute;
-    top:0px;
-    bottom:0px;
-    left:0px;
-    right:0px;
-    overflow:auto;
-    margin-top:91px;
-    margin-right:inherit;
+  .content-block {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow: auto;
+    margin-top: 91px;
+    margin-right: inherit;
   }
-
-  .footer{
+  .footer {
     /* position:absolute;
     bottom:0px; */
-    width:100%;
+    width: 100%;
   }
-
 }
 
 .drawer-container {
@@ -785,12 +757,23 @@ a:hover {
   right: 0;
 }
 
+.swipe-area {
+  position: absolute;
+  width: 50px;
+  left: 168px;
+  top: 0;
+  height: 100%;
+  /* background: #f3f3f3; */
+  z-index: 9999;
+  /* touch-action: auto; */
+}
+
 /* ::webkit-scrollbar {
   -webkit-appearance: none;
-   width:12px;
+  width: 12px;
 } */
 
-/* ::-webkit-scrollbar:vertical {
+::-webkit-scrollbar:vertical {
   width: 12px;
 }
 
@@ -807,4 +790,4 @@ a:hover {
 ::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: #ffffff;
-} */
+}
