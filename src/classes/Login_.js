@@ -190,17 +190,19 @@ class Login_ {
         //localStorage.setItem('token', data.token);
         localStorage.setItem('userEmail', data.email);
         loginform1[0].style.display = 'none';
-        console.log(front);
-        window.location.assign(front + '/login/?token=true');
-        //window.location.href = feurl + '/login/?token=true';
+        //console.log(front);
+        if (process.env.NODE_ENV !== 'test'){
+          window.location.assign(front + '/login/?token=true');
+        }
       }
       if (data.message) {
         messagediv.innerHTML = '<p style="text-align:left; padding-left:12px">' + data.message + '</p>';
       }
       if (!data.message && !data.token && data.email) {
         loginform1[0].style.display = 'none';
-        window.location.assign(front + '/userutil/?email=' + data.email + '&form=reset');
-        //window.location.href = feurl + '/userutil/?email=' + data.email + '&form=reset';
+        if (process.env.NODE_ENV !== 'test'){
+          window.location.assign(front + '/userutil/?email=' + data.email + '&form=reset');
+        }
       }
     })
     .catch((error) => {
