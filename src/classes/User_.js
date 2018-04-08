@@ -169,6 +169,7 @@ class User_ {
         if (process.env.frontURL !== undefined) {
           feurl = process.env.frontURL;
         }
+        /* istanbul ignore if */
         if (process.env.NODE_ENV !== 'test'){
           window.location.href = feurl + '/';
         }
@@ -188,6 +189,7 @@ class User_ {
     if (process.env.frontURL !== undefined) {
       feurl = process.env.frontURL;
     }
+    /* istanbul ignore if */
     if (process.env.NODE_ENV !== 'test'){
       window.location.href = feurl + '/';
     }

@@ -190,7 +190,7 @@ class Login_ {
         //localStorage.setItem('token', data.token);
         localStorage.setItem('userEmail', data.email);
         loginform1[0].style.display = 'none';
-        //console.log(front);
+        /* istanbul ignore if */
         if (process.env.NODE_ENV !== 'test'){
           window.location.assign(front + '/login/?token=true');
         }
@@ -200,6 +200,7 @@ class Login_ {
       }
       if (!data.message && !data.token && data.email) {
         loginform1[0].style.display = 'none';
+        /* istanbul ignore if */
         if (process.env.NODE_ENV !== 'test'){
           window.location.assign(front + '/userutil/?email=' + data.email + '&form=reset');
         }
