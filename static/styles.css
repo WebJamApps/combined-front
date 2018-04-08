@@ -757,18 +757,7 @@ a:hover {
   right: 0;
 }
 
-.swipe-area {
-  position: absolute;
-  width: 50px;
-  left: 168px;
-  top: 0;
-  height: 100%;
-  /* background: #f3f3f3; */
-  z-index: 9999;
-  /* touch-action: auto; */
-}
-
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 12px;
 }
@@ -790,7 +779,7 @@ a:hover {
 ::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: #ffffff;
-} */
+}
 
 .swipe-area {
   position: absolute;

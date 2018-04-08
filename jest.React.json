@@ -1,0 +1,15 @@
+{
+  "verbose": true,
+  "bail": true,
+  "setupFiles": [
+    "enzyme-react-16-adapter-setup"
+  ],
+  "testPathIgnorePatterns": ["/node_modules/", "/test/karma-unit/", "/test/jest-unit/ReactComp.spec.js"],
+  "coverageDirectory": "coverage/jest",
+  "collectCoverageFrom": ["src/components/*.{js,jsx}", "src/classes/*.{js,jsx}", "src/commons/*.{js,jsx}", "!**/node_modules/**", "!src/commons/slideshow.js", "!src/commons/utils.js", "!src/classes/AppState.js", "!src/classes/UserAccess.js", "!src/classes/FormValidator.js"],
+  "collectCoverage": true,
+  "testEnvironment": "jest-environment-jsdom",
+  "transform": {
+    "^.+\\.jsx?$": "babel-jest"
+  }
+}
