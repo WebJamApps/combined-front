@@ -1,7 +1,7 @@
 {
   "verbose": true,
   "bail": true,
-  "testPathIgnorePatterns": ["/node_modules/", "/test/karma-unit/", "/test/jest-unit/ReactComp.spec.js"],
+  "testPathIgnorePatterns": ["/node_modules/", "/test/karma-unit/", "/test/react-unit/ReactComp.spec.js"],
   "coverageDirectory": "coverage/jest",
   "collectCoverageFrom": ["src/classes/*.{js,jsx}", "src/commons/*.{js,jsx}", "!**/node_modules/**", "!src/commons/slideshow.js", "!src/commons/utils.js", "!src/classes/AppState.js", "!src/classes/UserAccess.js", "!src/classes/FormValidator.js"],
   "collectCoverage": true,
