@@ -15,7 +15,7 @@ export class TimePicker {
   }
 
   render() {
-    ReactDOM.render(<TimeInput data={this.data} mode='12h' onChange={(time) => {this.updateTime(time)}}/>, this.element);
+    ReactDOM.render(<TimeInput data={this.data} mode='12h' onChange={(time) => {this.updateTime(time);}}/>, this.element);
   }
 
   updateTime(time) {
