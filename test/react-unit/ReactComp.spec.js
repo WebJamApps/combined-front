@@ -3,7 +3,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 //import renderer from 'react-test-renderer';
 //import ReactComponent from '../../src/components/react-comp.js';
-import HelloWorld from '../../src/components/react-element.js';
+import HelloWorld from '../../src/components/react-comp.js';
 
 describe('the App module', () => {
   //let element;
