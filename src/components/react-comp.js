@@ -1,21 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactElement from './react-element';
-import {noView, inject, customElement} from 'aurelia-framework';
+import React, {Component} from 'react';
 
-@noView()
-@inject(Element)
-@customElement('react-component')
-export class ReactComponent {
-  constructor(element) {
-    this.element = element;
-  }
+export default class HelloWorld extends Component {
 
   render() {
-    ReactDOM.render(<ReactElement/>, this.element);
-  }
-
-  bind() {
-    this.render();
+    return <h1>Hello World</h1>;
   }
 }
