@@ -28,4 +28,11 @@ describe('the App module', () => {
   //   console.log(RC.html());
   //   expect(RC.html()).toEqual('Hello World');
   // });
+  it('one toplevel element', () => {
+    expect(RC.length).toEqual(1);
+  });
+
+  it('wrapper should match snapshot', () => {
+    expect(RC).toMatchSnapshot();
+  });
 });
