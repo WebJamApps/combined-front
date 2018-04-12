@@ -24,6 +24,14 @@ export class TimePicker {
     } else {
       this.data.voEndTime = time;
     }
+    this.showScheduleButton();
+  }
+
+  showScheduleButton() {
+    let data = this.data;
+    if (data.voName && data.voStartTime && data.voEndTime && data.voNumPeopleNeeded && data.voStartDate && data.voEndDate && data.voState && data.voCity && data.voStreet && data.voZipCode) {
+      document.getElementById('scheduleEvent').style.display = 'block';
+    }
   }
 
   bind() {
