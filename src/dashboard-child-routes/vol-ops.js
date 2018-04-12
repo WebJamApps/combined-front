@@ -4,7 +4,6 @@ import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
 import {fixDates, formatDate, markPast} from '../commons/utils.js';
-const Inputmask = require('inputmask');
 @inject(App, ValidationControllerFactory, Validator)
 export class VolunteerOpps {
   controller = null;
@@ -131,6 +130,7 @@ export class VolunteerOpps {
   }
 
   scheduleEvent(){
+    console.log(this.voOpp);
     this.voOpp.voStatus = 'new';
     this.app.httpClient.fetch('/volopp/create', {
       method: 'post',
@@ -187,11 +187,6 @@ export class VolunteerOpps {
     let topSection = document.getElementById('topSection');
     topSection.style.display = 'block';
     topSection.scrollIntoView();
-    let startTimeInput = document.getElementById('s-time');
-    let endTimeInput = document.getElementById('e-time');
-    let imst = new Inputmask('99:99 am');
-    imst.mask(startTimeInput);
-    imst.mask(endTimeInput);
     this.showUpdateEvent(null, 'new');
   }
 
@@ -283,8 +278,8 @@ export class VolunteerOpps {
     .ensure('voContactEmail').email()
     .ensure('voName').required().maxLength(40).withMessage('Name of Event please')
     .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
-    .ensure('voStartTime').required().matches(/\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([ap][m]))/)
-    .ensure('voEndTime').required().matches(/\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([ap][m]))/)
+    .ensure('voStartTime').required()
+    .ensure('voEndTime').required()
     .ensure('voStartDate').required()
     .ensure('voEndDate').required()
     .ensure('voZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
