@@ -12,10 +12,11 @@ import {noView, customElement, bindable, inject} from 'aurelia-framework';
 export class TimePicker {
   constructor(element) {
     this.element = element;
+    this.updateTime = this.updateTime.bind(this);
   }
 
   render() {
-    ReactDOM.render(<TimeInput defaultValue={new Date(0)} data={this.data} mode='12h' onChange={(time) => {this.updateTime(time);}}/>, this.element);
+    ReactDOM.render(<TimeInput defaultValue={new Date(0)} data={this.data} mode='12h' onChange={this.updateTime}/>, this.element);
   }
 
   updateTime(time) {
