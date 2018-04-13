@@ -309,7 +309,7 @@ export class VolunteerOpps {
   attached(){
     this.showNewEvent();
     this.setupValidation2();
-    this.controller2.validate();
+    // this.controller2.validate();
   }
 
 }
