@@ -2,7 +2,7 @@
   <require from="../components/time-picker"></require>
   <div class="page-content">
     <div id="topSection">
-      <h3 id="eventHeader" style="text-align:center">Events for ${voOpp.voCharityName}</h3>
+      <h3 style="margin-top:10px; text-align:center" id="eventHeader">Events for ${voOpp.voCharityName}</h3>
       <div if.bind="events.length === 0"><p style="text-align:center">There are no scheduled events</p></div>
       <div if.bind="events.length !== 0" class="search-table-outer" style="position:relative;overflow-x:auto;">
         <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
