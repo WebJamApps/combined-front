@@ -122,7 +122,7 @@ strong {
 
 table {
   margin: auto;
-  border-collapse: separate;
+  border-collapse: collapse;
 }
 
 tbody tr:nth-child(odd) {
@@ -688,23 +688,6 @@ a:hover {
   display: none;
 }
 
-@media screen and (max-width: 766px) {
-  .drawer {
-    background-color: rgb(192, 192, 192);
-    float: right;
-    height: 100%;
-  }
-  .drawer-container {
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    position: fixed;
-    width: 100%;
-  }
-  .content-block {
-    overflow-x: hidden;
-  }
-}
-
 @media screen and (min-width: 766px) {
   .drawer-container {
     float: right;
@@ -779,6 +762,26 @@ a:hover {
 ::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: #ffffff;
+}
+
+@media screen and (max-width: 766px) {
+  .drawer {
+    background-color: rgb(192, 192, 192);
+    float: right;
+    height: 100%;
+  }
+  .drawer-container {
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    width: 100%;
+  }
+  .content-block {
+    overflow-x: hidden;
+  }
+  ::-webkit-scrollbar:vertical {
+    width: 0;
+  }
 }
 
 .swipe-area {

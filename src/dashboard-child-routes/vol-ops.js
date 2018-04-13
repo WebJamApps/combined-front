@@ -91,7 +91,7 @@ export class VolunteerOpps {
       //if (res !== null && res !== undefined && res !== ''){
       person = await res.json();
       this.allPeople.push(person);
-        //res = '';
+      //res = '';
       // }
     }
     this.eventTitle = thisevent.voName;
@@ -158,6 +158,7 @@ export class VolunteerOpps {
       nub.style.display = 'none';
     }
     this.setupValidation2();
+    this.controller2.validate();
   }
 
   showNewEvent(){
@@ -236,7 +237,9 @@ export class VolunteerOpps {
     let valid = true;
     //console.log('Running updateCanSubmit2');
     let nub = document.getElementsByClassName('updateButton')[0];
-    nub.style.display = 'none';
+    if (nub !== undefined){
+      nub.style.display = 'none';
+    }
     // let updateButton = document.getElementById('updateScheduleEvent');
     // if (createButton !== null){
     //   createButton.style.display = 'none';
@@ -271,7 +274,7 @@ export class VolunteerOpps {
   validate2() {
     return this.validator2.validateObject(this.voOpp);
   }
-/* istanbul ignore next */
+  /* istanbul ignore next */
   setupValidation2() {
     ValidationRules
     .ensure('voContactPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
