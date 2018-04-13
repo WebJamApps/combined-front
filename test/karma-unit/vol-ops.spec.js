@@ -134,24 +134,24 @@ describe('the Volunteer Opps Module', () => {
     expect(volops4.events[0].voNumPeopleScheduled).toBe(2);
   }));
 
-  it('does not show the submit button on initial display of update form', testAsync(async function(){
-    volops.activate();
-    let thisEvent = {
-      '_id': '123',
-      'voWorkTypes': ['other'],
-      'voWorkTypeOther': '',
-      'voCharityName': '',
-      'voStartDate': '2017-12-12',
-      'voEndDate': '2017-12-12',
-      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-      'voTalentTypeOther': 'scrubbing',
-      'voDescription': 'howdy'
-    };
-    document.body.innerHTML = '<div id="topSection"></div><button id="updateScheduleEvent"></button>';
-    volops.setupValidation2 = function(){};
-    await volops.showUpdateEvent(thisEvent, 'update');
-    expect(document.getElementById('updateScheduleEvent').style.display).toBe('none');
-  }));
+  // it('does not show the submit button on initial display of update form', testAsync(async function(){
+  //   volops.activate();
+  //   let thisEvent = {
+  //     '_id': '123',
+  //     'voWorkTypes': ['other'],
+  //     'voWorkTypeOther': '',
+  //     'voCharityName': '',
+  //     'voStartDate': '2017-12-12',
+  //     'voEndDate': '2017-12-12',
+  //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+  //     'voTalentTypeOther': 'scrubbing',
+  //     'voDescription': 'howdy'
+  //   };
+  //   document.body.innerHTML = '<div id="topSection"></div><button id="updateScheduleEvent"></button>';
+  //   volops.setupValidation2 = function(){};
+  //   await volops.showUpdateEvent(thisEvent, 'update');
+  //   expect(document.getElementById('updateScheduleEvent').style.display).toBe('none');
+  // }));
 
   it('it sets signups to zero', testAsync(async function(){
     volops4.events = [{_id: '123', voStartDate: null, voEndDate: null}];
@@ -165,8 +165,6 @@ describe('the Volunteer Opps Module', () => {
       return Promise.reject(new Error('fail'));
     };
     await volops4.checkScheduled().then((isError) => {
-        // console.log('is this an error?');
-        // console.log(isError);
     });
     expect(volops4.events[0].voNumPeopleScheduled).toBe(0);
   }));
@@ -298,32 +296,30 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  it('it displays the talent other form field', (done) => {
-    volops.activate();
-    volops.user = {
-      'name': 'me',
-      'email': 'me@me.org',
-      'userPhone': '3333333333',
-      'volTalents': []
-    };
-    volops.voOpp = {
-      'voTalentTypes': ['other']
-    };
-    volops.app.selectPickedChange(volops.voOpp, volops, 'voTalentTypes', 'voTalentTypeOther', 'talentOther');
-    expect(volops.talentOther).toBe(true);
-    volops.voOpp = {
-      'voTalentTypes': ['swimming']
-    };
-    volops.voOpp.voTalentTypeOther = 'teststring';
-      //volops.app.selectPickedChange(volops.voOpp, volops, 'voTalentTypes', 'voTalentTypeOther', 'talentOther');
-    volops.selectPickChange('talents');
-    expect(volops.talentOther).toBe(false);
-    document.body.innerHTML =   document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
-    volops.setupValidation2 = function(){};
-    volops.attached();
-      //expect(volops.voOpp.voTalentTypeOther).toBe('');
-    done();
-  });
+  // it('it displays the talent other form field', (done) => {
+  //   volops.activate();
+  //   volops.user = {
+  //     'name': 'me',
+  //     'email': 'me@me.org',
+  //     'userPhone': '3333333333',
+  //     'volTalents': []
+  //   };
+  //   volops.voOpp = {
+  //     'voTalentTypes': ['other']
+  //   };
+  //   volops.app.selectPickedChange(volops.voOpp, volops, 'voTalentTypes', 'voTalentTypeOther', 'talentOther');
+  //   expect(volops.talentOther).toBe(true);
+  //   volops.voOpp = {
+  //     'voTalentTypes': ['swimming']
+  //   };
+  //   volops.voOpp.voTalentTypeOther = 'teststring';
+  //   volops.selectPickChange('talents');
+  //   expect(volops.talentOther).toBe(false);
+  //   document.body.innerHTML =   document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
+  //   volops.setupValidation2 = function(){};
+  //   volops.attached();
+  //   done();
+  // });
 
   it('it display the work other form field', (done) => {
     volops.activate();
@@ -467,44 +463,44 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  it('displays the update event form', (done) => {
-      //volops.activate();
-    document.body.innerHTML = '<div id="topSection"></div>';
-    let thisEvent = {
-      'voWorkTypes': ['other'],
-      'voCharityName': '',
-      'voStartDate': '2017-12-12',
-      'voEndDate': '2017-12-12',
-      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-      'voTalentTypeOther': 'scrubbing',
-      'voContactPhone': '5555555',
-      'voContactEmail': 'j@b.com',
-      'voName': 'howdy',
-      'voNumPeopleNeeded': 4,
-      'voStartTime': '08:00 am',
-      'voEndTime': '05:00 pm',
-      'voZipCode': '24153',
-      'voCity': 'Rochester',
-      'voStreet': '120 street drive',
-      'voState': 'Virginia'
-    };
-    volops.setupValidation2 = function(){};
-    volops.showUpdateEvent(thisEvent, 'update');
-    done();
-  });
+  // it('displays the update event form', (done) => {
+  //     //volops.activate();
+  //   document.body.innerHTML = '<div id="topSection"></div>';
+  //   let thisEvent = {
+  //     'voWorkTypes': ['other'],
+  //     'voCharityName': '',
+  //     'voStartDate': '2017-12-12',
+  //     'voEndDate': '2017-12-12',
+  //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+  //     'voTalentTypeOther': 'scrubbing',
+  //     'voContactPhone': '5555555',
+  //     'voContactEmail': 'j@b.com',
+  //     'voName': 'howdy',
+  //     'voNumPeopleNeeded': 4,
+  //     'voStartTime': '08:00 am',
+  //     'voEndTime': '05:00 pm',
+  //     'voZipCode': '24153',
+  //     'voCity': 'Rochester',
+  //     'voStreet': '120 street drive',
+  //     'voState': 'Virginia'
+  //   };
+  //   volops.setupValidation2 = function(){};
+  //   volops.showUpdateEvent(thisEvent, 'update');
+  //   done();
+  // });
 
-  it('displays the new event form', (done) => {
-      //volops.activate();
-    volops.user = {
-      'name': 'me',
-      'email': 'me@me.org',
-      'userPhone': '3333333333'
-    };
-    document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
-    volops.setupValidation2 = function(){};
-    volops.showNewEvent();
-    done();
-  });
+  // it('displays the new event form', (done) => {
+  //     //volops.activate();
+  //   volops.user = {
+  //     'name': 'me',
+  //     'email': 'me@me.org',
+  //     'userPhone': '3333333333'
+  //   };
+  //   document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
+  //   volops.setupValidation2 = function(){};
+  //   volops.showNewEvent();
+  //   done();
+  // });
 
   it('displays the charity types including other types', (done) => {
     volops3.charityID = '123';
