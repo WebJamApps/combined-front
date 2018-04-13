@@ -281,8 +281,8 @@ export class VolunteerOpps {
     .ensure('voContactEmail').email()
     .ensure('voName').required().maxLength(40).withMessage('Name of Event please')
     .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
-    .ensure('voStartTime').required()
-    .ensure('voEndTime').required()
+    .ensure('voStartTime').required().withMessage('Event start time is required')
+    .ensure('voEndTime').required().withMessage('Event end time is required')
     .ensure('voStartDate').required()
     .ensure('voEndDate').required()
     .ensure('voZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
@@ -311,7 +311,8 @@ export class VolunteerOpps {
 
   attached(){
     this.showNewEvent();
-    //this.setupValidation2();
+    this.setupValidation2();
+    // this.controller2.validate();
   }
 
 }

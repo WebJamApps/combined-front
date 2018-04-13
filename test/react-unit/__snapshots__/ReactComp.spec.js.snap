@@ -4,7 +4,7 @@ exports[`the App module wrapper should match snapshot 1`] = `
 ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <HelloWorld />,
+  Symbol(enzyme.__unrendered__): <HWComp />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "getNode": [Function],
