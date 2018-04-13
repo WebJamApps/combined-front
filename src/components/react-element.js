@@ -6,7 +6,7 @@ import {noView, inject, customElement} from 'aurelia-framework';
 @noView()
 @inject(Element)
 @customElement('hello-world')
-export class ReactComponent {
+export class HelloWorld {
   constructor(element) {
     this.element = element;
   }
