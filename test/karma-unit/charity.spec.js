@@ -363,12 +363,12 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('validate2', (done) => {
-    charity.controller2 = {errors: []};
-    charity.updateCharity = {charityTypes: ['Hunger', 'other'], charityName: 'okay'};
-    charity.validate2();
-    done();
-  });
+  // it('validate2', (done) => {
+  //   charity.controller2 = {errors: []};
+  //   charity.updateCharity = {charityTypes: ['Hunger', 'other'], charityName: 'okay'};
+  //   charity.validate2();
+  //   done();
+  // });
 
   it('updateCharityFunct', (done) => {
     charity.updateCharity = updatedCharity;
@@ -398,32 +398,32 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('should open checkbox', (done) => {
-    document.body.innerHTML = '<div id="typesUpdate"></div>';
-    let el = document.getElementById('typesUpdate');
-    el.style.display = 'block';
-    charity.updateCharity = {charityTypes: ['other']};
-    charity.controller2 = {errors: []};
-    charity.openCheckboxAndValidate('typesUpdate');
-    done();
-  });
-  it('should not validate the charity type', (done) => {
-    document.body.innerHTML = '<div id="typesUpdate"></div>';
-    let el = document.getElementById('typesUpdate');
-    el.style.display = 'none';
-    charity.updateCharity = {charityTypes: ['other']};
-    charity.controller2 = {errors: []};
-    charity.openCheckboxAndValidate('typesUpdate');
-    done();
-  });
-  it('does not validate if charity types are selected on initial load', (done) => {
-    document.body.innerHTML = '<div id="typesUpdate"></div>';
-    let el = document.getElementById('typesUpdate');
-    el.style.display = 'none';
-    charity.charityTypeValid = true;
-    charity.updateCharity = {charityTypes: []};
-    //charity.controller2 = {errors: []};
-    charity.validate2();
-    done();
-  });
+  // it('should open checkbox', (done) => {
+  //   document.body.innerHTML = '<div id="typesUpdate"></div>';
+  //   let el = document.getElementById('typesUpdate');
+  //   el.style.display = 'block';
+  //   charity.updateCharity = {charityTypes: ['other']};
+  //   charity.controller2 = {errors: []};
+  //   charity.openCheckboxAndValidate('typesUpdate');
+  //   done();
+  // });
+  // it('should not validate the charity type', (done) => {
+  //   document.body.innerHTML = '<div id="typesUpdate"></div>';
+  //   let el = document.getElementById('typesUpdate');
+  //   el.style.display = 'none';
+  //   charity.updateCharity = {charityTypes: ['other']};
+  //   charity.controller2 = {errors: []};
+  //   charity.openCheckboxAndValidate('typesUpdate');
+  //   done();
+  // });
+  // it('does not validate if charity types are selected on initial load', (done) => {
+  //   document.body.innerHTML = '<div id="typesUpdate"></div>';
+  //   let el = document.getElementById('typesUpdate');
+  //   el.style.display = 'none';
+  //   charity.charityTypeValid = true;
+  //   charity.updateCharity = {charityTypes: []};
+  //   //charity.controller2 = {errors: []};
+  //   charity.validate2();
+  //   done();
+  // });
 });

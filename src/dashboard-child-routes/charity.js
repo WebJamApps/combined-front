@@ -65,7 +65,8 @@ export class Charity {
     this.canSubmit2 = true;
     this.validType2 = true;
     this.showUpdateCharity(charity);
-    this.openCheckboxAndValidate('typesUpdate', true);
+    //this.openCheckboxAndValidate('typesUpdate', true);
+    this.app.showCheckboxes('typesUpdate', true);
     let ctypeerror = document.getElementsByClassName('ctypeerror')[0];
     ctypeerror.style.display = 'none';
   }
@@ -84,12 +85,12 @@ export class Charity {
     }
   }
 
-  openCheckboxAndValidate(e, forceOpen) {
-    let open = this.app.showCheckboxes(e, forceOpen);
-    if (open === false) {
-      this.validate2();
-    }
-  }
+  // openCheckboxAndValidate(e, forceOpen) {
+  //   let open = this.app.showCheckboxes(e, forceOpen);
+  //   if (open === false) {
+  //     this.validate2();
+  //   }
+  // }
 
   updateTypePicked(){
     //console.log('I clicked a checkbox');
@@ -122,15 +123,15 @@ export class Charity {
     .on(this.updateCharity);
   }
 
-  validate2() {
-    if (this.updateCharity.charityTypes.join(',') === '' && !this.charityTypeValid) {
-      this.controller2.errors.push({ id: '_charityType', message: 'Charity Type is required', valid: false, __observer__: {} });
-      this.charityTypeValid = true;
-    } else if (this.updateCharity.charityTypes.join(',') !== '') {
-      this.controller2.errors = [...this.controller2.errors.filter( (x) => x.id !== '_charityType')];
-      this.charityTypeValid = false;
-    }
-  }
+  // validate2() {
+  //   if (this.updateCharity.charityTypes.join(',') === '' && !this.charityTypeValid) {
+  //     this.controller2.errors.push({ id: '_charityType', message: 'Charity Type is required', valid: false, __observer__: {} });
+  //     this.charityTypeValid = true;
+  //   } else if (this.updateCharity.charityTypes.join(',') !== '') {
+  //     this.controller2.errors = [...this.controller2.errors.filter( (x) => x.id !== '_charityType')];
+  //     this.charityTypeValid = false;
+  //   }
+  // }
 
   updateCanSubmit2(validationResults) {
     let valid = true;
