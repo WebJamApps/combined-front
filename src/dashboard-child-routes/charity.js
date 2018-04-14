@@ -3,7 +3,6 @@ import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
-//import {VolOpp} from '../classes/VolOpp';
 @inject(App, ValidationControllerFactory, Validator)
 export class Charity {
   controller = null;
@@ -20,7 +19,7 @@ export class Charity {
   }
 
   async activate(){
-    // this.counter = 1;
+    this.counter = 1;
     this.update = false;
     this.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
     this.types.sort();
@@ -50,7 +49,7 @@ export class Charity {
 
   createNewCharity(){
     console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
-    let charity = {'charityName': '', 'charityStreet': '', 'charityCity': '', 'charityState': '', 'charityZipCode': '', 'charityTypes': [], 'charityManagers': [], 'charityMngIds': [], 'charityTypeOther': '', 'charityTypesHtml': ''};
+    let charity = {'charityEmail': '', 'charityName': '', 'charityStreet': '', 'charityCity': '', 'charityState': '', 'charityZipCode': '', 'charityTypes': [], 'charityManagers': [], 'charityMngIds': [], 'charityTypeOther': '', 'charityTypesHtml': ''};
     this.update = false;
     document.getElementById('charTable').style.display = 'block';
     this.updateScheduledEvent = false;
@@ -60,12 +59,16 @@ export class Charity {
   }
 
   updateCharityFunction(charity){
-    //this.counter = 1;
+    charity.charityEmail = '';
+    this.counter = 1;
     this.update = true;
     this.canSubmit2 = true;
     this.validType2 = true;
     this.showUpdateCharity(charity);
-    this.openCheckboxAndValidate('typesUpdate', true);
+    //this.openCheckboxAndValidate('typesUpdate', true);
+    this.app.showCheckboxes('typesUpdate', true);
+    let ctypeerror = document.getElementsByClassName('ctypeerror')[0];
+    ctypeerror.style.display = 'none';
   }
 
   showUpdateCharity(charity){
@@ -77,35 +80,36 @@ export class Charity {
     this.controller2.validate();
     if (this.update === true){
       document.getElementById('updateCharitySection').scrollIntoView();
-      document.getElementById('updateCharityButton').style.display = 'none';
     } else {
       document.getElementById('charityDash').scrollIntoView();
     }
   }
 
-  openCheckboxAndValidate(e, forceOpen) {
-    let open = this.app.showCheckboxes(e, forceOpen);
-    if (open === false) {
-      this.validate2();
-    }
-  }
+  // openCheckboxAndValidate(e, forceOpen) {
+  //   let open = this.app.showCheckboxes(e, forceOpen);
+  //   if (open === false) {
+  //     this.validate2();
+  //   }
+  // }
 
   updateTypePicked(){
+    //console.log('I clicked a checkbox');
     this.validType2 = false;
-    let nub = document.getElementsByClassName('updateButton')[0];
-    nub.style.display = 'none';
+    let ctypeerror = document.getElementsByClassName('ctypeerror')[0];
+    ctypeerror.style.display = 'block';
+    //console.log(this.updateCharity.charityTypes);
     for (let i of this.types) {
       if (this.updateCharity.charityTypes.indexOf(i) > -1){
         this.validType2 = true;
-        nub.style.display = this.canSubmit2 && nub ? 'block' : 'none';
+        ctypeerror.style.display = 'none';
       }
     }
-    this.validate2();
+    //console.log(this.validType2);
+    this.controller2.validate();
     this.typeOther = this.updateCharity.charityTypes.includes('other');
     this.updateCharity.charityTypeOther = !this.typeOther ? '' : this.updateCharity.charityTypeOther;
   }
 
-  /* istanbul ignore next */
   setupValidation2() {
     ValidationRules
     .ensure('charityTypes').required().minLength(1).withMessage('charity type is required')
@@ -119,20 +123,23 @@ export class Charity {
     .on(this.updateCharity);
   }
 
-  validate2() {
-    if (this.updateCharity.charityTypes.join(',') === '' && !this.charityTypeValid) {
-      this.controller2.errors.push({ id: '_charityType', message: 'Charity Type is required', valid: false, __observer__: {} });
-      this.charityTypeValid = true;
-    } else if (this.updateCharity.charityTypes.join(',') !== '') {
-      this.controller2.errors = [...this.controller2.errors.filter( (x) => x.id !== '_charityType')];
-      this.charityTypeValid = false;
-    }
-  }
+  // validate2() {
+  //   if (this.updateCharity.charityTypes.join(',') === '' && !this.charityTypeValid) {
+  //     this.controller2.errors.push({ id: '_charityType', message: 'Charity Type is required', valid: false, __observer__: {} });
+  //     this.charityTypeValid = true;
+  //   } else if (this.updateCharity.charityTypes.join(',') !== '') {
+  //     this.controller2.errors = [...this.controller2.errors.filter( (x) => x.id !== '_charityType')];
+  //     this.charityTypeValid = false;
+  //   }
+  // }
 
   updateCanSubmit2(validationResults) {
     let valid = true;
-    console.log('Running updateCanSubmit2');
+    //console.log('Running updateCanSubmit2');
     let nub = document.getElementsByClassName('updateButton')[0];
+    if (nub !== undefined){
+      nub.style.display = 'none';
+    }
     if (nub) {
       for (let result of validationResults) {
         if (result.valid === false){
@@ -143,7 +150,17 @@ export class Charity {
       }
       this.canSubmit2 = valid;
       if (this.canSubmit2 && this.validType2){
+        //console.log(this.validType2);
         nub.style.display = 'block';
+        nub.removeAttribute('disabled');
+        if (this.update){
+          nub.setAttribute('disabled', '');
+          this.counter ++;
+          //console.log(this.counter);
+        }
+        if (this.counter > 8){
+          nub.removeAttribute('disabled');
+        }
       }
       return this.canSubmit2;
     }
@@ -153,7 +170,7 @@ export class Charity {
     this.updateCharity.charityManagers[0] = this.user.name;
     this.updateCharity.charityMngIds[0] = this.user._id;
     this.updateCharity.charityEmail = this.updateCharity.charityEmail.toLowerCase();
-    console.log('this is the update charity email: ' + this.updateCharity);
+    //console.log('this is the update charity email: ' + this.updateCharity);
     if (this.updateCharity.charityEmail !== '' && this.updateCharity.charityEmail !== null){
       this.findUserByEmail('post');
     } else {
@@ -167,7 +184,7 @@ export class Charity {
       body: json(this.updateCharity)
     })
     .then((data) => {
-      console.log(data);
+      //console.log(data);
       document.getElementById('charityDash').scrollIntoView();
       this.activate();
       this.createNewCharity();
@@ -195,7 +212,7 @@ export class Charity {
       method: 'delete'
     })
     .then((data) => {
-      console.log('your charity has been deleted');
+      //console.log('your charity has been deleted');
       this.activate();
       this.createNewCharity();
     });
@@ -203,7 +220,7 @@ export class Charity {
 
   updateCharityFunct(){
     this.updateCharity.charityEmail = this.updateCharity.charityEmail.toLowerCase();
-    console.log('this is the update charity email: ' + this.updateCharity.charityEmail);
+    //console.log('this is the update charity email: ' + this.updateCharity.charityEmail);
     if (this.updateCharity.charityEmail !== '' && this.updateCharity.charityEmail !== null){
       this.findUserByEmail('put');
     } else {
@@ -243,13 +260,12 @@ export class Charity {
       if (data.length !== 0){
         //console.log('the additional manager is: ' + JSON.stringify(data));
         const tempManager = data;
-        console.log('this is the additional manager: ');
-        console.log(tempManager[0].name);
-        console.log(tempManager[0]._id);
+        // console.log('this is the additional manager: ');
+        // console.log(tempManager[0].name);
+        // console.log(tempManager[0]._id);
         //only do this if the array does not already contain the user id, else alert that the user is already a manager of this charity
         for (let l = 0; l < this.updateCharity.charityMngIds.length; l++){
           console.log('checking for already a manager');
-          /* istanbul ignore else */
           if (this.updateCharity.charityMngIds.indexOf(tempManager[0]._id) > -1){
             return alert('this user is already a manager of this charity');
           }
