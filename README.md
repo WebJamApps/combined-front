@@ -7,10 +7,10 @@
 
 This is the front end for the following apps:
 <ui>
+  <li><a href="https://www.web-jam.com">Web Jam LLC</a></li>
 <li><a href="http://www.ourhandsandfeet.org">ourhandsandfeet.org</a></li>
-<li><a href="https://www.web-jam.com">Web Jam LLC</a></li>
-<li><a href="https://www.web-jam.com/library">Web Jam Library</a></li>
 <li><a href="http://joshandmariamusic.com">joshandmariamusic.com</a></li>
+<li><a href="https://www.web-jam.com/library">Web Jam Library</a></li>
 </ul>
 
 <br> Here are the steps to get the development version running. First, read our <a href="https://docs.google.com/document/d/1_QDDbqmBrJuGqBoib59fmgYtls03dAXXuLqRR5roPO4/edit">Developer's Guide</a> gdoc to make sure you have all of the necessary prerequisites installed, including the correct version of NodeJS that matches the version specified in our package.json and yarn.
