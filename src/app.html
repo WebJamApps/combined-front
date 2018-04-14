@@ -9,10 +9,8 @@
           if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
         </div>
         <div if.bind="!fullmenu && (Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer')" style="background-color:#2a222a;width:50px;height:91px" class="navImage">
-
         </div>
         <div if.bind="!fullmenu && (Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer')" style="background-color:#565656;width:50px;height:91px" class="navImage">
-
         </div>
         <div if.bind="!fullmenu" class="material-header ${currentStyles.headerClass}" style="width: 63px; height:91px"></div>
         <div class="nav-list">
@@ -156,14 +154,12 @@
           <div id="ohaflogo" if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'" class="headercontent" style="top:-23px; left:3px">
             <img src="${currentStyles.headerImagePath}" class="${currentStyles.headerImageClass}">
           </div>
-          <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:7px; height:10px;bottom:0px"
-          if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'">
-          <h3 class="header-text">
-            ${currentStyles.headerText1}
-          </h3>
-        </div>
-          <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:7px; height:81px; padding-left:2px"
-          if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
+          <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:7px; height:10px;bottom:0px" if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'">
+            <h3 class="header-text">
+              ${currentStyles.headerText1}
+            </h3>
+          </div>
+          <div class="headercontent ${currentStyles.headerClass} header-text-card" style="top:7px; height:81px; padding-left:2px" if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
             <h3 class="header-text" style="margin-top:0">
               ${currentStyles.headerText1}
               <br>${currentStyles.headerText2}
