@@ -248,31 +248,31 @@ describe('the Charity Module', () => {
     jasmine.clock().uninstall();
   });
 
-  it('hides the update charity button if it was displayed', (done) => {
-    jasmine.clock().install();
-    charity.activate();
-    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection"></div><div><button id="updateCharityButton" style="display:block">Create</button>';
-    charity.setupValidation2 = function() {};
-    charity.update = true;
-    const myCharity = {
-      'charityName': 'test charity',
-      'charityCity': '',
-      'charityState': '',
-      'charityZipCode': '',
-      'charityTypes': ['Christian', 'other'],
-      'charityManagers': [],
-      'charityMngIds': [],
-      'charityTypeOther': '',
-      'charityTypesHtml': '',
-      'charityEmail': ''
-    };
-    charity.controller2 = {validate: function(){}};
-    charity.showUpdateCharity(myCharity);
-    jasmine.clock().tick(1);
-    expect(document.getElementById('updateCharityButton').style.display).toBe('none');
-    done();
-    jasmine.clock().uninstall();
-  });
+  // it('hides the update charity button if it was displayed', (done) => {
+  //   jasmine.clock().install();
+  //   charity.activate();
+  //   document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection"></div><div><button id="updateCharityButton" style="display:block">Create</button>';
+  //   charity.setupValidation2 = function() {};
+  //   charity.update = true;
+  //   const myCharity = {
+  //     'charityName': 'test charity',
+  //     'charityCity': '',
+  //     'charityState': '',
+  //     'charityZipCode': '',
+  //     'charityTypes': ['Christian', 'other'],
+  //     'charityManagers': [],
+  //     'charityMngIds': [],
+  //     'charityTypeOther': '',
+  //     'charityTypesHtml': '',
+  //     'charityEmail': ''
+  //   };
+  //   charity.controller2 = {validate: function(){}};
+  //   charity.showUpdateCharity(myCharity);
+  //   jasmine.clock().tick(1);
+  //   expect(document.getElementById('updateCharityButton').style.display).toBe('none');
+  //   done();
+  //   jasmine.clock().uninstall();
+  // });
 
   it('it does not try to display the submit or update button if it does not exist', (done) => {
     charity.activate();
