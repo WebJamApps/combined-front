@@ -50,7 +50,7 @@ export class Charity {
 
   createNewCharity(){
     console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
-    let charity = {'charityName': '', 'charityStreet': '', 'charityCity': '', 'charityState': '', 'charityZipCode': '', 'charityTypes': [], 'charityManagers': [], 'charityMngIds': [], 'charityTypeOther': '', 'charityTypesHtml': ''};
+    let charity = {'charityEmail': '', 'charityName': '', 'charityStreet': '', 'charityCity': '', 'charityState': '', 'charityZipCode': '', 'charityTypes': [], 'charityManagers': [], 'charityMngIds': [], 'charityTypeOther': '', 'charityTypesHtml': ''};
     this.update = false;
     document.getElementById('charTable').style.display = 'block';
     this.updateScheduledEvent = false;
@@ -60,6 +60,7 @@ export class Charity {
   }
 
   updateCharityFunction(charity){
+    charity.charityEmail = '';
     this.counter = 1;
     this.update = true;
     this.canSubmit2 = true;
