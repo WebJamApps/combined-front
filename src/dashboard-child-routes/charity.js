@@ -3,11 +3,13 @@ import {App} from '../app';
 import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
+import {showCheckboxes} from '../commons/utils.js';
 @inject(App, ValidationControllerFactory, Validator)
 export class Charity {
   controller = null;
   validator = null;
   constructor(app, controllerFactory, validator){
+    this.showCheckboxes = showCheckboxes;
     this.app = app;
     this.charities = [];
     this.validator2 = new FormValidator(validator, (results) => this.updateCanSubmit2(results));
@@ -66,7 +68,7 @@ export class Charity {
     this.validType2 = true;
     this.showUpdateCharity(charity);
     //this.openCheckboxAndValidate('typesUpdate', true);
-    this.app.showCheckboxes('typesUpdate', true);
+    this.showCheckboxes('typesUpdate', true);
     let ctypeerror = document.getElementsByClassName('ctypeerror')[0];
     ctypeerror.style.display = 'none';
   }
@@ -84,13 +86,6 @@ export class Charity {
       document.getElementById('charityDash').scrollIntoView();
     }
   }
-
-  // openCheckboxAndValidate(e, forceOpen) {
-  //   let open = this.app.showCheckboxes(e, forceOpen);
-  //   if (open === false) {
-  //     this.validate2();
-  //   }
-  // }
 
   updateTypePicked(){
     //console.log('I clicked a checkbox');
@@ -110,7 +105,6 @@ export class Charity {
     this.updateCharity.charityTypeOther = !this.typeOther ? '' : this.updateCharity.charityTypeOther;
   }
 
-  /* istanbul ignore next */
   setupValidation2() {
     ValidationRules
     .ensure('charityTypes').required().minLength(1).withMessage('charity type is required')
