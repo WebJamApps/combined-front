@@ -128,31 +128,31 @@ describe('the Charity Module', () => {
     done();
   });
 
-  // it('displays the update charity table', (done) => {
-  //   charity.activate();
-  //   charity.setupValidation2 = function(){};
-  //   let charity1 = {
-  //     'charityName': 'test charity',
-  //     'charityCity': '',
-  //     'charityState': '',
-  //     'charityZipCode': '',
-  //     'charityTypes': ['other'],
-  //     'charityManagers': [],
-  //     'charityMngIds': [],
-  //     'charityTypeOther': '',
-  //     'charityTypesHtml': '',
-  //     'charityEmail': ''
-  //   };
-  //   charity.update = true;
-  //   charity.controller2 = {validate: function(){}};
-  //   document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="typesUpdate"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button><button id="updateCharityButton"></button></div><div id="scheduleCharitySection"></div>';
-  //   charity.updateCharityFunction(charity1);
-  //   expect(charity.charityName).toBe('test charity');
-  //   charity.update = false;
-  //   document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button></div><div id=""></div>';
-  //   charity.createNewCharity();
-  //   done();
-  // });
+  it('displays the update charity table', (done) => {
+    charity.activate();
+    charity.setupValidation2 = function(){};
+    let charity1 = {
+      'charityName': 'test charity',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': ['other'],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': '',
+      'charityEmail': ''
+    };
+    charity.update = true;
+    charity.controller2 = {validate: function(){}};
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div class="ctypeerror" id="charTable"></div><div id="typesUpdate"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button><button id="updateCharityButton"></button></div><div id="scheduleCharitySection"></div>';
+    charity.updateCharityFunction(charity1);
+    expect(charity.charityName).toBe('test charity');
+    charity.update = false;
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button></div><div id=""></div>';
+    charity.createNewCharity();
+    done();
+  });
 
   it('has a list of states', (done) => {
     let states = [ 'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
@@ -191,40 +191,40 @@ describe('the Charity Module', () => {
     done();
   });
 
-  // it('detects when the charity type is changed in the update form', (done) => {
-  //   charity.activate();
-  //   charity.controller2 = {errors: [{_id: 123}]};
-  //   charity.charityTypeValid = false;
-  //   charity.updateCharity = {
-  //     'charityName': 'test charity',
-  //     'charityCity': '',
-  //     'charityState': '',
-  //     'charityZipCode': '',
-  //     'charityTypes': [],
-  //     'charityManagers': [],
-  //     'charityMngIds': [],
-  //     'charityTypeOther': '',
-  //     'charityTypesHtml': '',
-  //     'charityEmail': ''
-  //   };
-  //   document.body.innerHTML = '<button class="updateButton"></button>';
-  //   charity.updateTypePicked();
-  //   charity.canSubmit2 = false;
-  //   charity.updateCharity = {
-  //     'charityName': 'test charity',
-  //     'charityCity': '',
-  //     'charityState': '',
-  //     'charityZipCode': '',
-  //     'charityTypes': ['Christian', 'other'],
-  //     'charityManagers': [],
-  //     'charityMngIds': [],
-  //     'charityTypeOther': '',
-  //     'charityTypesHtml': '',
-  //     'charityEmail': ''
-  //   };
-  //   charity.updateTypePicked();
-  //   done();
-  // });
+  it('detects when the charity type is changed in the update form', (done) => {
+    charity.activate();
+    charity.controller2 = {errors: [{_id: 123}], validate: () => {}};
+    charity.charityTypeValid = false;
+    charity.updateCharity = {
+      'charityName': 'test charity',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': [],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': '',
+      'charityEmail': ''
+    };
+    document.body.innerHTML = '<button class="updateButton ctypeerror"></button>';
+    charity.updateTypePicked();
+    charity.canSubmit2 = false;
+    charity.updateCharity = {
+      'charityName': 'test charity',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': ['Christian', 'other'],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': '',
+      'charityEmail': ''
+    };
+    charity.updateTypePicked();
+    done();
+  });
 
   it('it displays the submit or update button on the form if the form is valid', (done) => {
     charity.activate();
@@ -248,35 +248,34 @@ describe('the Charity Module', () => {
     jasmine.clock().uninstall();
   });
 
-  // it('hides the update charity button if it was displayed', (done) => {
-  //   jasmine.clock().install();
-  //   charity.activate();
-  //   document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection"></div><div><button id="updateCharityButton" style="display:block">Create</button>';
-  //   charity.setupValidation2 = function() {};
-  //   charity.update = true;
-  //   const myCharity = {
-  //     'charityName': 'test charity',
-  //     'charityCity': '',
-  //     'charityState': '',
-  //     'charityZipCode': '',
-  //     'charityTypes': ['Christian', 'other'],
-  //     'charityManagers': [],
-  //     'charityMngIds': [],
-  //     'charityTypeOther': '',
-  //     'charityTypesHtml': '',
-  //     'charityEmail': ''
-  //   };
-  //   charity.controller2 = {validate: function(){}};
-  //   charity.showUpdateCharity(myCharity);
-  //   jasmine.clock().tick(1);
-  //   expect(document.getElementById('updateCharityButton').style.display).toBe('none');
-  //   done();
-  //   jasmine.clock().uninstall();
-  // });
+  it('hides the update charity button if it was displayed', (done) => {
+    charity.activate();
+    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection"></div><div><button id="updateCharityButton" style="display:block">Create</button>';
+    charity.setupValidation2 = function() {};
+    charity.update = true;
+    const myCharity = {
+      'charityName': 'test charity',
+      'charityCity': '',
+      'charityState': '',
+      'charityZipCode': '',
+      'charityTypes': ['Christian', 'other'],
+      'charityManagers': [],
+      'charityMngIds': [],
+      'charityTypeOther': '',
+      'charityTypesHtml': '',
+      'charityEmail': ''
+    };
+    charity.controller2 = {validate: function(){}};
+    charity.showUpdateCharity(myCharity);
+    expect(document.getElementById('updateCharityButton').style.display).toBe('block');
+    done();
+  });
 
   it('it does not try to display the submit or update button if it does not exist', (done) => {
     charity.activate();
     charity.validType2 = true;
+    charity.update = true;
+    charity.counter = 9;
     document.body.innerHTML = '<button class="updateButton"></button>';
     let validationResults = [{valid: false}, {valid: true}, {valid: false}];
     // let validationResults = [];
@@ -321,17 +320,17 @@ describe('the Charity Module', () => {
     done();
   });
 
-  // it('displays the submit button when a type has been selected and the rest of the form is valid', (done) => {
-  //   charity2.activate();
-  //   charity2.controller2 = {errors: []};
-  //   charity2.updateCharity = {
-  //     'charityTypes': [ 'Christian', 'Homeless']
-  //   };
-  //   document.body.innerHTML = '<button id="newCharityButton" class="updateButton">';
-  //   charity2.canSubmit2 = true;
-  //   charity2.updateTypePicked();
-  //   done();
-  // });
+  it('displays the submit button when a type has been selected and the rest of the form is valid', (done) => {
+    charity2.activate();
+    charity2.controller2 = {errors: [{_id: 123}], validate: () => {}};
+    charity2.updateCharity = {
+      'charityTypes': [ 'Christian', 'Homeless']
+    };
+    document.body.innerHTML = '<button id="newCharityButton" class="updateButton ctypeerror">';
+    charity2.canSubmit2 = true;
+    charity2.updateTypePicked();
+    done();
+  });
 
   it('does not add a new charity manager if the email is not a user of the app', (done) => {
     charity2.activate();
