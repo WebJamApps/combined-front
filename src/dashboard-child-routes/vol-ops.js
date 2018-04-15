@@ -279,12 +279,12 @@ export class VolunteerOpps {
     ValidationRules
     .ensure('voContactPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
     .ensure('voContactEmail').email()
-    .ensure('voName').required().maxLength(40).withMessage('Name of Event please')
+    .ensure('voName').required().withMessage('Event Name is required').maxLength(40).withMessage('Name of Event please')
     .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
-    .ensure('voStartTime').required().withMessage('Event start time is required')
-    .ensure('voEndTime').required().withMessage('Event end time is required')
-    .ensure('voStartDate').required()
-    .ensure('voEndDate').required()
+    .ensure('voStartTime').required().withMessage('Event Start time is required')
+    .ensure('voEndTime').required().withMessage('Event End time is required')
+    .ensure('voStartDate').required().withMessage('Event Start Date is required')
+    .ensure('voEndDate').required().withMessage('Event End Date is required')
     .ensure('voZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
     .ensure('voCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
     .ensure('voStreet').required().maxLength(40).withMessage('Charity street address please')
@@ -312,7 +312,6 @@ export class VolunteerOpps {
   attached(){
     this.showNewEvent();
     this.setupValidation2();
-    // this.controller2.validate();
   }
 
 }
