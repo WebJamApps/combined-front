@@ -124,46 +124,30 @@ export class Charity {
     .on(this.updateCharity);
   }
 
-  // validate2() {
-  //   if (this.updateCharity.charityTypes.join(',') === '' && !this.charityTypeValid) {
-  //     this.controller2.errors.push({ id: '_charityType', message: 'Charity Type is required', valid: false, __observer__: {} });
-  //     this.charityTypeValid = true;
-  //   } else if (this.updateCharity.charityTypes.join(',') !== '') {
-  //     this.controller2.errors = [...this.controller2.errors.filter( (x) => x.id !== '_charityType')];
-  //     this.charityTypeValid = false;
-  //   }
-  // }
-
   updateCanSubmit2(validationResults) {
     let valid = true;
-    //console.log('Running updateCanSubmit2');
     let nub = document.getElementsByClassName('updateButton')[0];
     if (nub !== undefined){
       nub.style.display = 'none';
     }
-    if (nub) {
-      for (let result of validationResults) {
-        if (result.valid === false){
-          nub.style.display = 'none';
-          valid = false;
-          break;
-        }
+    for (let result of validationResults) {
+      if (result.valid === false){
+        valid = false;
       }
-      this.canSubmit2 = valid;
-      if (this.canSubmit2 && this.validType2){
-        //console.log(this.validType2);
-        nub.style.display = 'block';
+    }
+    if (!valid || !this.validType2){
+      return this.canSubmit2 = false;
+    }
+    this.canSubmit2 = true;
+    nub.style.display = 'block';
+    nub.removeAttribute('disabled');
+    if (this.update){
+      nub.setAttribute('disabled', '');
+      this.counter ++;
+      //console.log(this.counter);
+      if (this.counter > 8){
         nub.removeAttribute('disabled');
-        if (this.update){
-          nub.setAttribute('disabled', '');
-          this.counter ++;
-          //console.log(this.counter);
-        }
-        if (this.counter > 8){
-          nub.removeAttribute('disabled');
-        }
       }
-      return this.canSubmit2;
     }
   }
 
