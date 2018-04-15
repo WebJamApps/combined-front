@@ -4,6 +4,7 @@ import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
 import {fixDates, formatDate, markPast} from '../commons/utils.js';
+import {showCheckboxes} from '../commons/utils.js';
 @inject(App, ValidationControllerFactory, Validator)
 export class VolunteerOpps {
   controller = null;
@@ -14,7 +15,7 @@ export class VolunteerOpps {
     this.selectedTalents = [];
     this.selectedWorks = [];
     this.newEvent = true;
-    //this.utils = utils;
+    this.showCheckboxes = showCheckboxes;
     this.validator2 = new FormValidator(validator, (results) => this.updateCanSubmit2(results));
     this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;

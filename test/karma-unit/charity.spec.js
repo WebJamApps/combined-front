@@ -100,7 +100,7 @@ describe('the Charity Module', () => {
   it('displays the checkboxes inside a select box', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
     //charity.app.expanded = true;
-    charity.app.showCheckboxes('types');
+    charity.showCheckboxes('types');
     expect(document.getElementById('types').style.display).toBe('block');
     done();
   });
@@ -108,7 +108,7 @@ describe('the Charity Module', () => {
   it('checkboxes closed', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;display:block"></div>';
     //charity.app.expanded = false;
-    charity.app.showCheckboxes('types');
+    charity.showCheckboxes('types');
     expect(document.getElementById('types').style.display).toBe('none');
     done();
   });

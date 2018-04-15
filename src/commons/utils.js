@@ -87,13 +87,6 @@ exports.filterSelected = function(myModule){
       myModule.filters[a].value = '';
     }
   }
-  // for (let z = 0; z < myModule.filters.length; z++){
-  //   if(myModule[myModule.filters[z].filterby] = true;)
-  // for (let t = 0; t < arrayFilters.length; t++){
-  //   if (arrayFilters[t].showFilters === false){
-  //     arrayFilters[t].value = '';
-  //   }
-  // }
 };
 
 
@@ -129,4 +122,18 @@ exports.startSlides = function(idArray1, errorMsg, idArray2){
     }
     exports.showSlides(idArray2);
   }, 5400);
+};
+
+exports.showCheckboxes = function(id, forceOpen){
+  let fo = false;
+  if (forceOpen !== null && forceOpen !== undefined){
+    fo = forceOpen;
+  }
+  let checkboxes = document.getElementById(id);
+  if (checkboxes.style.display === 'block' && !fo) {
+    checkboxes.style.display = 'none';
+    return false;
+  }
+  checkboxes.style.display = 'block';
+  return true;
 };

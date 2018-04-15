@@ -340,14 +340,16 @@ export class App {
         footer.style.backgroundColor = '#565656';
         color = '#c09580';
       }
-      footer.innerHTML = '<div style="text-align: center">' +
+      footer.innerHTML = '<div style="text-align: center;padding:6px">' +
       '<a target="_blank" style="color:' + color + '"  href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x footerIcon" aria-hidden="true"></i></a>' +
-      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://www.linkedin.com/company/webjam/"><i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a>' +
       '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x footerIcon" aria-hidden="true"></i></a>' +
+        '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>' +
       '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x footerIcon" aria-hidden="true"></i></a>' +
-      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a><br>' +
-      '<span style="color:white; font-size: 9pt; padding-left:18px;">Powered by ' +
-      '<a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
+
+      '<p style="color:white; font-size: 9pt;margin-bottom:0">Powered by ' +
+      '<a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>';
     }
   }
 
@@ -402,28 +404,19 @@ export class App {
     return result;
   }
 
-  showCheckboxes(id, forceOpen){
-    let fo = false;
-    if (forceOpen !== null && forceOpen !== undefined){
-      fo = forceOpen;
-    }
-    //let checkboxes = null;
-    //if (id !== null){
-    let checkboxes = document.getElementById(id);
-    // }    else {
-    //   checkboxes = document.getElementById('checkboxes-iron');
-    // }
-    //console.log('what is this expanded?');
-    //console.log(this.expanded);
-    if (checkboxes.style.display === 'block' && !fo) {
-      checkboxes.style.display = 'none';
-      //this.expanded = true;
-      return false;
-    }
-    checkboxes.style.display = 'block';
-    //this.expanded = false;
-    return true;
-  }
+  // showCheckboxes(id, forceOpen){
+  //   let fo = false;
+  //   if (forceOpen !== null && forceOpen !== undefined){
+  //     fo = forceOpen;
+  //   }
+  //   let checkboxes = document.getElementById(id);
+  //   if (checkboxes.style.display === 'block' && !fo) {
+  //     checkboxes.style.display = 'none';
+  //     return false;
+  //   }
+  //   checkboxes.style.display = 'block';
+  //   return true;
+  // }
 
   buildPTag(object, objectSelector, objectSelectorOther, objectStoreResult){
     for (let l = 0; l < object.length; l++){

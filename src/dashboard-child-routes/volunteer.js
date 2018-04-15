@@ -1,17 +1,16 @@
 import {inject} from 'aurelia-framework';
 import {App} from '../app';
 import {fixDates, formatDate, markPast} from '../commons/utils.js';
-//import {json} from 'aurelia-fetch-client';
+import {showCheckboxes} from '../commons/utils.js';
 import {filterSelected} from '../commons/utils';
 @inject(App)
 export class Volunteer {
   constructor(app){
-    //this.top = '33px';
+    this.showCheckboxes = showCheckboxes;
     this.app = app;
     this.events = [];
     this.signup = {};
     this.selectedFilter = ['future only'];
-    //this.doubleCheckSignups = false;
     this.canSignup = true;
     this.hidePast = true;
     this.zipcode = false;
