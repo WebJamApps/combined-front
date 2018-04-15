@@ -110,6 +110,7 @@ export class Charity {
     this.updateCharity.charityTypeOther = !this.typeOther ? '' : this.updateCharity.charityTypeOther;
   }
 
+  /* istanbul ignore next */
   setupValidation2() {
     ValidationRules
     .ensure('charityTypes').required().minLength(1).withMessage('charity type is required')
