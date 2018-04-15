@@ -6,6 +6,7 @@ import {filterSelected} from '../commons/utils';
 @inject(App)
 export class Volunteer {
   constructor(app){
+    //this.top = '33px';
     this.app = app;
     this.events = [];
     this.signup = {};
@@ -264,8 +265,25 @@ export class Volunteer {
     document.getElementById('updateUserButton').style.display = 'block';
   }
 
+  // get widescreen() {
+  //   console.log('am i here');
+  //   let isWide = document.documentElement.clientWidth > 766;
+  //   console.log(isWide);
+  // }
+
   attached(){
     document.getElementById('distanceInput').addEventListener('keydown', this.showButton);
     this.setupVolunteerUser();
+    if (document.documentElement.clientWidth < 766){
+      console.log('i am cell phone');
+      document.getElementsByClassName('checkboxes-div')[0].style.top = '124px';
+    }
+
+    // console.log(this.widescreen);
+    // if (!this.app.widescreen){
+    //   console.log(this.app.widescreen);
+    //   console.log('cell phone mode detected');
+    // }
   }
+
 }

@@ -67,11 +67,27 @@ describe('the Volunteer Module', () => {
     spyOn(volunteer, 'reload').and.callFake(() => 'nope is nothn');
   });
 
+  afterEach(() => {
+    viewport.reset();
+  });
+
   it('should active so it can display the volunteer settings', (done) => {
     volunteer.activate();
     volunteer.app.appState.user = { name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare'], volCauses: ['Environmental'], volWorkPrefs: ['counseling'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true};
     volunteer.activate();
     //console.log(volunteer.user);
+    done();
+  });
+
+  it('sets the filter dropdown position for cell phone display', (done) => {
+    viewport.set(800);
+    document.body.innerHTML = '<div class="checkboxes-div" style="top:33px"></div><div id="distanceInput"><div>';
+    volunteer.setupVolunteerUser = function(){};
+    volunteer.attached();
+    expect(document.getElementsByClassName('checkboxes-div')[0].style.top).toBe('33px');
+    viewport.set(500);
+    volunteer.attached();
+    expect(document.getElementsByClassName('checkboxes-div')[0].style.top).toBe('124px');
     done();
   });
 
