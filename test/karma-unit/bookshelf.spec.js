@@ -100,7 +100,7 @@ describe('The Bookshelf Module', () => {
     done();
   });
 
-  it('displays the drop-down checkbox', (done) => {
+  it('displays the drop-down checkboxes', (done) => {
     document.body.innerHTML = '<div id="checkboxes-iron" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
     shelf.showCheckboxes('checkboxes-iron');
     expect(document.getElementById('checkboxes-iron').style.display).toBe('block');
