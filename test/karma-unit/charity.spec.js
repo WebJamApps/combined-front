@@ -209,6 +209,7 @@ describe('the Charity Module', () => {
     };
     document.body.innerHTML = '<button class="updateButton ctypeerror"></button>';
     charity.updateTypePicked();
+    expect(document.getElementsByClassName('ctypeerror')[0].style.display).toBe('block');
     charity.canSubmit2 = false;
     charity.updateCharity = {
       'charityName': 'test charity',
@@ -223,6 +224,7 @@ describe('the Charity Module', () => {
       'charityEmail': ''
     };
     charity.updateTypePicked();
+    expect(document.getElementsByClassName('ctypeerror')[0].style.display).toBe('none');
     done();
   });
 
@@ -230,7 +232,11 @@ describe('the Charity Module', () => {
     charity.activate();
     charity.validType2 = true;
     let validationResults = [{valid: true}];
+    charity.update = true;
+    charity.counter = 9;
+    document.body.innerHTML = '<button class="updateButton"></button>';
     charity.updateCanSubmit2(validationResults);
+    expect(charity.canSubmit2).toBe(true);
     done();
   });
 
@@ -274,12 +280,11 @@ describe('the Charity Module', () => {
   it('it does not try to display the submit or update button if it does not exist', (done) => {
     charity.activate();
     charity.validType2 = true;
-    charity.update = true;
-    charity.counter = 9;
     document.body.innerHTML = '<button class="updateButton"></button>';
     let validationResults = [{valid: false}, {valid: true}, {valid: false}];
     // let validationResults = [];
     charity.updateCanSubmit2(validationResults);
+    expect(charity.canSubmit2).toBe(false);
     done();
   });
 
@@ -329,6 +334,7 @@ describe('the Charity Module', () => {
     document.body.innerHTML = '<button id="newCharityButton" class="updateButton ctypeerror">';
     charity2.canSubmit2 = true;
     charity2.updateTypePicked();
+    expect(document.getElementsByClassName('ctypeerror')[0].style.display).toBe('none');
     done();
   });
 
