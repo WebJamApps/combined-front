@@ -296,30 +296,31 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  // it('it displays the talent other form field', (done) => {
-  //   volops.activate();
-  //   volops.user = {
-  //     'name': 'me',
-  //     'email': 'me@me.org',
-  //     'userPhone': '3333333333',
-  //     'volTalents': []
-  //   };
-  //   volops.voOpp = {
-  //     'voTalentTypes': ['other']
-  //   };
-  //   volops.app.selectPickedChange(volops.voOpp, volops, 'voTalentTypes', 'voTalentTypeOther', 'talentOther');
-  //   expect(volops.talentOther).toBe(true);
-  //   volops.voOpp = {
-  //     'voTalentTypes': ['swimming']
-  //   };
-  //   volops.voOpp.voTalentTypeOther = 'teststring';
-  //   volops.selectPickChange('talents');
-  //   expect(volops.talentOther).toBe(false);
-  //   document.body.innerHTML =   document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
-  //   volops.setupValidation2 = function(){};
-  //   volops.attached();
-  //   done();
-  // });
+  it('it displays the talent other form field', (done) => {
+    volops.activate();
+    volops.user = {
+      'name': 'me',
+      'email': 'me@me.org',
+      'userPhone': '3333333333',
+      'volTalents': []
+    };
+    volops.voOpp = {
+      'voTalentTypes': ['other']
+    };
+    volops.app.selectPickedChange(volops.voOpp, volops, 'voTalentTypes', 'voTalentTypeOther', 'talentOther');
+    expect(volops.talentOther).toBe(true);
+    volops.voOpp = {
+      'voTalentTypes': ['swimming']
+    };
+    volops.voOpp.voTalentTypeOther = 'teststring';
+    volops.selectPickChange('talents');
+    expect(volops.talentOther).toBe(false);
+    document.body.innerHTML =   document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
+    volops.setupValidation2 = function(){};
+    volops.controller2 = {validate: () => {}};
+    volops.attached();
+    done();
+  });
 
   it('it display the work other form field', (done) => {
     volops.activate();
@@ -447,7 +448,6 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-
   it('it reactivates a cancelled event', (done) => {
     let signupevent = {
       '_id': '123',
@@ -463,44 +463,48 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  // it('displays the update event form', (done) => {
-  //     //volops.activate();
-  //   document.body.innerHTML = '<div id="topSection"></div>';
-  //   let thisEvent = {
-  //     'voWorkTypes': ['other'],
-  //     'voCharityName': '',
-  //     'voStartDate': '2017-12-12',
-  //     'voEndDate': '2017-12-12',
-  //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-  //     'voTalentTypeOther': 'scrubbing',
-  //     'voContactPhone': '5555555',
-  //     'voContactEmail': 'j@b.com',
-  //     'voName': 'howdy',
-  //     'voNumPeopleNeeded': 4,
-  //     'voStartTime': '08:00 am',
-  //     'voEndTime': '05:00 pm',
-  //     'voZipCode': '24153',
-  //     'voCity': 'Rochester',
-  //     'voStreet': '120 street drive',
-  //     'voState': 'Virginia'
-  //   };
-  //   volops.setupValidation2 = function(){};
-  //   volops.showUpdateEvent(thisEvent, 'update');
-  //   done();
-  // });
+  it('displays the update event form', (done) => {
+      //volops.activate();
+    document.body.innerHTML = '<div id="topSection"><div id="updateScheduleEvent"></div></div>';
+    let thisEvent = {
+      'voWorkTypes': ['other'],
+      'voCharityName': '',
+      'voStartDate': '2017-12-12',
+      'voEndDate': '2017-12-12',
+      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
+      'voTalentTypeOther': 'scrubbing',
+      'voContactPhone': '5555555',
+      'voContactEmail': 'j@b.com',
+      'voName': 'howdy',
+      'voNumPeopleNeeded': 4,
+      'voStartTime': '08:00 am',
+      'voEndTime': '05:00 pm',
+      'voZipCode': '24153',
+      'voCity': 'Rochester',
+      'voStreet': '120 street drive',
+      'voState': 'Virginia'
+    };
+    volops.setupValidation2 = function(){};
+    volops.controller2 = {validate: () => {}};
+    volops.showUpdateEvent(thisEvent, 'update');
+    expect(volops.newEvent).toBe(false);
+    done();
+  });
 
-  // it('displays the new event form', (done) => {
-  //     //volops.activate();
-  //   volops.user = {
-  //     'name': 'me',
-  //     'email': 'me@me.org',
-  //     'userPhone': '3333333333'
-  //   };
-  //   document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
-  //   volops.setupValidation2 = function(){};
-  //   volops.showNewEvent();
-  //   done();
-  // });
+  it('displays the new event form', (done) => {
+      //volops.activate();
+    volops.user = {
+      'name': 'me',
+      'email': 'me@me.org',
+      'userPhone': '3333333333'
+    };
+    document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
+    volops.setupValidation2 = function(){};
+    volops.controller2 = {validate: () => {}};
+    volops.showNewEvent();
+    expect(document.getElementById('topSection').style.display).toBe('block');
+    done();
+  });
 
   it('displays the charity types including other types', (done) => {
     volops3.charityID = '123';
@@ -538,7 +542,6 @@ describe('the Volunteer Opps Module', () => {
     volops.deleteEvent('333');
     done();
   });
-
 
   it('displays the submit button if the form is valid', (done) => {
       //volops.activate();
