@@ -125,6 +125,7 @@ describe('the Volunteer Opps Module', () => {
   it('activates and there are events and runs the show time', (done) => {
     volops.activate();
       //volops.showTime();
+    expect(volops.counter).toBe(1);
     done();
   });
 
@@ -133,25 +134,6 @@ describe('the Volunteer Opps Module', () => {
     await volops4.checkScheduled();
     expect(volops4.events[0].voNumPeopleScheduled).toBe(2);
   }));
-
-  // it('does not show the submit button on initial display of update form', testAsync(async function(){
-  //   volops.activate();
-  //   let thisEvent = {
-  //     '_id': '123',
-  //     'voWorkTypes': ['other'],
-  //     'voWorkTypeOther': '',
-  //     'voCharityName': '',
-  //     'voStartDate': '2017-12-12',
-  //     'voEndDate': '2017-12-12',
-  //     'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-  //     'voTalentTypeOther': 'scrubbing',
-  //     'voDescription': 'howdy'
-  //   };
-  //   document.body.innerHTML = '<div id="topSection"></div><button id="updateScheduleEvent"></button>';
-  //   volops.setupValidation2 = function(){};
-  //   await volops.showUpdateEvent(thisEvent, 'update');
-  //   expect(document.getElementById('updateScheduleEvent').style.display).toBe('none');
-  // }));
 
   it('it sets signups to zero', testAsync(async function(){
     volops4.events = [{_id: '123', voStartDate: null, voEndDate: null}];
@@ -231,6 +213,7 @@ describe('the Volunteer Opps Module', () => {
 
   it('activates and there are no events', (done) => {
     volops2.activate();
+    expect(volops2.counter).toBe(1);
     done();
   });
 
@@ -242,6 +225,7 @@ describe('the Volunteer Opps Module', () => {
     };
     volops.selectDate('start-date');
     volops.selectDate('end-date');
+    expect(volops.minEndDate).toBe(volops.voOpp.voStartDate);
     done();
   });
 
@@ -293,6 +277,7 @@ describe('the Volunteer Opps Module', () => {
     volops.showCheckboxes('talents');
     volops.app.expanded = true;
     volops.showCheckboxes('talents');
+    expect(volops.app.expanded).toBeTruthy();
     done();
   });
 
@@ -362,6 +347,7 @@ describe('the Volunteer Opps Module', () => {
       'voTalentTypeOther': 'scrubbing'
     };
     volops.scheduleEvent();
+    expect(volops.voOpp.voStatus).toBe('new');
     done();
   });
 
@@ -460,6 +446,7 @@ describe('the Volunteer Opps Module', () => {
       'voTalentTypeOther': 'scrubbing'
     };
     volops.reactivateEvent(signupevent);
+    expect(volops.voOpp.voStatus).toBe('reactivate');
     done();
   });
 
@@ -519,6 +506,7 @@ describe('the Volunteer Opps Module', () => {
       'voCharityTypes': ['Christian', 'other']
     };
     volops3.findCharity();
+    expect(volops3.voOpp.voCharityTypes.includes('Home')).toBeFalsy();
     done();
   });
 
@@ -534,12 +522,14 @@ describe('the Volunteer Opps Module', () => {
       '_id': '2222'
     };
     volops.updateEvent();
+    expect(volops.voOpp.voStatus).toBeUndefined();
     done();
   });
 
   it('deletes an event', (done) => {
       //volops.activate();
     volops.deleteEvent('333');
+    expect(volops.counter).toBe(1);
     done();
   });
 
@@ -558,7 +548,8 @@ describe('the Volunteer Opps Module', () => {
     };
     volops.validType2 = true;
     let validationResults = [{result: {valid: true}}];
-    volops.updateCanSubmit2(validationResults);
+    let val = volops.updateCanSubmit2(validationResults);
+    expect(val).toBeTruthy();
     done();
   });
 
@@ -598,6 +589,7 @@ describe('the Volunteer Opps Module', () => {
       '_id': '2222'
     };
     volops2.validate2();
+    expect(volops2.charityName === 'OHAF').toBeTruthy();
     done();
   });
 
@@ -618,6 +610,7 @@ describe('the Volunteer Opps Module', () => {
     volops2.onlyPositive();
     volops2.voOpp.voNumPeopleNeeded = 45;
     volops2.onlyPositive();
+    expect(volops2.voOpp.voNumPeopleNeeded < 1).toBeFalsy();
     done();
   });
 });
