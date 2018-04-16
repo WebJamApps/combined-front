@@ -148,15 +148,15 @@
         <!-- <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text" click.delegate="showTime('s-time')"> -->
         <!--<input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text">-->
         <div>
-          <input hidden="true" id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="time">
-          <time-picker data.bind="voOpp" type="start" validator.bind="setupValidation2"></time-picker>
+          <!--<input hidden="true" id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="time">-->
+          <time-picker data.two-way="voOpp.voStartTime & validate:controller2"></time-picker>
         </div>
         <label style="margin-top:48px; font-size:11pt">End Time (required)</label>
         <!-- <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text" click.delegate="showTime('e-time')"> -->
         <!--<input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text">-->
         <div>
-          <input hidden="true" id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="time">
-          <time-picker data.bind="voOpp" type="end" validator.bind="setupValidation2"></time-picker>
+          <!--<input hidden="true" id="e-time" value.two-way="" type="time">-->
+          <time-picker data.two-way="voOpp.voEndTime & validate:controller2"></time-picker>
         </div>
         <label style="margin-top:40px; font-size:11pt">Location of Event (required)</label>
         <p style="font-size:9pt; margin-bottom:2px">Street Address</p>
