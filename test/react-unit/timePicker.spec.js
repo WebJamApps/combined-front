@@ -31,11 +31,17 @@ describe('++TimePicker tests', () => {
   });
 
   it('should update time', (done) => {
-    document.body.innerHTML = '<div id="scheduleEvent"></div>';
-    tp.type = 'start';
-    tp.updateTime(new Date());
-    tp.type = 'end';
-    tp.updateTime(new Date());
+    tp.updateTime(new Date('1995-12-17T13:24:00'));
+    done();
+  });
+
+  it('should update time in the AM', (done) => {
+    tp.updateTime(new Date('1995-12-17T03:24:00'));
+    done();
+  });
+
+  it('should update time now', (done) => {
+    tp.updateTime(new Date(0));
     done();
   });
 
