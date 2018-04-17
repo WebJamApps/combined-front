@@ -109,7 +109,7 @@ export class UserAccount {
     this.events2 = await res.json();
     fixDates(this.events2);
     markPast(this.events2, formatDate);
-    fixPeopleScheduled(this.events2);
+    this.fixPeopleScheduled(this.events2);
   }
 
   fixPeopleScheduled(events){

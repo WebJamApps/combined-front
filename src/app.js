@@ -16,6 +16,7 @@ export class App {
     this.dashboardTitle = 'Dashboard';
     this.role = '';
     this.menuToggled = false;
+    this.style = 'wj';
   }
 
   email = '';
@@ -331,12 +332,12 @@ export class App {
     }
   }
 
-  setFooter(style){
+  setFooter(){
     let footer = document.getElementById('wjfooter');
     let color = '';
     if (footer !== null){
       footer.style.backgroundColor = '#2a222a';
-      if (style === 'ohaf'){
+      if (this.style === 'ohaf'){
         footer.style.backgroundColor = '#565656';
         color = '#c09580';
       }
@@ -355,15 +356,10 @@ export class App {
 
   get currentStyles() {
     let result = {};
-    let style = 'wj';
-    let menuDrawer = document.getElementsByClassName('drawer')[0];
-    let navList = document.getElementsByClassName('nav-list')[0];
-    //let footer = document.getElementById('wjfooter');
-    let mobilemenutoggle = document.getElementById('mobilemenutoggle');
-    //let color = '';
+    this.style = 'wj';
     this.checkNavMenu();
     if (this.Menu === 'charity' || this.Menu === 'ohaf' || this.Menu === 'volunteer' || this.role === 'Charity' || this.role === 'Volunteer'){
-      style = 'ohaf';
+      this.style = 'ohaf';
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',
         headerText1: 'Our',
@@ -375,12 +371,6 @@ export class App {
         menuToggleClass: 'ohaf-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/ohaf/butterfly.png';
-      menuDrawer.style.backgroundColor = '#c09580';
-      navList.style.backgroundColor = '#c09580';
-      //navList.style.width = '180px';
-      if (mobilemenutoggle !== null){
-        mobilemenutoggle.style.backgroundColor = '#565656';
-      }
     } else {
       result = {
         headerImagePath: '../static/imgs/webjamicon7.png',
@@ -391,17 +381,31 @@ export class App {
         menuToggleClass: 'home-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
+    }
+    this.setFooter();
+    this.setOtherStyles();
+    return result;
+  }
+
+  setOtherStyles(){
+    let menuDrawer = document.getElementsByClassName('drawer')[0];
+    let navList = document.getElementsByClassName('nav-list')[0];
+    let mobilemenutoggle = document.getElementById('mobilemenutoggle');
+    if (this.style === 'ohaf'){
+      menuDrawer.style.backgroundColor = '#c09580';
+      navList.style.backgroundColor = '#c09580';
+      if (mobilemenutoggle !== null){
+        mobilemenutoggle.style.backgroundColor = '#565656';
+      }
+    } else {
       if (menuDrawer !== null && menuDrawer !== undefined){
         menuDrawer.style.backgroundColor = '#c0c0c0';
         navList.style.backgroundColor = '#c0c0c0';
-        //navList.style.width = '182px';
       }
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#2a222a';
       }
     }
-    this.setFooter(style);
-    return result;
   }
 
   // showCheckboxes(id, forceOpen){
