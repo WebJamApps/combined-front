@@ -43,10 +43,8 @@ export class VolunteerOpps {
   makeDataTable(){
     if (this.events.length > 0){
       this.events = fixDates(this.events);
-      //this.buildWorkPrefs();
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
-      //this.buildTalents();
       this.checkScheduled();
       markPast(this.events, formatDate);
     }
@@ -89,17 +87,12 @@ export class VolunteerOpps {
     this.allPeople = [];
     for (let i = 0; i < thisevent.voPeopleScheduled.length; i++){
       res = await this.app.httpClient.fetch('/user/' + thisevent.voPeopleScheduled[i]);
-      //if (res !== null && res !== undefined && res !== ''){
       person = await res.json();
       this.allPeople.push(person);
-      //res = '';
-      // }
     }
     this.eventTitle = thisevent.voName;
     let display = document.getElementById('showvolunteers');
-    // if (display !== null){
     display.scrollIntoView();
-    // }
   }
 
   selectDate(dtype){
@@ -131,7 +124,6 @@ export class VolunteerOpps {
   }
 
   scheduleEvent(){
-    console.log(this.voOpp);
     this.voOpp.voStatus = 'new';
     this.app.httpClient.fetch('/volopp/create', {
       method: 'post',
@@ -163,23 +155,7 @@ export class VolunteerOpps {
   }
 
   showNewEvent(){
-    this.voOpp = {
-      'voName': '',
-      'voCharityId': this.charityID,
-      'voNumPeopleNeeded': 1,
-      'voDescription': '',
-      'voWorkTypes': [],
-      'voTalentTypes': [],
-      'voWorkTypeOther': '',
-      'voTalentTypeOther': '',
-      'voStartDate': null,
-      'voStartTime': '',
-      'voEndDate': null,
-      'voEndTime': '',
-      'voContactName': this.user.name,
-      'voContactEmail': this.user.email,
-      'voContactPhone': this.user.userPhone
-    };
+    this.voOpp = {'voName': '', 'voCharityId': this.charityID, 'voNumPeopleNeeded': 1, 'voDescription': '', 'voWorkTypes': [], 'voTalentTypes': [], 'voWorkTypeOther': '', 'voTalentTypeOther': '', 'voStartDate': null, 'voStartTime': '', 'voEndDate': null, 'voEndTime': '', 'voContactName': this.user.name, 'voContactEmail': this.user.email, 'voContactPhone': this.user.userPhone};
     this.voOpp.voCharityName = this.charity.charityName;
     this.voOpp.voStreet = this.charity.charityStreet;
     this.voOpp.voCity = this.charity.charityCity;
@@ -229,47 +205,30 @@ export class VolunteerOpps {
       method: 'delete'
     })
     .then((data) => {
-      //console.log('your event has been deleted');
       this.activate();
     });
   }
 
   updateCanSubmit2(validationResults) {
     let valid = true;
-    //console.log('Running updateCanSubmit2');
     let nub = document.getElementsByClassName('updateButton')[0];
     if (nub !== undefined){
       nub.style.display = 'none';
     }
-    // let updateButton = document.getElementById('updateScheduleEvent');
-    // if (createButton !== null){
-    //   createButton.style.display = 'none';
-    // }
-    // if (updateButton !== null){
-    //   updateButton.style.display = 'none';
-    // }
-    /* istanbul ignore else */
-    if (nub) {
-      for (let result of validationResults) {
-        if (result.valid === false){
-          //nub.style.display = 'none';
-          valid = false;
-          break;
-        }
+    for (let result of validationResults) {
+      if (result.valid === false){
+        valid = false;
+        break;
       }
-      this.canSubmit2 = valid;
-      if (this.canSubmit2){
-        // if (this.newEvent === false && updateButton !== null){
-        //   updateButton.style.display = 'block';
-        // } else {
-        //   createButton.style.display = 'block';
-        if (this.counter !== 1 || !this.updateEvent){
-          nub.style.display = 'block';
-        }
-        this.counter ++;
-      }
-      return this.canSubmit2;
     }
+    this.canSubmit2 = valid;
+    if (this.canSubmit2){
+      if (this.counter !== 1 || !this.updateEvent){
+        nub.style.display = 'block';
+      }
+      this.counter ++;
+    }
+    return this.canSubmit2;
   }
 
   validate2() {
