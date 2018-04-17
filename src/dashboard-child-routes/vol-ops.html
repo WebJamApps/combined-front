@@ -147,16 +147,16 @@
         <label style="margin-top:10px; font-size:11pt">Start Time (required)</label>
         <!-- <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text" click.delegate="showTime('s-time')"> -->
         <!--<input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text">-->
-        <div>
+        <div id='start'>
           <!--<input hidden="true" id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="time">-->
-          <time-picker data.two-way="voOpp.voStartTime & validate:controller2"></time-picker>
+          <time-picker data.two-way="voOpp.voStartTime & validate:controller2" type="start"></time-picker>
         </div>
         <label style="margin-top:48px; font-size:11pt">End Time (required)</label>
         <!-- <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text" click.delegate="showTime('e-time')"> -->
         <!--<input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text">-->
-        <div>
+        <div id="end">
           <!--<input hidden="true" id="e-time" value.two-way="" type="time">-->
-          <time-picker data.two-way="voOpp.voEndTime & validate:controller2"></time-picker>
+          <time-picker data.two-way="voOpp.voEndTime & validate:controller2" type="end"></time-picker>
         </div>
         <label style="margin-top:40px; font-size:11pt">Location of Event (required)</label>
         <p style="font-size:9pt; margin-bottom:2px">Street Address</p>
