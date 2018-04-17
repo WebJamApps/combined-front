@@ -31,16 +31,36 @@ describe('++TimePicker tests', () => {
   });
 
   it('should update time', (done) => {
+    document.body.innerHTML = '<div id="renderer"></div>';
+    tp.el = document.getElementById('renderer');
     tp.updateTime(new Date('1995-12-17T13:24:00'));
     done();
   });
 
   it('should update time in the AM', (done) => {
+    document.body.innerHTML = '<div id="renderer"></div>';
+    tp.el = document.getElementById('renderer');
     tp.updateTime(new Date('1995-12-17T03:24:00'));
     done();
   });
 
+  it('should show timer on start', (done) => {
+    document.body.innerHTML = '<div id="start"><input class="MuiInput-input-11"/></div>';
+    tp.type = 'start';
+    tp.showTimer();
+    done();
+  });
+
+  it('should show timer on start', (done) => {
+    document.body.innerHTML = '<div id="end"><input class="MuiInput-input-11"/></div>';
+    tp.type = 'end';
+    tp.showTimer();
+    done();
+  });
+
   it('should update time now', (done) => {
+    document.body.innerHTML = '<div id="renderer"></div>';
+    tp.el = document.getElementById('renderer');
     tp.updateTime(new Date(0));
     done();
   });
