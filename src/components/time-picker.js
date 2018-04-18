@@ -20,7 +20,7 @@ export class TimePicker {
     return (
       <div>
         <div style={{display: 'none'}}><TimeInput mode='12h' onChange={this.updateTime}/></div>
-        <section ref={(el) => {this.el = el;}} style={{border: '1px solid #ccc', padding: '1px 5px', width: '83%', margin: 0, outline: 0, textAlign: 'left', cursor: 'text'}} onClick={this.showTimer}>{this.type === 'start' ? '8:00 am' : '5:00 pm'}</section>
+        <section ref={(el) => {this.el = el;}} style={{border: '1px solid #ccc', color: '#fff', padding: '1px 5px', width: '83%', margin: 0, outline: 0, textAlign: 'left', cursor: 'text'}} onClick={this.showTimer}>{this.type === 'start' ? '8:00 am' : '5:00 pm'}</section>
       </div>
     );
   }
@@ -41,6 +41,7 @@ export class TimePicker {
     let zone = a > 11 && a !== 0 ? 'pm' : 'am';
     let offset = a > 12 && a !== 0 ? a % 12 : a === 0 ? 12 : a;
     this.data = `${offset}:${b} ${zone}`;
+    this.el.style.color = '#000';
     this.el.innerText = this.data;
   }
 
