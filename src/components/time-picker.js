@@ -20,7 +20,7 @@ export class TimePicker {
     return (
       <div>
         <div style={{display: 'none'}}><TimeInput mode='12h' onChange={this.updateTime}/></div>
-        <section ref={(el) => {this.el = el;}} style={{borderBottom: '1px solid #000', width: '60%', height: '30px', margin: 0, outline: 0, textAlign: 'left', cursor: 'text'}} onClick={this.showTimer}></section>
+        <section ref={(el) => {this.el = el;}} style={{border: '1px solid #ccc', padding: '1px 5px', width: '83%', margin: 0, outline: 0, textAlign: 'left', cursor: 'text'}} onClick={this.showTimer}>{this.type === 'start' ? '8:00 am' : '5:00 pm'}</section>
       </div>
     );
   }
