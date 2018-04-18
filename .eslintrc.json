@@ -15,6 +15,6 @@
       "after": true
     }],
     "arrow-parens": ["error", "always"],
-    "no-nested-ternary":"off"
+    "no-nested-ternary": "off"
   }
 }
