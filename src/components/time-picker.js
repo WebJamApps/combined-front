@@ -26,7 +26,7 @@ export class TimePicker {
   }
 
   showTimer() {
-    let el = this.type === 'start' ? document.querySelector('#start input.MuiInput-input-11') : document.querySelector('#end input.MuiInput-input-11');
+    let el = this.type === 'start' ? document.querySelector('#start input') : document.querySelector('#end input');
     el.click();
   }
 
