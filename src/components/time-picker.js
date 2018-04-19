@@ -35,11 +35,13 @@ export class TimePicker {
   }
 
   updateTime(time) {
+    let tz = time.getTimezoneOffset();
+    console.log(tz);
     time = time.toISOString().split('T')[1].split(':');
     let a = parseInt(time[0], 0);
     let b = time[1].split(':')[0];
     let zone = a > 11 && a !== 0 ? 'pm' : 'am';
-    let offset = a > 12 && a !== 0 ? (a % 12) - 4 : a === 0 ? 12 - 4 : a - 4;
+    let offset = a > 12 && a !== 0 ? (a % 12) - tz : a === 0 ? 12 - tz : a - tz;
     this.data = `${offset}:${b} ${zone}`;
     this.el.style.color = '#000';
     this.el.innerText = this.data;
