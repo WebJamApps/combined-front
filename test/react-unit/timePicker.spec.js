@@ -71,4 +71,12 @@ describe('++TimePicker tests', () => {
     tp.bind();
     done();
   });
+
+  it('should bind element', (done) => {
+    document.body.innerHTML = '<div id="renderer"></div>';
+    tp.element = document.getElementById('renderer');
+    tp.type = 'start';
+    tp.bind();
+    done();
+  });
 });
