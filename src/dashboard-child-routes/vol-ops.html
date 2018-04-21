@@ -1,10 +1,11 @@
 <template>
+  <require from="../components/time-picker"></require>
   <div class="page-content">
     <div id="topSection">
-      <h3 id="eventHeader" style="text-align:center">Events for ${voOpp.voCharityName}</h3>
+      <h3 style="margin-top:10px; text-align:center" id="eventHeader">Events for ${voOpp.voCharityName}</h3>
       <div if.bind="events.length === 0"><p style="text-align:center">There are no scheduled events</p></div>
       <div if.bind="events.length !== 0" class="search-table-outer" style="position:relative;overflow-x:auto;">
-        <table aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
+        <table style="border-collapse: collapse;" aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
           <thead>
             <tr>
               <th style="padding:8px; text-align:center">Action</th>
@@ -99,7 +100,7 @@
         <label style="font-size:11pt; margin-top:16px"># of Volunteers Needed</label>
         <input type="number" change.delegate="onlyPositive()" value.two-way="voOpp.voNumPeopleNeeded & validate:controller2">
         <div class="multiselect" style="width:170px; margin-top:20px">
-          <div class="selectBox" click.delegate="app.showCheckboxes('talents')">
+          <div class="selectBox" click.delegate="showCheckboxes('talents')">
             <select>
               <option style="font-weight:normal">Volunteer's talent(s)</option>
             </select>
@@ -117,7 +118,7 @@
         <p style="font-size: 1px; margin-top:-10px" if.bind="talentOther">&nbsp;</p>
         <input if.bind="talentOther" value.two-way="voOpp.voTalentTypeOther">
         <div class="multiselect" style="width:170px; margin-top:25px">
-          <div class="selectBox" click.delegate="app.showCheckboxes('work')">
+          <div class="selectBox" click.delegate="showCheckboxes('work')">
             <select>
               <option style="font-weight:normal">Volunteer work</option>
             </select>
@@ -145,10 +146,18 @@
         <p>&nbsp;</p>
         <label style="margin-top:10px; font-size:11pt">Start Time (required)</label>
         <!-- <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text" click.delegate="showTime('s-time')"> -->
-        <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text">
+        <!--<input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text">-->
+        <div id="start">
+          <!--<input hidden="true" id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="time">-->
+          <time-picker data.two-way="voOpp.voStartTime & validate:controller2" type="start"></time-picker>
+        </div>
         <label style="margin-top:48px; font-size:11pt">End Time (required)</label>
         <!-- <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text" click.delegate="showTime('e-time')"> -->
-        <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text">
+        <!--<input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text">-->
+        <div id="end">
+          <!--<input hidden="true" id="e-time" value.two-way="" type="time">-->
+          <time-picker data.two-way="voOpp.voEndTime & validate:controller2" type="end"></time-picker>
+        </div>
         <label style="margin-top:40px; font-size:11pt">Location of Event (required)</label>
         <p style="font-size:9pt; margin-bottom:2px">Street Address</p>
         <input type="text" value.two-way="voOpp.voStreet & validate:controller2">

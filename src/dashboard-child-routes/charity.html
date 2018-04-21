@@ -53,7 +53,7 @@
           <h4 if.bind = "!update" class="material-header-h4">Create a New Charity</h4>
           <form>
             <div class="multiselect" style="width:220px; margin-top:30px">
-              <div class="selectBox" click.delegate="openCheckboxAndValidate('typesUpdate')">
+              <div class="selectBox" click.delegate="showCheckboxes('typesUpdate', false)">
                 <select>
                   <option style="font-weight:normal">Type of Charity (required)</option>
                 </select>
@@ -86,10 +86,14 @@
             <label>Add additional manager by email (optional)</label>
             <input value.two-way="updateCharity.charityEmail & validate:controller2">
             <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
-              <ul if.bind="controller2.errors">
+              <ul if.bind="controller2.errors" style="margin-bottom:0">
                 <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red; width:2in">
                   ${error.message}
                 </li>
+                <!-- <li style="margin-left:-24px; color:red; width:2in" class="ctypeerror">Charity type is required.</li> -->
+              </ul>
+              <ul class="ctypeerror">
+                <li style="margin-left:-24px; color:red; width:2in;margin-top:0">Charity Type is required.</li>
               </ul>
             </div>
             <button if.bind = "update" id="updateCharityButton" class="updateButton" raised click.trigger="updateCharityFunct()" style="margin-bottom:40px; display:none">Update</button>

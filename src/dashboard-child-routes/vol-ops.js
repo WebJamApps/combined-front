@@ -4,7 +4,7 @@ import {json} from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import {FormValidator} from '../classes/FormValidator';
 import {fixDates, formatDate, markPast} from '../commons/utils.js';
-const Inputmask = require('inputmask');
+import {showCheckboxes} from '../commons/utils.js';
 @inject(App, ValidationControllerFactory, Validator)
 export class VolunteerOpps {
   controller = null;
@@ -15,7 +15,7 @@ export class VolunteerOpps {
     this.selectedTalents = [];
     this.selectedWorks = [];
     this.newEvent = true;
-    //this.utils = utils;
+    this.showCheckboxes = showCheckboxes;
     this.validator2 = new FormValidator(validator, (results) => this.updateCanSubmit2(results));
     this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
@@ -43,10 +43,8 @@ export class VolunteerOpps {
   makeDataTable(){
     if (this.events.length > 0){
       this.events = fixDates(this.events);
-      //this.buildWorkPrefs();
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
-      //this.buildTalents();
       this.checkScheduled();
       markPast(this.events, formatDate);
     }
@@ -89,17 +87,12 @@ export class VolunteerOpps {
     this.allPeople = [];
     for (let i = 0; i < thisevent.voPeopleScheduled.length; i++){
       res = await this.app.httpClient.fetch('/user/' + thisevent.voPeopleScheduled[i]);
-      //if (res !== null && res !== undefined && res !== ''){
       person = await res.json();
       this.allPeople.push(person);
-        //res = '';
-      // }
     }
     this.eventTitle = thisevent.voName;
     let display = document.getElementById('showvolunteers');
-    // if (display !== null){
     display.scrollIntoView();
-    // }
   }
 
   selectDate(dtype){
@@ -158,26 +151,11 @@ export class VolunteerOpps {
       nub.style.display = 'none';
     }
     this.setupValidation2();
+    this.controller2.validate();
   }
 
   showNewEvent(){
-    this.voOpp = {
-      'voName': '',
-      'voCharityId': this.charityID,
-      'voNumPeopleNeeded': 1,
-      'voDescription': '',
-      'voWorkTypes': [],
-      'voTalentTypes': [],
-      'voWorkTypeOther': '',
-      'voTalentTypeOther': '',
-      'voStartDate': null,
-      'voStartTime': '',
-      'voEndDate': null,
-      'voEndTime': '',
-      'voContactName': this.user.name,
-      'voContactEmail': this.user.email,
-      'voContactPhone': this.user.userPhone
-    };
+    this.voOpp = {'voName': '', 'voCharityId': this.charityID, 'voNumPeopleNeeded': 1, 'voDescription': '', 'voWorkTypes': [], 'voTalentTypes': [], 'voWorkTypeOther': '', 'voTalentTypeOther': '', 'voStartDate': null, 'voStartTime': '', 'voEndDate': null, 'voEndTime': '', 'voContactName': this.user.name, 'voContactEmail': this.user.email, 'voContactPhone': this.user.userPhone};
     this.voOpp.voCharityName = this.charity.charityName;
     this.voOpp.voStreet = this.charity.charityStreet;
     this.voOpp.voCity = this.charity.charityCity;
@@ -187,11 +165,6 @@ export class VolunteerOpps {
     let topSection = document.getElementById('topSection');
     topSection.style.display = 'block';
     topSection.scrollIntoView();
-    let startTimeInput = document.getElementById('s-time');
-    let endTimeInput = document.getElementById('e-time');
-    let imst = new Inputmask('99:99 am');
-    imst.mask(startTimeInput);
-    imst.mask(endTimeInput);
     this.showUpdateEvent(null, 'new');
   }
 
@@ -223,7 +196,10 @@ export class VolunteerOpps {
       this.voOpp.voDescription = '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>' + this.voOpp.voDescription;
     }
     await this.app.updateById('/volopp/', this.voOpp._id, this.voOpp);
-    this.activate();
+    if (process.env.NODE_ENV !== 'test'){
+      window.location.reload();
+    }
+    //this.activate();
   }
 
   async deleteEvent(thisEventId){
@@ -232,65 +208,50 @@ export class VolunteerOpps {
       method: 'delete'
     })
     .then((data) => {
-      //console.log('your event has been deleted');
       this.activate();
     });
   }
 
   updateCanSubmit2(validationResults) {
     let valid = true;
-    //console.log('Running updateCanSubmit2');
     let nub = document.getElementsByClassName('updateButton')[0];
-    nub.style.display = 'none';
-    // let updateButton = document.getElementById('updateScheduleEvent');
-    // if (createButton !== null){
-    //   createButton.style.display = 'none';
-    // }
-    // if (updateButton !== null){
-    //   updateButton.style.display = 'none';
-    // }
-    /* istanbul ignore else */
-    if (nub) {
-      for (let result of validationResults) {
-        if (result.valid === false){
-          //nub.style.display = 'none';
-          valid = false;
-          break;
-        }
-      }
-      this.canSubmit2 = valid;
-      if (this.canSubmit2){
-        // if (this.newEvent === false && updateButton !== null){
-        //   updateButton.style.display = 'block';
-        // } else {
-        //   createButton.style.display = 'block';
-        if (this.counter !== 1 || !this.updateEvent){
-          nub.style.display = 'block';
-        }
-        this.counter ++;
-      }
-      return this.canSubmit2;
+    if (nub !== undefined){
+      nub.style.display = 'none';
     }
+    for (let result of validationResults) {
+      if (result.valid === false){
+        valid = false;
+        break;
+      }
+    }
+    this.canSubmit2 = valid;
+    if (this.canSubmit2){
+      if (this.counter !== 1 || !this.updateEvent){
+        nub.style.display = 'block';
+      }
+      this.counter ++;
+    }
+    return this.canSubmit2;
   }
 
   validate2() {
     return this.validator2.validateObject(this.voOpp);
   }
-/* istanbul ignore next */
+  /* istanbul ignore next */
   setupValidation2() {
     ValidationRules
     .ensure('voContactPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
     .ensure('voContactEmail').email()
-    .ensure('voName').required().maxLength(40).withMessage('Name of Event please')
+    .ensure('voName').required().withMessage('Event Name is required').maxLength(40)
     .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
-    .ensure('voStartTime').required().matches(/\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([ap][m]))/)
-    .ensure('voEndTime').required().matches(/\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([ap][m]))/)
-    .ensure('voStartDate').required()
-    .ensure('voEndDate').required()
-    .ensure('voZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
-    .ensure('voCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
-    .ensure('voStreet').required().maxLength(40).withMessage('Charity street address please')
-    .ensure('voState').required().withMessage('Charity state please')
+    .ensure('voStartTime').required().withMessage('Event Start time is required')
+    .ensure('voEndTime').required().withMessage('Event End time is required')
+    .ensure('voStartDate').required().withMessage('Event Start Date is required')
+    .ensure('voEndDate').required().withMessage('Event End Date is required')
+    .ensure('voZipCode').required().withMessage('5-digit Zipcode is required').matches(/\b\d{5}\b/)
+    .ensure('voCity').required().withMessage('Event City is required').matches(/[^0-9]+/).maxLength(30)
+    .ensure('voStreet').required().withMessage('Event Street Address is required').maxLength(40)
+    .ensure('voState').required().withMessage('Event State is required')
     .on(this.voOpp);
   }
 

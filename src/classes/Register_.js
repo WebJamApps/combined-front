@@ -228,11 +228,13 @@ class Register_ {
           console.log('howdy');
           let front = window.location.href;
           front = front.replace('/register', '');
-          if (route === '/auth/resetpass'){
-            console.log('am i here?');
-            window.location.assign(front + '/userutil?email=' + data.email + '&form=reset');
-          } else {
-            window.location.assign(front + '/userutil?email=' + data.email);
+          /* istanbul ignore if */
+          if (process.env.NODE_ENV !== 'test'){
+            if (route === '/auth/resetpass'){
+              window.location.assign(front + '/userutil?email=' + data.email + '&form=reset');
+            } else {
+              window.location.assign(front + '/userutil?email=' + data.email);
+            }
           }
         }
       }

@@ -3,12 +3,9 @@
 import config from './authConfig';
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap/dist/css/bootstrap-grid.min.css';
-// import 'bootstrap/dist/css/bootstrap-reboot.min.css';
 import '../static/styles.css';
 import * as Bluebird from 'bluebird';
 import 'babel-polyfill';
-import 'inputmask';
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });
 

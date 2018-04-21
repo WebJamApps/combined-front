@@ -7,6 +7,7 @@ import {UserAccess} from './classes/UserAccess.js';
 import {AuthService} from 'aurelia-auth';
 import {json, HttpClient} from 'aurelia-fetch-client';
 import {AppState} from './classes/AppState.js';
+const Hammer = require('hammerjs');
 @inject(AuthService, HttpClient)
 export class App {
   constructor(auth, httpClient) {
@@ -15,6 +16,7 @@ export class App {
     this.dashboardTitle = 'Dashboard';
     this.role = '';
     this.menuToggled = false;
+    this.style = 'wj';
   }
 
   email = '';
@@ -114,11 +116,7 @@ export class App {
       run(routingContext, next) {
         //console.log(routingContext);
         if (!routingContext.config.settings.noScrollToTop) {
-          //console.log('scroll to top damnit!');
-          // $('.page-host').scrollTop(0);
-          // window.scrollTo(0, 0);
           let top = document.getElementsByClassName('material-header')[0];
-          //let top = document.getElementById('top');
           if (top !== null && top !== undefined){
             top.scrollIntoView();
           }
@@ -129,6 +127,7 @@ export class App {
     config.map([
       { route: 'dashboard', name: 'dashboard-router', moduleId: PLATFORM.moduleName('./dashboard-router'), nav: false, title: '', auth: true, settings: 'fa fa-tachometer'},
       { route: 'login', name: 'login', moduleId: PLATFORM.moduleName('./login'), nav: false, title: 'Login', settings: 'fa fa-sign-in'},
+      { route: 'react-example', name: 'react-example', moduleId: PLATFORM.moduleName('./react-example'), nav: false, title: 'React Example',  settings: ''},
       { route: 'register', name: 'register', moduleId: PLATFORM.moduleName('./register'), nav: false, title: 'Register', settings: 'fa fa-user-plus'},
       { route: 'userutil', name: 'userutil', moduleId: PLATFORM.moduleName('./userutil'), nav: false, title: '' },
       { route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./ohaf-home'), nav: false, title: 'OHAF', settings: 'fa fa-handshake-o' },
@@ -146,18 +145,21 @@ export class App {
     let isWide = document.documentElement.clientWidth > 766;
     let drawer = document.getElementsByClassName('drawer')[0];
     let mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
+    let swipeArea = document.getElementsByClassName('swipe-area')[0];
     if (!this.menuToggled && !isWide) {
       /* istanbul ignore else */
       if (drawer !== null && drawer !== undefined) {
         drawer.style.display = 'none';
         $(drawer).parent().css('display', 'none');
         mobileMenuToggle.style.display = 'block';
+        swipeArea.style.display = 'block';
       }
     }
     if (isWide) {
       if (drawer !== null && drawer !== undefined) {
         if (this.contentWidth === '0px'){this.contentWidth = '182px';}
         drawer.style.display = 'block';
+        swipeArea.style.display = 'none';
         $(drawer).parent().css('display', 'block');
         mobileMenuToggle.style.display = 'none';
       }
@@ -169,21 +171,27 @@ export class App {
     return isWide;
   }
 
+  clickFunc() {
+    let drawer = document.getElementsByClassName('drawer')[0];
+    let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+    console.log(event.target.className);
+    /* istanbul ignore else */
+    if (event.target.className !== 'menu-item') {
+      document.getElementsByClassName('swipe-area')[0].style.display = 'none';
+      drawer.style.display = 'none';
+      $(drawer).parent().css('display', 'none');
+      toggleIcon.style.display = 'block';
+      document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
+    }
+  }
+
   toggleMobileMenu(toggle) {
     document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
     if (toggle !== 'close') {
       document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
-      document.getElementsByClassName('page-host')[0].addEventListener('click', function() {
-        let drawer = document.getElementsByClassName('drawer')[0];
-        let toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
-        /* istanbul ignore else */
-        if (event.target.className !== 'nav-list' && event.target.className !== 'menu-item') {
-          drawer.style.display = 'none';
-          $(drawer).parent().css('display', 'none');
-          toggleIcon.style.display = 'block';
-          document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
-        }
-      });
+      document.getElementsByClassName('swipe-area')[0].style.display = 'block';
+      document.getElementsByClassName('page-host')[0].addEventListener('click', this.clickFunc);
+       //this.manager.on('swipe', this.close.bind(this));
     }
     this.menuToggled = true;
     let drawer = document.getElementsByClassName('drawer')[0];
@@ -192,10 +200,20 @@ export class App {
       drawer.style.display = 'block';
       $(drawer).parent().css('display', 'block');
       toggleIcon.style.display = 'none';
+       // document.getElementsByClassName('swipe-area')[0].style.display = 'block';
+       // this.manager.on('swipe', this.close.bind(this));
     } else {
       drawer.style.display = 'none';
       $(drawer).parent().css('display', 'none');
       toggleIcon.style.display = 'block';
+       //this.manager.off('swipe', this.close.bind(this));
+       //document.getElementsByClassName('page-host')[0].removeEventListener('click', clickFunc);
+       //document.getElementsByClassName('swipe-area')[0].style.display = 'none';
+    }
+    if (toggle === 'close') {
+      document.getElementsByClassName('page-host')[0].removeEventListener('click', this.clickFunc);
+      document.getElementsByClassName('swipe-area')[0].style.display = 'none';
+       //this.manager.off('swipe', this.close.bind(this));
     }
   }
 
@@ -314,37 +332,34 @@ export class App {
     }
   }
 
-  setFooter(style){
+  setFooter(){
     let footer = document.getElementById('wjfooter');
     let color = '';
     if (footer !== null){
       footer.style.backgroundColor = '#2a222a';
-      if (style === 'ohaf'){
+      if (this.style === 'ohaf'){
         footer.style.backgroundColor = '#565656';
         color = '#c09580';
       }
-      footer.innerHTML = '<div style="text-align: center">' +
+      footer.innerHTML = '<div style="text-align: center;padding:6px">' +
       '<a target="_blank" style="color:' + color + '"  href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x footerIcon" aria-hidden="true"></i></a>' +
-      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://www.linkedin.com/company-beta/16257103"><i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://www.linkedin.com/company/webjam/"><i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a>' +
       '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x footerIcon" aria-hidden="true"></i></a>' +
+        '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>' +
       '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x footerIcon" aria-hidden="true"></i></a>' +
-      '<span>&nbsp;&nbsp;</span><a target="_blank" style="color:' + color + '"  href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a><br>' +
-      '<span style="color:white; font-size: 9pt; padding-left:18px;">Powered by ' +
-      '<a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></span></div>';
+
+      '<p style="color:white; font-size: 9pt;margin-bottom:0">Powered by ' +
+      '<a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>';
     }
   }
 
   get currentStyles() {
     let result = {};
-    let style = 'wj';
-    let menuDrawer = document.getElementsByClassName('drawer')[0];
-    let navList = document.getElementsByClassName('nav-list')[0];
-    //let footer = document.getElementById('wjfooter');
-    let mobilemenutoggle = document.getElementById('mobilemenutoggle');
-    //let color = '';
+    this.style = 'wj';
     this.checkNavMenu();
     if (this.Menu === 'charity' || this.Menu === 'ohaf' || this.Menu === 'volunteer' || this.role === 'Charity' || this.role === 'Volunteer'){
-      style = 'ohaf';
+      this.style = 'ohaf';
       result = {
         headerImagePath: '../static/imgs/ohaf/charitylogo.png',
         headerText1: 'Our',
@@ -356,12 +371,6 @@ export class App {
         menuToggleClass: 'ohaf-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/ohaf/butterfly.png';
-      menuDrawer.style.backgroundColor = '#c09580';
-      navList.style.backgroundColor = '#c09580';
-      //navList.style.width = '180px';
-      if (mobilemenutoggle !== null){
-        mobilemenutoggle.style.backgroundColor = '#565656';
-      }
     } else {
       result = {
         headerImagePath: '../static/imgs/webjamicon7.png',
@@ -372,41 +381,46 @@ export class App {
         menuToggleClass: 'home-menu-toggle'
       };
       result.sidebarImagePath = '../static/imgs/webjamlogo1.png';
+    }
+    this.setFooter();
+    this.setOtherStyles();
+    return result;
+  }
+
+  setOtherStyles(){
+    let menuDrawer = document.getElementsByClassName('drawer')[0];
+    let navList = document.getElementsByClassName('nav-list')[0];
+    let mobilemenutoggle = document.getElementById('mobilemenutoggle');
+    if (this.style === 'ohaf'){
+      menuDrawer.style.backgroundColor = '#c09580';
+      navList.style.backgroundColor = '#c09580';
+      if (mobilemenutoggle !== null){
+        mobilemenutoggle.style.backgroundColor = '#565656';
+      }
+    } else {
       if (menuDrawer !== null && menuDrawer !== undefined){
         menuDrawer.style.backgroundColor = '#c0c0c0';
         navList.style.backgroundColor = '#c0c0c0';
-        //navList.style.width = '182px';
       }
       if (mobilemenutoggle !== null){
         mobilemenutoggle.style.backgroundColor = '#2a222a';
       }
     }
-    this.setFooter(style);
-    return result;
   }
 
-  showCheckboxes(id, forceOpen){
-    let fo = false;
-    if (forceOpen !== null && forceOpen !== undefined){
-      fo = forceOpen;
-    }
-    //let checkboxes = null;
-    //if (id !== null){
-    let checkboxes = document.getElementById(id);
-    // }    else {
-    //   checkboxes = document.getElementById('checkboxes-iron');
-    // }
-    //console.log('what is this expanded?');
-    //console.log(this.expanded);
-    if (checkboxes.style.display === 'block' && !fo) {
-      checkboxes.style.display = 'none';
-      //this.expanded = true;
-      return false;
-    }
-    checkboxes.style.display = 'block';
-    //this.expanded = false;
-    return true;
-  }
+  // showCheckboxes(id, forceOpen){
+  //   let fo = false;
+  //   if (forceOpen !== null && forceOpen !== undefined){
+  //     fo = forceOpen;
+  //   }
+  //   let checkboxes = document.getElementById(id);
+  //   if (checkboxes.style.display === 'block' && !fo) {
+  //     checkboxes.style.display = 'none';
+  //     return false;
+  //   }
+  //   checkboxes.style.display = 'block';
+  //   return true;
+  // }
 
   buildPTag(object, objectSelector, objectSelectorOther, objectStoreResult){
     for (let l = 0; l < object.length; l++){
@@ -461,5 +475,21 @@ export class App {
     }).catch((error) => {
       console.log(error);
     });
+  }
+  attached() {
+    this.manager = new Hammer.Manager(document.getElementsByClassName('swipe-area')[0], {
+      recognizers: [
+              [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]
+      ]
+    });
+    this.manager.on('swipe', this.close.bind(this));
+    console.log(this.manager);
+    //document.getElementsByClassName('swipe-area')[0].style.display = 'none';
+  }
+  detached() {
+    this.manager.off('swipe', this.close.bind(this));
+    let ph = document.getElementsByClassName('page-host')[0];
+    ph.removeEventListener('click', this.clickFunc);
+    ph.setAttribute('hasEvent', false);
   }
 }

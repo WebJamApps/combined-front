@@ -1,14 +1,20 @@
 {
-  "extends": "./node_modules/aurelia-tools/.eslintrc.json",
+  "extends": ["./node_modules/aurelia-tools/.eslintrc.json", "plugin:react/recommended"],
   "rules": {
     "space-before-function-paren": [0, "never"],
-    "space-before-blocks": [ 0, "never"],
-    "no-trailing-spaces": [ 1, {"skipBlankLines" : true}],
+    "space-before-blocks": [0, "never"],
+    "no-trailing-spaces": [1, {
+      "skipBlankLines": true
+    }],
     "no-console": [0, "never"],
     "no-alert": [0, "never"],
     "no-empty": [0, "never"],
-      "new-cap": [0, "never"],
-    "arrow-spacing": ["error", { "before": true, "after": true }],
-    "arrow-parens": ["error", "always"]
+    "new-cap": [0, "never"],
+    "arrow-spacing": ["error", {
+      "before": true,
+      "after": true
+    }],
+    "arrow-parens": ["error", "always"],
+    "no-nested-ternary": "off"
   }
 }

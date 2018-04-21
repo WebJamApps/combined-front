@@ -169,7 +169,10 @@ class User_ {
         if (process.env.frontURL !== undefined) {
           feurl = process.env.frontURL;
         }
-        window.location.href = feurl + '/';
+        /* istanbul ignore if */
+        if (process.env.NODE_ENV !== 'test'){
+          window.location.href = feurl + '/';
+        }
       }
     })
     .catch((error) => {
@@ -186,7 +189,10 @@ class User_ {
     if (process.env.frontURL !== undefined) {
       feurl = process.env.frontURL;
     }
-    window.location.href = feurl + '/';
+    /* istanbul ignore if */
+    if (process.env.NODE_ENV !== 'test'){
+      window.location.href = feurl + '/';
+    }
   }
 
   verifyChangeEmail(evt) {

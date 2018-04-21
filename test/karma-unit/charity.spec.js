@@ -100,7 +100,7 @@ describe('the Charity Module', () => {
   it('displays the checkboxes inside a select box', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
     //charity.app.expanded = true;
-    charity.app.showCheckboxes('types');
+    charity.showCheckboxes('types');
     expect(document.getElementById('types').style.display).toBe('block');
     done();
   });
@@ -108,7 +108,7 @@ describe('the Charity Module', () => {
   it('checkboxes closed', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;display:block"></div>';
     //charity.app.expanded = false;
-    charity.app.showCheckboxes('types');
+    charity.showCheckboxes('types');
     expect(document.getElementById('types').style.display).toBe('none');
     done();
   });
@@ -145,7 +145,7 @@ describe('the Charity Module', () => {
     };
     charity.update = true;
     charity.controller2 = {validate: function(){}};
-    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="typesUpdate"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button><button id="updateCharityButton"></button></div><div id="scheduleCharitySection"></div>';
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div class="ctypeerror" id="charTable"></div><div id="typesUpdate"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button><button id="updateCharityButton"></button></div><div id="scheduleCharitySection"></div>';
     charity.updateCharityFunction(charity1);
     expect(charity.charityName).toBe('test charity');
     charity.update = false;
@@ -193,7 +193,7 @@ describe('the Charity Module', () => {
 
   it('detects when the charity type is changed in the update form', (done) => {
     charity.activate();
-    charity.controller2 = {errors: [{_id: 123}]};
+    charity.controller2 = {errors: [{_id: 123}], validate: () => {}};
     charity.charityTypeValid = false;
     charity.updateCharity = {
       'charityName': 'test charity',
@@ -207,8 +207,9 @@ describe('the Charity Module', () => {
       'charityTypesHtml': '',
       'charityEmail': ''
     };
-    document.body.innerHTML = '<button class="updateButton"></button>';
+    document.body.innerHTML = '<button class="updateButton ctypeerror"></button>';
     charity.updateTypePicked();
+    expect(document.getElementsByClassName('ctypeerror')[0].style.display).toBe('block');
     charity.canSubmit2 = false;
     charity.updateCharity = {
       'charityName': 'test charity',
@@ -223,6 +224,7 @@ describe('the Charity Module', () => {
       'charityEmail': ''
     };
     charity.updateTypePicked();
+    expect(document.getElementsByClassName('ctypeerror')[0].style.display).toBe('none');
     done();
   });
 
@@ -230,7 +232,11 @@ describe('the Charity Module', () => {
     charity.activate();
     charity.validType2 = true;
     let validationResults = [{valid: true}];
+    charity.update = true;
+    charity.counter = 9;
+    document.body.innerHTML = '<button class="updateButton"></button>';
     charity.updateCanSubmit2(validationResults);
+    expect(charity.canSubmit2).toBe(true);
     done();
   });
 
@@ -249,7 +255,6 @@ describe('the Charity Module', () => {
   });
 
   it('hides the update charity button if it was displayed', (done) => {
-    jasmine.clock().install();
     charity.activate();
     document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection"></div><div><button id="updateCharityButton" style="display:block">Create</button>';
     charity.setupValidation2 = function() {};
@@ -268,10 +273,8 @@ describe('the Charity Module', () => {
     };
     charity.controller2 = {validate: function(){}};
     charity.showUpdateCharity(myCharity);
-    jasmine.clock().tick(1);
-    expect(document.getElementById('updateCharityButton').style.display).toBe('none');
+    expect(document.getElementById('updateCharityButton').style.display).toBe('block');
     done();
-    jasmine.clock().uninstall();
   });
 
   it('it does not try to display the submit or update button if it does not exist', (done) => {
@@ -279,8 +282,31 @@ describe('the Charity Module', () => {
     charity.validType2 = true;
     document.body.innerHTML = '<button class="updateButton"></button>';
     let validationResults = [{valid: false}, {valid: true}, {valid: false}];
-    // let validationResults = [];
     charity.updateCanSubmit2(validationResults);
+    expect(charity.canSubmit2).toBe(false);
+    done();
+  });
+
+  it('does not disable the submit button for create new charity', (done) => {
+    charity.activate();
+    charity.validType2 = true;
+    charity.update = false;
+    document.body.innerHTML = '<button class="updateButton" style="display:none"></button>';
+    let validationResults = [{valid: true}, {valid: true}, {valid: true}];
+    charity.updateCanSubmit2(validationResults);
+    expect(document.getElementsByClassName('updateButton')[0].style.display).toBe('block');
+    done();
+  });
+
+  it('disables the update button when the update form initially displays', (done) => {
+    charity.activate();
+    charity.validType2 = true;
+    charity.update = true;
+    charity.counter = 1;
+    document.body.innerHTML = '<button class="updateButton" style="display:none"></button>';
+    let validationResults = [{valid: true}, {valid: true}, {valid: true}];
+    charity.updateCanSubmit2(validationResults);
+    expect(document.getElementsByClassName('updateButton')[0].disabled).toBe(true);
     done();
   });
 
@@ -323,13 +349,14 @@ describe('the Charity Module', () => {
 
   it('displays the submit button when a type has been selected and the rest of the form is valid', (done) => {
     charity2.activate();
-    charity2.controller2 = {errors: []};
+    charity2.controller2 = {errors: [{_id: 123}], validate: () => {}};
     charity2.updateCharity = {
       'charityTypes': [ 'Christian', 'Homeless']
     };
-    document.body.innerHTML = '<button id="newCharityButton" class="updateButton">';
+    document.body.innerHTML = '<button id="newCharityButton" class="updateButton ctypeerror">';
     charity2.canSubmit2 = true;
     charity2.updateTypePicked();
+    expect(document.getElementsByClassName('ctypeerror')[0].style.display).toBe('none');
     done();
   });
 
@@ -363,13 +390,6 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('validate2', (done) => {
-    charity.controller2 = {errors: []};
-    charity.updateCharity = {charityTypes: ['Hunger', 'other'], charityName: 'okay'};
-    charity.validate2();
-    done();
-  });
-
   it('updateCharityFunct', (done) => {
     charity.updateCharity = updatedCharity;
     let node = document.createElement('div');
@@ -395,35 +415,6 @@ describe('the Charity Module', () => {
   it('removes manager', (done) => {
     charity.user = {name: 'Dev Patel'};
     charity.removeManager(updatedCharity);
-    done();
-  });
-
-  it('should open checkbox', (done) => {
-    document.body.innerHTML = '<div id="typesUpdate"></div>';
-    let el = document.getElementById('typesUpdate');
-    el.style.display = 'block';
-    charity.updateCharity = {charityTypes: ['other']};
-    charity.controller2 = {errors: []};
-    charity.openCheckboxAndValidate('typesUpdate');
-    done();
-  });
-  it('should not validate the charity type', (done) => {
-    document.body.innerHTML = '<div id="typesUpdate"></div>';
-    let el = document.getElementById('typesUpdate');
-    el.style.display = 'none';
-    charity.updateCharity = {charityTypes: ['other']};
-    charity.controller2 = {errors: []};
-    charity.openCheckboxAndValidate('typesUpdate');
-    done();
-  });
-  it('does not validate if charity types are selected on initial load', (done) => {
-    document.body.innerHTML = '<div id="typesUpdate"></div>';
-    let el = document.getElementById('typesUpdate');
-    el.style.display = 'none';
-    charity.charityTypeValid = true;
-    charity.updateCharity = {charityTypes: []};
-    //charity.controller2 = {errors: []};
-    charity.validate2();
     done();
   });
 });

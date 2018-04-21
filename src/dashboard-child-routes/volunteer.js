@@ -1,16 +1,16 @@
 import {inject} from 'aurelia-framework';
 import {App} from '../app';
 import {fixDates, formatDate, markPast} from '../commons/utils.js';
-//import {json} from 'aurelia-fetch-client';
+import {showCheckboxes} from '../commons/utils.js';
 import {filterSelected} from '../commons/utils';
 @inject(App)
 export class Volunteer {
   constructor(app){
+    this.showCheckboxes = showCheckboxes;
     this.app = app;
     this.events = [];
     this.signup = {};
     this.selectedFilter = ['future only'];
-    //this.doubleCheckSignups = false;
     this.canSignup = true;
     this.hidePast = true;
     this.zipcode = false;
@@ -264,8 +264,25 @@ export class Volunteer {
     document.getElementById('updateUserButton').style.display = 'block';
   }
 
+  // get widescreen() {
+  //   console.log('am i here');
+  //   let isWide = document.documentElement.clientWidth > 766;
+  //   console.log(isWide);
+  // }
+
   attached(){
     document.getElementById('distanceInput').addEventListener('keydown', this.showButton);
     this.setupVolunteerUser();
+    if (document.documentElement.clientWidth < 766){
+      console.log('i am cell phone');
+      document.getElementsByClassName('checkboxes-div')[0].style.top = '124px';
+    }
+
+    // console.log(this.widescreen);
+    // if (!this.app.widescreen){
+    //   console.log(this.app.widescreen);
+    //   console.log('cell phone mode detected');
+    // }
   }
+
 }

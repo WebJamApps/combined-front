@@ -125,6 +125,7 @@ describe('the Volunteer Opps Module', () => {
   it('activates and there are events and runs the show time', (done) => {
     volops.activate();
       //volops.showTime();
+    expect(volops.counter).toBe(1);
     done();
   });
 
@@ -132,25 +133,6 @@ describe('the Volunteer Opps Module', () => {
     volops4.events = [{_id: '123', voPeopleScheduled: ['1', '2'] }];
     await volops4.checkScheduled();
     expect(volops4.events[0].voNumPeopleScheduled).toBe(2);
-  }));
-
-  it('does not show the submit button on initial display of update form', testAsync(async function(){
-    volops.activate();
-    let thisEvent = {
-      '_id': '123',
-      'voWorkTypes': ['other'],
-      'voWorkTypeOther': '',
-      'voCharityName': '',
-      'voStartDate': '2017-12-12',
-      'voEndDate': '2017-12-12',
-      'voTalentTypes': ['shoveling', 'sweeping', 'other'],
-      'voTalentTypeOther': 'scrubbing',
-      'voDescription': 'howdy'
-    };
-    document.body.innerHTML = '<div id="topSection"></div><button id="updateScheduleEvent"></button>';
-    volops.setupValidation2 = function(){};
-    await volops.showUpdateEvent(thisEvent, 'update');
-    expect(document.getElementById('updateScheduleEvent').style.display).toBe('none');
   }));
 
   it('it sets signups to zero', testAsync(async function(){
@@ -165,8 +147,6 @@ describe('the Volunteer Opps Module', () => {
       return Promise.reject(new Error('fail'));
     };
     await volops4.checkScheduled().then((isError) => {
-        // console.log('is this an error?');
-        // console.log(isError);
     });
     expect(volops4.events[0].voNumPeopleScheduled).toBe(0);
   }));
@@ -233,6 +213,7 @@ describe('the Volunteer Opps Module', () => {
 
   it('activates and there are no events', (done) => {
     volops2.activate();
+    expect(volops2.counter).toBe(1);
     done();
   });
 
@@ -244,6 +225,7 @@ describe('the Volunteer Opps Module', () => {
     };
     volops.selectDate('start-date');
     volops.selectDate('end-date');
+    expect(volops.minEndDate).toBe(volops.voOpp.voStartDate);
     done();
   });
 
@@ -292,9 +274,10 @@ describe('the Volunteer Opps Module', () => {
   it('opens and closes the drop-down checkboxes', (done) => {
       //volops.activate();
     document.body.innerHTML = '<div id="talents" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    volops.app.showCheckboxes('talents');
+    volops.showCheckboxes('talents');
     volops.app.expanded = true;
-    volops.app.showCheckboxes('talents');
+    volops.showCheckboxes('talents');
+    expect(volops.app.expanded).toBeTruthy();
     done();
   });
 
@@ -315,13 +298,12 @@ describe('the Volunteer Opps Module', () => {
       'voTalentTypes': ['swimming']
     };
     volops.voOpp.voTalentTypeOther = 'teststring';
-      //volops.app.selectPickedChange(volops.voOpp, volops, 'voTalentTypes', 'voTalentTypeOther', 'talentOther');
     volops.selectPickChange('talents');
     expect(volops.talentOther).toBe(false);
     document.body.innerHTML =   document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
     volops.setupValidation2 = function(){};
+    volops.controller2 = {validate: () => {}};
     volops.attached();
-      //expect(volops.voOpp.voTalentTypeOther).toBe('');
     done();
   });
 
@@ -365,6 +347,7 @@ describe('the Volunteer Opps Module', () => {
       'voTalentTypeOther': 'scrubbing'
     };
     volops.scheduleEvent();
+    expect(volops.voOpp.voStatus).toBe('new');
     done();
   });
 
@@ -451,7 +434,6 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-
   it('it reactivates a cancelled event', (done) => {
     let signupevent = {
       '_id': '123',
@@ -464,12 +446,13 @@ describe('the Volunteer Opps Module', () => {
       'voTalentTypeOther': 'scrubbing'
     };
     volops.reactivateEvent(signupevent);
+    expect(volops.voOpp.voStatus).toBe('reactivate');
     done();
   });
 
   it('displays the update event form', (done) => {
       //volops.activate();
-    document.body.innerHTML = '<div id="topSection"></div>';
+    document.body.innerHTML = '<div id="topSection"><div id="updateScheduleEvent"></div></div>';
     let thisEvent = {
       'voWorkTypes': ['other'],
       'voCharityName': '',
@@ -489,7 +472,9 @@ describe('the Volunteer Opps Module', () => {
       'voState': 'Virginia'
     };
     volops.setupValidation2 = function(){};
+    volops.controller2 = {validate: () => {}};
     volops.showUpdateEvent(thisEvent, 'update');
+    expect(volops.newEvent).toBe(false);
     done();
   });
 
@@ -502,7 +487,9 @@ describe('the Volunteer Opps Module', () => {
     };
     document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
     volops.setupValidation2 = function(){};
+    volops.controller2 = {validate: () => {}};
     volops.showNewEvent();
+    expect(document.getElementById('topSection').style.display).toBe('block');
     done();
   });
 
@@ -519,6 +506,7 @@ describe('the Volunteer Opps Module', () => {
       'voCharityTypes': ['Christian', 'other']
     };
     volops3.findCharity();
+    expect(volops3.voOpp.voCharityTypes.includes('Home')).toBeFalsy();
     done();
   });
 
@@ -534,15 +522,16 @@ describe('the Volunteer Opps Module', () => {
       '_id': '2222'
     };
     volops.updateEvent();
+    expect(volops.voOpp.voStatus).toBeUndefined();
     done();
   });
 
   it('deletes an event', (done) => {
       //volops.activate();
     volops.deleteEvent('333');
+    expect(volops.counter).toBe(1);
     done();
   });
-
 
   it('displays the submit button if the form is valid', (done) => {
       //volops.activate();
@@ -559,7 +548,8 @@ describe('the Volunteer Opps Module', () => {
     };
     volops.validType2 = true;
     let validationResults = [{result: {valid: true}}];
-    volops.updateCanSubmit2(validationResults);
+    let val = volops.updateCanSubmit2(validationResults);
+    expect(val).toBeTruthy();
     done();
   });
 
@@ -599,6 +589,7 @@ describe('the Volunteer Opps Module', () => {
       '_id': '2222'
     };
     volops2.validate2();
+    expect(volops2.charityName === 'OHAF').toBeTruthy();
     done();
   });
 
@@ -619,6 +610,7 @@ describe('the Volunteer Opps Module', () => {
     volops2.onlyPositive();
     volops2.voOpp.voNumPeopleNeeded = 45;
     volops2.onlyPositive();
+    expect(volops2.voOpp.voNumPeopleNeeded < 1).toBeFalsy();
     done();
   });
 });
