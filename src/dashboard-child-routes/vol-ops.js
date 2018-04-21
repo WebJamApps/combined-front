@@ -196,7 +196,10 @@ export class VolunteerOpps {
       this.voOpp.voDescription = '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>' + this.voOpp.voDescription;
     }
     await this.app.updateById('/volopp/', this.voOpp._id, this.voOpp);
-    this.activate();
+    if (process.env.NODE_ENV !== 'test'){
+      window.location.reload();
+    }
+    //this.activate();
   }
 
   async deleteEvent(thisEventId){
@@ -239,16 +242,16 @@ export class VolunteerOpps {
     ValidationRules
     .ensure('voContactPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
     .ensure('voContactEmail').email()
-    .ensure('voName').required().withMessage('Event Name is required').maxLength(40).withMessage('Name of Event please')
+    .ensure('voName').required().withMessage('Event Name is required').maxLength(40)
     .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
     .ensure('voStartTime').required().withMessage('Event Start time is required')
     .ensure('voEndTime').required().withMessage('Event End time is required')
     .ensure('voStartDate').required().withMessage('Event Start Date is required')
     .ensure('voEndDate').required().withMessage('Event End Date is required')
-    .ensure('voZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
-    .ensure('voCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
-    .ensure('voStreet').required().maxLength(40).withMessage('Charity street address please')
-    .ensure('voState').required().withMessage('Charity state please')
+    .ensure('voZipCode').required().withMessage('5-digit Zipcode is required').matches(/\b\d{5}\b/)
+    .ensure('voCity').required().withMessage('Event City is required').matches(/[^0-9]+/).maxLength(30)
+    .ensure('voStreet').required().withMessage('Event Street Address is required').maxLength(40)
+    .ensure('voState').required().withMessage('Event State is required')
     .on(this.voOpp);
   }
 
