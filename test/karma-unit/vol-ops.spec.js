@@ -136,7 +136,7 @@ describe('the Volunteer Opps Module', () => {
   }));
 
   it('it sets signups to zero', testAsync(async function(){
-    volops4.events = [{_id: '123', voStartDate: null, voEndDate: null}];
+    volops4.events = [{_id: '123', voStartDate: null, voEndDate: null, voPeopleScheduled: []}];
     await volops4.checkScheduled();
     expect(volops4.events[0].voNumPeopleScheduled).toBe(0);
   }));
