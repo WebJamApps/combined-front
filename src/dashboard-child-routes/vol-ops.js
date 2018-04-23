@@ -61,22 +61,20 @@ export class VolunteerOpps {
   }
 
   async checkScheduled(){
-    for (let i = 0; i < this.events.length; i++){
-      this.events[i].voNumPeopleScheduled = 0;
-      if (this.events[i].voPeopleScheduled !== null && this.events[i].voPeopleScheduled !== undefined){
-        for (let j = 0; j < this.events[i].voPeopleScheduled.length; j++){
-          try {
-            await this.app.httpClient.fetch('/user/' + this.events[i].voPeopleScheduled[j]);
-          } catch (err) {
-            //user does not exist, remove it from voPeopleScheduled and update this event, then run make data makeDataTable
-            console.log('user does not exist');
-            this.events[i].voPeopleScheduled = this.events[i].voPeopleScheduled.filter((e) => e !== this.events[i].voPeopleScheduled[j]);
-            await this.app.updateById('/volopp/', this.events[i]._id, this.events[i]);
-            return this.makeDataTable();
-          }
+    for (let i of this.events){
+      i.voNumPeopleScheduled = 0;
+      for (let j of i.voPeopleScheduled){
+        try {
+          await this.app.httpClient.fetch('/user/' + j);
+        } catch (err) {
+          //user does not exist, remove it from voPeopleScheduled and update this event, then run make data makeDataTable
+          console.log('user does not exist');
+          i.voPeopleScheduled = i.voPeopleScheduled.filter((e) => e !== j);
+          await this.app.updateById('/volopp/', i._id, i);
+          return this.makeDataTable();
         }
-        this.events[i].voNumPeopleScheduled = this.events[i].voPeopleScheduled.length;
       }
+      i.voNumPeopleScheduled = i.voPeopleScheduled.length;
     }
   }
 
@@ -125,15 +123,12 @@ export class VolunteerOpps {
 
   scheduleEvent(){
     this.voOpp.voStatus = 'new';
-    this.app.httpClient.fetch('/volopp/create', {
-      method: 'post',
-      body: json(this.voOpp)
-    })
-    .then((data) => {
-      this.voOpp = {};
-      document.getElementById('eventHeader').scrollIntoView();
-      this.activate();
-    });
+    this.app.httpClient.fetch('/volopp/create', {method: 'post', body: json(this.voOpp)})
+      .then((data) => {
+        this.voOpp = {};
+        document.getElementById('eventHeader').scrollIntoView();
+        this.activate();
+      });
   }
 
   showUpdateEvent(thisEvent, type){
@@ -204,9 +199,7 @@ export class VolunteerOpps {
 
   async deleteEvent(thisEventId){
     await fetch;
-    this.app.httpClient.fetch('/volopp/' + thisEventId, {
-      method: 'delete'
-    })
+    this.app.httpClient.fetch('/volopp/' + thisEventId, {method: 'delete'})
     .then((data) => {
       this.activate();
     });
