@@ -43,7 +43,7 @@
     "aurelia-loader-webpack": "^2.1.0",
     "aurelia-logging-console": "^1.0.0",
     "aurelia-pal-browser": "^1.2.1",
-    "aurelia-pal-nodejs": "^1.0.0-beta.3.2.0",
+    "aurelia-pal-nodejs": "^1.0.0-beta.3.3.0",
     "aurelia-polyfills": "^1.2.2",
     "aurelia-router": "^1.5.0",
     "aurelia-templating": "^1.5.0",
