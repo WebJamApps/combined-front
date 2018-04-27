@@ -1,6 +1,7 @@
 require('aurelia-polyfills');
 require('aurelia-pal-browser').initialize();
 require('babel-polyfill');
+
 Error.stackTraceLimit = Infinity;
 
 const srcContext = require.context(

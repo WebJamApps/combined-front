@@ -1,10 +1,10 @@
-import {MusicRouter} from '../../src/music-router';
+import { MusicRouter } from '../../src/music-router';
 
 function log(array) {
   console.log(array);
 }
 
-let config = {
+const config = {
   map: log
 };
 

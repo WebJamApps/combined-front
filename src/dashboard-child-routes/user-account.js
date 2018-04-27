@@ -1,16 +1,16 @@
-import {inject} from 'aurelia-framework';
-import {App} from '../app';
+import { inject } from 'aurelia-framework';
+import { App } from '../app';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
-import {FormValidator} from '../classes/FormValidator';
-import {fixDates, formatDate, markPast} from '../commons/utils.js';
+import { FormValidator } from '../classes/FormValidator';
+import { fixDates, formatDate, markPast } from '../commons/utils.js';
 @inject(App, ValidationControllerFactory, Validator)
 export class UserAccount {
   controller = null;
   validator = null;
-  constructor(app, controllerFactory, validator){
+  constructor(app, controllerFactory, validator) {
     this.app = app;
     this.canChangeUserType = true;
-    this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results));
+    this.validator = new FormValidator(validator, results => this.updateCanSubmit(results));
     this.controller = controllerFactory.createForCurrentScope(this.validator);
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false;
@@ -35,14 +35,14 @@ export class UserAccount {
     this.newUserType = this.user.userType;
   }
 
-  checkUserEmail(){
+  checkUserEmail() {
     if (this.user.email.split('@gmail').length > 1 || this.user.email.split('@vt.edu').length > 1 || this.user.email.split('@bi.vt.edu').length > 1) {
       this.isGoogleEmail = true;
     }
   }
 
-  checkUserStatus(){
-    if (this.user.userStatus === undefined || this.user.userStatus === null || this.user.userStatus === ''){
+  checkUserStatus() {
+    if (this.user.userStatus === undefined || this.user.userStatus === null || this.user.userStatus === '') {
       console.log(this.user.userStatus);
       this.user.userStatus = 'enabled';
     }
@@ -50,61 +50,75 @@ export class UserAccount {
 
   setupValidation() {
     ValidationRules
-    .ensure('userPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
-    .ensure('userType').required().minLength(5).withMessage('select a user type')
-    .ensure('userZip').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
-    .ensure('userCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City name please')
-    .ensure('userState').required()
-    .ensure('name').required()
-    .ensure('email').required().email()
-    .on(this.user);
+      .ensure('userPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
+      .ensure('userType')
+      .required()
+      .minLength(5)
+      .withMessage('select a user type')
+      .ensure('userZip')
+      .required()
+      .matches(/\b\d{5}\b/)
+      .withMessage('5-digit zipcode')
+      .ensure('userCity')
+      .required()
+      .matches(/[^0-9]+/)
+      .maxLength(30)
+      .withMessage('City name please')
+      .ensure('userState')
+      .required()
+      .ensure('name')
+      .required()
+      .ensure('email')
+      .required()
+      .email()
+      .on(this.user);
   }
 
   updateCanSubmit(validationResults) {
-    let nub = document.getElementById('updateUserButton');
+    const nub = document.getElementById('updateUserButton');
     nub.style.display = 'none';
     let valid = true;
-    for (let result of validationResults) {
-      if (result.valid === false){
+    for (const result of validationResults) {
+      if (result.valid === false) {
         valid = false;
         break;
       }
     }
     this.canSubmit = valid;
-    if (this.user.userType !== '' && this.canSubmit){
+    if (this.user.userType !== '' && this.canSubmit) {
       nub.style.display = 'block';
     }
     return this.canSubmit;
   }
 
-  async checkChangeUserType(){
+  async checkChangeUserType() {
     this.changeReasons = '';
-    if (this.user.userType === 'Volunteer' || this.user.userType === 'Developer'){
+    if (this.user.userType === 'Volunteer' || this.user.userType === 'Developer') {
       await this.fetchAllEvents();
       this.checkScheduled();
     }
-    if (this.user.userType === 'Charity' || this.user.userType === 'Developer'){
+    if (this.user.userType === 'Charity' || this.user.userType === 'Developer') {
       // Do not allow user to change their primary userType away from Charity if they have created a charity
-      const res = await this.app.httpClient.fetch('/charity/' + this.uid);
+      const res = await this.app.httpClient.fetch(`/charity/${this.uid}`);
       this.charities = await res.json();
-      if (this.charities.length > 0){
+      if (this.charities.length > 0) {
         this.canChangeUserType = false;
         this.canDelete = false;
-        this.changeReasons = this.changeReasons + '<li>You are the manager of a charity.</li>';
+        this.changeReasons = `${this.changeReasons}<li>You are the manager of a charity.</li>`;
       }
     }
-    if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
-      const res = await this.app.httpClient.fetch('/book/findcheckedout/' + this.uid);
+    if (this.user.userType === 'Reader' || this.user.userType === 'Developer') {
+      const res = await this.app.httpClient.fetch(`/book/findcheckedout/${this.uid}`);
       this.books = await res.json();
-      if (this.books.length > 0){
+      if (this.books.length > 0) {
         this.canChangeUserType = false;
         this.canDelete = false;
-        this.changeReasons = this.changeReasons + '<li>You have a book checked out.</li>';
+        this.changeReasons = `${this.changeReasons}<li>You have a book checked out.</li>`;
       }
     }
   }
 
-  async fetchAllEvents(){
+  async fetchAllEvents() {
     const res = await this.app.httpClient.fetch('/volopp/getall');
     this.events2 = await res.json();
     fixDates(this.events2);
@@ -112,41 +126,41 @@ export class UserAccount {
     this.fixPeopleScheduled(this.events2);
   }
 
-  fixPeopleScheduled(events){
-    for (let i = 0; i < events.length; i++){
-      if (events[i].voPeopleScheduled === null || events[i].voPeopleScheduled === undefined){
+  fixPeopleScheduled(events) {
+    for (let i = 0; i < events.length; i++) {
+      if (events[i].voPeopleScheduled === null || events[i].voPeopleScheduled === undefined) {
         events[i].voPeopleScheduled = [];
       }
     }
   }
 
-  checkScheduled(){
-    //let isScheduled = false;
-    for (let i = 0; i < this.events2.length; i++){
+  checkScheduled() {
+    // let isScheduled = false;
+    for (let i = 0; i < this.events2.length; i++) {
       // if (this.events2[i].voPeopleScheduled !== null && this.events2[i].voPeopleScheduled !== undefined){
-      if (this.events2[i].voPeopleScheduled.includes(this.uid)){
+      if (this.events2[i].voPeopleScheduled.includes(this.uid)) {
         this.canDelete = false;
-        if (!this.events2[i].past){
+        if (!this.events2[i].past) {
           this.canChangeUserType = false;
-            //console.log(this.events2[i]);
-            //isScheduled = true;
+          // console.log(this.events2[i]);
+          // isScheduled = true;
         }
       }
       // }
     }
-    if (!this.canChangeUserType && this.changeReasons.indexOf('<li>You are scheduled to work an event.</li>') === -1){
-      this.changeReasons = this.changeReasons + '<li>You are scheduled to work an event.</li>';
+    if (!this.canChangeUserType && this.changeReasons.indexOf('<li>You are scheduled to work an event.</li>') === -1) {
+      this.changeReasons = `${this.changeReasons}<li>You are scheduled to work an event.</li>`;
     }
   }
 
-  async setCharity(){
+  async setCharity() {
     this.user.userDetails = '';
     this.user.userType = 'Charity';
     await this.app.updateById('/user/', this.uid, this.user);
   }
 
-  afterUpdateUser(){
-    if (this.user.changeemail !== ''){
+  afterUpdateUser() {
+    if (this.user.changeemail !== '') {
       console.log('email address was changed!');
       this.changeUserEmail();
     } else {
@@ -157,36 +171,36 @@ export class UserAccount {
   }
 
   changeUserEmail() {
-    let bodyData = {'changeemail': this.user.changeemail.toLowerCase(), 'email': this.user.email.toLowerCase() };
-    let fetchData = {
+    const bodyData = { changeemail: this.user.changeemail.toLowerCase(), email: this.user.email.toLowerCase() };
+    const fetchData = {
       method: 'PUT',
       body: JSON.stringify(bodyData),
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       }
     };
     return this.app.httpClient.fetch('/auth/changeemail', fetchData)
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.message) {
-        let messagediv = document.getElementsByClassName('formErrors')[0];
-        messagediv.innerHTML = '<p style="text-align:left; padding-left:12px">' + data.message + '</p>';
-      } else {
+      .then(response => response.json())
+      .then((data) => {
+        if (data.message) {
+          const messagediv = document.getElementsByClassName('formErrors')[0];
+          messagediv.innerHTML = `<p style="text-align:left; padding-left:12px">${data.message}</p>`;
+        } else {
         /* istanbul ignore if */
-        if (process.env.NODE_ENV !== 'test'){
-          window.location.assign('/userutil/?changeemail=' + this.user.changeemail.toLowerCase());
+          if (process.env.NODE_ENV !== 'test') {
+            window.location.assign(`/userutil/?changeemail=${this.user.changeemail.toLowerCase()}`);
+          }
         }
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  async updateUser(){
+  async updateUser() {
     this.user.changeemail = '';
-    if (this.originalEmail !== this.user.email){
+    if (this.originalEmail !== this.user.email) {
       this.user.changeemail = this.user.email.toLowerCase();
       this.user.email = this.originalEmail.toLowerCase();
     }
@@ -195,28 +209,27 @@ export class UserAccount {
     this.afterUpdateUser();
   }
 
-  disableUser(status){
+  disableUser(status) {
     this.user.userStatus = status;
     this.updateUser();
   }
 
-  async deleteUser(){
+  async deleteUser() {
     await fetch;
-    this.app.httpClient.fetch('/user/' + this.uid, {
+    this.app.httpClient.fetch(`/user/${this.uid}`, {
       method: 'delete'
     })
-    .then((data) => {
-      this.app.logout();
-    });
+      .then((data) => {
+        this.app.logout();
+      });
   }
 
-  showUpdateButton(){
-    let nub = document.getElementById('updateUserButton');
+  showUpdateButton() {
+    const nub = document.getElementById('updateUserButton');
     nub.style.display = 'block';
   }
 
-  attached(){
+  attached() {
     this.controller.validate();
   }
-
 }

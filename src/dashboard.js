@@ -1,24 +1,24 @@
-import {inject} from 'aurelia-framework';
-import {App} from './app';
-//import {json} from 'aurelia-fetch-client';
-//import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
-//import {FormValidator} from './classes/FormValidator';
-//@inject(App, ValidationControllerFactory, Validator)
+import { inject } from 'aurelia-framework';
+import { App } from './app';
+// import {json} from 'aurelia-fetch-client';
+// import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
+// import {FormValidator} from './classes/FormValidator';
+// @inject(App, ValidationControllerFactory, Validator)
 @inject(App)
 export class Dashboard {
-  //controller = null;
-  //validator = null;
-  //constructor(app, controllerFactory, validator){
-  constructor(app){
+  // controller = null;
+  // validator = null;
+  // constructor(app, controllerFactory, validator){
+  constructor(app) {
     this.app = app;
-    //this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
-    //this.controller = controllerFactory.createForCurrentScope(this.validator);
-    //this.controller.validateTrigger = validateTrigger.changeOrBlur;
-    //this.canSubmit = false;  //the button on the form
+    // this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
+    // this.controller = controllerFactory.createForCurrentScope(this.validator);
+    // this.controller.validateTrigger = validateTrigger.changeOrBlur;
+    // this.canSubmit = false;  //the button on the form
   }
 
   async activate() {
-    //this.userTypes = JSON.parse(process.env.userRoles).roles;
+    // this.userTypes = JSON.parse(process.env.userRoles).roles;
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);
     window.localStorage.setItem('userEmail', this.user.email);
@@ -63,13 +63,13 @@ export class Dashboard {
   //   }
   // }
 
-  childRoute(){
-    if (this.user.userStatus === 'disabled'){
+  childRoute() {
+    if (this.user.userStatus === 'disabled') {
       return this.app.router.navigate('dashboard/user-account');
     }
-    if (this.user.userType === undefined || this.user.userType === ''){
+    if (this.user.userType === undefined || this.user.userType === '') {
       this.user.userDetails = 'newUser';
-      if (this.user.isOhafUser){
+      if (this.user.isOhafUser) {
         this.user.userType = 'Volunteer';
       } else {
         this.user.userType = 'user-account';
@@ -78,20 +78,20 @@ export class Dashboard {
       this.app.router.navigate('dashboard/user-account');
     } else {
       /* istanbul ignore else */
-      if (this.user.userType === 'Charity'){
+      if (this.user.userType === 'Charity') {
         this.app.router.navigate('dashboard/charity');
-      } else if (this.user.userType === 'Volunteer'){
+      } else if (this.user.userType === 'Volunteer') {
         this.app.router.navigate('dashboard/volunteer');
-      } else if (this.user.userType === 'Reader'){
+      } else if (this.user.userType === 'Reader') {
         this.app.router.navigate('dashboard/reader');
-      } else if (this.user.userType === 'Librarian'){
+      } else if (this.user.userType === 'Librarian') {
         this.app.router.navigate('dashboard/librarian');
-      } else if (this.user.userType === 'Developer'){
+      } else if (this.user.userType === 'Developer') {
         this.app.router.navigate('dashboard/developer');
       }
-      //else {
+      // else {
       //   this.setupValidation();
-      //}
+      // }
     }
   }
 

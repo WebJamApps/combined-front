@@ -1,14 +1,14 @@
-//import {PageObjectWelcome} from './welcome.po.js';
-import {PageObjectSkeleton} from './skeleton.po';
-import {config} from '../protractor.conf';
+// import {PageObjectWelcome} from './welcome.po.js';
+import { PageObjectSkeleton } from './skeleton.po';
+import { config } from '../protractor.conf';
 
-describe('aurelia skeleton app', function() {
-  //let poWelcome;
+describe('aurelia skeleton app', () => {
+  // let poWelcome;
   let poSkeleton;
 
   beforeEach(async () => {
     poSkeleton = new PageObjectSkeleton();
-    //poWelcome = new PageObjectWelcome();
+    // poWelcome = new PageObjectWelcome();
 
     await browser.loadAndWaitForAureliaPage(`http://localhost:${config.port}`);
     browser.driver.manage().window().maximize();

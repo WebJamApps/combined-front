@@ -1,5 +1,5 @@
-import {OhafHome} from '../../src/ohaf-home';
-//import {RouterStub} from './commons';
+import { OhafHome } from '../../src/ohaf-home';
+// import {RouterStub} from './commons';
 
 describe('the OhafHome Module', () => {
   let ohaf;
@@ -8,7 +8,7 @@ describe('the OhafHome Module', () => {
   });
 
   it('gets widescreen', (done) => {
-    let truth = ohaf.widescreen;
+    const truth = ohaf.widescreen;
     expect(typeof truth).toBe('boolean');
     done();
   });

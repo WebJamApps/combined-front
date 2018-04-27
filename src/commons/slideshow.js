@@ -1,6 +1,6 @@
 
 export class Slideshow {
-  activate(model){
+  activate(model) {
     this.data = model;
   }
 }

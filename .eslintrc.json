@@ -1,20 +1,24 @@
 {
-  "extends": ["./node_modules/aurelia-tools/.eslintrc.json", "plugin:react/recommended"],
+  "extends": ["./node_modules/aurelia-tools/.eslintrc.json", "plugin:react/recommended", "airbnb"],
   "rules": {
-    "space-before-function-paren": [0, "never"],
-    "space-before-blocks": [0, "never"],
-    "no-trailing-spaces": [1, {
-      "skipBlankLines": true
-    }],
     "no-console": [0, "never"],
+    "comma-dangle": [0, "never"],
+    "no-undef": [0, "never"],
+    "react/jsx-filename-extension": [0, "never"],
+    "no-underscore-dangle": [0, "never"],
     "no-alert": [0, "never"],
-    "no-empty": [0, "never"],
-    "new-cap": [0, "never"],
-    "arrow-spacing": ["error", {
-      "before": true,
-      "after": true
+    "func-names": [0, "never"],
+    "class-methods-use-this": [0, "never"],
+    "no-restricted-syntax": [0, "never"],
+    "prefer-destructuring": [0, "never"],
+    "max-len": ["error", {
+      "code": 150
     }],
-    "arrow-parens": ["error", "always"],
-    "no-nested-ternary": "off"
+    "one-var-declaration-per-line": [0, "never"],
+    "one-var": [2, {
+      "var": "never",
+      "let": "always",
+      "const": "never"
+    }]
   }
 }

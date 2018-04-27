@@ -1,4 +1,6 @@
 node_modules
 coverage
 dist
-bower_components
+webpack.config.js
+test/protractor.conf.js
+test/karma.conf.js

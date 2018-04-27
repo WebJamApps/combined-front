@@ -1,31 +1,32 @@
-//const Counter = require('assertions-counter');
-import {HttpMock, AuthStub, AppStateStub} from './commons';
-import {Bookshelf} from '../../src/bookshelf';
-import {App} from '../../src/app';
+// const Counter = require('assertions-counter');
+import { HttpMock, AuthStub, AppStateStub } from './commons';
+import { Bookshelf } from '../../src/bookshelf';
+import { App } from '../../src/app';
 
-let book = {
-  'title': '',
-  'type': 'hardback',
-  'author': '',
-  'numberPages': 0,
-  'dateOfPub': 0,
-  'url': '',
-  'isbn': '',
-  'siteLocation': '',
-  'numberOfCopies': 1,
-  'access': '',
-  'comments': '',
-  'checkedOutBy': '',
-  'checkedOutByName': '',
-  '_id': '12345'
+const book = {
+  title: '',
+  type: 'hardback',
+  author: '',
+  numberPages: 0,
+  dateOfPub: 0,
+  url: '',
+  isbn: '',
+  siteLocation: '',
+  numberOfCopies: 1,
+  access: '',
+  comments: '',
+  checkedOutBy: '',
+  checkedOutByName: '',
+  _id: '12345'
 };
 
-let book2 = book;
+const book2 = book;
 book2.type = 'hardrock';
 book2.siteLocation = 'https://bookstore.com/home';
 
 class HttpStub extends HttpMock {
   fetch(url, obj) {
+    console.log(obj);
     return Promise.resolve({
       Headers: this.headers,
       json: () => Promise.resolve([book, book2, book])
@@ -35,7 +36,7 @@ class HttpStub extends HttpMock {
 
 class HttpStub2 {
   fetch(fn) {
-    let response = this.itemStub;
+    const response = this.itemStub;
     this.__fetchCallback = fn;
     return new Promise((resolve) => {
       resolve({ json: () => response });
@@ -55,10 +56,10 @@ describe('The Bookshelf Module', () => {
   let bookshelf2;
   let auth;
   beforeEach(() => {
-    let itemStubs = [1];
+    const itemStubs = [1];
     http = new HttpStub();
     auth = new AuthStub();
-    auth.setToken({sub: '112'});
+    auth.setToken({ sub: '112' });
     app = new App(auth, http);
     shelf = new Bookshelf(app);
     shelf.app.appState = new AppStateStub();
@@ -76,7 +77,7 @@ describe('The Bookshelf Module', () => {
   it('gets all books', () => {
     bookshelf2.activate().then(() => {
       expect(bookshelf2.books).toBe(itemStubs);
-      //expect(bookshelf1.books).not.toBe(itemFake);
+      // expect(bookshelf1.books).not.toBe(itemFake);
       done();
     });
   });
@@ -96,7 +97,7 @@ describe('The Bookshelf Module', () => {
   it('should clear all filters', (done) => {
     shelf.selectedFilter = [];
     shelf.filterPicked();
-    //expect(shelf.filters[0].value.toBe(''));
+    // expect(shelf.filters[0].value.toBe(''));
     done();
   });
 
