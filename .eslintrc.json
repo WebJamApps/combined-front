@@ -11,6 +11,7 @@
     "class-methods-use-this": [0, "never"],
     "no-restricted-syntax": [0, "never"],
     "prefer-destructuring": [0, "never"],
+    "no-param-reassign": [0, "never"],
     "max-len": ["error", {
       "code": 150
     }],
