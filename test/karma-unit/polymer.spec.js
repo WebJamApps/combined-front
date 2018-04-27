@@ -1,4 +1,4 @@
-import {HttpClient} from 'aurelia-fetch-client';
+import { HttpClient } from 'aurelia-fetch-client';
 
 describe('The Polymer module', () => {
   let http;
@@ -6,13 +6,13 @@ describe('The Polymer module', () => {
   beforeEach(() => {
     http = new HttpClient();
     http.configure((config) => {
-      config.withBaseUrl('http://localhost:' + process.env.PORT + '/');
+      config.withBaseUrl(`http://localhost:${process.env.PORT}/`);
     });
   });
 
   it('Should load includes.html', () => {
     http.fetch('includes.html')
-      .then((response) => response.json())
+      .then(response => response.json())
       .then((data) => {
         expect(data.status).toBe(200);
       });
@@ -20,7 +20,7 @@ describe('The Polymer module', () => {
 
   it('Should load webcomponents.min.js', () => {
     http.fetch('webcomponents.min.js')
-      .then((response) => response.json())
+      .then(response => response.json())
       .then((data) => {
         expect(data.status).toBe(200);
       });

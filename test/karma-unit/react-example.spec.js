@@ -1,4 +1,4 @@
-import {ReactExample} from '../../src/react-example';
+import { ReactExample } from '../../src/react-example';
 
 function testAsync(runAsync) {
   return (done) => {
@@ -14,7 +14,7 @@ describe('++ React example', () => {
     document.body.innerHTML = '<div class="here"><div><h1>Hello World</h1></div></div>';
   });
 
-  it('should have the react element inner', testAsync(async function(){
+  it('should have the react element inner', testAsync(async () => {
     await reactExample.attached();
     expect(reactExample.reactElementInner).toBe('<h1>Hello World</h1>');
   }));

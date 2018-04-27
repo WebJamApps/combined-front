@@ -1,14 +1,14 @@
-import {App} from '../../src/app';
-import {AuthStub, HttpMock, AppStateStub} from './commons';
-import {Librarian} from '../../src/dashboard-child-routes/librarian';
-//import './setup';
-import {csvFixture} from './librarian.spec.fixtures';
+import { App } from '../../src/app';
+import { AuthStub, HttpMock, AppStateStub } from './commons';
+import { Librarian } from '../../src/dashboard-child-routes/librarian';
+// import './setup';
+import { csvFixture } from './librarian.spec.fixtures';
 import csvjson from 'csvjson';
-import {Validator} from 'aurelia-validation';
+import { Validator } from 'aurelia-validation';
 
 class VCMock {
   createForCurrentScope(validator) {
-    return {validateTrigger: null};
+    return { validateTrigger: null };
   }
 }
 
@@ -19,7 +19,7 @@ class ValidatorMock extends Validator {
     this.b = b;
   }
   validateObject(obj, rules) {
-    return Promise.resolve([{name: 'john', valid: true}]);
+    return Promise.resolve([{ name: 'john', valid: true }]);
   }
   validateProperty(prop, val, rules) {
     return Promise.resolve({});
@@ -34,11 +34,11 @@ describe('the librarian module', () => {
   let vc;
   let val;
   let auth;
-  global.CSVFilePath = { files: [csvFixture.string, 'sample.txt']};
+  global.CSVFilePath = { files: [csvFixture.string, 'sample.txt'] };
 
   beforeEach(() => {
     auth = new AuthStub();
-    auth.setToken({sub: '1'});
+    auth.setToken({ sub: '1' });
     http = new HttpMock();
     reader = new FileReader();
     app1 = new App(auth, http);
@@ -47,7 +47,7 @@ describe('the librarian module', () => {
     app1.activate();
     librarian = new Librarian(app1, reader, {}, vc, val);
     librarian.app.appState = new AppStateStub();
-    librarian.CSVFilePath = {files: [csvFixture.string]};
+    librarian.CSVFilePath = { files: [csvFixture.string] };
   });
 
   it('should activate', (done) => {
@@ -58,12 +58,12 @@ describe('the librarian module', () => {
   it('should validate', (done) => {
     document.body.innerHTML = '<div id="createMediaButton"></div>';
     librarian.validate();
-    librarian.updateCanSubmit([{valid: false}]);
+    librarian.updateCanSubmit([{ valid: false }]);
     done();
   });
 
   it('should parse the csv.fixtures into object', (done) => {
-    let object = csvjson.toObject(librarian.CSVFilePath.files[0]);
+    const object = csvjson.toObject(librarian.CSVFilePath.files[0]);
     expect(object instanceof Array).toBeTruthy();
     done();
   });
@@ -89,16 +89,16 @@ describe('the librarian module', () => {
   });
 
   it('should raise a file reader error', (done) => {
-    window.CSVFilePath = {files: [new Blob()] };
-    let error = new Event('error');
-    let load = new Event('load');
+    window.CSVFilePath = { files: [new Blob()] };
+    const error = new Event('error');
+    const load = new Event('load');
     librarian.createBooksFromCSV();
     // if dashbook.createBooksFromCSV is called, it should called the makeLotaBooks that
     // places a http call and HttpMock will respond to it and also change the status.
     librarian.reader.dispatchEvent(error);
     librarian.reader.dispatchEvent(load);
-    setTimeout(function() {
-      //expect(http.status).toBe(200);
+    setTimeout(() => {
+      // expect(http.status).toBe(200);
       done();
     }, 2001);
   });
@@ -117,7 +117,7 @@ describe('the librarian module', () => {
 
   it('should make a .csv file', (done) => {
     librarian.makeCSVfile();
-    //expect(http2.status).toBe(200);
+    // expect(http2.status).toBe(200);
     done();
   });
 

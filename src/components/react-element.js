@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import HWComp from './react-comp';
-import {noView, inject, customElement} from 'aurelia-framework';
+import { noView, inject, customElement } from 'aurelia-framework';
 
 @noView()
 @inject(Element)
@@ -12,7 +12,7 @@ export class HelloWorld {
   }
 
   render() {
-    ReactDOM.render(<HWComp/>, this.element);
+    ReactDOM.render(<HWComp />, this.element);
   }
 
   bind() {

@@ -1,17 +1,19 @@
-import {Login} from '../../src/login';
-import {RouterStub, AuthStub, HttpMock, AppStateStub} from './commons';
-import {App} from '../../src/app';
+import { Login } from '../../src/login';
+import { RouterStub, AuthStub, HttpMock, AppStateStub } from './commons';
+import { App } from '../../src/app';
 
 class AuthStub1 extends AuthStub {
   authenticate(name, f = false, o = null) {
+    console.log(f);
+    console.log(o);
     return Promise.resolve({
-      name: name,
+      name,
       token: 'heyvgyuv38t327rvuiqt78b934ujwehgyq89ery8t'
     });
   }
 }
 
-class AppStub extends App{
+class AppStub extends App {
   authenticated = false;
 }
 
@@ -22,7 +24,7 @@ describe('the Login module', () => {
 
   beforeEach(() => {
     auth = new AuthStub1();
-    auth.setToken({sub: 'aowifjawifhiawofjo'});
+    auth.setToken({ sub: 'aowifjawifhiawofjo' });
     app1 = new AppStub(auth, new HttpMock());
     app1.router = new RouterStub();
     app1.activate();
@@ -32,6 +34,7 @@ describe('the Login module', () => {
 
   it('should authentication when not from OHAF', (done) => {
     login.app.authenticate('google').then((data) => {
+      console.log(data);
       done();
     }, null);
   });
@@ -39,6 +42,7 @@ describe('the Login module', () => {
   it('should authentication when from OHAF', (done) => {
     login.app.appState.isOhafLogin = true;
     login.app.authenticate('google').then((data) => {
+      console.log(data);
       done();
     }, null);
   });

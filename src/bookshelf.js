@@ -1,9 +1,9 @@
-import {inject} from 'aurelia-framework';
-import {App} from './app';
-import {makeFilterDropdown, showCheckboxes} from './commons/utils.js';
+import { inject } from 'aurelia-framework';
+import { App } from './app';
+import { makeFilterDropdown, showCheckboxes } from './commons/utils.js';
 @inject(App)
 export class Bookshelf {
-  constructor(app){
+  constructor(app) {
     this.app = app;
     this.showCheckboxes = showCheckboxes;
     this.filterType = '';
@@ -18,12 +18,12 @@ export class Bookshelf {
   mediaType = false;
   siteLocation = false;
   filters = [
-    {value: '', keys: ['title', 'type', 'author', 'numberPages', 'dateOfPub', 'siteLocation', 'access', 'comments']},
-    {value: '', keys: ['type']},
-    {value: '', keys: ['siteLocation']}
+    { value: '', keys: ['title', 'type', 'author', 'numberPages', 'dateOfPub', 'siteLocation', 'access', 'comments'] },
+    { value: '', keys: ['type'] },
+    { value: '', keys: ['siteLocation'] }
   ];
 
-  async activate(){
+  async activate() {
     const res = await this.app.httpClient.fetch('/book/getall');
     this.books = await res.json();
     console.log(this.books);
@@ -36,25 +36,25 @@ export class Bookshelf {
       this.user = await this.app.appState.getUser(this.uid);
       console.log(this.user);
       /* istanbul ignore else */
-      if (this.user.userType === 'Reader' || this.user.userType === 'Developer'){
+      if (this.user.userType === 'Reader' || this.user.userType === 'Developer') {
         this.reader = true;
       }
     }
   }
 
-  filterPicked(){
-    let arrayLength = this.selectedFilter.length;
+  filterPicked() {
+    const arrayLength = this.selectedFilter.length;
     this.keyword = false;
     this.mediaType = false;
     this.siteLocation = false;
-    if (arrayLength === 0){
+    if (arrayLength === 0) {
       this.filters[0].value = '';
       this.filters[1].value = '';
       this.filters[2].value = '';
       return;
     }
     for (let i = 0; i < arrayLength; i++) {
-      /* look in array, if filter type is contained then set the selected filtertype to be true  this.keyword = true; this.mediaType=true; this.siteLocation=true*/
+      /* look in array, if filter type is contained then set the selected filtertype to be true  this.keyword = true; this.mediaType=true; this.siteLocation=true */
       if (this.selectedFilter.includes('keyword')) {
         this.keyword = true;
       } else {
@@ -76,5 +76,4 @@ export class Bookshelf {
       }
     }
   }
-
 }

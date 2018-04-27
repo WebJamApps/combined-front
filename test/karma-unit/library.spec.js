@@ -1,4 +1,4 @@
-import {Library} from '../../src/library';
+import { Library } from '../../src/library';
 
 describe('the Library module', () => {
   let lib1;
