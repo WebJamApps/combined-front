@@ -3,20 +3,17 @@ import { UserAccount } from '../../src/dashboard-child-routes/user-account';
 import { AuthStub, HttpMock, AppStateStub, RouterStub } from './commons';
 import { App } from '../../src/app';
 
-
 function testAsync(runAsync) {
   return (done) => {
     runAsync().then(done, (e) => { fail(e); done(); });
   };
 }
-
 class VCMock {
   createForCurrentScope(validator) {
     console.log(validator);
     return { validateTrigger: null };
   }
 }
-
 class HttpStub extends HttpMock {
   fetch(url) {
     if (url === '/auth/changeemail') {
@@ -29,7 +26,6 @@ class HttpStub extends HttpMock {
     });
   }
 }
-
 class HttpStub2 extends HttpMock {
   fetch(url) {
     if (url === '/auth/changeemail') {
@@ -42,7 +38,6 @@ class HttpStub2 extends HttpMock {
     });
   }
 }
-
 class ValidatorMock extends Validator {
   constructor(a, b) {
     super();
@@ -58,12 +53,8 @@ class ValidatorMock extends Validator {
     return Promise.resolve({});
   }
 }
-
 describe('the UserAccount Module', () => {
-  let ua;
-  let app;
-  let auth;
-
+  let ua, app, auth;
   beforeEach(() => {
     auth = new AuthStub();
     auth.setToken({ sub: 'aowifjawifhiawofjo' });
@@ -77,15 +68,23 @@ describe('the UserAccount Module', () => {
     ua.selectedTalents = [];
     ua.activate();
     ua.user = {
-      name: 'Iddris Elba', email: 'yo@yo.com', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''
+      name: 'Iddris Elba',
+      email: 'yo@yo.com',
+      userType: 'Charity',
+      _id: '3333333',
+      volTalents:
+      ['childcare', 'other'],
+      volCauses: ['Environmental', 'other'],
+      volWorkPrefs: ['counseling', 'other'],
+      volCauseOther: '',
+      volTalentOther: '',
+      volWorkOther: ''
     };
   });
-
   it('should validate property', (done) => {
     ua.validator.validateProperty({}, 'school', 'schoolRules');
     done();
   });
-
   it('should activate and get the user type from appState', testAsync(async () => {
     ua.app.appState.getUser = function () {
       console.log('did I call this?');
@@ -97,28 +96,34 @@ describe('the UserAccount Module', () => {
     await ua.activate();
     expect(ua.newUserType).toBe('monster');
   }));
-
   it('should set charity', (done) => {
     ua.setCharity();
     done();
   });
-
   it('should set the user status', (done) => {
     ua.disableUser('disabled');
     expect(ua.user.userStatus).toBe('disabled');
     done();
   });
-
   it('should check the user email when it is a google account', (done) => {
     ua.isGoogleEmail = false;
     ua.user = {
-      name: 'Iddris Elba', email: 'j@gmail.com', userType: 'Charity', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: ''
+      name: 'Iddris Elba',
+      email: 'j@gmail.com',
+      userType: 'Charity',
+      _id: '3333333',
+      volTalents:
+      ['childcare', 'other'],
+      volCauses: ['Environmental', 'other'],
+      volWorkPrefs: ['counseling', 'other'],
+      volCauseOther: '',
+      volTalentOther: '',
+      volWorkOther: ''
     };
     ua.checkUserEmail();
     expect(ua.isGoogleEmail).toBe(true);
     done();
   });
-
   it('updates a user when email has changed', (done) => {
     ua.originalEmail = 'yo@yo.com';
     ua.user.email = 'bye@bye.com';
@@ -126,7 +131,6 @@ describe('the UserAccount Module', () => {
     expect(ua.user.changeemail).toBe('bye@bye.com');
     done();
   });
-
   it('updates a user when email has not changed', (done) => {
     ua.user.changeemail = '';
     ua.originalEmail = 'bye@bye.com';
@@ -135,39 +139,32 @@ describe('the UserAccount Module', () => {
     expect(ua.user.changeemail).toBe('');
     done();
   });
-
   it('should allow Librarian user to change their user type', (done) => {
     ua.user.userType = 'Librarian';
     ua.checkChangeUserType();
     expect(ua.canChangeUserType).toBe(true);
     done();
   });
-
   it('fixes events that are not configured with people scheduled', (done) => {
     ua.events2 = [{ voPeopleScheduled: ['123', '234'] }];
     const checker = ua.events2;
     ua.fixPeopleScheduled(ua.events2);
     expect(ua.events2).toBe(checker);
     ua.events2 = [{ id: '123' }];
-    // checker
     ua.fixPeopleScheduled(ua.events2);
     expect(ua.events2[0].voPeopleScheduled.length).toBe(0);
     done();
   });
-
   it('checks for scheduled events by a volunteer user', (done) => {
     ua.user.userType = 'Volunteer';
     ua.fetchAllEvents = function () { return Promise.resolve(); };
     ua.checkChangeUserType();
-    // expect(ua.canChangeUserType).toBe(true);
     done();
   });
-
   it('should allow Charity user to change their user type if they have no charities', (done) => {
     ua.user.userType = 'Charity';
     ua.app.httpClient.fetch = function () {
       return Promise.resolve({
-        // Headers: this.headers,
         json: () => Promise.resolve([])
       });
     };
@@ -175,7 +172,6 @@ describe('the UserAccount Module', () => {
     expect(ua.canChangeUserType).toBe(true);
     done();
   });
-
   it('should not allow Charity user to change their user type if they have charities', testAsync(async () => {
     ua.user.userType = 'Charity';
     ua.app.httpClient.fetch = function () {
@@ -185,9 +181,7 @@ describe('the UserAccount Module', () => {
     };
     await ua.checkChangeUserType();
     expect(ua.canChangeUserType).toBe(false);
-    // done();
   }));
-
   it('does not allow change user type or delete if signed up for an event', testAsync(async () => {
     ua.uid = '123';
     ua.events2 = [{ voPeopleScheduled: ['123'] }];
@@ -195,15 +189,6 @@ describe('the UserAccount Module', () => {
     await ua.checkScheduled();
     expect(ua.canChangeUserType).toBe(false);
   }));
-
-  // it('checks scheduled when nothing is scheduled', testAsync(async function(){
-  //   ua.uid = '123';
-  //   ua.events2 = [{_id: '123'}];
-  //   ua.changeReasons = '';
-  //   await ua.checkScheduled();
-  //   expect(ua.canChangeUserType).toBe(true);
-  // }));
-
   it('allows change user type when scheduled event is in the past', testAsync(async () => {
     ua.uid = '123';
     ua.events2 = [{ voPeopleScheduled: ['123'], past: true }];
@@ -211,7 +196,6 @@ describe('the UserAccount Module', () => {
     await ua.checkScheduled();
     expect(ua.canChangeUserType).toBe(true);
   }));
-
   it('does not allow change user type and we already have the reason', testAsync(async () => {
     ua.uid = '123';
     ua.events2 = [{ voPeopleScheduled: ['123'], past: false }];
@@ -219,48 +203,41 @@ describe('the UserAccount Module', () => {
     await ua.checkScheduled();
     expect(ua.canChangeUserType).toBe(false);
   }));
-
   it('it shows the update button after we change the user status', testAsync(async () => {
     document.body.innerHTML = '<button id="updateUserButton" style="display:none">Update</button>';
     ua.showUpdateButton();
     expect(document.getElementById('updateUserButton').style.display).toBe('block');
   }));
-
   it('allow change user type or delete if not signed up for an event', testAsync(async () => {
     ua.uid = '123';
     ua.events2 = [{ voPeopleScheduled: ['1234', '1235'] }];
     await ua.checkScheduled();
     expect(ua.canChangeUserType).toBe(true);
   }));
-
   it('should check whether update can submit', (done) => {
     document.body.innerHTML = '<button id="updateUserButton">Update</button>';
     ua.updateCanSubmit([{ valid: false }]);
     expect(document.getElementById('updateUserButton').style.display).toBe('none');
     done();
   });
-
   it('should check whether update can submit when valid', (done) => {
     document.body.innerHTML = '<button id="updateUserButton">Update</button>';
     ua.updateCanSubmit([{ valid: true }]);
     expect(document.getElementById('updateUserButton').style.display).toBe('block');
     done();
   });
-
   it('not set user status to enabled if not already defined', (done) => {
     ua.user.userStatus = 'disabled';
     ua.checkUserStatus();
     expect(ua.user.userStatus).toBe('disabled');
     done();
   });
-
   it('should call after update user when changeemail is null', (done) => {
     ua.user.changeemail = '';
     ua.afterUpdateUser();
     expect(ua.app.appState.user).toBe(ua.user);
     done();
   });
-
   it('should change user email and catch an error', testAsync(async () => {
     document.body.innerHTML = '<div class="formErrors"></div>';
     ua.user = {
@@ -268,15 +245,11 @@ describe('the UserAccount Module', () => {
     };
     ua.app.httpClient.fetch = function () {
       return Promise.resolve({
-        // Headers: this.headers,
         json: () => Promise.reject(new Error({ error: 'you fail' }))
       });
     };
     await ua.changeUserEmail();
-    // expect(document.getElementsByClassName('formErrors')[0].innerHTML).not.toBe('');
-    // done();
   }));
-
   it('should change user email with and without error message', testAsync(async () => {
     document.body.innerHTML = '<div class="formErrors"></div>';
     app = new App(auth, new HttpStub2());
@@ -288,7 +261,6 @@ describe('the UserAccount Module', () => {
     };
     ua.app.httpClient.fetch = function () {
       return Promise.resolve({
-        // Headers: this.headers,
         json: () => Promise.resolve({ message: 'good job' })
       });
     };
@@ -296,23 +268,19 @@ describe('the UserAccount Module', () => {
     expect(document.getElementsByClassName('formErrors')[0].innerHTML).not.toBe('');
     ua.app.httpClient.fetch = function () {
       return Promise.resolve({
-        // Headers: this.headers,
         json: () => Promise.resolve({})
       });
     };
     document.getElementsByClassName('formErrors')[0].innerHTML = '';
     await ua.changeUserEmail();
     expect(document.getElementsByClassName('formErrors')[0].innerHTML).toBe('');
-    // done();
   }));
-
   it('deletes the user', testAsync(async () => {
     ua.check = true;
     ua.app.logout = function () { ua.check = false; return true; };
     await ua.deleteUser();
     expect(ua.check).toBe(false);
   }));
-
   it('validates the update user form after page loads', (done) => {
     document.body.innerHTML = '<div class="formErrors"></div>';
     app = new App(auth, new HttpStub2());
@@ -324,7 +292,6 @@ describe('the UserAccount Module', () => {
     };
     ua.controller.validate = function () {};
     ua.attached();
-    // expect(document.getElementsByClassName('formErrors')[0].innerHTML).not.toBe('');
     done();
   });
 });
