@@ -67,7 +67,23 @@ class HttpMockEvent extends HttpMock {
     return Promise.resolve({
       Headers: this.headers,
       json: () => Promise.resolve([{
-        voName: '', voCharityId: this.charityID, voCharityName: this.charityName, voNumPeopleNeeded: 1, voDescription: '', voWorkTypes: [], voTalentTypes: [], voWorkTypeOther: '', voTalentTypeOther: '', voStartDate: null, voStartTime: '', voEndDate: null, voEndTime: '', voContactName: this.user.name, voContactEmail: this.user.email, voContactPhone: this.user.userPhone
+        voName: '',
+        voCharityId: this.charityID,
+        voCharityName: this.charityName,
+        voNumPeopleNeeded: 1,
+        voDescription:
+        '',
+        voWorkTypes: [],
+        voTalentTypes: [],
+        voWorkTypeOther: '',
+        voTalentTypeOther: '',
+        voStartDate: null,
+        voStartTime: '',
+        voEndDate: null,
+        voEndTime: '',
+        voContactName: this.user.name,
+        voContactEmail: this.user.email,
+        voContactPhone: this.user.userPhone
       }])
     });
   }
@@ -106,15 +122,7 @@ class HttpMockChar extends HttpMock {
 }
 
 describe('the Volunteer Opps Module', () => {
-  let app;
-  let auth;
-  let volops;
-  let app2;
-  let volops2;
-  let app3;
-  let volops3;
-  let volops4;
-  let app4;
+  let app, auth, volops, app2, volops2, app3, volops3, volops4, app4;
   beforeEach(() => {
     auth = new AuthStub();
     auth.setToken({ sub: 'aowifjawifhiawofjo' });
@@ -175,7 +183,18 @@ describe('the Volunteer Opps Module', () => {
       _id: '123', voPeopleScheduled: ['14444', '244444'], voStartDate: null, voEndDate: null, voWorkTypes: [], voTalentTypes: []
     }];
     const fakeVolunteer = {
-      name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true
+      name: 'Iddris Elba',
+      userType: 'Volunteer',
+      _id: '3333333',
+      volTalents: ['childcare', 'other'],
+      volCauses:
+      ['Environmental', 'other'],
+      volWorkPrefs: ['counseling', 'other'],
+      volCauseOther: '',
+      volTalentOther: '',
+      volWorkOther: '',
+      userDetails: 'newUser',
+      isOhafUser: true
     };
     volops4.app.httpClient.fetch = function () {
       return Promise.resolve({
@@ -452,7 +471,8 @@ describe('the Volunteer Opps Module', () => {
       voDescription: 'howdy'
     };
     volops.updateEvent('update');
-    expect(volops.voOpp.voDescription).toBe('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>howdy');
+    expect(volops.voOpp.voDescription).toBe('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event' +
+    '</strong></p>howdy');
     done();
   });
 
