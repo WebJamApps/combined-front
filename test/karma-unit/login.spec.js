@@ -12,16 +12,11 @@ class AuthStub1 extends AuthStub {
     });
   }
 }
-
 class AppStub extends App {
   authenticated = false;
 }
-
 describe('the Login module', () => {
-  let login;
-  let app1;
-  let auth;
-
+  let login, app1, auth;
   beforeEach(() => {
     auth = new AuthStub1();
     auth.setToken({ sub: 'aowifjawifhiawofjo' });
@@ -31,14 +26,12 @@ describe('the Login module', () => {
     login = new Login(app1);
     login.app.appState = new AppStateStub();
   });
-
   it('should authentication when not from OHAF', (done) => {
     login.app.authenticate('google').then((data) => {
       console.log(data);
       done();
     }, null);
   });
-
   it('should authentication when from OHAF', (done) => {
     login.app.appState.isOhafLogin = true;
     login.app.authenticate('google').then((data) => {
@@ -50,14 +43,12 @@ describe('the Login module', () => {
     login.attached();
     done();
   });
-
   it('should check if user is logged in', (done) => {
     window.localStorage.setItem('aurelia_id_token', '109842sdhgsgfhjsfoi4124');
     login.app.checkIfLoggedIn();
     expect(login.app.auth.getTokenPayload()).toBe(window.localStorage.getItem('aurelia_id_token'));
     done();
   });
-
   it('displays login form with appName', (done) => {
     document.body.innerHTML = '<div class="home"></div>';
     login.app.showForm('webjam llc', login.login_Class);

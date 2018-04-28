@@ -6,13 +6,11 @@ describe('the OhafHome Module', () => {
   beforeEach(() => {
     ohaf = new OhafHome();
   });
-
   it('gets widescreen', (done) => {
     const truth = ohaf.widescreen;
     expect(typeof truth).toBe('boolean');
     done();
   });
-
   it('show slides when component is attached and there is no slide', (done) => {
     jasmine.clock().install();
     ohaf.attached();
@@ -22,10 +20,12 @@ describe('the OhafHome Module', () => {
     done();
     jasmine.clock().uninstall();
   });
-
   it('shows slides when component is attached', (done) => {
     jasmine.clock().install();
-    document.body.innerHTML = '<div id="musicSlide1"><div></div></div><div id="slideshow1"><div class="mySlides"><img src="https://static.pexels.com/photos/2422/sky-earth-galaxy-universe.jpg" /></div></div> <div id="musicSlide2"><div></div></div><div id="slideshow"><div class="mySlides"><img src="https://static.pexels.com/photos/2422/sky-earth-galaxy-universe.jpg" /></div></div>';
+    document.body.innerHTML = '<div id="musicSlide1"><div></div></div><div id="slideshow1"><div class="mySlides">' +
+    '<img src="https://static.pexels.com/photos/2422/sky-earth-galaxy-universe.jpg" /></div></div> <div id="musicSlide2"><div>' +
+    '</div></div><div id="slideshow"><div class="mySlides"><img src="https://static.pexels.com/photos/2422/sky-earth-galaxy-universe.jpg" />' +
+    '</div></div>';
     ohaf.attached();
     jasmine.clock().tick(5500);
     expect(document.getElementById('musicSlide1')).not.toBe(null);

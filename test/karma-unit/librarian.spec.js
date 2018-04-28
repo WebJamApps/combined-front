@@ -1,13 +1,12 @@
+import csvjson from 'csvjson';
+import { Validator } from 'aurelia-validation';
 import { App } from '../../src/app';
 import { AuthStub, HttpMock, AppStateStub } from './commons';
 import { Librarian } from '../../src/dashboard-child-routes/librarian';
-// import './setup';
 import { csvFixture } from './librarian.spec.fixtures';
-import csvjson from 'csvjson';
-import { Validator } from 'aurelia-validation';
 
 class VCMock {
-  createForCurrentScope(validator) {
+  createForCurrentScope() {
     return { validateTrigger: null };
   }
 }
@@ -18,22 +17,16 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
-  validateObject(obj, rules) {
+  validateObject() {
     return Promise.resolve([{ name: 'john', valid: true }]);
   }
-  validateProperty(prop, val, rules) {
+  validateProperty() {
     return Promise.resolve({});
   }
 }
 
 describe('the librarian module', () => {
-  let librarian;
-  let app1;
-  let http;
-  let reader;
-  let vc;
-  let val;
-  let auth;
+  let librarian, app1, http, reader, vc, val, auth;
   global.CSVFilePath = { files: [csvFixture.string, 'sample.txt'] };
 
   beforeEach(() => {

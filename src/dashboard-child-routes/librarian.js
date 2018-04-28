@@ -8,8 +8,8 @@ const csvjson = require('csvjson');
 const filesaver = require('file-saver');
 @inject(App, FileReader, filesaver, ValidationControllerFactory, Validator)
 export class Librarian {
-  controller = null;
-  validator = null;
+  // controller = null;
+  // validator = null;
   constructor(app, reader, saver, controllerFactory, validator) {
     this.app = app;
     this.reader = reader;

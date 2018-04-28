@@ -1,14 +1,9 @@
 import { App } from '../../src/app';
 import { AuthStub, HttpMock } from './commons';
-import { Reader } from '../../src/dashboard-child-routes/reader.js';
+import { Reader } from '../../src/dashboard-child-routes/reader';
 
 describe('the Reader Module', () => {
-  let auth;
-  // let http;
-  // let token = 'mhioj23yr675843ho12yv9852vbbjeywouitryhrcyqo7t89vu';
-  let reader;
-  // let reader2;
-  let app;
+  let auth, reader, app;
   const book = {
     title: '',
     type: 'hardback',

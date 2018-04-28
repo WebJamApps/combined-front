@@ -9,17 +9,13 @@ class AuthStub2 extends AuthStub {
     return this.authenticated;
   }
 }
-
 function testAsync(runAsync) {
   return (done) => {
     runAsync().then(done, (e) => { fail(e); done(); });
   };
 }
-
 describe('the App module', () => {
-  let app1;
-  let app2;
-
+  let app1, app2;
   beforeEach(() => {
     app1 = new App(new AuthStub(), new HttpMock());
     app1.auth.setToken('No token');
@@ -29,7 +25,6 @@ describe('the App module', () => {
     app2.activate();
     app2.appState = new AppStateStub();
   });
-
   it('tests configHttpClient', (done) => {
     const { add: ok } = new Counter(4, done);
     app1.auth.tokenInterceptor = 'tokenInterceptor';
@@ -71,15 +66,24 @@ describe('the App module', () => {
     // let configStub = {options: {pushState: true}, addPipelineStep(){}, addPostRenderStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
     app1.activate();
 
-    let config = {
-      fallbackRoute() {}, map() {}, title: '', options: { pushstate: '', root: '' }, addPipelineStep() {}, addPostRenderStep(funObj) { funObj.run({ config: { settings: { noScrollToTop: false } } }, () => {}); }
+    let router, config = {
+      fallbackRoute() {},
+      map() {},
+      title: '',
+      options: { pushstate: '', root: '' },
+      addPipelineStep() {},
+      addPostRenderStep(funObj) { funObj.run({ config: { settings: { noScrollToTop: false } } }, () => {}); }
     };
-    let router;
     app2.configureRouter(config, router);
     document.body.innerHTML = '';
     app2.configureRouter(config, router);
     config = {
-      fallbackRoute() {}, map() {}, title: '', options: { pushstate: '', root: '' }, addPipelineStep() {}, addPostRenderStep(funObj) { funObj.run({ config: { settings: { noScrollToTop: true } } }, () => {}); }
+      fallbackRoute() {},
+      map() {},
+      title: '',
+      options: { pushstate: '', root: '' },
+      addPipelineStep() {},
+      addPostRenderStep(funObj) { funObj.run({ config: { settings: { noScrollToTop: true } } }, () => {}); }
     };
     app2.configureRouter(config, router);
     done();
@@ -101,7 +105,7 @@ describe('the App module', () => {
       options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}
     };
     app1.configureRouter(configStub, RouterStub);
-    expect(app1.router).toBeDefined;
+    expect(app1.router).toBeDefined();
     done();
   });
 
@@ -167,8 +171,9 @@ describe('the App module', () => {
   it('gets the current fragment', (done) => {
     app1.router = new RouterStub();
     const frag = app1.currentRouteFrag;
-    app1.currentRoute;
+    const cr = app1.currentRoute;
     expect(typeof frag).toBe('object');
+    expect(cr).toBeDefined();
     done();
   });
 
@@ -178,13 +183,13 @@ describe('the App module', () => {
     app1.router = routre;
     app1.appState.isOhafLogin = true;
     document.body.innerHTML = '<div id="wjfooter" class="footer drawer nav-list"><i id="mobilemenutoggle"></i></div>';
-    // app1.currentRoute = 'login';
-    app1.currentStyles;
-    // app1.logout();
+    let cs = app1.currentStyles;
     expect(app1.Menu).toBe('ohaf');
+    expect(cs).toBeDefined();
     app1.appState.isOhafLogin = false;
-    app1.currentStyles;
+    cs = app1.currentStyles;
     expect(app1.Menu).toBe('wj');
+    expect(cs).toBeDefined();
     done();
   });
 
@@ -193,8 +198,9 @@ describe('the App module', () => {
     routre.currentInstruction.config.name = 'ohaf';
     document.body.innerHTML = '<div id="wjfooter" class="footer drawer nav-list"><i id="mobilemenutoggle"></i></div>';
     app1.router = routre;
-    app1.currentStyles;
+    const cs = app1.currentStyles;
     expect(app1.Menu).toBe('ohaf');
+    expect(cs).toBeDefined();
     done();
   });
 
@@ -203,8 +209,9 @@ describe('the App module', () => {
     routre.currentInstruction.config.name = 'library';
     document.body.innerHTML = '<div id="wjfooter" class="footer drawer nav-list"><i id="mobilemenutoggle"></i></div>';
     app1.router = routre;
-    app1.currentStyles;
+    const cs = app1.currentStyles;
     expect(app1.Menu).toBe('library');
+    expect(cs).toBeDefined();
     done();
   });
 
@@ -212,8 +219,9 @@ describe('the App module', () => {
     const routre = new RouterStub();
     routre.currentInstruction.fragment = '/dashboard';
     app1.router = routre;
-    app1.currentStyles;
+    const cs = app1.currentStyles;
     expect(app1.Menu).toBe('dashboard');
+    expect(cs).toBeDefined();
     done();
   });
 
@@ -221,8 +229,9 @@ describe('the App module', () => {
     const routre = new RouterStub();
     routre.currentInstruction.fragment = '/bookshelf';
     app1.router = routre;
-    app1.currentStyles;
+    const cs = app1.currentStyles;
     expect(app1.Menu).toBe('bookshelf');
+    expect(cs).toBeDefined();
     done();
   });
 
@@ -230,28 +239,33 @@ describe('the App module', () => {
     const routre = new RouterStub();
     routre.currentInstruction.fragment = '/dashboard/user-account';
     app1.router = routre;
-    app1.currentStyles;
+    const cs = app1.currentStyles;
     expect(app1.Menu).toBe('user-account');
+    expect(cs).toBeDefined();
     done();
   });
 
   it('gets the current styles dashboard/volunteer route', (done) => {
     const routre = new RouterStub();
-    document.body.innerHTML = '<div id="ohaf-footer" class="footer drawer nav-list" elevation="4" style="padding:8px; background-color: #565656"></div>';
+    document.body.innerHTML = '<div id="ohaf-footer" class="footer drawer nav-list" elevation="4" ' +
+    'style="padding:8px; background-color: #565656"></div>';
     routre.currentInstruction.fragment = '/dashboard/volunteer';
     app1.router = routre;
-    app1.currentStyles;
+    const cs = app1.currentStyles;
     expect(app1.Menu).toBe('volunteer');
+    expect(cs).toBeDefined();
     done();
   });
 
   it('gets the current styles with dashboard/charity route', (done) => {
-    document.body.innerHTML = '<div id="ohaf-footer" class="footer drawer nav-list" elevation="4" style="padding:8px; background-color: #565656"></div>';
+    document.body.innerHTML = '<div id="ohaf-footer" class="footer drawer nav-list" elevation="4" ' +
+    'style="padding:8px; background-color: #565656"></div>';
     const routre = new RouterStub();
     routre.currentInstruction.fragment = '/dashboard/charity';
     app1.router = routre;
-    app1.currentStyles;
+    const cs = app1.currentStyles;
     expect(app1.Menu).toBe('charity');
+    expect(cs).toBeDefined();
     done();
   });
 
@@ -259,8 +273,9 @@ describe('the App module', () => {
     const routre = new RouterStub();
     routre.currentInstruction.fragment = '/dashboard/reader';
     app1.router = routre;
-    app1.currentStyles;
+    const cs = app1.currentStyles;
     expect(app1.Menu).toBe('reader');
+    expect(cs).toBeDefined();
     done();
   });
 
@@ -268,8 +283,9 @@ describe('the App module', () => {
     const routre = new RouterStub();
     routre.currentInstruction.fragment = '/dashboard/librarian';
     app1.router = routre;
-    app1.currentStyles;
+    const cs = app1.currentStyles;
     expect(app1.Menu).toBe('librarian');
+    expect(cs).toBeDefined();
     done();
   });
 
@@ -277,8 +293,9 @@ describe('the App module', () => {
     const routre = new RouterStub();
     routre.currentInstruction.fragment = '/dashboard/developer';
     app1.router = routre;
-    app1.currentStyles;
+    const cs = app1.currentStyles;
     expect(app1.Menu).toBe('developer');
+    expect(cs).toBeDefined();
     done();
   });
 
@@ -286,8 +303,9 @@ describe('the App module', () => {
     const routre = new RouterStub();
     routre.currentInstruction.config.name = 'music-router';
     app1.router = routre;
-    app1.currentStyles;
+    const cs = app1.currentStyles;
     expect(app1.Menu).toBe('music');
+    expect(cs).toBeDefined();
     done();
   });
 
@@ -295,7 +313,8 @@ describe('the App module', () => {
     const routre = new RouterStub();
     routre.currentInstruction.fragment = '/sc2rs';
     app1.router = routre;
-    app1.currentStyles;
+    const cs = app1.currentStyles;
+    expect(cs).toBeDefined();
     done();
   });
 
@@ -303,12 +322,14 @@ describe('the App module', () => {
     const routre = new RouterStub();
     routre.currentInstruction.fragment = 'vol-ops/';
     app1.router = routre;
-    app1.currentStyles;
+    let cs = app1.currentStyles;
     expect(app1.Menu).toBe('charity');
+    expect(cs).toBeDefined();
     routre.currentInstruction.fragment = undefined;
     app1.router = routre;
-    app1.currentStyles;
+    cs = app1.currentStyles;
     expect(app1.Menu).toBe('wj');
+    expect(cs).toBeDefined();
     done();
   });
 
@@ -329,7 +350,7 @@ describe('the App module', () => {
   it('should get widescreen', (done) => {
     const app3 = new App(new AuthStub(), new HttpMock());
     document.body.innerHTML = '<div class="drawer swipe-area"></div> <div class="mobile-menu-toggle"></div><div class="main-panel"></div>';
-    window.$ = () => ({ parent: () => ({ css: (arg) = arg }) });
+    window.$ = () => ({ parent: () => ({ css: arg }) });
     app3.contentWidth = '0px';
     expect(app3.widescreen).toBe(true);
     done();

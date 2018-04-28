@@ -33,7 +33,6 @@ class RouterStub {
     this.opt = opt;
   }
 }
-
 class ConfigStub {
   map(array1) {
     return array1;
@@ -42,7 +41,6 @@ class ConfigStub {
     this.route = route;
   }
 }
-
 class AuthStub {
   setToken(token) {
     this.token = token;
@@ -69,7 +67,6 @@ class AuthStub {
     return this.authenticated;
   }
 }
-
 class AppStateStub {
   constructor() {
     this.user = {};
@@ -79,25 +76,68 @@ class AppStateStub {
   getUser(uid) {
     if (uid === '1') {
       this.user = {
-        name: 'Iddris Elba', email: 'yo@yo.com', userType: 'Charity', _id: '1', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true
+        name: 'Iddris Elba',
+        email: 'yo@yo.com',
+        userType: 'Charity',
+        _id: '1',
+        volTalents: ['childcare', 'other'],
+        volCauses: ['Environmental', 'other'],
+        volWorkPrefs: ['counseling', 'other'],
+        volCauseOther: '',
+        volTalentOther: '',
+        volWorkOther: '',
+        userDetails: 'newUser',
+        isOhafUser: true
       };
     } else if (uid === '2') {
       this.user = {
-        name: 'Iddris Elba', email: 'yo@yo.com', userType: 'Volunteer', _id: '2', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true
+        name: 'Iddris Elba',
+        email: 'yo@yo.com',
+        userType: 'Volunteer',
+        _id: '2',
+        volTalents: ['childcare', 'other'],
+        volCauses: ['Environmental', 'other'],
+        volWorkPrefs: ['counseling', 'other'],
+        volCauseOther: '',
+        volTalentOther: '',
+        volWorkOther: '',
+        userDetails: 'newUser',
+        isOhafUser: true
       };
     } else if (uid === '3') {
       this.user = {
-        userStatus: 'enabled', name: 'Iddris Elba', email: 'yo@yo.com', userType: 'Volunteer', _id: '3', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true
+        userStatus: 'enabled',
+        name: 'Iddris Elba',
+        email: 'yo@yo.com',
+        userType: 'Volunteer',
+        _id: '3',
+        volTalents:
+        ['childcare', 'other'],
+        volCauses: ['Environmental', 'other'],
+        volWorkPrefs: ['counseling', 'other'],
+        volCauseOther: '',
+        volTalentOther: '',
+        volWorkOther: '',
+        userDetails: 'newUser',
+        isOhafUser: true
       };
     } else {
       this.user = {
-        name: 'Iddris Elba', email: 'yo@yo.com', userType: 'Developer', _id: '3333333', volTalents: ['childcare', 'other'], volCauses: ['Environmental', 'other'], volWorkPrefs: ['counseling', 'other'], volCauseOther: '', volTalentOther: '', volWorkOther: '', userDetails: 'newUser', isOhafUser: true
+        name: 'Iddris Elba',
+        email: 'yo@yo.com',
+        userType: 'Developer',
+        _id: '3333333',
+        volTalents: ['childcare', 'other'],
+        volCauses: ['Environmental', 'other'],
+        volWorkPrefs: ['counseling', 'other'],
+        volCauseOther: '',
+        volTalentOther:
+        '',
+        volWorkOther: '',
+        userDetails: 'newUser',
+        isOhafUser: true
       };
     }
-    // return Promise.resolve({
-    //   //Headers: this.headers,
-    //   resolve(this.user)
-    // });
     return new Promise((resolve) => {
       resolve(this.user);
     });
@@ -121,7 +161,15 @@ class HttpMock {
   // real api calls will have more methods.
   constructor(data) {
     this.user = data || {
-      name: 'Iddris Elba', userType: 'Volunteer', _id: '3333333', volTalents: [], volCauses: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''
+      name: 'Iddris Elba',
+      userType: 'Volunteer',
+      _id: '3333333',
+      volTalents: [],
+      volCauses: [],
+      volWorkPrefs: [],
+      volCauseOther: '',
+      volTalentOther: '',
+      volWorkOther: ''
     };
   }
   status = 500;
@@ -138,18 +186,11 @@ class HttpMock {
     }
     this.status = 200;
     let returnValue = this.user;
-    console.log('this is url:');
-    console.log(url);
-    // if (url === '/signup/getall') {
-    //   returnValue = this.getSignUpAll();
-    // console.log(return_value);
-    // }
     if (url === '/user/1' || url === '/user/2' || url === '/user/3') {
       returnValue = this.getSpecificUser(url.substring(-1));
     } else if (url === '/volopp/') {
       returnValue = { message: 'success' };
     } else if (url === '/volopp/get/234') {
-      // console.log('i am in the correct route!');
       returnValue = {
         _id: '234',
         voName: 'run the swamp',
@@ -171,7 +212,6 @@ class HttpMock {
         voContactPhone: ''
       };
     } else if (url === '/volopp/get/2345') {
-      // console.log('i am in the correct route!');
       returnValue = {
         _id: '2345',
         voName: 'run the swamp',
@@ -220,7 +260,6 @@ class HttpMock {
       returnValue = null;
     }
     if (returnValue !== null) {
-      // console.log('i am here');
       return Promise.resolve({
         Headers: this.headers,
         json: () => Promise.resolve(returnValue)
@@ -236,7 +275,16 @@ class HttpMock {
     if (id === '1') {
       return [
         {
-          name: 'Iddris Elba', userType: 'Volunteer', _id: '1', volTalents: [], volCauses: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''
+          name: 'Iddris Elba',
+          userType: 'Volunteer',
+          _id: '1',
+          volTalents: [],
+          volCauses: [],
+          volWorkPrefs:
+          [],
+          volCauseOther: '',
+          volTalentOther: '',
+          volWorkOther: ''
         }
       ];
     } else if (id === '2') {
@@ -244,7 +292,16 @@ class HttpMock {
     } else if (id === '3') {
       return [
         {
-          name: 'Test Elba', userType: 'Volunteer', _id: '3', volTalents: [], volCauses: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''
+          name: 'Test Elba',
+          userType: 'Volunteer',
+          _id: '3',
+          volTalents: [],
+          volCauses: [],
+          volWorkPrefs:
+          [],
+          volCauseOther: '',
+          volTalentOther: '',
+          volWorkOther: ''
         }
       ];
     }

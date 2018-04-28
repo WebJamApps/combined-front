@@ -212,7 +212,7 @@ test('it catches error on create a new user', () => {
     this.headers.method = data.method;
     return Promise.resolve({
       Headers: this.headers,
-      json: () => Promise.reject({ error: 'rejected' })
+      json: () => Promise.reject(new Error({ error: 'rejected' }))
     });
   };
   const evt = { target: { fetchClient: mockfetch, runFetch: reg.runFetch } };

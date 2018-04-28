@@ -12,16 +12,11 @@ class AuthStub1 extends AuthStub {
     });
   }
 }
-
 class AppStub extends App {
   authenticated = false;
 }
-
 describe('the Register module', () => {
-  let register;
-  let app1;
-  let auth;
-
+  let register, app1, auth;
   beforeEach(() => {
     auth = new AuthStub1();
     auth.setToken({ sub: 'aowifjawifhiawofjo' });
@@ -31,12 +26,10 @@ describe('the Register module', () => {
     register = new Register(app1);
     register.app.appState = new AppStateStub();
   });
-
   it('should run attached function', (done) => {
     register.attached();
     done();
   });
-
   it('displays registration form with appName', (done) => {
     document.body.innerHTML = '<div class="home"></div>';
     register.app.showForm('webjam llc', register.registerClass);
