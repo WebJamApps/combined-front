@@ -1,21 +1,21 @@
 const User_ = require('../../src/classes/User_.js');
 
-let mockfetch;
+// let ;
 const mockStorage = {
-  setItem(item, value) {
+  setItem() {
   // do nothing
   },
-  getItem(item) {
+  getItem() {
   // do nothing
   },
-  removeItem(item) {
+  removeItem() {
   // do nothing
   }
 };
 window.localStorage = mockStorage;
 
 document.body.innerHTML = '<div><div class="home"></div></div>';
-let user = new User_();
+let user = new User_(), mockfetch;
 
 test('generates a email varification form', () => {
   user.verifyEmail();
@@ -156,7 +156,7 @@ test('it catches the error from reset password PUT', () => {
     this.headers.method = data.method;
     return Promise.resolve({
       Headers: this.headers,
-      json: () => Promise.reject({ error: 'server error' })
+      json: () => Promise.reject(new Error({ error: 'server error' }))
     });
   };
   const evt = { target: { formType: 'reset', fetchClient: mockfetch, runFetch: user.runFetch } };
@@ -206,7 +206,7 @@ test('it catches errors on update the user PUT', () => {
     this.headers.method = data.method;
     return Promise.resolve({
       Headers: this.headers,
-      json: () => Promise.reject({ error: 'big problem' })
+      json: () => Promise.reject(new Error({ error: 'big problem' }))
     });
   };
   const evt = { target: { fetchClient: mockfetch, runFetch: user.runFetch } };
@@ -273,7 +273,7 @@ test('it sends PUT request to varify the changed email with pin and catches erro
     this.headers.method = data.method;
     return Promise.resolve({
       Headers: this.headers,
-      json: () => Promise.reject({ error: 'big problem' })
+      json: () => Promise.reject(new Error({ error: 'big problem' }))
     });
   };
   user.fetch = mockfetch;

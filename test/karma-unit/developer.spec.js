@@ -19,9 +19,7 @@ class HttpMockDev extends HttpMock {
 }
 
 describe('the Developer Module', () => {
-  let developer;
-  let auth;
-  let app;
+  let developer, auth, app;
   beforeEach(() => {
     auth = new AuthStub();
     auth.setToken({ sub: '1' });

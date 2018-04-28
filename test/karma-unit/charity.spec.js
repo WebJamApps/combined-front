@@ -9,7 +9,6 @@ class VCMock {
     return { validateTrigger: null };
   }
 }
-
 class ValidatorMock extends Validator {
   constructor(a, b) {
     super();
@@ -32,7 +31,6 @@ class ValidatorMock extends Validator {
     return Promise.resolve({});
   }
 }
-
 class HttpMockChar extends HttpMock {
   fetch(url, obj) {
     this.headers.url = url;
@@ -43,11 +41,11 @@ class HttpMockChar extends HttpMock {
     this.status = 200;
     return Promise.resolve({
       Headers: this.headers,
-      json: () => Promise.resolve([{ charityTypes: ['Home', 'Elderly'], charityManagers: ['Home', 'Elderly'] }, { charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other'] }, { charityTypes: [], charityManagers: [] }])
+      json: () => Promise.resolve([{ charityTypes: ['Home', 'Elderly'], charityManagers: ['Home', 'Elderly'] },
+        { charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other'] }, { charityTypes: [], charityManagers: [] }])
     });
   }
 }
-
 class HttpMockChar2 extends HttpMock {
   fetch(url, obj) {
     this.headers.url = url;
@@ -62,15 +60,8 @@ class HttpMockChar2 extends HttpMock {
     });
   }
 }
-
 describe('the Charity Module', () => {
-  let charity;
-  let charity2;
-  let app;
-  let app2;
-  let auth;
-  let vc;
-  let val;
+  let charity, charity2, app, app2, auth, vc, val;
   const updatedCharity = {
     charityName: '',
     charityCity: '',
@@ -83,7 +74,6 @@ describe('the Charity Module', () => {
     charityTypesHtml: '',
     charityPhoneNumber: '0237654897'
   };
-
   beforeEach(() => {
     vc = new VCMock();
     val = new ValidatorMock();
@@ -98,43 +88,36 @@ describe('the Charity Module', () => {
     charity2 = new Charity(app2, vc, val);
     charity2.app.appState = new AppStateStub();
   });
-
   it('should call submit callback', (done) => {
     charity.validator2.cb([]);
     done();
   });
-
   it('displays the checkboxes inside a select box', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    // charity.app.expanded = true;
     charity.showCheckboxes('types');
     expect(document.getElementById('types').style.display).toBe('block');
     done();
   });
-
   it('checkboxes closed', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;display:block"></div>';
-    // charity.app.expanded = false;
     charity.showCheckboxes('types');
     expect(document.getElementById('types').style.display).toBe('none');
     done();
   });
-
   it('it does not display the charities table when there are no charities', (done) => {
     charity2.activate();
     expect(charity2.charities.length).toBe(0);
     done();
   });
-
   it('it displays the new charity form on page load', (done) => {
     charity2.activate();
     charity2.setupValidation2 = function () {};
     charity2.controller2 = { validate() {} };
-    document.body.innerHTML = '<div id="charityDash"></div><div id="updateCharitySection"><div id="charTable"></div><button id="createNewCharityButton"></button></div>';
+    document.body.innerHTML = '<div id="charityDash"></div><div id="updateCharitySection"><div id="charTable">' +
+    '</div><button id="createNewCharityButton"></button></div>';
     charity2.attached();
     done();
   });
-
   it('displays the update charity table', (done) => {
     charity.activate();
     charity.setupValidation2 = function () {};
@@ -152,21 +135,29 @@ describe('the Charity Module', () => {
     };
     charity.update = true;
     charity.controller2 = { validate() {} };
-    document.body.innerHTML = '<h3 id="charityDash"></h3><div class="ctypeerror" id="charTable"></div><div id="typesUpdate"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button><button id="updateCharityButton"></button></div><div id="scheduleCharitySection"></div>';
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div class="ctypeerror" id="charTable">' +
+    '</div><div id="typesUpdate"></div><div id="updateCharitySection"><button id="createNewCharityButton">' +
+    '</button><button id="updateCharityButton"></button></div><div id="scheduleCharitySection"></div>';
     charity.updateCharityFunction(charity1);
     expect(charity.charityName).toBe('test charity');
     charity.update = false;
-    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection"><button id="createNewCharityButton"></button></div><div id=""></div>';
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection">' +
+    '<button id="createNewCharityButton"></button></div><div id=""></div>';
     charity.createNewCharity();
     done();
   });
 
   it('has a list of states', (done) => {
-    const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
-      'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
-      'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
-      'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+    const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
+      'Connecticut', 'Delaware', 'District of Columbia',
+      'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana',
+      'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
+      'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana',
+      'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+      'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon',
+      'Palau', 'Pennsylvania', 'Puerto Rico',
+      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island',
+      'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     states.sort();
     expect(charity.app.states).toContain(states[0]);
     expect(charity.app.states.length).toBe(states.length);
@@ -197,7 +188,6 @@ describe('the Charity Module', () => {
     charity.createCharity();
     done();
   });
-
   it('detects when the charity type is changed in the update form', (done) => {
     charity.activate();
     charity.controller2 = { errors: [{ _id: 123 }], validate: () => {} };
@@ -234,7 +224,6 @@ describe('the Charity Module', () => {
     expect(document.getElementsByClassName('ctypeerror')[0].style.display).toBe('none');
     done();
   });
-
   it('it displays the submit or update button on the form if the form is valid', (done) => {
     charity.activate();
     charity.validType2 = true;
@@ -246,11 +235,11 @@ describe('the Charity Module', () => {
     expect(charity.canSubmit2).toBe(true);
     done();
   });
-
   it('displays the create new charity webform with hidden submit button and the charities table', (done) => {
     jasmine.clock().install();
     charity.activate();
-    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div><button id="createNewCharityButton" style="display:block">Create</button>';
+    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div><button id="createNewCharityButton" ' +
+    'style="display:block">Create</button>';
     // charity.setUpValidation2 = function() {};
     charity.showUpdateCharity = function () {};
     charity.createNewCharity();
@@ -263,7 +252,8 @@ describe('the Charity Module', () => {
 
   it('hides the update charity button if it was displayed', (done) => {
     charity.activate();
-    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection"></div><div><button id="updateCharityButton" style="display:block">Create</button>';
+    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection">' +
+    '</div><div><button id="updateCharityButton" style="display:block">Create</button>';
     charity.setupValidation2 = function () {};
     charity.update = true;
     const myCharity = {
@@ -319,7 +309,11 @@ describe('the Charity Module', () => {
 
   it('does not display charity types when there are none', (done) => {
     charity2.activate();
-    charity2.charities = [{ charityTypes: [''], charityManagers: ['Home', 'Elderly'] }, { charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other'] }, { charityTypes: [], charityManagers: [] }];
+    charity2.charities = [{ charityTypes: [''], charityManagers: ['Home', 'Elderly'] }, {
+      charityTypes:
+       ['Home', 'Elderly', 'other'],
+      charityManagers: ['Home', 'Elderly', 'other']
+    }, { charityTypes: [], charityManagers: [] }];
     charity2.app.buildPTag(charity2.charities, 'charityTypes', 'charityTypeOther', 'charityTypesHtml');
     expect(charity2.charities[0].charityTypesHtml).toBe('<p style="font-size:10pt">not specified</p>');
     done();
@@ -327,7 +321,11 @@ describe('the Charity Module', () => {
 
   it('displays charity types when there are some', (done) => {
     charity2.activate();
-    charity2.charities = [{ charityTypes: [''], charityManagers: ['Home', 'Elderly'] }, { charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other'] }, { charityTypes: [], charityManagers: [] }];
+    charity2.charities = [{ charityTypes: [''], charityManagers: ['Home', 'Elderly'] }, {
+      charityTypes:
+      ['Home', 'Elderly', 'other'],
+      charityManagers: ['Home', 'Elderly', 'other']
+    }, { charityTypes: [], charityManagers: [] }];
     charity2.app.buildPTag(charity2.charities, 'charityTypes', 'charityTypeOther', 'charityTypesHtml');
     expect(charity2.charities[1].charityTypesHtml).not.toBe('<p style="font-size:10pt">not specified</p>');
     done();
@@ -335,7 +333,11 @@ describe('the Charity Module', () => {
 
   it('does not display charity managers when there are none', (done) => {
     charity2.activate();
-    charity2.charities = [{ charityTypes: [''], charityManagers: [''] }, { charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other'] }, { charityTypes: [], charityManagers: [] }];
+    charity2.charities = [{ charityTypes: [''], charityManagers: [''] }, {
+      charityTypes:
+      ['Home', 'Elderly', 'other'],
+      charityManagers: ['Home', 'Elderly', 'other']
+    }, { charityTypes: [], charityManagers: [] }];
     charity2.buildManagers();
     done();
   });
@@ -387,7 +389,8 @@ describe('the Charity Module', () => {
 
   it('it checks if a charity does not have any events', (done) => {
     charity2.activate();
-    charity2.charities = [{ _id: '1234', charityTypes: [''], charityManagers: [''] }, { _id: '2345', charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other'] }];
+    charity2.charities = [{ _id: '1234', charityTypes: [''], charityManagers: [''] },
+      { _id: '2345', charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other'] }];
     charity2.checkEvents();
     done();
   });

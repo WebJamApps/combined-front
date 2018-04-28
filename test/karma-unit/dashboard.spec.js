@@ -7,10 +7,7 @@ describe('the Dashboard Module', () => {
   let dashboard;
 
   describe('Dashboard DI', () => {
-    let auth;
-    let http;
-    let app;
-
+    let auth, app, http;
     beforeEach(() => {
       auth = new AuthStub();
       auth.setToken({ sub: '3456' });

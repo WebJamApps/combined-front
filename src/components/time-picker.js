@@ -8,7 +8,7 @@ import { noView, customElement, bindable, inject } from 'aurelia-framework';
 @bindable('data')
 @bindable('type')
 @customElement('time-picker')
-export default class TimePicker {
+export class TimePicker {
   constructor(element) {
     this.element = element;
     this.updateTime = this.updateTime.bind(this);

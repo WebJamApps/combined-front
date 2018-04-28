@@ -1,8 +1,6 @@
 const Login_ = require('../../src/classes/Login_.js');
-// import 'isomorphic-fetch';
 
 const reg = new Login_();
-
 test('generates a login form', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('PATRIC');
@@ -92,7 +90,7 @@ test('it catches error on reset password', () => {
     this.headers.method = data.method;
     return Promise.resolve({
       Headers: this.headers,
-      json: () => Promise.reject({ error: 'rejected' })
+      json: () => Promise.reject(new Error({ error: 'rejected' }))
     });
   };
   const evt = { target: { fetchClient: mockfetch, appName: 'PATRIC', runFetch: reg.runFetch } };
@@ -266,14 +264,14 @@ test('login the PATRIC user', () => {
   };
   const evt = {
     target: {
-      fetchClient: mockfetch, appName: 'PATRIC', runFetch: reg.runFetch, checkIfLoggedIn() {}, generateSession(email) {}
+      fetchClient: mockfetch, appName: 'PATRIC', runFetch: reg.runFetch, checkIfLoggedIn() {}, generateSession() {}
     }
   };
   const mockStorage = {
-    setItem(item, value) {
+    setItem() {
     // do nothing
     },
-    getItem(item, value) {
+    getItem() {
     // do nothing
     }
   };
@@ -302,10 +300,10 @@ test('login the other app user', () => {
   };
   const evt = { target: { fetchClient: mockfetch, appName: 'CoolApp', runFetch: reg.runFetch } };
   const mockStorage = {
-    setItem(item, value) {
+    setItem() {
     // do nothing
     },
-    getItem(item, value) {
+    getItem() {
     // do nothing
     }
   };
@@ -334,7 +332,7 @@ test('displays error message if login fails', () => {
   };
   const evt = { target: { fetchClient: mockfetch, appName: 'PATRIC', runFetch: reg.runFetch } };
   const mockStorage = {
-    setItem(item, value) {
+    setItem() {
     // do nothing
     }
   };
@@ -355,12 +353,12 @@ test('catches any login errors', () => {
     this.headers.method = data.method;
     return Promise.resolve({
       Headers: this.headers,
-      json: () => Promise.reject({ error: 'incorrect email or password' })
+      json: () => Promise.reject(new Error({ error: 'incorrect email or password' }))
     });
   };
   const evt = { target: { fetchClient: mockfetch, appName: 'PATRIC', runFetch: reg.runFetch } };
   const mockStorage = {
-    setItem(item, value) {
+    setItem() {
     // do nothing
     }
   };

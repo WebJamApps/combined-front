@@ -19,11 +19,9 @@ const book = {
   checkedOutByName: '',
   _id: '12345'
 };
-
 const book2 = book;
 book2.type = 'hardrock';
 book2.siteLocation = 'https://bookstore.com/home';
-
 class HttpStub extends HttpMock {
   fetch(url, obj) {
     console.log(obj);
@@ -33,7 +31,6 @@ class HttpStub extends HttpMock {
     });
   }
 }
-
 class HttpStub2 {
   fetch(fn) {
     const response = this.itemStub;
@@ -47,14 +44,8 @@ class HttpStub2 {
     return this.__configureReturns;
   }
 }
-
 describe('The Bookshelf Module', () => {
-  let http;
-  let http2;
-  let shelf;
-  let app;
-  let bookshelf2;
-  let auth;
+  let http, http2, shelf, app, bookshelf2, auth;
   beforeEach(() => {
     const itemStubs = [1];
     http = new HttpStub();

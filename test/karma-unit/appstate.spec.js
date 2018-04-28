@@ -1,6 +1,4 @@
-// this are unit tests for the AppState
-
-import { AppState } from '../../src/classes/AppState.js';
+import { AppState } from '../../src/classes/AppState';
 import { HttpMock } from './commons';
 
 function testAsync(runAsync) {
