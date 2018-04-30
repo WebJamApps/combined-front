@@ -1,5 +1,5 @@
 import { bindable } from 'aurelia-framework';
-import { startSlides } from './commons/utils.js';
+import { startSlides } from './commons/utils';
 
 export class Library {
   @bindable

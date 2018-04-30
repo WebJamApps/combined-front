@@ -1,8 +1,6 @@
 import { inject } from 'aurelia-framework';
 import { App } from '../app';
-import { fixDates, formatDate, markPast } from '../commons/utils.js';
-import { showCheckboxes } from '../commons/utils.js';
-import { filterSelected } from '../commons/utils';
+import { fixDates, formatDate, markPast, showCheckboxes, filterSelected } from '../commons/utils';
 @inject(App)
 export class Volunteer {
   constructor(app) {
@@ -68,7 +66,7 @@ export class Volunteer {
   }
 
   checkScheduled() {
-    for (let i = 0; i < this.events.length; i++) {
+    for (let i = 0; i < this.events.length; i += 1) {
       this.events[i].voNumPeopleScheduled = 0;
       this.events[i].scheduled = false;
       this.events[i].full = false;
@@ -85,7 +83,7 @@ export class Volunteer {
   }
 
   fixZipcodesAndTypes() {
-    for (let i = 0; i < this.events.length; i++) {
+    for (let i = 0; i < this.events.length; i += 1) {
       if (this.events[i].voZipCode === undefined || this.events[i].voZipCode === '' || this.events[i].voZipCode === null) {
         this.events[i].voZipCode = '00000';
       }
@@ -157,9 +155,8 @@ export class Volunteer {
       .then((data) => {
         console.log(data);
         if (data.voStartDate) {
-          let today = new Date();
+          let today = new Date(), testDate = data.voStartDate.replace('-', '');
           today = formatDate(today);
-          let testDate = data.voStartDate.replace('-', '');
           testDate = testDate.replace('-', '');
           if (testDate < today) {
             alert('this event has already started');

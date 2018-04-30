@@ -1,8 +1,8 @@
+import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import { inject } from 'aurelia-framework';
 import { App } from '../app';
-import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import { FormValidator } from '../classes/FormValidator';
-import { fixDates, formatDate, markPast } from '../commons/utils.js';
+import { fixDates, formatDate, markPast } from '../commons/utils';
 @inject(App, ValidationControllerFactory, Validator)
 export class UserAccount {
   controller = null;
@@ -127,7 +127,7 @@ export class UserAccount {
   }
 
   fixPeopleScheduled(events) {
-    for (let i = 0; i < events.length; i++) {
+    for (let i = 0; i < events.length; i += 1) {
       if (events[i].voPeopleScheduled === null || events[i].voPeopleScheduled === undefined) {
         events[i].voPeopleScheduled = [];
       }
@@ -136,7 +136,7 @@ export class UserAccount {
 
   checkScheduled() {
     // let isScheduled = false;
-    for (let i = 0; i < this.events2.length; i++) {
+    for (let i = 0; i < this.events2.length; i += 1) {
       // if (this.events2[i].voPeopleScheduled !== null && this.events2[i].voPeopleScheduled !== undefined){
       if (this.events2[i].voPeopleScheduled.includes(this.uid)) {
         this.canDelete = false;
@@ -186,11 +186,9 @@ export class UserAccount {
         if (data.message) {
           const messagediv = document.getElementsByClassName('formErrors')[0];
           messagediv.innerHTML = `<p style="text-align:left; padding-left:12px">${data.message}</p>`;
-        } else {
-        /* istanbul ignore if */
-          if (process.env.NODE_ENV !== 'test') {
-            window.location.assign(`/userutil/?changeemail=${this.user.changeemail.toLowerCase()}`);
-          }
+          /* istanbul ignore if */
+        } else if (process.env.NODE_ENV !== 'test') {
+          window.location.assign(`/userutil/?changeemail=${this.user.changeemail.toLowerCase()}`);
         }
       })
       .catch((error) => {
@@ -219,7 +217,7 @@ export class UserAccount {
     this.app.httpClient.fetch(`/user/${this.uid}`, {
       method: 'delete'
     })
-      .then((data) => {
+      .then(() => {
         this.app.logout();
       });
   }

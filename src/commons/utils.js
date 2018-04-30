@@ -1,5 +1,5 @@
 exports.fixDates = function (myevents) {
-  for (let i = 0; i < myevents.length; i++) {
+  for (let i = 0; i < myevents.length; i += 1) {
     const startDate = myevents[i].voStartDate;
     const endDate = myevents[i].voEndDate;
     if (startDate !== null) {
@@ -27,10 +27,9 @@ exports.formatDate = function (today) {
 };
 
 exports.markPast = function (myEvents, formatDate) {
-  let testDate;
-  let today = new Date();
+  let testDate, today = new Date();
   today = formatDate(today);
-  for (let i = 0; i < myEvents.length; i++) {
+  for (let i = 0; i < myEvents.length; i += 1) {
     if (myEvents[i].voStartDate === undefined || myEvents[i].voStartDate === null || myEvents[i].voStartDate === '') {
       myEvents[i].voStartDate = today;
     }
@@ -58,17 +57,17 @@ exports.filterSelected = function (myModule) {
   console.log('trying to filter please');
   if (myModule.selectedFilter.length === 0) {
     console.log('no filters');
-    for (let i = 0; i < myModule.filters.length; i++) {
+    for (let i = 0; i < myModule.filters.length; i += 1) {
       myModule.filters[i].value = '';
       myModule[myModule.filters[i].filterby] = false;
       // myModule.filters[i].showFilter = false;
     }
     return;
   }
-  for (let s = 0; s < myModule.selectedFilter.length; s++) {
+  for (let s = 0; s < myModule.selectedFilter.length; s += 1) {
     console.log('I picked a filter:');
     // console.log(myModule.selectedFilter[0]);
-    for (let u = 0; u < myModule.filters.length; u++) {
+    for (let u = 0; u < myModule.filters.length; u += 1) {
       console.log('inside this loop');
       console.log(myModule.filters[u].filterby);
       console.log(myModule.selectedFilter[s]);
@@ -81,7 +80,7 @@ exports.filterSelected = function (myModule) {
   }
   console.log('these are the selected filters');
   console.log(myModule.selectedFilter);
-  for (let a = 0; a < myModule.filters.length; a++) {
+  for (let a = 0; a < myModule.filters.length; a += 1) {
     if (myModule.selectedFilter.indexOf(myModule.filters[a].filterby) === -1) {
       myModule[myModule.filters[a].filterby] = false;
       myModule.filters[a].value = '';
@@ -92,8 +91,8 @@ exports.filterSelected = function (myModule) {
 
 exports.showSlides = function (idArray) {
   idArray.forEach((id) => {
-    let slides;
-    slides = document.getElementById(id);
+    // let slides;
+    const slides = document.getElementById(id);
     if (slides !== null) {
       $(`#${id} > div:first`)
         .hide()
@@ -120,7 +119,7 @@ exports.startSlides = function (idArray1, errorMsg, idArray2) {
       console.log(errorMsg);
       return clearInterval(slideshowTimer);
     }
-    exports.showSlides(idArray2);
+    return this.showSlides(idArray2);
   }, 5400);
 };
 
