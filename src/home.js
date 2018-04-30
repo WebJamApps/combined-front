@@ -5,7 +5,7 @@
 // @inject(Router)
 export class Home {
   constructor() {
-    this.top;
+    this.top = null;
   }
 
   get widescreenHomepage() {

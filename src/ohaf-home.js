@@ -1,6 +1,4 @@
-// import {Router} from 'aurelia-router';
-// import {inject} from 'aurelia-framework';
-import { startSlides } from './commons/utils.js';
+import { startSlides } from './commons/utils';
 // @inject(Router)
 export class OhafHome {
   // constructor(router) {

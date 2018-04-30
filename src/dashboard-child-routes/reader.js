@@ -1,8 +1,6 @@
-
+import { json } from 'aurelia-fetch-client';
 import { inject } from 'aurelia-framework';
 import { App } from '../app';
-// import {AuthService} from 'aurelia-auth';
-import { json } from 'aurelia-fetch-client';
 @inject(App)
 export class Reader {
   constructor(app) {
@@ -45,32 +43,21 @@ export class Reader {
       this.activate();
     }
   }
-
   updateBook(book) {
     this.app.httpClient.fetch(`/book/${this.book._id}`, {
       method: 'put',
       body: json(book)
     })
       .then(response => response.json())
-      .then((data) => {
+      .then(() => {
       // fetch a new list of all books
         this.activate();
       });
   }
-
   checkInBook(book) {
     this.book = book;
     this.book.checkedOutBy = '';
     this.book.checkedOutByName = '';
     this.updateBook(this.book);
-    // this.app.httpClient.fetch('/book/' + this.book._id, {
-    //   method: 'put',
-    //   body: json(this.book)
-    // })
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   //fetch a fresh new list of all books
-    //   this.activate();
-    // });
   }
 }

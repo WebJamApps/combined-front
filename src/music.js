@@ -1,5 +1,5 @@
 
-import { showSlides } from './commons/utils.js';
+import { showSlides } from './commons/utils';
 
 export class Music {
   constructor() {
@@ -25,7 +25,7 @@ export class Music {
         console.log('you left the music page');
         return clearInterval(musicTimer);
       }
-      showSlides(['slideshowMusic']);
+      return showSlides(['slideshowMusic']);
     }, 5400);
   }
 }

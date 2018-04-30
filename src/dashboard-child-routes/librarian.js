@@ -1,15 +1,13 @@
+import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import { inject } from 'aurelia-framework';
 import { json } from 'aurelia-fetch-client';
 import { App } from '../app';
-import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import { FormValidator } from '../classes/FormValidator';
 
 const csvjson = require('csvjson');
 const filesaver = require('file-saver');
 @inject(App, FileReader, filesaver, ValidationControllerFactory, Validator)
 export class Librarian {
-  // controller = null;
-  // validator = null;
   constructor(app, reader, saver, controllerFactory, validator) {
     this.app = app;
     this.reader = reader;
@@ -63,13 +61,11 @@ export class Librarian {
   textFileValidate() {
     const nub = document.getElementById('deleteCreateButton');
     nub.style.display = 'none';
-    console.log('i am validating');
-    console.log(CSVFilePath.files);
     if (CSVFilePath.files.length === 0) {
       alert('no file was selected');
       return false;
     }
-    for (let i = 0; i < CSVFilePath.files.length; i++) {
+    for (let i = 0; i < CSVFilePath.files.length; i += 1) {
       const oInput = CSVFilePath.files[i];
       console.log(oInput.type);
       // the type is determined automatically during the creation of the Blob.
@@ -83,6 +79,7 @@ export class Librarian {
       alert(`Sorry, ${oInput.type} is an invalid file type.`);
       return false;
     }
+    return false;
   }
 
   setupValidation() {
@@ -133,7 +130,7 @@ export class Librarian {
       method: 'post',
       body: json(this.newBook)
     })
-      .then((data) => {
+      .then(() => {
         this.app.router.navigate('/bookshelf');
       });
   }
@@ -150,7 +147,7 @@ export class Librarian {
     await fetch;
     this.app.httpClient.fetch('/book/deleteall', {
       method: 'get'
-    }).then((response) => {
+    }).then(() => {
       this.createBooksFromCSV();
     });
   }
@@ -159,6 +156,18 @@ export class Librarian {
     let jsonObj;
     const httpClient = this.app.httpClient;
     const router = this.app.router;
+    async function makeLotaBooks(jsonObject) {
+      httpClient.fetch('/book/create', {
+        method: 'post',
+        body: json(jsonObject)
+      })
+        .then(response => response.json())
+        .then(() => {
+          setTimeout(() => {
+          }, 2000);
+          router.navigate('/bookshelf');
+        });
+    }
     async function loaded(evt) {
       console.log('in csv create');
       const fileString = evt.target.result;
@@ -168,29 +177,14 @@ export class Librarian {
       jsonObj = csvjson.toObject(fileString, options);
       makeLotaBooks(jsonObj);
     }
-
-    function errorHandler(evt) {
+    function errorHandler() {
       alert('The file could not be read');
-    }
-
-    async function makeLotaBooks(jsonObject) {
-      httpClient.fetch('/book/create', {
-        method: 'post',
-        body: json(jsonObject)
-      })
-        .then(response => response.json())
-        .then((data) => {
-          setTimeout(() => {
-          }, 2000);
-          router.navigate('/bookshelf');
-        });
     }
 
     this.reader.onload = loaded;
     this.reader.onerror = errorHandler;
     this.reader.readAsText(CSVFilePath.files[0]);
   }
-
   makeCSVfile() {
     this.app.httpClient.fetch('/book/getall')
       .then(response => response.json())
