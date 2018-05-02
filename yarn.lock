@@ -674,7 +674,7 @@ aurelia-metadata@^1.0.0, aurelia-metadata@^1.0.2:
   dependencies:
     aurelia-pal "^1.0.0"
 
-aurelia-pal-browser@^1.0.0, aurelia-pal-browser@^1.2.1:
+aurelia-pal-browser@^1.0.0, aurelia-pal-browser@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/aurelia-pal-browser/-/aurelia-pal-browser-1.8.0.tgz#7da454544b7a192b1ec797b9cb7505ccae0098b2"
   dependencies:
