@@ -27,6 +27,8 @@ export class TimePicker {
  border: '1px solid #ccc', color: '#fff', padding: '1px 5px', width: '83%', margin: 0, outline: 0, textAlign: 'left', cursor: 'text'
 }}
           onClick={this.showTimer}
+          onKeyDown={() => {}}
+          role="presentation"
         >{this.type === 'start' ? '8:00 am' : '5:00 pm'}
         </section>
       </div>
