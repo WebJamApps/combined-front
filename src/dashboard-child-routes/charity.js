@@ -1,9 +1,10 @@
 import { inject } from 'aurelia-framework';
-import { App } from '../app';
 import { json } from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
+import { App } from '../app';
 import { FormValidator } from '../classes/FormValidator';
-import { showCheckboxes } from '../commons/utils.js';
+import { showCheckboxes } from '../commons/utils';
+
 @inject(App, ValidationControllerFactory, Validator)
 export class Charity {
   controller = null;
@@ -182,7 +183,7 @@ export class Charity {
       method: 'post',
       body: json(this.updateCharity)
     })
-      .then((data) => {
+      .then(() => {
       // console.log(data);
         document.getElementById('charityDash').scrollIntoView();
         this.activate();
@@ -210,7 +211,7 @@ export class Charity {
     this.app.httpClient.fetch(`/charity/${charityId}`, {
       method: 'delete'
     })
-      .then((data) => {
+      .then(() => {
       // console.log('your charity has been deleted');
         this.activate();
         this.createNewCharity();

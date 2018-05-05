@@ -47,8 +47,19 @@ export class TimePicker {
   updateTime(time) {
     const a = time.getHours();
     const b = time.getMinutes();
-    const zone = a > 11 && a !== 0 ? 'pm' : 'am';
-    const offset = a > 12 && a !== 0 ? a % 12 : a === 0 ? 12 : a;
+    let zone, offset;
+    if (a > 11 && a !== 0) {
+      zone = 'pm';
+    } else {
+      zone = 'am';
+    }
+    if (a > 12 && a !== 0) {
+      offset = a % 12;
+    } else if (a === 12) {
+      offset = 12;
+    } else {
+      offset = 12;
+    }
     this.data = `${offset}:${b < 10 ? `0${b}` : b} ${zone}`;
     this.el.style.color = '#000';
     this.el.innerText = this.data;

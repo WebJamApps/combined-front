@@ -1,10 +1,10 @@
 import { inject } from 'aurelia-framework';
-import { App } from '../app';
 import { json } from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
+import { App } from '../app';
 import { FormValidator } from '../classes/FormValidator';
-import { fixDates, formatDate, markPast } from '../commons/utils.js';
-import { showCheckboxes } from '../commons/utils.js';
+import { fixDates, formatDate, markPast, showCheckboxes } from '../commons/utils';
+
 @inject(App, ValidationControllerFactory, Validator)
 export class VolunteerOpps {
   controller = null;
@@ -80,8 +80,7 @@ export class VolunteerOpps {
 
   async viewPeople(thisevent) {
     this.showVolunteers = true;
-    let res;
-    let person;
+    let res, person;
     this.allPeople = [];
     for (let i = 0; i < thisevent.voPeopleScheduled.length; i++) {
       res = await this.app.httpClient.fetch(`/user/${thisevent.voPeopleScheduled[i]}`);
@@ -124,7 +123,7 @@ export class VolunteerOpps {
   scheduleEvent() {
     this.voOpp.voStatus = 'new';
     this.app.httpClient.fetch('/volopp/create', { method: 'post', body: json(this.voOpp) })
-      .then((data) => {
+      .then(() => {
         this.voOpp = {};
         document.getElementById('eventHeader').scrollIntoView();
         this.activate();
@@ -202,7 +201,7 @@ export class VolunteerOpps {
   async deleteEvent(thisEventId) {
     await fetch;
     this.app.httpClient.fetch(`/volopp/${thisEventId}`, { method: 'delete' })
-      .then((data) => {
+      .then(() => {
         this.activate();
       });
   }
@@ -224,7 +223,7 @@ export class VolunteerOpps {
       if (this.counter !== 1 || !this.updateEvent) {
         nub.style.display = 'block';
       }
-      this.counter++;
+      this.counter += 1;
     }
     return this.canSubmit2;
   }
