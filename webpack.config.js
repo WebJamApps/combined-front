@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plugin');
-const { optimize: { CommonsChunkPlugin }, ProvidePlugin } = require('webpack');
+const { ProvidePlugin } = require('webpack');
 const webpack = require('webpack');
 // config helpers:
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
@@ -83,6 +83,9 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     { test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'file-loader' }
     ]
   },
+  optimization: {
+    minimize: false
+  },
   plugins: [
     new AureliaPlugin(),
     new ModuleDependenciesPlugin({
@@ -145,9 +148,6 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     ...when(extractCss, new ExtractTextPlugin({
       filename: production ? '[contenthash].css' : '[id].css',
       allChunks: true
-    })),
-    ...when(production, new CommonsChunkPlugin({
-      name: ['common']
     })),
     ...when(production, new CopyWebpackPlugin([
   { from: 'static/favicon.ico', to: 'favicon.ico' }
