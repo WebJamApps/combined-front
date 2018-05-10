@@ -7,7 +7,7 @@ import { json, HttpClient } from 'aurelia-fetch-client';
 import { AppState } from './classes/AppState.js';
 
 import 'isomorphic-fetch';
-import 'whatwg-fetch);
+import 'whatwg-fetch';
 const Hammer = require('hammerjs');
 @inject(AuthService, HttpClient)
 export class App {
