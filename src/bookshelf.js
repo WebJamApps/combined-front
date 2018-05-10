@@ -1,6 +1,6 @@
 import { inject } from 'aurelia-framework';
 import { App } from './app';
-import { makeFilterDropdown, showCheckboxes } from './commons/utils.js';
+import { makeFilterDropdown, showCheckboxes } from './commons/utils';
 @inject(App)
 export class Bookshelf {
   constructor(app) {
