@@ -4,6 +4,7 @@ dotenv.config({path: '.env'});
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
 const webpack = require('webpack');
@@ -54,10 +55,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
       {
         test: /\.css$/i,
         issuer: [{ not: [{ test: /\.html$/i }] }],
-        use: extractCss ? ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: cssRules
-        }) : ['style-loader', ...cssRules]
+        use: extractCss ? [MiniCssExtractPlugin.loader, "css-loader"] : ['style-loader', ...cssRules]
       },
       {
         test: /\.css$/i,
@@ -84,7 +82,17 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     ]
   },
   optimization: {
-    minimize: false
+    minimize: false,
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true
+        }
+      }
+    }
   },
   plugins: [
     new AureliaPlugin(),
@@ -145,7 +153,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
   { from: 'static/music/TTGA.mp3', to: 'TTGA.mp3' },
   { from: 'static/WebJamLLC_FactSheet.pdf', to: 'WebJamLLC_FactSheet.pdf' }
     ]),
-    ...when(extractCss, new ExtractTextPlugin({
+    ...when(extractCss, new MiniCssExtractPlugin({
       filename: production ? '[contenthash].css' : '[id].css',
       allChunks: true
     })),
