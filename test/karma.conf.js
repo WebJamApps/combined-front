@@ -1,5 +1,6 @@
 
 const path = require('path');
+const webpack = require('../webpack.config');
 
 const isDebug = arg => arg === '--debug';
 
@@ -31,7 +32,7 @@ module.exports = function (config) {
       'test/karma-bundle.js': ['webpack', 'sourcemap']
     },
 
-    webpack: require('../webpack.config')({ coverage: !process.argv.some(isDebug) }),
+    webpack: webpack({ coverage: !process.argv.some(isDebug) }),
 
     /*
     * test results reporter to use
