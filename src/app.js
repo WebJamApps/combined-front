@@ -1,14 +1,13 @@
 import { PLATFORM } from 'aurelia-pal';
 import { inject, bindable } from 'aurelia-framework';
-import { AuthorizeStep } from 'aurelia-auth';
-import { UserAccess } from './classes/UserAccess.js';
-import { AuthService } from 'aurelia-auth';
+import { AuthorizeStep, AuthService } from 'aurelia-auth';
 import { json, HttpClient } from 'aurelia-fetch-client';
-import { AppState } from './classes/AppState.js';
-
 import 'isomorphic-fetch';
 import 'whatwg-fetch';
-const Hammer = require('hammerjs');
+import * as Hammer from 'hammerjs';
+import { UserAccess } from './classes/UserAccess';
+import { AppState } from './classes/AppState';
+
 @inject(AuthService, HttpClient)
 export class App {
   constructor(auth, httpClient) {
@@ -194,7 +193,7 @@ export class App {
     return isWide;
   }
 
-  clickFunc() {
+  clickFunc(event) {
     const drawer = document.getElementsByClassName('drawer')[0];
     const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
     console.log(event.target.className);
@@ -305,6 +304,7 @@ export class App {
     if (this.router.currentInstruction) {
       return this.router.currentInstruction.config.name;
     }
+    return null;
   }
 
   get currentRouteFrag() {
@@ -312,6 +312,7 @@ export class App {
     if (this.router.currentInstruction) {
       return this.router.currentInstruction.fragment;
     }
+    return null;
   }
 
   checkNavMenu() {
