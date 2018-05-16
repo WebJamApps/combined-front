@@ -345,7 +345,7 @@ export class App {
       this.Menu = 'volunteer';
     } else if (this.currentRouteFrag === '/dashboard/user-account') {
       this.Menu = 'user-account';
-    } else if (this.currentRouteFrag !== undefined) {
+    } else if (this.currentRouteFrag) {
       if (this.currentRouteFrag.indexOf('vol-ops/') !== -1) {
         this.Menu = 'charity';
       } else {
