@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
@@ -11,7 +11,7 @@ const webpack = require('webpack');
 
 // config helpers:
 dotenv.config({ path: '.env' });
-const ensureArray = config => config && ((Array.isArray(config) ? config : [config]) || []);
+const ensureArray = config => config && (Array.isArray(config) ? config : [config]) || [];
 const when = (condition, config, negativeConfig) => condition ? ensureArray(config) : ensureArray(negativeConfig);
 // primary config:
 const title = 'Web Jam LLC';
