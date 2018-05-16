@@ -14,10 +14,11 @@
   },
   "scripts": {
     "start": "nps",
-    "test": "rm -rf coverage && npm run test:lint && npm run test:jest && npm run test:jest-react && npm run test:karma && npm run combine-coverage && npm run webdriver-update && nps e2e",
+    "test": "rm -rf coverage && npm run test:jest && npm run test:jest-react && npm run test:karma && npm run combine-coverage && npm run webdriver-update && nps e2e && npm run test:lint",
     "combine-coverage": "istanbul-combine -d coverage -p none -r lcov -r html coverage/jest-react/coverage-final.json coverage/jest/coverage-final.json coverage/karma/coverage-final.json",
     "test:jest": "cross-env NODE_ENV=test && jest --no-cache --config jest.config.json --notify",
     "test:jest-react": "nps test.react",
+    "test:jest-react-u": "nps test.react.accept",
     "test:karma": "cross-env NODE_ENV=test nps test.karma",
     "test:debug": "cross-env NODE_ENV=test nps test.karma.debug",
     "test:lint": "nps test.lint",
