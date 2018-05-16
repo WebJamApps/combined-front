@@ -1,9 +1,8 @@
 
 const path = require('path');
+const webpack = require('../webpack.config');
 
-let isDebug = (arg) => {
-  return arg === '--debug';
-};
+const isDebug = arg => arg === '--debug';
 
 module.exports = function (config) {
   config.set({
@@ -17,25 +16,23 @@ module.exports = function (config) {
     *
     * available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     */
-    frameworks: [ 'jasmine', 'viewport' ],
+    frameworks: ['jasmine', 'viewport'],
 
     /**
     * list of files / patterns to load in the browser
     * we are building the test environment in ./spec-bundle.js
     */
-    files: [
-      { pattern: 'test/karma-bundle.js', watched: false }
-    ],
+    files: [{ pattern: 'test/karma-bundle.js', watched: false }],
 
     /*
     * preprocess matching files before serving them to the browser
     * available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     */
     preprocessors: {
-      'test/karma-bundle.js': [ 'webpack', 'sourcemap' ]
+      'test/karma-bundle.js': ['webpack', 'sourcemap']
     },
 
-    webpack: require('../webpack.config')({ coverage: !process.argv.some(isDebug) }),
+    webpack: webpack({ coverage: !process.argv.some(isDebug) }),
 
     /*
     * test results reporter to use
@@ -43,10 +40,10 @@ module.exports = function (config) {
     * possible values: 'dots', 'progress'
     * available reporters: https://npmjs.org/browse/keyword/karma-reporter
     */
-    reporters: [ 'mocha', 'coverage' ],
+    reporters: ['mocha', 'coverage'],
 
     coverageReporter: {
-      reporters: [ { type: 'html' }, { type: 'lcovonly' }, { type: 'text-summary' }, { type: 'json' } ],
+      reporters: [{ type: 'html' }, { type: 'lcovonly' }, { type: 'text-summary' }, { type: 'json' }],
       dir: 'coverage/',
       subdir: 'karma/'
     },

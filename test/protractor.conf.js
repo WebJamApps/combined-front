@@ -1,7 +1,7 @@
 const port = 19876;
 
 exports.config = {
-  port: port,
+  port,
 
   baseUrl: `http://localhost:${port}/`,
 
@@ -30,9 +30,9 @@ exports.config = {
   directConnect: true,
 
   capabilities: {
-    'browserName': 'chrome',
-    'chromeOptions': {
-      'args': [
+    browserName: 'chrome',
+    chromeOptions: {
+      args: [
         '--show-fps-counter',
         '--no-default-browser-check',
         '--no-first-run',
@@ -50,7 +50,7 @@ exports.config = {
     }
   },
 
-  onPrepare: function() {
+  onPrepare() {
     process.env.BABEL_TARGET = 'node';
     process.env.IN_PROTRACTOR = 'true';
     require('babel-register');

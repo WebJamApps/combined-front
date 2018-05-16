@@ -73,9 +73,7 @@ const configForProduction = {
 };
 let config;
 if (
-  window.location.hostname === 'localhost'
-  || process.env.NODE_ENV
-  && process.env.NODE_ENV.match(/dev/i)
+  window.location.hostname === 'localhost' || (process.env.NODE_ENV && process.env.NODE_ENV.match(/dev/i))
 ) {
   config = configForDevelopment;
 } else {
