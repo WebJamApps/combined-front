@@ -53,6 +53,8 @@ exports.config = {
   onPrepare() {
     process.env.BABEL_TARGET = 'node';
     process.env.IN_PROTRACTOR = 'true';
+
+    // eslint-disable-next-line global-require
     require('babel-register');
   },
 
