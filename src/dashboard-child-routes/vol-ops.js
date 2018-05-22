@@ -65,26 +65,27 @@ export class VolunteerOpps {
       i.voNumPeopleScheduled = 0;
       for (const j of i.voPeopleScheduled) {
         try {
-          await this.app.httpClient.fetch(`/user/${j}`);
+          this.app.httpClient.fetch(`/user/${j}`);
         } catch (err) {
           // user does not exist, remove it from voPeopleScheduled and update this event, then run make data makeDataTable
           console.log('user does not exist');
           i.voPeopleScheduled = i.voPeopleScheduled.filter(e => e !== j);
-          await this.app.updateById('/volopp/', i._id, i);
+          this.app.updateById('/volopp/', i._id, i);
           return this.makeDataTable();
         }
       }
       i.voNumPeopleScheduled = i.voPeopleScheduled.length;
     }
+    return null;
   }
 
   async viewPeople(thisevent) {
     this.showVolunteers = true;
     let res, person;
     this.allPeople = [];
-    for (let i = 0; i < thisevent.voPeopleScheduled.length; i++) {
-      res = await this.app.httpClient.fetch(`/user/${thisevent.voPeopleScheduled[i]}`);
-      person = await res.json();
+    for (let i = 0; i < thisevent.voPeopleScheduled.length; i += 1) {
+      res = this.app.httpClient.fetch(`/user/${thisevent.voPeopleScheduled[i]}`);
+      person = res.json();
       this.allPeople.push(person);
     }
     this.eventTitle = thisevent.voName;
@@ -150,7 +151,21 @@ export class VolunteerOpps {
 
   showNewEvent() {
     this.voOpp = {
-      voName: '', voCharityId: this.charityID, voNumPeopleNeeded: 1, voDescription: '', voWorkTypes: [], voTalentTypes: [], voWorkTypeOther: '', voTalentTypeOther: '', voStartDate: null, voStartTime: '', voEndDate: null, voEndTime: '', voContactName: this.user.name, voContactEmail: this.user.email, voContactPhone: this.user.userPhone
+      voName: '',
+      voCharityId: this.charityID,
+      voNumPeopleNeeded: 1,
+      voDescription: '',
+      voWorkTypes: [],
+      voTalentTypes: [],
+      voWorkTypeOther: '',
+      voTalentTypeOther: '',
+      voStartDate: null,
+      voStartTime: '',
+      voEndDate: null,
+      voEndTime: '',
+      voContactName: this.user.name,
+      voContactEmail: this.user.email,
+      voContactPhone: this.user.userPhone
     };
     this.voOpp.voCharityName = this.charity.charityName;
     this.voOpp.voStreet = this.charity.charityStreet;
@@ -168,17 +183,22 @@ export class VolunteerOpps {
     this.voOpp = theEvent;
     this.updateEvent('cancel');
     if (this.voOpp.voDescription !== undefined) {
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
-      this.voOpp.voDescription = `<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>${this.voOpp.voDescription}`;
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event' +
+        '</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About' +
+        ' This Event</strong></p>', '');
+      this.voOpp.voDescription = `<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong>
+        </p>${this.voOpp.voDescription}`;
     }
   }
 
   reactivateEvent(theEvent) {
     this.voOpp = theEvent;
     if (this.voOpp.voDescription !== undefined) {
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong></p>', '<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow">' +
+        '<strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:red"><strong>The Charity Has Cancelled This ' +
+        'Event</strong></p>', '<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>');
     }
     this.updateEvent('reactivate');
   }
@@ -186,10 +206,14 @@ export class VolunteerOpps {
   async updateEvent(updateType) {
     this.voOpp.voStatus = updateType;
     if (updateType === 'update') {
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>', '');
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>', '');
-      this.voOpp.voDescription = `<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong></p>${this.voOpp.voDescription}`;
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow">' +
+        '<strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow">' +
+        '<strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green">' +
+        '<strong>The Charity Has Reactivated This Event</strong></p>', '');
+      this.voOpp.voDescription = `<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong>
+        </p>${this.voOpp.voDescription}`;
     }
     await this.app.updateById('/volopp/', this.voOpp._id, this.voOpp);
     if (process.env.NODE_ENV !== 'test') {

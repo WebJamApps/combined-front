@@ -41,11 +41,11 @@ export class Charity {
   }
 
   async checkEvents() {
-    for (let i = 0; i < this.charities.length; i++) {
+    for (let i = 0; i < this.charities.length; i += 1) {
       let foundEvents = [];
       this.charities[i].hasEvents = false;
-      const res = await this.app.httpClient.fetch(`/volopp/${this.charities[i]._id}`);
-      foundEvents = await res.json();
+      const res = this.app.httpClient.fetch(`/volopp/${this.charities[i]._id}`);
+      foundEvents = res.json();
       this.charities[i].hasEvents = foundEvents.length > 0;
     }
   }
@@ -53,7 +53,17 @@ export class Charity {
   createNewCharity() {
     console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
     const charity = {
-      charityEmail: '', charityName: '', charityStreet: '', charityCity: '', charityState: '', charityZipCode: '', charityTypes: [], charityManagers: [], charityMngIds: [], charityTypeOther: '', charityTypesHtml: ''
+      charityEmail: '',
+      charityName: '',
+      charityStreet: '',
+      charityCity: '',
+      charityState: '',
+      charityZipCode: '',
+      charityTypes: [],
+      charityManagers: [],
+      charityMngIds: [],
+      charityTypeOther: '',
+      charityTypesHtml: ''
     };
     this.update = false;
     document.getElementById('charTable').style.display = 'block';
@@ -151,19 +161,21 @@ export class Charity {
       }
     }
     if (!valid || !this.validType2) {
-      return this.canSubmit2 = false;
+      this.canSubmit2 = false;
+      return false;
     }
     this.canSubmit2 = true;
     nub.style.display = 'block';
     nub.removeAttribute('disabled');
     if (this.update) {
       nub.setAttribute('disabled', '');
-      this.counter++;
+      this.counter += 1;
       // console.log(this.counter);
       if (this.counter > 8) {
         nub.removeAttribute('disabled');
       }
     }
+    return null;
   }
 
   createCharity() {
@@ -192,9 +204,9 @@ export class Charity {
   }
 
   buildManagers() {
-    for (let l = 0; l < this.charities.length; l++) {
+    for (let l = 0; l < this.charities.length; l += 1) {
       let manHtml = '';
-      for (let i = 0; i < this.charities[l].charityManagers.length; i++) {
+      for (let i = 0; i < this.charities[l].charityManagers.length; i += 1) {
         if (this.charities[l].charityManagers[i] !== '') {
           manHtml = `${manHtml}<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">${this.charities[l].charityManagers[i]}</p>`;
         }
@@ -264,7 +276,7 @@ export class Charity {
           // console.log(tempManager[0].name);
           // console.log(tempManager[0]._id);
           // only do this if the array does not already contain the user id, else alert that the user is already a manager of this charity
-          for (let l = 0; l < this.updateCharity.charityMngIds.length; l++) {
+          for (let l = 0; l < this.updateCharity.charityMngIds.length; l += 1) {
             console.log('checking for already a manager');
             if (this.updateCharity.charityMngIds.indexOf(tempManager[0]._id) > -1) {
               return alert('this user is already a manager of this charity');
@@ -280,6 +292,7 @@ export class Charity {
         } else {
           alert('There is no OHAF user with that email');
         }
+        return null;
       });
   }
 
