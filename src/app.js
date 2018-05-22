@@ -38,11 +38,12 @@ export class App {
     this.configHttpClient();
     this.appState = new AppState(this.httpClient);
     this.userAccess = new UserAccess(this.appState);
-    this.states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
-      'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
-      'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
-      'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+    this.states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
+      'District of Columbia', 'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa',
+      'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri',
+      'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+      'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina',
+      'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     this.states.sort();
     await this.checkUser();
   }
@@ -111,7 +112,7 @@ export class App {
     config.options.pushState = true;
     config.options.root = '/';
     config.addPipelineStep('authorize', AuthorizeStep);// Is the actually Authorization to get into the /dashboard
-    config.addPipelineStep('authorize', this.userAccess);// provides access controls to prevent users from certain /dashboard child routes when not their userType (role)
+    config.addPipelineStep('authorize', this.userAccess);// provides access controls to prevent users from certain
     config.addPostRenderStep({
       run(routingContext, next) {
         // console.log(routingContext);
@@ -126,13 +127,24 @@ export class App {
     });
     config.map([
       {
-        route: 'dashboard', name: 'dashboard-router', moduleId: PLATFORM.moduleName('./dashboard-router'), nav: false, title: '', auth: true, settings: 'fa fa-tachometer'
+        route: 'dashboard',
+        name: 'dashboard-router',
+        moduleId: PLATFORM.moduleName('./dashboard-router'),
+        nav: false,
+        title: '',
+        auth: true,
+        settings: 'fa fa-tachometer'
       },
       {
         route: 'login', name: 'login', moduleId: PLATFORM.moduleName('./login'), nav: false, title: 'Login', settings: 'fa fa-sign-in'
       },
       {
-        route: 'react-example', name: 'react-example', moduleId: PLATFORM.moduleName('./react-example'), nav: false, title: 'React Example', settings: ''
+        route: 'react-example',
+        name: 'react-example',
+        moduleId: PLATFORM.moduleName('./react-example'),
+        nav: false,
+        title: 'React Example',
+        settings: ''
       },
       {
         route: 'register', name: 'register', moduleId: PLATFORM.moduleName('./register'), nav: false, title: 'Register', settings: 'fa fa-user-plus'
@@ -366,15 +378,16 @@ export class App {
         color = '#c09580';
       }
       footer.innerHTML = `${'<div style="text-align: center;padding:6px">' +
-      '<a target="_blank" style="color:'}${color}"  href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x footerIcon" aria-hidden="true"></i></a>` +
-      `<span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"  href="https://www.linkedin.com/company/webjam/"><i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a>` +
-      `<span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"  href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a>` +
-      `<span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"  href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x footerIcon" aria-hidden="true"></i></a>` +
-        `<span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"  href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>` +
-      `<span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"  href="https://plus.google.com/u/1/109586499331294076292"><i class="fa fa-google-plus-square fa-2x footerIcon" aria-hidden="true"></i></a>` +
-
-      '<p style="color:white; font-size: 9pt;margin-bottom:0">Powered by ' +
-      '<a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>';
+      '<a target="_blank" style="color:'}${color}"  href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x footerIcon" aria-hidden="true">
+      </i></a><span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"  href="https://www.linkedin.com/company/webjam/">
+      <i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a><span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"
+       href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a><span>&nbsp;&nbsp;</span>
+       <a target="_blank" style="color:${color}"  href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x footerIcon" 
+       aria-hidden="true"></i></a><span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}" 
+        href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>
+        <span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"  href="https://plus.google.com/u/1/109586499331294076292">
+        <i class="fa fa-google-plus-square fa-2x footerIcon" aria-hidden="true"></i></a><p style="color:white; font-size: 9pt;margin-bottom:0">
+        Powered by <a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>`;
     }
   }
 
@@ -447,9 +460,9 @@ export class App {
   // }
 
   buildPTag(object, objectSelector, objectSelectorOther, objectStoreResult) {
-    for (let l = 0; l < object.length; l++) {
+    for (let l = 0; l < object.length; l += 1) {
       let typeHtml = '';
-      for (let i = 0; i < object[l][objectSelector].length; i++) {
+      for (let i = 0; i < object[l][objectSelector].length; i += 1) {
         if (object[l][objectSelector][i] !== '') {
           if (object[l][objectSelector][i] !== 'other') {
             typeHtml = `${typeHtml}<p style="font-size:10pt; padding-top:4px; margin-bottom:4px">${object[l][objectSelector][i]}</p>`;
@@ -465,8 +478,8 @@ export class App {
     }
   }
 
-  selectPickedChange(selectorObj, thisObj, mainSelectedList, selectorOtherVariable, otherVariable, selectorUseThis = false, userVariable = undefined) {
-    if (userVariable !== undefined) {
+  selectPickedChange(selectorObj, thisObj, mainSelectedList, selectorOtherVariable, otherVariable, selectorUseThis = false, userVariable) {
+    if (userVariable) {
       selectorObj[userVariable] = thisObj[mainSelectedList];
     }
     let exists = false;
