@@ -14,10 +14,11 @@
   },
   "scripts": {
     "start": "nps",
-    "test": "rm -rf coverage && npm run test:lint && npm run test:jest && npm run test:jest-react && npm run test:karma && npm run combine-coverage && npm run webdriver-update && nps e2e",
+    "test": "rm -rf coverage && npm run test:jest && npm run test:jest-react && npm run test:karma && npm run combine-coverage && npm run webdriver-update && nps e2e && npm run test:lint",
     "combine-coverage": "istanbul-combine -d coverage -p none -r lcov -r html coverage/jest-react/coverage-final.json coverage/jest/coverage-final.json coverage/karma/coverage-final.json",
     "test:jest": "cross-env NODE_ENV=test && jest --no-cache --config jest.config.json --notify",
     "test:jest-react": "nps test.react",
+    "test:jest-react-u": "nps test.react.accept",
     "test:karma": "cross-env NODE_ENV=test nps test.karma",
     "test:debug": "cross-env NODE_ENV=test nps test.karma.debug",
     "test:lint": "nps test.lint",
@@ -27,7 +28,6 @@
     "eslint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
     "postinstall": "npm run fix:aurelia-val && npm start -- build",
-    "prepublish": "npm run snyk-protect",
     "webdriver-update": "webdriver-manager update"
   },
   "dependencies": {
@@ -45,7 +45,7 @@
     "aurelia-logging-console": "^1.0.0",
     "aurelia-pal": "^1.8.0",
     "aurelia-pal-browser": "^1.8.0",
-    "aurelia-pal-nodejs": "^1.0.0-beta.3.3.0",
+    "aurelia-pal-nodejs": "^1.1.0",
     "aurelia-polyfills": "^1.2.2",
     "aurelia-router": "^1.5.0",
     "aurelia-templating": "^1.5.0",
@@ -139,7 +139,6 @@
     "karma-viewport": "^1.0.2",
     "karma-webpack": "^2.0.4",
     "protractor": "^5.1.2",
-    "react-test-renderer": "^16.0.0",
     "redux-devtools": "^3.4.1",
     "stylelint": "^8.4.0",
     "stylelint-config-standard": "^17.0.0",
