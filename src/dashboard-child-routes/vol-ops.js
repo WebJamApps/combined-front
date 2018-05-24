@@ -85,6 +85,7 @@ export class VolunteerOpps {
     this.allPeople = [];
     for (let i = 0; i < thisevent.voPeopleScheduled.length; i += 1) {
       res = this.app.httpClient.fetch(`/user/${thisevent.voPeopleScheduled[i]}`);
+      console.log(res);
       person = res.json();
       this.allPeople.push(person);
     }
