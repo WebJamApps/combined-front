@@ -71,10 +71,10 @@ const configForProduction = {
   // Once logged in, we want to redirect the user to the welcome view.
   loginRedirect: '/dashboard'
 };
+
+// eslint-disable-next-line import/no-mutable-exports
 let config;
-if (
-  window.location.hostname === 'localhost' || (process.env.NODE_ENV && process.env.NODE_ENV.match(/dev/i))
-) {
+if (window.location.hostname === 'localhost' || (process.env.NODE_ENV && process.env.NODE_ENV.match(/dev/i))) {
   config = configForDevelopment;
 } else {
   config = configForProduction;

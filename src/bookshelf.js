@@ -53,8 +53,9 @@ export class Bookshelf {
       this.filters[2].value = '';
       return;
     }
-    for (let i = 0; i < arrayLength; i++) {
-      /* look in array, if filter type is contained then set the selected filtertype to be true  this.keyword = true; this.mediaType=true; this.siteLocation=true */
+    for (let i = 0; i < arrayLength; i += 1) {
+      /* look in array, if filter type is contained then set the selected filtertype to be true
+      this.keyword = true; this.mediaType=true; this.siteLocation=true */
       if (this.selectedFilter.includes('keyword')) {
         this.keyword = true;
       } else {

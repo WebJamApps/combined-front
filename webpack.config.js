@@ -3,7 +3,6 @@ const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
@@ -11,8 +10,8 @@ const webpack = require('webpack');
 
 // config helpers:
 dotenv.config({ path: '.env' });
-const ensureArray = config => config && (Array.isArray(config) ? config : [config]) || [];
-const when = (condition, config, negativeConfig) => condition ? ensureArray(config) : ensureArray(negativeConfig);
+const ensureArray = config => (config && (Array.isArray(config) ? config : [config])) || [];
+const when = (condition, config, negativeConfig) => (condition ? ensureArray(config) : ensureArray(negativeConfig));
 // primary config:
 const title = 'Web Jam LLC';
 const outDir = path.resolve(__dirname, 'dist');
@@ -27,7 +26,7 @@ const cssRules = [
   }
 ];
 
-module.exports = ({ production, server, extractCss, coverage } = {}) => ({
+module.exports = (production, server, extractCss, coverage) => ({
   resolve: {
     extensions: ['.js'],
     modules: [srcDir, 'node_modules']
@@ -67,7 +66,9 @@ module.exports = ({ production, server, extractCss, coverage } = {}) => ({
       },
       { test: /\.html$/i, loader: 'html-loader' },
       {
-        test: /\.js$/i, loader: 'babel-loader', exclude: nodeModulesDir,
+        test: /\.js$/i,
+        loader: 'babel-loader',
+        exclude: nodeModulesDir,
         options: coverage ? { sourceMap: 'inline', plugins: ['istanbul'] } : {}
       },
       { test: /\.json$/i, loader: 'json-loader' },
@@ -142,10 +143,12 @@ module.exports = ({ production, server, extractCss, coverage } = {}) => ({
       { from: 'static/favicon.ico', to: 'favicon.ico' },
       { from: 'static/imgs', to: 'static/imgs' }]),
     new webpack.EnvironmentPlugin(['NODE_ENV', 'AuthProductionBaseURL', 'PORT', 'BackendUrl', 'GoogleClientId', 'userRoles']),
-    new webpack.DefinePlugin({'process.env': Object.keys(process.env).reduce((o, k) => {
-      o[k] = JSON.stringify(process.env[k]);
-      return o;
-    }, {})}),
+    new webpack.DefinePlugin({
+      'process.env': Object.keys(process.env).reduce((o, k) => {
+        o[k] = JSON.stringify(process.env[k]);
+        return o;
+      }, {})
+    }),
     new CopyWebpackPlugin([
       { from: 'static/music/DG.mp3', to: 'DG.mp3' },
       { from: 'static/music/MRM.mp3', to: 'MRM.mp3' },

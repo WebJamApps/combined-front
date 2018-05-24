@@ -15,7 +15,8 @@ class User_ {
   createVerifyCodeForm() {
     let formTitle = '';
     const passInput = '<tr class="pwheader"><th style="border:none; text-align:left">New Password</th></tr>' +
-    '<tr class="pwinput"><td><input class="loginpass" pattern=".{8,}" title="8 characters minimum" type="password" name="password" style="width:250px;min-width:0" value="" required></td></tr>';
+    '<tr class="pwinput"><td><input class="loginpass" pattern=".{8,}" title="8 characters minimum" type="password"' +
+      ' name="password" style="width:250px;min-width:0" value="" required></td></tr>';
     const emailVarifyForm = document.createElement('div');
     if (this.formType === 'reset') {
       formTitle = 'Reset Your Password';
@@ -26,10 +27,12 @@ class User_ {
     }
     emailVarifyForm.className = 'RegistrationForm elevation2';
     emailVarifyForm.style.maxWidth = '3in';
-    emailVarifyForm.innerHTML = `<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;">${formTitle}</h2><form style="min-height:3.25in">` +
+    emailVarifyForm.innerHTML = `<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;">${formTitle}</h2>
+    <form style="min-height:3.25in">` +
     '<div style="padding:2px; margin:10px;"><table><tbody class="regformtbody"><tr><th style="text-align:left">Email</th></tr><tr><td>' +
     '<input class="email" type="email" name="email" style="width:250px;min-width:0" value="" required>' +
-    `</td></tr>${passInput}<tr><td style="padding-bottom:0"><p class="codeNote" style="margin-bottom:0; font-size:10pt"><i>Check your email for a verification code.</i></p></td></tr>` +
+    `</td></tr>${passInput}<tr><td style="padding-bottom:0"><p class="codeNote" style="margin-bottom:0; font-size:10pt">
+    <i>Check your email for a verification code.</i></p></td></tr>` +
     '<tr><th style="text-align:left; padding-top:0">5-digit Code</th></tr><tr><td>' +
     '<input type="number" title="5 digit code" name="code" class="code" style="width:150px;min-width:0" required" value=""></td></tr>' +
     '</tbody></table></div><div style="text-align:center;padding:2px;margin:10px;">' +
@@ -99,7 +102,8 @@ class User_ {
     if (this.formType === 'reset') {
       const validPassword = newpasswd.checkValidity();
       if (validPassword && isemailvalid && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
-        return submitbutton.style.display = 'block';
+        submitbutton.style.display = 'block';
+        return true;
       }
       if (!validPassword) {
         errorMessage += '<li>Password is not >= 8 characters</li>';
@@ -113,9 +117,11 @@ class User_ {
     }
     if (errorMessage !== '<ul style="margin-right:0; margin-top:0; margin-bottom:20px; text-align:left; padding-left:20px; font-size:10pt">') {
       errorMessage += '</ul><p>&nbsp;</p>';
-      return document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
+      document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
+      return false;
     }
     submitbutton.style.display = 'block';
+    return null;
   }
 
   updateUser(evt) {
@@ -142,7 +148,11 @@ class User_ {
   resetPasswd(evt) {
     const fetchClient = evt.target.fetchClient;
     const runFetch = evt.target.runFetch;
-    const bodyData = { email: document.getElementsByClassName('email')[0].value, resetCode: document.getElementsByClassName('code')[0].value, password: document.getElementsByClassName('loginpass')[0].value };
+    const bodyData = {
+      email: document.getElementsByClassName('email')[0].value,
+      resetCode: document.getElementsByClassName('code')[0].value,
+      password: document.getElementsByClassName('loginpass')[0].value
+    };
     const fetchData = { method: 'PUT', body: JSON.stringify(bodyData), headers: { Accept: 'application/json', 'Content-Type': 'application/json' } };
     let backend = '';
     /* istanbul ignore else */
@@ -180,10 +190,10 @@ class User_ {
   }
 
   nevermind(className) {
-    let regform1 = [];
+    let regform1 = [],
+      feurl = 'http://localhost:9000';
     regform1 = document.getElementsByClassName(className);
     regform1[0].style.display = 'none';
-    let feurl = 'http://localhost:9000';
     /* istanbul ignore if */
     if (process.env.frontURL !== undefined) {
       feurl = process.env.frontURL;
@@ -197,8 +207,11 @@ class User_ {
   verifyChangeEmail(evt) {
     const fetchClient = evt.target.fetchClient;
     const runFetch = evt.target.runFetch;
-    console.log('using your pin to validate your new email address now ...');
-    const bodyData = { changeemail: document.getElementsByClassName('email')[0].value, resetCode: document.getElementsByClassName('code')[0].value, email: localStorage.getItem('userEmail') };
+    const bodyData = {
+      changeemail: document.getElementsByClassName('email')[0].value,
+      resetCode: document.getElementsByClassName('code')[0].value,
+      email: localStorage.getItem('userEmail')
+    };
     const fetchData = {
       method: 'PUT',
       body: JSON.stringify(bodyData),

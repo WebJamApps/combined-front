@@ -16,11 +16,13 @@ class Login_ {
     '<input class="userid" name="userid" style="width:300px;" value="" required></tr></td>';
     const loginform = document.createElement('div');
     loginform.className = 'LoginForm elevation2';
-    loginform.innerHTML = `${'<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;"><span class="patric">PATRIC</span>User Login</h2>' +
+    loginform.innerHTML = `${'<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;">' +
+      '<span class="patric">PATRIC</span>User Login</h2>' +
     '<form><div style="padding:2px; margin:10px;"><table><tbody class="regformtbody">'}${useridrow
     }${useremailinput
     }<tr><th style="border:none">Password</th></tr><tr><td>` +
-    '<input class="loginpass" pattern=".{8,}" title="8 characters minimum" type="password" name="password" style="width:300px;" value="" required></td></tr>' +
+    '<input class="loginpass" pattern=".{8,}" title="8 characters minimum" type="password" name="password" style="width:300px;" value="" required>' +
+      '</td></tr>' +
     '</tbody></table></div><div style="text-align:center;padding:2px;margin:10px;">' +
     '<div class="loginerror" style="color:red"></div>' +
     '<div><button style="display:none; margin-bottom:-22px; margin-left:10px" type="button" class="loginbutton">Login</button>' +
@@ -76,9 +78,8 @@ class Login_ {
     const useridValue = document.getElementsByClassName('userid')[0].value;
     const validpass = document.getElementsByClassName('loginpass')[0].checkValidity();
     const emailValue = document.getElementsByClassName('loginemail')[0].value;
-    let validemail = document.getElementsByClassName('loginemail')[0].checkValidity();
+    let validemail = document.getElementsByClassName('loginemail')[0].checkValidity(), message = '';
     const edot = emailValue.split('.');
-    let message = '';
     if (edot.length === 1 || !validemail || emailValue === '') {
       validemail = false;
       message = '<p>Invalid email format</p>';
@@ -119,12 +120,10 @@ class Login_ {
     // let appName = evt.target.appName;
     const fetchClient = evt.target.fetchClient;
     const runFetch = evt.target.runFetch;
-    let loginEmail = '';
-    // if (appName !== 'PATRIC') {
-    loginEmail = document.getElementsByClassName('loginemail')[0].value.toLowerCase();
-    // } else {
-    //   loginEmail = document.getElementsByClassName('userid')[0].value;
-    // }
+
+    const loginEmail = document.getElementsByClassName('loginemail')[0].value.toLowerCase();
+    let backend = '';
+
     const bodyData = { email: loginEmail };
     const fetchData = {
       method: 'PUT',
@@ -134,7 +133,6 @@ class Login_ {
         'Content-Type': 'application/json'
       }
     };
-    let backend = '';
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {
       backend = process.env.BackendUrl;
@@ -148,13 +146,12 @@ class Login_ {
     const runFetch = evt.target.runFetch;
     const appName = evt.target.appName;
     const generateSession = evt.target.generateSession;
-    let useridValue = '';
-    let emailValue = '';
+    let backend = '', emailValue = '';
     const passwordValue = document.getElementsByClassName('loginpass')[0].value;
     useridValue = document.getElementsByClassName('userid')[0].value;
-    // if (appName !== 'PATRIC') {
+
     emailValue = document.getElementsByClassName('loginemail')[0].value.toLowerCase();
-    // }
+
     const bodyData = { email: emailValue, password: passwordValue, id: useridValue };
     const fetchData = {
       method: 'POST',
@@ -164,7 +161,6 @@ class Login_ {
         'Content-Type': 'application/json'
       }
     };
-    let backend = '';
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {
       backend = process.env.BackendUrl;
@@ -172,14 +168,10 @@ class Login_ {
     return runFetch(fetchClient, backend, '/auth/login', fetchData, generateSession, appName, null);
   }
 
-  runFetch(fetchClient, url, route, fetchData, generateSession, appName, loginEmail) {
+  runFetch(fetchClient, url, route, fetchData) {
     const loginform1 = document.getElementsByClassName('LoginForm');
     const messagediv = document.getElementsByClassName('loginerror')[0];
-    // let feurl = 'http://localhost:7000';
 
-    // if (process.env.FrontendUrl !== undefined) {
-    //   feurl = process.env.FrontendUrl;
-    // }
     return fetchClient(url + route, fetchData)
       .then(response => response.json())
       .then((data) => {
