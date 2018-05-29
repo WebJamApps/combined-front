@@ -51,7 +51,7 @@ export class Charity {
   }
 
   createNewCharity() {
-    console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
+    // console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
     const charity = {
       charityEmail: '',
       charityName: '',
@@ -277,7 +277,7 @@ export class Charity {
           // console.log(tempManager[0]._id);
           // only do this if the array does not already contain the user id, else alert that the user is already a manager of this charity
           for (let l = 0; l < this.updateCharity.charityMngIds.length; l += 1) {
-            console.log('checking for already a manager');
+            // console.log('checking for already a manager');
             if (this.updateCharity.charityMngIds.indexOf(tempManager[0]._id) > -1) {
               return alert('this user is already a manager of this charity');
             }
