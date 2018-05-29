@@ -208,7 +208,6 @@ export class App {
   clickFunc(event) {
     const drawer = document.getElementsByClassName('drawer')[0];
     const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
-    console.log(event.target.className);
     /* istanbul ignore else */
     if (event.target.className !== 'menu-item') {
       document.getElementsByClassName('swipe-area')[0].style.display = 'none';
@@ -252,7 +251,6 @@ export class App {
   }
 
   close() {
-    console.log('going to close the menu if not widescreen');
     if (!this.widescreen) {
       this.toggleMobileMenu('close');
     }
@@ -277,7 +275,6 @@ export class App {
 
   ohafLogin() {
     // this.close();
-    console.log('ohaf login!');
     this.menu = 'ohaf';
     this.appState.isOhafLogin = true;
     this.router.navigate('/login');
@@ -285,7 +282,6 @@ export class App {
 
   wjLogin() {
     // this.close();
-    console.log('wj login!');
     this.menu = 'wj';
     this.appState.isOhafLogin = false;
     this.router.navigate('/login');
@@ -300,12 +296,11 @@ export class App {
     if (this.role !== 'Charity' && this.role !== 'Volunteer') {
       this.auth.logout('/')
         .then(() => {
-          console.log('Promise fulfilled, logged out');
         });
     } else {
       this.auth.logout('/ohaf')
         .then(() => {
-          console.log('Promise fulfilled, logged out');
+          // console.log('Promise fulfilled, logged out');
         });
     }
     this.role = '';
@@ -506,9 +501,9 @@ export class App {
     })
       .then(response => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
       }).catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }
   attached() {
@@ -518,7 +513,7 @@ export class App {
       ]
     });
     this.manager.on('swipe', this.close.bind(this));
-    console.log(this.manager);
+    // console.log(this.manager);
     // document.getElementsByClassName('swipe-area')[0].style.display = 'none';
   }
   detached() {

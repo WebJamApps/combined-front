@@ -93,7 +93,7 @@ class Register_ {
   }
 
   updateRegForm() {
-    console.log('inside this function');
+    // console.log('inside this function');
     const primApp = document.getElementsByClassName('pas')[0].value;
     const uidRow = document.getElementsByClassName('userIdRow')[0];
     const useridinput = document.getElementsByClassName('useridinput')[0];
@@ -245,7 +245,7 @@ class Register_ {
         } else {
           document.getElementsByClassName('RegistrationForm')[0].style.display = 'none';
           if (data.email) {
-            console.log('howdy');
+            // console.log('howdy');
             let front = window.location.href;
             front = front.replace('/register', '');
             /* istanbul ignore if */
@@ -260,7 +260,7 @@ class Register_ {
         }
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }
 }

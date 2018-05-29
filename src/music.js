@@ -22,7 +22,7 @@ export class Music {
       if (ms1 !== null && ms1 !== undefined) {
         ms1.style.display = 'none';
       } else {
-        console.log('you left the music page');
+        // console.log('you left the music page');
         return clearInterval(musicTimer);
       }
       return showSlides(['slideshowMusic']);

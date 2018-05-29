@@ -141,7 +141,7 @@ class Login_ {
   }
 
   logMeIn(evt) {
-    console.log('going to log you in');
+    // console.log('going to log you in');
     const fetchClient = evt.target.fetchClient;
     const runFetch = evt.target.runFetch;
     const appName = evt.target.appName;
@@ -199,7 +199,7 @@ class Login_ {
         }
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }
 }
