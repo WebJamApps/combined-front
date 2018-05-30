@@ -1,7 +1,6 @@
 {
   "extends": ["./node_modules/aurelia-tools/.eslintrc.json", "plugin:react/recommended", "airbnb"],
   "rules": {
-    "no-console": [0, "never"],
     "comma-dangle": [0, "never"],
     "no-undef": [0, "never"],
     "react/jsx-filename-extension": [0, "never"],
