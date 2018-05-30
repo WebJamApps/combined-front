@@ -125,7 +125,7 @@ class User_ {
   }
 
   updateUser(evt) {
-    console.log('trying to validate the user email with a code');
+    // console.log('trying to validate the user email with a code');
     const fetchClient = evt.target.fetchClient;
     const runFetch = evt.target.runFetch;
     const bodyData = { email: document.getElementsByClassName('email')[0].value, resetCode: document.getElementsByClassName('code')[0].value };
@@ -184,8 +184,8 @@ class User_ {
           }
         }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        // console.log(error);
       });
   }
 
