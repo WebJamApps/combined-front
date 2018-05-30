@@ -23,8 +23,8 @@ const book2 = book;
 book2.type = 'hardrock';
 book2.siteLocation = 'https://bookstore.com/home';
 class HttpStub extends HttpMock {
-  fetch(url, obj) {
-    console.log(obj);
+  fetch() {
+    // console.log(obj);
     return Promise.resolve({
       Headers: this.headers,
       json: () => Promise.resolve([book, book2, book])

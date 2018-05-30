@@ -3,9 +3,9 @@ import { RouterStub, AuthStub, HttpMock, AppStateStub } from './commons';
 import { App } from '../../src/app';
 
 class AuthStub1 extends AuthStub {
-  authenticate(name, f = false, o = null) {
-    console.log(o);
-    console.log(f);
+  authenticate(name) {
+    // console.log(o);
+    // console.log(f);
     return Promise.resolve({
       name,
       token: 'heyvgyuv38t327rvuiqt78b934ujwehgyq89ery8t'

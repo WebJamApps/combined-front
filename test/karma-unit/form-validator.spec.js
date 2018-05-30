@@ -2,8 +2,8 @@ import { FormValidator } from '../../src/classes/FormValidator';
 
 describe('the FormValidator class', () => {
   let fv;
-  const validator = function (rules, rule) {
-    console.log(rule);
+  const validator = function () {
+    // console.log(rule);
     // do nothing
   };
   beforeEach(() => {

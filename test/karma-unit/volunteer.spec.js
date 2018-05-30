@@ -482,9 +482,9 @@ describe('the Volunteer Module', () => {
   }));
 
   it('should catch error on doubleCheckSignups', testAsync(async () => {
-    volunteer.doubleCheckSignups({ _id: '234567' }).then((isError) => {
-      console.log('is this an error?');
-      console.log(isError);
+    volunteer.doubleCheckSignups({ _id: '234567' }).then(() => {
+      // console.log('is this an error?');
+      // console.log(isError);
       // expect(isError).toBe(Error{});
     });
   }));

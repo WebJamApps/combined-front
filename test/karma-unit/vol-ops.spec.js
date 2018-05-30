@@ -11,8 +11,8 @@ function testAsync(runAsync) {
 }
 
 class VCMock {
-  createForCurrentScope(validator) {
-    console.log(validator);
+  createForCurrentScope() {
+    // console.log(validator);
     return { validateTrigger: null };
   }
 }
@@ -23,14 +23,14 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
-  validateObject(obj, rules) {
-    console.log(rules);
+  validateObject() {
+    // console.log(rules);
     return Promise.resolve([{
       rule: Object, object: Object, propertyName: 'voStartTime', valid: true, message: ''
     }]);
   }
-  validateProperty(prop, val, rules) {
-    console.log(rules);
+  validateProperty() {
+    // console.log(rules);
     return Promise.resolve({});
   }
 }
@@ -41,16 +41,16 @@ class ValidatorMockFalse extends Validator {
     this.a = a;
     this.b = b;
   }
-  validateObject(obj, rules) {
-    console.log(rules);
-    console.log('obj');
-    console.log(obj);
+  validateObject() {
+    // console.log(rules);
+    // console.log('obj');
+    // console.log(obj);
     return Promise.resolve([{
       rule: Object, object: Object, propertyName: 'voStartTime', valid: false, message: ''
     }]);
   }
-  validateProperty(prop, val, rules) {
-    console.log(rules);
+  validateProperty() {
+    // console.log(rules);
     return Promise.resolve({});
   }
 }
@@ -172,8 +172,8 @@ describe('the Volunteer Opps Module', () => {
     volops4.app.httpClient.fetch = function () {
       return Promise.reject(new Error('fail'));
     };
-    await volops4.checkScheduled().then((isError) => {
-      console.log(isError);
+    await volops4.checkScheduled().then(() => {
+      // console.log(isError);
     });
     expect(volops4.events[0].voNumPeopleScheduled).toBe(2);
   }));
