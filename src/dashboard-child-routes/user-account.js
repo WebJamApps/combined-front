@@ -191,7 +191,7 @@ export class UserAccount {
           window.location.assign(`/userutil/?changeemail=${this.user.changeemail.toLowerCase()}`);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         // console.log(error);
       });
   }

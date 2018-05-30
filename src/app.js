@@ -500,9 +500,9 @@ export class App {
       body: json(dataObj)
     })
       .then(response => response.json())
-      .then((data) => {
+      .then(() => {
         // console.log(data);
-      }).catch((error) => {
+      }).catch(() => {
         // console.log(error);
       });
   }

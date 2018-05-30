@@ -259,7 +259,7 @@ class Register_ {
           }
         }
       })
-      .catch((error) => {
+      .catch(() => {
         // console.log(error);
       });
   }

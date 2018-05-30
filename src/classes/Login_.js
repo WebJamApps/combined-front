@@ -198,7 +198,7 @@ class Login_ {
           }
         }
       })
-      .catch((error) => {
+      .catch(() => {
         // console.log(error);
       });
   }
