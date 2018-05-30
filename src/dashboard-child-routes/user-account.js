@@ -43,7 +43,7 @@ export class UserAccount {
 
   checkUserStatus() {
     if (this.user.userStatus === undefined || this.user.userStatus === null || this.user.userStatus === '') {
-      console.log(this.user.userStatus);
+      // console.log(this.user.userStatus);
       this.user.userStatus = 'enabled';
     }
   }
@@ -161,7 +161,7 @@ export class UserAccount {
 
   afterUpdateUser() {
     if (this.user.changeemail !== '') {
-      console.log('email address was changed!');
+      // console.log('email address was changed!');
       this.changeUserEmail();
     } else {
       this.app.appState.setUser(this.user);
@@ -191,8 +191,8 @@ export class UserAccount {
           window.location.assign(`/userutil/?changeemail=${this.user.changeemail.toLowerCase()}`);
         }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        // console.log(error);
       });
   }
 

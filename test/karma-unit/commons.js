@@ -11,12 +11,12 @@ class RouterStub {
   getRoute() {
     return this.router.currentInstruction.config.title; // name of the route
   }
-  addPipelineStep(param1, AuthorizeStep) {
-    console.log(AuthorizeStep);
+  addPipelineStep() {
+    // console.log(AuthorizeStep);
     // do nothing
   }
-  addPostRenderStep(param1, next) {
-    console.log(next);
+  addPostRenderStep() {
+    // console.log(next);
     // do nothing
   }
   options() {
@@ -45,8 +45,8 @@ class AuthStub {
   setToken(token) {
     this.token = token;
   }
-  logout(data) {
-    console.log(data);
+  logout() {
+    // console.log(data);
     const response = 'user logged out';
     return new Promise((resolve) => {
       resolve({ json: () => response });
@@ -234,7 +234,7 @@ class HttpMock {
         voContactPhone: ''
       };
     } else if (url === '/volopp/get/23456') {
-      console.log('i am in the correct route!');
+      // console.log('i am in the correct route!');
       returnValue = {
         _id: '23456',
         voName: 'run the swamp',

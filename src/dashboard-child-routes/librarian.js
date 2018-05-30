@@ -67,12 +67,12 @@ export class Librarian {
     }
     for (let i = 0; i < CSVFilePath.files.length; i += 1) {
       const oInput = CSVFilePath.files[i];
-      console.log(oInput.type);
+      // console.log(oInput.type);
       // the type is determined automatically during the creation of the Blob.
       // this value cannot be controlled by developer, hence cannot test it.
       /* istanbul ignore if */
       if (oInput.type === 'text/plain') {
-        console.log('type is a plain text file');
+        // console.log('type is a plain text file');
         nub.style.display = 'block';
         return true;
       }
@@ -99,8 +99,8 @@ export class Librarian {
     let valid = true;
     const nub = document.getElementById('createMediaButton');
     nub.style.display = 'none';
-    console.log('checking if I can submit');
-    console.log(this.newBook.type);
+    // console.log('checking if I can submit');
+    // console.log(this.newBook.type);
     for (const result of validationResults) {
       if (result.valid === false) {
         valid = false;
@@ -169,7 +169,7 @@ export class Librarian {
         });
     }
     async function loaded(evt) {
-      console.log('in csv create');
+      // console.log('in csv create');
       const fileString = evt.target.result;
       const options = {
         delimiter: '\t'

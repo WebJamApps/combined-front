@@ -26,15 +26,15 @@ export class Bookshelf {
   async activate() {
     const res = await this.app.httpClient.fetch('/book/getall');
     this.books = await res.json();
-    console.log(this.books);
+    // console.log(this.books);
     makeFilterDropdown(this.mediaTypes, this.books, 'type');
     makeFilterDropdown(this.siteLocations, this.books, 'siteLocation');
     /* istanbul ignore else */
     if (this.app.auth.isAuthenticated()) {
-      console.log('i am authenticated');
+      // console.log('i am authenticated');
       this.uid = this.app.auth.getTokenPayload().sub;
       this.user = await this.app.appState.getUser(this.uid);
-      console.log(this.user);
+      // console.log(this.user);
       /* istanbul ignore else */
       if (this.user.userType === 'Reader' || this.user.userType === 'Developer') {
         this.reader = true;
@@ -59,7 +59,7 @@ export class Bookshelf {
       if (this.selectedFilter.includes('keyword')) {
         this.keyword = true;
       } else {
-        console.log('you unchecked the keyword filter');
+        // console.log('you unchecked the keyword filter');
         this.filters[0].value = '';
         this.keyword = false;
       }

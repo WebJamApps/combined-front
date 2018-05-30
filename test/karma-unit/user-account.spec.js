@@ -9,8 +9,8 @@ function testAsync(runAsync) {
   };
 }
 class VCMock {
-  createForCurrentScope(validator) {
-    console.log(validator);
+  createForCurrentScope() {
+    // console.log(validator);
     return { validateTrigger: null };
   }
 }
@@ -44,12 +44,12 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
-  validateObject(obj, rules) {
-    console.log(rules);
+  validateObject() {
+    // console.log(rules);
     return Promise.resolve([{ name: 'john', valid: true }]);
   }
-  validateProperty(prop, val, rules) {
-    console.log(rules);
+  validateProperty() {
+    // console.log(rules);
     return Promise.resolve({});
   }
 }
@@ -87,7 +87,7 @@ describe('the UserAccount Module', () => {
   });
   it('should activate and get the user type from appState', testAsync(async () => {
     ua.app.appState.getUser = function () {
-      console.log('did I call this?');
+      // console.log('did I call this?');
       return new Promise((resolve) => {
         resolve({ userType: 'monster', email: 'yo@yo.com' });
       });

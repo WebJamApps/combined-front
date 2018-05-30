@@ -7,6 +7,6 @@ export class ReactExample {
   attached() {
     // console.log(document.getElementsByClassName('here')[0].children[0].innerHTML);
     this.reactElementInner = document.getElementsByClassName('here')[0].children[0].innerHTML;
-    console.log(this.reactElementInner);
+    // console.log(this.reactElementInner);
   }
 }

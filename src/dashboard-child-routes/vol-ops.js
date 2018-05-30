@@ -68,7 +68,7 @@ export class VolunteerOpps {
           this.app.httpClient.fetch(`/user/${j}`);
         } catch (err) {
           // user does not exist, remove it from voPeopleScheduled and update this event, then run make data makeDataTable
-          console.log('user does not exist');
+          // console.log('user does not exist');
           i.voPeopleScheduled = i.voPeopleScheduled.filter(e => e !== j);
           this.app.updateById('/volopp/', i._id, i);
           return this.makeDataTable();
@@ -85,7 +85,7 @@ export class VolunteerOpps {
     this.allPeople = [];
     for (let i = 0; i < thisevent.voPeopleScheduled.length; i += 1) {
       res = this.app.httpClient.fetch(`/user/${thisevent.voPeopleScheduled[i]}`);
-      console.log(res);
+      // console.log(res);
       person = res.json();
       this.allPeople.push(person);
     }

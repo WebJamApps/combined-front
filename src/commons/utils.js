@@ -54,9 +54,9 @@ exports.makeFilterDropdown = function (filterName, model, attrib) {
 };
 
 exports.filterSelected = function (myModule) {
-  console.log('trying to filter please');
+  // console.log('trying to filter please');
   if (myModule.selectedFilter.length === 0) {
-    console.log('no filters');
+    // console.log('no filters');
     for (let i = 0; i < myModule.filters.length; i += 1) {
       myModule.filters[i].value = '';
       myModule[myModule.filters[i].filterby] = false;
@@ -65,21 +65,21 @@ exports.filterSelected = function (myModule) {
     return;
   }
   for (let s = 0; s < myModule.selectedFilter.length; s += 1) {
-    console.log('I picked a filter:');
+    // console.log('I picked a filter:');
     // console.log(myModule.selectedFilter[0]);
     for (let u = 0; u < myModule.filters.length; u += 1) {
-      console.log('inside this loop');
-      console.log(myModule.filters[u].filterby);
-      console.log(myModule.selectedFilter[s]);
+      // console.log('inside this loop');
+      // console.log(myModule.filters[u].filterby);
+      // console.log(myModule.selectedFilter[s]);
       // myModule[myModule.filters[u].filterby] = false;
       if (myModule.filters[u].filterby === myModule.selectedFilter[s]) {
-        console.log('I have a match');
+        // console.log('I have a match');
         myModule[myModule.filters[u].filterby] = true;
       }
     }
   }
-  console.log('these are the selected filters');
-  console.log(myModule.selectedFilter);
+  // console.log('these are the selected filters');
+  // console.log(myModule.selectedFilter);
   for (let a = 0; a < myModule.filters.length; a += 1) {
     if (myModule.selectedFilter.indexOf(myModule.filters[a].filterby) === -1) {
       myModule[myModule.filters[a].filterby] = false;
@@ -116,7 +116,7 @@ exports.startSlides = function (idArray1, errorMsg, idArray2) {
       }
     });
     if (!(foundElement)) {
-      console.log(errorMsg);
+      // console.log(errorMsg);
       return clearInterval(slideshowTimer);
     }
     return this.showSlides(idArray2);

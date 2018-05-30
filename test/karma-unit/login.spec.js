@@ -3,9 +3,9 @@ import { RouterStub, AuthStub, HttpMock, AppStateStub } from './commons';
 import { App } from '../../src/app';
 
 class AuthStub1 extends AuthStub {
-  authenticate(name, f = false, o = null) {
-    console.log(f);
-    console.log(o);
+  authenticate(name) {
+    // console.log(f);
+    // console.log(o);
     return Promise.resolve({
       name,
       token: 'heyvgyuv38t327rvuiqt78b934ujwehgyq89ery8t'
@@ -27,15 +27,15 @@ describe('the Login module', () => {
     login.app.appState = new AppStateStub();
   });
   it('should authentication when not from OHAF', (done) => {
-    login.app.authenticate('google').then((data) => {
-      console.log(data);
+    login.app.authenticate('google').then(() => {
+      // console.log(data);
       done();
     }, null);
   });
   it('should authentication when from OHAF', (done) => {
     login.app.appState.isOhafLogin = true;
-    login.app.authenticate('google').then((data) => {
-      console.log(data);
+    login.app.authenticate('google').then(() => {
+      // console.log(data);
       done();
     }, null);
   });

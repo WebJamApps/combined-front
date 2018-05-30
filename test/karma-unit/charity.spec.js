@@ -4,8 +4,8 @@ import { App } from '../../src/app';
 import { AuthStub, HttpMock, AppStateStub } from './commons';
 
 class VCMock {
-  createForCurrentScope(validator) {
-    console.log(validator);
+  createForCurrentScope() {
+    // console.log(validator);
     return { validateTrigger: null };
   }
 }
@@ -15,8 +15,8 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
-  validateObject(obj, rules) {
-    console.log(rules);
+  validateObject(obj) {
+    // console.log(rules);
     if (obj.charityTypes.indexOf('True') > -1) {
       return Promise.resolve([{
         rule: Object, object: Object, propertyName: 'charityPhoneNumber', valid: true, message: 'Charity Phone Number is correct'
@@ -26,8 +26,8 @@ class ValidatorMock extends Validator {
       rule: Object, object: Object, propertyName: 'charityPhoneNumber', valid: false, message: 'Charity Phone Number is not correct'
     }]);
   }
-  validateProperty(prop, val, rules) {
-    console.log(rules);
+  validateProperty() {
+    // console.log(rules);
     return Promise.resolve({});
   }
 }
