@@ -10,7 +10,7 @@
   "author": "HandlersAndKickers",
   "license": "MIT",
   "engines": {
-    "node": "8.11.1"
+    "node": "8.11.3"
   },
   "scripts": {
     "start": "nps",
@@ -31,6 +31,7 @@
     "webdriver-update": "webdriver-manager update"
   },
   "dependencies": {
+    "@material-ui/core": "^1.2.1",
     "au-table": "^0.1.12",
     "aurelia-api": "^3.1.1",
     "aurelia-auth": "^3.0.5",
@@ -45,7 +46,7 @@
     "aurelia-logging-console": "^1.0.0",
     "aurelia-pal": "^1.8.0",
     "aurelia-pal-browser": "^1.8.0",
-    "aurelia-pal-nodejs": "^1.1.0",
+    "aurelia-pal-nodejs": "^1.1.1",
     "aurelia-polyfills": "^1.2.2",
     "aurelia-router": "^1.5.0",
     "aurelia-templating": "^1.5.0",
@@ -84,8 +85,7 @@
     "jquery": "^3.2.1",
     "jsdom": "11.5.1",
     "json-loader": "^0.5.4",
-    "material-ui": "^1.0.0-beta.40",
-    "material-ui-time-picker": "^0.1.6",
+    "material-ui-time-picker": "^1.0.0",
     "mini-css-extract-plugin": "^0.4.0",
     "minimatch": "^3.0.2",
     "nps": "^5.6.0",
