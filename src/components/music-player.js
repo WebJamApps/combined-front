@@ -18,10 +18,31 @@ export class MusicPlayer {
       {src: 'AT.mp3', type: 'audio/mpeg'},
       {src: 'TTGA.mp3', type: 'audio/mpeg'}
     ];
+    this.playing = false;
+    this.play = this.play.bind(this);
+  }
+
+  get html() {
+    return (
+      <div id="player" align="center" className="mb-2">
+        <section id="playSection" style={{display: 'inline'}}>
+          <ReactPlayer style={{backgroundColor: '#eee'}} url={this.url} playing={true} />
+        </section>
+        <section className="mt-0">
+          <button onClick={this.play}>Play</button>
+          <button>Stop</button>
+          <button>Shuffle</button>
+        </section>
+      </div>
+    )
+  }
+
+  play() {
+    this.playing = true;
   }
 
   render() {
-    ReactDOM.render(<ReactPlayer url="DG.mp3" />, this.element);
+    ReactDOM.render(this.html, this.element);
   }
 
   bind() {
