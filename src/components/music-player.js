@@ -35,7 +35,7 @@ export class MusicPlayer {
             style={{ backgroundColor: '#eee', textAlign: 'center' }}
             url={this.url}
             playing={this.playing}
-            controls={true}
+            controls
             onEnded={this.playEnd}
           />
         </section>
