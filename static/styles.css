@@ -792,3 +792,26 @@ a:hover {
   z-index: 9999;
   /* touch-action: auto; */
 }
+
+/*Music player styles*/
+#player{
+
+}
+
+#player button {
+  background-color: #eee;
+  padding: 3px 10px;
+  border-radius: 3px;
+  border: 0;
+  margin: 3px;
+  outline: 0;
+  font-size: 0.8em;
+}
+
+#player button:hover {
+  background-color: #c0c0c0;
+}
+
+#player #playSection {
+  background-color: #eeeeee;
+}

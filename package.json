@@ -96,6 +96,7 @@
     "postcss-sass": "^0.2.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
+    "react-player": "^1.6.4",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "snyk": "^1.69.10",
