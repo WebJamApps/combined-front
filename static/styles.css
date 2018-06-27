@@ -794,8 +794,8 @@ a:hover {
 }
 
 /*Music player styles*/
-#player{
-
+#musicTable tr, #musicTable td{
+  background-color: transparent!important;
 }
 
 #player button {
@@ -810,8 +810,4 @@ a:hover {
 
 #player button:hover {
   background-color: #c0c0c0;
-}
-
-#player #playSection {
-  background-color: #eeeeee;
 }
