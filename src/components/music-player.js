@@ -22,41 +22,44 @@ export class MusicPlayer {
     this.share = this.share.bind(this);
     this.copyShare = this.copyShare.bind(this);
     this.stop = this.stop.bind(this);
-    this.playUrl = document.location.href;
+    this.playUrl = document.location.href+"?oneplayer=true";
     this.shown = false;
     this.navigator = navigator;
   }
 
   get html() {
     return (
-      <div id="player" className="mb-2 row justify-content-center">
-        <section id="playSection" className="col-7 mb-2" style={{ display: 'inline', textAlign: 'center' }}>
-          <ReactPlayer
-            style={{ backgroundColor: '#eee', textAlign: 'center' }}
-            url={this.url}
-            playing={this.playing}
-            controls
-            onEnded={this.playEnd}
-          />
-        </section>
-        <section className="mt-0 col-7">
-          <button role="menu" onClick={this.play}>Play</button>
-          <button role="menu" onClick={this.pause}>Pause</button>
-          <button role="menu" onClick={this.stop}>Stop</button>
-          <button role="menu" onClick={this.shuffle}>Shuffle</button>
-          <button role="menu" onClick={this.share}>Share</button>
-        </section>
-        <section className="col-7 d-none" id="copier">
-          <div className="input-group input-group-sm">
-            <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="form-control" />
-            <div className="input-group-append" onKeyPress={() => {}} role="presentation" onClick={this.copyShare} style={{ cursor: 'pointer' }}>
-              <span className="input-group-text">Copy URL</span>
+      <div className="container">
+        <div id="player" className="mb-2 row justify-content-center">
+          <section id="playSection" className="col-7 mb-2" style={{ display: 'inline', textAlign: 'center' }}>
+            <ReactPlayer
+              style={{ backgroundColor: '#eee', textAlign: 'center' }}
+              url={this.url}
+              playing={this.playing}
+              controls
+              onEnded={this.playEnd}
+              width="100%"
+            />
+          </section>
+          <section className="mt-0 col-7">
+            <button role="menu" onClick={this.play}>Play</button>
+            <button role="menu" onClick={this.pause}>Pause</button>
+            <button role="menu" onClick={this.stop}>Stop</button>
+            <button role="menu" onClick={this.shuffle}>Shuffle</button>
+            <button role="menu" onClick={this.share}>Share</button>
+          </section>
+          <section className="col-7 d-none" id="copier">
+            <div className="input-group input-group-sm">
+              <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="form-control" />
+              <div className="input-group-append" onKeyPress={() => {}} role="presentation" onClick={this.copyShare} style={{ cursor: 'pointer' }}>
+                <span className="input-group-text">Copy URL</span>
+              </div>
             </div>
-          </div>
-        </section>
-        <section id="copyMessage" className="col-7 d-none">
-          <span className="text-success" style={{ fontSize: '0.8em' }}>Url copied Url to clipboard</span>
-        </section>
+          </section>
+          <section id="copyMessage" className="col-7 d-none">
+            <span className="text-success" style={{ fontSize: '0.8em' }}>Url copied Url to clipboard</span>
+          </section>
+        </div>
       </div>
     );
   }
