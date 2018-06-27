@@ -22,7 +22,7 @@ export class MusicPlayer {
     this.share = this.share.bind(this);
     this.copyShare = this.copyShare.bind(this);
     this.stop = this.stop.bind(this);
-    this.playUrl = document.location.href+"?oneplayer=true";
+    this.playUrl = `${document.location.href}?oneplayer=true`;
     this.shown = false;
     this.navigator = navigator;
   }
