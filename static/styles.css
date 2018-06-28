@@ -808,6 +808,11 @@ a:hover {
   font-size: 0.8em;
 }
 
+#mainPlayer{
+  background-image: url("../static/imgs/webjamlogo1.png");
+  background-size: cover;
+}
+
 #player button:hover {
   background-color: #c0c0c0;
 }
