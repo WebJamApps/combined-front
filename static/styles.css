@@ -813,6 +813,10 @@ a:hover {
   background-size: cover;
 }
 
+#mainPlayer audio {
+  border-radius: 0!important;
+}
+
 #player button:hover {
   background-color: #c0c0c0;
 }
