@@ -3,15 +3,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactPlayer from 'react-player';
 
-
 @noView()
 @inject(Element)
 @customElement('music-player')
 export class MusicPlayer {
   constructor(element) {
     this.element = element;
-    this.urls = ['DG.mp3', 'MRM.mp3', 'AT.mp3', 'TTGA.mp3', 'https://soundcloud.com/joshandmariamusic/good-enough',
-      'https://www.youtube.com/embed/ach2ubW21h4', 'https://www.youtube.com/embed/mCvUBjuzfo8'];
+    this.urls = [['DG.mp3', 'Don\'t Go / Web Jam Band'], ['MRM.mp3', 'Misty Rainy Moring / Web Jam Band'], ['AT.mp3', 'Alone Time / Web Jam Band'],
+      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], ['https://soundcloud.com/joshandmariamusic/good-enough', 'Good Enough / Web Jam Enough'],
+      ['https://www.youtube.com/embed/ach2ubW21h4', ''], ['https://www.youtube.com/embed/mCvUBjuzfo8', '']];
+
+    this._urls = [['DG.mp3', 'Don\'t Go / Web Jam Band'], ['MRM.mp3', 'Misty Rainy Moring / Web Jam Band'], ['AT.mp3', 'Alone Time / Web Jam Band'],
+      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], ['https://soundcloud.com/joshandmariamusic/good-enough', 'Good Enough / Web Jam Enough'],
+      ['https://www.youtube.com/embed/ach2ubW21h4', ''], ['https://www.youtube.com/embed/mCvUBjuzfo8', '']];
+
     this.play = this.play.bind(this);
     this.index = 0;
     this.url = this.urls[this.index];
@@ -22,9 +27,11 @@ export class MusicPlayer {
     this.share = this.share.bind(this);
     this.copyShare = this.copyShare.bind(this);
     this.stop = this.stop.bind(this);
+    this.nextTrack = this.nextTrack.bind(this);
     this.playUrl = `${document.location.href}?oneplayer=true`;
     this.shown = false;
     this.navigator = navigator;
+    this.isShuffleOn = false;
   }
 
   get html() {
@@ -34,16 +41,21 @@ export class MusicPlayer {
           <section id="playSection" className="col-7 mb-2" style={{ display: 'inline', textAlign: 'center' }}>
             <ReactPlayer
               style={{ backgroundColor: '#eee', textAlign: 'center' }}
-              url={this.url}
+              url={this.url[0]}
               playing={this.playing}
               controls
               onEnded={this.playEnd}
               width="100%"
+              id="mainPlayer"
+              config={{ file: { attributes: { controlsList: 'nodownload' } } }}
             />
           </section>
+          <section className="col-7">{this.url[1]}</section>
           <section className="mt-0 col-7">
             <button role="menu" onClick={this.play}>Play</button>
             <button role="menu" onClick={this.pause}>Pause</button>
+            <button role="menu" onClick={this.nextTrack}>Next</button>
+            <div className="d-md-none" />
             <button role="menu" onClick={this.stop}>Stop</button>
             <button role="menu" onClick={this.shuffle}>Shuffle</button>
             <button role="menu" onClick={this.share}>Share</button>
@@ -68,10 +80,19 @@ export class MusicPlayer {
    * Shuffles array in place. ES6 version
    */
   shuffle() {
-    for (let i = this.urls.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [this.urls[i], this.urls[j]] = [this.urls[j], this.urls[i]];
+    if (this.isShuffleOn) {
+      this.urls = this._urls;
+      this.isShuffleOn = false;
+    } else {
+      this.urls = this.urls.slice();
+      for (let i = this.urls.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [this.urls[i], this.urls[j]] = [this.urls[j], this.urls[i]];
+      }
+      this.isShuffleOn = true;
     }
+    this.index = 0;
+    this.url = this.urls[this.index];
     this.play();
   }
 
@@ -81,13 +102,23 @@ export class MusicPlayer {
 
   stop() {
     this.index = -1;
-    this.url = this.urls[this.index];
+    this.url = this.urls[this.index] || ['', ''];
     this.bind();
   }
 
+  nextTrack() {
+    this.index += 1;
+    if (this.index >= this.urls.length) {
+      this.index = -1;
+      this.url = this.urls[this.index] || ['', ''];
+      this.bind();
+    } else {
+      this.url = this.urls[this.index];
+      this.bind();
+    }
+  }
+
   play() {
-    this.index = 0;
-    this.url = this.urls[this.index];
     this.playing = true;
     this.bind();
   }
