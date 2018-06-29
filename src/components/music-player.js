@@ -102,7 +102,7 @@ export class MusicPlayer {
 
   stop() {
     this.index = -1;
-    this.url = this.urls[this.index];
+    this.url = this.urls[this.index] || ['', ''];
     this.bind();
   }
 
@@ -110,7 +110,7 @@ export class MusicPlayer {
     this.index += 1;
     if (this.index >= this.urls.length) {
       this.index = -1;
-      this.url = this.urls[this.index];
+      this.url = this.urls[this.index] || ['', ''];
       this.bind();
     } else {
       this.url = this.urls[this.index];
