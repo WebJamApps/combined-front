@@ -6,7 +6,8 @@ describe('++MusicPlayer tests', () => {
 
   beforeEach(() => {
     mp = new MusicPlayer();
-    document.body.innerHTML = '<div id="renderer"><section id="copier"></section><section id="copyMessage"></section></div>';
+    document.body.innerHTML = '<div id="renderer"><section id="copier"></section><section id="copyMessage">' +
+      '</section><button id="shuffle"></button></div>';
     mp.element = document.getElementById('renderer');
   });
 
@@ -18,16 +19,19 @@ describe('++MusicPlayer tests', () => {
 
   it('should simulate play end', () => {
     mp.playEnd();
+    mp.playTrue();
   });
 
   it('should copy share', () => {
     mp.share();
+    mp.play();
+    mp.isShuffleOn = true;
+    mp.shuffle();
   });
 
   it('should simulate the stop player', () => {
     mp.index = 7;
     mp.next();
-    mp.stop();
   });
 
   it('should pause the player', () => {
