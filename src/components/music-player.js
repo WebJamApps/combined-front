@@ -27,6 +27,7 @@ export class MusicPlayer {
     this.share = this.share.bind(this);
     this.copyShare = this.copyShare.bind(this);
     this.next = this.next.bind(this);
+    this.prev = this.prev.bind(this);
     this.playUrl = `${document.location.href}?oneplayer=true`;
     this.shown = false;
     this.navigator = navigator;
@@ -54,6 +55,7 @@ export class MusicPlayer {
             <button role="menu" onClick={this.play}>Play/Pause</button>
             <button role="menu" onClick={this.next}>Next</button>
             <div className="d-md-none" />
+            <button role="menu" onClick={this.prev}>Prev</button>
             <button id="shuffle" role="menu" onClick={this.shuffle}>Shuffle</button>
             <button role="menu" onClick={this.share}>Share</button>
           </section>
@@ -103,6 +105,18 @@ export class MusicPlayer {
     this.bind();
   }
 
+  prev() {
+    this.index -= 1;
+    if (this.index < 0) {
+      this.index = this.urls.length - 1;
+      this.url = this.urls[this.index];
+    } else {
+      this.url = this.urls[this.index];
+    }
+    this.playTrue();
+    this.playSound();
+  }
+
   play() {
     this.playing = !this.playing;
     this.bind();
@@ -115,7 +129,7 @@ export class MusicPlayer {
 
   playSound() {
     if (this.url[0] === 'https://soundcloud.com/joshandmariamusic/good-enough') {
-      // setTimeout(() => { this.playing = true; this.playTrue(); }, 10000);
+      setTimeout(() => { this.playing = true; this.playTrue(); }, 5000);
     }
   }
 
