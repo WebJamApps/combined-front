@@ -26,8 +26,7 @@ export class MusicPlayer {
     this.shuffle = this.shuffle.bind(this);
     this.share = this.share.bind(this);
     this.copyShare = this.copyShare.bind(this);
-    this.stop = this.stop.bind(this);
-    this.nextTrack = this.nextTrack.bind(this);
+    this.next = this.next.bind(this);
     this.playUrl = `${document.location.href}?oneplayer=true`;
     this.shown = false;
     this.navigator = navigator;
@@ -38,7 +37,7 @@ export class MusicPlayer {
     return (
       <div className="container">
         <div id="player" className="mb-2 row justify-content-center">
-          <section id="playSection" className="col-7 mb-2" style={{ display: 'inline', textAlign: 'center' }}>
+          <section id="playSection" className="col-7" style={{ display: 'inline', textAlign: 'center' }}>
             <ReactPlayer
               style={{ backgroundColor: '#eee', textAlign: 'center' }}
               url={this.url[0]}
@@ -50,14 +49,12 @@ export class MusicPlayer {
               config={{ file: { attributes: { controlsList: 'nodownload' } } }}
             />
           </section>
-          <section className="col-7">{this.url[1]}</section>
+          <section className="col-7 mt-1">{this.url[1]}</section>
           <section className="mt-0 col-7">
-            <button role="menu" onClick={this.play}>Play</button>
-            <button role="menu" onClick={this.pause}>Pause</button>
-            <button role="menu" onClick={this.nextTrack}>Next</button>
+            <button role="menu" onClick={this.play}>Play/Pause</button>
+            <button role="menu" onClick={this.next}>Next</button>
             <div className="d-md-none" />
-            <button role="menu" onClick={this.stop}>Stop</button>
-            <button role="menu" onClick={this.shuffle}>Shuffle</button>
+            <button id="shuffle" role="menu" onClick={this.shuffle}>Shuffle</button>
             <button role="menu" onClick={this.share}>Share</button>
           </section>
           <section className="col-7 d-none" id="copier">
@@ -83,43 +80,31 @@ export class MusicPlayer {
     if (this.isShuffleOn) {
       this.urls = this._urls;
       this.isShuffleOn = false;
+      document.getElementById('shuffle').classList.remove('on');
     } else {
       this.urls = this.urls.slice();
       for (let i = this.urls.length - 1; i > 0; i -= 1) {
         const j = Math.floor(Math.random() * (i + 1));
         [this.urls[i], this.urls[j]] = [this.urls[j], this.urls[i]];
       }
+      document.getElementById('shuffle').classList.add('on');
       this.isShuffleOn = true;
     }
     this.index = 0;
     this.url = this.urls[this.index];
-    this.play();
+    this.bind();
   }
 
   playEnd() {
     this.next();
   }
 
-  stop() {
-    this.index = -1;
-    this.url = this.urls[this.index] || ['', ''];
+  playTrue() {
     this.bind();
   }
 
-  nextTrack() {
-    this.index += 1;
-    if (this.index >= this.urls.length) {
-      this.index = -1;
-      this.url = this.urls[this.index] || ['', ''];
-      this.bind();
-    } else {
-      this.url = this.urls[this.index];
-      this.bind();
-    }
-  }
-
   play() {
-    this.playing = true;
+    this.playing = !this.playing;
     this.bind();
   }
 
@@ -128,16 +113,22 @@ export class MusicPlayer {
     this.bind();
   }
 
+  playSound() {
+    if (this.url[0] === 'https://soundcloud.com/joshandmariamusic/good-enough') {
+      // setTimeout(() => { this.playing = true; this.playTrue(); }, 10000);
+    }
+  }
+
   next() {
     this.index += 1;
     if (this.index >= this.urls.length) {
       this.index = 0;
       this.url = this.urls[this.index];
-      this.bind();
     } else {
       this.url = this.urls[this.index];
-      this.bind();
     }
+    this.playTrue();
+    this.playSound();
   }
 
   render() {
