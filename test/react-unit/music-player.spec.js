@@ -22,6 +22,10 @@ describe('++MusicPlayer tests', () => {
     mp.playTrue();
   });
 
+  it('should go on the preview', () => {
+    mp.prev();
+  });
+
   it('should copy share', () => {
     mp.share();
     mp.play();
