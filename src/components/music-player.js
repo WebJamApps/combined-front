@@ -38,7 +38,7 @@ export class MusicPlayer {
     return (
       <div className="container">
         <div id="player" className="mb-2 row justify-content-center">
-          <section id="playSection" className="col-7" style={{ display: 'inline', textAlign: 'center' }}>
+          <section id="playSection" className="col-sm-12 col-md-7" style={{ display: 'inline', textAlign: 'center' }}>
             <ReactPlayer
               style={{ backgroundColor: '#eee', textAlign: 'center' }}
               url={this.url[0]}
