@@ -50,6 +50,17 @@ export class MusicPlayer {
               config={{ file: { attributes: { controlsList: 'nodownload' } } }}
             />
           </section>
+          <section className="col-7 mt-2 d-none" id="copier">
+            <div className="input-group input-group-sm">
+              <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="form-control" />
+              <div className="input-group-append" onKeyPress={() => {}} role="presentation" onClick={this.copyShare} style={{ cursor: 'pointer' }}>
+                <span className="input-group-text">Copy URL</span>
+              </div>
+            </div>
+          </section>
+          <section id="copyMessage" className="col-7 d-none m-0">
+            <span className="text-success" style={{ fontSize: '0.8em' }}>Url copied Url to clipboard</span>
+          </section>
           <section className="col-7 mt-1">{this.url[1]}</section>
           <section className="mt-0 col-7">
             <button role="menu" onClick={this.play}>Play/Pause</button>
@@ -58,17 +69,6 @@ export class MusicPlayer {
             <button role="menu" onClick={this.prev}>Prev</button>
             <button id="shuffle" role="menu" onClick={this.shuffle}>Shuffle</button>
             <button role="menu" onClick={this.share}>Share</button>
-          </section>
-          <section className="col-7 d-none" id="copier">
-            <div className="input-group input-group-sm">
-              <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="form-control" />
-              <div className="input-group-append" onKeyPress={() => {}} role="presentation" onClick={this.copyShare} style={{ cursor: 'pointer' }}>
-                <span className="input-group-text">Copy URL</span>
-              </div>
-            </div>
-          </section>
-          <section id="copyMessage" className="col-7 d-none">
-            <span className="text-success" style={{ fontSize: '0.8em' }}>Url copied Url to clipboard</span>
           </section>
         </div>
       </div>

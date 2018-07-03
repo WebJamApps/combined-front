@@ -3,6 +3,7 @@ export class Originals {
     if (document.location.search === '?oneplayer=true') {
       document.getElementById('wholeMusicSection').style.display = 'none';
       document.getElementsByClassName('content-block')[0].style.overflow = 'hidden';
+      document.getElementsByClassName('content-block')[0].style.marginTop = '0';
       document.getElementsByClassName('page-content')[0].style.borderRight = '0';
       document.getElementsByTagName('h4')[0].style.display = 'none';
 
