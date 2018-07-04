@@ -10,8 +10,8 @@ export class MusicPlayer {
   constructor(element) {
     this.element = element;
     this.urls = [['DG.mp3', 'Don\'t Go / Web Jam Band'], ['MRM.mp3', 'Misty Rainy Moring / Web Jam Band'], ['AT.mp3', 'Alone Time / Web Jam Band'],
-      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], ['https://soundcloud.com/joshandmariamusic/good-enough', 'Good Enough / Web Jam Enough'],
-      ['https://www.youtube.com/embed/ach2ubW21h4', ''], ['https://www.youtube.com/embed/mCvUBjuzfo8', '']];
+      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], ['https://soundcloud.com/joshandmariamusic/good-enough', 'Good Enough / Web Jam Band'],
+      ['https://www.youtube.com/embed/ach2ubW21h4', 'Boogie Board Rash / Web Jam Band'], ['https://www.youtube.com/embed/mCvUBjuzfo8', 'Hey Red / Web Jam Band']];
 
     this._urls = [['DG.mp3', 'Don\'t Go / Web Jam Band'], ['MRM.mp3', 'Misty Rainy Moring / Web Jam Band'], ['AT.mp3', 'Alone Time / Web Jam Band'],
       ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], ['https://soundcloud.com/joshandmariamusic/good-enough', 'Good Enough / Web Jam Enough'],
@@ -36,9 +36,9 @@ export class MusicPlayer {
 
   get html() {
     return (
-      <div className="container">
+      <div className="container-fluid">
         <div id="player" className="mb-2 row justify-content-center">
-          <section id="playSection" className="col-sm-12 col-md-7" style={{ display: 'inline', textAlign: 'center' }}>
+          <section id="playSection" className="col-12 mt-2 mr-0 col-md-7" style={{ display: 'inline', textAlign: 'center' }}>
             <ReactPlayer
               style={{ backgroundColor: '#eee', textAlign: 'center' }}
               url={this.url[0]}
@@ -61,7 +61,7 @@ export class MusicPlayer {
           <section id="copyMessage" className="col-7 d-none m-0">
             <span className="text-success" style={{ fontSize: '0.8em' }}>Url copied Url to clipboard</span>
           </section>
-          <section className="col-7 mt-1">{this.url[1]}</section>
+          <section className="col-7 mt-1" style={{ fontSize: '0.8em' }}>{this.url[1]}</section>
           <section className="mt-0 col-7">
             <button role="menu" onClick={this.play}>Play/Pause</button>
             <button role="menu" onClick={this.next}>Next</button>
