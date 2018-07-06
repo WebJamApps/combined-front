@@ -834,4 +834,5 @@ button.on{
 #copyUrl {
   border-top-right-radius: 0!important;
   border-bottom-right-radius: 0!important;
+  font-size: 0.8em;
 }
