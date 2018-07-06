@@ -52,12 +52,12 @@ export class MusicPlayer {
               config={{ file: { attributes: { controlsList: 'nodownload' } } }}
             />
           </section>
-          <section className="col-12 col-md-7 m-0 mt-2 d-none" id="copier">
-            <div className="input-group input-group-sm">
-              <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="form-control" />
-              <div className="input-group-append" onKeyPress={() => {}} role="presentation" onClick={this.copyShare} style={{ cursor: 'pointer' }}>
-                <span className="input-group-text" id='inputGroup'>Copy URL</span>
-              </div>
+          <section className="col-12 row col-md-7 m-0 mt-2 d-none" id="copier">
+            <div className="col-8 col-sm-9 col-md-10 p-0">
+              <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff', fontSize: '0.8em' }} className="form-control" />
+            </div>
+            <div className="col-4 col-sm-3 col-md-2 p-0" onKeyPress={() => {}} role="presentation" onClick={this.copyShare} style={{ cursor: 'pointer' }}>
+              <span className="input-group-text" id='inputGroup' style={{ fontSize: '0.8em' }}>Copy URL</span>
             </div>
           </section>
           <section id="copyMessage" className="col-12 col-md-7 d-none m-0">
