@@ -825,3 +825,14 @@ button.on{
 #player button:hover {
   background-color: #c0c0c0;
 }
+
+#inputGroup {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#copyUrl {
+  border-top-right-radius: 0!important;
+  border-bottom-right-radius: 0!important;
+  font-size: 0.8em;
+}

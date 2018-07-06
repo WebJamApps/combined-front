@@ -9,14 +9,15 @@ import ReactPlayer from 'react-player';
 export class MusicPlayer {
   constructor(element) {
     this.element = element;
-    this.urls = [['DG.mp3', 'Don\'t Go / Web Jam Band'], ['MRM.mp3', 'Misty Rainy Moring / Web Jam Band'], ['AT.mp3', 'Alone Time / Web Jam Band'],
-      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], ['https://soundcloud.com/joshandmariamusic/good-enough', 'Good Enough / Web Jam Band'],
-      ['https://www.youtube.com/embed/ach2ubW21h4', 'Boogie Board Rash / Web Jam Band'], ['https://www.youtube.com/embed/mCvUBjuzfo8',
-        'Hey Red / Web Jam Band']];
+    this.urls = [['DG.mp3', 'Don\'t Go / Web Jam Band'], ['MRM.mp3', 'Misty Rainy Morning / Web Jam Band'], ['AT.mp3', 'Alone Time / Web Jam Band'],
+      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], ['https://www.youtube.com/embed/ach2ubW21h4', 'Boogie Board Rash / Web Jam Band'],
+      ['https://www.youtube.com/embed/mCvUBjuzfo8', 'Hey Red / Web Jam Band'], ['https://soundcloud.com/joshandmariamusic/good-enough',
+        'Good Enough / Web Jam Band']];
 
-    this._urls = [['DG.mp3', 'Don\'t Go / Web Jam Band'], ['MRM.mp3', 'Misty Rainy Moring / Web Jam Band'], ['AT.mp3', 'Alone Time / Web Jam Band'],
-      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], ['https://soundcloud.com/joshandmariamusic/good-enough', 'Good Enough / Web Jam Enough'],
-      ['https://www.youtube.com/embed/ach2ubW21h4', ''], ['https://www.youtube.com/embed/mCvUBjuzfo8', '']];
+    this._urls = [['DG.mp3', 'Don\'t Go / Web Jam Band'], ['MRM.mp3', 'Misty Rainy Morning / Web Jam Band'], ['AT.mp3', 'Alone Time / Web Jam Band'],
+      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], ['https://www.youtube.com/embed/ach2ubW21h4', 'Boogie Board Rash / Web Jam Band'],
+      ['https://www.youtube.com/embed/mCvUBjuzfo8', 'Hey Red / Web Jam Band'], ['https://soundcloud.com/joshandmariamusic/good-enough',
+        'Good Enough / Web Jam Band']];
 
     this.play = this.play.bind(this);
     this.index = 0;
@@ -51,19 +52,25 @@ export class MusicPlayer {
               config={{ file: { attributes: { controlsList: 'nodownload' } } }}
             />
           </section>
-          <section className="col-7 mt-2 d-none" id="copier">
-            <div className="input-group input-group-sm">
+          <section className="col-12 row col-md-7 m-0 mt-2 d-none" id="copier">
+            <div className="col-8 col-sm-9 col-md-10 p-0">
               <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="form-control" />
-              <div className="input-group-append" onKeyPress={() => {}} role="presentation" onClick={this.copyShare} style={{ cursor: 'pointer' }}>
-                <span className="input-group-text">Copy URL</span>
-              </div>
+            </div>
+            <div
+              className="col-4 col-sm-3 col-md-2 p-0"
+              onKeyPress={() => {}}
+              role="presentation"
+              onClick={this.copyShare}
+              style={{ cursor: 'pointer' }}
+            >
+              <span className="input-group-text" id="inputGroup" style={{ fontSize: '0.8em' }}>Copy URL</span>
             </div>
           </section>
-          <section id="copyMessage" className="col-7 d-none m-0">
+          <section id="copyMessage" className="col-12 col-md-7 d-none m-0">
             <span className="text-success" style={{ fontSize: '0.8em' }}>Url copied Url to clipboard</span>
           </section>
-          <section className="col-7 mt-1" style={{ fontSize: '0.8em' }}>{this.url[1]}</section>
-          <section className="mt-0 col-7">
+          <section className="col-12 col-md-7 mt-1" style={{ fontSize: '0.8em' }}>{this.url[1]}</section>
+          <section className="mt-0 col-12 col-md-7">
             <button role="menu" onClick={this.play}>Play/Pause</button>
             <button role="menu" onClick={this.next}>Next</button>
             <div className="d-md-none" />
