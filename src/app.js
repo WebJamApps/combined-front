@@ -50,7 +50,6 @@ export class App {
 
   checkIfLoggedIn() {
     const token = localStorage.getItem('aurelia_id_token');
-    // console.log(token);
     if (token !== null) {
       this.auth.setToken(token);
       this.authenticated = true;
@@ -377,8 +376,8 @@ export class App {
       </i></a><span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"  href="https://www.linkedin.com/company/webjam/">
       <i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a><span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"
        href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a><span>&nbsp;&nbsp;</span>
-       <a target="_blank" style="color:${color}"  href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x footerIcon" 
-       aria-hidden="true"></i></a><span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}" 
+       <a target="_blank" style="color:${color}"  href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x footerIcon"
+       aria-hidden="true"></i></a><span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"
         href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>
         <span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"  href="https://plus.google.com/u/1/109586499331294076292">
         <i class="fa fa-google-plus-square fa-2x footerIcon" aria-hidden="true"></i></a><p style="color:white; font-size: 9pt;margin-bottom:0">
