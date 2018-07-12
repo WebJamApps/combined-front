@@ -20,7 +20,6 @@ export class UserAccount {
     this.isGoogleEmail = false;
     this.newUserType = '';
   }
-
   async activate() {
     this.userTypes = JSON.parse(process.env.userRoles).roles;
     this.uid = this.app.auth.getTokenPayload().sub;
@@ -34,27 +33,19 @@ export class UserAccount {
     this.setupValidation();
     this.newUserType = this.user.userType;
   }
-
   checkUserEmail() {
     if (this.user.email.split('@gmail').length > 1 || this.user.email.split('@vt.edu').length > 1 || this.user.email.split('@bi.vt.edu').length > 1) {
       this.isGoogleEmail = true;
     }
   }
-
   checkUserStatus() {
     if (this.user.userStatus === undefined || this.user.userStatus === null || this.user.userStatus === '') {
-      // console.log(this.user.userStatus);
       this.user.userStatus = 'enabled';
     }
   }
-
   setupValidation() {
     ValidationRules
       .ensure('userPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
-      .ensure('userType')
-      .required()
-      .minLength(5)
-      .withMessage('select a user type')
       .ensure('userZip')
       .required()
       .matches(/\b\d{5}\b/)
@@ -73,24 +64,23 @@ export class UserAccount {
       .email()
       .on(this.user);
   }
-
   updateCanSubmit(validationResults) {
     const nub = document.getElementById('updateUserButton');
-    nub.style.display = 'none';
+    // nub.style.display = 'none';
     let valid = true;
     for (const result of validationResults) {
       if (result.valid === false) {
         valid = false;
+        nub.style.display = 'none';
         break;
       }
     }
     this.canSubmit = valid;
-    if (this.user.userType !== '' && this.canSubmit) {
+    if (this.canSubmit) {
       nub.style.display = 'block';
     }
     return this.canSubmit;
   }
-
   async checkChangeUserType() {
     this.changeReasons = '';
     if (this.user.userType === 'Volunteer' || this.user.userType === 'Developer') {
@@ -117,7 +107,6 @@ export class UserAccount {
       }
     }
   }
-
   async fetchAllEvents() {
     const res = await this.app.httpClient.fetch('/volopp/getall');
     this.events2 = await res.json();
@@ -125,7 +114,6 @@ export class UserAccount {
     markPast(this.events2, formatDate);
     this.fixPeopleScheduled(this.events2);
   }
-
   fixPeopleScheduled(events) {
     for (let i = 0; i < events.length; i += 1) {
       if (events[i].voPeopleScheduled === null || events[i].voPeopleScheduled === undefined) {
@@ -133,32 +121,24 @@ export class UserAccount {
       }
     }
   }
-
   checkScheduled() {
-    // let isScheduled = false;
     for (let i = 0; i < this.events2.length; i += 1) {
-      // if (this.events2[i].voPeopleScheduled !== null && this.events2[i].voPeopleScheduled !== undefined){
       if (this.events2[i].voPeopleScheduled.includes(this.uid)) {
         this.canDelete = false;
         if (!this.events2[i].past) {
           this.canChangeUserType = false;
-          // console.log(this.events2[i]);
-          // isScheduled = true;
         }
       }
-      // }
     }
     if (!this.canChangeUserType && this.changeReasons.indexOf('<li>You are scheduled to work an event.</li>') === -1) {
       this.changeReasons = `${this.changeReasons}<li>You are scheduled to work an event.</li>`;
     }
   }
-
   async setCharity() {
     this.user.userDetails = '';
     this.user.userType = 'Charity';
     await this.app.updateById('/user/', this.uid, this.user);
   }
-
   afterUpdateUser() {
     if (this.user.changeemail !== '') {
       // console.log('email address was changed!');
@@ -169,7 +149,6 @@ export class UserAccount {
       this.app.router.navigate('dashboard');
     }
   }
-
   changeUserEmail() {
     const bodyData = { changeemail: this.user.changeemail.toLowerCase(), email: this.user.email.toLowerCase() };
     const fetchData = {
@@ -195,7 +174,6 @@ export class UserAccount {
         // console.log(error);
       });
   }
-
   async updateUser() {
     this.user.changeemail = '';
     if (this.originalEmail !== this.user.email) {
@@ -206,12 +184,10 @@ export class UserAccount {
     await this.app.updateById('/user/', this.uid, this.user);
     this.afterUpdateUser();
   }
-
   disableUser(status) {
     this.user.userStatus = status;
     this.updateUser();
   }
-
   async deleteUser() {
     await fetch;
     this.app.httpClient.fetch(`/user/${this.uid}`, {
@@ -221,12 +197,10 @@ export class UserAccount {
         this.app.logout();
       });
   }
-
   showUpdateButton() {
     const nub = document.getElementById('updateUserButton');
     nub.style.display = 'block';
   }
-
   attached() {
     this.controller.validate();
   }
