@@ -2,7 +2,7 @@ import { ValidationControllerFactory, ValidationRules, Validator, validateTrigge
 import { inject } from 'aurelia-framework';
 import { App } from '../app';
 import { FormValidator } from '../classes/FormValidator';
-import { fixDates, formatDate, markPast } from '../commons/utils';
+import { formatDate, markPast } from '../commons/utils';
 @inject(App, ValidationControllerFactory, Validator)
 export class UserAccount {
   controller = null;
@@ -39,9 +39,7 @@ export class UserAccount {
     }
   }
   checkUserStatus() {
-    if (this.user.userStatus === undefined || this.user.userStatus === null || this.user.userStatus === '') {
-      this.user.userStatus = 'enabled';
-    }
+    if (this.user.userStatus === undefined || this.user.userStatus === null || this.user.userStatus === '') this.user.userStatus = 'enabled';
   }
   setupValidation() {
     ValidationRules
@@ -66,7 +64,6 @@ export class UserAccount {
   }
   updateCanSubmit(validationResults) {
     const nub = document.getElementById('updateUserButton');
-    // nub.style.display = 'none';
     let valid = true;
     for (const result of validationResults) {
       if (result.valid === false) {
@@ -110,7 +107,7 @@ export class UserAccount {
   async fetchAllEvents() {
     const res = await this.app.httpClient.fetch('/volopp/getall');
     this.events2 = await res.json();
-    fixDates(this.events2);
+    // fixDates(this.events2); //TODO determine if this is still needed or fix (this should be a backend function)
     markPast(this.events2, formatDate);
     this.fixPeopleScheduled(this.events2);
   }
