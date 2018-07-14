@@ -23,6 +23,12 @@ describe('++MusicPlayer tests', () => {
   });
 
   it('should go on the preview', () => {
+    mp.index = 0;
+    mp.prev();
+  });
+
+  it('should go on the preview for the first song', () => {
+    mp.index = -1;
     mp.prev();
   });
 
