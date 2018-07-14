@@ -35,7 +35,7 @@ export class Charity {
     if (this.charities.length !== 0) {
       this.app.buildPTag(this.charities, 'charityTypes', 'charityTypeOther', 'charityTypesHtml');
       this.buildManagers();
-      this.checkEvents();
+      await this.checkEvents();
     }
   }
   async checkEvents() {
@@ -43,9 +43,10 @@ export class Charity {
       let foundEvents = [];
       this.charities[i].hasEvents = false;
       const res = await this.app.httpClient.fetch(`/volopp/${this.charities[i]._id}`); // eslint-disable-line no-await-in-loop
-      foundEvents = res.json();
+      foundEvents = await res.json(); // eslint-disable-line no-await-in-loop
       this.charities[i].hasEvents = foundEvents.length > 0;
     }
+    // console.log(this.charities);
   }
   createNewCharity() {
     const charity = {
@@ -179,9 +180,13 @@ export class Charity {
     nub.removeAttribute('disabled');
     if (this.update) {
       nub.setAttribute('disabled', '');
+      nub.style.cursor = 'none';
+      nub.style.backgroundColor = 'buttonface';
       this.counter += 1;
       if (this.counter > 8) {
         nub.removeAttribute('disabled');
+        nub.style.cursor = 'pointer';
+        nub.style.backgroundColor = '#dfc';
       }
     }
     return null;
