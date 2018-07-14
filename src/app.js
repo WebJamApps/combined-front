@@ -286,82 +286,45 @@ export class App {
     this.router.navigate('/login');
   }
 
-  logout() {
+  async logout() {
     this.appState.setUser({});
     this.authenticated = false;
     localStorage.clear();
-    // window.localStorage.removeItem('userEmail');
-    // window.localStorage.removeItem('aurelia_id_token');
     if (this.role !== 'Charity' && this.role !== 'Volunteer') {
-      this.auth.logout('/')
-        .then(() => {
-        });
-    } else {
-      this.auth.logout('/ohaf')
-        .then(() => {
-          // console.log('Promise fulfilled, logged out');
-        });
-    }
+      await this.auth.logout('/');
+    } else await this.auth.logout('/ohaf');
     this.role = '';
     this.appState.isOhafLogin = false;
   }
-
   get currentRoute() {
-    if (this.router.currentInstruction) {
-      return this.router.currentInstruction.config.name;
-    }
+    if (this.router.currentInstruction) return this.router.currentInstruction.config.name;
     return null;
   }
-
   get currentRouteFrag() {
-    /* istanbul ignore else */
-    if (this.router.currentInstruction) {
-      return this.router.currentInstruction.fragment;
-    }
+    if (this.router.currentInstruction) return this.router.currentInstruction.fragment;
     return null;
   }
-
   checkNavMenu() {
     this.Menu = 'wj';
-    if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') {
-      this.Menu = 'ohaf';
-    } else if (this.currentRoute === 'music-router') {
-      this.Menu = 'music';
-    } else if (this.currentRoute === 'library') {
-      this.Menu = 'library';
-    } else if (this.currentRoute === 'login') {
-      if (this.appState.isOhafLogin) {
-        this.Menu = 'ohaf';
-      } else {
-        this.Menu = 'wj';
-      }
-    } else if (this.currentRouteFrag === '/dashboard') {
-      this.Menu = 'dashboard';
-    } else if (this.currentRouteFrag === '/bookshelf') {
-      this.Menu = 'bookshelf';
-    } else if (this.currentRouteFrag === '/dashboard/developer') {
-      this.Menu = 'developer';
-    } else if (this.currentRouteFrag === '/dashboard/reader') {
-      this.Menu = 'reader';
-    } else if (this.currentRouteFrag === '/dashboard/librarian') {
-      this.Menu = 'librarian';
-    } else if (this.currentRouteFrag === '/dashboard/charity') {
-      this.Menu = 'charity';
-    } else if (this.currentRouteFrag === '/dashboard/volunteer') {
-      this.Menu = 'volunteer';
-    } else if (this.currentRouteFrag === '/dashboard/user-account') {
-      this.Menu = 'user-account';
-    } else if (this.currentRouteFrag) {
-      if (this.currentRouteFrag.indexOf('vol-ops/') !== -1) {
-        this.Menu = 'charity';
-      } else {
-        this.Menu = 'wj';
-      }
-    } else {
-      this.Menu = 'wj';
-    }
+    if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') this.Menu = 'ohaf';
+    else if (this.currentRoute === 'music-router') this.Menu = 'music';
+    else if (this.currentRoute === 'library') this.Menu = 'library';
+    else if (this.currentRoute === 'login') {
+      if (this.appState.isOhafLogin) this.Menu = 'ohaf';
+      else this.Menu = 'wj';
+    } else if (this.currentRouteFrag === '/dashboard') this.Menu = 'dashboard';
+    else if (this.currentRouteFrag === '/bookshelf') this.Menu = 'bookshelf';
+    else if (this.currentRouteFrag === '/dashboard/developer') this.Menu = 'developer';
+    else if (this.currentRouteFrag === '/dashboard/reader') this.Menu = 'reader';
+    else if (this.currentRouteFrag === '/dashboard/librarian') this.Menu = 'librarian';
+    else if (this.currentRouteFrag === '/dashboard/charity') this.Menu = 'charity';
+    else if (this.currentRouteFrag === '/dashboard/volunteer') this.Menu = 'volunteer';
+    else if (this.currentRouteFrag === '/dashboard/user-account') this.Menu = 'user-account';
+    else if (this.currentRouteFrag) {
+      if (this.currentRouteFrag.indexOf('vol-ops/') !== -1) this.Menu = 'charity';
+      else this.Menu = 'wj';
+    } else this.Menu = 'wj';
   }
-
   setFooter() {
     const footer = document.getElementById('wjfooter');
     let color = '';
@@ -371,20 +334,21 @@ export class App {
         footer.style.backgroundColor = '#565656';
         color = '#c09580';
       }
-      footer.innerHTML = `${'<div style="text-align: center;padding:6px">' +
-      '<a target="_blank" style="color:'}${color}"  href="https://github.com/WebJamApps"><i class="fa fa-github fa-2x footerIcon" aria-hidden="true">
-      </i></a><span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"  href="https://www.linkedin.com/company/webjam/">
-      <i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a><span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"
-       href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a><span>&nbsp;&nbsp;</span>
-       <a target="_blank" style="color:${color}"  href="https://www.facebook.com/WebJamLLC/"><i class="fa fa-facebook-square fa-2x footerIcon"
-       aria-hidden="true"></i></a><span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"
-        href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>
-        <span>&nbsp;&nbsp;</span><a target="_blank" style="color:${color}"  href="https://plus.google.com/u/1/109586499331294076292">
-        <i class="fa fa-google-plus-square fa-2x footerIcon" aria-hidden="true"></i></a><p style="color:white; font-size: 9pt;margin-bottom:0">
-        Powered by <a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>`;
+      footer.innerHTML = '<div style="text-align: center;padding:6px">' +
+      `<a target="_blank" style="color:${color}; padding-right:5px" href="https://github.com/WebJamApps">` +
+      '<i class="fa fa-github fa-2x footerIcon" aria-hidden="true">' +
+      `</i></a><a target="_blank" style="color:${color};padding-right:5px" href="https://www.linkedin.com/company/webjam/">` +
+      `<i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a><a target="_blank" style="color:${color};padding-right:5px"` +
+      'href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      `<a target="_blank" style="color:${color};padding-right:5px" href="https://www.facebook.com/WebJamLLC/">` +
+      '<i class="fa fa-facebook-square fa-2x footerIcon"' +
+      `aria-hidden="true"></i></a><a target="_blank" style="color:${color};padding-right:5px"` +
+      'href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>' +
+      `<a target="_blank" style="color:${color};padding-right:5px" href="https://plus.google.com/u/1/109586499331294076292">` +
+      '<i class="fa fa-google-plus-square fa-2x footerIcon" aria-hidden="true"></i></a><p style="color:white; font-size: 9pt;margin-bottom:0">' +
+      'Powered by <a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>';
     }
   }
-
   get currentStyles() {
     let result = {};
     this.style = 'wj';
@@ -417,7 +381,6 @@ export class App {
     this.setOtherStyles();
     return result;
   }
-
   setOtherStyles() {
     const menuDrawer = document.getElementsByClassName('drawer')[0];
     const navList = document.getElementsByClassName('nav-list')[0];
@@ -438,21 +401,6 @@ export class App {
       }
     }
   }
-
-  // showCheckboxes(id, forceOpen){
-  //   let fo = false;
-  //   if (forceOpen !== null && forceOpen !== undefined){
-  //     fo = forceOpen;
-  //   }
-  //   let checkboxes = document.getElementById(id);
-  //   if (checkboxes.style.display === 'block' && !fo) {
-  //     checkboxes.style.display = 'none';
-  //     return false;
-  //   }
-  //   checkboxes.style.display = 'block';
-  //   return true;
-  // }
-
   buildPTag(object, objectSelector, objectSelectorOther, objectStoreResult) {
     for (let l = 0; l < object.length; l += 1) {
       let typeHtml = '';
@@ -471,7 +419,6 @@ export class App {
       object[l][objectStoreResult] = typeHtml;
     }
   }
-
   selectPickedChange(selectorObj, thisObj, mainSelectedList, selectorOtherVariable, otherVariable, selectorUseThis = false, userVariable) {
     if (userVariable) {
       selectorObj[userVariable] = thisObj[mainSelectedList];
@@ -491,19 +438,14 @@ export class App {
       selectorObj[selectorOtherVariable] = '';
     }
   }
-
   async updateById(route, id, dataObj) {
-    await fetch;
-    return this.httpClient.fetch(route + id, {
-      method: 'put',
-      body: json(dataObj)
-    })
-      .then(response => response.json())
-      .then(() => {
-        // console.log(data);
-      }).catch(() => {
-        // console.log(error);
+    try {
+      const cb = await this.httpClient.fetch(route + id, {
+        method: 'put',
+        body: json(dataObj)
       });
+      return cb.json();
+    } catch (e) { return e; }
   }
   attached() {
     this.manager = new Hammer.Manager(document.getElementsByClassName('swipe-area')[0], {
@@ -512,8 +454,6 @@ export class App {
       ]
     });
     this.manager.on('swipe', this.close.bind(this));
-    // console.log(this.manager);
-    // document.getElementsByClassName('swipe-area')[0].style.display = 'none';
   }
   detached() {
     this.manager.off('swipe', this.close.bind(this));
