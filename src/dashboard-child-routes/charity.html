@@ -47,7 +47,6 @@
       </div>
       <p>&nbsp;</p>
       <div class ="elevation3" style="max-width:6in; margin:auto;">
-        <!-- Create/Update form -->
         <div id="updateCharitySection" style="margin-left:10px; padding-top:25px">
           <h4 if.bind = "update" class="material-header-h4">Update ${charityName}</h4>
           <h4 if.bind = "!update" class="material-header-h4">Create a New Charity</h4>
@@ -85,15 +84,14 @@
             <input id="charity-phone" type="tel" value.two-way="updateCharity.charityPhoneNumber & validate:controller2">
             <label>Add additional manager by email (optional)</label>
             <input value.two-way="updateCharity.charityEmail & validate:controller2">
-            <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
-              <ul if.bind="controller2.errors" style="margin-bottom:0">
-                <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red; width:2in">
-                  ${error.message}
-                </li>
-                <!-- <li style="margin-left:-24px; color:red; width:2in" class="ctypeerror">Charity type is required.</li> -->
+            <div validation-errors.bind="errors" class="form-group" style="max-width: 2.5in;padding:10px">
+              <ul id="valErrors" if.bind="controller2.errors" style="margin-bottom:0">
+                <!-- <li repeat.for="error of controller2.errors" style="margin-left:-24px; color:red; width:2.5in">
+                  <span if.bind="error.message !== ''">${error.message}</span>
+                </li> -->
               </ul>
               <ul class="ctypeerror">
-                <li style="margin-left:-24px; color:red; width:2in;margin-top:0">Charity Type is required.</li>
+                <li style="margin-left:-24px; color:red; width:2.5in;margin-top:0">Charity Type is required.</li>
               </ul>
             </div>
             <button if.bind = "update" id="updateCharityButton" class="updateButton" raised click.trigger="updateCharityFunct()" style="margin-bottom:40px; display:none">Update</button>
