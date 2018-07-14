@@ -17,8 +17,6 @@ export class MusicRouter {
       {
         route: 'buymusic', name: 'buymusic', moduleId: PLATFORM.moduleName('./music-child-routes/buymusic'), nav: true, title: 'Buy Music'
       }
-      // ,
-      //   { route: 'band', name: 'band', moduleId: PLATFORM.moduleName('./music-child-routes/band'), nav: true, title: 'Band'}
     ]);
     this.router = router;
   }

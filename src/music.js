@@ -1,5 +1,4 @@
-
-import { showSlides } from './commons/utils';
+const showSlides = require('./commons/showSlides');
 
 export class Music {
   constructor() {
@@ -10,22 +9,16 @@ export class Music {
   }
 
   jump(h) {
-    // console.log(document.getElementById(h));
     document.getElementById(h).scrollIntoView();
   }
 
   attached() {
-    // this.slideIndex = 0;
-    // $('#slideshow > div:gt(0)').hide();
     const musicTimer = setInterval(() => {
       const ms1 = document.getElementById('musicSlide1');
       if (ms1 !== null && ms1 !== undefined) {
         ms1.style.display = 'none';
-      } else {
-        // console.log('you left the music page');
-        return clearInterval(musicTimer);
-      }
-      return showSlides(['slideshowMusic']);
+      } else { return clearInterval(musicTimer); }
+      return showSlides.showSlides(['slideshowMusic']);
     }, 5400);
   }
 }
