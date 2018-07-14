@@ -20,7 +20,6 @@ export class Charity {
     this.validType2 = false;
     this.charityTypeValid = false;
   }
-
   async activate() {
     this.counter = 1;
     this.update = false;
@@ -39,19 +38,16 @@ export class Charity {
       this.checkEvents();
     }
   }
-
   async checkEvents() {
     for (let i = 0; i < this.charities.length; i += 1) {
       let foundEvents = [];
       this.charities[i].hasEvents = false;
-      const res = this.app.httpClient.fetch(`/volopp/${this.charities[i]._id}`);
+      const res = await this.app.httpClient.fetch(`/volopp/${this.charities[i]._id}`); // eslint-disable-line no-await-in-loop
       foundEvents = res.json();
       this.charities[i].hasEvents = foundEvents.length > 0;
     }
   }
-
   createNewCharity() {
-    // console.log('createNewCharity function populates a blank charity object and then runs the showUpdateCharity function');
     const charity = {
       charityEmail: '',
       charityName: '',
@@ -86,38 +82,51 @@ export class Charity {
     ctypeerror.style.display = 'none';
   }
 
-  showUpdateCharity(charity) {
+  async showUpdateCharity(charity) {
     this.charityName = charity.charityName;
     this.updateCharity = charity;
     this.typeOther = this.updateCharity.charityTypes.includes('other');
     this.updateCharity.charityTypeOther = !this.typeOther ? '' : this.updateCharity.charityTypeOther;
-    this.setupValidation2();
-    this.controller2.validate();
-    if (this.update === true) {
-      document.getElementById('updateCharitySection').scrollIntoView();
-    } else {
-      document.getElementById('charityDash').scrollIntoView();
+    await this.setupValidation2();
+    await this.controller2.validate();
+    // console.log(this.controller2.errors);
+    if (this.update === true) document.getElementById('updateCharitySection').scrollIntoView();
+    else document.getElementById('charityDash').scrollIntoView();
+    // console.log(this.controller2.errors);
+    this.buildErrors();
+  }
+  buildErrors() {
+    // console.log(99);
+    const errorList = document.getElementById('valErrors');
+    // console.log(errorList);
+    let innerH = '';
+    // console.log(this.controller2.errors);
+    for (let i = 0; i < this.controller2.errors.length; i += 1) {
+      // console.log(102);
+      innerH += `<li style="margin-left:-24px; color:red; width:2.5in">${this.controller2.errors[i].message}</li>`;
+      // console.log(innerH);
+    }
+    if (errorList !== null) {
+      errorList.style.display = 'block';
+      errorList.innerHTML = innerH;
     }
   }
 
-  updateTypePicked() {
-    // console.log('I clicked a checkbox');
+  async updateTypePicked() {
     this.validType2 = false;
     const ctypeerror = document.getElementsByClassName('ctypeerror')[0];
     ctypeerror.style.display = 'block';
-    // console.log(this.updateCharity.charityTypes);
     for (const i of this.types) {
       if (this.updateCharity.charityTypes.indexOf(i) > -1) {
         this.validType2 = true;
         ctypeerror.style.display = 'none';
       }
     }
-    // console.log(this.validType2);
-    this.controller2.validate();
+    await this.controller2.validate();
+    this.buildErrors();
     this.typeOther = this.updateCharity.charityTypes.includes('other');
     this.updateCharity.charityTypeOther = !this.typeOther ? '' : this.updateCharity.charityTypeOther;
   }
-
   setupValidation2() {
     ValidationRules
       .ensure('charityTypes').required().minLength(1).withMessage('charity type is required')
@@ -127,7 +136,7 @@ export class Charity {
       .ensure('charityName')
       .required()
       .maxLength(40)
-      .withMessage('Charity name please')
+      .withMessage('Charity name is required')
       .ensure('charityEmail')
       .email()
       .ensure('charityZipCode')
@@ -138,17 +147,16 @@ export class Charity {
       .required()
       .matches(/[^0-9]+/)
       .maxLength(30)
-      .withMessage('City name please')
+      .withMessage('City is required')
       .ensure('charityStreet')
       .required()
       .maxLength(40)
-      .withMessage('Charity street address please')
+      .withMessage('Street address is required')
       .ensure('charityState')
       .required()
-      .withMessage('Charity state please')
+      .withMessage('State is required')
       .on(this.updateCharity);
   }
-
   updateCanSubmit2(validationResults) {
     let valid = true;
     const nub = document.getElementsByClassName('updateButton')[0];
@@ -162,15 +170,16 @@ export class Charity {
     }
     if (!valid || !this.validType2) {
       this.canSubmit2 = false;
+      this.buildErrors();
       return false;
     }
     this.canSubmit2 = true;
     nub.style.display = 'block';
+    document.getElementById('valErrors').style.display = 'none';
     nub.removeAttribute('disabled');
     if (this.update) {
       nub.setAttribute('disabled', '');
       this.counter += 1;
-      // console.log(this.counter);
       if (this.counter > 8) {
         nub.removeAttribute('disabled');
       }
