@@ -55,10 +55,10 @@ export class TimePicker {
     }
     if (a > 12 && a !== 0) {
       offset = a % 12;
-    } else if (a === 12) {
+    } else if (a === 12 || a === 0) {
       offset = 12;
     } else {
-      offset = 12;
+      offset = a;
     }
     this.data = `${offset}:${b < 10 ? `0${b}` : b} ${zone}`;
     this.el.style.color = '#000';

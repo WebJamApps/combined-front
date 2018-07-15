@@ -10,14 +10,14 @@ export class MusicPlayer {
   constructor(element) {
     this.element = element;
     this.urls = [['DG.mp3', 'Don\'t Go / Web Jam Band'], ['MRM.mp3', 'Misty Rainy Morning / Web Jam Band'], ['AT.mp3', 'Alone Time / Web Jam Band'],
-      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], ['https://www.youtube.com/embed/ach2ubW21h4', 'Boogie Board Rash / Josh Sherman'],
-      ['https://www.youtube.com/embed/mCvUBjuzfo8', 'Hey Red / Josh Sherman'], ['https://soundcloud.com/joshandmariamusic/good-enough',
-        'Good Enough / Josh & Maria Sherman']];
+      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], [`https://www.youtube.com/embed/ach2ubW21h4?origin=http://${document.location.host}`,
+        'Boogie Board Rash / Josh Sherman'], [`https://www.youtube.com/embed/mCvUBjuzfo8?origin=http://${document.location.host}`,
+        'Hey Red / Josh Sherman'], ['https://soundcloud.com/joshandmariamusic/good-enough', 'Good Enough / Josh & Maria Sherman']];
 
     this._urls = [['DG.mp3', 'Don\'t Go / Web Jam Band'], ['MRM.mp3', 'Misty Rainy Morning / Web Jam Band'], ['AT.mp3', 'Alone Time / Web Jam Band'],
-      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], ['https://www.youtube.com/embed/ach2ubW21h4', 'Boogie Board Rash / Web Jam Band'],
-      ['https://www.youtube.com/embed/mCvUBjuzfo8', 'Hey Red / Web Jam Band'], ['https://soundcloud.com/joshandmariamusic/good-enough',
-        'Good Enough / Josh & Maria Sherman']];
+      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'], [`https://www.youtube.com/embed/ach2ubW21h4?origin=http://${document.location.host}`,
+        'Boogie Board Rash / Josh Sherman'], [`https://www.youtube.com/embed/mCvUBjuzfo8?origin=http://${document.location.host}`,
+        'Hey Red / Josh Sherman'], ['https://soundcloud.com/joshandmariamusic/good-enough', 'Good Enough / Josh & Maria Sherman']];
 
     this.play = this.play.bind(this);
     this.index = 0;
@@ -53,11 +53,11 @@ export class MusicPlayer {
             />
           </section>
           <section className="col-12 row col-md-7 m-0 mt-2 d-none" id="copier">
-            <div className="col-8 col-sm-9 col-md-10 p-0">
+            <div className="col-8 col-sm-8 col-md-9 p-0">
               <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="form-control" />
             </div>
             <div
-              className="col-4 col-sm-3 col-md-2 p-0"
+              className="col-4 col-sm-4 col-md-3 p-0 text-md-center"
               onKeyPress={() => {}}
               role="presentation"
               onClick={this.copyShare}
