@@ -149,7 +149,6 @@ export class MusicPlayer {
     } else {
       this.url = this.urls[this.index];
     }
-    console.log(this.url);
     this.playTrue();
     this.playSound();
   }
