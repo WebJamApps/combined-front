@@ -317,6 +317,16 @@ export class VolunteerOpps {
     }
   }
 
+  clickaChoo() {
+    const element = document.querySelector('#start input');
+    element.click();
+  }
+
+  clickaCha() {
+    const element = document.querySelector('#end input');
+    element.click();
+  }
+
   attached() {
     this.showNewEvent();
     this.setupValidation2();

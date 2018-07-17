@@ -656,4 +656,16 @@ describe('the Volunteer Opps Module', () => {
     expect(volops2.voOpp.voNumPeopleNeeded < 1).toBeFalsy();
     done();
   });
+
+  it('should click a choo', (done) => {
+    document.body.innerHTML = '<div id="start" horizontal-align="right" vertical-align="top" style="margin-top:25px;"><input /></div>';
+    volops.clickaChoo();
+    done();
+  });
+
+  it('should click a cha', (done) => {
+    document.body.innerHTML = '<div id="end" horizontal-align="right" vertical-align="top" style="margin-top:25px;"><input /></div>';
+    volops.clickaCha();
+    done();
+  });
 });
