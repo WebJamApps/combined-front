@@ -147,14 +147,21 @@
         <label style="margin-top:10px; font-size:11pt">Start Time (required)</label>
         <!-- <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text" click.delegate="showTime('s-time')"> -->
         <!--<input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text">-->
-        <div id="start">
-          <!--<input hidden="true" id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="time">-->
-          <time-picker data.two-way="voOpp.voStartTime & validate:controller2" type="start"></time-picker>
+        <div>
+          <input style="outline:0;" click.delegate="clickaChoo()" value.two-way="voOpp.voStartTime & validate:controller2" type="text">
+        </div>
+        <div style="display:none;" id="start">
+          <div>
+            <time-picker data.two-way="voOpp.voStartTime & validate:controller2" type="start"></time-picker>
+          </div>
         </div>
         <label style="margin-top:48px; font-size:11pt">End Time (required)</label>
         <!-- <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text" click.delegate="showTime('e-time')"> -->
         <!--<input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text">-->
-        <div id="end">
+        <div>
+          <input style="outline:0;" click.delegate="clickaCha()" value.two-way="voOpp.voEndTime & validate:controller2" type="text">
+        </div>
+        <div style="display:none;" id="end">
           <!--<input hidden="true" id="e-time" value.two-way="" type="time">-->
           <time-picker data.two-way="voOpp.voEndTime & validate:controller2" type="end"></time-picker>
         </div>
