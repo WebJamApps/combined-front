@@ -1,8 +1,8 @@
-
+const merge = require('deepmerge');
 const path = require('path');
 const webpack = require('../webpack.config');
 
-const isDebug = arg => arg === '--debug';
+// const isDebug = arg => arg === '--debug';
 
 module.exports = function (config) {
   config.set({
@@ -32,7 +32,14 @@ module.exports = function (config) {
       'test/karma-bundle.js': ['webpack', 'sourcemap']
     },
 
-    webpack: webpack({ coverage: !process.argv.some(isDebug) }),
+    webpack: merge(webpack, {
+      // Work around webpack 4 compatibility issues:
+    // https://github.com/webpack-contrib/karma-webpack/issues/322
+      optimization: {
+        splitChunks: false,
+        runtimeChunk: false
+      }
+    }),
 
     /*
     * test results reporter to use
