@@ -31,7 +31,7 @@ module.exports = (production, server, extractCss, coverage) => ({
     extensions: ['.js'],
     modules: [srcDir, 'node_modules']
   },
-  devtool: production ? 'source-map' : 'cheap-module-eval-source-map',
+  devtool: production ? 'nosources-source-map' : 'cheap-module-eval-source-map',
   entry: {
     app: ['aurelia-bootstrapper'],
     vendor: ['bluebird', 'jquery', 'bootstrap', 'whatwg-fetch', 'isomorphic-fetch']
@@ -84,6 +84,7 @@ module.exports = (production, server, extractCss, coverage) => ({
       { test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'file-loader' }
     ]
   },
+  performance: { hints: false },
   optimization: {
     minimize: false,
     splitChunks: {
