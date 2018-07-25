@@ -16,7 +16,7 @@ module.exports = function (config) {
     *
     * available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     */
-    frameworks: ['jasmine', 'viewport'],
+    frameworks: ['jasmine'],
 
     /**
     * list of files / patterns to load in the browser
@@ -32,7 +32,7 @@ module.exports = function (config) {
       'test/karma-bundle.js': ['webpack', 'sourcemap']
     },
 
-    webpack: webpack({ coverage: !process.argv.some(isDebug) }),
+    webpack: webpack({ coverage: true }),
 
     /*
     * test results reporter to use
@@ -40,7 +40,7 @@ module.exports = function (config) {
     * possible values: 'dots', 'progress'
     * available reporters: https://npmjs.org/browse/keyword/karma-reporter
     */
-    reporters: ['mocha', 'coverage'],
+    reporters: ['mocha', 'progress', 'coverage'],
 
     coverageReporter: {
       reporters: [{ type: 'html' }, { type: 'lcovonly' }, { type: 'text-summary' }, { type: 'json' }],
