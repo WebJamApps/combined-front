@@ -1,6 +1,4 @@
-const {
-  series, crossEnv, concurrent, rimraf
-} = require('nps-utils');
+const { series, crossEnv, concurrent, rimraf } = require('nps-utils');
 const { config: { port: E2E_PORT } } = require('./test/protractor.conf');
 
 module.exports = {
@@ -15,7 +13,7 @@ module.exports = {
       },
       karma: {
         default: series(
-          rimraf('test/karma-coverage'),
+          rimraf('test/coverage-karma'),
           'karma start test/karma.conf.js'
         ),
         watch: 'karma start test/karma.conf.js --auto-watch --no-single-run',
