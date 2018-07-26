@@ -16,23 +16,24 @@ Error.stackTraceLimit = Infinity;
 const testModuleContexts = loadTestModules();
 runTests(testModuleContexts);
 
-const srcContext = require.context(
-  // directory:
-  '../src',
-  // recursive:
-  true,
-  // tests in /src folder regex:
-  /\.spec\.[tj]s$/im
-);
-
-const testContext = require.context(
-  // recursive:
-  true,
-  // tests in ./unit folder regex:
-  /\.spec\.[tj]s$/im
-);
 
 function loadTestModules() {
+  const srcContext = require.context(
+    // directory:
+    '../src',
+    // recursive:
+    true,
+    // tests in /src folder regex:
+    /\.spec\.[tj]s$/im
+  );
+
+  const testContext = require.context(
+    // recursive:
+    true,
+    // tests in ./unit folder regex:
+    /\.spec\.[tj]s$/im
+  );
+
   return [srcContext, testContext];
 }
 
