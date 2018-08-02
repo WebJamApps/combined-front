@@ -10,7 +10,7 @@
   "author": "HandlersAndKickers",
   "license": "MIT",
   "engines": {
-    "node": "8.11.3"
+    "node": "10.4.1"
   },
   "scripts": {
     "start": "nps",
@@ -132,15 +132,16 @@
     "jest": "^22.4.3",
     "jest-cli": "^22.4.3",
     "jest-environment-jsdom": "^22.4.3",
-    "karma": "^1.7.0",
+    "jest-jasmine2": "^23.0.0-alpha.0",
+    "jest-matchers": "^20.0.3",
+    "karma": "^2.0.0",
     "karma-chrome-launcher": "^2.2.0",
-    "karma-coverage": "^1.1.1",
-    "karma-coverage-istanbul-reporter": "^1.2.0",
-    "karma-jasmine": "^1.1.0",
-    "karma-mocha-reporter": "^2.2.3",
+    "karma-coverage": "latest",
+    "karma-coverage-istanbul-reporter": "^1.4.2",
+    "karma-jasmine": "^1.1.1",
+    "karma-mocha-reporter": "latest",
     "karma-sourcemap-loader": "^0.3.7",
-    "karma-viewport": "^1.0.2",
-    "karma-webpack": "^2.0.4",
+    "karma-webpack": "latest",
     "protractor": "^5.1.2",
     "redux-devtools": "^3.4.1",
     "stylelint": "^8.4.0",
