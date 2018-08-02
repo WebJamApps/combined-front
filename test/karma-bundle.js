@@ -1,4 +1,5 @@
 import 'aurelia-polyfills';
+import 'babel-polyfill';
 import 'aurelia-loader-webpack';
 import {install as installJasmineAsync} from 'jest-jasmine2/jasmine_async';
 
@@ -16,7 +17,6 @@ Error.stackTraceLimit = Infinity;
 const testModuleContexts = loadTestModules();
 runTests(testModuleContexts);
 
-
 function loadTestModules() {
   const srcContext = require.context(
     // directory:
@@ -28,6 +28,8 @@ function loadTestModules() {
   );
 
   const testContext = require.context(
+    // directory:
+    './karma-unit',
     // recursive:
     true,
     // tests in ./unit folder regex:
