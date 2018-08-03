@@ -43,9 +43,9 @@ module.exports = function (config) {
     reporters: ['mocha', 'progress', 'coverage'],
 
     coverageReporter: {
-      reporters: [{ type: 'html' }, { type: 'lcovonly' }, { type: 'text-summary' }, { type: 'json' }],
-      dir: 'coverage/',
-      subdir: 'karma/'
+      reporters: [ { type: 'html' }, { type: 'lcovonly' }, { type: 'text-summary' } ],
+      dir: path.resolve(__dirname, 'coverage-karma'),
+      subdir: '../coverage'
     },
 
     // Webpack please don't spam the console when running in karma!
@@ -78,6 +78,6 @@ module.exports = function (config) {
     * Continuous Integration mode
     * if true, Karma captures browsers, runs the tests and exits
     */
-    singleRun: false
+    singleRun: true
   });
 };
