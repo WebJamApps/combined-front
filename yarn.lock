@@ -153,10 +153,6 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
 
-"@types/bluebird@*":
-  version "3.5.22"
-  resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.22.tgz#519b87fe3c9d290ca6c06381ffc3040770ab452b"
-
 "@types/debug@^0.0.29":
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-0.0.29.tgz#a1e514adfbd92f03a224ba54d693111dbf1f3754"
@@ -167,13 +163,6 @@
   dependencies:
     csstype "^2.0.0"
     indefinite-observable "^1.0.1"
-
-"@types/karma@^1.7.3":
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/@types/karma/-/karma-1.7.5.tgz#72055af26b7be5084a0c7fc09664a408e52e1941"
-  dependencies:
-    "@types/bluebird" "*"
-    "@types/node" "*"
 
 "@types/node@*":
   version "10.5.2"
@@ -6037,9 +6026,9 @@ items@2.x.x:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/items/-/items-2.1.1.tgz#8bd16d9c83b19529de5aea321acaada78364a198"
 
-jasmine-core@^2.6.4:
-  version "2.99.1"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.99.1.tgz#e6400df1e6b56e130b61c4bcd093daa7f6e8ca15"
+jasmine-core@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-3.1.0.tgz#a4785e135d5df65024dfc9224953df585bd2766c"
 
 jasmine-core@~2.8.0:
   version "2.8.0"
@@ -6660,10 +6649,6 @@ jsonpointer@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/jsonpointer/-/jsonpointer-4.0.1.tgz#4fd92cb34e0e9db3c89c8622ecf51f9b978c6cb9"
 
-jsonschema@^1.1.1:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/jsonschema/-/jsonschema-1.2.4.tgz#a46bac5d3506a254465bc548876e267c6d0d6464"
-
 jsprim@^1.2.2:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/jsprim/-/jsprim-1.4.1.tgz#313e66bc1e5cc06e438bc1b7499c2e5c56acb6a2"
@@ -6805,13 +6790,6 @@ karma-sourcemap-loader@^0.3.7:
   resolved "https://registry.yarnpkg.com/karma-sourcemap-loader/-/karma-sourcemap-loader-0.3.7.tgz#91322c77f8f13d46fed062b042e1009d4c4505d8"
   dependencies:
     graceful-fs "^4.1.2"
-
-karma-viewport@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/karma-viewport/-/karma-viewport-1.0.2.tgz#61ffde670b6395fa3dd213526e5f382656d775f1"
-  dependencies:
-    "@types/karma" "^1.7.3"
-    jsonschema "^1.1.1"
 
 karma-webpack@latest:
   version "3.0.0"
@@ -7976,7 +7954,7 @@ npmlog@^4.0.2:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
-nps-utils@^1.2.0:
+nps-utils@^1.5.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/nps-utils/-/nps-utils-1.6.0.tgz#d88badb94fdf002e037d9718df5bc6cbf4c58bcf"
   dependencies:
@@ -7991,7 +7969,7 @@ nps-utils@^1.2.0:
     opn-cli "^3.1.0"
     rimraf "^2.6.1"
 
-nps@^5.6.0:
+nps@^5.8.2:
   version "5.9.2"
   resolved "https://registry.yarnpkg.com/nps/-/nps-5.9.2.tgz#3531ebd79b81bca648e9c751ccf24b937ff7bcb0"
   dependencies:
