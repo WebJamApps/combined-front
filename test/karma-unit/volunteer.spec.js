@@ -77,7 +77,7 @@ describe('the Volunteer Module', () => {
   });
 
   afterEach(() => {
-    viewport.reset();
+    // viewport.reset();
   });
 
   it('should active so it can display the volunteer settings', (done) => {
@@ -101,12 +101,12 @@ describe('the Volunteer Module', () => {
   });
 
   it('sets the filter dropdown position for cell phone display', (done) => {
-    viewport.set(800);
+    // viewport.set(800);
     document.body.innerHTML = '<div class="checkboxes-div" style="top:33px"></div><div id="distanceInput"><div>';
     volunteer.setupVolunteerUser = function () {};
     volunteer.attached();
     expect(document.getElementsByClassName('checkboxes-div')[0].style.top).toBe('33px');
-    viewport.set(500);
+    // viewport.set(500);
     volunteer.attached();
     expect(document.getElementsByClassName('checkboxes-div')[0].style.top).toBe('124px');
     done();
