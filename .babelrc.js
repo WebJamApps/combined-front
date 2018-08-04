@@ -8,8 +8,6 @@ module.exports = () => {
     "presets": [
       [
         "react"
-      ], [
-        "stage-2"
       ],
       [
         "env", {
