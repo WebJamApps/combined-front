@@ -29,7 +29,7 @@ module.exports = function (config) {
     * available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     */
     preprocessors: {
-      'test/karma-bundle.js': ['webpack', 'sourcemap']
+      'test/karma-bundle.js': ['webpack']
     },
 
     webpack: webpack({ coverage: true }),
@@ -44,8 +44,8 @@ module.exports = function (config) {
 
     coverageReporter: {
       reporters: [ { type: 'html' }, { type: 'lcovonly' }, { type: 'text-summary' } ],
-      dir: path.resolve(__dirname, 'coverage-karma'),
-      subdir: '../coverage'
+      dir: 'coverage/',
+      subdir: 'coverage-karma/'
     },
 
     // Webpack please don't spam the console when running in karma!
