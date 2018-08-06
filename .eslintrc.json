@@ -27,6 +27,7 @@
       "code": 150
     }],
     "one-var-declaration-per-line": [0, "never"],
+    "lines-between-class-members": [0, "never"],
     "one-var": [2, {
       "var": "never",
       "let": "always",
