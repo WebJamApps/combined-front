@@ -1,7 +1,9 @@
 import { StageComponent } from 'aurelia-testing';
 import { Dashboard } from '../../src/dashboard';
 import { App } from '../../src/app';
-import { AuthStub, HttpMock, AppStateStub, RouterStub } from './commons';
+import {
+  AuthStub, HttpMock, AppStateStub, RouterStub
+} from './commons';
 
 describe('the Dashboard Module', () => {
   let dashboard;

@@ -22,8 +22,8 @@ describe('the Music module', () => {
   });
   it('shows slides when component is attached', (done) => {
     jasmine.clock().install();
-    document.body.innerHTML = '<div id="musicSlide1"><div></div></div><div id="slideshowMusic"><div class="mySlides">' +
-    '<img src="https://static.pexels.com/photos/2422/sky-earth-galaxy-universe.jpg" /></div></div>';
+    document.body.innerHTML = '<div id="musicSlide1"><div></div></div><div id="slideshowMusic"><div class="mySlides">'
+    + '<img src="https://static.pexels.com/photos/2422/sky-earth-galaxy-universe.jpg" /></div></div>';
     music1.attached();
     jasmine.clock().tick(5500);
     expect(document.getElementById('musicSlide1')).not.toBe(null);

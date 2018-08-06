@@ -51,13 +51,13 @@ export class Dashboard {
     /* istanbul ignore else */
     if (this.user.userType === 'Charity') {
       return this.app.router.navigate('dashboard/charity');
-    } else if (this.user.userType === 'Volunteer') {
+    } if (this.user.userType === 'Volunteer') {
       return this.app.router.navigate('dashboard/volunteer');
-    } else if (this.user.userType === 'Reader') {
+    } if (this.user.userType === 'Reader') {
       return this.app.router.navigate('dashboard/reader');
-    } else if (this.user.userType === 'Librarian') {
+    } if (this.user.userType === 'Librarian') {
       return this.app.router.navigate('dashboard/librarian');
-    } else if (this.user.userType === 'Developer') {
+    } if (this.user.userType === 'Developer') {
       return this.app.router.navigate('dashboard/developer');
     }
     return this.app.router.navigate('/');

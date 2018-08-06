@@ -287,9 +287,9 @@ class HttpMock {
           volWorkOther: ''
         }
       ];
-    } else if (id === '2') {
+    } if (id === '2') {
       return null;
-    } else if (id === '3') {
+    } if (id === '3') {
       return [
         {
           name: 'Test Elba',
@@ -332,4 +332,6 @@ class HttpMock {
   }
 }
 
-export { RouterStub, ConfigStub, AuthStub, AppStateStub, HttpMock };
+export {
+  RouterStub, ConfigStub, AuthStub, AppStateStub, HttpMock
+};

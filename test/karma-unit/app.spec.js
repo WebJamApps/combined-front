@@ -1,5 +1,7 @@
 import { App } from '../../src/app';
-import { AuthStub, HttpMock, RouterStub, AppStateStub } from './commons';
+import {
+  AuthStub, HttpMock, RouterStub, AppStateStub
+} from './commons';
 
 const Counter = require('assertions-counter');
 
@@ -247,8 +249,8 @@ describe('the App module', () => {
 
   it('gets the current styles dashboard/volunteer route', (done) => {
     const routre = new RouterStub();
-    document.body.innerHTML = '<div id="ohaf-footer" class="footer drawer nav-list" elevation="4" ' +
-    'style="padding:8px; background-color: #565656"></div>';
+    document.body.innerHTML = '<div id="ohaf-footer" class="footer drawer nav-list" elevation="4" '
+    + 'style="padding:8px; background-color: #565656"></div>';
     routre.currentInstruction.fragment = '/dashboard/volunteer';
     app1.router = routre;
     const cs = app1.currentStyles;
@@ -258,8 +260,8 @@ describe('the App module', () => {
   });
 
   it('gets the current styles with dashboard/charity route', (done) => {
-    document.body.innerHTML = '<div id="ohaf-footer" class="footer drawer nav-list" elevation="4" ' +
-    'style="padding:8px; background-color: #565656"></div>';
+    document.body.innerHTML = '<div id="ohaf-footer" class="footer drawer nav-list" elevation="4" '
+    + 'style="padding:8px; background-color: #565656"></div>';
     const routre = new RouterStub();
     routre.currentInstruction.fragment = '/dashboard/charity';
     app1.router = routre;

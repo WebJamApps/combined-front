@@ -15,7 +15,7 @@ describe('the App module', () => {
     expect(RC.text()).toEqual('Hello World');
   });
   it('one toplevel element', () => {
-    expect(RC.length).toEqual(1);
+    expect(RC).toHaveLength(1);
   });
 
   it('wrapper should match snapshot', () => {

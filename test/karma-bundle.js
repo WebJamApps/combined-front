@@ -1,7 +1,7 @@
 import 'aurelia-polyfills';
 import 'babel-polyfill';
 import 'aurelia-loader-webpack';
-import {install as installJasmineAsync} from 'jest-jasmine2/jasmine_async';
+import { install as installJasmineAsync } from 'jest-jasmine2/jasmine_async';
 
 // enable running Promise-returning tests:
 installJasmineAsync(global);
@@ -63,14 +63,14 @@ function installJestExpect() {
   jasmine.stringMatching = expect.stringMatching;
   jasmine.addMatchers = (jasmineMatchersObject) => {
     const jestMatchersObject = Object.create(null);
-    Object.keys(jasmineMatchersObject).forEach(name => {
-      jestMatchersObject[name] = function() {
+    Object.keys(jasmineMatchersObject).forEach((name) => {
+      jestMatchersObject[name] = function () {
         const result = jasmineMatchersObject[name](jasmine.matchersUtil, null);
         // if there is no 'negativeCompare', both should be handled by `compare`
         const negativeCompare = result.negativeCompare || result.compare;
 
         return this.isNot
-          ? negativeCompare.apply(null, arguments)
+          ? negativeCompare(...arguments)
           : result.compare.apply(null, arguments);
       };
     });

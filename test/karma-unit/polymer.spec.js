@@ -26,4 +26,3 @@ describe('The Polymer module', () => {
       });
   });
 });
-

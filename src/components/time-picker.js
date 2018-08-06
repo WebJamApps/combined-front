@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TimeInput from 'material-ui-time-picker';
-import { noView, customElement, bindable, inject } from 'aurelia-framework';
+import {
+  noView, customElement, bindable, inject
+} from 'aurelia-framework';
 
 @noView()
 @inject(Element)
@@ -20,16 +22,19 @@ export class TimePicker {
   get component() {
     return (
       <div>
-        <div style={{ display: 'none' }}><TimeInput ref={(el) => { this.picker = el; }} mode="12h" onChange={this.updateTime} /></div>
+        <div style={{ display: 'none' }}>
+          <TimeInput ref={(el) => { this.picker = el; }} mode="12h" onChange={this.updateTime} />
+        </div>
         <section
           ref={(el) => { this.el = el; }}
           style={{
- border: '1px solid #ccc', color: '#fff', padding: '1px 5px', width: '83%', margin: 0, outline: 0, textAlign: 'left', cursor: 'text'
-}}
+            border: '1px solid #ccc', color: '#fff', padding: '1px 5px', width: '83%', margin: 0, outline: 0, textAlign: 'left', cursor: 'text'
+          }}
           onClick={this.showTimer}
           onKeyDown={() => {}}
           role="presentation"
-        >{this.type === 'start' ? '8:00 am' : '5:00 pm'}
+        >
+          {this.type === 'start' ? '8:00 am' : '5:00 pm'}
         </section>
       </div>
     );

@@ -1,6 +1,8 @@
 import { Validator } from 'aurelia-validation';
 import { UserAccount } from '../../src/dashboard-child-routes/user-account';
-import { AuthStub, HttpMock, AppStateStub, RouterStub } from './commons';
+import {
+  AuthStub, HttpMock, AppStateStub, RouterStub
+} from './commons';
 import { App } from '../../src/app';
 
 function testAsync(runAsync) {
@@ -152,7 +154,7 @@ describe('the UserAccount Module', () => {
     expect(ua.events2).toBe(checker);
     ua.events2 = [{ id: '123' }];
     ua.fixPeopleScheduled(ua.events2);
-    expect(ua.events2[0].voPeopleScheduled.length).toBe(0);
+    expect(ua.events2[0].voPeopleScheduled).toHaveLength(0);
     done();
   });
   it('checks for scheduled events by a volunteer user', (done) => {
