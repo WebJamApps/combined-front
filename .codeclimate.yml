@@ -1,8 +1,4 @@
 version:                  "2"
-prepare:
-  fetch:
-  - url:                  https://raw.githubusercontent.com/aurelia/tools/master/.eslintrc.json
-    path:                 node_modules/aurelia-tools/.eslintrc.json
 checks:
   method-lines:
     config:
@@ -23,8 +19,6 @@ plugins:
       languages:
         javascript:
           mass_threshold: 60
-  eslint:
-    enabled:              true
   stylelint:
     enabled:              false
   htmlhint:
