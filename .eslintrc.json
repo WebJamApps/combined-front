@@ -27,18 +27,7 @@
     "func-names": [0, "never"],
     "class-methods-use-this": [0, "never"],
     "no-restricted-syntax": [0, "never"],
-    "prefer-destructuring": ["error", {
-      "VariableDeclarator": {
-        "array": false,
-        "object": false
-      },
-      "AssignmentExpression": {
-        "array": false,
-        "object": false
-      }
-    }, {
-      "enforceForRenamedProperties": false
-    }],
+    "prefer-destructuring": 0,
     "no-param-reassign": [0, "never"],
     "import/prefer-default-export": [0, "never"],
     "max-len": ["error", {
