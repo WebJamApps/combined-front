@@ -239,8 +239,8 @@ test('it sends PUT request to varify the changed email with pin', () => {
     });
   };
   user.fetch = mockfetch;
-  document.body.innerHTML = '<input class="email" value="new@email.com">' +
-  '<input class="code" value="12345"><div class="loginerror"></div>';
+  document.body.innerHTML = '<input class="email" value="new@email.com">'
+  + '<input class="code" value="12345"><div class="loginerror"></div>';
   const evt = { target: { fetchClient: mockfetch, runFetch: user.runFetch } };
   return user.verifyChangeEmail(evt).then(() => {
     expect(document.getElementsByClassName('loginerror')[0].innerHTML).toBe('');
@@ -258,8 +258,8 @@ test('it sends PUT request to varify the changed email with pin and displays err
     });
   };
   user.fetch = mockfetch;
-  document.body.innerHTML = '<input class="email" value="new@email.com">' +
-  '<input class="code" value="12345"><div class="loginerror"></div>';
+  document.body.innerHTML = '<input class="email" value="new@email.com">'
+  + '<input class="code" value="12345"><div class="loginerror"></div>';
   const evt = { target: { fetchClient: mockfetch, runFetch: user.runFetch } };
   return user.verifyChangeEmail(evt).then(() => {
     expect(document.getElementsByClassName('loginerror')[0].innerHTML).toBe('<p style="text-align:left; padding-left:12px">incorrect pin</p>');

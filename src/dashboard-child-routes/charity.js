@@ -1,6 +1,8 @@
 import { inject } from 'aurelia-framework';
 import { json } from 'aurelia-fetch-client';
-import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
+import {
+  ValidationControllerFactory, ValidationRules, Validator, validateTrigger
+} from 'aurelia-validation';
 import { App } from '../app';
 import { FormValidator } from '../classes/FormValidator';
 import { showCheckboxes } from '../commons/utils';

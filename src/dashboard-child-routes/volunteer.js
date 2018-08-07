@@ -1,6 +1,8 @@
 import { inject } from 'aurelia-framework';
 import { App } from '../app';
-import { fixDates, formatDate, markPast, showCheckboxes, filterSelected } from '../commons/utils';
+import {
+  fixDates, formatDate, markPast, showCheckboxes, filterSelected
+} from '../commons/utils';
 @inject(App)
 export class Volunteer {
   constructor(app) {

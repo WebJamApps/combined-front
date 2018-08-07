@@ -334,19 +334,19 @@ export class App {
         footer.style.backgroundColor = '#565656';
         color = '#c09580';
       }
-      footer.innerHTML = '<div style="text-align: center;padding:6px">' +
-      `<a target="_blank" style="color:${color}; padding-right:5px" href="https://github.com/WebJamApps">` +
-      '<i class="fa fa-github fa-2x footerIcon" aria-hidden="true">' +
-      `</i></a><a target="_blank" style="color:${color};padding-right:5px" href="https://www.linkedin.com/company/webjam/">` +
-      `<i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a><a target="_blank" style="color:${color};padding-right:5px"` +
-      'href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a>' +
-      `<a target="_blank" style="color:${color};padding-right:5px" href="https://www.facebook.com/WebJamLLC/">` +
-      '<i class="fa fa-facebook-square fa-2x footerIcon"' +
-      `aria-hidden="true"></i></a><a target="_blank" style="color:${color};padding-right:5px"` +
-      'href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>' +
-      `<a target="_blank" style="color:${color};padding-right:5px" href="https://plus.google.com/u/1/109586499331294076292">` +
-      '<i class="fa fa-google-plus-square fa-2x footerIcon" aria-hidden="true"></i></a><p style="color:white; font-size: 9pt;margin-bottom:0">' +
-      'Powered by <a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>';
+      footer.innerHTML = '<div style="text-align: center;padding:6px">'
+      + `<a target="_blank" style="color:${color}; padding-right:5px" href="https://github.com/WebJamApps">`
+      + '<i class="fa fa-github fa-2x footerIcon" aria-hidden="true">'
+      + `</i></a><a target="_blank" style="color:${color};padding-right:5px" href="https://www.linkedin.com/company/webjam/">`
+      + `<i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a><a target="_blank" style="color:${color};padding-right:5px"`
+      + 'href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a>'
+      + `<a target="_blank" style="color:${color};padding-right:5px" href="https://www.facebook.com/WebJamLLC/">`
+      + '<i class="fa fa-facebook-square fa-2x footerIcon"'
+      + `aria-hidden="true"></i></a><a target="_blank" style="color:${color};padding-right:5px"`
+      + 'href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>'
+      + `<a target="_blank" style="color:${color};padding-right:5px" href="https://plus.google.com/u/1/109586499331294076292">`
+      + '<i class="fa fa-google-plus-square fa-2x footerIcon" aria-hidden="true"></i></a><p style="color:white; font-size: 9pt;margin-bottom:0">'
+      + 'Powered by <a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>';
     }
   }
   get currentStyles() {

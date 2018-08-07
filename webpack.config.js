@@ -2,7 +2,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const autoprefixer = require('autoprefixer');
+// require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
@@ -11,9 +11,8 @@ const webpack = require('webpack');
 
 // config helpers:
 dotenv.config({ path: '.env' });
-const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
-const when = (condition, config, negativeConfig) =>
-  condition ? ensureArray(config) : ensureArray(negativeConfig);
+const ensureArray = config => config && (Array.isArray(config) ? config : [config]) || [];
+const when = (condition, config, negativeConfig) => (condition ? ensureArray(config) : ensureArray(negativeConfig));
 
 // primary config:
 const title = 'Web Jam LLC';
@@ -26,7 +25,9 @@ const cssRules = [
   { loader: 'css-loader' }
 ];
 
-module.exports = ({production, server, extractCss, coverage, analyze} = {}) => ({
+module.exports = ({
+  production, server, extractCss, coverage, analyze
+} = {}) => ({
   resolve: {
     extensions: ['.js'],
     modules: [srcDir, 'node_modules'],
@@ -71,8 +72,11 @@ module.exports = ({production, server, extractCss, coverage, analyze} = {}) => (
         use: cssRules
       },
       { test: /\.html$/i, loader: 'html-loader' },
-      { test: /\.js$/i, loader: 'babel-loader', exclude: nodeModulesDir,
-        options: coverage ? { sourceMap: 'inline', plugins: [ 'istanbul' ] } : {},
+      {
+        test: /\.js$/i,
+        loader: 'babel-loader',
+        exclude: nodeModulesDir,
+        options: coverage ? { sourceMap: 'inline', plugins: ['istanbul'] } : {},
       },
       { test: /\.json$/i, loader: 'json-loader' },
       // use Bluebird as the global Promise implementation:
@@ -88,14 +92,14 @@ module.exports = ({production, server, extractCss, coverage, analyze} = {}) => (
   plugins: [
     new AureliaPlugin(),
     new ProvidePlugin({
-      'Promise': 'bluebird',
-      '$': 'jquery',
-      'jQuery': 'jquery',
+      Promise: 'bluebird',
+      $: 'jquery',
+      jQuery: 'jquery',
       'window.jQuery': 'jquery',
-      'Popper': ['popper.js', 'default']
+      Popper: ['popper.js', 'default']
     }),
     new ModuleDependenciesPlugin({
-      'aurelia-testing': [ './compile-spy', './view-spy' ],
+      'aurelia-testing': ['./compile-spy', './view-spy'],
       'aurelia-auth': ['./auth-filter'],
       'aurelia-config': ['./aurelia-config'],
       'au-table': ['./au-table', './au-table-select', './au-table-sort', './au-table-pagination'],

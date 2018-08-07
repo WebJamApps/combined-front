@@ -1,6 +1,8 @@
 import { Volunteer } from '../../src/dashboard-child-routes/volunteer';
 import { App } from '../../src/app';
-import { AuthStub, HttpMock, AppStateStub, RouterStub } from './commons';
+import {
+  AuthStub, HttpMock, AppStateStub, RouterStub
+} from './commons';
 import { formatDate, markPast } from '../../src/commons/utils';
 
 function testAsync(runAsync) {
@@ -144,8 +146,8 @@ describe('the Volunteer Module', () => {
       volTalentOther: '',
       volWorkOther: ''
     };
-    document.body.innerHTML = '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div>' +
-    '<button id="updateUserButton"></button>';
+    document.body.innerHTML = '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div>'
+    + '<button id="updateUserButton"></button>';
     volunteer.selectPickChange('causes');
     volunteer.selectPickChange('work');
     volunteer.selectPickChange('talents');
@@ -224,8 +226,8 @@ describe('the Volunteer Module', () => {
 
   it('should run attached to setup the volunteer user', (done) => {
     volunteer.activate();
-    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector">' +
-    '</div><input id="distanceInput"><button id="updateUserButton"></button>';
+    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector">'
+    + '</div><input id="distanceInput"><button id="updateUserButton"></button>';
     volunteer.user = {
       volCauses: ['Hunger', 'other'],
       volTalents: ['Cooking', 'other'],
@@ -241,8 +243,8 @@ describe('the Volunteer Module', () => {
 
   it('should not display the checkboxes', (done) => {
     volunteer.activate();
-    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div>' +
-    '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div>';
+    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div>'
+    + '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div>';
     volunteer.user = {
       volCauses: [], volTalents: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''
     };
@@ -255,8 +257,8 @@ describe('the Volunteer Module', () => {
 
   it('removes double quote empty string array elements', (done) => {
     volunteer.activate();
-    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div>' +
-    '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div><button id="updateUserButton"></button>';
+    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div>'
+    + '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div><button id="updateUserButton"></button>';
     volunteer.user = {
       volCauses: [], volTalents: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''
     };
@@ -274,9 +276,9 @@ describe('the Volunteer Module', () => {
 
   it('hides the checkboxes when all are unchecked', (done) => {
     volunteer.activate();
-    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector">' +
-    '</div><div id="selectTalents" style="display:block"></div><div id="selectCauses" style="display:block"></div>' +
-    '<div id="selectWork" style="display:block"></div><button id="updateUserButton"></button>';
+    document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector">'
+    + '</div><div id="selectTalents" style="display:block"></div><div id="selectCauses" style="display:block"></div>'
+    + '<div id="selectWork" style="display:block"></div><button id="updateUserButton"></button>';
     volunteer.user = {
       volCauses: [], volTalents: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''
     };

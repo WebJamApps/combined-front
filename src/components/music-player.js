@@ -67,20 +67,36 @@ export class MusicPlayer {
               onClick={this.copyShare}
               style={{ cursor: 'pointer' }}
             >
-              <span className="input-group-text" id="inputGroup" style={{ fontSize: '0.8em' }}>Copy URL</span>
+              <span className="input-group-text" id="inputGroup" style={{ fontSize: '0.8em' }}>
+Copy URL
+              </span>
             </div>
           </section>
           <section id="copyMessage" className="col-12 col-md-7 d-none m-0">
-            <span className="text-success" style={{ fontSize: '0.8em' }}>Url copied Url to clipboard</span>
+            <span className="text-success" style={{ fontSize: '0.8em' }}>
+Url copied Url to clipboard
+            </span>
           </section>
-          <section className="col-12 col-md-7 mt-1" style={{ fontSize: '0.8em' }}>{this.url[1]}</section>
+          <section className="col-12 col-md-7 mt-1" style={{ fontSize: '0.8em' }}>
+            {this.url[1]}
+          </section>
           <section className="mt-0 col-12 col-md-7">
-            <button role="menu" onClick={this.play}>Play/Pause</button>
-            <button role="menu" onClick={this.next}>Next</button>
+            <button role="menu" onClick={this.play}>
+Play/Pause
+            </button>
+            <button role="menu" onClick={this.next}>
+Next
+            </button>
             <div className="d-md-none" />
-            <button role="menu" onClick={this.prev}>Prev</button>
-            <button id="shuffle" role="menu" onClick={this.shuffle}>Shuffle</button>
-            <button role="menu" onClick={this.share}>Share</button>
+            <button role="menu" onClick={this.prev}>
+Prev
+            </button>
+            <button id="shuffle" role="menu" onClick={this.shuffle}>
+Shuffle
+            </button>
+            <button role="menu" onClick={this.share}>
+Share
+            </button>
           </section>
         </div>
       </div>

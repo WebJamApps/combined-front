@@ -1,4 +1,6 @@
-import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
+import {
+  ValidationControllerFactory, ValidationRules, Validator, validateTrigger
+} from 'aurelia-validation';
 import { inject } from 'aurelia-framework';
 import { json } from 'aurelia-fetch-client';
 import { App } from '../app';

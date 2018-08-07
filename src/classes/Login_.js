@@ -10,24 +10,24 @@ class Login_ {
   createLoginForm(appName) {
     patric.nevermind('LoginForm');
     patric.nevermind('RegistrationForm');
-    const useremailinput = '<tr class="emailheader"><th style="border:none">Email</th></tr><tr class="emailinput"><td>' +
-    '<input class="loginemail" type="email" name="email" style="width:300px;" value="" required></td></tr>';
-    const useridrow = '<tr class="uidheader"><th style="border:none">Email or Userid</th></tr><tr class="uidinput"><td>' +
-    '<input class="userid" name="userid" style="width:300px;" value="" required></tr></td>';
+    const useremailinput = '<tr class="emailheader"><th style="border:none">Email</th></tr><tr class="emailinput"><td>'
+    + '<input class="loginemail" type="email" name="email" style="width:300px;" value="" required></td></tr>';
+    const useridrow = '<tr class="uidheader"><th style="border:none">Email or Userid</th></tr><tr class="uidinput"><td>'
+    + '<input class="userid" name="userid" style="width:300px;" value="" required></tr></td>';
     const loginform = document.createElement('div');
     loginform.className = 'LoginForm elevation2';
-    loginform.innerHTML = `${'<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;">' +
-      '<span class="patric">PATRIC</span>User Login</h2>' +
-    '<form><div style="padding:2px; margin:10px;"><table><tbody class="regformtbody">'}${useridrow
+    loginform.innerHTML = `${'<h2 style="margin:0px;padding:4px;font-size:1.2em;text-align:center;background:#eee;">'
+      + '<span class="patric">PATRIC</span>User Login</h2>'
+    + '<form><div style="padding:2px; margin:10px;"><table><tbody class="regformtbody">'}${useridrow
     }${useremailinput
-    }<tr><th style="border:none">Password</th></tr><tr><td>` +
-    '<input class="loginpass" pattern=".{8,}" title="8 characters minimum" type="password" name="password" style="width:300px;" value="" required>' +
-      '</td></tr>' +
-    '</tbody></table></div><div style="text-align:center;padding:2px;margin:10px;">' +
-    '<div class="loginerror" style="color:red"></div>' +
-    '<div><button style="display:none; margin-bottom:-22px; margin-left:10px" type="button" class="loginbutton">Login</button>' +
-    '<button style="display:none;margin-top:34px; margin-left:10px" class="resetpass" type="button">Reset Password</button></div></div></form>' +
-    '<button class="nevermind" style="margin-left:86px;margin-top:8px; margin-bottom:15px" type="button">Cancel</button></div></div></form>';
+    }<tr><th style="border:none">Password</th></tr><tr><td>`
+    + '<input class="loginpass" pattern=".{8,}" title="8 characters minimum" type="password" name="password" style="width:300px;" value="" required>'
+      + '</td></tr>'
+    + '</tbody></table></div><div style="text-align:center;padding:2px;margin:10px;">'
+    + '<div class="loginerror" style="color:red"></div>'
+    + '<div><button style="display:none; margin-bottom:-22px; margin-left:10px" type="button" class="loginbutton">Login</button>'
+    + '<button style="display:none;margin-top:34px; margin-left:10px" class="resetpass" type="button">Reset Password</button></div></div></form>'
+    + '<button class="nevermind" style="margin-left:86px;margin-top:8px; margin-bottom:15px" type="button">Cancel</button></div></div></form>';
     const home = document.getElementsByClassName('home');
     home[0].insertBefore(loginform, home[0].childNodes[0]);
     const elementsObj = { PATRIC: ['patric', 'uidheader', 'uidinput'], nArr: ['emailheader', 'emailinput'] };
