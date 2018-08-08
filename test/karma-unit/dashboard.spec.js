@@ -69,8 +69,8 @@ describe('the Dashboard Module', () => {
       dashboard.activate();
       setTimeout(() => {
         // expect(http.status).toBe(200);
-        done();
       }, 10);
+      done();
     });
 
     it('should expect route for all userTypes', (done) => {
