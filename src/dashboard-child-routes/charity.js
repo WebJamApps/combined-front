@@ -167,9 +167,7 @@ export class Charity {
       nub.style.display = 'none';
     }
     for (const result of validationResults) {
-      if (result.valid === false) {
-        valid = false;
-      }
+      if (result.valid === false) { valid = false; }
     }
     if (!valid || !this.validType2) {
       this.canSubmit2 = false;

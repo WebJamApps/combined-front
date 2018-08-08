@@ -63,13 +63,10 @@ class Register_ {
     registerEventButton.addEventListener('click', this.createUser);
     const resetPB = document.getElementsByClassName('resetpass')[0];
     resetPB.fetchClient = this.fetch;
-    // resetPB.appName = appName;
     resetPB.runFetch = this.runFetch;
     resetPB.addEventListener('click', this.resetpass);
     const cancelButton = document.getElementsByClassName('nevermind')[0];
-    cancelButton.addEventListener('click', () => {
-      document.getElementsByClassName('RegistrationForm')[0].style.display = 'none';
-    });
+    cancelButton.addEventListener('click', () => { document.getElementsByClassName('RegistrationForm')[0].style.display = 'none'; });
     const pas2 = document.getElementsByClassName('pas')[0];
     pas2.addEventListener('change', this.updateRegForm);
     pas2.addEventListener('change', this.validateReg);
