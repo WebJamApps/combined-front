@@ -87,7 +87,8 @@
     "vinyl-fs": "^3.0.2",
     "webpack": "^4.1.1",
     "webpack-bundle-analyzer": "latest",
-    "webpack-dev-server": "^3.1.1"
+    "webpack-dev-server": "^3.1.1",
+    "snyk": "^1.90.2"
   },
   "peerDependencies": {},
   "devDependencies": {
@@ -138,6 +139,8 @@
     "eslint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
     "postinstall": "npm run fix:aurelia-val && npm start -- build",
-    "webdriver-update": "webdriver-manager update"
-  }
+    "webdriver-update": "webdriver-manager update",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
