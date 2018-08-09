@@ -1,11 +1,11 @@
-import {inject} from 'aurelia-framework';
-import {App} from '../app';
-import {fixDates, formatDate, markPast} from '../commons/utils.js';
-import {showCheckboxes} from '../commons/utils.js';
-import {filterSelected} from '../commons/utils';
+import { inject } from 'aurelia-framework';
+import { App } from '../app';
+import {
+  fixDates, formatDate, markPast, showCheckboxes, filterSelected
+} from '../commons/utils';
 @inject(App)
 export class Volunteer {
-  constructor(app){
+  constructor(app) {
     this.showCheckboxes = showCheckboxes;
     this.app = app;
     this.events = [];
@@ -31,9 +31,9 @@ export class Volunteer {
   siteLocation = false;
   causeFilter = false;
   filters = [
-    {filterby: 'keyword', value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState']},
-    {filterby: 'zipcode', value: '', keys: ['voZipCode']},
-    {filterby: 'cause', value: '', keys: ['voCharityTypes']}
+    { filterby: 'keyword', value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState'] },
+    { filterby: 'zipcode', value: '', keys: ['voZipCode'] },
+    { filterby: 'cause', value: '', keys: ['voCharityTypes'] }
   ];
 
   async activate() {
@@ -49,8 +49,8 @@ export class Volunteer {
     // }
   }
 
-  async displayEvents(){
-    if (this.events.length > 0){
+  async displayEvents() {
+    if (this.events.length > 0) {
       this.fixZipcodesAndTypes();
       fixDates(this.events);
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
@@ -62,77 +62,77 @@ export class Volunteer {
     }
   }
 
-  async fetchAllEvents(){
+  async fetchAllEvents() {
     const res = await this.app.httpClient.fetch('/volopp/getall');
     this.events = await res.json();
   }
 
-  checkScheduled(){
-    for (let i = 0; i < this.events.length; i++){
+  checkScheduled() {
+    for (let i = 0; i < this.events.length; i += 1) {
       this.events[i].voNumPeopleScheduled = 0;
       this.events[i].scheduled = false;
       this.events[i].full = false;
-      if (this.events[i].voPeopleScheduled !== null && this.events[i].voPeopleScheduled !== undefined){
+      if (this.events[i].voPeopleScheduled !== null && this.events[i].voPeopleScheduled !== undefined) {
         this.events[i].voNumPeopleScheduled = this.events[i].voPeopleScheduled.length;
-        if (this.events[i].voPeopleScheduled.includes(this.uid)){
+        if (this.events[i].voPeopleScheduled.includes(this.uid)) {
           this.events[i].scheduled = true;
         }
       }
-      if (this.events[i].voNumPeopleScheduled >= this.events[i].voNumPeopleNeeded){
+      if (this.events[i].voNumPeopleScheduled >= this.events[i].voNumPeopleNeeded) {
         this.events[i].full = true;
       }
     }
   }
 
-  fixZipcodesAndTypes(){
-    for (let i = 0; i < this.events.length; i++){
-      if (this.events[i].voZipCode === undefined || this.events[i].voZipCode === '' || this.events[i].voZipCode === null){
+  fixZipcodesAndTypes() {
+    for (let i = 0; i < this.events.length; i += 1) {
+      if (this.events[i].voZipCode === undefined || this.events[i].voZipCode === '' || this.events[i].voZipCode === null) {
         this.events[i].voZipCode = '00000';
       }
-      if (this.events[i].voCharityTypes === undefined || this.events[i].voCharityTypes === null || this.events[i].voCharityTypes.length === 0){
-        console.log('we have a missing charity type');
+      if (this.events[i].voCharityTypes === undefined || this.events[i].voCharityTypes === null || this.events[i].voCharityTypes.length === 0) {
+        // console.log('we have a missing charity type');
         this.events[i].voCharityTypes = ['not specified'];
       }
     }
   }
 
-  filterPicked(){
+  filterPicked() {
     filterSelected(this);
     if (this.selectedFilter.includes('future only')) {
-      console.log('you selected the starting date filter');
+      // console.log('you selected the starting date filter');
       markPast(this.events, formatDate);
       this.hidePast = true;
     } else {
-      console.log('show past now!');
+      // console.log('show past now!');
       this.hidePast = false;
     }
   }
 
-  populateSites(){
+  populateSites() {
     this.siteLocations.push('');
-    for (let next of this.events){
-      let nextSite = next.voZipCode;
-      if (this.siteLocations.indexOf(nextSite) === -1){
+    for (const next of this.events) {
+      const nextSite = next.voZipCode;
+      if (this.siteLocations.indexOf(nextSite) === -1) {
         this.siteLocations.push(nextSite);
       }
     }
   }
 
-  populateCauses(){
+  populateCauses() {
     this.causes.push('');
-    for (let next of this.events){
-      let nextCharityType = next.voCharityTypes;
-      for (let nextType of nextCharityType){
-        if (this.causes.indexOf(nextType) === -1){
+    for (const next of this.events) {
+      const nextCharityType = next.voCharityTypes;
+      for (const nextType of nextCharityType) {
+        if (this.causes.indexOf(nextType) === -1) {
           this.causes.push(nextType);
         }
       }
     }
   }
 
-  async signupEvent(thisevent){
-    let result =  await this.doubleCheckSignups(thisevent);
-    if (this.canSignup){
+  async signupEvent(thisevent) {
+    const result = await this.doubleCheckSignups(thisevent);
+    if (this.canSignup) {
       thisevent.voPeopleScheduled.push(this.uid);
       this.app.updateById('/volopp/', thisevent._id, thisevent);
       await this.fetchAllEvents();
@@ -143,85 +143,84 @@ export class Volunteer {
     return result;
   }
 
-  async cancelSignup(thisevent){
-    thisevent.voPeopleScheduled = thisevent.voPeopleScheduled.filter((e) => e !== this.uid);
+  async cancelSignup(thisevent) {
+    thisevent.voPeopleScheduled = thisevent.voPeopleScheduled.filter(e => e !== this.uid);
     await this.app.updateById('/volopp/', thisevent._id, thisevent);
     this.app.router.navigate('dashboard');
   }
 
-  doubleCheckSignups(thisevent){
-    console.log('double checking...');
-    //get this event, check if start date is in past, check if max signups are already reached
-    return this.app.httpClient.fetch('/volopp/get/' + thisevent._id)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      if (data.voStartDate){
-        let today = new Date();
-        today = formatDate(today);
-        let testDate = data.voStartDate.replace('-', '');
-        testDate = testDate.replace('-', '');
-        if (testDate < today){
-          alert('this event has already started');
-          this.canSignup = false;
+  doubleCheckSignups(thisevent) {
+    // console.log('double checking...');
+    // get this event, check if start date is in past, check if max signups are already reached
+    return this.app.httpClient.fetch(`/volopp/get/${thisevent._id}`)
+      .then(response => response.json())
+      .then((data) => {
+        // console.log(data);
+        if (data.voStartDate) {
+          let today = new Date(), testDate = data.voStartDate.replace('-', '');
+          today = formatDate(today);
+          testDate = testDate.replace('-', '');
+          if (testDate < today) {
+            alert('this event has already started');
+            this.canSignup = false;
+          }
         }
-      }
-      if (data.voPeopleScheduled){
-        if (data.voPeopleScheduled.length >= data.voNumPeopleNeeded){
-          console.log(data.voPeopleScheduled.length);
-          alert('this event has already reached max volunteers needed');
-          this.canSignup = false;
+        if (data.voPeopleScheduled) {
+          if (data.voPeopleScheduled.length >= data.voNumPeopleNeeded) {
+            // console.log(data.voPeopleScheduled.length);
+            alert('this event has already reached max volunteers needed');
+            this.canSignup = false;
+          }
         }
-      }
-      //let user = data;
-    }).catch((error) => {
-      this.canSignup = false;
-      console.log('inside volunteer module with error');
-      console.log(error);
-      return error;
-    });
+      // let user = data;
+      }).catch((error) => {
+        this.canSignup = false;
+        // console.log('inside volunteer module with error');
+        // console.log(error);
+        return error;
+      });
   }
 
-  selectPickChange(type){
+  selectPickChange(type) {
     this.showButton();
-    if (type === 'causes'){
+    if (type === 'causes') {
       this.app.selectPickedChange(this.user, this, 'selectedCauses', 'volCauseOther', 'causeOther', true, 'volCauses');
-      this.selectedCauses = this.selectedCauses.filter((e) => e !== '');
+      this.selectedCauses = this.selectedCauses.filter(e => e !== '');
     }
-    if (type === 'work'){
+    if (type === 'work') {
       this.app.selectPickedChange(this.user, this, 'selectedWorks', 'volWorkOther', 'workOther', true, 'volWorkPrefs');
-      this.selectedWorks = this.selectedWorks.filter((e) => e !== '');
+      this.selectedWorks = this.selectedWorks.filter(e => e !== '');
     }
-    if (type === 'talents'){
-      console.log('you picked talents');
+    if (type === 'talents') {
+      // console.log('you picked talents');
       this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
-      this.selectedTalents = this.selectedTalents.filter((e) => e !== '');
+      this.selectedTalents = this.selectedTalents.filter(e => e !== '');
     }
-    if (this.selectedCauses.length === 0){
+    if (this.selectedCauses.length === 0) {
       this.hideCheckBoxes('selectCauses');
     }
-    if (this.selectedTalents.length === 0){
+    if (this.selectedTalents.length === 0) {
       this.hideCheckBoxes('selectTalents');
     }
-    if (this.selectedWorks.length === 0){
+    if (this.selectedWorks.length === 0) {
       this.hideCheckBoxes('selectWork');
     }
   }
 
-  hideCheckBoxes(id){
-    let checkboxes = document.getElementById(id);
+  hideCheckBoxes(id) {
+    const checkboxes = document.getElementById(id);
     if (checkboxes.style.display === 'block') {
       checkboxes.style.display = 'none';
     }
   }
 
-  setupVolunteerUser(){
+  setupVolunteerUser() {
     this.changeCauses(this.allCauses, this.user.volCauses, this.selectedCauses);
-    this.selectedCauses = this.selectedCauses.filter((e) => e !== '');
+    this.selectedCauses = this.selectedCauses.filter(e => e !== '');
     this.changeCauses(this.allTalents, this.user.volTalents, this.selectedTalents);
-    this.selectedTalents = this.selectedTalents.filter((e) => e !== '');
+    this.selectedTalents = this.selectedTalents.filter(e => e !== '');
     this.changeCauses(this.allWorks, this.user.volWorkPrefs, this.selectedWorks);
-    this.selectedWorks = this.selectedWorks.filter((e) => e !== '');
+    this.selectedWorks = this.selectedWorks.filter(e => e !== '');
     this.workOther = this.selectedWorks.includes('other');
     this.talentOther = this.selectedTalents.includes('other');
     this.causeOther = this.selectedCauses.includes('other');
@@ -244,7 +243,7 @@ export class Volunteer {
   changeCauses(item, vol, container) {
     item.sort();
     item.push('other');
-    for (let i of item) {
+    for (const i of item) {
       if (vol.includes(i)) {
         container.push(i);
       } else {
@@ -253,14 +252,14 @@ export class Volunteer {
     }
   }
 
-  async updateUser(){
+  async updateUser() {
     await this.app.updateById('/user/', this.uid, this.user);
     await this.activate();
     this.reload();
   }
 
-  showButton(){
-    console.log('show button!');
+  showButton() {
+    // console.log('show button!');
     document.getElementById('updateUserButton').style.display = 'block';
   }
 
@@ -270,11 +269,11 @@ export class Volunteer {
   //   console.log(isWide);
   // }
 
-  attached(){
+  attached() {
     document.getElementById('distanceInput').addEventListener('keydown', this.showButton);
     this.setupVolunteerUser();
-    if (document.documentElement.clientWidth < 766){
-      console.log('i am cell phone');
+    if (document.documentElement.clientWidth < 766) {
+      // console.log('i am cell phone');
       document.getElementsByClassName('checkboxes-div')[0].style.top = '124px';
     }
 
@@ -284,5 +283,4 @@ export class Volunteer {
     //   console.log('cell phone mode detected');
     // }
   }
-
 }

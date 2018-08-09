@@ -2,13 +2,7 @@
   <div class="page-content">
     <div>
       <h3 class="ohaf" style="margin:auto; padding-top:20px; padding-bottom:20px;text-align:center"><strong>User Account</strong></h3>
-      <!-- <p if.bind="user.userDetails ==='newUser' && user.userType ==='Volunteer'">You are a new user. Do you want to change your primary user role to be Charity instead of Volunteer?</p> -->
     </div>
-    <!-- <div class="material-content elevation3" style="max-width:5in; margin:auto" ">
-
-    <button style="margin-right:20px" click.delegate="setCharity()">Charity</button><button click.delegate="setNolongerNew()">Volunteer</button>
-  </div> -->
-  <!-- <p if.bind="user.userDetails ==='newUser'">&nbsp;</p> -->
   <div class="material-content elevation3" style="max-width:5in; margin:auto">
     <h4 class="material-header-h4"><strong><i>Update Your Info</i></strong></h4>
     <form>
@@ -19,10 +13,8 @@
       </div>
       <label style="margin-top:0;padding-top:0">Email (required)</label>
       <input value.two-way="user.email & validate" style="min-width:3in">
-      <!-- <p><strong>Email:</strong> <i>${user.email}</i></p> -->
-      <label style="margin-top:15px; padding-top:0;max-height:30px">Primary User Type (required)<span if.bind="!canChangeUserType">:<i style="font-weight:normal;"> ${user.userType}</i><br><br></span></label>
-      <select if.bind="canChangeUserType" id="type" class="form-control" value.two-way="newUserType & validate" style="width: 2in; margin-bottom:20px">
-        <!-- <option value=""> </option> -->
+      <label style="margin-top:15px; padding-top:0;max-height:30px">Primary User Type<span if.bind="!canChangeUserType">:<i style="font-weight:normal;"> ${user.userType}</i><br><br></span></label>
+      <select if.bind="canChangeUserType" id="type" class="form-control" value.two-way="newUserType" style="width: 2in; margin-bottom:20px">
         <option repeat.for="type of userTypes" model.bind="type">${type}</option>
       </select>
       <label if.bind="canChangeUserType" style="display: inline;margin-right:20px" repeat.for="stat of status">
@@ -54,8 +46,9 @@
         </ul>
         <div class="formErrors" style="color:red"></div>
       </div>
-      <button id="updateUserButton" class="button-lib" raised click.trigger="updateUser()" style="display:none">
-        update</button>
+      <div style="margin-top:-40px">
+      <button id="updateUserButton" class="button-lib" raised click.trigger="updateUser()">update</button>
+    </div>
       </form>
     </div>
     <p>&nbsp;</p>
@@ -66,16 +59,10 @@
           Delete User
         </button>
       </div>
-      <!-- <p style="padding:10px" if.bind="!canDelete"><i>You are not allowed to delete your user account for the following reasons:</i></p>
-      <ul if.bind="!canDelete" innerhtml.bind="deleteReasons"></ul> -->
-      <!-- <button if.bind="!canChangeUserType && user.userStatus !== 'disabled' && canDisable" style="width:1in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="disableUser('disabled')">
-      Disable User
-    </button>
     <button if.bind="user.userStatus === 'disabled'" style="width:1.2in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="disableUser('enabled')">
     Re-enable User
-  </button> -->
+  </button>
 </div>
 <p>&nbsp;</p>
-
 </div>
 </template>

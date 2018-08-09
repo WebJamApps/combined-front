@@ -1,31 +1,41 @@
 <template>
+  <require from="../components/music-player"></require>
   <div class="page-content">
     <h4 style="text-align:center; margin:20px; font-weight:bold">Originals</h4>
-    <div align="center">
-      <table>
+
+    <div>
+      <music-player></music-player>
+    </div>
+
+    <div id="wholeMusicSection" align="center" style="margin-top: 40px;">
+      <table id="musicTable" width="60%" align="center" class="table-responsive-md table-responsive-sm table-bordered">
         <tr>
-          <td style="width:140px;text-align:center;"><p style="padding-bottom:1px;font-size:10pt">Don't Go</p>
-            <audio controls controlslist="nodownload" style="width:140px">
+          <td style="width: 150px;text-align:center;">
+            <p style="padding-bottom:1px;font-size:10pt">Don't Go</p>
+            <audio controls controlslist="nodownload" style="">
               <source src="DG.mp3" type="audio/mpeg">
-              </audio>
-            </td>
-            <td style="width:140px;text-align:center;"><p style="padding-bottom:1px;font-size:10pt">Misty Rainy Morning</p>
-              <audio controls controlslist="nodownload" style="width:140px">
-                <source src="MRM.mp3" type="audio/mpeg">
-                </audio>
-              </td>
+            </audio>
+          </td>
+          <td style="width: 150px;text-align:center;">
+            <p style="padding-bottom:1px;font-size:10pt">Misty Rainy Morning</p>
+            <audio controls controlslist="nodownload" style="">
+              <source src="MRM.mp3" type="audio/mpeg">
+            </audio>
+          </td>
           </tr>
           <tr>
-            <td style="width:140px;text-align:center;"><p style="padding-bottom:1px;font-size:10pt">Alone Time</p>
-              <audio controls controlslist="nodownload" style="width:140px">
+            <td style="width: 150px;text-align:center;">
+              <p style="padding-bottom:1px;font-size:10pt">Alone Time</p>
+              <audio controls controlslist="nodownload" style="">
                 <source src="AT.mp3" type="audio/mpeg">
-                </audio>
-              </td>
-              <td style="width:140px;text-align:center;"><p style="padding-bottom:1px;font-size:10pt">Try to Get Along</p>
-                <audio controls controlslist="nodownload" style="width:140px">
-                  <source src="TTGA.mp3" type="audio/mpeg">
-                  </audio>
-                </td>
+              </audio>
+            </td>
+            <td style="width: 150px;text-align:center;">
+              <p style="padding-bottom:1px;font-size:10pt">Try to Get Along</p>
+              <audio controls controlslist="nodownload" style="">
+                <source src="TTGA.mp3" type="audio/mpeg">
+              </audio>
+            </td>
           </tr>
         </table>
         <p>&nbsp;</p>
@@ -40,5 +50,9 @@
         <iframe style="max-width:90%" align="center" width="400px" height="200px" src="https://www.youtube.com/embed/mCvUBjuzfo8" frameborder="0"></iframe>
       </div>
       <p>&nbsp;</p>
+    </div>
+
+    <div class="m-4" style="visibility: hidden;">
+      Original Music from webJam.
     </div>
   </template>

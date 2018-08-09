@@ -704,10 +704,10 @@ a:hover {
   }
   .content-block {
     position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     overflow: auto;
     margin-top: 91px;
     margin-right: inherit;
@@ -791,4 +791,48 @@ a:hover {
   /* background: #f3f3f3; */
   z-index: 9999;
   /* touch-action: auto; */
+}
+
+/*Music player styles*/
+#musicTable tr, #musicTable td{
+  background-color: transparent!important;
+}
+
+#player button {
+  background-color: #eee;
+  padding: 3px 10px;
+  border-radius: 3px;
+  border: 0;
+  margin: 3px;
+  outline: 0;
+  font-size: 0.8em;
+}
+
+#mainPlayer{
+  background-image: url("../static/imgs/webjamlogo1.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+#mainPlayer audio {
+  border-radius: 0!important;
+}
+
+button.on{
+  background-color: #c0c0c0!important;
+}
+
+#player button:hover {
+  background-color: #c0c0c0;
+}
+
+#inputGroup {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#copyUrl {
+  border-top-right-radius: 0!important;
+  border-bottom-right-radius: 0!important;
+  font-size: 0.8em;
 }

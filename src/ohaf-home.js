@@ -1,6 +1,4 @@
-// import {Router} from 'aurelia-router';
-// import {inject} from 'aurelia-framework';
-import {startSlides} from './commons/utils.js';
+import { startSlides } from './commons/utils';
 // @inject(Router)
 export class OhafHome {
   // constructor(router) {
@@ -19,7 +17,7 @@ export class OhafHome {
     '../static/imgs/ohaf/slideshow11.png',
     '../static/imgs/ohaf/slideshow12.png', '../static/imgs/ohaf/slideshow1.png'];
 
-  constructor(){
+  constructor() {
     this.slideshow_data = {
       id: 'slideshow1',
       slideshow_images: this.slideshowImages
@@ -37,5 +35,4 @@ export class OhafHome {
   attached() {
     startSlides(['musicSlide1', 'musicSlide2'], 'you left the ohaf page', ['slideshow1', 'slideshow']);
   }
-
 }

@@ -1,18 +1,17 @@
-//import {computedFrom} from 'aurelia-framework';
-//import {Router, Bindable} from 'aurelia-router';
-//import {inject} from 'aurelia-framework';
+// import {computedFrom} from 'aurelia-framework';
+// import {Router, Bindable} from 'aurelia-router';
+// import {inject} from 'aurelia-framework';
 
-//@inject(Router)
+// @inject(Router)
 export class Home {
-
   constructor() {
-    this.top;
+    this.top = null;
   }
 
-  get widescreenHomepage(){
-    //document.getElementById('top').scrollIntoView();
+  get widescreenHomepage() {
+    // document.getElementById('top').scrollIntoView();
     return document.documentElement.clientWidth > 1200;
-    //document.getElementById('top').scrollIntoView();
+    // document.getElementById('top').scrollIntoView();
   }
 
   // showSlides() {
@@ -26,8 +25,8 @@ export class Home {
 
   attached() {
     this.top = document.getElementsByClassName('material-header')[0];
-    //let top = document.getElementById('top');
-    if (this.top !== null && this.top !== undefined){
+    // let top = document.getElementById('top');
+    if (this.top !== null && this.top !== undefined) {
       this.top.scrollIntoView();
     }
   }

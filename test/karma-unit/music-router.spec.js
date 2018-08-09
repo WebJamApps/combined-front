@@ -1,10 +1,11 @@
-import {MusicRouter} from '../../src/music-router';
+import { MusicRouter } from '../../src/music-router';
 
 function log(array) {
+  // eslint-disable-next-line no-console
   console.log(array);
 }
 
-let config = {
+const config = {
   map: log
 };
 

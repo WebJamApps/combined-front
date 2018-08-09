@@ -1,6 +1,6 @@
-import {UserUtil} from '../../src/userutil';
+import { UserUtil } from '../../src/userutil';
 
-let uu = new UserUtil();
+const uu = new UserUtil();
 
 describe('the User Util Module', () => {
   it('attaches', (done) => {

@@ -1,5 +1,7 @@
-const {series, crossEnv, concurrent, rimraf} = require('nps-utils');
-const {config: {port: E2E_PORT}} = require('./test/protractor.conf');
+const {
+  series, crossEnv, concurrent, rimraf
+} = require('nps-utils');
+const { config: { port: E2E_PORT } } = require('./test/protractor.conf');
 
 module.exports = {
   scripts: {
@@ -7,13 +9,16 @@ module.exports = {
     test: {
       default: 'nps test.jest',
       jest: {
-        default: crossEnv('BABEL_TARGET=node jest'),
+        default: series(
+          rimraf('test/coverage-jest'),
+          crossEnv('BABEL_TARGET=node jest')
+        ),
         accept: crossEnv('BABEL_TARGET=node jest -u'),
-        watch: crossEnv('BABEL_TARGET=node jest --watch')
+        watch: crossEnv('BABEL_TARGET=node jest --watch'),
       },
       karma: {
         default: series(
-          rimraf('test/karma-coverage'),
+          rimraf('test/coverage-karma'),
           'karma start test/karma.conf.js'
         ),
         watch: 'karma start test/karma.conf.js --auto-watch --no-single-run',
@@ -35,10 +40,10 @@ module.exports = {
       })
     },
     e2e: {
-      default: concurrent({
+      default: `${concurrent({
         webpack: `webpack-dev-server --inline --port=${E2E_PORT}`,
         protractor: 'nps e2e.whenReady'
-      }) + ' --kill-others --success first',
+      })} --kill-others --success first`,
       protractor: {
         install: 'webdriver-manager update',
         default: series(

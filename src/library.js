@@ -1,7 +1,7 @@
-import {bindable} from 'aurelia-framework';
-import {startSlides} from './commons/utils.js';
-export class Library {
+import { bindable } from 'aurelia-framework';
+import { startSlides } from './commons/utils';
 
+export class Library {
   @bindable
   columnWidth = '450px';
 
@@ -9,7 +9,7 @@ export class Library {
     '../static/imgs/library/books2.jpg',
     '../static/imgs/library/books3.jpg'];
 
-  constructor(){
+  constructor() {
     this.slideshow_data = {
       id: 'libslideshow1',
       slideshow_images: this.slideshowImages
@@ -20,12 +20,11 @@ export class Library {
     };
   }
 
-  get widescreen(){
+  get widescreen() {
     return document.documentElement.clientWidth > 1000;
   }
 
   attached() {
     startSlides(['lSlide1', 'lSlide2'], 'you left the library page', ['libslideshow1', 'libslideshow']);
   }
-
 }

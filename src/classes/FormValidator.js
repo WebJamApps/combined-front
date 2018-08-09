@@ -18,7 +18,7 @@ export class FormValidator {
   * and call our callback in order for TodoPage.canSave to be correctly updated.
   */
   validateProperty(object, propertyName, rules) {
-    let validationDefered = this.validator.validateProperty(object, propertyName, rules);
+    const validationDefered = this.validator.validateProperty(object, propertyName, rules);
     validationDefered.then(() => this.validateObject(object, rules));
 
     return validationDefered;

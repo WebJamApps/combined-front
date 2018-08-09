@@ -1,4 +1,4 @@
-import {Home} from '../../src/home';
+import { Home } from '../../src/home';
 
 describe('the Home Module', () => {
   let home;
