@@ -4,4 +4,5 @@ import { globalize } from 'aurelia-pal-nodejs';
 import * as path from 'path';
 
 Options.relativeToDir = path.join(__dirname, 'react-unit');
+
 globalize();

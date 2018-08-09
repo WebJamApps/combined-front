@@ -1,9 +1,13 @@
 import { inject } from 'aurelia-framework';
 import { json } from 'aurelia-fetch-client';
-import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
+import {
+  ValidationControllerFactory, ValidationRules, Validator, validateTrigger
+} from 'aurelia-validation';
 import { App } from '../app';
 import { FormValidator } from '../classes/FormValidator';
-import { fixDates, formatDate, markPast, showCheckboxes } from '../commons/utils';
+import {
+  fixDates, formatDate, markPast, showCheckboxes
+} from '../commons/utils';
 
 @inject(App, ValidationControllerFactory, Validator)
 export class VolunteerOpps {
@@ -184,10 +188,10 @@ export class VolunteerOpps {
     this.voOpp = theEvent;
     this.updateEvent('cancel');
     if (this.voOpp.voDescription !== undefined) {
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event' +
-        '</strong></p>', '');
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About' +
-        ' This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green"><strong>The Charity Has Reactivated This Event'
+        + '</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow"><strong>The Charity Has Updated Details About'
+        + ' This Event</strong></p>', '');
       this.voOpp.voDescription = `<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong>
         </p>${this.voOpp.voDescription}`;
     }
@@ -196,10 +200,10 @@ export class VolunteerOpps {
   reactivateEvent(theEvent) {
     this.voOpp = theEvent;
     if (this.voOpp.voDescription !== undefined) {
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow">' +
-        '<strong>The Charity Has Updated Details About This Event</strong></p>', '');
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:red"><strong>The Charity Has Cancelled This ' +
-        'Event</strong></p>', '<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow">'
+        + '<strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:red"><strong>The Charity Has Cancelled This '
+        + 'Event</strong></p>', '<p style="background-color:green"><strong>The Charity Has Reactivated This Event</strong></p>');
     }
     this.updateEvent('reactivate');
   }
@@ -207,12 +211,12 @@ export class VolunteerOpps {
   async updateEvent(updateType) {
     this.voOpp.voStatus = updateType;
     if (updateType === 'update') {
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow">' +
-        '<strong>The Charity Has Updated Details About This Event</strong></p>', '');
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow">' +
-        '<strong>The Charity Has Updated Details About This Event</strong></p>', '');
-      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green">' +
-        '<strong>The Charity Has Reactivated This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow">'
+        + '<strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:yellow">'
+        + '<strong>The Charity Has Updated Details About This Event</strong></p>', '');
+      this.voOpp.voDescription = this.voOpp.voDescription.replace('<p style="background-color:green">'
+        + '<strong>The Charity Has Reactivated This Event</strong></p>', '');
       this.voOpp.voDescription = `<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong>
         </p>${this.voOpp.voDescription}`;
     }

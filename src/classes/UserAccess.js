@@ -44,8 +44,8 @@ export class UserAccess {
           // console.log(routingContext.params.childRoute);
           // console.log(userRoles[i].toLowerCase());
           // in this case the user is only in one role at a time.
-          if (userRoles.indexOf('disabled') === -1 && (routingContext.params.childRoute === userRoles[i].toLowerCase() ||
-          (routingContext.params.childRoute.indexOf('vol-ops/') !== -1 && userRoles[i].toLowerCase() === 'charity'))) {
+          if (userRoles.indexOf('disabled') === -1 && (routingContext.params.childRoute === userRoles[i].toLowerCase()
+          || (routingContext.params.childRoute.indexOf('vol-ops/') !== -1 && userRoles[i].toLowerCase() === 'charity'))) {
             return next();
           }
           // if (routingContext.params.childRoute.indexOf('vol-ops/') !== -1 && userRoles[i].toLowerCase() === 'charity') {

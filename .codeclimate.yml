@@ -1,44 +1,36 @@
----
-prepare:
-  fetch:
-  - url: https://raw.githubusercontent.com/aurelia/tools/master/.eslintrc.json
-    path: node_modules/aurelia-tools/.eslintrc.json
+version:                  "2"
 checks:
   method-lines:
     config:
-      threshold: 32
+      threshold:          30
   method-complexity:
     config:
-      threshold: 10
+      threshold:          10
   similar-code:
     config:
-      threshold: 80
-engines:
+      threshold:          100
+plugins:
   duplication:
-    enabled: true
+    enabled:              true
     checks:
       Similar Code:
-        enabled: true
+        enabled:          true
     config:
       languages:
         javascript:
-          mass_threshold: 40
-  eslint:
-    enabled: true
+          mass_threshold: 60
   stylelint:
-    enabled: false
+    enabled:              false
   htmlhint:
-    enabled: true
+    enabled:              true
   fixme:
-    enabled: true
+    enabled:              true
 ratings:
   paths:
   - "**.js"
   - "**.jsx"
 exclude_paths:
 - test/
-- static/includes.html
 - node_modules/
 - coverage/
 - dist/
-- bower_components/

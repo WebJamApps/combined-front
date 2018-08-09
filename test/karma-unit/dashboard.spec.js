@@ -1,7 +1,9 @@
 import { StageComponent } from 'aurelia-testing';
 import { Dashboard } from '../../src/dashboard';
 import { App } from '../../src/app';
-import { AuthStub, HttpMock, AppStateStub, RouterStub } from './commons';
+import {
+  AuthStub, HttpMock, AppStateStub, RouterStub
+} from './commons';
 
 describe('the Dashboard Module', () => {
   let dashboard;
@@ -67,8 +69,8 @@ describe('the Dashboard Module', () => {
       dashboard.activate();
       setTimeout(() => {
         // expect(http.status).toBe(200);
-        done();
       }, 10);
+      done();
     });
 
     it('should expect route for all userTypes', (done) => {
