@@ -1,5 +1,7 @@
 import { Register } from '../../src/register';
-import { RouterStub, AuthStub, HttpMock, AppStateStub } from './commons';
+import {
+  RouterStub, AuthStub, HttpMock, AppStateStub
+} from './commons';
 import { App } from '../../src/app';
 
 class AuthStub1 extends AuthStub {

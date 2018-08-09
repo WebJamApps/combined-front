@@ -6,8 +6,8 @@ describe('++MusicPlayer tests', () => {
 
   beforeEach(() => {
     mp = new MusicPlayer();
-    document.body.innerHTML = '<div id="renderer"><section id="copier"></section><section id="copyMessage">' +
-      '</section><button id="shuffle"></button></div>';
+    document.body.innerHTML = '<div id="renderer"><section id="copier"></section><section id="copyMessage">'
+      + '</section><button id="shuffle"></button></div>';
     mp.element = document.getElementById('renderer');
   });
 

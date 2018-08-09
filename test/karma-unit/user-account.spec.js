@@ -1,6 +1,8 @@
 import { Validator } from 'aurelia-validation';
 import { UserAccount } from '../../src/dashboard-child-routes/user-account';
-import { AuthStub, HttpMock, AppStateStub, RouterStub } from './commons';
+import {
+  AuthStub, HttpMock, AppStateStub, RouterStub
+} from './commons';
 import { App } from '../../src/app';
 
 function testAsync(runAsync) {
@@ -142,7 +144,7 @@ describe('the UserAccount Module', () => {
   it('should allow Librarian user to change their user type', (done) => {
     ua.user.userType = 'Librarian';
     ua.checkChangeUserType();
-    expect(ua.canChangeUserType).toBe(true);
+    expect(ua.canChangeUserType).toBe(false);
     done();
   });
   it('fixes events that are not configured with people scheduled', (done) => {
@@ -152,7 +154,7 @@ describe('the UserAccount Module', () => {
     expect(ua.events2).toBe(checker);
     ua.events2 = [{ id: '123' }];
     ua.fixPeopleScheduled(ua.events2);
-    expect(ua.events2[0].voPeopleScheduled.length).toBe(0);
+    expect(ua.events2[0].voPeopleScheduled).toHaveLength(0);
     done();
   });
   it('checks for scheduled events by a volunteer user', (done) => {
@@ -169,7 +171,7 @@ describe('the UserAccount Module', () => {
       });
     };
     ua.checkChangeUserType();
-    expect(ua.canChangeUserType).toBe(true);
+    expect(ua.canChangeUserType).toBe(false);
     done();
   });
   it('should not allow Charity user to change their user type if they have charities', testAsync(async () => {
@@ -194,7 +196,7 @@ describe('the UserAccount Module', () => {
     ua.events2 = [{ voPeopleScheduled: ['123'], past: true }];
     ua.changeReasons = '';
     await ua.checkScheduled();
-    expect(ua.canChangeUserType).toBe(true);
+    expect(ua.canChangeUserType).toBe(false);
   }));
   it('does not allow change user type and we already have the reason', testAsync(async () => {
     ua.uid = '123';
@@ -212,7 +214,7 @@ describe('the UserAccount Module', () => {
     ua.uid = '123';
     ua.events2 = [{ voPeopleScheduled: ['1234', '1235'] }];
     await ua.checkScheduled();
-    expect(ua.canChangeUserType).toBe(true);
+    expect(ua.canChangeUserType).toBe(false);
   }));
   it('should check whether update can submit', (done) => {
     document.body.innerHTML = '<button id="updateUserButton">Update</button>';

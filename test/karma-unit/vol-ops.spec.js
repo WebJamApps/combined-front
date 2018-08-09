@@ -405,8 +405,8 @@ describe('the Volunteer Opps Module', () => {
       voDescription: 'howdy'
     };
     volops.cancelEvent(signupevent);
-    expect(volops.voOpp.voDescription === '<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong>' +
-      '</p>howdy').toBeFalsy();
+    expect(volops.voOpp.voDescription === '<p style="background-color:red"><strong>The Charity Has Cancelled This Event</strong>'
+      + '</p>howdy').toBeFalsy();
     done();
   });
 
@@ -472,8 +472,8 @@ describe('the Volunteer Opps Module', () => {
       voDescription: 'howdy'
     };
     volops.updateEvent('update');
-    expect(volops.voOpp.voDescription === '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong>' +
-      '</p>howdy').toBeFalsy();
+    expect(volops.voOpp.voDescription === '<p style="background-color:yellow"><strong>The Charity Has Updated Details About This Event</strong>'
+      + '</p>howdy').toBeFalsy();
     done();
   });
 

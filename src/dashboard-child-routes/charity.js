@@ -1,6 +1,8 @@
 import { inject } from 'aurelia-framework';
 import { json } from 'aurelia-fetch-client';
-import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
+import {
+  ValidationControllerFactory, ValidationRules, Validator, validateTrigger
+} from 'aurelia-validation';
 import { App } from '../app';
 import { FormValidator } from '../classes/FormValidator';
 import { showCheckboxes } from '../commons/utils';
@@ -165,9 +167,7 @@ export class Charity {
       nub.style.display = 'none';
     }
     for (const result of validationResults) {
-      if (result.valid === false) {
-        valid = false;
-      }
+      if (result.valid === false) { valid = false; }
     }
     if (!valid || !this.validType2) {
       this.canSubmit2 = false;

@@ -9,13 +9,16 @@ module.exports = {
     test: {
       default: 'nps test.jest',
       jest: {
-        default: crossEnv('BABEL_TARGET=node jest'),
+        default: series(
+          rimraf('test/coverage-jest'),
+          crossEnv('BABEL_TARGET=node jest')
+        ),
         accept: crossEnv('BABEL_TARGET=node jest -u'),
-        watch: crossEnv('BABEL_TARGET=node jest --watch')
+        watch: crossEnv('BABEL_TARGET=node jest --watch'),
       },
       karma: {
         default: series(
-          rimraf('test/karma-coverage'),
+          rimraf('test/coverage-karma'),
           'karma start test/karma.conf.js'
         ),
         watch: 'karma start test/karma.conf.js --auto-watch --no-single-run',

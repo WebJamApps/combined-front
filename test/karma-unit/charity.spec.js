@@ -106,15 +106,15 @@ describe('the Charity Module', () => {
   });
   it('it does not display the charities table when there are no charities', (done) => {
     charity2.activate();
-    expect(charity2.charities.length).toBe(0);
+    expect(charity2.charities).toHaveLength(0);
     done();
   });
   it('it displays the new charity form on page load', (done) => {
     charity2.activate();
     charity2.setupValidation2 = function () {};
     charity2.controller2 = { validate() {} };
-    document.body.innerHTML = '<div id="charityDash"></div><div id="updateCharitySection"><div id="charTable">' +
-    '</div><button id="createNewCharityButton"></button></div>';
+    document.body.innerHTML = '<div id="charityDash"></div><div id="updateCharitySection"><div id="charTable">'
+    + '</div><button id="createNewCharityButton"></button></div>';
     charity2.attached();
     done();
   });
@@ -135,14 +135,14 @@ describe('the Charity Module', () => {
     };
     charity.update = true;
     charity.controller2 = { validate() {} };
-    document.body.innerHTML = '<h3 id="charityDash"></h3><div class="ctypeerror" id="charTable">' +
-    '</div><div id="typesUpdate"></div><div id="updateCharitySection"><button id="createNewCharityButton">' +
-    '</button><button id="updateCharityButton"></button></div><div id="scheduleCharitySection"></div>';
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div class="ctypeerror" id="charTable">'
+    + '</div><div id="typesUpdate"></div><div id="updateCharitySection"><button id="createNewCharityButton">'
+    + '</button><button id="updateCharityButton"></button></div><div id="scheduleCharitySection"></div>';
     charity.updateCharityFunction(charity1);
     expect(charity.charityName).toBe('test charity');
     charity.update = false;
-    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection">' +
-    '<button id="createNewCharityButton"></button></div><div id=""></div>';
+    document.body.innerHTML = '<h3 id="charityDash"></h3><div id="charTable"></div><div id="updateCharitySection">'
+    + '<button id="createNewCharityButton"></button></div><div id=""></div>';
     charity.createNewCharity();
     done();
   });
@@ -160,7 +160,7 @@ describe('the Charity Module', () => {
       'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     states.sort();
     expect(charity.app.states).toContain(states[0]);
-    expect(charity.app.states.length).toBe(states.length);
+    expect(charity.app.states).toHaveLength(states.length);
     done();
   });
 
@@ -238,8 +238,8 @@ describe('the Charity Module', () => {
   it('displays the create new charity webform with hidden submit button and the charities table', (done) => {
     jasmine.clock().install();
     charity.activate();
-    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div><button id="createNewCharityButton" ' +
-    'style="display:block">Create</button>';
+    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div><button id="createNewCharityButton" '
+    + 'style="display:block">Create</button>';
     charity.showUpdateCharity = function () {};
     charity.createNewCharity();
     jasmine.clock().tick(1);
@@ -250,8 +250,8 @@ describe('the Charity Module', () => {
   });
   it('hides the update charity button if it was displayed', (done) => {
     charity.activate();
-    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection">' +
-    '</div><div><button id="updateCharityButton" style="display:block">Create</button>';
+    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection">'
+    + '</div><div><button id="updateCharityButton" style="display:block">Create</button>';
     charity.setupValidation2 = function () {};
     charity.update = true;
     const myCharity = {
