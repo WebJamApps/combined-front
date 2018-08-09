@@ -6,8 +6,6 @@ import { App } from '../../src/app';
 
 class AuthStub1 extends AuthStub {
   authenticate(name) {
-    // console.log(f);
-    // console.log(o);
     return Promise.resolve({
       name,
       token: 'heyvgyuv38t327rvuiqt78b934ujwehgyq89ery8t'
@@ -37,13 +35,8 @@ describe('the Login module', () => {
   it('should authentication when from OHAF', (done) => {
     login.app.appState.isOhafLogin = true;
     login.app.authenticate('google').then(() => {
-      // console.log(data);
       done();
     }, null);
-  });
-  it('should be attached to router', (done) => {
-    login.attached();
-    done();
   });
   it('should check if user is logged in', (done) => {
     window.localStorage.setItem('aurelia_id_token', '109842sdhgsgfhjsfoi4124');

@@ -11,7 +11,7 @@ export class Login {
   // showLogin(appName) {
   //   this.login_Class.loginUser(appName);
   // }
-  attached() {
-    this.app.checkIfLoggedIn();
-  }
+  // attached() {
+  //   this.app.checkIfLoggedIn();
+  // }
 }
