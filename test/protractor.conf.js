@@ -41,10 +41,10 @@ exports.config = {
         '--disable-translate',
         '--disable-background-timer-throttling',
         '--disable-renderer-backgrounding',
-        '--disable-device-discovery-notifications'
+        '--disable-device-discovery-notifications',
         /* enable these if you'd like to test using Chrome Headless
-        '--no-gpu',
-        '--headless'
+          '--no-gpu',
+          '--headless'
         */
       ]
     }
@@ -53,12 +53,10 @@ exports.config = {
   onPrepare() {
     process.env.BABEL_TARGET = 'node';
     process.env.IN_PROTRACTOR = 'true';
-
-    // eslint-disable-next-line global-require
     require('babel-register');
   },
 
   plugins: [{
     package: 'aurelia-protractor-plugin'
-  }]
+  }],
 };
