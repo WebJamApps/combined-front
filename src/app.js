@@ -77,7 +77,12 @@ export class App {
   async checkUser() {
     if (this.auth.isAuthenticated()) {
       this.authenticated = true; // Logout element is reliant upon a local var;
-      const uid = this.auth.getTokenPayload().sub;
+      try {
+        const uid = this.auth.getTokenPayload().sub;
+      } catch (e) {
+        console.log('i have an error');
+        this.logout();
+      }
       this.user = await this.appState.getUser(uid);
       if (this.user !== undefined) {
         this.role = this.user.userType;
@@ -273,14 +278,12 @@ export class App {
   }
 
   ohafLogin() {
-    // this.close();
     this.menu = 'ohaf';
     this.appState.isOhafLogin = true;
     this.router.navigate('/login');
   }
 
   wjLogin() {
-    // this.close();
     this.menu = 'wj';
     this.appState.isOhafLogin = false;
     this.router.navigate('/login');

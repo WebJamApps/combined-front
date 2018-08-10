@@ -28,12 +28,15 @@ export class Charity {
     this.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
     this.types.sort();
     this.types.push('other');
-    this.uid = this.app.auth.getTokenPayload().sub;
+    try {
+      this.uid = this.app.auth.getTokenPayload().sub;
+    } catch (e) { console.log('i have an error'); }
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
     this.app.role = this.user.userType;
     const res = await this.app.httpClient.fetch(`/charity/${this.uid}`);
     this.charities = await res.json();
+    console.log(res);
     if (this.charities.length !== 0) {
       this.app.buildPTag(this.charities, 'charityTypes', 'charityTypeOther', 'charityTypesHtml');
       this.buildManagers();
@@ -48,7 +51,6 @@ export class Charity {
       foundEvents = await res.json(); // eslint-disable-line no-await-in-loop
       this.charities[i].hasEvents = foundEvents.length > 0;
     }
-    // console.log(this.charities);
   }
   createNewCharity() {
     const charity = {
@@ -67,7 +69,6 @@ export class Charity {
     this.update = false;
     document.getElementById('charTable').style.display = 'block';
     this.updateScheduledEvent = false;
-    // the element is available in the template.
     setTimeout(() => { document.getElementById('createNewCharityButton').style.display = 'none'; });
     this.showUpdateCharity(charity);
   }
@@ -79,7 +80,6 @@ export class Charity {
     this.canSubmit2 = true;
     this.validType2 = true;
     this.showUpdateCharity(charity);
-    // this.openCheckboxAndValidate('typesUpdate', true);
     this.showCheckboxes('typesUpdate', true);
     const ctypeerror = document.getElementsByClassName('ctypeerror')[0];
     ctypeerror.style.display = 'none';
@@ -92,22 +92,15 @@ export class Charity {
     this.updateCharity.charityTypeOther = !this.typeOther ? '' : this.updateCharity.charityTypeOther;
     await this.setupValidation2();
     await this.controller2.validate();
-    // console.log(this.controller2.errors);
     if (this.update === true) document.getElementById('updateCharitySection').scrollIntoView();
     else document.getElementById('charityDash').scrollIntoView();
-    // console.log(this.controller2.errors);
     this.buildErrors();
   }
   buildErrors() {
-    // console.log(99);
     const errorList = document.getElementById('valErrors');
-    // console.log(errorList);
     let innerH = '';
-    // console.log(this.controller2.errors);
     for (let i = 0; i < this.controller2.errors.length; i += 1) {
-      // console.log(102);
       innerH += `<li style="margin-left:-24px; color:red; width:2.5in">${this.controller2.errors[i].message}</li>`;
-      // console.log(innerH);
     }
     if (errorList !== null) {
       errorList.style.display = 'block';
@@ -196,7 +189,6 @@ export class Charity {
     this.updateCharity.charityManagers[0] = this.user.name;
     this.updateCharity.charityMngIds[0] = this.user._id;
     this.updateCharity.charityEmail = this.updateCharity.charityEmail.toLowerCase();
-    // console.log('this is the update charity email: ' + this.updateCharity);
     if (this.updateCharity.charityEmail !== '' && this.updateCharity.charityEmail !== null) {
       this.findUserByEmail('post');
     } else {
