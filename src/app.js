@@ -75,19 +75,18 @@ export class App {
   }
 
   async checkUser() {
+    let uid;
     if (this.auth.isAuthenticated()) {
       this.authenticated = true; // Logout element is reliant upon a local var;
       try {
-        const uid = this.auth.getTokenPayload().sub;
-      } catch (e) {
-        console.log('i have an error');
-        this.logout();
-      }
+        uid = this.auth.getTokenPayload().sub;
+      } catch (e) { return this.logout(); }
       this.user = await this.appState.getUser(uid);
       if (this.user !== undefined) {
         this.role = this.user.userType;
       }
     }
+    return this.role;
   }
 
   configHttpClient() {

@@ -1,0 +1,3 @@
+exports.logoutUser = function () {
+
+};
