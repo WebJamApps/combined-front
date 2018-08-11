@@ -31,8 +31,8 @@ export class AppState {
         if (this.user.userType) {
           this.checkUserRole();
         }
-      }).catch((err) => {
-        console.log(err);
+      }).catch(() => {
+        // console.log(err);
         this.logoutUser();
       });
   }

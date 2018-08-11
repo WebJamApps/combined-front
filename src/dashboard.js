@@ -9,7 +9,7 @@ export class Dashboard {
   async activate() {
     try {
       this.uid = this.app.auth.getTokenPayload().sub;
-    } catch (e) { console.log('I have an error'); }
+    } catch (e) { this.app.logout(); }
     this.user = await this.app.appState.getUser(this.uid);
     window.localStorage.setItem('userEmail', this.user.email);
     this.childRoute();

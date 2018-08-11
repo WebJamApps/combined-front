@@ -24,6 +24,7 @@ export class Charity {
     this.uid = '';
   }
   async activate() {
+    let res;
     this.counter = 1;
     this.update = false;
     this.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
@@ -35,7 +36,9 @@ export class Charity {
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
     this.app.role = this.user.userType;
-    const res = await this.app.httpClient.fetch(`/charity/${this.uid}`);
+    try {
+      res = await this.app.httpClient.fetch(`/charity/${this.uid}`);
+    } catch (e) { return this.app.logout(); }
     this.charities = await res.json();
     if (this.charities.length !== 0) {
       this.app.buildPTag(this.charities, 'charityTypes', 'charityTypeOther', 'charityTypesHtml');

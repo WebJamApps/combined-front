@@ -54,9 +54,12 @@ export class App {
   checkIfLoggedIn() {
     const token = localStorage.getItem('aurelia_id_token');
     if (token !== null) {
-      this.auth.setToken(token);
-      this.authenticated = true;
-      this.router.navigate('dashboard');
+      try {
+        this.auth.getTokenPayload();
+        this.auth.setToken(token);
+        this.authenticated = true;
+        this.router.navigate('dashboard');
+      } catch (e) { this.logout(); }
     }
   }
 
@@ -79,28 +82,8 @@ export class App {
       //   return console.log(e);
       // }
     }
-    // ret.then((data) => {
     return this.auth.setToken(ret.token);
-    // }, undefined);
-    // return ret;
   }
-
-  // async checkUser() {
-  //   // console.log(this.appUtils);
-  //   await this.appUtils.checkUser(this);
-  //   // let uid;
-  //   // if (this.auth.isAuthenticated()) {
-  //   //   this.authenticated = true; // Logout element is reliant upon a local var;
-  //   //   try {
-  //   //     uid = this.auth.getTokenPayload().sub;
-  //   //   } catch (e) { return this.logout(); }
-  //   //   this.user = await this.appState.getUser(uid);
-  //   //   if (this.user !== undefined) {
-  //   //     this.role = this.user.userType;
-  //   //   }
-  //   // }
-  //   // return this.role;
-  // }
 
   configHttpClient() {
     this.backend = '';
