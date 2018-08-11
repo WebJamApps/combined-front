@@ -6,10 +6,10 @@ exports.checkUser = async function (app) {
       uid = app.auth.getTokenPayload().sub;
     } catch (e) {
       app.logout();
-      return Promise.resolve();
+      return Promise.resolve('bad token');
     }
     app.user = await app.appState.getUser(uid);
     if (app.user !== undefined) app.role = app.user.userType;
   }
-  return Promise.resolve();
+  return Promise.resolve(true);
 };
