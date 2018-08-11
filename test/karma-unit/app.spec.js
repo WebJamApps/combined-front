@@ -121,12 +121,12 @@ describe('the App module', () => {
     // done();
   }));
 
-  it('should find a user when authenticated', (done) => {
-    // let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
-    app1.checkUser();
-    // expect(app1.router).toBeDefined;
-    done();
-  });
+  // it('should find a user when authenticated', (done) => {
+  //   // let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
+  //   app1.checkUser();
+  //   // expect(app1.router).toBeDefined;
+  //   done();
+  // });
 
   it('should provide a login page for OHAF', (done) => {
     app1.activate().then(() => {

@@ -8,6 +8,8 @@ import * as Hammer from 'hammerjs';
 import { UserAccess } from './classes/UserAccess';
 import { AppState } from './classes/AppState';
 
+const appUtils = require('./commons/appUtils');
+
 @inject(AuthService, HttpClient)
 export class App {
   constructor(auth, httpClient) {
@@ -17,6 +19,7 @@ export class App {
     this.role = '';
     this.menuToggled = false;
     this.style = 'wj';
+    this.appUtils = appUtils;
   }
 
   email = '';
@@ -45,7 +48,7 @@ export class App {
       'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina',
       'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     this.states.sort();
-    await this.checkUser();
+    await this.appUtils.checkUser(this);
   }
 
   checkIfLoggedIn() {
@@ -61,33 +64,43 @@ export class App {
     className.startup(appName);
   }
 
-  authenticate(name) {
+  async authenticate(name) {
     let ret;
     if (this.appState.isOhafLogin) {
-      ret = this.auth.authenticate(name, false, { isOhafUser: true });
+      // try {
+      ret = await this.auth.authenticate(name, false, { isOhafUser: true });
+      // } catch (e) {
+      //   return console.log(e);
+      // }
     } else {
-      ret = this.auth.authenticate(name, false, { isOhafUser: false });
+      // try {
+      ret = await this.auth.authenticate(name, false, { isOhafUser: false });
+      // } catch (e) {
+      //   return console.log(e);
+      // }
     }
-    ret.then((data) => {
-      this.auth.setToken(data.token);
-    }, undefined);
-    return ret;
+    // ret.then((data) => {
+    return this.auth.setToken(ret.token);
+    // }, undefined);
+    // return ret;
   }
 
-  async checkUser() {
-    let uid;
-    if (this.auth.isAuthenticated()) {
-      this.authenticated = true; // Logout element is reliant upon a local var;
-      try {
-        uid = this.auth.getTokenPayload().sub;
-      } catch (e) { return this.logout(); }
-      this.user = await this.appState.getUser(uid);
-      if (this.user !== undefined) {
-        this.role = this.user.userType;
-      }
-    }
-    return this.role;
-  }
+  // async checkUser() {
+  //   // console.log(this.appUtils);
+  //   await this.appUtils.checkUser(this);
+  //   // let uid;
+  //   // if (this.auth.isAuthenticated()) {
+  //   //   this.authenticated = true; // Logout element is reliant upon a local var;
+  //   //   try {
+  //   //     uid = this.auth.getTokenPayload().sub;
+  //   //   } catch (e) { return this.logout(); }
+  //   //   this.user = await this.appState.getUser(uid);
+  //   //   if (this.user !== undefined) {
+  //   //     this.role = this.user.userType;
+  //   //   }
+  //   // }
+  //   // return this.role;
+  // }
 
   configHttpClient() {
     this.backend = '';

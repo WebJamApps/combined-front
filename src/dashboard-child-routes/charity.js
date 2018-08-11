@@ -21,6 +21,7 @@ export class Charity {
     this.canSubmit2 = false;
     this.validType2 = false;
     this.charityTypeValid = false;
+    this.uid = '';
   }
   async activate() {
     this.counter = 1;
@@ -30,18 +31,18 @@ export class Charity {
     this.types.push('other');
     try {
       this.uid = this.app.auth.getTokenPayload().sub;
-    } catch (e) { console.log('i have an error'); }
+    } catch (e) { return this.app.logout(); }
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
     this.app.role = this.user.userType;
     const res = await this.app.httpClient.fetch(`/charity/${this.uid}`);
     this.charities = await res.json();
-    console.log(res);
     if (this.charities.length !== 0) {
       this.app.buildPTag(this.charities, 'charityTypes', 'charityTypeOther', 'charityTypesHtml');
       this.buildManagers();
       await this.checkEvents();
     }
+    return this.charities;
   }
   async checkEvents() {
     for (let i = 0; i < this.charities.length; i += 1) {
