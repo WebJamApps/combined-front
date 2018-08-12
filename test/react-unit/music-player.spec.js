@@ -28,7 +28,7 @@ describe('++MusicPlayer tests', () => {
   });
 
   it('should go on the preview for the first song', () => {
-    mp.index = -1;
+    mp.index = 1;
     mp.prev();
   });
 
@@ -46,6 +46,10 @@ describe('++MusicPlayer tests', () => {
 
   it('should pause the player', () => {
     mp.pause();
+  });
+
+  it('should simulate click share holder', () => {
+    mp.pressKey();
   });
 
   it('should copy the share url', (done) => {
