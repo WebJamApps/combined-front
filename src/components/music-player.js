@@ -34,6 +34,7 @@ export class MusicPlayer {
     this.copyShare = this.copyShare.bind(this);
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
+    this.pressKey = this.pressKey.bind(this);
     this.playUrl = `${document.location.href}?oneplayer=true`;
     this.shown = false;
     this.navigator = navigator;
@@ -62,12 +63,12 @@ export class MusicPlayer {
             </div>
             <div
               className="col-4 col-sm-4 col-md-3 p-0 text-md-center"
-              onKeyPress={() => {}}
+              onKeyPress={this.pressKey}
               role="presentation"
               onClick={this.copyShare}
               style={{ cursor: 'pointer' }}
             >
-              <span className="input-group-text" id="inputGroup" style={{ fontSize: '0.8em' }}>
+              <span className="input-group-text" id="inputGroup" style={{ fontSize: '0.8em', padding: '0.65em' }}>
 Copy URL
               </span>
             </div>
@@ -102,6 +103,8 @@ Share
       </div>
     );
   }
+
+  pressKey() {}
 
   /**
    * Shuffles array in place. ES6 version
@@ -142,7 +145,6 @@ Share
       this.url = this.urls[this.index];
     }
     this.playTrue();
-    this.playSound();
   }
 
   play() {
@@ -155,12 +157,6 @@ Share
     this.bind();
   }
 
-  playSound() {
-    if (this.url[0] === 'https://soundcloud.com/joshandmariamusic/good-enough') {
-      setTimeout(() => { this.playing = true; this.playTrue(); }, 5000);
-    }
-  }
-
   next() {
     this.index += 1;
     if (this.index >= this.urls.length) {
@@ -170,7 +166,6 @@ Share
       this.url = this.urls[this.index];
     }
     this.playTrue();
-    this.playSound();
   }
 
   render() {
@@ -199,7 +194,7 @@ Share
       setTimeout(() => {
         el.classList.add('d-none');
       }, 1500);
-    }, () => {});
+    });
   }
 
   bind() {
