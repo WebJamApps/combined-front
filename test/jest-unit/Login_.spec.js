@@ -358,31 +358,10 @@ test('catches any login errors', () => {
   };
   const evt = { target: { fetchClient: mockfetch, appName: 'PATRIC', runFetch: reg.runFetch } };
   const mockStorage = {
-    setItem() {
-    // do nothing
+    setItem() { // do nothing
     }
   };
   window.localStorage = mockStorage;
   return reg.logMeIn(evt)
     .catch(e => expect(e).toBeTruthy());
 });
-
-// test('Generates a session for PATRIC', () => {
-//   const mockfetch = function(url, data) {
-//     this.headers = {};
-//     this.headers.url = url;
-//     this.headers.method = data.method;
-//     return Promise.resolve({
-//       Headers: this.headers,
-//       json: () => Promise.resolve({ message: 'success' })
-//     });
-//   };
-//   reg.fetch = mockfetch;
-//   const mockStorage = {getItem: function(item, value) {
-//     //do nothing
-//   }};
-//   window.localStorage = mockStorage;
-//   reg.generateSession('joe@smith.com').then((data) => {
-//     expect(data.message).toBe('success');
-//   });
-// });

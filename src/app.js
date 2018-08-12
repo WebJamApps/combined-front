@@ -51,17 +51,17 @@ export class App {
     await this.appUtils.checkUser(this);
   }
 
-  checkIfLoggedIn() {
-    const token = localStorage.getItem('aurelia_id_token');
-    if (token !== null) {
-      try {
-        this.auth.getTokenPayload();
-        this.auth.setToken(token);
-        this.authenticated = true;
-        this.router.navigate('dashboard');
-      } catch (e) { this.logout(); }
-    }
-  }
+  // checkIfLoggedIn() {
+  //   const token = localStorage.getItem('aurelia_id_token');
+  //   if (token !== null) {
+  //     try {
+  //       this.auth.getTokenPayload();
+  //       this.auth.setToken(token);
+  //       this.authenticated = true;
+  //       this.router.navigate('dashboard');
+  //     } catch (e) { this.logout(); }
+  //   }
+  // }
 
   showForm(appName, className) {
     className.startup(appName);

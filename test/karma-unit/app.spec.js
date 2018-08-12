@@ -52,17 +52,17 @@ describe('the App module', () => {
       }
     })());
   });
-  it('check if user is logged in', (done) => {
-    window.localStorage.setItem('aurelia_id_token', '109842sdhgsgfhjsfoi4124');
-    const configStub = {
-      options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}, navigate() {}
-    };
-    app1.configureRouter(configStub, RouterStub);
-    app1.router.navigate = function () {};
-    app1.checkIfLoggedIn();
-    expect(app1.auth.getTokenPayload()).toBe(window.localStorage.getItem('aurelia_id_token'));
-    done();
-  });
+  // it('check if user is logged in', (done) => {
+  //   window.localStorage.setItem('aurelia_id_token', '109842sdhgsgfhjsfoi4124');
+  //   const configStub = {
+  //     options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}, navigate() {}
+  //   };
+  //   app1.configureRouter(configStub, RouterStub);
+  //   app1.router.navigate = function () {};
+  //   app1.checkIfLoggedIn();
+  //   expect(app1.auth.getTokenPayload()).toBe(window.localStorage.getItem('aurelia_id_token'));
+  //   done();
+  // });
   it('scrolls page to top after route changes', (done) => {
     document.body.innerHTML = '<div class="material-header"></div>';
     // let configStub = {options: {pushState: true}, addPipelineStep(){}, addPostRenderStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
@@ -90,18 +90,18 @@ describe('the App module', () => {
     app2.configureRouter(config, router);
     done();
   });
-  it('check if user is logged in when token is not in local storage', (done) => {
-    window.localStorage.clear();
-    // app1.authenticated = true;
-    const configStub = {
-      options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}, navigate() {}
-    };
-    app1.configureRouter(configStub, RouterStub);
-    app1.router.navigate = function () {};
-    app1.checkIfLoggedIn();
-    // expect(app1.authenticated).toBe(false);
-    done();
-  });
+  // it('check if user is logged in when token is not in local storage', (done) => {
+  //   window.localStorage.clear();
+  //   // app1.authenticated = true;
+  //   const configStub = {
+  //     options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}, navigate() {}
+  //   };
+  //   app1.configureRouter(configStub, RouterStub);
+  //   app1.router.navigate = function () {};
+  //   app1.checkIfLoggedIn();
+  //   // expect(app1.authenticated).toBe(false);
+  //   done();
+  // });
   it('configures the router', (done) => {
     const configStub = {
       options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}
