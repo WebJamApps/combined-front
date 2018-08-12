@@ -20,7 +20,7 @@ const configForDevelopment = {
   authToken: 'Bearer',
   withCredentials: true,
   platform: 'browser',
-  storage: 'sessionStorage',
+  // storage: 'sessionStorage',
   providers: {
     google: {
       name: 'google',

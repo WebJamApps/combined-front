@@ -385,19 +385,21 @@ export class App {
     const menuDrawer = document.getElementsByClassName('drawer')[0];
     const navList = document.getElementsByClassName('nav-list')[0];
     const mobilemenutoggle = document.getElementById('mobilemenutoggle');
-    if (this.style === 'ohaf') {
-      menuDrawer.style.backgroundColor = '#c09580';
-      navList.style.backgroundColor = '#c09580';
-      if (mobilemenutoggle !== null) {
-        mobilemenutoggle.style.backgroundColor = '#565656';
-      }
-    } else {
-      if (menuDrawer !== null && menuDrawer !== undefined) {
-        menuDrawer.style.backgroundColor = '#c0c0c0';
-        navList.style.backgroundColor = '#c0c0c0';
-      }
-      if (mobilemenutoggle !== null) {
-        mobilemenutoggle.style.backgroundColor = '#2a222a';
+    if (menuDrawer !== undefined) {
+      if (this.style === 'ohaf') {
+        menuDrawer.style.backgroundColor = '#c09580';
+        navList.style.backgroundColor = '#c09580';
+        if (mobilemenutoggle !== null) {
+          mobilemenutoggle.style.backgroundColor = '#565656';
+        }
+      } else {
+        if (menuDrawer !== null && menuDrawer !== undefined) {
+          menuDrawer.style.backgroundColor = '#c0c0c0';
+          navList.style.backgroundColor = '#c0c0c0';
+        }
+        if (mobilemenutoggle !== null) {
+          mobilemenutoggle.style.backgroundColor = '#2a222a';
+        }
       }
     }
   }
