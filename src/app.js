@@ -20,13 +20,13 @@ export class App {
     this.menuToggled = false;
     this.style = 'wj';
     this.appUtils = appUtils;
+    this.widescreen = false;
   }
 
   email = '';
   password = '';
   authenticated = false;
   token = '';
-  // expanded = false;
 
   @bindable
   drawerWidth = '182px';
@@ -50,18 +50,6 @@ export class App {
     this.states.sort();
     await this.appUtils.checkUser(this);
   }
-
-  // checkIfLoggedIn() {
-  //   const token = localStorage.getItem('aurelia_id_token');
-  //   if (token !== null) {
-  //     try {
-  //       this.auth.getTokenPayload();
-  //       this.auth.setToken(token);
-  //       this.authenticated = true;
-  //       this.router.navigate('dashboard');
-  //     } catch (e) { this.logout(); }
-  //   }
-  // }
 
   showForm(appName, className) {
     className.startup(appName);
@@ -174,36 +162,6 @@ export class App {
     this.router = router;
   }
 
-  get widescreen() {
-    const isWide = document.documentElement.clientWidth > 766;
-    const drawer = document.getElementsByClassName('drawer')[0];
-    const mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
-    const swipeArea = document.getElementsByClassName('swipe-area')[0];
-    if (!this.menuToggled && !isWide) {
-      /* istanbul ignore else */
-      if (drawer !== null && drawer !== undefined) {
-        drawer.style.display = 'none';
-        $(drawer).parent().css('display', 'none');
-        mobileMenuToggle.style.display = 'block';
-        swipeArea.style.display = 'block';
-      }
-    }
-    if (isWide) {
-      if (drawer !== null && drawer !== undefined) {
-        if (this.contentWidth === '0px') { this.contentWidth = '182px'; }
-        drawer.style.display = 'block';
-        swipeArea.style.display = 'none';
-        $(drawer).parent().css('display', 'block');
-        mobileMenuToggle.style.display = 'none';
-      }
-    } else { this.contentWidth = '0px'; }
-    const mainP = document.getElementsByClassName('main-panel')[0];
-    if (mainP !== null && mainP !== undefined) {
-      mainP.style.marginRight = this.contentWidth;
-    }
-    return isWide;
-  }
-
   clickFunc(event) {
     const drawer = document.getElementsByClassName('drawer')[0];
     const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
@@ -223,7 +181,6 @@ export class App {
       document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
       document.getElementsByClassName('swipe-area')[0].style.display = 'block';
       document.getElementsByClassName('page-host')[0].addEventListener('click', this.clickFunc);
-      // this.manager.on('swipe', this.close.bind(this));
     }
     this.menuToggled = true;
     const drawer = document.getElementsByClassName('drawer')[0];
@@ -232,25 +189,19 @@ export class App {
       drawer.style.display = 'block';
       $(drawer).parent().css('display', 'block');
       toggleIcon.style.display = 'none';
-      // document.getElementsByClassName('swipe-area')[0].style.display = 'block';
-      // this.manager.on('swipe', this.close.bind(this));
     } else {
       drawer.style.display = 'none';
       $(drawer).parent().css('display', 'none');
       toggleIcon.style.display = 'block';
-      // this.manager.off('swipe', this.close.bind(this));
-      // document.getElementsByClassName('page-host')[0].removeEventListener('click', clickFunc);
-      // document.getElementsByClassName('swipe-area')[0].style.display = 'none';
     }
     if (toggle === 'close') {
       document.getElementsByClassName('page-host')[0].removeEventListener('click', this.clickFunc);
       document.getElementsByClassName('swipe-area')[0].style.display = 'none';
-      // this.manager.off('swipe', this.close.bind(this));
     }
   }
 
   close() {
-    if (!this.widescreen) {
+    if (!this.appUtils.checkIfWidescreen(this)) {
       this.toggleMobileMenu('close');
     }
   }
@@ -448,6 +399,7 @@ export class App {
     } catch (e) { return e; }
   }
   attached() {
+    this.widescreen = this.appUtils.checkIfWidescreen(this);
     this.manager = new Hammer.Manager(document.getElementsByClassName('swipe-area')[0], {
       recognizers: [
         [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]

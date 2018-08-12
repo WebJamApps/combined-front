@@ -52,22 +52,9 @@ describe('the App module', () => {
       }
     })());
   });
-  // it('check if user is logged in', (done) => {
-  //   window.localStorage.setItem('aurelia_id_token', '109842sdhgsgfhjsfoi4124');
-  //   const configStub = {
-  //     options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}, navigate() {}
-  //   };
-  //   app1.configureRouter(configStub, RouterStub);
-  //   app1.router.navigate = function () {};
-  //   app1.checkIfLoggedIn();
-  //   expect(app1.auth.getTokenPayload()).toBe(window.localStorage.getItem('aurelia_id_token'));
-  //   done();
-  // });
   it('scrolls page to top after route changes', (done) => {
     document.body.innerHTML = '<div class="material-header"></div>';
-    // let configStub = {options: {pushState: true}, addPipelineStep(){}, addPostRenderStep(){}, map(){}, fallbackRoute(){}, navigate(){}};
     app1.activate();
-
     let router, config = {
       fallbackRoute() {},
       map() {},
@@ -90,18 +77,6 @@ describe('the App module', () => {
     app2.configureRouter(config, router);
     done();
   });
-  // it('check if user is logged in when token is not in local storage', (done) => {
-  //   window.localStorage.clear();
-  //   // app1.authenticated = true;
-  //   const configStub = {
-  //     options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}, navigate() {}
-  //   };
-  //   app1.configureRouter(configStub, RouterStub);
-  //   app1.router.navigate = function () {};
-  //   app1.checkIfLoggedIn();
-  //   // expect(app1.authenticated).toBe(false);
-  //   done();
-  // });
   it('configures the router', (done) => {
     const configStub = {
       options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}
@@ -112,21 +87,8 @@ describe('the App module', () => {
   });
 
   it('updates by id', testAsync(async () => {
-    // let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
-    // let afterF = function(){console.log('howdy');};
     await app1.updateById('/volopp/', '123', {});
-    // console.log('this is the response');
-    // console.log(response);
-    // expect(app1.router).toBeDefined;
-    // done();
   }));
-
-  // it('should find a user when authenticated', (done) => {
-  //   // let configStub = {options: {pushState: true}, addPipelineStep(){}, map(){}, fallbackRoute(){}};
-  //   app1.checkUser();
-  //   // expect(app1.router).toBeDefined;
-  //   done();
-  // });
 
   it('should provide a login page for OHAF', (done) => {
     app1.activate().then(() => {
@@ -143,10 +105,8 @@ describe('the App module', () => {
   });
 
   it('should sent an OHAF user to /OHAF on logout', (done) => {
-    // app1.activate().then(() => {
     app1.role = 'Charity';
     app1.logout();
-    // });
     done();
   });
 
@@ -157,17 +117,13 @@ describe('the App module', () => {
   }));
 
   it('gets the current route', testAsync(async () => {
-    // console.log(app1);
     await app1.activate();
     const configStub = {
       options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}
     };
-    // let routerStub = {};
     await app1.configureRouter(configStub, RouterStub);
-    // console.log('current instruction ' + app1.router.currentInstruction);
     const route = await app1.currentRoute;
     expect(route).toBe(route);
-    // expect(route).toBe('yoyo');
   }));
 
   it('gets the current fragment', (done) => {
@@ -321,17 +277,6 @@ describe('the App module', () => {
   });
 
   it('leaves the styles set to wj if undefined route frag', (done) => {
-    // const routre = new RouterStub();
-    // routre.currentInstruction.fragment = 'vol-ops/';
-    // app1.router = routre;
-    // let cs = app1.currentStyles;
-    // expect(app1.Menu).toBe('charity');
-    // expect(cs).toBeDefined();
-    // routre.currentInstruction.fragment = undefined;
-    // app1.router = routre;
-    // cs = app1.currentStyles;
-    // expect(app1.Menu).toBe('wj');
-    // expect(cs).toBeDefined();
     done();
   });
 

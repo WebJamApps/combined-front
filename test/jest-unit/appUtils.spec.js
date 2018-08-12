@@ -1,16 +1,28 @@
+// const jsdom = require('jsdom');
 const au = require('../../src/commons/appUtils');
 
+// const { JSDOM } = jsdom;
+// const dom = new JSDOM('<!DOCTYPE html><html><head></head><body></body></html>');
+// global.window = dom.window;
+// global.document = dom.window.document;
+// const resizeEvent = document.createEvent('Event');
+// resizeEvent.initEvent('resize', true, true);
+// global.window.resizeTo = (width, height) => {
+//   global.window.innerWidth = width || global.window.innerWidth;
+//   global.window.innerHeight = height || global.window.innerHeight;
+//   global.window.dispatchEvent(resizeEvent);
+// };
 
 describe('the appUtils', () => {
   it('checks for an authenticated user but has error on get token payload on checkUser', async () => {
     try {
-      cb = await au.checkUser({ logout() {}, auth: { isAuthenticated() { return true; } } });
+      const cb = await au.checkUser({ logout() {}, auth: { isAuthenticated() { return true; } } });
       expect(cb).toBe('bad token');
     } catch (e) { throw e; }
   });
   it('assigned the role of an authenticated user on checkUser', async () => {
     try {
-      cb = await au.checkUser({
+      const cb = await au.checkUser({
         logout() {},
         auth: {
           isAuthenticated() { return true; },
@@ -23,7 +35,7 @@ describe('the appUtils', () => {
   });
   it('does nothing is user is not authenticated on checkUser', async () => {
     try {
-      cb = await au.checkUser({
+      const cb = await au.checkUser({
         logout() {},
         auth: {
           isAuthenticated() { return false; },
@@ -59,7 +71,7 @@ describe('the appUtils', () => {
   });
   it('does nothing is user is not defined on checkUser', async () => {
     try {
-      cb = await au.checkUser({
+      const cb = await au.checkUser({
         logout() {},
         auth: {
           isAuthenticated() { return true; },
@@ -70,4 +82,21 @@ describe('the appUtils', () => {
       expect(cb).toBe(true);
     } catch (e) { throw e; }
   });
+  it('checks if widescreen and returns false', (done) => {
+    // global.window.innerWidth = 500;
+    // global.window.dispatchEvent(new Event('resize'));
+    // console.log(document.documentElement.clientWidth);
+    const app = { menuToggled: false };
+    const cb = au.checkIfWidescreen(app);
+    expect(cb).toBe(false);
+    done();
+  });
+  // it('checks if widescreen and returns true', (done) => {
+  //   global.window.innerWidth = 800;
+  //   global.window.dispatchEvent(new Event('resize'));
+  //   const app = { menuToggled: false };
+  //   const cb = au.checkIfWidescreen(app);
+  //   expect(cb).toBe(true);
+  //   done();
+  // });
 });
