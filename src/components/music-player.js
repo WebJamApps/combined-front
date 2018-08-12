@@ -34,7 +34,6 @@ export class MusicPlayer {
     this.copyShare = this.copyShare.bind(this);
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
-    this.pressKey = this.pressKey.bind(this);
     this.playUrl = `${document.location.href}?oneplayer=true`;
     this.shown = false;
     this.navigator = navigator;
