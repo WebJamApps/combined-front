@@ -99,4 +99,11 @@ describe('the appUtils', () => {
   //   expect(cb).toBe(true);
   //   done();
   // });
+  // it('provides a click function', (done) => {
+  //   document.body.innerHTML = '<div class="page-host"><div class="swipe-area"></div><div class="drawer"></div></div>';
+  //   const myEvent = { target: { className: 'funtimes' } };
+  //   au.clickFunc(myEvent);
+  //   expect(document.getElementsByClassName('page-host')[0].style.overflow).toBe('auto');
+  //   done();
+  // });
 });

@@ -60,3 +60,16 @@ exports.checkIfWidescreen = function (app) {
   }
   return isWide;
 };
+
+exports.clickFunc = function (event) {
+  const drawer = document.getElementsByClassName('drawer')[0];
+  const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+  /* istanbul ignore else */
+  if (event.target.className !== 'menu-item') {
+    document.getElementsByClassName('swipe-area')[0].style.display = 'none';
+    drawer.style.display = 'none';
+    $(drawer).parent().css('display', 'none');
+    toggleIcon.style.display = 'block';
+    document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
+  }
+};

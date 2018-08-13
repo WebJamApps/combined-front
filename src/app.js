@@ -162,25 +162,25 @@ export class App {
     this.router = router;
   }
 
-  clickFunc(event) {
-    const drawer = document.getElementsByClassName('drawer')[0];
-    const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
-    /* istanbul ignore else */
-    if (event.target.className !== 'menu-item') {
-      document.getElementsByClassName('swipe-area')[0].style.display = 'none';
-      drawer.style.display = 'none';
-      $(drawer).parent().css('display', 'none');
-      toggleIcon.style.display = 'block';
-      document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
-    }
-  }
+  // clickFunc(event) {
+  //   const drawer = document.getElementsByClassName('drawer')[0];
+  //   const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+  //   /* istanbul ignore else */
+  //   if (event.target.className !== 'menu-item') {
+  //     document.getElementsByClassName('swipe-area')[0].style.display = 'none';
+  //     drawer.style.display = 'none';
+  //     $(drawer).parent().css('display', 'none');
+  //     toggleIcon.style.display = 'block';
+  //     document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
+  //   }
+  // }
 
   toggleMobileMenu(toggle) {
     document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
     if (toggle !== 'close') {
       document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
       document.getElementsByClassName('swipe-area')[0].style.display = 'block';
-      document.getElementsByClassName('page-host')[0].addEventListener('click', this.clickFunc);
+      document.getElementsByClassName('page-host')[0].addEventListener('click', this.appUtils.clickFunc);
     }
     this.menuToggled = true;
     const drawer = document.getElementsByClassName('drawer')[0];
@@ -195,7 +195,7 @@ export class App {
       toggleIcon.style.display = 'block';
     }
     if (toggle === 'close') {
-      document.getElementsByClassName('page-host')[0].removeEventListener('click', this.clickFunc);
+      document.getElementsByClassName('page-host')[0].removeEventListener('click', this.appUtils.clickFunc);
       document.getElementsByClassName('swipe-area')[0].style.display = 'none';
     }
   }
@@ -410,7 +410,7 @@ export class App {
   detached() {
     this.manager.off('swipe', this.close.bind(this));
     const ph = document.getElementsByClassName('page-host')[0];
-    ph.removeEventListener('click', this.clickFunc);
+    ph.removeEventListener('click', this.appUtils.clickFunc);
     ph.setAttribute('hasEvent', false);
   }
 }
