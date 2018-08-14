@@ -23,9 +23,9 @@ class Login_ {
       + '</td></tr>'
     + '</tbody></table></div><div style="text-align:center;padding:2px;margin:10px;">'
     + '<div class="loginerror" style="color:red"></div>'
-    + '<div><button style="display:none; margin-bottom:-22px; margin-left:10px" type="button" class="loginbutton">Login</button>'
+    + '<div><button style="display:none; margin-bottom:-20px; margin-left:10px" type="button" class="loginbutton">Login</button>'
     + '<button style="display:none;margin-top:34px; margin-left:10px" class="resetpass" type="button">Reset Password</button></div></div></form>'
-    + '<button class="nevermind" style="margin-left:86px;margin-top:8px; margin-bottom:15px" type="button">Cancel</button></div></div></form>';
+    + '<button class="nevermind" style="margin-left:27px;margin-top:19px; margin-bottom:15px" type="button">Cancel</button></div></div></form>';
     const home = document.getElementsByClassName('home');
     home[0].insertBefore(loginform, home[0].childNodes[0]);
   }
@@ -93,18 +93,19 @@ class Login_ {
     logbutton.style.display = 'none';
     const loginErrorMessage = document.getElementsByClassName('loginerror')[0];
     loginErrorMessage.innerHTML = message;
-    if (validemail) {
+    if (validemail && validpass) {
       logbutton.style.display = 'block';
       loginErrorMessage.innerHTML = '';
+      resetpassButton.style.display = 'none';
     }
     if (!validpass) {
       logbutton.style.display = 'none';
-      loginErrorMessage.innerHTML = '<p>Invalid password</p>';
+      loginErrorMessage.innerHTML += '<p>Invalid password</p>';
+      resetpassButton.style.display = 'block';
     }
-    // if (useridValue !== '' || validemail) {
-    //   resetpassButton.style.display = 'block';
-    // } else {
-    //   resetpassButton.style.display = 'none';
+    // if (!validemail) {
+    //   logbutton.style.display = 'none';
+    //   loginErrorMessage.innerHTML += '<p>Invalid email</p>';
     // }
   }
 
