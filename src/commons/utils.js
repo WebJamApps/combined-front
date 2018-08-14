@@ -1,6 +1,6 @@
 const slowSlides = require('./showSlides');
 
-exports.fixDates = function (myevents) {
+exports.fixDates = function fixDates(myevents) {
   for (let i = 0; i < myevents.length; i += 1) {
     const startDate = myevents[i].voStartDate;
     const endDate = myevents[i].voEndDate;
@@ -18,7 +18,7 @@ exports.fixDates = function (myevents) {
   return myevents;
 };
 
-exports.formatDate = function (today) {
+exports.formatDate = function formatDate(today) {
   const mm = today.getMonth() + 1; // getMonth() is zero-based
   const dd = today.getDate();
   today = [today.getFullYear(),
@@ -27,7 +27,7 @@ exports.formatDate = function (today) {
   return today;
 };
 
-exports.markPast = function (myEvents, formatDate) {
+exports.markPast = function markPast(myEvents, formatDate) {
   let testDate, today = new Date();
   today = formatDate(today);
   for (let i = 0; i < myEvents.length; i += 1) {
@@ -44,7 +44,7 @@ exports.markPast = function (myEvents, formatDate) {
   }
 };
 
-exports.makeFilterDropdown = function (filterName, model, attrib) {
+exports.makeFilterDropdown = function makeFilterDropdown(filterName, model, attrib) {
   filterName.push('');
   for (const next of model) {
     const nextType = next[attrib];
@@ -54,7 +54,7 @@ exports.makeFilterDropdown = function (filterName, model, attrib) {
   }
 };
 
-exports.filterSelected = function (myModule) {
+exports.filterSelected = function filterSelected(myModule) {
   if (myModule.selectedFilter.length === 0) {
     for (let i = 0; i < myModule.filters.length; i += 1) {
       myModule.filters[i].value = '';
@@ -77,7 +77,7 @@ exports.filterSelected = function (myModule) {
   }
 };
 
-exports.startSlides = function (idArray1, errorMsg, idArray2) {
+exports.startSlides = function startSlides(idArray1, errorMsg, idArray2) {
   const slideshowTimer = setInterval(() => {
     let foundElement = false;
     idArray1.forEach((id) => {
@@ -95,7 +95,7 @@ exports.startSlides = function (idArray1, errorMsg, idArray2) {
   }, 5400);
 };
 
-exports.showCheckboxes = function (id, forceOpen) {
+exports.showCheckboxes = function showCheckboxes(id, forceOpen) {
   let fo = false;
   if (forceOpen !== null && forceOpen !== undefined) {
     fo = forceOpen;

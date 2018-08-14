@@ -2,7 +2,7 @@ import { FormValidator } from '../../src/classes/FormValidator';
 
 describe('the FormValidator class', () => {
   let fv;
-  const validator = function () {
+  const validator = function validator() {
     // console.log(rule);
     // do nothing
   };

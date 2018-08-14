@@ -37,9 +37,9 @@ test('generates a reset password form with email already filled in', () => {
 
 test('it validates the reset password form', () => {
   user.formType = 'reset';
-  document.getElementsByClassName('email')[0].checkValidity = function () { return true; };
+  document.getElementsByClassName('email')[0].checkValidity = function checkValidity() { return true; };
   document.getElementsByClassName('code')[0].value = 12345;
-  document.getElementsByClassName('loginpass')[0].checkValidity = function () { return true; };
+  document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return true; };
   const evt = { target: { formType: 'reset' } };
   user.validateForm(evt);
   const sbutton = document.getElementsByClassName('regbutton')[0];
@@ -51,9 +51,9 @@ test('it validates the email varification form', () => {
   const evt = { target: { formType: 'email' } };
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
   document.getElementsByClassName('code')[0].value = '12345';
-  document.getElementsByClassName('email')[0].checkValidity = function () { return true; };
-  document.getElementsByClassName('code')[0].checkValidity = function () { return true; };
-  document.getElementsByClassName('loginpass')[0].checkValidity = function () { return true; };
+  document.getElementsByClassName('email')[0].checkValidity = function checkValidity() { return true; };
+  document.getElementsByClassName('code')[0].checkValidity = function checkValidity() { return true; };
+  document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return true; };
   user.validateForm(evt);
   const sbutton = document.getElementsByClassName('regbutton')[0];
   expect(sbutton.style.display).toBe('block');
@@ -64,15 +64,15 @@ test('it hides submit button if the email varification form is invalid', () => {
   const evt = { target: { formType: 'email' } };
   document.getElementsByClassName('email')[0].value = 'joesmith.com';
   document.getElementsByClassName('code')[0].value = '12345';
-  document.getElementsByClassName('email')[0].checkValidity = function () { return false; };
-  document.getElementsByClassName('code')[0].checkValidity = function () { return true; };
-  document.getElementsByClassName('loginpass')[0].checkValidity = function () { return true; };
+  document.getElementsByClassName('email')[0].checkValidity = function checkValidity() { return false; };
+  document.getElementsByClassName('code')[0].checkValidity = function checkValidity() { return true; };
+  document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return true; };
   user.validateForm(evt);
   const sbutton = document.getElementsByClassName('regbutton')[0];
   expect(sbutton.style.display).toBe('none');
   document.getElementsByClassName('email')[0].value = 'joesmith@joe.com';
-  document.getElementsByClassName('email')[0].checkValidity = function () { return true; };
-  document.getElementsByClassName('code')[0].checkValidity = function () { return false; };
+  document.getElementsByClassName('email')[0].checkValidity = function checkValidity() { return true; };
+  document.getElementsByClassName('code')[0].checkValidity = function checkValidity() { return false; };
   document.getElementsByClassName('code')[0].value = '123459';
   user.validateForm(evt);
   expect(sbutton.style.display).toBe('none');
@@ -83,26 +83,26 @@ test('it hides submit button if the reset password form is invalid', () => {
   const evt = { target: { formType: 'reset' } };
   document.getElementsByClassName('email')[0].value = 'joesmith.com';
   document.getElementsByClassName('code')[0].value = '12345';
-  document.getElementsByClassName('email')[0].checkValidity = function () { return false; };
-  document.getElementsByClassName('code')[0].checkValidity = function () { return false; };
-  document.getElementsByClassName('loginpass')[0].checkValidity = function () { return false; };
+  document.getElementsByClassName('email')[0].checkValidity = function checkValidity() { return false; };
+  document.getElementsByClassName('code')[0].checkValidity = function checkValidity() { return false; };
+  document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return false; };
   user.validateForm(evt);
   const sbutton = document.getElementsByClassName('regbutton')[0];
   expect(sbutton.style.display).toBe('none');
   document.getElementsByClassName('email')[0].value = 'joesmith@.com';
-  document.getElementsByClassName('email')[0].checkValidity = function () { return true; };
-  document.getElementsByClassName('code')[0].checkValidity = function () { return true; };
+  document.getElementsByClassName('email')[0].checkValidity = function checkValidity() { return true; };
+  document.getElementsByClassName('code')[0].checkValidity = function checkValidity() { return true; };
   document.getElementsByClassName('code')[0].value = '123459';
   user.validateForm(evt);
   expect(sbutton.style.display).toBe('none');
-  document.getElementsByClassName('loginpass')[0].checkValidity = function () { return true; };
-  document.getElementsByClassName('email')[0].checkValidity = function () { return false; };
+  document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return true; };
+  document.getElementsByClassName('email')[0].checkValidity = function checkValidity() { return false; };
   user.validateForm(evt);
   expect(sbutton.style.display).toBe('none');
 });
 
 test('it resets the password', () => {
-  mockfetch = function (url, data) {
+  mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -130,7 +130,7 @@ test('it displays the error message from reset password PUT', () => {
   user.formType = 'reset';
   user.userEmail = 'joe@smith.com';
   user.verifyEmail();
-  mockfetch = function (url, data) {
+  mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -150,7 +150,7 @@ test('it displays the error message from reset password PUT', () => {
 });
 
 test('it catches the error from reset password PUT', () => {
-  mockfetch = function (url, data) {
+  mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -165,7 +165,7 @@ test('it catches the error from reset password PUT', () => {
 });
 
 test('it updates the user', () => {
-  mockfetch = function (url, data) {
+  mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -182,7 +182,7 @@ test('it updates the user', () => {
 });
 
 test('it displays error message on updates the user PUT', () => {
-  mockfetch = function (url, data) {
+  mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -200,7 +200,7 @@ test('it displays error message on updates the user PUT', () => {
 });
 
 test('it catches errors on update the user PUT', () => {
-  mockfetch = function (url, data) {
+  mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -229,7 +229,7 @@ test('it displays a email varification form for a change email request', () => {
 });
 
 test('it sends PUT request to varify the changed email with pin', () => {
-  mockfetch = function (url, data) {
+  mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -248,7 +248,7 @@ test('it sends PUT request to varify the changed email with pin', () => {
 });
 
 test('it sends PUT request to varify the changed email with pin and displays error message', () => {
-  mockfetch = function (url, data) {
+  mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -267,7 +267,7 @@ test('it sends PUT request to varify the changed email with pin and displays err
 });
 
 test('it sends PUT request to varify the changed email with pin and catches error', () => {
-  mockfetch = function (url, data) {
+  mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;

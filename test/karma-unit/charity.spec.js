@@ -111,7 +111,7 @@ describe('the Charity Module', () => {
   });
   it('it displays the new charity form on page load', (done) => {
     charity2.activate();
-    charity2.setupValidation2 = function () {};
+    charity2.setupValidation2 = function setupValidation2() {};
     charity2.controller2 = { validate() {} };
     document.body.innerHTML = '<div id="charityDash"></div><div id="updateCharitySection"><div id="charTable">'
     + '</div><button id="createNewCharityButton"></button></div>';
@@ -120,7 +120,7 @@ describe('the Charity Module', () => {
   });
   it('displays the update charity table', (done) => {
     charity.activate();
-    charity.setupValidation2 = function () {};
+    charity.setupValidation2 = function setupValidation2() {};
     const charity1 = {
       charityName: 'test charity',
       charityCity: '',
@@ -168,7 +168,7 @@ describe('the Charity Module', () => {
     charity.activate();
     const user = { name: 'Josh', _id: '1234' };
     charity.user = user;
-    charity.setupValidation2 = function () {};
+    charity.setupValidation2 = function setupValidation2() {};
     charity.updateCharity = {
       charityName: 'test charity',
       charityCity: '',
@@ -240,7 +240,7 @@ describe('the Charity Module', () => {
     charity.activate();
     document.body.innerHTML = '<div id="charTable" style="display:none"></div><div><button id="createNewCharityButton" '
     + 'style="display:block">Create</button>';
-    charity.showUpdateCharity = function () {};
+    charity.showUpdateCharity = function showUpdateCharity() {};
     charity.createNewCharity();
     jasmine.clock().tick(1);
     expect(document.getElementById('createNewCharityButton').style.display).toBe('none');
@@ -252,7 +252,7 @@ describe('the Charity Module', () => {
     charity.activate();
     document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection">'
     + '</div><div><button id="updateCharityButton" style="display:block">Create</button>';
-    charity.setupValidation2 = function () {};
+    charity.setupValidation2 = function setupValidation2() {};
     charity.update = true;
     const myCharity = {
       charityName: 'test charity',

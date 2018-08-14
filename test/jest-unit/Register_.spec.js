@@ -57,8 +57,8 @@ test('hides the submit button when registration form is not valid email', () => 
   document.getElementsByClassName('pas')[0].value = 'other';
   document.getElementsByClassName('pas')[0].style.display = 'block';
   document.getElementsByClassName('email')[0].value = 'google.@gmail.com';
-  document.getElementsByClassName('email')[0].checkValidity = function () { return false; };
-  document.getElementsByClassName('password')[0].checkValidity = function () { return true; };
+  document.getElementsByClassName('email')[0].checkValidity = function checkValidity() { return false; };
+  document.getElementsByClassName('password')[0].checkValidity = function checkValidity() { return true; };
   const evt = { target: { displayError: reg.displayRegError, validateGoogle: reg.validateGoogle } };
   reg.validateReg(evt);
   const registbutton = document.getElementsByClassName('registerbutton')[0];
@@ -68,8 +68,8 @@ test('hides the submit button when registration form is not valid email', () => 
 test('hides the submit button when registration form is not valid name', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('PATRIC');
-  document.getElementsByClassName('password')[0].checkValidity = function () { return true; };
-  document.getElementsByClassName('email')[0].checkValidity = function () { return true; };
+  document.getElementsByClassName('password')[0].checkValidity = function checkValidity() { return true; };
+  document.getElementsByClassName('email')[0].checkValidity = function checkValidity() { return true; };
   document.getElementsByClassName('firstname')[0].value = '';
   const evt = { target: { displayError: reg.displayRegError, validateGoogle: reg.validateGoogle } };
   reg.validateReg(evt);
@@ -83,8 +83,8 @@ test('hides the submit button when registration form is not valid password', () 
   document.getElementsByClassName('email')[0].value = 'google.@gb.com';
   document.getElementsByClassName('firstname')[0].value = 'Bob';
   document.getElementsByClassName('lastname')[0].value = 'Smith';
-  document.getElementsByClassName('email')[0].checkValidity = function () { return true; };
-  document.getElementsByClassName('password')[0].checkValidity = function () { return false; };
+  document.getElementsByClassName('email')[0].checkValidity = function checkValidity() { return true; };
+  document.getElementsByClassName('password')[0].checkValidity = function checkValidity() { return false; };
   const evt = { target: { displayError: reg.displayRegError, validateGoogle: reg.validateGoogle } };
   reg.validateReg(evt);
   const registbutton = document.getElementsByClassName('registerbutton')[0];
@@ -98,7 +98,7 @@ test('shows the submit button when registration form is valid', () => {
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
   document.getElementsByClassName('password')[0].value = '123456789';
-  const mockvalidity = function () {
+  const mockvalidity = function mockvalidity() {
     return true;
   };
   document.getElementsByClassName('password')[0].checkValidity = mockvalidity;
@@ -117,7 +117,7 @@ test('shows the submit button when registration form uses a Google email with PA
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@gmail.com';
   document.getElementsByClassName('password')[0].value = '123456789';
-  const mockvalidity = function () {
+  const mockvalidity = function mockvalidity() {
     return true;
   };
   document.getElementsByClassName('password')[0].checkValidity = mockvalidity;
@@ -137,10 +137,10 @@ test('hides register button when email format is not valid', () => {
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
   document.getElementsByClassName('password')[0].value = '123456789';
-  const mockvalidity = function () {
+  const mockvalidity = function mockvalidity() {
     return false;
   };
-  document.getElementsByClassName('password')[0].checkValidity = function () { return true; };
+  document.getElementsByClassName('password')[0].checkValidity = function checkValidity() { return true; };
   document.getElementsByClassName('email')[0].checkValidity = mockvalidity;
   const evt = { target: { displayError: reg.displayRegError, validateGoogle: reg.validateGoogle } };
   reg.validateReg(evt);
@@ -158,7 +158,7 @@ test('create a new user for another app', () => {
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
   document.getElementsByClassName('password')[0].value = '123456789';
   document.getElementsByClassName('pas')[0].value = 'CoolApp';
-  const mockfetch = function (url, data) {
+  const mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -182,7 +182,7 @@ test('it does not create a new user when there is an response error message from
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
   document.getElementsByClassName('password')[0].value = '123456789';
-  const mockfetch = function (url, data) {
+  const mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -206,7 +206,7 @@ test('it catches error on create a new user', () => {
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
   document.getElementsByClassName('password')[0].value = '123456789';
-  const mockfetch = function (url, data) {
+  const mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -227,7 +227,7 @@ test('it initiates an email varification', () => {
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
   document.getElementsByClassName('password')[0].value = '123456789';
-  const mockfetch = function (url, data) {
+  const mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -249,7 +249,7 @@ test('it does not initiates an email varification', () => {
   document.getElementsByClassName('lastname')[0].value = 'Smith';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
   document.getElementsByClassName('password')[0].value = '123456789';
-  const mockfetch = function (url, data) {
+  const mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -266,7 +266,7 @@ test('it does not initiates an email varification', () => {
 
 test('initiates a reset password request', () => {
   document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
-  const mockfetch = function (url, data) {
+  const mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;

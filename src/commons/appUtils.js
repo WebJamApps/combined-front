@@ -1,4 +1,4 @@
-exports.checkUser = async function (app) {
+exports.checkUser = async function checkUser(app) {
   let uid;
   if (app.auth.isAuthenticated()) {
     app.authenticated = true; // Logout element is reliant upon a local var;
@@ -14,7 +14,7 @@ exports.checkUser = async function (app) {
   return Promise.resolve(true);
 };
 
-exports.checkIfLoggedIn = function (app) {
+exports.checkIfLoggedIn = function checkIfLoggedIn(app) {
   const token = localStorage.getItem('aurelia_id_token');
   if (token !== null && token !== undefined) {
     try {
@@ -31,7 +31,7 @@ exports.checkIfLoggedIn = function (app) {
   return false;
 };
 
-exports.checkIfWidescreen = function (app) {
+exports.checkIfWidescreen = function checkIfWidescreen(app) {
   const isWide = document.documentElement.clientWidth > 766;
   const drawer = document.getElementsByClassName('drawer')[0];
   const mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
@@ -61,7 +61,7 @@ exports.checkIfWidescreen = function (app) {
   return isWide;
 };
 
-exports.clickFunc = function (event) {
+exports.clickFunc = function clickFunc(event) {
   const drawer = document.getElementsByClassName('drawer')[0];
   const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
   /* istanbul ignore else */
