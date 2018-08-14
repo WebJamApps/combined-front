@@ -1,6 +1,6 @@
 {
   "plugins": ["node", "security", "jest", "react"],
-  "extends": ["./node_modules/aurelia-tools/.eslintrc.json", "plugin:react/recommended", "airbnb",
+  "extends": ["./node_modules/aurelia-tools/.eslintrc.json", "airbnb",
     "plugin:jest/recommended", "plugin:security/recommended", "plugin:node/recommended"
   ],
   "rules": {
@@ -22,10 +22,9 @@
     "no-useless-escape": 0,
     "comma-dangle": [0, "never"],
     "no-undef": [0, "never"],
-    "react/jsx-filename-extension": [0, "never"],
+    "react/jsx-filename-extension": 0,
     "no-underscore-dangle": [0, "never"],
     "no-alert": [0, "never"],
-    "func-names": [0, "never"],
     "class-methods-use-this": [0, "never"],
     "no-restricted-syntax": [0, "never"],
     "prefer-destructuring": 0,

@@ -187,7 +187,7 @@ describe('the Volunteer Module', () => {
       voCharityTypes: ['ages', 'in', 'the', 'wake']
     }];
     volunteer2.selectedFilter = ['future only', 'hello'];
-    volunteer2.app.buildPTag = function () {};
+    volunteer2.app.buildPTag = function buildPTag() {};
     volunteer2.displayEvents();
     done();
   });
