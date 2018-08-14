@@ -108,3 +108,10 @@ exports.showCheckboxes = function showCheckboxes(id, forceOpen) {
   checkboxes.style.display = 'block';
   return true;
 };
+
+exports.nevermind = function nevermind(className) {
+  const regform1 = document.getElementsByClassName(className);
+  if (regform1[0] !== undefined) {
+    regform1[0].style.display = 'none';
+  }
+};

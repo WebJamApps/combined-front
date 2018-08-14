@@ -1,22 +1,22 @@
 const Fetch = require('isomorphic-fetch');
-const patric = require('../commons/patric.js');
+const utils = require('../commons/utils.js');
 
 class Register_ {
   constructor() {
     this.fetch = Fetch;
     this.appName = '';
-    this.patric = patric;
+    this.utils = utils;
   }
 
   createRegistrationForm(appName) {
-    this.patric.nevermind('LoginForm');
-    this.patric.nevermind('RegistrationForm');
+    this.utils.nevermind('LoginForm');
+    this.utils.nevermind('RegistrationForm');
     this.appName = appName;
     const regform = document.createElement('div');
     regform.className = 'RegistrationForm elevation2';
     regform.innerHTML = '<form><div style="" class="regformform"><table style=""><tbody class="regformtbody">'
     + '<tr class="primApSel" style="height:1px"><td><label class="primapplabel" style="display:none">Primary App </label>'
-    + '<select class="pas" style="display:none"><option value=""> </option><option value="PATRIC">PATRIC</option></select></td></tr>'
+    + '<select class="pas" style="display:none"><option value=""> </option></select></td></tr>'
     + '<tr><th>First Name <span style="color:red">*</span></th><th>Last Name <span style="color:red">*</span></th></tr><tr><td width="50%">'
     + '<input class="firstname" type="text" name="first_name" style="width:100%;min-width:0" required>'
     + '</td><td><input class="lastname" type="text" name="last_name" style="width:100%;min-width:0" required>'
@@ -41,9 +41,6 @@ class Register_ {
     + '<button class="nevermind" type="button" style="margin-top:8px; margin-bottom:8px">Cancel</button></div></div></form>';
     const home = document.getElementsByClassName('home');
     home[0].insertBefore(regform, home[0].childNodes[0]);
-    // document.getElementsByClassName('appName')[0].innerHTML = appName + ' ';
-    const elementsObj = { PATRIC: ['userIdRow', 'useridinput'], nArr: ['primApSel'] };
-    patric.showHideElements2(this.appName, elementsObj);
   }
 
   startup(appName) {
@@ -90,20 +87,12 @@ class Register_ {
   }
 
   updateRegForm() {
-    // console.log('inside this function');
     const primApp = document.getElementsByClassName('pas')[0].value;
     const uidRow = document.getElementsByClassName('userIdRow')[0];
     const useridinput = document.getElementsByClassName('useridinput')[0];
-    if (primApp === 'PATRIC') {
-      uidRow.style.display = 'block';
-      useridinput.style.display = 'block';
-      document.getElementsByClassName('registererror')[0].innerHTML = '';
-      this.appName = 'PATRIC';
-    } else {
-      uidRow.style.display = 'none';
-      useridinput.style.display = 'none';
-      this.appName = primApp;
-    }
+    uidRow.style.display = 'none';
+    useridinput.style.display = 'none';
+    this.appName = primApp;
   }
 
   validateReg(evt) {
@@ -139,9 +128,7 @@ class Register_ {
   validateGoogle(email, appName) {
     let googleAccount = false;
     if (email.split('@gmail').length > 1 || email.split('@vt.edu').length > 1 || email.split('@bi.vt.edu').length > 1) {
-      if (appName !== 'PATRIC') {
-        googleAccount = true;
-      }
+      googleAccount = true;
     }
     return googleAccount;
   }
