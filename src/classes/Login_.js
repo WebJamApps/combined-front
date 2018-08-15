@@ -34,8 +34,6 @@ class Login_ {
     this.createLoginForm(appName);
     const emailInput = document.getElementsByClassName('loginemail')[0];
     this.setEvents(emailInput, appName);
-    // const useridInput = document.getElementsByClassName('userid')[0];
-    // this.setEvents(useridInput, appName);
     const passwordInput = document.getElementsByClassName('loginpass')[0];
     this.setEvents(passwordInput, appName);
     const loginButton = document.getElementsByClassName('loginbutton')[0];
@@ -78,11 +76,11 @@ class Login_ {
     const edot = emailValue.split('.');
     if (edot.length === 1 || !validemail || emailValue === '') {
       validemail = false;
-      message = '<p>Invalid email format</p>';
+      message = '<p style="margin-bottom:0px">Invalid email format</p>';
     }
     if (emailValue.split('@gmail').length > 1 || emailValue.split('@vt.edu').length > 1 || emailValue.split('@bi.vt.edu').length > 1) {
       validemail = false;
-      message = '<p>Please click the Login with Google button</p>';
+      message = '<p style="margin-bottom:0px">Please click the Login with Google button</p>';
     }
     buttonsErrors(appName, message, validemail, validpass);
   }
@@ -100,13 +98,11 @@ class Login_ {
     }
     if (!validpass) {
       logbutton.style.display = 'none';
-      loginErrorMessage.innerHTML += '<p>Invalid password</p>';
+      loginErrorMessage.innerHTML += '<p style="margin-bottom:0px">Invalid password</p>';
+    }
+    if (!validpass && validemail) {
       resetpassButton.style.display = 'block';
     }
-    // if (!validemail) {
-    //   logbutton.style.display = 'none';
-    //   loginErrorMessage.innerHTML += '<p>Invalid email</p>';
-    // }
   }
 
   resetpass(evt) {
