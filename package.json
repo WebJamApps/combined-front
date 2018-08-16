@@ -9,7 +9,7 @@
   },
   "author": "HandlersAndKickers",
   "engines": {
-    "node": ">=10.8.0"
+    "node": "10.9.0"
   },
   "files": [
     "webpack.config.js",
