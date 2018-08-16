@@ -31,7 +31,8 @@ exports.checkIfLoggedIn = function checkIfLoggedIn(app) {
   return false;
 };
 
-exports.returnIsWide = function returnIsWide(app, isWide, drawer, mobileMenuToggle, swipeArea) {
+exports.returnIsWide = function returnIsWide(app, isWide, drawer, mobileMenuToggle) {
+  const swipeArea = document.getElementsByClassName('swipe-area')[0];
   if (isWide) {
     if (drawer !== null && drawer !== undefined) {
       if (app.contentWidth === '0px') { app.contentWidth = '182px'; }
@@ -62,7 +63,7 @@ exports.handleScreenSize = function checkIfWidescreen(app, isWide) {
       swipeArea.style.display = 'block';
     }
   }
-  return this.returnIsWide(app, isWide, drawer, mobileMenuToggle, swipeArea);
+  return this.returnIsWide(app, isWide, drawer, mobileMenuToggle);
   // if (isWide) {
   //   if (drawer !== null && drawer !== undefined) {
   //     if (app.contentWidth === '0px') { app.contentWidth = '182px'; }
