@@ -399,7 +399,7 @@ export class App {
     } catch (e) { return e; }
   }
   attached() {
-    this.widescreen = this.appUtils.checkIfWidescreen(this);
+    this.widescreen = this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766);
     this.manager = new Hammer.Manager(document.getElementsByClassName('swipe-area')[0], {
       recognizers: [
         [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]

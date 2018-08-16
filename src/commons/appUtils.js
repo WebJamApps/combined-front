@@ -31,20 +31,8 @@ exports.checkIfLoggedIn = function (app) {
   return false;
 };
 
-exports.checkIfWidescreen = function (app) {
-  const isWide = document.documentElement.clientWidth > 766;
-  const drawer = document.getElementsByClassName('drawer')[0];
-  const mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
+exports.returnIsWide = function returnIsWide(app, isWide, drawer, mobileMenuToggle) {
   const swipeArea = document.getElementsByClassName('swipe-area')[0];
-  if (!app.menuToggled && !isWide) {
-    /* istanbul ignore else */
-    if (drawer !== null && drawer !== undefined) {
-      drawer.style.display = 'none';
-      $(drawer).parent().css('display', 'none');
-      mobileMenuToggle.style.display = 'block';
-      swipeArea.style.display = 'block';
-    }
-  }
   if (isWide) {
     if (drawer !== null && drawer !== undefined) {
       if (app.contentWidth === '0px') { app.contentWidth = '182px'; }
@@ -59,6 +47,37 @@ exports.checkIfWidescreen = function (app) {
     mainP.style.marginRight = app.contentWidth;
   }
   return isWide;
+};
+
+exports.handleScreenSize = function checkIfWidescreen(app, isWide) {
+  // const isWide = document.documentElement.clientWidth > 766;
+  const drawer = document.getElementsByClassName('drawer')[0];
+  const mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
+  const swipeArea = document.getElementsByClassName('swipe-area')[0];
+  if (!app.menuToggled && !isWide) {
+    /* istanbul ignore else */
+    if (drawer !== null && drawer !== undefined) {
+      drawer.style.display = 'none';
+      $(drawer).parent().css('display', 'none');
+      mobileMenuToggle.style.display = 'block';
+      swipeArea.style.display = 'block';
+    }
+  }
+  return this.returnIsWide(app, isWide, drawer, mobileMenuToggle);
+  // if (isWide) {
+  //   if (drawer !== null && drawer !== undefined) {
+  //     if (app.contentWidth === '0px') { app.contentWidth = '182px'; }
+  //     drawer.style.display = 'block';
+  //     swipeArea.style.display = 'none';
+  //     $(drawer).parent().css('display', 'block');
+  //     mobileMenuToggle.style.display = 'none';
+  //   }
+  // } else { app.contentWidth = '0px'; }
+  // const mainP = document.getElementsByClassName('main-panel')[0];
+  // if (mainP !== null && mainP !== undefined) {
+  //   mainP.style.marginRight = app.contentWidth;
+  // }
+  // return isWide;
 };
 
 exports.clickFunc = function (event) {
