@@ -184,7 +184,7 @@ class Login_ {
           loginform1[0].style.display = 'none';
           /* istanbul ignore if */
           if (process.env.NODE_ENV !== 'test') {
-            window.location.assign(`${front}/login/?token=true`);
+            window.location.assign(`${front}/dashboard`);
           }
         }
         if (data.message) {

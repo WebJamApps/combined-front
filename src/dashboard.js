@@ -1,37 +1,17 @@
 import { inject } from 'aurelia-framework';
 import { App } from './app';
-// import {json} from 'aurelia-fetch-client';
-// import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
-// import {FormValidator} from './classes/FormValidator';
-// @inject(App, ValidationControllerFactory, Validator)
 @inject(App)
 export class Dashboard {
-  // controller = null;
-  // validator = null;
-  // constructor(app, controllerFactory, validator){
   constructor(app) {
     this.app = app;
-    // this.validator = new FormValidator(validator, (results) => this.updateCanSubmit(results)); //if the form is valid then set to true.
-    // this.controller = controllerFactory.createForCurrentScope(this.validator);
-    // this.controller.validateTrigger = validateTrigger.changeOrBlur;
-    // this.canSubmit = false;  //the button on the form
   }
 
   async activate() {
-    // this.userTypes = JSON.parse(process.env.userRoles).roles;
-    this.uid = this.app.auth.getTokenPayload().sub;
+    try {
+      this.uid = this.app.auth.getTokenPayload().sub;
+    } catch (e) { this.app.logout(); }
     this.user = await this.app.appState.getUser(this.uid);
     window.localStorage.setItem('userEmail', this.user.email);
-    /* istanbul ignore else */
-    // if (this.user.userType === 'Developer'){
-    //   this.userTypes.push('Developer');
-    // }
-    // if (localStorage.getItem('token') === null) {
-    //   let newToken = localStorage.getItem('aurelia_id_token');
-    //   if (newToken !== null) {
-    //     localStorage.setItem('token', newToken);
-    //   }
-    // }
     this.childRoute();
   }
   childRoute() {

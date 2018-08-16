@@ -8,6 +8,8 @@ import * as Hammer from 'hammerjs';
 import { UserAccess } from './classes/UserAccess';
 import { AppState } from './classes/AppState';
 
+const appUtils = require('./commons/appUtils');
+
 @inject(AuthService, HttpClient)
 export class App {
   constructor(auth, httpClient) {
@@ -17,13 +19,14 @@ export class App {
     this.role = '';
     this.menuToggled = false;
     this.style = 'wj';
+    this.appUtils = appUtils;
+    this.widescreen = false;
   }
 
   email = '';
   password = '';
   authenticated = false;
   token = '';
-  // expanded = false;
 
   @bindable
   drawerWidth = '182px';
@@ -45,44 +48,29 @@ export class App {
       'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina',
       'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     this.states.sort();
-    await this.checkUser();
-  }
-
-  checkIfLoggedIn() {
-    const token = localStorage.getItem('aurelia_id_token');
-    if (token !== null) {
-      this.auth.setToken(token);
-      this.authenticated = true;
-      this.router.navigate('dashboard');
-    }
+    await this.appUtils.checkUser(this);
   }
 
   showForm(appName, className) {
     className.startup(appName);
   }
 
-  authenticate(name) {
+  async authenticate(name) {
     let ret;
     if (this.appState.isOhafLogin) {
-      ret = this.auth.authenticate(name, false, { isOhafUser: true });
+      // try {
+      ret = await this.auth.authenticate(name, false, { isOhafUser: true });
+      // } catch (e) {
+      //   return console.log(e);
+      // }
     } else {
-      ret = this.auth.authenticate(name, false, { isOhafUser: false });
+      // try {
+      ret = await this.auth.authenticate(name, false, { isOhafUser: false });
+      // } catch (e) {
+      //   return console.log(e);
+      // }
     }
-    ret.then((data) => {
-      this.auth.setToken(data.token);
-    }, undefined);
-    return ret;
-  }
-
-  async checkUser() {
-    if (this.auth.isAuthenticated()) {
-      this.authenticated = true; // Logout element is reliant upon a local var;
-      const uid = this.auth.getTokenPayload().sub;
-      this.user = await this.appState.getUser(uid);
-      if (this.user !== undefined) {
-        this.role = this.user.userType;
-      }
-    }
+    return this.auth.setToken(ret.token);
   }
 
   configHttpClient() {
@@ -174,56 +162,25 @@ export class App {
     this.router = router;
   }
 
-  get widescreen() {
-    const isWide = document.documentElement.clientWidth > 766;
-    const drawer = document.getElementsByClassName('drawer')[0];
-    const mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
-    const swipeArea = document.getElementsByClassName('swipe-area')[0];
-    if (!this.menuToggled && !isWide) {
-      /* istanbul ignore else */
-      if (drawer !== null && drawer !== undefined) {
-        drawer.style.display = 'none';
-        $(drawer).parent().css('display', 'none');
-        mobileMenuToggle.style.display = 'block';
-        swipeArea.style.display = 'block';
-      }
-    }
-    if (isWide) {
-      if (drawer !== null && drawer !== undefined) {
-        if (this.contentWidth === '0px') { this.contentWidth = '182px'; }
-        drawer.style.display = 'block';
-        swipeArea.style.display = 'none';
-        $(drawer).parent().css('display', 'block');
-        mobileMenuToggle.style.display = 'none';
-      }
-    } else { this.contentWidth = '0px'; }
-    const mainP = document.getElementsByClassName('main-panel')[0];
-    if (mainP !== null && mainP !== undefined) {
-      mainP.style.marginRight = this.contentWidth;
-    }
-    return isWide;
-  }
-
-  clickFunc(event) {
-    const drawer = document.getElementsByClassName('drawer')[0];
-    const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
-    /* istanbul ignore else */
-    if (event.target.className !== 'menu-item') {
-      document.getElementsByClassName('swipe-area')[0].style.display = 'none';
-      drawer.style.display = 'none';
-      $(drawer).parent().css('display', 'none');
-      toggleIcon.style.display = 'block';
-      document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
-    }
-  }
+  // clickFunc(event) {
+  //   const drawer = document.getElementsByClassName('drawer')[0];
+  //   const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
+  //   /* istanbul ignore else */
+  //   if (event.target.className !== 'menu-item') {
+  //     document.getElementsByClassName('swipe-area')[0].style.display = 'none';
+  //     drawer.style.display = 'none';
+  //     $(drawer).parent().css('display', 'none');
+  //     toggleIcon.style.display = 'block';
+  //     document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
+  //   }
+  // }
 
   toggleMobileMenu(toggle) {
     document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
     if (toggle !== 'close') {
       document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
       document.getElementsByClassName('swipe-area')[0].style.display = 'block';
-      document.getElementsByClassName('page-host')[0].addEventListener('click', this.clickFunc);
-      // this.manager.on('swipe', this.close.bind(this));
+      document.getElementsByClassName('page-host')[0].addEventListener('click', this.appUtils.clickFunc);
     }
     this.menuToggled = true;
     const drawer = document.getElementsByClassName('drawer')[0];
@@ -232,25 +189,19 @@ export class App {
       drawer.style.display = 'block';
       $(drawer).parent().css('display', 'block');
       toggleIcon.style.display = 'none';
-      // document.getElementsByClassName('swipe-area')[0].style.display = 'block';
-      // this.manager.on('swipe', this.close.bind(this));
     } else {
       drawer.style.display = 'none';
       $(drawer).parent().css('display', 'none');
       toggleIcon.style.display = 'block';
-      // this.manager.off('swipe', this.close.bind(this));
-      // document.getElementsByClassName('page-host')[0].removeEventListener('click', clickFunc);
-      // document.getElementsByClassName('swipe-area')[0].style.display = 'none';
     }
     if (toggle === 'close') {
-      document.getElementsByClassName('page-host')[0].removeEventListener('click', this.clickFunc);
+      document.getElementsByClassName('page-host')[0].removeEventListener('click', this.appUtils.clickFunc);
       document.getElementsByClassName('swipe-area')[0].style.display = 'none';
-      // this.manager.off('swipe', this.close.bind(this));
     }
   }
 
   close() {
-    if (!this.widescreen) {
+    if (!this.appUtils.checkIfWidescreen(this)) {
       this.toggleMobileMenu('close');
     }
   }
@@ -273,14 +224,12 @@ export class App {
   }
 
   ohafLogin() {
-    // this.close();
     this.menu = 'ohaf';
     this.appState.isOhafLogin = true;
     this.router.navigate('/login');
   }
 
   wjLogin() {
-    // this.close();
     this.menu = 'wj';
     this.appState.isOhafLogin = false;
     this.router.navigate('/login');
@@ -450,6 +399,7 @@ export class App {
     } catch (e) { return e; }
   }
   attached() {
+    this.widescreen = this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766);
     this.manager = new Hammer.Manager(document.getElementsByClassName('swipe-area')[0], {
       recognizers: [
         [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]
@@ -460,7 +410,7 @@ export class App {
   detached() {
     this.manager.off('swipe', this.close.bind(this));
     const ph = document.getElementsByClassName('page-host')[0];
-    ph.removeEventListener('click', this.clickFunc);
+    ph.removeEventListener('click', this.appUtils.clickFunc);
     ph.setAttribute('hasEvent', false);
   }
 }
