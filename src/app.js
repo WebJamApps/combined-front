@@ -200,8 +200,8 @@ export class App {
     }
   }
 
-  close() {
-    if (!this.appUtils.checkIfWidescreen(this)) {
+  close(doc) {
+    if (!this.appUtils.checkIfWidescreen(this, doc || document)) {
       this.toggleMobileMenu('close');
     }
   }
@@ -399,7 +399,7 @@ export class App {
     } catch (e) { return e; }
   }
   attached() {
-    this.widescreen = this.appUtils.checkIfWidescreen(this);
+    this.widescreen = this.appUtils.checkIfWidescreen(this, document);
     this.manager = new Hammer.Manager(document.getElementsByClassName('swipe-area')[0], {
       recognizers: [
         [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]

@@ -31,11 +31,11 @@ exports.checkIfLoggedIn = function checkIfLoggedIn(app) {
   return false;
 };
 
-exports.checkIfWidescreen = function checkIfWidescreen(app) {
-  const isWide = document.documentElement.clientWidth > 766;
-  const drawer = document.getElementsByClassName('drawer')[0];
-  const mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
-  const swipeArea = document.getElementsByClassName('swipe-area')[0];
+exports.checkIfWidescreen = function checkIfWidescreen(app, doc = document) {
+  const isWide = doc.documentElement.clientWidth > 766;
+  const drawer = doc.getElementsByClassName('drawer')[0];
+  const mobileMenuToggle = doc.getElementsByClassName('mobile-menu-toggle')[0];
+  const swipeArea = doc.getElementsByClassName('swipe-area')[0];
   if (!app.menuToggled && !isWide) {
     /* istanbul ignore else */
     if (drawer !== null && drawer !== undefined) {
@@ -54,7 +54,7 @@ exports.checkIfWidescreen = function checkIfWidescreen(app) {
       mobileMenuToggle.style.display = 'none';
     }
   } else { app.contentWidth = '0px'; }
-  const mainP = document.getElementsByClassName('main-panel')[0];
+  const mainP = doc.getElementsByClassName('main-panel')[0];
   if (mainP !== null && mainP !== undefined) {
     mainP.style.marginRight = app.contentWidth;
   }
