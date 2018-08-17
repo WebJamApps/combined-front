@@ -20,7 +20,7 @@ export class App {
     this.menuToggled = false;
     this.style = 'wj';
     this.appUtils = appUtils;
-    this.widescreen = false;
+    // this.widescreen = false;
   }
 
   email = '';
@@ -201,7 +201,7 @@ export class App {
   }
 
   close() {
-    if (!this.appUtils.checkIfWidescreen(this)) {
+    if (!this.widescreen) {
       this.toggleMobileMenu('close');
     }
   }
@@ -398,8 +398,11 @@ export class App {
       return cb.json();
     } catch (e) { return e; }
   }
+
+  get widescreen() { return this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766); }
+
   attached() {
-    this.widescreen = this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766);
+    // this.widescreen = this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766);
     this.manager = new Hammer.Manager(document.getElementsByClassName('swipe-area')[0], {
       recognizers: [
         [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]

@@ -88,13 +88,13 @@ describe('the UserAccount Module', () => {
     done();
   });
   it('should activate and get the user type from appState', testAsync(async () => {
-    ua.app.appState.getUser = function () {
+    ua.app.appState.getUser = function getUser() {
       // console.log('did I call this?');
       return new Promise((resolve) => {
         resolve({ userType: 'monster', email: 'yo@yo.com' });
       });
     };
-    ua.setupValidation = function () {};
+    ua.setupValidation = function setupValidation() {};
     await ua.activate();
     expect(ua.newUserType).toBe('monster');
   }));
@@ -159,13 +159,13 @@ describe('the UserAccount Module', () => {
   });
   it('checks for scheduled events by a volunteer user', (done) => {
     ua.user.userType = 'Volunteer';
-    ua.fetchAllEvents = function () { return Promise.resolve(); };
+    ua.fetchAllEvents = function fetchAllEvents() { return Promise.resolve(); };
     ua.checkChangeUserType();
     done();
   });
   it('should allow Charity user to change their user type if they have no charities', (done) => {
     ua.user.userType = 'Charity';
-    ua.app.httpClient.fetch = function () {
+    ua.app.httpClient.fetch = function fetch() {
       return Promise.resolve({
         json: () => Promise.resolve([])
       });
@@ -176,7 +176,7 @@ describe('the UserAccount Module', () => {
   });
   it('should not allow Charity user to change their user type if they have charities', testAsync(async () => {
     ua.user.userType = 'Charity';
-    ua.app.httpClient.fetch = function () {
+    ua.app.httpClient.fetch = function fetch() {
       return Promise.resolve({
         json: () => Promise.resolve([{ _id: '1' }])
       });
@@ -245,7 +245,7 @@ describe('the UserAccount Module', () => {
     ua.user = {
       name: 'Iddris Elba', email: 'j@gmail.com', userType: 'Charity', _id: '3333333', changeemail: 'yo@yo.com'
     };
-    ua.app.httpClient.fetch = function () {
+    ua.app.httpClient.fetch = function fetch() {
       return Promise.resolve({
         json: () => Promise.reject(new Error({ error: 'you fail' }))
       });
@@ -261,14 +261,14 @@ describe('the UserAccount Module', () => {
     ua.user = {
       name: 'Iddris Elba', email: 'j@gmail.com', userType: 'Charity', _id: '3333333', changeemail: 'yo@yo.com'
     };
-    ua.app.httpClient.fetch = function () {
+    ua.app.httpClient.fetch = function fetch() {
       return Promise.resolve({
         json: () => Promise.resolve({ message: 'good job' })
       });
     };
     await ua.changeUserEmail();
     expect(document.getElementsByClassName('formErrors')[0].innerHTML).not.toBe('');
-    ua.app.httpClient.fetch = function () {
+    ua.app.httpClient.fetch = function fetch() {
       return Promise.resolve({
         json: () => Promise.resolve({})
       });
@@ -279,7 +279,7 @@ describe('the UserAccount Module', () => {
   }));
   it('deletes the user', testAsync(async () => {
     ua.check = true;
-    ua.app.logout = function () { ua.check = false; return true; };
+    ua.app.logout = function logout() { ua.check = false; return true; };
     await ua.deleteUser();
     expect(ua.check).toBe(false);
   }));
@@ -292,7 +292,7 @@ describe('the UserAccount Module', () => {
     ua.user = {
       name: 'Iddris Elba', email: 'j@gmail.com', userType: 'Charity', _id: '3333333', changeemail: 'yo@yo.com'
     };
-    ua.controller.validate = function () {};
+    ua.controller.validate = function validate() {};
     ua.attached();
     done();
   });

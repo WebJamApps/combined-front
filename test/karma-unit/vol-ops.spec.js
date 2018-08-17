@@ -169,7 +169,7 @@ describe('the Volunteer Opps Module', () => {
     volops4.events = [{
       _id: '123', voPeopleScheduled: ['14444', '244444'], voStartDate: null, voEndDate: null, voWorkTypes: [], voTalentTypes: []
     }];
-    volops4.app.httpClient.fetch = function () {
+    volops4.app.httpClient.fetch = function fetch() {
       return Promise.reject(new Error('fail'));
     };
     await volops4.checkScheduled().then(() => {
@@ -343,7 +343,7 @@ describe('the Volunteer Opps Module', () => {
     volops.selectPickChange('talents');
     expect(volops.talentOther).toBe(false);
     document.body.innerHTML += '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
-    volops.setupValidation2 = function () {};
+    volops.setupValidation2 = function setupValidation2() {};
     volops.controller2 = { validate: () => {} };
     volops.attached();
     done();
@@ -514,7 +514,7 @@ describe('the Volunteer Opps Module', () => {
       voStreet: '120 street drive',
       voState: 'Virginia'
     };
-    volops.setupValidation2 = function () {};
+    volops.setupValidation2 = function setupValidation2() {};
     volops.controller2 = { validate: () => {} };
     volops.showUpdateEvent(thisEvent, 'update');
     expect(volops.newEvent).toBe(false);
@@ -529,7 +529,7 @@ describe('the Volunteer Opps Module', () => {
       userPhone: '3333333333'
     };
     document.body.innerHTML = '<div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text">';
-    volops.setupValidation2 = function () {};
+    volops.setupValidation2 = function setupValidation2() {};
     volops.controller2 = { validate: () => {} };
     volops.showNewEvent();
     expect(document.getElementById('topSection').style.display).toBe('block');

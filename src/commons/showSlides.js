@@ -1,4 +1,4 @@
-exports.showSlides = function (idArray) {
+exports.showSlides = function showSlides(idArray) {
   idArray.forEach((id) => {
     // let slides;
     const slides = document.getElementById(id);
