@@ -16,17 +16,10 @@ test('hides a login form with click Cancel button', () => {
   expect(regform[0].style.display).toBe('none');
 });
 
-// test('generates a login form without userid', () => {
-//   document.body.innerHTML = '<div class="home"></div>';
-//   reg.startup('AdifferentApp');
-//   const useridInput = document.getElementsByClassName('uidinput')[0];
-//   expect(useridInput.style.display).toBe('none');
-// });
-
 test('initiates a reset password request', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('');
-  document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
+  // document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
   const mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
@@ -64,7 +57,7 @@ test('initiates a reset password request for other app', () => {
 test('Does not initiates a reset password request with invalid email', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('');
-  document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
+  // document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
   const mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
@@ -83,7 +76,7 @@ test('Does not initiates a reset password request with invalid email', () => {
 test('it catches error on reset password', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('');
-  document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
+  // document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
   const mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
@@ -98,35 +91,22 @@ test('it catches error on reset password', () => {
     .catch(e => expect(e).toBeTruthy());
 });
 
-// test('validates a login form with userid and no email', () => {
+// test('validates a login form', () => {
 //   document.body.innerHTML = '<div class="home"></div>';
-//   reg.startup('');
-//   document.getElementsByClassName('userid')[0].value = 'user123';
+//   reg.startup('OtherApp');
+//   document.getElementsByClassName('loginemail')[0].value = 'joe@smith.com';
+//   document.getElementsByClassName('loginemail')[0].checkValidity = function checkValidity() { return true; };
 //   document.getElementsByClassName('loginpass')[0].value = '123456789';
 //   document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return true; };
-//   document.getElementsByClassName('loginemail')[0].checkValidity = function checkValidity() { return false; };
 //   const logbutton = document.getElementsByClassName('loginbutton')[0];
-//   const evt = { target: { appName: '', buttonsErrors: reg.buttonsErrors } };
+//   const resetpassButton = document.getElementsByClassName('resetpass')[0];
+//   const evt = { target: { appName: 'OtherApp', buttonsErrors: reg.buttonsErrors } };
 //   reg.validateLogin(evt);
 //   expect(logbutton.style.display).toBe('block');
+//   expect(resetpassButton.style.display).toBe('block');
 // });
 
-test('validates a login form without userid', () => {
-  document.body.innerHTML = '<div class="home"></div>';
-  reg.startup('OtherApp');
-  document.getElementsByClassName('loginemail')[0].value = 'joe@smith.com';
-  document.getElementsByClassName('loginemail')[0].checkValidity = function checkValidity() { return true; };
-  document.getElementsByClassName('loginpass')[0].value = '123456789';
-  document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return true; };
-  const logbutton = document.getElementsByClassName('loginbutton')[0];
-  const resetpassButton = document.getElementsByClassName('resetpass')[0];
-  const evt = { target: { appName: 'OtherApp', buttonsErrors: reg.buttonsErrors } };
-  reg.validateLogin(evt);
-  expect(logbutton.style.display).toBe('block');
-  expect(resetpassButton.style.display).toBe('block');
-});
-
-test('validates a login form without userid and invalid email (missing period)', () => {
+test('validates a login form with invalid email (missing period)', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('OtherApp');
   document.getElementsByClassName('loginemail')[0].value = 'joe@smithcom';
@@ -141,7 +121,7 @@ test('validates a login form without userid and invalid email (missing period)',
   expect(resetpassButton.style.display).toBe('none');
 });
 
-test('validates a login form without userid and invalid email (Google)', () => {
+test('validates a login form with invalid email (Google)', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('OtherApp');
   document.getElementsByClassName('loginemail')[0].value = 'joe@gmail.com';
@@ -156,7 +136,7 @@ test('validates a login form without userid and invalid email (Google)', () => {
   expect(resetpassButton.style.display).toBe('none');
 });
 
-test('validates a login form without userid and invalid email (missing @)', () => {
+test('validates a login form with invalid email (missing @)', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('OtherApp');
   document.getElementsByClassName('loginemail')[0].value = 'joegma.com';
@@ -171,25 +151,25 @@ test('validates a login form without userid and invalid email (missing @)', () =
   expect(resetpassButton.style.display).toBe('none');
 });
 
-test('validates a login form without useremail and invalid password', () => {
-  document.body.innerHTML = '<div class="home"></div>';
-  reg.startup('');
-  document.getElementsByClassName('userid')[0].value = 'joesmith';
-  document.getElementsByClassName('loginpass')[0].value = '123456789';
-  document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return false; };
-  document.getElementsByClassName('loginemail')[0].checkValidity = function checkValidity() { return false; };
-  const logbutton = document.getElementsByClassName('loginbutton')[0];
-  const resetpassButton = document.getElementsByClassName('resetpass')[0];
-  const evt = { target: { appName: '', buttonsErrors: reg.buttonsErrors } };
-  reg.validateLogin(evt);
-  expect(logbutton.style.display).toBe('none');
-  expect(resetpassButton.style.display).toBe('block');
-});
+// test('validates a login form without useremail and invalid password', () => {
+//   document.body.innerHTML = '<div class="home"></div>';
+//   reg.startup('');
+//   document.getElementsByClassName('userid')[0].value = 'joesmith';
+//   document.getElementsByClassName('loginpass')[0].value = '123456789';
+//   document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return false; };
+//   document.getElementsByClassName('loginemail')[0].checkValidity = function checkValidity() { return false; };
+//   const logbutton = document.getElementsByClassName('loginbutton')[0];
+//   const resetpassButton = document.getElementsByClassName('resetpass')[0];
+//   const evt = { target: { appName: '', buttonsErrors: reg.buttonsErrors } };
+//   reg.validateLogin(evt);
+//   expect(logbutton.style.display).toBe('none');
+//   expect(resetpassButton.style.display).toBe('block');
+// });
 
 test('does not display the login button with invalid password and valid email', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('OtherApp');
-  document.getElementsByClassName('userid')[0].value = 'joesmith';
+  // document.getElementsByClassName('userid')[0].value = 'joesmith';
   document.getElementsByClassName('loginemail')[0].value = 'joe@smith.com';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return false; };
@@ -217,10 +197,10 @@ test('does not display the login button with invalid password and valid email', 
 //   expect(resetpassButton.style.display).toBe('block');
 // });
 
-test('It does not displays reset password button', () => {
+test('It does not display reset password button', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('');
-  document.getElementsByClassName('userid')[0].value = '';
+  // document.getElementsByClassName('userid')[0].value = '';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return true; };
   document.getElementsByClassName('loginemail')[0].checkValidity = function checkValidity() { return false; };
@@ -251,7 +231,7 @@ test('login and reset buttons do not display when email is not valid format', ()
 test('login the user', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('');
-  document.getElementsByClassName('userid')[0].value = 'joe@smith';
+  // document.getElementsByClassName('userid')[0].value = 'joe@smith';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   const mockfetch = function mockfetch(url, data) {
     this.headers = {};
@@ -319,7 +299,7 @@ test('login the other app user', () => {
 test('displays error message if login fails', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('');
-  document.getElementsByClassName('userid')[0].value = 'joe@smith';
+  // document.getElementsByClassName('userid')[0].value = 'joe@smith';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   const mockfetch = function mockfetch(url, data) {
     this.headers = {};
@@ -345,7 +325,7 @@ test('displays error message if login fails', () => {
 test('catches any login errors', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup('');
-  document.getElementsByClassName('userid')[0].value = 'joe@smith';
+  // document.getElementsByClassName('userid')[0].value = 'joe@smith';
   document.getElementsByClassName('loginpass')[0].value = '123456789';
   const mockfetch = function mockfetch(url, data) {
     this.headers = {};
