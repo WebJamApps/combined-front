@@ -40,7 +40,7 @@ describe('the Login module', () => {
   });
   it('should check if user is logged in', (done) => {
     window.localStorage.setItem('aurelia_id_token', '109842sdhgsgfhjsfoi4124');
-    login.app.checkIfLoggedIn();
+    login.app.appUtils.checkIfLoggedIn(login.app);
     expect(login.app.auth.getTokenPayload()).toBe(window.localStorage.getItem('aurelia_id_token'));
     done();
   });
