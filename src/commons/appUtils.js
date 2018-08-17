@@ -31,7 +31,6 @@ exports.checkIfLoggedIn = function checkIfLoggedIn(app) {
   return false;
 };
 
-
 exports.returnIsWide = function returnIsWide(app, isWide, drawer, mobileMenuToggle) {
   const swipeArea = document.getElementsByClassName('swipe-area')[0];
   if (isWide) {
@@ -50,7 +49,8 @@ exports.returnIsWide = function returnIsWide(app, isWide, drawer, mobileMenuTogg
   return isWide;
 };
 
-exports.handleScreenSize = function handleScreenSize(app, isWide) {
+exports.handleScreenSize = function checkIfWidescreen(app, isWide) {
+  // const isWide = document.documentElement.clientWidth > 766;
   const drawer = document.getElementsByClassName('drawer')[0];
   const mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
   const swipeArea = document.getElementsByClassName('swipe-area')[0];
@@ -66,7 +66,7 @@ exports.handleScreenSize = function handleScreenSize(app, isWide) {
   return this.returnIsWide(app, isWide, drawer, mobileMenuToggle);
 };
 
-exports.clickFunc = function clickFunc(event) {
+exports.clickFunc = function (event) {
   const drawer = document.getElementsByClassName('drawer')[0];
   const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
   /* istanbul ignore else */
