@@ -82,15 +82,15 @@ describe('the appUtils', () => {
       expect(cb).toBe(true);
     } catch (e) { throw e; }
   });
-  it('checks if widescreen and returns false', (done) => {
-    // global.window.innerWidth = 500;
-    // global.window.dispatchEvent(new Event('resize'));
-    // console.log(document.documentElement.clientWidth);
-    const app = { menuToggled: false };
-    const cb = au.checkIfWidescreen(app);
-    expect(cb).toBe(false);
-    done();
-  });
+  // it('checks if widescreen and returns false', (done) => {
+  //   // global.window.innerWidth = 500;
+  //   // global.window.dispatchEvent(new Event('resize'));
+  //   // console.log(document.documentElement.clientWidth);
+  //   const app = { menuToggled: false };
+  //   const cb = au.checkIfWidescreen(app);
+  //   expect(cb).toBe(false);
+  //   done();
+  // });
   // it('checks if widescreen and returns true', (done) => {
   //   global.window.innerWidth = 800;
   //   global.window.dispatchEvent(new Event('resize'));
