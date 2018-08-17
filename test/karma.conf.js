@@ -4,7 +4,7 @@ const webpack = require('../webpack.config');
 
 const isDebug = arg => arg === '--debug';
 
-module.exports = function (config) {
+module.exports = function configKarma(config) {
   config.set({
     /**
     * base path that will be used to resolve all patterns (e.g. files, exclude)
