@@ -49,7 +49,8 @@ exports.returnIsWide = function returnIsWide(app, isWide, drawer, mobileMenuTogg
   return isWide;
 };
 
-exports.handleScreenSize = function handleScreenSize(app, isWide) {
+exports.handleScreenSize = function checkIfWidescreen(app, isWide) {
+  // const isWide = document.documentElement.clientWidth > 766;
   const drawer = document.getElementsByClassName('drawer')[0];
   const mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
   const swipeArea = document.getElementsByClassName('swipe-area')[0];
