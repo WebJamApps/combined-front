@@ -42,7 +42,7 @@ exports.returnIsWide = function returnIsWide(app, isWide, drawer, mobileMenuTogg
       mobileMenuToggle.style.display = 'none';
     }
   } else { app.contentWidth = '0px'; }
-  const mainP = doc.getElementsByClassName('main-panel')[0];
+  const mainP = document.getElementsByClassName('main-panel')[0];
   if (mainP !== null && mainP !== undefined) {
     mainP.style.marginRight = app.contentWidth;
   }
