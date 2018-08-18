@@ -66,7 +66,7 @@ exports.handleScreenSize = function checkIfWidescreen(app, isWide) {
   return this.returnIsWide(app, isWide, drawer, mobileMenuToggle);
 };
 
-exports.clickFunc = function (event) {
+exports.clickFunc = function clickFunc(event) {
   const drawer = document.getElementsByClassName('drawer')[0];
   const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
   /* istanbul ignore else */
