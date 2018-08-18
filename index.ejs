@@ -2,25 +2,20 @@
 <html>
 
 <head id="head">
+  <meta property="og:title" content="Web Jam Band Orignal Songs" />
+  <meta property="og:description" content="Try out our new music player to hear many original songs played in a continous loop" />
+  <meta property="og:image" content="https://web-jam.com/static/imgs/webjamlogo1.png" />
   <meta charset="utf-8">
   <title>
     <%- htmlWebpackPlugin.options.metadata.title %>
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
-
-  <!-- <script src="webcomponents.min.js"></script> -->
-  <!-- <script src="mdDateTimePicker.min.js"></script>
-    <script src="moment.min.js"></script>
-     <script src="draggabilly.pkgd.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
-  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"> -->
   <link href="//fonts.googleapis.com/css?family=PT Sans Caption" rel="stylesheet">
   <link href="//fonts.googleapis.com/css?family=Habibi" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!-- <link rel="import" href="includes.html"> -->
 
-  <!-- imported CSS are concatenated and added automatically -->
 </head>
 
 <body aurelia-app="main">
@@ -30,10 +25,6 @@
     </div>
     <i class="fa fa-spinner fa-spin"></i>
   </div>
-  <!--< % if (htmlWebpackPlugin.options.metadata.server) { % >-->
-  <!--&lt;!&ndash; Webpack Dev Server reload &ndash;&gt;-->
-  <!--<script src="/webpack-dev-server.js"></script>-->
-  <!--< % } % >-->
 </body>
 
 </html>
