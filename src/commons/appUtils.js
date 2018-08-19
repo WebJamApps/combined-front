@@ -49,7 +49,7 @@ exports.returnIsWide = function returnIsWide(app, isWide, drawer, mobileMenuTogg
   return isWide;
 };
 
-exports.handleScreenSize = function checkIfWidescreen(app, isWide, doc=document) {
+exports.handleScreenSize = function checkIfWidescreen(app, isWide, doc = document) {
   // const isWide = document.documentElement.clientWidth > 766;
   const drawer = doc.getElementsByClassName('drawer')[0];
   const mobileMenuToggle = doc.getElementsByClassName('mobile-menu-toggle')[0];
