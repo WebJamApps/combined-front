@@ -49,11 +49,11 @@ exports.returnIsWide = function returnIsWide(app, isWide, drawer, mobileMenuTogg
   return isWide;
 };
 
-exports.handleScreenSize = function checkIfWidescreen(app, isWide, doc = document) {
+exports.handleScreenSize = function checkIfWidescreen(app, isWide) {
   // const isWide = document.documentElement.clientWidth > 766;
-  const drawer = doc.getElementsByClassName('drawer')[0];
-  const mobileMenuToggle = doc.getElementsByClassName('mobile-menu-toggle')[0];
-  const swipeArea = doc.getElementsByClassName('swipe-area')[0];
+  const drawer = document.getElementsByClassName('drawer')[0];
+  const mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
+  const swipeArea = document.getElementsByClassName('swipe-area')[0];
   if (!app.menuToggled && !isWide) {
     /* istanbul ignore else */
     if (drawer !== null && drawer !== undefined) {

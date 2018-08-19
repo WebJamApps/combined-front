@@ -399,11 +399,11 @@ export class App {
     } catch (e) { return e; }
   }
 
-  get widescreen() { return this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766, document); }
+  get widescreen() { return this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766); }
 
   attached() {
     // this.widescreen = this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766);
-    // this.widescreen = this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766, document);
+    // this.widescreen = this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766);
     this.manager = new Hammer.Manager(document.getElementsByClassName('swipe-area')[0], {
       recognizers: [
         [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]
