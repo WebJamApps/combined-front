@@ -1,5 +1,9 @@
 export class Originals {
   attached() {
+    // const head = document.getElementById('head');
+    // head.innerHTML += '<meta property="og:title" content="Web Jam Band Original Songs"/>'
+    // + '<meta property="og:description" content="Try out our new music player to hear many songs played in a continous loop"/>'
+    // + '<meta property="og:image" content="https://web-jam.com/static/imgs/webjamlogo1.png"/>';
     if (document.location.search === '?oneplayer=true') {
       document.getElementById('wholeMusicSection').style.display = 'none';
       document.getElementsByClassName('content-block')[0].style.overflow = 'hidden';
@@ -17,10 +21,6 @@ export class Originals {
       swipe.parentNode.removeChild(swipe);
       footer.parentNode.removeChild(footer);
       header.parentNode.removeChild(header);
-      const head = document.getElementById('head');
-      head.innerHTML += '<meta property="og:title" content="Web Jam Band Orignal Songs"/>'
-      + '<meta property="og:description" content="Try out our new music player to hear many original songs played in a continous loop"/>'
-      + '<meta property="og:image" content="https://web-jam.com/static/imgs/webjamlogo1.png"/>';
     }
   }
 }
