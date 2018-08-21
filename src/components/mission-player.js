@@ -9,18 +9,18 @@ import ReactPlayer from 'react-player';
 export class MusicPlayer {
   constructor(element) {
     this.element = element;
-    this.urls = [['DITR.mp3', 'Down In The Rain / Web Jam Band'],
-      ['https://soundcloud.com/joshandmariamusic/alleluia-alleluia-give-thanks', 'Alleluia Alleluia Give Thanks / Web Jam Band'],
-      ['https://soundcloud.com/joshandmariamusic/comeallyoupeople', 'Come All You People / Web Jam Band'],
-      ['https://soundcloud.com/joshandmariamusic/ithelordofseaandskyhereiamlord', 'I The Lord Of Sea And Sky Here I Am Lord / Web Jam Band'],
-      ['https://soundcloud.com/joshandmariamusic/one-bread-one-body', 'One Bread One Body / Josh Sherman'],
-      ['https://soundcloud.com/joshandmariamusic/canticle-for-departure', 'Canticle For Departure / Josh Sherman']];
-    this._urls = [['DITR.mp3', 'Down In The Rain / Web Jam Band'],
-      ['https://soundcloud.com/joshandmariamusic/alleluia-alleluia-give-thanks', 'Alleluia Alleluia Give Thanks / Web Jam Band'],
-      ['https://soundcloud.com/joshandmariamusic/comeallyoupeople', 'Come All You People / Web Jam Band'],
-      ['https://soundcloud.com/joshandmariamusic/ithelordofseaandskyhereiamlord', 'I The Lord Of Sea And Sky Here I Am Lord / Web Jam Band'],
-      ['https://soundcloud.com/joshandmariamusic/one-bread-one-body', 'One Bread One Body / Josh Sherman'],
-      ['https://soundcloud.com/joshandmariamusic/canticle-for-departure', 'Canticle For Departure / Josh Sherman']];
+    this.urls = [['DITR.mp3', 'Down In The River - Web Jam Band'],
+      ['https://soundcloud.com/joshandmariamusic/alleluia-alleluia-give-thanks', 'Alleluia Alleluia Give Thanks - Web Jam Band'],
+      ['https://soundcloud.com/joshandmariamusic/comeallyoupeople', 'Come All You People - Web Jam Band'],
+      ['https://soundcloud.com/joshandmariamusic/ithelordofseaandskyhereiamlord', 'I The Lord Of Sea And Sky Here I Am Lord - Web Jam Band'],
+      ['https://soundcloud.com/joshandmariamusic/one-bread-one-body', 'One Bread One Body - Josh Sherman'],
+      ['https://soundcloud.com/joshandmariamusic/canticle-for-departure', 'Canticle For Departure - Josh Sherman']];
+    this._urls = [['DITR.mp3', 'Down In The Rain - Web Jam Band'],
+      ['https://soundcloud.com/joshandmariamusic/alleluia-alleluia-give-thanks', 'Alleluia Alleluia Give Thanks - Web Jam Band'],
+      ['https://soundcloud.com/joshandmariamusic/comeallyoupeople', 'Come All You People - Web Jam Band'],
+      ['https://soundcloud.com/joshandmariamusic/ithelordofseaandskyhereiamlord', 'I The Lord Of Sea And Sky Here I Am Lord - Web Jam Band'],
+      ['https://soundcloud.com/joshandmariamusic/one-bread-one-body', 'One Bread One Body - Josh Sherman'],
+      ['https://soundcloud.com/joshandmariamusic/canticle-for-departure', 'Canticle For Departure - Josh Sherman']];
     this.play = this.play.bind(this);
     this.index = 0;
     this.url = this.urls[this.index];
@@ -55,11 +55,11 @@ export class MusicPlayer {
             />
           </section>
           <section className="col-12 row col-md-7 m-0 mt-2 d-none" id="copier">
-            <div className="col-8 col-sm-8 col-md-9 p-0">
+            <div className="col-8 col-sm-8 col-md-9 col-lg-10 p-0">
               <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="form-control" />
             </div>
             <div
-              className="col-4 col-sm-4 col-md-3 p-0 text-md-center"
+              className="col-4 col-sm-4 col-md-3 col-lg-2 p-0 text-md-center"
               onKeyPress={this.pressKey}
               role="presentation"
               onClick={this.copyShare}
@@ -79,7 +79,7 @@ Url copied Url to clipboard
             {this.url[1]}
           </section>
           <section className="mt-0 col-12 col-md-7">
-            <button role="menu" onClick={this.play}>
+            <button id="play-pause" role="menu" onClick={this.play}>
 Play/Pause
             </button>
             <button role="menu" onClick={this.next}>
@@ -146,6 +146,11 @@ Share
 
   play() {
     this.playing = !this.playing;
+    if(this.playing) {
+      document.getElementById('play-pause').classList.add('on');
+    } else {
+      document.getElementById('play-pause').classList.remove('on');
+    }
     this.bind();
   }
 
