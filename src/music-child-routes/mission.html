@@ -1,11 +1,11 @@
 <template>
-  <require from="../components/mission-player"></require>
+  <require from="../components/music-player"></require>
   <div class="page-content">
 
     <h4 style="text-align:center; margin-bottom:20px; margin-top: 20px; font-weight:bold">Mission Music</h4>
 
     <div class="mb-5">
-      <music-player></music-player>
+      <music-player data.bind="urls" copy.bind="_urls"></music-player>
     </div>
 
 
