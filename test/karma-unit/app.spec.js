@@ -305,9 +305,17 @@ describe('the App module', () => {
   });
 
   it('should toggle mobile menu', (done) => {
+    spyOn(document, ['getElementsByClassName']).and.returnValue([
+      {
+        style: { overflow: '', display: '' },
+        addEventListener(a, b) { },
+        removeEventListener(a, b) { }
+      }
+    ]);
     document.body.innerHTML = '<div class="page-host drawer mobile-menu-toggle main-panel swipe-area"></div>';
     // const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
-    // app1.toggleMobileMenu();
+    app1.toggleMobileMenu();
+    app1.toggleMobileMenu('close');
     // expect(toggleIcon.style.display).toBe('block');
     // document.getElementsByClassName('drawer')[0].style.display = 'none';
     // app1.toggleMobileMenu();
@@ -315,13 +323,21 @@ describe('the App module', () => {
     done();
   });
 
-  it('should toggle menu to be icons only', (done) => {
-    // app2.activate();
-    // app2.fullmenu = true;
-    // document.body.innerHTML = '<div class="main-panel"></div><div class="drawer-container"></div><div class="nav-list"></div>';
-    // app2.toggleMenu();
-    // expect(app2.fullmenu).toBe(false);
-    // expect(app2.drawerWidth).toBe('50px');
+  it('should detach', (done) => {
+    spyOn(document, ['getElementsByClassName']).and.returnValue([
+      {
+        style: {
+          overflow: '', display: '', marginRight: '', width: ''
+        },
+        addEventListener(a, b) { },
+        removeEventListener(a, b) { },
+        setAttribute(a, b) { }
+      }
+    ]);
+    app1.manager = {
+      off(a, b) { }
+    };
+    app1.detached();
     done();
   });
 
