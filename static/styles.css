@@ -836,3 +836,7 @@ button.on{
   border-bottom-right-radius: 0!important;
   font-size: 0.8em;
 }
+
+#playSection audio::-webkit-media-controls-play-button {
+  display: none;
+}
