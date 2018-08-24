@@ -307,7 +307,7 @@ describe('the App module', () => {
   it('should toggle mobile menu', (done) => {
     document.body.innerHTML = '<div class="page-host drawer mobile-menu-toggle main-panel swipe-area"></div>';
     // const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
-    app1.toggleMobileMenu();
+    // app1.toggleMobileMenu();
     // expect(toggleIcon.style.display).toBe('block');
     // document.getElementsByClassName('drawer')[0].style.display = 'none';
     // app1.toggleMobileMenu();
