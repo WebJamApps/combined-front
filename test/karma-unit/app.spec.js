@@ -300,27 +300,29 @@ describe('the App module', () => {
     // window.$ = () => ({ parent: () => ({ css: arg }) });
     // app3.contentWidth = '0px';
     // expect(app3.widescreen).toBe(true);
+    // const ws = app2.widescreen;
     done();
   });
 
-  it('should toggle mobile menu', () => {
-    // document.body.innerHTML = '<div class="page-host drawer mobile-menu-toggle main-panel swipe-area"></div>';
+  it('should toggle mobile menu', (done) => {
+    document.body.innerHTML = '<div class="page-host drawer mobile-menu-toggle main-panel swipe-area"></div>';
     // const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
-    // app1.toggleMobileMenu();
+    app1.toggleMobileMenu();
     // expect(toggleIcon.style.display).toBe('block');
     // document.getElementsByClassName('drawer')[0].style.display = 'none';
     // app1.toggleMobileMenu();
     // expect(toggleIcon.style.display).toBe('none');
+    done();
   });
 
-  it('should toggle menu to be icons only', () => {
+  it('should toggle menu to be icons only', (done) => {
     // app2.activate();
     // app2.fullmenu = true;
     // document.body.innerHTML = '<div class="main-panel"></div><div class="drawer-container"></div><div class="nav-list"></div>';
     // app2.toggleMenu();
     // expect(app2.fullmenu).toBe(false);
     // expect(app2.drawerWidth).toBe('50px');
-    // done();
+    done();
   });
 
   it('should toggle menu to be icons with text', () => {
@@ -330,5 +332,4 @@ describe('the App module', () => {
     // expect(app1.fullmenu).toBe(true);
     // expect(app1.drawerWidth).toBe('182px');
   });
-  // done();
 });
