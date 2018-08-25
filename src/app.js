@@ -57,19 +57,8 @@ export class App {
 
   async authenticate(name) {
     let ret;
-    if (this.appState.isOhafLogin) {
-      // try {
-      ret = await this.auth.authenticate(name, false, { isOhafUser: true });
-      // } catch (e) {
-      //   return console.log(e);
-      // }
-    } else {
-      // try {
-      ret = await this.auth.authenticate(name, false, { isOhafUser: false });
-      // } catch (e) {
-      //   return console.log(e);
-      // }
-    }
+    if (this.appState.isOhafLogin) ret = await this.auth.authenticate(name, false, { isOhafUser: true });
+    else ret = await this.auth.authenticate(name, false, { isOhafUser: false });
     return this.auth.setToken(ret.token);
   }
 
@@ -102,7 +91,6 @@ export class App {
     config.addPipelineStep('authorize', this.userAccess);// provides access controls to prevent users from certain
     config.addPostRenderStep({
       run(routingContext, next) {
-        // console.log(routingContext);
         if (!routingContext.config.settings.noScrollToTop) {
           const top = document.getElementsByClassName('material-header')[0];
           if (top !== null && top !== undefined) {
@@ -399,7 +387,10 @@ export class App {
     } catch (e) { return e; }
   }
 
-  get widescreen() { return this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766); }
+  get widescreen() {
+    return this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766,
+      $(document.getElementsByClassName('drawer')).parent());
+  }
 
   attached() {
     // this.widescreen = this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766);
