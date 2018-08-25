@@ -82,8 +82,8 @@ describe('the appUtils', () => {
     + '</div><div class="drawer-parent"><div class="drawer"></div><button class="mobile-menu-toggle"></button></div>';
     const app = { menuToggled: false, contentWidth: '100px' };
     const drawer = document.getElementsByClassName('drawer')[0];
-    const mobileMenuToggle = { style: { display: 'none' } };
-    const cb = au.returnIsWide(app, true, drawer, document.getElementsByClassName('drawer-parent')[0]);
+    const drawerParent = { css() {} };
+    const cb = au.returnIsWide(app, true, drawer, drawerParent);
     expect(cb).toBe(true);
     done();
   });
