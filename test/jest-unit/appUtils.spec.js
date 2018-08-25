@@ -1,17 +1,4 @@
-// const jsdom = require('jsdom');
 const au = require('../../src/commons/appUtils');
-
-// const { JSDOM } = jsdom;
-// const dom = new JSDOM('<!DOCTYPE html><html><head></head><body></body></html>');
-// global.window = dom.window;
-// global.document = dom.window.document;
-// const resizeEvent = document.createEvent('Event');
-// resizeEvent.initEvent('resize', true, true);
-// global.window.resizeTo = (width, height) => {
-//   global.window.innerWidth = width || global.window.innerWidth;
-//   global.window.innerHeight = height || global.window.innerHeight;
-//   global.window.dispatchEvent(resizeEvent);
-// };
 
 describe('the appUtils', () => {
   it('checks for an authenticated user but has error on get token payload on checkUser', async () => {
@@ -82,23 +69,24 @@ describe('the appUtils', () => {
       expect(cb).toBe(true);
     } catch (e) { throw e; }
   });
-  // it('checks if widescreen and returns false', (done) => {
-  //   // global.window.innerWidth = 500;
-  //   // global.window.dispatchEvent(new Event('resize'));
-  //   // console.log(document.documentElement.clientWidth);
-  //   const app = { menuToggled: false };
-  //   const cb = au.checkIfWidescreen(app);
-  //   expect(cb).toBe(false);
-  //   done();
-  // });
-  // it('checks if widescreen and returns true', (done) => {
-  //   global.window.innerWidth = 800;
-  //   global.window.dispatchEvent(new Event('resize'));
-  //   const app = { menuToggled: false };
-  //   const cb = au.checkIfWidescreen(app);
-  //   expect(cb).toBe(true);
-  //   done();
-  // });
+  it('checks if widescreen and returns false', (done) => {
+    const app = { menuToggled: false, contentWidth: '100px' };
+    const drawer = { style: { display: 'none' } };
+    const mobileMenuToggle = { style: { display: 'none' } };
+    const cb = au.returnIsWide(app, false, drawer, mobileMenuToggle);
+    expect(cb).toBe(false);
+    done();
+  });
+  it('checks if widescreen and returns true', (done) => {
+    document.body.innerHTML = '<div class="swipe-area"></div><div class="main-panel">'
+    + '</div><div class="drawer-parent"><div class="drawer"></div><button class="mobile-menu-toggle"></button></div>';
+    const app = { menuToggled: false, contentWidth: '100px' };
+    const drawer = document.getElementsByClassName('drawer')[0];
+    const drawerParent = { css() {} };
+    const cb = au.returnIsWide(app, true, drawer, drawerParent);
+    expect(cb).toBe(true);
+    done();
+  });
   // it('provides a click function', (done) => {
   //   document.body.innerHTML = '<div class="page-host"><div class="swipe-area"></div><div class="drawer"></div></div>';
   //   const myEvent = { target: { className: 'funtimes' } };

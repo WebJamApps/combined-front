@@ -31,14 +31,16 @@ exports.checkIfLoggedIn = function checkIfLoggedIn(app) {
   return false;
 };
 
-exports.returnIsWide = function returnIsWide(app, isWide, drawer, mobileMenuToggle) {
+exports.returnIsWide = function returnIsWide(app, isWide, drawer, drawerParent) {
   const swipeArea = document.getElementsByClassName('swipe-area')[0];
+  const mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
   if (isWide) {
     if (drawer !== null && drawer !== undefined) {
       if (app.contentWidth === '0px') { app.contentWidth = '182px'; }
       drawer.style.display = 'block';
       swipeArea.style.display = 'none';
-      $(drawer).parent().css('display', 'block');
+      drawerParent.css('display', 'block');
+      // $(drawer).parent().css('display', 'block');
       mobileMenuToggle.style.display = 'none';
     }
   } else { app.contentWidth = '0px'; }
@@ -49,8 +51,7 @@ exports.returnIsWide = function returnIsWide(app, isWide, drawer, mobileMenuTogg
   return isWide;
 };
 
-exports.handleScreenSize = function checkIfWidescreen(app, isWide) {
-  // const isWide = document.documentElement.clientWidth > 766;
+exports.handleScreenSize = function handleScreenSize(app, isWide, drawerParent) {
   const drawer = document.getElementsByClassName('drawer')[0];
   const mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
   const swipeArea = document.getElementsByClassName('swipe-area')[0];
@@ -58,12 +59,13 @@ exports.handleScreenSize = function checkIfWidescreen(app, isWide) {
     /* istanbul ignore else */
     if (drawer !== null && drawer !== undefined) {
       drawer.style.display = 'none';
-      $(drawer).parent().css('display', 'none');
+      // drawerParent.style.display = 'none';
+      drawerParent.css('display', 'none');
       mobileMenuToggle.style.display = 'block';
       swipeArea.style.display = 'block';
     }
   }
-  return this.returnIsWide(app, isWide, drawer, mobileMenuToggle);
+  return this.returnIsWide(app, isWide, drawer, drawerParent);
 };
 
 exports.clickFunc = function clickFunc(event) {
