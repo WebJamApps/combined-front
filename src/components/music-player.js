@@ -72,17 +72,21 @@ Url copied Url to clipboard
           <section className="mt-0 col-12 col-md-7">
             <button id="play-pause" role="menu" onClick={this.play}>
 Play/Pause
-            </button><br className="d-md-none"/>
+            </button>
+            <br className="d-md-none" />
             <button role="menu" onClick={this.next}>
 Next
-            </button><br className="d-md-none"/>
+            </button>
+            <br className="d-md-none" />
             <div className="d-md-none" />
             <button role="menu" onClick={this.prev}>
 Prev
-            </button><br className="d-md-none"/>
+            </button>
+            <br className="d-md-none" />
             <button id="shuffle" role="menu" onClick={this.shuffle}>
 Shuffle
-            </button><br className="d-md-none"/>
+            </button>
+            <br className="d-md-none" />
             <button role="menu" onClick={this.share}>
 Share
             </button>
