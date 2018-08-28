@@ -72,17 +72,17 @@ Url copied Url to clipboard
           <section className="mt-0 col-12 col-md-7">
             <button id="play-pause" role="menu" onClick={this.play}>
 Play/Pause
-            </button>
+            </button><br className="d-md-none"/>
             <button role="menu" onClick={this.next}>
 Next
-            </button>
+            </button><br className="d-md-none"/>
             <div className="d-md-none" />
             <button role="menu" onClick={this.prev}>
 Prev
-            </button>
+            </button><br className="d-md-none"/>
             <button id="shuffle" role="menu" onClick={this.shuffle}>
 Shuffle
-            </button>
+            </button><br className="d-md-none"/>
             <button role="menu" onClick={this.share}>
 Share
             </button>
@@ -138,9 +138,11 @@ Share
   play() {
     this.playing = !this.playing;
     if (this.playing) {
+      document.getElementById('play-pause').classList.remove('off');
       document.getElementById('play-pause').classList.add('on');
     } else {
       document.getElementById('play-pause').classList.remove('on');
+      document.getElementById('play-pause').classList.add('off');
     }
     this.bind();
   }
