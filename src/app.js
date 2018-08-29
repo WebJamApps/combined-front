@@ -20,7 +20,6 @@ export class App {
     this.menuToggled = false;
     this.style = 'wj';
     this.appUtils = appUtils;
-    // this.widescreen = false;
   }
 
   email = '';
