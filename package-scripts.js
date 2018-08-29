@@ -29,9 +29,9 @@ module.exports = {
         fix: 'eslint --fix'
       },
       react: {
-        default: crossEnv('BABEL_TARGET=node jest --no-cache --config jest.React.json --notify --updateSnapshot'),
+        default: crossEnv('BABEL_TARGET=node jest --no-cache --config jest.React.json --notify'),
         accept: crossEnv('BABEL_TARGET=node jest -u --no-cache --config jest.React.json --notify --updateSnapshot'),
-        watch: crossEnv('BABEL_TARGET=node jest --watch --no-cache --config jest.React.json --notify --updateSnapshot')
+        watch: crossEnv('BABEL_TARGET=node jest --watch --no-cache --config jest.React.json --notify')
       },
       all: concurrent({
         browser: series.nps('test.karma', 'e2e'),
