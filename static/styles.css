@@ -837,6 +837,15 @@ button.on{
   font-size: 0.8em;
 }
 
+#play-pause.off {
+  background-color: #c0c0c0!important;
+}
+
+#play-pause.on {
+  background-color: green!important;
+  color: #ffffff;
+}
+
 #playSection audio::-webkit-media-controls-play-button {
   display: none;
 }
