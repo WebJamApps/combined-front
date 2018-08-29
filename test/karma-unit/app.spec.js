@@ -227,15 +227,15 @@ describe('the App module', () => {
     done();
   });
 
-  it('gets the current styles with dashboard/reader route', (done) => {
-    const routre = new RouterStub();
-    routre.currentInstruction.fragment = '/dashboard/reader';
-    app1.router = routre;
-    const cs = app1.currentStyles;
-    expect(app1.Menu).toBe('reader');
-    expect(cs).toBeDefined();
-    done();
-  });
+  // it('gets the current styles with dashboard/reader route', (done) => {
+  //   const routre = new RouterStub();
+  //   routre.currentInstruction.fragment = '/dashboard/reader';
+  //   app1.router = routre;
+  //   const cs = app1.currentStyles;
+  //   expect(app1.Menu).toBe('reader');
+  //   expect(cs).toBeDefined();
+  //   done();
+  // });
 
   // it('gets the current styles with dashboard/librarian route', (done) => {
   //   const routre = new RouterStub();
