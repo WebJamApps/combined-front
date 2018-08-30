@@ -47,10 +47,10 @@ export class MusicPlayer {
           </section>
           <section className="col-12 row col-md-7 m-0 mt-2 d-none" id="copier">
             <div id="copyInput">
-              <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="form-control" />
+              <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="" />
             </div>
             <div id="copyButton" onKeyPress={this.pressKey} role="presentation" onClick={this.copyShare} style={{ cursor: 'pointer' }}>
-              <span id="inputGroup" style={{ fontSize: '0.8em', padding: '0.65em' }}>Copy URL</span>
+              <span id="inputGroup" style={{ fontSize: '0.8em' }}>Copy URL</span>
             </div>
           </section>
           <section id="copyMessage" className="col-12 col-md-7 d-none m-0">
