@@ -780,15 +780,6 @@ a:hover {
   ::-webkit-scrollbar:vertical {
     width: 0;
   }
-  #player button {
-    background-color: #eee;
-    padding: 3px 7px!important;
-    border-radius: 3px!important;
-    border: 0;
-    margin: 1px!important;
-    outline: 0;
-    font-size: 0.6em!important;
-  }
 }
 
 .swipe-area {
@@ -872,11 +863,21 @@ button.on{
   width:100%;
 }
 
+#copyInput input {
+  border:1px solid #c0c0c0!important;
+  width: 100%;
+  padding: 4px;
+}
+
 #copyButton {
   position: absolute;
   border: 1px solid #c0c0c0;
   right:15px;
   z-index: 10;
+  padding: 4px;
+  background-color: #c0c0c0;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 #playSection audio::-webkit-media-controls-play-button {
