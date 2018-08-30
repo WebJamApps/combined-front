@@ -32,7 +32,7 @@ export class MusicPlayer {
   get html() {
     return (
       <div className="container-fluid">
-        <div id="player" className="mb-2 row justify-content-center">
+        <div id="player" className="mb-2 row justify-content-md-center">
           <section id="playSection" className="col-12 mt-2 mr-0 col-md-7" style={{ display: 'inline', textAlign: 'center' }}>
             <ReactPlayer
               style={{ backgroundColor: '#eee', textAlign: 'center' }}
@@ -70,26 +70,12 @@ Url copied Url to clipboard
             {this.url[1]}
           </section>
           <section className="mt-0 col-12 col-md-7">
-            <button id="play-pause" role="menu" onClick={this.play}>
-Play/Pause
-            </button>
-            <br className="d-md-none" />
-            <button role="menu" onClick={this.next}>
-Next
-            </button>
-            <br className="d-md-none" />
-            <div className="d-md-none" />
-            <button role="menu" onClick={this.prev}>
-Prev
-            </button>
-            <br className="d-md-none" />
-            <button id="shuffle" role="menu" onClick={this.shuffle}>
-Shuffle
-            </button>
-            <br className="d-md-none" />
-            <button role="menu" onClick={this.share}>
-Share
-            </button>
+            <button id="play-pause" role="menu" onClick={this.play}>Play/Pause</button>
+            <button role="menu" onClick={this.next}>Next</button>
+            <button role="menu" onClick={this.prev}>Prev</button>
+            <button id="shuffle" role="menu" onClick={this.shuffle}>Shuffle</button>
+            <button role="menu" onClick={this.share}>Share</button>
+            <button role="menu"> <a id="homeLink" href="/">Home</a> </button>
           </section>
         </div>
       </div>
