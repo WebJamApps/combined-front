@@ -46,19 +46,11 @@ export class MusicPlayer {
             />
           </section>
           <section className="col-12 row col-md-7 m-0 mt-2 d-none" id="copier">
-            <div className="col-8 col-sm-8 col-md-9 p-0">
+            <div id="copyInput">
               <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="form-control" />
             </div>
-            <div
-              className="col-4 col-sm-4 col-md-3 p-0 text-md-center"
-              onKeyPress={this.pressKey}
-              role="presentation"
-              onClick={this.copyShare}
-              style={{ cursor: 'pointer' }}
-            >
-              <span className="input-group-text" id="inputGroup" style={{ fontSize: '0.8em', padding: '0.65em' }}>
-Copy URL
-              </span>
+            <div id="copyButton" onKeyPress={this.pressKey} role="presentation" onClick={this.copyShare} style={{ cursor: 'pointer' }}>
+              <span id="inputGroup" style={{ fontSize: '0.8em', padding: '0.65em' }}>Copy URL</span>
             </div>
           </section>
           <section id="copyMessage" className="col-12 col-md-7 d-none m-0">
@@ -75,7 +67,9 @@ Url copied Url to clipboard
             <button role="menu" onClick={this.prev}>Prev</button>
             <button id="shuffle" role="menu" onClick={this.shuffle}>Shuffle</button>
             <button role="menu" onClick={this.share}>Share</button>
-            <button role="menu"> <a id="homeLink" href="/">Home</a> </button>
+            <button role="menu">
+              <a id="homeLink" href="/">Home</a>
+            </button>
           </section>
         </div>
       </div>
