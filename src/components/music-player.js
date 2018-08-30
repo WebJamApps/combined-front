@@ -32,7 +32,7 @@ export class MusicPlayer {
   get html() {
     return (
       <div className="container-fluid">
-        <div id="player" className="mb-2 row justify-content-center">
+        <div id="player" className="mb-2 row justify-content-md-center">
           <section id="playSection" className="col-12 mt-2 mr-0 col-md-7" style={{ display: 'inline', textAlign: 'center' }}>
             <ReactPlayer
               style={{ backgroundColor: '#eee', textAlign: 'center' }}
@@ -46,19 +46,11 @@ export class MusicPlayer {
             />
           </section>
           <section className="col-12 row col-md-7 m-0 mt-2 d-none" id="copier">
-            <div className="col-8 col-sm-8 col-md-9 p-0">
+            <div id="copyInput">
               <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="form-control" />
             </div>
-            <div
-              className="col-4 col-sm-4 col-md-3 p-0 text-md-center"
-              onKeyPress={this.pressKey}
-              role="presentation"
-              onClick={this.copyShare}
-              style={{ cursor: 'pointer' }}
-            >
-              <span className="input-group-text" id="inputGroup" style={{ fontSize: '0.8em', padding: '0.65em' }}>
-Copy URL
-              </span>
+            <div id="copyButton" onKeyPress={this.pressKey} role="presentation" onClick={this.copyShare} style={{ cursor: 'pointer' }}>
+              <span id="inputGroup" style={{ fontSize: '0.8em', padding: '0.65em' }}>Copy URL</span>
             </div>
           </section>
           <section id="copyMessage" className="col-12 col-md-7 d-none m-0">
@@ -70,25 +62,13 @@ Url copied Url to clipboard
             {this.url[1]}
           </section>
           <section className="mt-0 col-12 col-md-7">
-            <button id="play-pause" role="menu" onClick={this.play}>
-Play/Pause
-            </button>
-            <br className="d-md-none" />
-            <button role="menu" onClick={this.next}>
-Next
-            </button>
-            <br className="d-md-none" />
-            <div className="d-md-none" />
-            <button role="menu" onClick={this.prev}>
-Prev
-            </button>
-            <br className="d-md-none" />
-            <button id="shuffle" role="menu" onClick={this.shuffle}>
-Shuffle
-            </button>
-            <br className="d-md-none" />
-            <button role="menu" onClick={this.share}>
-Share
+            <button id="play-pause" role="menu" onClick={this.play}>Play/Pause</button>
+            <button role="menu" onClick={this.next}>Next</button>
+            <button role="menu" onClick={this.prev}>Prev</button>
+            <button id="shuffle" role="menu" onClick={this.shuffle}>Shuffle</button>
+            <button role="menu" onClick={this.share}>Share</button>
+            <button role="menu">
+              <a id="homeLink" href="/">Home</a>
             </button>
           </section>
         </div>
