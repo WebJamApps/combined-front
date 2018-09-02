@@ -1,32 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title><%- htmlWebpackPlugin.options.metadata.title %></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
 
-  <!-- <script src="webcomponents.min.js"></script> -->
-   <!-- <script src="mdDateTimePicker.min.js"></script>
-    <script src="moment.min.js"></script>
-     <script src="draggabilly.pkgd.min.js"></script> -->
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# music: http://ogp.me/ns/music#">
+  <meta property="og:title" content="Web Jam Band Orignal Songs" />
+  <meta property="og:description" content="Try out our new music player to hear many original songs played in a continous loop" />
+  <meta property="og:image" content="https://web-jam.com/static/imgs/webjamlogo1.png" />
+  <meta property="og:url" content="https://web-jam.com/music/originals" />
+  <meta property="og:type" content="music.playlist" />
+  <meta property="fb:app_id" content="2207148322688942" />
+  <title>
+    <%- htmlWebpackPlugin.options.metadata.title %>
+  </title>
+  <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
-<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"> -->
   <link href="//fonts.googleapis.com/css?family=PT Sans Caption" rel="stylesheet">
   <link href="//fonts.googleapis.com/css?family=Habibi" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!-- <link rel="import" href="includes.html"> -->
 
-  <!-- imported CSS are concatenated and added automatically -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body aurelia-app="main">
   <div class="splash">
-    <div class="message"><%- htmlWebpackPlugin.options.metadata.title %></div>
+    <div class="message">
+      <%- htmlWebpackPlugin.options.metadata.title %>
+    </div>
     <i class="fa fa-spinner fa-spin"></i>
   </div>
-  <!--< % if (htmlWebpackPlugin.options.metadata.server) { % >-->
-    <!--&lt;!&ndash; Webpack Dev Server reload &ndash;&gt;-->
-    <!--<script src="/webpack-dev-server.js"></script>-->
-    <!--< % } % >-->
-  </body>
-  </html>
+</body>
+
+</html>

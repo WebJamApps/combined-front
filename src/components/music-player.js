@@ -1,31 +1,20 @@
-import { noView, inject, customElement } from 'aurelia-framework';
+import {
+  noView, inject, customElement, bindable
+} from 'aurelia-framework';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactPlayer from 'react-player';
 
 @noView()
 @inject(Element)
+@bindable('data')
+@bindable('copy')
 @customElement('music-player')
 export class MusicPlayer {
   constructor(element) {
     this.element = element;
-    this.urls = [['DG.mp3', 'Don\'t Go / Web Jam Band'],
-      ['MRM.mp3', 'Misty Rainy Morning / Web Jam Band'],
-      ['AT.mp3', 'Alone Time / Web Jam Band'],
-      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'],
-      [`https://www.youtube.com/embed/ach2ubW21h4?origin=http://${document.location.host}`, 'Boogie Board Rash / Josh Sherman'],
-      [`https://www.youtube.com/embed/mCvUBjuzfo8?origin=http://${document.location.host}`, 'Hey Red / Josh Sherman'],
-      ['https://soundcloud.com/joshandmariamusic/good-enough', 'Good Enough / Josh & Maria Sherman']];
-    this._urls = [['DG.mp3', 'Don\'t Go / Web Jam Band'],
-      ['MRM.mp3', 'Misty Rainy Morning / Web Jam Band'],
-      ['AT.mp3', 'Alone Time / Web Jam Band'],
-      ['TTGA.mp3', 'Try to Get Along / Web Jam Band'],
-      [`https://www.youtube.com/embed/ach2ubW21h4?origin=http://${document.location.host}`, 'Boogie Board Rash / Josh Sherman'],
-      [`https://www.youtube.com/embed/mCvUBjuzfo8?origin=http://${document.location.host}`, 'Hey Red / Josh Sherman'],
-      ['https://soundcloud.com/joshandmariamusic/good-enough', 'Good Enough / Josh & Maria Sherman']];
     this.play = this.play.bind(this);
     this.index = 0;
-    this.url = this.urls[this.index];
     this.playing = false;
     this.playEnd = this.playEnd.bind(this);
     this.pause = this.pause.bind(this);
@@ -43,7 +32,7 @@ export class MusicPlayer {
   get html() {
     return (
       <div className="container-fluid">
-        <div id="player" className="mb-2 row justify-content-center">
+        <div id="player" className="mb-2 row justify-content-md-center">
           <section id="playSection" className="col-12 mt-2 mr-0 col-md-7" style={{ display: 'inline', textAlign: 'center' }}>
             <ReactPlayer
               style={{ backgroundColor: '#eee', textAlign: 'center' }}
@@ -57,19 +46,11 @@ export class MusicPlayer {
             />
           </section>
           <section className="col-12 row col-md-7 m-0 mt-2 d-none" id="copier">
-            <div className="col-8 col-sm-8 col-md-9 p-0">
-              <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="form-control" />
+            <div id="copyInput">
+              <input id="copyUrl" disabled value={this.playUrl} style={{ backgroundColor: '#fff' }} className="" />
             </div>
-            <div
-              className="col-4 col-sm-4 col-md-3 p-0 text-md-center"
-              onKeyPress={() => {}}
-              role="presentation"
-              onClick={this.copyShare}
-              style={{ cursor: 'pointer' }}
-            >
-              <span className="input-group-text" id="inputGroup" style={{ fontSize: '0.8em' }}>
-Copy URL
-              </span>
+            <div id="copyButton" onKeyPress={this.pressKey} role="presentation" onClick={this.copyShare} style={{ cursor: 'pointer' }}>
+              <span id="inputGroup" style={{ fontSize: '0.8em' }}>Copy URL</span>
             </div>
           </section>
           <section id="copyMessage" className="col-12 col-md-7 d-none m-0">
@@ -81,27 +62,21 @@ Url copied Url to clipboard
             {this.url[1]}
           </section>
           <section className="mt-0 col-12 col-md-7">
-            <button role="menu" onClick={this.play}>
-Play/Pause
-            </button>
-            <button role="menu" onClick={this.next}>
-Next
-            </button>
-            <div className="d-md-none" />
-            <button role="menu" onClick={this.prev}>
-Prev
-            </button>
-            <button id="shuffle" role="menu" onClick={this.shuffle}>
-Shuffle
-            </button>
-            <button role="menu" onClick={this.share}>
-Share
+            <button id="play-pause" role="menu" onClick={this.play}>Play/Pause</button>
+            <button role="menu" onClick={this.next}>Next</button>
+            <button role="menu" onClick={this.prev}>Prev</button>
+            <button id="shuffle" role="menu" onClick={this.shuffle}>Shuffle</button>
+            <button role="menu" onClick={this.share}>Share</button>
+            <button role="menu">
+              <a id="homeLink" href="/?reload=true">Home</a>
             </button>
           </section>
         </div>
       </div>
     );
   }
+
+  pressKey() {}
 
   /**
    * Shuffles array in place. ES6 version
@@ -142,23 +117,23 @@ Share
       this.url = this.urls[this.index];
     }
     this.playTrue();
-    this.playSound();
   }
 
   play() {
     this.playing = !this.playing;
+    if (this.playing) {
+      document.getElementById('play-pause').classList.remove('off');
+      document.getElementById('play-pause').classList.add('on');
+    } else {
+      document.getElementById('play-pause').classList.remove('on');
+      document.getElementById('play-pause').classList.add('off');
+    }
     this.bind();
   }
 
   pause() {
     this.playing = false;
     this.bind();
-  }
-
-  playSound() {
-    if (this.url[0] === 'https://soundcloud.com/joshandmariamusic/good-enough') {
-      setTimeout(() => { this.playing = true; this.playTrue(); }, 5000);
-    }
   }
 
   next() {
@@ -170,7 +145,6 @@ Share
       this.url = this.urls[this.index];
     }
     this.playTrue();
-    this.playSound();
   }
 
   render() {
@@ -199,10 +173,16 @@ Share
       setTimeout(() => {
         el.classList.add('d-none');
       }, 1500);
-    }, () => {});
+    });
   }
 
   bind() {
+    if (!this.urls || !this._urls) {
+      this.urls = this.data;
+      this._urls = this.copy;
+      this.url = this.urls[this.index];
+    }
+
     this.render();
   }
 }

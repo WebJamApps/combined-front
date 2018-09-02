@@ -4,7 +4,7 @@ const webpack = require('../webpack.config');
 
 const isDebug = arg => arg === '--debug';
 
-module.exports = function (config) {
+module.exports = function configKarma(config) {
   config.set({
     /**
     * base path that will be used to resolve all patterns (e.g. files, exclude)
@@ -43,7 +43,7 @@ module.exports = function (config) {
     reporters: ['mocha', 'progress', 'coverage'],
 
     coverageReporter: {
-      reporters: [{ type: 'html' }, { type: 'lcovonly' }, { type: 'text-summary' }, { type: 'json' }],
+      reporters: [{ type: 'json' }, { type: 'lcov' }],
       dir: 'coverage/',
       subdir: 'coverage-karma/'
     },

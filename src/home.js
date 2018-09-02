@@ -24,6 +24,8 @@ export class Home {
   // }
 
   attached() {
+    this.searchParams = new URLSearchParams(window.location.search);
+    if (this.searchParams.get('reload')) window.location.href = window.location.href.split('?')[0];
     this.top = document.getElementsByClassName('material-header')[0];
     // let top = document.getElementById('top');
     if (this.top !== null && this.top !== undefined) {

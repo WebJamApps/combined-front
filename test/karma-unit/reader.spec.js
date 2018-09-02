@@ -54,11 +54,11 @@ describe('the Reader Module', () => {
     done();
   });
 
-  it('check out a book already taken', (done) => {
-    reader.activate().then(() => {
-      reader.checkOutBook(book);
-      reader.checkOutBook(book);
-      done();
-    });
-  });
+  // it('check out a book already taken', (done) => {
+  //   reader.activate().then(() => {
+  //     reader.checkOutBook(book);
+  //     reader.checkOutBook(book);
+  //     done();
+  //   });
+  // });
 });

@@ -808,14 +808,13 @@ a:hover {
   font-size: 0.8em;
 }
 
-#mainPlayer{
+#playSection audio {
   background-image: url("../static/imgs/webjamlogo1.png");
-  background-size: 100% 100%;
+  background-position: center;
+  background-size: 80%;
   background-repeat: no-repeat;
-}
-
-#mainPlayer audio {
   border-radius: 0!important;
+  background-color: #2a222a!important;
 }
 
 button.on{
@@ -829,10 +828,58 @@ button.on{
 #inputGroup {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  display: block;
+  background-color: #c0c0c0;
+  text-align: right!important;
 }
 
 #copyUrl {
   border-top-right-radius: 0!important;
   border-bottom-right-radius: 0!important;
   font-size: 0.8em;
+}
+
+#play-pause.off {
+  background-color: #c0c0c0!important;
+}
+
+#play-pause.on {
+  background-color: green!important;
+  color: #ffffff;
+}
+
+#homeLink{
+  color: #000;
+  text-decoration: None;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+#copier {
+  position: relative;
+}
+
+#copyInput {
+  width:100%;
+}
+
+#copyInput input {
+  border:1px solid #c0c0c0!important;
+  width: 100%;
+  padding: 4px;
+}
+
+#copyButton {
+  position: absolute;
+  border: 1px solid #c0c0c0;
+  right:15px;
+  z-index: 10;
+  padding: 4px;
+  background-color: #c0c0c0;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+#playSection audio::-webkit-media-controls-play-button {
+  display: none;
 }

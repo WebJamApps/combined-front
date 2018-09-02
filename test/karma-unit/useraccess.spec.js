@@ -11,14 +11,14 @@ describe('The UserAccess module unit tests', () => {
     userAccess = new UserAccess(appState);
   });
   it('should not require authentication', (done) => {
-    next = function () {
+    next = function next() {
       done();
     };
     routingContext.config = { auth: false };
     userAccess.run(routingContext, next);
   });
   it('should require auth, but requested dashboard, so do not check role', (done) => {
-    next = function () {
+    next = function next() {
       done();
     };
     routingContext.config = { auth: true };
@@ -27,7 +27,7 @@ describe('The UserAccess module unit tests', () => {
   });
 
   it('should require auth, but when child route is user-account do not check role', (done) => {
-    next = function () {
+    next = function next() {
       done();
     };
     routingContext.config = { auth: true };
@@ -36,28 +36,8 @@ describe('The UserAccess module unit tests', () => {
     userAccess.run(routingContext, next);
   });
 
-  // it('should require auth, but requested librarian, so do not check role', done => {
-  //   next = function() {
-  //     done();
-  //   };
-  //   routingContext.config = {auth: true};
-  //   routingContext.fragment = '/dashboard/librarian';
-  //   routingContext.params = {childRoute: 'librarian'};
-  //   userAccess.run(routingContext, next);
-  // });
-
-  // it('should require auth, but requested reader, so do not check role', done => {
-  //   next = function() {
-  //     done();
-  //   };
-  //   routingContext.config = {auth: true};
-  //   routingContext.fragment = '/dashboard/reader';
-  //   routingContext.params = {childRoute: 'reader'};
-  //   userAccess.run(routingContext, next);
-  // });
-
   it('should require auth and check roles and be authorized', (done) => {
-    next = function () {
+    next = function next() {
       done();
     };
     routingContext.config = { auth: true };
@@ -67,7 +47,7 @@ describe('The UserAccess module unit tests', () => {
   });
 
   it('should allow charity role to schedule events', (done) => {
-    next = function () {
+    next = function next() {
       done();
     };
     routingContext.config = { auth: true };
