@@ -68,7 +68,7 @@ Url copied Url to clipboard
             <button id="shuffle" role="menu" onClick={this.shuffle}>Shuffle</button>
             <button role="menu" onClick={this.share}>Share</button>
             <button role="menu">
-              <a id="homeLink" href="/">Home</a>
+              <a id="homeLink" href="/?reload=true">Home</a>
             </button>
           </section>
         </div>
