@@ -4,7 +4,8 @@ export class Music {
   constructor() {
     this.slideshow_data = {
       id: 'slideshowMusic',
-      slideshow_images: ['../../static/imgs/prom2015.png', '../../static/imgs/ourWedding.png', '../../static/imgs/hiddenValleyTalentShow.png']
+      slideshow_images: ['../../static/imgs/martinsville2017.png', '../../static/imgs/prom2015.png',
+        '../../static/imgs/ourWedding.png', '../../static/imgs/hiddenValleyTalentShow.png']
     };
   }
 
