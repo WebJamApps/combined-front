@@ -1,6 +1,6 @@
 {
   "name": "combined-front",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Front End of web-jam.com App",
   "main": "dist/index.html",
   "repository": {
@@ -9,7 +9,7 @@
   },
   "author": "HandlersAndKickers",
   "engines": {
-    "node": ">=10.9.0"
+    "node": ">=10.10.0"
   },
   "files": [
     "webpack.config.js",
@@ -112,7 +112,7 @@
     "karma-coverage-istanbul-reporter": "latest",
     "karma-jasmine": "latest",
     "karma-mocha-reporter": "latest",
-    "karma-webpack": "^4.0.0-rc.1",
+    "karma-webpack": "^4.0.0-rc.2",
     "istanbul-combine": "latest",
     "istanbul-instrumenter-loader": "latest",
     "jasmine-core": "latest",
