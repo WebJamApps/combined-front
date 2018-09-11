@@ -948,8 +948,8 @@ aurelia-event-aggregator@^1.0.0:
     aurelia-logging "^1.0.0"
 
 aurelia-fetch-client@^1.0.0-beta.1.2.5, aurelia-fetch-client@^1.1.2:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/aurelia-fetch-client/-/aurelia-fetch-client-1.4.0.tgz#d845f2218774d321c9a9fb2c15da49b0acbd019d"
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/aurelia-fetch-client/-/aurelia-fetch-client-1.5.0.tgz#e6a9586ff0163366277df90858ec53082f41fa95"
   dependencies:
     aurelia-pal "^1.3.0"
 
@@ -3379,7 +3379,7 @@ debug@2, debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.2, debug@^2.3.3, de
   dependencies:
     ms "2.0.0"
 
-debug@3.1.0, debug@~3.1.0:
+debug@3.1.0, debug@=3.1.0, debug@~3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
@@ -4761,15 +4761,15 @@ flush-write-stream@^1.0.0, flush-write-stream@^1.0.2:
 
 follow-redirects@1.0.0:
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.0.0.tgz#8e34298cbd2e176f254effec75a1c78cc849fd37"
+  resolved "http://registry.npmjs.org/follow-redirects/-/follow-redirects-1.0.0.tgz#8e34298cbd2e176f254effec75a1c78cc849fd37"
   dependencies:
     debug "^2.2.0"
 
 follow-redirects@^1.0.0:
-  version "1.5.7"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.7.tgz#a39e4804dacb90202bca76a9e2ac10433ca6a69a"
+  version "1.5.8"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.8.tgz#1dbfe13e45ad969f813e86c00e5296f525c885a1"
   dependencies:
-    debug "^3.1.0"
+    debug "=3.1.0"
 
 font-awesome@4.7.0:
   version "4.7.0"
@@ -7262,7 +7262,7 @@ karma-mocha-reporter@latest:
     log-symbols "^2.1.0"
     strip-ansi "^4.0.0"
 
-karma-webpack@^4.0.0-rc.1:
+karma-webpack@^4.0.0-rc.2:
   version "4.0.0-rc.2"
   resolved "https://registry.yarnpkg.com/karma-webpack/-/karma-webpack-4.0.0-rc.2.tgz#4c194e94789842af7f0ffa0de77ee7715739c7c1"
   dependencies:
@@ -12779,7 +12779,7 @@ webpack-dev-middleware@^3.2.0:
     url-join "^4.0.0"
     webpack-log "^2.0.0"
 
-webpack-dev-server@^3.1.1:
+webpack-dev-server@latest:
   version "3.1.8"
   resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-3.1.8.tgz#eb7a95945d1108170f902604fb3b939533d9daeb"
   dependencies:

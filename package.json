@@ -1,6 +1,6 @@
 {
   "name": "combined-front",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Front End of web-jam.com App",
   "main": "dist/index.html",
   "repository": {
@@ -9,7 +9,7 @@
   },
   "author": "HandlersAndKickers",
   "engines": {
-    "node": ">=10.9.0"
+    "node": ">=10.10.0"
   },
   "files": [
     "webpack.config.js",
@@ -87,7 +87,6 @@
     "wait-on": "^2.1.0",
     "webpack": "^4.1.1",
     "webpack-bundle-analyzer": "latest",
-    "webpack-dev-server": "^3.1.1",
     "webpack-cli": "^3.1.0",
     "snyk": "latest"
   },
@@ -113,7 +112,7 @@
     "karma-coverage-istanbul-reporter": "latest",
     "karma-jasmine": "^1.1.1",
     "karma-mocha-reporter": "latest",
-    "karma-webpack": "^4.0.0-rc.1",
+    "karma-webpack": "^4.0.0-rc.2",
     "istanbul-combine": "latest",
     "istanbul-instrumenter-loader": "latest",
     "jasmine-core": "^3.1.0",
@@ -132,7 +131,8 @@
     "eslint-plugin-jsx-a11y": "latest",
     "eslint-plugin-node": "latest",
     "eslint-plugin-react": "latest",
-    "eslint-plugin-security": "latest"
+    "eslint-plugin-security": "latest",
+    "webpack-dev-server": "latest"
   },
   "scripts": {
     "start": "nps",

@@ -172,7 +172,6 @@ audio::-webkit-media-controls-panel {
 }
 
 /* Slideshow container */
-
 #libslideshow, #libslideshow1, #slideshowMusic, #slideshow1, #slideshow, #musicSlide1, #musicSlide2, #lSlide1, #lSlide2 {
   max-width: 1000px;
   position: relative;
@@ -206,7 +205,6 @@ audio::-webkit-media-controls-panel {
 .dot:hover {
   background-color: #717171;
 }*/
-
 .answer {
   margin-bottom: 1em;
   font-style: italic;
@@ -214,7 +212,6 @@ audio::-webkit-media-controls-panel {
 }
 
 /* These are Aurelia animate page transitions */
-
 .au-enter-active {
   -webkit-animation: fadeInRight 1s;
   animation: fadeInRight 1s;
@@ -514,7 +511,6 @@ audio::-webkit-media-controls-panel {
 }
 
 /* splash is in the index.ejs file, used for the initial page load animation */
-
 .splash {
   text-align: center;
   margin: 10% 0 0;
@@ -568,6 +564,7 @@ audio::-webkit-media-controls-panel {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -580,6 +577,7 @@ audio::-webkit-media-controls-panel {
     -ms-transform: translate3d(100%, 0, 0);
     transform: translate3d(100%, 0, 0);
   }
+
   100% {
     opacity: 1;
     -webkit-transform: none;
@@ -604,18 +602,19 @@ audio::-webkit-media-controls-panel {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
 }
 
 /* animation definitions */
-
 @-webkit-keyframes fadeInRight {
   0% {
     opacity: 0;
     transform: translate3d(100%, 0, 0);
   }
+
   100% {
     opacity: 1;
     transform: none;
@@ -688,13 +687,14 @@ a:hover {
   display: none;
 }
 
-@media screen and (min-width: 766px) {
+@media screen and (min-width: 900px) {
   .drawer-container {
     float: right;
     position: fixed;
     right: 0;
     /* display:inline-block; */
   }
+
   .main-panel {
     overflow: hidden;
     position: relative;
@@ -702,6 +702,7 @@ a:hover {
     display: block;
     margin-right: 182px;
   }
+
   .content-block {
     position: absolute;
     top: 0;
@@ -712,6 +713,7 @@ a:hover {
     margin-top: 91px;
     margin-right: inherit;
   }
+
   /* .footer {
     width: 100%;
   } */
@@ -762,21 +764,24 @@ a:hover {
   background-color: #ffffff;
 }
 
-@media screen and (max-width: 766px) {
+@media screen and (max-width: 900px) {
   .drawer {
     background-color: rgb(192, 192, 192);
     float: right;
     height: 100%;
   }
+
   .drawer-container {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     width: 100%;
   }
+
   .content-block {
     overflow-x: hidden;
   }
+
   ::-webkit-scrollbar:vertical {
     width: 0;
   }
@@ -794,8 +799,8 @@ a:hover {
 }
 
 /*Music player styles*/
-#musicTable tr, #musicTable td{
-  background-color: transparent!important;
+#musicTable tr, #musicTable td {
+  background-color: transparent !important;
 }
 
 #player button {
@@ -813,12 +818,12 @@ a:hover {
   background-position: center;
   background-size: 80%;
   background-repeat: no-repeat;
-  border-radius: 0!important;
-  background-color: #2a222a!important;
+  border-radius: 0 !important;
+  background-color: #2a222a !important;
 }
 
-button.on{
-  background-color: #c0c0c0!important;
+button.on {
+  background-color: #c0c0c0 !important;
 }
 
 #player button:hover {
@@ -830,25 +835,25 @@ button.on{
   border-bottom-left-radius: 0;
   display: block;
   background-color: #c0c0c0;
-  text-align: right!important;
+  text-align: right !important;
 }
 
 #copyUrl {
-  border-top-right-radius: 0!important;
-  border-bottom-right-radius: 0!important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
   font-size: 0.8em;
 }
 
 #play-pause.off {
-  background-color: #c0c0c0!important;
+  background-color: #c0c0c0 !important;
 }
 
 #play-pause.on {
-  background-color: green!important;
+  background-color: green !important;
   color: #ffffff;
 }
 
-#homeLink{
+#homeLink {
   color: #000;
   text-decoration: None;
   font-size: inherit;
@@ -860,11 +865,11 @@ button.on{
 }
 
 #copyInput {
-  width:100%;
+  width: 100%;
 }
 
 #copyInput input {
-  border:1px solid #c0c0c0!important;
+  border: 1px solid #c0c0c0 !important;
   width: 100%;
   padding: 4px;
 }
@@ -872,7 +877,7 @@ button.on{
 #copyButton {
   position: absolute;
   border: 1px solid #c0c0c0;
-  right:15px;
+  right: 15px;
   z-index: 10;
   padding: 4px;
   background-color: #c0c0c0;
