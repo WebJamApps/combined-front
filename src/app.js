@@ -149,19 +149,6 @@ export class App {
     this.router = router;
   }
 
-  // clickFunc(event) {
-  //   const drawer = document.getElementsByClassName('drawer')[0];
-  //   const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
-  //   /* istanbul ignore else */
-  //   if (event.target.className !== 'menu-item') {
-  //     document.getElementsByClassName('swipe-area')[0].style.display = 'none';
-  //     drawer.style.display = 'none';
-  //     $(drawer).parent().css('display', 'none');
-  //     toggleIcon.style.display = 'block';
-  //     document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
-  //   }
-  // }
-
   toggleMobileMenu(toggle) {
     document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
     if (toggle !== 'close') {
@@ -387,13 +374,11 @@ export class App {
   }
 
   get widescreen() {
-    return this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766,
+    return this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 900,
       $(document.getElementsByClassName('drawer')).parent());
   }
 
   attached() {
-    // this.widescreen = this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766);
-    // this.widescreen = this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 766);
     this.manager = new Hammer.Manager(document.getElementsByClassName('swipe-area')[0], {
       recognizers: [
         [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]
