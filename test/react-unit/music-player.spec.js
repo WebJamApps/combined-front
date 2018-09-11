@@ -5,9 +5,9 @@ describe('++MusicPlayer tests', () => {
   let mp;
 
   beforeEach(() => {
-    mp = new MusicPlayer();
-    document.body.innerHTML = '<div id="renderer"><section id="copier"></section><section id="copyMessage">'
+    document.body.innerHTML = '<div id="renderer" class="swipe-area"><section id="copier"></section><section id="copyMessage">'
       + '</section><button id="shuffle"></button><button id="play-pause"></button></div>';
+    mp = new MusicPlayer();
     mp.element = document.getElementById('renderer');
     mp.data = [['DITR.mp3', 'Down In The River - Web Jam Band'],
       ['https://soundcloud.com/joshandmariamusic/alleluia-alleluia-give-thanks', 'Alleluia Alleluia Give Thanks - Web Jam Band'],

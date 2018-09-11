@@ -183,15 +183,15 @@ describe('the App module', () => {
   //   done();
   // });
 
-  it('gets the current styles with bookshelf route', (done) => {
-    const routre = new RouterStub();
-    routre.currentInstruction.fragment = '/bookshelf';
-    app1.router = routre;
-    const cs = app1.currentStyles;
-    expect(app1.Menu).toBe('bookshelf');
-    expect(cs).toBeDefined();
-    done();
-  });
+  // it('gets the current styles with bookshelf route', (done) => {
+  //   const routre = new RouterStub();
+  //   routre.currentInstruction.fragment = '/bookshelf';
+  //   app1.router = routre;
+  //   const cs = app1.currentStyles;
+  //   expect(app1.Menu).toBe('bookshelf');
+  //   expect(cs).toBeDefined();
+  //   done();
+  // });
 
   // it('gets the current styles with user-account route', (done) => {
   //   const routre = new RouterStub();
