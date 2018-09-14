@@ -29,7 +29,10 @@ export class MusicPlayer {
     this.isShuffleOn = false;
 
     // after the component is bound to the DOM. remove the swiping-area from the DOM.
-    document.getElementsByClassName('swipe-area')[0].style.display = 'none';
+    const swipe = document.getElementsByClassName('swipe-area');
+    if (swipe.length) {
+      swipe[0].style.display = 'none';
+    }
   }
 
   get html() {
