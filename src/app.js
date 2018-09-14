@@ -392,7 +392,6 @@ export class App {
       const wms = document.getElementById('wholeMusicSection'); // .style.display = 'none';
       const h4 = document.getElementsByTagName('h4')[0];
       const header = document.getElementsByClassName('home-header')[0];
-      const swipe = document.getElementsByClassName('swipe-area')[0];
       const footer = document.getElementById('wjfooter');
       const i = document.getElementById('mobilemenutoggle');
       const child = document.getElementsByClassName('home-sidebar')[0];
@@ -400,7 +399,6 @@ export class App {
       i.parentNode.removeChild(i);
       wms.parentNode.removeChild(wms);
       h4.parentNode.removeChild(h4);
-      swipe.parentNode.removeChild(swipe);
       footer.parentNode.removeChild(footer);
       header.parentNode.removeChild(header);
     }
