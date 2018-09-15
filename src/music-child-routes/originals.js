@@ -1,6 +1,7 @@
 export class Originals {
   constructor() {
     this.urls = [['https://dl.dropboxusercontent.com/s/h7xolhpjst6spbd/Dark%20Light.mp3?dl=0', 'Dark Light - Josh & Maria Sherman'],
+      ['https://dl.dropboxusercontent.com/s/3tisiordjrgjkoq/Good%20Enough.mp3?dl=0', 'Good Enough - Josh & Maria Sherman'],
       ['https://dl.dropboxusercontent.com/s/ceqa0bk1swccgs2/Don%27t%20Go.mp3?dl=0', 'Don\'t Go - Web Jam Band'],
       ['MRM.mp3', 'Misty Rainy Morning - Web Jam Band'],
       ['AT.mp3', 'Alone Time - Web Jam Band'],
@@ -10,6 +11,7 @@ export class Originals {
       ['https://soundcloud.com/joshandmariamusic/good-enough', 'Good Enough - Josh & Maria Sherman']];
 
     this._urls = [['https://dl.dropboxusercontent.com/s/h7xolhpjst6spbd/Dark%20Light.mp3?dl=0', 'Dark Light - Josh & Maria Sherman'],
+      ['https://dl.dropboxusercontent.com/s/3tisiordjrgjkoq/Good%20Enough.mp3?dl=0', 'Good Enough - Josh & Maria Sherman'],
       ['https://dl.dropboxusercontent.com/s/ceqa0bk1swccgs2/Don%27t%20Go.mp3?dl=0', 'Don\'t Go - Web Jam Band'],
       ['MRM.mp3', 'Misty Rainy Morning - Web Jam Band'],
       ['AT.mp3', 'Alone Time - Web Jam Band'],
