@@ -153,7 +153,7 @@ export class App {
     document.getElementsByClassName('page-host')[0].style.overflow = 'auto';
     if (toggle !== 'close') {
       document.getElementsByClassName('page-host')[0].style.overflow = 'hidden';
-      document.getElementsByClassName('swipe-area')[0].style.display = 'block';
+      document.getElementsByClassName('swipe-area')[0].style.width = '60px';
       document.getElementsByClassName('page-host')[0].addEventListener('click', this.appUtils.clickFunc);
     }
     this.menuToggled = true;
@@ -170,7 +170,7 @@ export class App {
     }
     if (toggle === 'close') {
       document.getElementsByClassName('page-host')[0].removeEventListener('click', this.appUtils.clickFunc);
-      document.getElementsByClassName('swipe-area')[0].style.display = 'none';
+      document.getElementsByClassName('swipe-area')[0].style.width = '0px';
     }
   }
 
