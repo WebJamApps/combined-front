@@ -143,7 +143,6 @@ module.exports = ({
       }, {})
     }),
     new CopyWebpackPlugin([
-      { from: 'static/music/DG.mp3', to: 'DG.mp3' },
       { from: 'static/music/MRM.mp3', to: 'MRM.mp3' },
       { from: 'static/music/AT.mp3', to: 'AT.mp3' },
       { from: 'static/music/TTGA.mp3', to: 'TTGA.mp3' },
