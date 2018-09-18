@@ -1,5 +1,22 @@
 <template>
-  <div>
-    All songs here.
+
+  <require from="../components/music-player"></require>
+
+  <div class="btn-group text-center d-block m-4">
+    <button class="btn btn-secondary" click.trigger="originalClick()">Original</button>
+    <button class="btn btn-secondary" click.trigger="missionClick()">Mission</button>
+    <button class="btn btn-secondary" click.trigger="pubClick()">Pub</button>
+  </div>
+
+  <div class="mb-4" id="original">
+    <music-player data.bind="oUrls" copy.bind="_oUrls"></music-player>
+  </div>
+
+  <div class="d-none mb-4" id="mission">
+    <music-player data.bind="mUrls" copy.bind="_mUrls"></music-player>
+  </div>
+
+  <div class="d-none mb-4" id="pub">
+    <music-player data.bind="pUrls" copy.bind="_pUrls"></music-player>
   </div>
 </template>
