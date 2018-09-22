@@ -191,11 +191,10 @@ Url copied Url to clipboard
       this._urls = this.copy;
       this.url = this.urls[this.index];
     }
-    let search = document.location.search;
-    if (search.includes('oneplayer=true')){
-      this.index = parseInt(search.match(/\d/));
+    const search = document.location.search;
+    if (search.includes('oneplayer=true')) {
+      this.index = parseInt(search.match(/\d/), 0);
     }
-
     this.render();
   }
 }
