@@ -385,7 +385,7 @@ export class App {
       ]
     });
     this.manager.on('swipe', this.close.bind(this));
-    if (document.location.search === '?oneplayer=true') {
+    if (document.location.search.includes('oneplayer=true')) {
       document.getElementsByClassName('content-block')[0].style.overflow = 'hidden';
       document.getElementsByClassName('content-block')[0].style.marginTop = '0';
       document.getElementsByClassName('page-content')[0].style.borderRight = '0';

@@ -23,7 +23,6 @@ export class MusicPlayer {
     this.copyShare = this.copyShare.bind(this);
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
-    this.playUrl = `${document.location.href}?oneplayer=true`;
     this.shown = false;
     this.navigator = navigator;
     this.isShuffleOn = false;
@@ -83,6 +82,10 @@ Url copied Url to clipboard
   }
 
   pressKey() {}
+
+  get playUrl() {
+    return `${document.location.origin}${document.location.pathname}?oneplayer=true&index=${this.index}`;
+  }
 
   /**
    * Shuffles array in place. ES6 version
@@ -188,7 +191,10 @@ Url copied Url to clipboard
       this._urls = this.copy;
       this.url = this.urls[this.index];
     }
-
+    const search = document.location.search;
+    if (search.includes('oneplayer=true')) {
+      this.index = parseInt(search.match(/\d/), 0);
+    }
     this.render();
   }
 }

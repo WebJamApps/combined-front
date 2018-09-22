@@ -121,6 +121,12 @@
             </a>
           </div>
           <div class="menu-item" if.bind="Menu =='music'">
+            <a paper-drawer-toggle href="/music/songs" class="nav-link" click.delegate="close()">
+              <span class="fa fa-music"></span>
+              <span class="nav-item" if.bind="fullmenu">Songs</span>
+            </a>
+          </div>
+          <div class="menu-item" if.bind="Menu =='music'">
             <a paper-drawer-toggle href="/music/buymusic" class="nav-link" click.delegate="close()">
               <span class="fa fa-money"></span>
               <span class="nav-item" if.bind="fullmenu">Buy Music</span>
