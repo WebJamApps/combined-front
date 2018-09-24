@@ -41,7 +41,7 @@ export class MusicPlayer {
           <section id="playSection" className="col-12 mt-2 mr-0 col-md-7" style={{ display: 'inline', textAlign: 'center' }}>
             <ReactPlayer
               style={{ backgroundColor: '#eee', textAlign: 'center' }}
-              url={this.url[0]}
+              url={this.url.url}
               playing={this.playing}
               controls
               onEnded={this.playEnd}
@@ -64,7 +64,7 @@ Url copied Url to clipboard
             </span>
           </section>
           <section className="col-12 col-md-7 mt-1" style={{ fontSize: '0.8em' }}>
-            {this.url[1]}
+            {this.url.title}
           </section>
           <section className="mt-0 col-12 col-md-7">
             <button id="play-pause" role="menu" onClick={this.play}>Play/Pause</button>
