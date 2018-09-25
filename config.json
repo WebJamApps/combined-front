@@ -1,58 +1,98 @@
 {
-  "mission": {
-    "urls": [["DITR.mp3", "Down In The River - Josh & Maria Sherman"],
-      ["https://dl.dropboxusercontent.com/s/umeqd0irknjymnp/Narthex.mp3?dl=0", "Narthex by Jonathan Rundman - Josh & Maria Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/alleluia-alleluia-give-thanks", "Alleluia Alleluia Give Thanks - Josh & Maria Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/comeallyoupeople", "Come All You People - Josh & Maria Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/ithelordofseaandskyhereiamlord", "I The Lord Of Sea And Sky Here I Am Lord - Josh & Maria Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/one-bread-one-body", "One Bread One Body - Josh & Maria Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/canticle-for-departure", "Canticle For Departure by Jonathan Rundman - Josh & Maria Sherman"]],
-    "_urls": [["DITR.mp3", "Down In The River - Josh & Maria Sherman"],
-      ["https://dl.dropboxusercontent.com/s/umeqd0irknjymnp/Narthex.mp3?dl=0", "Narthex by Jonathan Rundman - Josh & Maria Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/alleluia-alleluia-give-thanks", "Alleluia Alleluia Give Thanks - Josh & Maria Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/comeallyoupeople", "Come All You People - Josh & Maria Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/ithelordofseaandskyhereiamlord", "I The Lord Of Sea And Sky Here I Am Lord - Josh & Maria Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/one-bread-one-body", "One Bread One Body - Josh & Maria Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/canticle-for-departure", "Canticle For Departure by Jonathan Rundman - Josh & Maria Sherman"]]
-  },
-
-  "pub": {
-    "urls": [
-      [
-        "https://soundcloud.com/joshandmariamusic/still-havent-found-what-im-looking-for",
-        "I Still Haven't Found What I'm Looking For by U2 - Josh & Maria Sherman"
-      ],
-      ["https://soundcloud.com/joshandmariamusic/cups-when-im-gone", "Cups (when i'm gone) by A. P. Carter - Josh & Maria Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/im-yours", "I'm Yours by Jason Mraz - Josh & Maria Sherman"]
-    ],
-    "_urls": [
-      [
-        "https://soundcloud.com/joshandmariamusic/still-havent-found-what-im-looking-for",
-        "I Still Haven't Found What I'm Looking For by U2 - Josh & Maria Sherman"
-      ],
-      ["https://soundcloud.com/joshandmariamusic/cups-when-im-gone", "Cups (when i'm gone) by A. P. Carter - Josh & Maria Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/im-yours", "I'm Yours by Jason Mraz - Josh & Maria Sherman"]
-    ]
-  },
-
-  "original": {
-    "urls": [["https://dl.dropboxusercontent.com/s/h7xolhpjst6spbd/Dark%20Light.mp3?dl=0", "Dark Light - Josh & Maria Sherman"],
-      ["https://dl.dropboxusercontent.com/s/3tisiordjrgjkoq/Good%20Enough.mp3?dl=0", "Good Enough - Josh & Maria Sherman"],
-      ["https://dl.dropboxusercontent.com/s/ceqa0bk1swccgs2/Don%27t%20Go.mp3?dl=0", "Don't Go - Web Jam Band"],
-      ["MRM.mp3", "Misty Rainy Morning - Web Jam Band"],
-      ["AT.mp3", "Alone Time - Web Jam Band"],
-      ["TTGA.mp3", "Try to Get Along - Web Jam Band"],
-      ["https://www.youtube.com/embed/ach2ubW21h4?origin=https://web-jam-back-dev.herokuapp.com", "Boogie Board Rash - Josh Sherman"],
-      ["https://www.youtube.com/embed/mCvUBjuzfo8?origin=https://web-jam-back-dev.herokuapp.com", "Hey Red - Josh Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/good-enough", "Good Enough - Josh & Maria Sherman"]],
-    "_urls": [["https://dl.dropboxusercontent.com/s/h7xolhpjst6spbd/Dark%20Light.mp3?dl=0", "Dark Light - Josh & Maria Sherman"],
-      ["https://dl.dropboxusercontent.com/s/3tisiordjrgjkoq/Good%20Enough.mp3?dl=0", "Good Enough - Josh & Maria Sherman"],
-      ["https://dl.dropboxusercontent.com/s/ceqa0bk1swccgs2/Don%27t%20Go.mp3?dl=0", "Don't Go - Web Jam Band"],
-      ["MRM.mp3", "Misty Rainy Morning - Web Jam Band"],
-      ["AT.mp3", "Alone Time - Web Jam Band"],
-      ["TTGA.mp3", "Try to Get Along - Web Jam Band"],
-      ["https://www.youtube.com/embed/ach2ubW21h4?origin=http://web-jam-back-dev.herokuapp.com", "Boogie Board Rash - Josh Sherman"],
-      ["https://www.youtube.com/embed/mCvUBjuzfo8?origin=http://web-jam-back-dev.herokuapp.com", "Hey Red - Josh Sherman"],
-      ["https://soundcloud.com/joshandmariamusic/good-enough", "Good Enough - Josh & Maria Sherman"]]
-  }
+  "songs": [
+    {
+      "title": "Down In The River - Josh & Maria Sherman",
+      "category": "mission",
+      "url": "DITR.mp3"
+    }, {
+      "title": "Narthex by Jonathan Rundman - Josh & Maria Sherman",
+      "category": "mission",
+      "url": "https://dl.dropboxusercontent.com/s/umeqd0irknjymnp/Narthex.mp3?dl=0"
+    },
+    {
+      "title": "Alleluia Alleluia Give Thanks - Josh & Maria Sherman",
+      "category": "mission",
+      "url": "https://soundcloud.com/joshandmariamusic/alleluia-alleluia-give-thanks"
+    },
+    {
+      "title": "Come All You People - Josh & Maria Sherman",
+      "category": "mission",
+      "url": "https://soundcloud.com/joshandmariamusic/comeallyoupeople"
+    },
+    {
+      "title": "I The Lord Of Sea And Sky Here I Am Lord - Josh & Maria Sherman",
+      "category": "mission",
+      "url": "https://soundcloud.com/joshandmariamusic/ithelordofseaandskyhereiamlord"
+    },
+    {
+      "title": "One Bread One Body - Josh & Maria Sherman",
+      "category": "mission",
+      "url": "https://soundcloud.com/joshandmariamusic/one-bread-one-body"
+    },
+    {
+      "title": "Canticle For Departure by Jonathan Rundman - Josh & Maria Sherman",
+      "category": "mission",
+      "url": "https://soundcloud.com/joshandmariamusic/canticle-for-departure"
+    },
+    {
+      "title": "I Still Haven't Found What I'm Looking For by U2 - Josh & Maria Sherman",
+      "category": "pub",
+      "url": "https://soundcloud.com/joshandmariamusic/still-havent-found-what-im-looking-for"
+    },
+    {
+      "title": "Cups (when i'm gone) by A. P. Carter - Josh & Maria Sherman",
+      "category": "pub",
+      "url": "https://soundcloud.com/joshandmariamusic/cups-when-im-gone"
+    },
+    {
+      "title": "I'm Yours by Jason Mraz - Josh & Maria Sherman",
+      "category": "pub",
+      "url": "https://soundcloud.com/joshandmariamusic/im-yours"
+    },
+    {
+      "title": "Dark Light - Josh & Maria Sherman",
+      "category": "original",
+      "url": "https://dl.dropboxusercontent.com/s/h7xolhpjst6spbd/Dark%20Light.mp3?dl=0"
+    },
+    {
+      "title": "Good Enough - Josh & Maria Sherman",
+      "category": "original",
+      "url": "https://dl.dropboxusercontent.com/s/3tisiordjrgjkoq/Good%20Enough.mp3?dl=0"
+    },
+    {
+      "title": "Don't Go - Web Jam Band",
+      "category": "original",
+      "url": "https://dl.dropboxusercontent.com/s/ceqa0bk1swccgs2/Don%27t%20Go.mp3?dl=0"
+    },
+    {
+      "title": "Misty Rainy Morning - Web Jam Band",
+      "category": "original",
+      "url": "MRM.mp3"
+    },
+    {
+      "title": "Alone Time - Web Jam Band",
+      "category": "original",
+      "url": "AT.mp3"
+    },
+    {
+      "title": "Try to Get Along - Web Jam Band",
+      "category": "original",
+      "url": "TTGA.mp3"
+    },
+    {
+      "title": "Boogie Board Rash - Josh Sherman",
+      "category": "original",
+      "url": "https://www.youtube.com/embed/ach2ubW21h4?origin=https://web-jam-back-dev.herokuapp.com"
+    },
+    {
+      "title": "Hey Red - Josh Sherman",
+      "category": "original",
+      "url": "https://www.youtube.com/embed/mCvUBjuzfo8?origin=https://web-jam-back-dev.herokuapp.com"
+    },
+    {
+      "title": "Good Enough - Josh & Maria Sherman",
+      "category": "original",
+      "url": "https://soundcloud.com/joshandmariamusic/good-enough"
+    }
+  ]
 }

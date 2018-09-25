@@ -2,6 +2,6 @@ import data from '../../config.json';
 
 
 export class Pub {
-  urls = data.pub.urls;
-  _urls = data.pub._urls;
+  urls = data.songs.filter(song => song.category === 'pub');
+  _urls = Array.from(data.songs.filter(song => song.category === 'pub'));
 }
