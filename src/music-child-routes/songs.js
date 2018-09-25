@@ -2,14 +2,14 @@ import data from '../../config.json';
 
 
 export class Songs {
-  oUrls = data.original.urls;
-  _oUrls = data.original._urls;
+  oUrls = data.songs.filter(song => song.category === 'original');
+  _oUrls = Array.from(data.songs.filter(song => song.category === 'original'));
 
-  pUrls = data.pub.urls;
-  _pUrls = data.pub._urls;
+  pUrls = data.songs.filter(song => song.category === 'pub');
+  _pUrls = Array.from(data.songs.filter(song => song.category === 'pub'));
 
-  mUrls = data.mission.urls;
-  _mUrls = data.mission._urls;
+  mUrls = data.songs.filter(song => song.category === 'mission');
+  _mUrls = Array.from(data.songs.filter(song => song.category === 'mission'));
 
   constructor() {
     this.originalElement = null;
