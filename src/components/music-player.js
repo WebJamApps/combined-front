@@ -188,7 +188,7 @@ Url copied Url to clipboard
 
   bind() {
     // look for the id of the song and then filter the song from the rest of the list.
-    const search = document.location.search;
+    const search = window.location.search;
     const oneplayer = search.includes('oneplayer=true');
 
     // if there is no song data, then use data from aurelia binding.
