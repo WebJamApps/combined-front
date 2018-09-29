@@ -85,7 +85,7 @@ Url copied Url to clipboard
   pressKey() {}
 
   get playUrl() {
-    return `${document.location.origin}${document.location.pathname}?oneplayer=true&id=${this.url.id}`;
+    return `${document.location.origin}/music/${this.url.category}?oneplayer=true&id=${this.url.id}`;
   }
 
   /**
