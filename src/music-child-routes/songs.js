@@ -2,7 +2,6 @@ import data from '../../config.json';
 
 
 export class Songs {
-
   urls = data.songs;
   _urls = Array.from(data.songs);
 
