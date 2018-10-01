@@ -151,8 +151,7 @@
     "eslint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
     "postinstall": "npm run fix:aurelia-val && npm start -- build",
-    "protractor": "nps e2e",
-    "prepare": "npm run snyk-protect"
+    "protractor": "nps e2e"
   },
   "snyk": true
 }
