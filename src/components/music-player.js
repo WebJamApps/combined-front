@@ -26,6 +26,7 @@ export class MusicPlayer {
     this.shown = false;
     this.navigator = navigator;
     this.isShuffleOn = false;
+    this.first = true;
 
     // after the component is bound to the DOM. remove the swiping-area from the DOM.
     const swipe = document.getElementsByClassName('swipe-area');
@@ -84,7 +85,7 @@ Url copied Url to clipboard
   pressKey() {}
 
   get playUrl() {
-    return `${document.location.origin}${document.location.pathname}?oneplayer=true&index=${this.index}`;
+    return `${document.location.origin}${document.location.pathname}?oneplayer=true&id=${this.url.id}`;
   }
 
   /**
@@ -186,15 +187,25 @@ Url copied Url to clipboard
   }
 
   bind() {
+    // look for the id of the song and then filter the song from the rest of the list.
+    const search = window.location.search;
+    const oneplayer = search.includes('oneplayer=true');
+
+    // if there is no song data, then use data from aurelia binding.
     if (!this.urls || !this._urls) {
       this.urls = this.data;
       this._urls = this.copy;
+    }
+
+    // if it's not in one player mode, then just go on as normal.
+    if (!oneplayer) {
       this.url = this.urls[this.index];
+    } else if (this.first) {
+      const id = search.match(/id=.+/g)[0].slice(3);
+      this.url = this.urls.filter(song => song.id === id)[0];
+      this.first = false;
     }
-    const search = document.location.search;
-    if (search.includes('oneplayer=true')) {
-      this.index = parseInt(search.match(/\d/), 0);
-    }
+
     this.render();
   }
 }
