@@ -9,12 +9,26 @@ describe('++MusicPlayer tests', () => {
       + '</section><button id="shuffle"></button><button id="play-pause"></button></div>';
     mp = new MusicPlayer();
     mp.element = document.getElementById('renderer');
-    mp.data = [['DITR.mp3', 'Down In The River - Web Jam Band'],
-      ['https://soundcloud.com/joshandmariamusic/alleluia-alleluia-give-thanks', 'Alleluia Alleluia Give Thanks - Web Jam Band'],
-      ['https://soundcloud.com/joshandmariamusic/comeallyoupeople', 'Come All You People - Web Jam Band'],
-      ['https://soundcloud.com/joshandmariamusic/ithelordofseaandskyhereiamlord', 'I The Lord Of Sea And Sky Here I Am Lord - Web Jam Band'],
-      ['https://soundcloud.com/joshandmariamusic/one-bread-one-body', 'One Bread One Body - Josh Sherman'],
-      ['https://soundcloud.com/joshandmariamusic/canticle-for-departure', 'Canticle For Departure - Josh Sherman']];
+    mp.data = [
+      {
+        title: 'I Still Haven"t Found What I"m Looking For by U2 - Josh & Maria Sherman',
+        category: 'pub',
+        url: 'https://soundcloud.com/joshandmariamusic/still-havent-found-what-im-looking-for',
+        id: '28ru9weis2309uoi4jrgbefieqr'
+      },
+      {
+        title: 'Cups (when i"m gone) by A. P. Carter - Josh & Maria Sherman',
+        category: 'pub',
+        url: 'https://soundcloud.com/joshandmariamusic/cups-when-im-gone',
+        id: '28ru9weis2309ur9r7ifuviuiu'
+      },
+      {
+        title: 'I"m Yours by Jason Mraz - Josh & Maria Sherman',
+        category: 'pub',
+        url: 'https://soundcloud.com/joshandmariamusic/im-yours',
+        id: '28ru9weis2309kjh34ig9gfui'
+      }
+    ];
     mp.copy = mp.data;
     mp.urls = mp.data;
     mp._urls = mp.data;
@@ -82,5 +96,15 @@ describe('++MusicPlayer tests', () => {
     setTimeout(() => {
       done();
     }, 1510);
+  });
+
+  it('should render with a particular song with first true', (done) => {
+    Object.defineProperty(window, 'location', {
+      value: { search: 'oneplayer=true&id=28ru9weis2309ur9r7ifuviuiu' },
+      writable: true
+    });
+    mp.first = true;
+    mp.bind();
+    done();
   });
 });

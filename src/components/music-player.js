@@ -23,10 +23,10 @@ export class MusicPlayer {
     this.copyShare = this.copyShare.bind(this);
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
-    this.playUrl = `${document.location.href}?oneplayer=true`;
     this.shown = false;
     this.navigator = navigator;
     this.isShuffleOn = false;
+    this.first = true;
 
     // after the component is bound to the DOM. remove the swiping-area from the DOM.
     const swipe = document.getElementsByClassName('swipe-area');
@@ -42,7 +42,7 @@ export class MusicPlayer {
           <section id="playSection" className="col-12 mt-2 mr-0 col-md-7" style={{ display: 'inline', textAlign: 'center' }}>
             <ReactPlayer
               style={{ backgroundColor: '#eee', textAlign: 'center' }}
-              url={this.url[0]}
+              url={this.url.url}
               playing={this.playing}
               controls
               onEnded={this.playEnd}
@@ -65,7 +65,7 @@ Url copied Url to clipboard
             </span>
           </section>
           <section className="col-12 col-md-7 mt-1" style={{ fontSize: '0.8em' }}>
-            {this.url[1]}
+            {this.url.title}
           </section>
           <section className="mt-0 col-12 col-md-7">
             <button id="play-pause" role="menu" onClick={this.play}>Play/Pause</button>
@@ -83,6 +83,10 @@ Url copied Url to clipboard
   }
 
   pressKey() {}
+
+  get playUrl() {
+    return `${document.location.origin}/music/${this.url.category}?oneplayer=true&id=${this.url.id}`;
+  }
 
   /**
    * Shuffles array in place. ES6 version
@@ -183,10 +187,23 @@ Url copied Url to clipboard
   }
 
   bind() {
+    // look for the id of the song and then filter the song from the rest of the list.
+    const search = window.location.search;
+    const oneplayer = search.includes('oneplayer=true');
+
+    // if there is no song data, then use data from aurelia binding.
     if (!this.urls || !this._urls) {
       this.urls = this.data;
       this._urls = this.copy;
+    }
+
+    // if it's not in one player mode, then just go on as normal.
+    if (!oneplayer) {
       this.url = this.urls[this.index];
+    } else if (this.first) {
+      const id = search.match(/id=.+/g)[0].slice(3);
+      this.url = this.urls.filter(song => song.id === id)[0];
+      this.first = false;
     }
 
     this.render();
