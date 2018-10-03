@@ -3,10 +3,8 @@
     <div class="${currentStyles.sidebarClass} drawer-container" style="display:none">
       <div class="drawer" style="background-color: #c0c0c0">
         <div if.bind="fullmenu" class="navImage">
-          <img id="webjamwidelogo" src="${currentStyles.sidebarImagePath}" style="width:182px; margin-right:0"
-          if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'">
-          <img id="ohafbutterflies" src="${currentStyles.sidebarImagePath}" style="width:182px; margin-right:0; margin-top:-4px"
-          if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
+          <img id="webjamwidelogo" src="${currentStyles.sidebarImagePath}" style="width:182px; margin-right:0" if.bind="Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer'">
+          <img id="ohafbutterflies" src="${currentStyles.sidebarImagePath}" style="width:182px; margin-right:0; margin-top:-4px" if.bind="Menu === 'charity' || Menu === 'volunteer' || Menu === 'ohaf' || role === 'Charity' || role ==='Volunteer'">
         </div>
         <div if.bind="!fullmenu && (Menu !== 'charity' && Menu !== 'volunteer' && Menu !== 'ohaf' && role !== 'Charity' && role !=='Volunteer')" style="background-color:#2a222a;width:50px;height:91px" class="navImage">
         </div>
@@ -120,12 +118,13 @@
               <span class="nav-item" if.bind="fullmenu">Pub Songs</span>
             </a>
           </div>
-          <div class="menu-item" if.bind="Menu =='music'">
+          <!-- TODO put back after prod release -->
+          <!-- <div class="menu-item" if.bind="Menu =='music'">
             <a paper-drawer-toggle href="/music/songs" class="nav-link" click.delegate="close()">
               <span class="fa fa-music"></span>
               <span class="nav-item" if.bind="fullmenu">Songs</span>
             </a>
-          </div>
+          </div> -->
           <div class="menu-item" if.bind="Menu =='music'">
             <a paper-drawer-toggle href="/music/buymusic" class="nav-link" click.delegate="close()">
               <span class="fa fa-money"></span>
