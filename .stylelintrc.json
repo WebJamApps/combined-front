@@ -12,6 +12,7 @@
     "selector-list-comma-newline-after": null,
     "length-zero-no-unit": null,
     "unit-no-unknown": true,
-    "unit-blacklist": ""
+    "unit-blacklist": "",
+    "declaration-block-semicolon-space-after": null
   }
 }
