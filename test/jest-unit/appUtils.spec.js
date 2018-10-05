@@ -87,11 +87,19 @@ describe('the appUtils', () => {
     expect(cb).toBe(true);
     done();
   });
-  // it('provides a click function', (done) => {
-  //   document.body.innerHTML = '<div class="page-host"><div class="swipe-area"></div><div class="drawer"></div></div>';
-  //   const myEvent = { target: { className: 'funtimes' } };
-  //   au.clickFunc(myEvent);
-  //   expect(document.getElementsByClassName('page-host')[0].style.overflow).toBe('auto');
-  //   done();
-  // });
+  it('handles the screen size functionality', (done) => {
+    document.body.innerHTML = '<div class="mobile-menu-toggle"><div class="swipe-area"></div><div class="drawer"></div></div>';
+    au.handleScreenSize({ menuToggled: false }, false, { style: { display: '' }, css(a, b) {} });
+    expect(document.getElementsByClassName('swipe-area')[0].style.display).toBe('block');
+    done();
+  });
+  it('provides a click function', (done) => {
+    window.$ = a => ({
+      parent() { return { css(a, b) {} }; }
+    });
+    document.body.innerHTML = '<div class="mobile-menu-toggle page-host"><div class="swipe-area"></div><div class="drawer"></div></div>';
+    au.clickFunc({ target: { className: 'menu' } });
+    expect(document.getElementsByClassName('mobile-menu-toggle')[0].style.display).toBe('block');
+    done();
+  });
 });
