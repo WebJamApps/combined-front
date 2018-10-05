@@ -3,15 +3,19 @@ import data from '../../config.json';
 
 export class Songs {
   urls = data.songs;
+
   _urls = Array.from(data.songs);
 
   oUrls = data.songs.filter(song => song.category === 'originals');
+
   _oUrls = Array.from(data.songs.filter(song => song.category === 'originals'));
 
   pUrls = data.songs.filter(song => song.category === 'pub');
+
   _pUrls = Array.from(data.songs.filter(song => song.category === 'pub'));
 
   mUrls = data.songs.filter(song => song.category === 'mission');
+
   _mUrls = Array.from(data.songs.filter(song => song.category === 'mission'));
 
   constructor() {

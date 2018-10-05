@@ -17,9 +17,11 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
+
   validateObject() {
     return Promise.resolve([{ name: 'john', valid: true }]);
   }
+
   validateProperty() {
     return Promise.resolve({});
   }
@@ -120,9 +122,9 @@ describe('the librarian module', () => {
     done();
   });
 
-  it('should validate textFile', (done) => {
-    // global.CSVFilePath = { files: [] };
-    // librarian.textFileValidate();
-    done();
-  });
+  // it('should validate textFile', (done) => {
+  //   // global.CSVFilePath = { files: [] };
+  //   // librarian.textFileValidate();
+  //   done();
+  // });
 });

@@ -39,6 +39,7 @@ class HttpStub2 {
       resolve({ json: () => response });
     });
   }
+
   configure(fn) {
     this.__configureCallback = fn;
     return this.__configureReturns;

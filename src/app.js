@@ -23,8 +23,11 @@ export class App {
   }
 
   email = '';
+
   password = '';
+
   authenticated = false;
+
   token = '';
 
   @bindable
@@ -219,14 +222,17 @@ export class App {
     this.role = '';
     this.appState.isOhafLogin = false;
   }
+
   get currentRoute() {
     if (this.router.currentInstruction) return this.router.currentInstruction.config.name;
     return null;
   }
+
   get currentRouteFrag() {
     if (this.router.currentInstruction) return this.router.currentInstruction.fragment;
     return null;
   }
+
   checkNavMenu() {
     this.Menu = 'wj';
     if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') this.Menu = 'ohaf';
@@ -248,6 +254,7 @@ export class App {
       else this.Menu = 'wj';
     } else this.Menu = 'wj';
   }
+
   setFooter() {
     const footer = document.getElementById('wjfooter');
     let color = '';
@@ -272,6 +279,7 @@ export class App {
       + 'Powered by <a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>';
     }
   }
+
   get currentStyles() {
     let result = {};
     this.style = 'wj';
@@ -304,6 +312,7 @@ export class App {
     this.setOtherStyles();
     return result;
   }
+
   setOtherStyles() {
     const menuDrawer = document.getElementsByClassName('drawer')[0];
     const navList = document.getElementsByClassName('nav-list')[0];
@@ -326,6 +335,7 @@ export class App {
       }
     }
   }
+
   buildPTag(object, objectSelector, objectSelectorOther, objectStoreResult) {
     for (let l = 0; l < object.length; l += 1) {
       let typeHtml = '';
@@ -344,6 +354,7 @@ export class App {
       object[l][objectStoreResult] = typeHtml;
     }
   }
+
   selectPickedChange(selectorObj, thisObj, mainSelectedList, selectorOtherVariable, otherVariable, selectorUseThis = false, userVariable) {
     if (userVariable) {
       selectorObj[userVariable] = thisObj[mainSelectedList];
@@ -363,6 +374,7 @@ export class App {
       selectorObj[selectorOtherVariable] = '';
     }
   }
+
   async updateById(route, id, dataObj) {
     try {
       const cb = await this.httpClient.fetch(route + id, {
@@ -403,6 +415,7 @@ export class App {
       header.parentNode.removeChild(header);
     }
   }
+
   detached() {
     this.manager.off('swipe', this.close.bind(this));
     const ph = document.getElementsByClassName('page-host')[0];

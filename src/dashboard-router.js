@@ -2,6 +2,7 @@ import { PLATFORM } from 'aurelia-pal';
 
 export class DashboardRouter {
   heading = 'Dashboard Router';
+
   configureRouter(config, router) {
     config.map([
       {

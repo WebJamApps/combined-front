@@ -7,6 +7,7 @@ export class UserUtil {
   // console.log(this.registerClass.register);
   // this.nevermind = this.registerClass.nevermind;
   }
+
   // activate(){
   //   this.userClass.verifyEmail();
   // }

@@ -11,12 +11,19 @@ export class Bookshelf {
   }
 
   mediaTypes = [];
+
   siteLocations = [];
+
   filterby = ['keyword', 'media type', 'location'];
+
   selectedFilter = [];
+
   keyword = false;
+
   mediaType = false;
+
   siteLocation = false;
+
   filters = [
     { value: '', keys: ['title', 'type', 'author', 'numberPages', 'dateOfPub', 'siteLocation', 'access', 'comments'] },
     { value: '', keys: ['type'] },

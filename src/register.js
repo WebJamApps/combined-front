@@ -8,6 +8,7 @@ export class Register {
     this.app = app;
     this.registerClass = new Register_();
   }
+
   // showRegister(appName) {
   //   this.registerClass.register(appName);
   // }

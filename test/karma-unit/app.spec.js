@@ -37,14 +37,17 @@ describe('the App module', () => {
         ok();
         return this;
       }
+
       useStandardConfiguration() {
         ok();
         return this;
       }
+
       withBaseUrl() {
         ok();
         return this;
       }
+
       withInterceptor(token) {
         expect(token).toBe(app1.auth.tokenInterceptor);
         ok();

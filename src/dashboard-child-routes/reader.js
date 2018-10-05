@@ -43,6 +43,7 @@ export class Reader {
       this.activate();
     }
   }
+
   updateBook(book) {
     this.app.httpClient.fetch(`/book/${this.book._id}`, {
       method: 'put',
@@ -54,6 +55,7 @@ export class Reader {
         this.activate();
       });
   }
+
   checkInBook(book) {
     this.book = book;
     this.book.checkedOutBy = '';
