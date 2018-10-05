@@ -138,7 +138,7 @@
   },
   "scripts": {
     "start": "nps",
-    "test": "npm run test:lint && rm -rf coverage && npm run test:jest && npm run test:jest-react && npm run test:karma && npm run combine-coverage && npm run protractor",
+    "test": "yarn run test:stylelint && npm run test:lint && rm -rf coverage && npm run test:jest && npm run test:jest-react && npm run test:karma && npm run combine-coverage && npm run protractor",
     "combine-coverage": "istanbul-combine -d coverage -p none -r lcov -r html coverage/jest-react/coverage-final.json coverage/jest/coverage-final.json coverage/coverage-karma/coverage-final.json",
     "test:jest": "cross-env NODE_ENV=test && jest --no-cache --config jest.config.json --notify",
     "protest": "nps test",
@@ -154,7 +154,7 @@
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
     "postinstall": "npm run fix:aurelia-val && npm start -- build",
     "protractor": "nps e2e",
-    "stylelint": "stylelint \"src/**/*.html\" && stylelint \"static/**/*.css\""
+    "test:stylelint": "stylelint \"src/**/*.html\" && stylelint \"static/**/*.css\""
   },
   "snyk": true
 }
