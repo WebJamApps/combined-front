@@ -1,6 +1,7 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
+    "no-empty-source": null,
     "no-eol-whitespace": null,
     "color-hex-length": null,
     "rule-empty-line-before": ["always", {
@@ -12,6 +13,12 @@
     "selector-list-comma-newline-after": null,
     "length-zero-no-unit": null,
     "unit-no-unknown": true,
-    "unit-blacklist": ""
+    "unit-blacklist": "",
+    "declaration-block-semicolon-space-after": null,
+    "no-descending-specificity": null,
+    "font-family-no-missing-generic-family-keyword": null,
+    "declaration-block-trailing-semicolon": null,
+    "indentation": null,
+    "no-missing-end-of-source-newline": null
   }
 }

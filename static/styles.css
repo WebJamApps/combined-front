@@ -201,10 +201,6 @@ audio::-webkit-media-controls-panel {
   background-color: #1e90ff;
 }
 
-/*.active,
-.dot:hover {
-  background-color: #717171;
-}*/
 .answer {
   margin-bottom: 1em;
   font-style: italic;
@@ -223,24 +219,8 @@ audio::-webkit-media-controls-panel {
   animation-delay: 50ms;
 }
 
-.aut-sort::after {
-  font-family: FontAwesome;
-  padding-left: 0.5em;
-  width: 1.28571429em;
-  display: inline-block;
-  text-align: center;
-}
-
-.aut-sortable::after {
-  content: "\f0dc";
-}
-
 .aut-asc::after {
   content: "\f160";
-}
-
-.aut-desc::after {
-  content: "\f161";
 }
 
 .aut-sort::after {
@@ -249,14 +229,7 @@ audio::-webkit-media-controls-panel {
   width: 1.28571429em;
   display: inline-block;
   text-align: center;
-}
-
-.aut-sortable::after {
   content: "\f0dc";
-}
-
-.aut-asc::after {
-  content: "\f160";
 }
 
 .aut-desc::after {
@@ -265,7 +238,6 @@ audio::-webkit-media-controls-panel {
 
 .button-lib {
   height: 0.35in;
-  /*width: 0.95in;*/
   text-transform: none;
   margin: 20px 6cm 0;
   background-color: #c0c0c0;
@@ -545,7 +517,7 @@ audio::-webkit-media-controls-panel {
   position: relative;
 }
 
-.selectBox select {
+.selectBoxBig select {
   width: 100%;
   font-weight: bold;
 }
