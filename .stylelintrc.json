@@ -17,6 +17,8 @@
     "declaration-block-semicolon-space-after": null,
     "no-descending-specificity": null,
     "font-family-no-missing-generic-family-keyword": null,
-    "declaration-block-trailing-semicolon": null
+    "declaration-block-trailing-semicolon": null,
+    "indentation": null,
+    "no-missing-end-of-source": null
   }
 }
