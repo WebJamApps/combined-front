@@ -46,10 +46,12 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
+
   validateObject() {
     // console.log(rules);
     return Promise.resolve([{ name: 'john', valid: true }]);
   }
+
   validateProperty() {
     // console.log(rules);
     return Promise.resolve({});

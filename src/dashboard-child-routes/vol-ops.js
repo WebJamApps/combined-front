@@ -12,7 +12,9 @@ import {
 @inject(App, ValidationControllerFactory, Validator)
 export class VolunteerOpps {
   controller = null;
+
   validator = null;
+
   constructor(app, controllerFactory, validator) {
     // this.validationRules = ValidationRules;
     this.app = app;
@@ -30,6 +32,7 @@ export class VolunteerOpps {
     this.showVolunteers = false;
     this.events = [];
   }
+
   async activate() {
     this.counter = 1;
     this.canSubmit2 = false;
@@ -260,6 +263,7 @@ export class VolunteerOpps {
   validate2() {
     return this.validator2.validateObject(this.voOpp);
   }
+
   /* istanbul ignore next */
   setupValidation2() {
     ValidationRules

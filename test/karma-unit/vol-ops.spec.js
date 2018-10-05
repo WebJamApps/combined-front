@@ -23,12 +23,14 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
+
   validateObject() {
     // console.log(rules);
     return Promise.resolve([{
       rule: Object, object: Object, propertyName: 'voStartTime', valid: true, message: ''
     }]);
   }
+
   validateProperty() {
     // console.log(rules);
     return Promise.resolve({});
@@ -41,6 +43,7 @@ class ValidatorMockFalse extends Validator {
     this.a = a;
     this.b = b;
   }
+
   validateObject() {
     // console.log(rules);
     // console.log('obj');
@@ -49,6 +52,7 @@ class ValidatorMockFalse extends Validator {
       rule: Object, object: Object, propertyName: 'voStartTime', valid: false, message: ''
     }]);
   }
+
   validateProperty() {
     // console.log(rules);
     return Promise.resolve({});

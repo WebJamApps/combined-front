@@ -1,5 +1,6 @@
 export class MusicRouter {
   heading = 'Music Router';
+
   configureRouter(config, router) {
     config.map([
       {

@@ -15,6 +15,7 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
+
   validateObject(obj) {
     // console.log(rules);
     if (obj.charityTypes.indexOf('True') > -1) {
@@ -26,6 +27,7 @@ class ValidatorMock extends Validator {
       rule: Object, object: Object, propertyName: 'charityPhoneNumber', valid: false, message: 'Charity Phone Number is not correct'
     }]);
   }
+
   validateProperty() {
     // console.log(rules);
     return Promise.resolve({});

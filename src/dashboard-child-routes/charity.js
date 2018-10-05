@@ -10,7 +10,9 @@ import { showCheckboxes } from '../commons/utils';
 @inject(App, ValidationControllerFactory, Validator)
 export class Charity {
   controller = null;
+
   validator = null;
+
   constructor(app, controllerFactory, validator) {
     this.showCheckboxes = showCheckboxes;
     this.app = app;
@@ -23,6 +25,7 @@ export class Charity {
     this.charityTypeValid = false;
     this.uid = '';
   }
+
   async activate() {
     let res;
     this.counter = 1;
@@ -47,6 +50,7 @@ export class Charity {
     }
     return this.charities;
   }
+
   async checkEvents() {
     for (let i = 0; i < this.charities.length; i += 1) {
       let foundEvents = [];
@@ -56,6 +60,7 @@ export class Charity {
       this.charities[i].hasEvents = foundEvents.length > 0;
     }
   }
+
   createNewCharity() {
     const charity = {
       charityEmail: '',
@@ -100,6 +105,7 @@ export class Charity {
     else document.getElementById('charityDash').scrollIntoView();
     this.buildErrors();
   }
+
   buildErrors() {
     const errorList = document.getElementById('valErrors');
     let innerH = '';
@@ -127,6 +133,7 @@ export class Charity {
     this.typeOther = this.updateCharity.charityTypes.includes('other');
     this.updateCharity.charityTypeOther = !this.typeOther ? '' : this.updateCharity.charityTypeOther;
   }
+
   setupValidation2() {
     ValidationRules
       .ensure('charityTypes').required().minLength(1).withMessage('charity type is required')
@@ -157,6 +164,7 @@ export class Charity {
       .withMessage('State is required')
       .on(this.updateCharity);
   }
+
   updateCanSubmit2(validationResults) {
     let valid = true;
     const nub = document.getElementsByClassName('updateButton')[0];

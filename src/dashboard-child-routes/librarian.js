@@ -39,6 +39,7 @@ export class Librarian {
   }
 
   types = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audio', 'graphic'];
+
   accessArray = ['Private', 'Public'];
   // newBook = null;
 
@@ -187,6 +188,7 @@ export class Librarian {
     this.reader.onerror = errorHandler;
     this.reader.readAsText(CSVFilePath.files[0]);
   }
+
   makeCSVfile() {
     this.app.httpClient.fetch('/book/getall')
       .then(response => response.json())

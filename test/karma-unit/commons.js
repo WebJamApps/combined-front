@@ -3,32 +3,40 @@ class RouterStub {
     config: { title: 'Howdy is cool', name: 'yoyo' },
     fragment: {}
   }
+
   configure(handler) {
     if (handler) {
       handler(this);
     }
   }
+
   getRoute() {
     return this.router.currentInstruction.config.title; // name of the route
   }
+
   addPipelineStep() {
     // console.log(AuthorizeStep);
     // do nothing
   }
+
   addPostRenderStep() {
     // console.log(next);
     // do nothing
   }
+
   options() {
     // do nothing
   }
+
   map(routes) {
     this.routes = routes;
     return this.routes instanceof Array ? this.routes : [this.routes];
   }
+
   navigate(route) {
     return route;
   }
+
   fallbackRoute(opt) {
     this.opt = opt;
   }
@@ -37,6 +45,7 @@ class ConfigStub {
   map(array1) {
     return array1;
   }
+
   fallbackRoute(route) {
     this.route = route;
   }
@@ -45,6 +54,7 @@ class AuthStub {
   setToken(token) {
     this.token = token;
   }
+
   logout() {
     // console.log(data);
     const response = 'user logged out';
@@ -52,16 +62,19 @@ class AuthStub {
       resolve({ json: () => response });
     });
   }
+
   getMe() {
     const response = 'This is user data';
     return new Promise((resolve) => {
       resolve({ json: () => response });
     });
   }
+
   getTokenPayload() {
     const response = this.token;
     return response;
   }
+
   isAuthenticated() {
     this.authenticated = true;
     return this.authenticated;
@@ -73,6 +86,7 @@ class AppStateStub {
     this.is_auth = false;
     this.roles = [];
   }
+
   getUser(uid) {
     if (uid === '1') {
       this.user = {
@@ -142,15 +156,19 @@ class AppStateStub {
       resolve(this.user);
     });
   }
+
   setUser(input) {
     this.user = input;
   }
+
   checkUserRole() {
     return this.roles;
   }
+
   getRoles() {
     return (this.roles);
   }
+
   setRoles(input) {
     this.roles = input;
   }
@@ -172,12 +190,16 @@ class HttpMock {
       volWorkOther: ''
     };
   }
+
   status = 500;
+
   headers = { accept: 'application/json', method: '', url: '' }
+
   configure(fn) {
     this.__configureCallback = fn;
     return this.__configureReturns;
   }
+
   fetch(url, obj) {
     this.headers.url = url;
     this.headers.method = obj ? obj.method : 'GET';

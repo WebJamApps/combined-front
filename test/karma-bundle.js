@@ -1,21 +1,13 @@
 import 'aurelia-polyfills';
 import 'babel-polyfill';
 import 'aurelia-loader-webpack';
-import { install as installJasmineAsync } from 'jest-jasmine2/jasmine_async';
+import { install as installJasmineAsync } from 'jest-jasmine2/build/jasmine_async';
 
 // enable running Promise-returning tests:
 installJasmineAsync(global);
 
-// enable running the same unit tests by using the Jest expect:
-installJestExpect();
-global.jest = false;
-
 // disable stacktrace limit so we do not loose any error information
 Error.stackTraceLimit = Infinity;
-
-// load and run tests:
-const testModuleContexts = loadTestModules();
-runTests(testModuleContexts);
 
 function loadTestModules() {
   const srcContext = require.context(
@@ -39,12 +31,12 @@ function loadTestModules() {
   return [srcContext, testContext];
 }
 
-function runTests(contexts) {
-  contexts.forEach(requireAllInContext);
-}
-
 function requireAllInContext(requireContext) {
   return requireContext.keys().map(requireContext);
+}
+
+function runTests(contexts) {
+  contexts.forEach(requireAllInContext);
 }
 
 /**
@@ -70,8 +62,8 @@ function installJestExpect() {
         const negativeCompare = result.negativeCompare || result.compare;
 
         return this.isNot
-          ? negativeCompare(...arguments)
-          : result.compare.apply(null, arguments);
+          ? negativeCompare(...args)
+          : result.compare.apply(null, args);
       };
     });
 
@@ -79,3 +71,9 @@ function installJestExpect() {
     expect.extend(jestMatchersObject);
   };
 }
+// enable running the same unit tests by using the Jest expect:
+installJestExpect();
+global.jest = false;
+// load and run tests:
+const testModuleContexts = loadTestModules();
+runTests(testModuleContexts);
