@@ -14,8 +14,8 @@ const configForDevelopment = {
   // tokenName: 'token',
   tokenPrefix: 'aurelia',
   responseTokenProp: 'access_token',
-  unlinkUrl: '/auth/unlink/',
-  unlinkMethod: 'get',
+  // unlinkUrl: '/auth/unlink/',
+  // unlinkMethod: 'get',
   authHeader: 'Authorization',
   authToken: 'Bearer',
   withCredentials: true,
@@ -24,7 +24,7 @@ const configForDevelopment = {
   providers: {
     google: {
       name: 'google',
-      url: '/auth/google',
+      url: '/user/auth/google',
       clientId: process.env.GoogleClientId
     }
     // ,
