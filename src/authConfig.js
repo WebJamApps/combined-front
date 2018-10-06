@@ -47,19 +47,20 @@ const configForDevelopment = {
 };
 
 const configForProduction = {
-  providers: {
-    google: {
-      clientId: process.env.GoogleClientId
-    }
-    // ,
-    // linkedin:{
-    //     clientId:'7561959vdub4x1'
-    // },
-    // facebook:{
-    //     clientId:'1653908914832509'
-    // }
-
-  },
+  providers: configForDevelopment.providers,
+  // providers: {
+  //   google: {
+  //     clientId: process.env.GoogleClientId
+  //   }
+  // ,
+  // linkedin:{
+  //     clientId:'7561959vdub4x1'
+  // },
+  // facebook:{
+  //     clientId:'1653908914832509'
+  // }
+  //
+  // },
   baseUrl: process.env.AuthProductionBaseURL,
   // The API specifies that new users register at the POST /users enpoint.
   signupUrl: 'users',
