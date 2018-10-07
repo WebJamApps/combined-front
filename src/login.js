@@ -8,6 +8,7 @@ export class Login {
     this.app = app;
     this.login_Class = new Login_();
   }
+
   attached() {
     this.app.appUtils.checkIfLoggedIn(this.app);
   }

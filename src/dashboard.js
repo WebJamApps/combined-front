@@ -14,6 +14,7 @@ export class Dashboard {
     window.localStorage.setItem('userEmail', this.user.email);
     this.childRoute();
   }
+
   childRoute() {
     if (this.user.userStatus === 'disabled') {
       return this.app.router.navigate('dashboard/user-account');

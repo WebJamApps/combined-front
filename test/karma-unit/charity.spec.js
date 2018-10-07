@@ -15,6 +15,7 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
+
   validateObject(obj) {
     // console.log(rules);
     if (obj.charityTypes.indexOf('True') > -1) {
@@ -26,6 +27,7 @@ class ValidatorMock extends Validator {
       rule: Object, object: Object, propertyName: 'charityPhoneNumber', valid: false, message: 'Charity Phone Number is not correct'
     }]);
   }
+
   validateProperty() {
     // console.log(rules);
     return Promise.resolve({});
@@ -164,30 +166,30 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('creates a new charity in the database with email as quote quote, null, and filled in', (done) => {
-    charity.activate();
-    const user = { name: 'Josh', _id: '1234' };
-    charity.user = user;
-    charity.setupValidation2 = function setupValidation2() {};
-    charity.updateCharity = {
-      charityName: 'test charity',
-      charityCity: '',
-      charityState: '',
-      charityZipCode: '',
-      charityTypes: ['other'],
-      charityManagers: [],
-      charityMngIds: [],
-      charityTypeOther: '',
-      charityTypesHtml: '',
-      charityEmail: ''
-    };
-    document.body.innerHTML = '<div id="charityDash"></div>';
-    charity.updateCharity.charityEmail = '';
-    charity.createCharity();
-    charity.updateCharity.charityEmail = 'howdy@howdy.com';
-    charity.createCharity();
-    done();
-  });
+  // it('creates a new charity in the database with email as quote quote, null, and filled in', (done) => {
+  //   charity.activate();
+  //   const user = { name: 'Josh', _id: '1234' };
+  //   charity.user = user;
+  //   charity.setupValidation2 = function setupValidation2() {};
+  //   charity.updateCharity = {
+  //     charityName: 'test charity',
+  //     charityCity: '',
+  //     charityState: '',
+  //     charityZipCode: '',
+  //     charityTypes: ['other'],
+  //     charityManagers: [],
+  //     charityMngIds: [],
+  //     charityTypeOther: '',
+  //     charityTypesHtml: '',
+  //     charityEmail: ''
+  //   };
+  //   document.body.innerHTML = '<div id="charityDash"></div>';
+  //   charity.updateCharity.charityEmail = '';
+  //   charity.createCharity();
+  //   charity.updateCharity.charityEmail = 'howdy@howdy.com';
+  //   charity.createCharity();
+  //   done();
+  // });
   it('detects when the charity type is changed in the update form', (done) => {
     charity.activate();
     charity.controller2 = { errors: [{ _id: 123 }], validate: () => {} };

@@ -36,6 +36,7 @@ export class AppState {
         this.logoutUser();
       });
   }
+
   logoutUser() {
     this.setUser({});
     localStorage.clear();

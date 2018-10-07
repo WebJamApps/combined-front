@@ -39,7 +39,7 @@
     "font-awesome": "4.7.0",
     "hammerjs": "^2.0.8",
     "jquery": "^3.2.1",
-    "material-ui-time-picker": "^1.0.0",
+    "material-ui-time-picker": "latest",
     "mini-css-extract-plugin": "^0.4.0",
     "popper.js": "^1.12.9",
     "postcss": "^6.0.14",
@@ -132,11 +132,14 @@
     "eslint-plugin-node": "latest",
     "eslint-plugin-react": "latest",
     "eslint-plugin-security": "latest",
+    "stylelint-config-standard": "latest",
+    "stylelint": "latest",
+    "htmlhint": "latest",
     "webpack-dev-server": "latest"
   },
   "scripts": {
     "start": "nps",
-    "test": "npm run test:lint && rm -rf coverage && npm run test:jest && npm run test:jest-react && npm run test:karma && npm run combine-coverage && npm run protractor",
+    "test": "yarn run test:html && yarn run test:stylelint && npm run test:lint && rm -rf coverage && npm run test:jest && npm run test:jest-react && npm run test:karma && npm run combine-coverage && npm run protractor",
     "combine-coverage": "istanbul-combine -d coverage -p none -r lcov -r html coverage/jest-react/coverage-final.json coverage/jest/coverage-final.json coverage/coverage-karma/coverage-final.json",
     "test:jest": "cross-env NODE_ENV=test && jest --no-cache --config jest.config.json --notify",
     "protest": "nps test",
@@ -151,7 +154,9 @@
     "eslint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
     "postinstall": "npm run fix:aurelia-val && npm start -- build",
-    "protractor": "nps e2e"
+    "protractor": "nps e2e",
+    "test:stylelint": "stylelint \"src/**/*.html\" && stylelint \"static/**/*.css\"",
+    "test:html": "htmlhint src/**/*.html"
   },
   "snyk": true
 }
