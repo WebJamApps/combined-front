@@ -180,7 +180,7 @@ class User_ {
           }
           /* istanbul ignore if */
           if (process.env.NODE_ENV !== 'test') {
-            window.location.href = `${feurl}/`;
+            window.location.href = `${feurl}/login`;
           }
         }
       })
