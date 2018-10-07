@@ -194,7 +194,7 @@ class Register_ {
     if (process.env.NODE_ENV !== 'production') {
       backend = process.env.BackendUrl;
     }
-    return runFetch(fetchClient, backend, '/auth/signup', fetchData);
+    return runFetch(fetchClient, backend, '/user/auth/signup', fetchData);
   }
 
   resetpass(evt) {
@@ -215,7 +215,7 @@ class Register_ {
     if (process.env.NODE_ENV !== 'production') {
       backend = process.env.BackendUrl;
     }
-    return runFetch(fetchClient, backend, '/auth/resetpass', fetchData);
+    return runFetch(fetchClient, backend, '/user/auth/resetpswd', fetchData);
   }
 
   runFetch(fetchClient, url, route, fetchData) {
@@ -234,7 +234,7 @@ class Register_ {
             front = front.replace('/register', '');
             /* istanbul ignore if */
             if (process.env.NODE_ENV !== 'test') {
-              if (route === '/auth/resetpass') {
+              if (route === '/user/auth/resetpswd') {
                 window.location.assign(`${front}/userutil?email=${data.email}&form=reset`);
               } else {
                 window.location.assign(`${front}/userutil?email=${data.email}`);
