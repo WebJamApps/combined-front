@@ -24,15 +24,7 @@ class Register_ {
     + '</th></tr><tr><td colspan="1">'
     + '<input class="email" type="email" name="email" style="width:100%;min-width:0" required></td><td>'
     + '<input class="password" pattern=".{8,}" title="8 characters minimum" type="password" name="password" style="width:100%;min-width:0" required>'
-    + '</td></tr><tr class="userIdRow"><th colspan="2">Userid (optional)</th></tr><tr class="useridinput"><td colspan="2">'
-    + '<div style="width:100%"><input class="userid" type="text" name="userid" value=""></div></td></tr>'
-    + '<tr><th colspan="2" style="display:none">Organization</th></tr><tr style="display:none"><td colspan="2">'
-    + '<input style="width:100%" class="organization" type="text" name="affiliation" value=""></td></tr>'
-    + '<tr><th colspan="2" style="display:none">Organisms</th></tr><tr style="display:none"><td colspan="2"><div>'
-    + '<input style="width:100%;" class="organisms" type="text" name="organisms" value=""></div></td></tr>'
-    + '<tr><th colspan="2" style="display:none">Short Bio</th></tr><tr style="display:none"><td colspan="2"><div style="display:none">'
-    + '<textarea style="width:100%;" class="interests" rows="5" cols="50" name="interests" style="height:75px;" value=""></textarea></div></td></tr>'
-    + '<tr><td><p"><span style="color:red">*</span> <i>Required field</i></p></td>'
+    + '</td></tr><tr><td><p"><span style="color:red">*</span> <i>Required field</i></p></td>'
     + '<td style="vertical-align:top"><button type="button" class="registerbutton" style="display:none; margin-bottom:-22px; margin-left:76px">'
     + 'Register</button></td></tr></tbody></table></div><div style="text-align:center;margin-top:-20px">'
     + '<div class="registererror" style="color:red; margin:0; padding:6px; text-align:left"></div>'
@@ -84,15 +76,6 @@ class Register_ {
     element.displayError = this.displayRegError;
     element.validateGoogle = this.validateGoogle;
     element.appName = appName;
-  }
-
-  updateRegForm() {
-    const primApp = document.getElementsByClassName('pas')[0].value;
-    const uidRow = document.getElementsByClassName('userIdRow')[0];
-    const useridinput = document.getElementsByClassName('useridinput')[0];
-    uidRow.style.display = 'none';
-    useridinput.style.display = 'none';
-    this.appName = primApp;
   }
 
   validateReg(evt) {
@@ -158,28 +141,13 @@ class Register_ {
     const fetchClient = evt.target.fetchClient;
     const firstname = document.getElementsByClassName('firstname')[0].value;
     const runFetch = evt.target.runFetch;
-    // let primaryAppValue = '';
-    const primaryAppValue = document.getElementsByClassName('pas')[0].value;
     const lastname = document.getElementsByClassName('lastname')[0].value;
-    // let orgString = '';
-    const orgString = document.getElementsByClassName('organization')[0].value;
-    // let organismString = '';
-    const organismString = document.getElementsByClassName('organisms')[0].value;
-    // let userdetString = '';
-    const userdetString = document.getElementsByClassName('interests')[0].value;
-    // let useridValue = '';
-    const useridValue = document.getElementsByClassName('userid')[0].value;
     const bodyData = {
       name: `${firstname} ${lastname}`,
       email: document.getElementsByClassName('email')[0].value.toLowerCase(),
       password: document.getElementsByClassName('password')[0].value,
       first_name: firstname,
       last_name: lastname,
-      affiliation: orgString,
-      organisms: organismString,
-      interests: userdetString,
-      id: useridValue,
-      primaryApp: primaryAppValue
     };
     const fetchData = {
       method: 'POST',
@@ -229,7 +197,6 @@ class Register_ {
         } else {
           document.getElementsByClassName('RegistrationForm')[0].style.display = 'none';
           if (data.email) {
-            // console.log('howdy');
             let front = window.location.href;
             front = front.replace('/register', '');
             /* istanbul ignore if */
