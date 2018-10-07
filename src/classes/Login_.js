@@ -69,7 +69,6 @@ class Login_ {
   validateLogin(evt) {
     const appName = evt.target.appName;
     const buttonsErrors = evt.target.buttonsErrors;
-    // const useridValue = document.getElementsByClassName('userid')[0].value;
     const validpass = document.getElementsByClassName('loginpass')[0].checkValidity();
     const emailValue = document.getElementsByClassName('loginemail')[0].value;
     let validemail = document.getElementsByClassName('loginemail')[0].checkValidity(), message = '';
@@ -106,7 +105,6 @@ class Login_ {
   }
 
   resetpass(evt) {
-    // let appName = evt.target.appName;
     const fetchClient = evt.target.fetchClient;
     const runFetch = evt.target.runFetch;
 
@@ -130,14 +128,12 @@ class Login_ {
   }
 
   logMeIn(evt) {
-    // console.log('going to log you in');
     const fetchClient = evt.target.fetchClient;
     const runFetch = evt.target.runFetch;
     const appName = evt.target.appName;
     const generateSession = evt.target.generateSession;
     let backend = '', emailValue = '';
     const passwordValue = document.getElementsByClassName('loginpass')[0].value;
-    // useridValue = document.getElementsByClassName('userid')[0].value;
 
     emailValue = document.getElementsByClassName('loginemail')[0].value.toLowerCase();
 
