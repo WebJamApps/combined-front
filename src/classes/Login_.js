@@ -126,7 +126,7 @@ class Login_ {
     if (process.env.NODE_ENV !== 'production') {
       backend = process.env.BackendUrl;
     }
-    return runFetch(fetchClient, backend, '/auth/resetpass', fetchData, null, null, loginEmail);
+    return runFetch(fetchClient, backend, '/user/auth/resetpswd', fetchData, null, null, loginEmail);
   }
 
   logMeIn(evt) {
@@ -154,7 +154,7 @@ class Login_ {
     if (process.env.NODE_ENV !== 'production') {
       backend = process.env.BackendUrl;
     }
-    return runFetch(fetchClient, backend, '/auth/login', fetchData, generateSession, appName, null);
+    return runFetch(fetchClient, backend, '/user/auth/login', fetchData, generateSession, appName, null);
   }
 
   runFetch(fetchClient, url, route, fetchData) {

@@ -91,20 +91,20 @@ test('it catches error on reset password', () => {
     .catch(e => expect(e).toBeTruthy());
 });
 
-// test('validates a login form', () => {
-//   document.body.innerHTML = '<div class="home"></div>';
-//   reg.startup('OtherApp');
-//   document.getElementsByClassName('loginemail')[0].value = 'joe@smith.com';
-//   document.getElementsByClassName('loginemail')[0].checkValidity = function checkValidity() { return true; };
-//   document.getElementsByClassName('loginpass')[0].value = '123456789';
-//   document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return true; };
-//   const logbutton = document.getElementsByClassName('loginbutton')[0];
-//   const resetpassButton = document.getElementsByClassName('resetpass')[0];
-//   const evt = { target: { appName: 'OtherApp', buttonsErrors: reg.buttonsErrors } };
-//   reg.validateLogin(evt);
-//   expect(logbutton.style.display).toBe('block');
-//   expect(resetpassButton.style.display).toBe('block');
-// });
+test('validates a valid login form', () => {
+  document.body.innerHTML = '<div class="home"></div>';
+  reg.startup('OtherApp');
+  document.getElementsByClassName('loginemail')[0].value = 'joe@smith.com';
+  document.getElementsByClassName('loginemail')[0].checkValidity = function checkValidity() { return true; };
+  document.getElementsByClassName('loginpass')[0].value = '123456789';
+  document.getElementsByClassName('loginpass')[0].checkValidity = function checkValidity() { return true; };
+  const loginbutton = document.getElementsByClassName('loginbutton')[0];
+  const resetpass = document.getElementsByClassName('resetpass')[0];
+  const evt = { target: { appName: 'OtherApp', buttonsErrors: reg.buttonsErrors } };
+  reg.validateLogin(evt);
+  expect(loginbutton.style.display).toBe('block');
+  expect(resetpass.style.display).toBe('none');
+});
 
 test('validates a login form with invalid email (missing period)', () => {
   document.body.innerHTML = '<div class="home"></div>';
