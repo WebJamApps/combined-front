@@ -2,22 +2,6 @@ const Register_ = require('../../src/classes/Register_.js');
 
 const reg = new Register_();
 
-// test('generates a registration form', () => {
-//   document.body.innerHTML = '<div class="home"></div>';
-//   reg.startup('');
-//   const regform = document.getElementsByClassName('RegistrationForm');
-//   expect(regform[0]).toBeDefined();
-//   expect(document.getElementsByClassName('userIdRow')[0].style.display).toBe('block');
-// });
-
-// test('generates a registration form for another app', () => {
-//   document.body.innerHTML = '<div class="home"></div>';
-//   reg.startup();
-//   const regform = document.getElementsByClassName('RegistrationForm');
-//   expect(regform[0]).toBeDefined();
-//   expect(document.getElementsByClassName('userIdRow')[0].style.display).toBe('none');
-// });
-
 test('hides a registration form with click Cancel button', () => {
   document.body.innerHTML = '<div class="home"></div>';
   reg.startup();
@@ -25,31 +9,6 @@ test('hides a registration form with click Cancel button', () => {
   const regform = document.getElementsByClassName('RegistrationForm');
   expect(regform[0].style.display).toBe('none');
 });
-
-// test('updates the registration form after selection of primary app', () => {
-//   document.body.innerHTML = '<div class="home"></div>';
-//   reg.startup('');
-//   document.getElementsByClassName('pas')[0].value = '';
-//   reg.updateRegForm();
-//   const uidRowStuff = document.getElementsByClassName('userIdRow')[0];
-//   expect(uidRowStuff.style.display).toBe('block');
-// });
-
-test('updates the registration form after selection of primary app', () => {
-  document.body.innerHTML = '<div class="home"></div>';
-  reg.startup('');
-  document.getElementsByClassName('pas')[0].value = '';
-  reg.updateRegForm();
-  const uidRowStuff = document.getElementsByClassName('userIdRow')[0];
-  expect(uidRowStuff.style.display).toBe('none');
-});
-
-// test('generates a registration form without userid', () => {
-//   document.body.innerHTML = '<div class="home"></div>';
-//   reg.startup('DifferentApp');
-//   const userIdRow = document.getElementsByClassName('userIdRow')[0];
-//   expect(userIdRow.style.display).toBe('none');
-// });
 
 test('hides the submit button when registration form is not valid email', () => {
   document.body.innerHTML = '<div class="home"></div>';
@@ -265,7 +224,6 @@ test('it does not initiates an email varification', () => {
 });
 
 test('initiates a reset password request', () => {
-  document.getElementsByClassName('userid')[0].value = 'joe@smith.com';
   const mockfetch = function mockfetch(url, data) {
     this.headers = {};
     this.headers.url = url;
@@ -283,7 +241,6 @@ test('initiates a reset password request', () => {
 
 test('it hides the registration form', () => {
   document.body.innerHTML = '<div><div class="RegistrationForm" style="display:block"></div></div>';
-  // reg.startup('otherapp');
   reg.utils.nevermind('RegistrationForm');
   expect(document.getElementsByClassName('RegistrationForm')[0].style.display).toBe('none');
 });

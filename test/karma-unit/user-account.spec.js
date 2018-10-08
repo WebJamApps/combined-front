@@ -18,7 +18,7 @@ class VCMock {
 }
 class HttpStub extends HttpMock {
   fetch(url) {
-    if (url === '/auth/changeemail') {
+    if (url === '/user/auth/changeemail') {
       return Promise.resolve({
         json: () => ({ message: 'in the jungle' })
       });
@@ -30,7 +30,7 @@ class HttpStub extends HttpMock {
 }
 class HttpStub2 extends HttpMock {
   fetch(url) {
-    if (url === '/auth/changeemail') {
+    if (url === '/user/auth/changeemail') {
       return Promise.resolve({
         json: () => ({ email: 'yo@yo.com' })
       });

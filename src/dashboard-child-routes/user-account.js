@@ -172,7 +172,7 @@ export class UserAccount {
         'Content-Type': 'application/json'
       }
     };
-    return this.app.httpClient.fetch('/auth/changeemail', fetchData)
+    return this.app.httpClient.fetch('/user/auth/changeemail', fetchData)
       .then(response => response.json())
       .then((data) => {
         if (data.message) {

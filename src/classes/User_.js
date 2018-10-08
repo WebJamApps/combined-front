@@ -142,7 +142,7 @@ class User_ {
     if (process.env.NODE_ENV !== 'production') {
       backend = process.env.BackendUrl;
     }
-    return runFetch(fetchClient, backend, '/auth/validemail', fetchData);
+    return runFetch(fetchClient, backend, '/user/auth/validateemail', fetchData);
   }
 
   resetPasswd(evt) {
@@ -159,7 +159,7 @@ class User_ {
     if (process.env.NODE_ENV !== 'production') {
       backend = process.env.BackendUrl;
     }
-    return runFetch(fetchClient, backend, '/auth/passwdreset', fetchData);
+    return runFetch(fetchClient, backend, '/user/auth/pswdreset', fetchData);
   }
 
   runFetch(fetchClient, url, route, fetchData) {
@@ -180,7 +180,7 @@ class User_ {
           }
           /* istanbul ignore if */
           if (process.env.NODE_ENV !== 'test') {
-            window.location.href = `${feurl}/`;
+            window.location.href = `${feurl}/login`;
           }
         }
       })
@@ -225,7 +225,7 @@ class User_ {
     if (process.env.NODE_ENV !== 'production') {
       backend = process.env.BackendUrl;
     }
-    return runFetch(fetchClient, backend, '/auth/updateemail', fetchData);
+    return runFetch(fetchClient, backend, '/user/auth/updateemail', fetchData);
   }
 }
 
