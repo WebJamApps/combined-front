@@ -57,6 +57,15 @@ describe('the librarian module', () => {
     done();
   });
 
+  it('validates the import txt file', (done) => {
+    let valid = true;
+    document.body.innerHTML = '<div id="createMediaButton"><input id="CSVFilePath" type="file"/><button id="deleteCreateButton">'
+    + '</button><p class="errorMessage"></p></div>';
+    valid = librarian.textFileValidate();
+    expect(valid).toBe(false);
+    done();
+  });
+
   it('should parse the csv.fixtures into object', (done) => {
     const object = csvjson.toObject(librarian.CSVFilePath.files[0]);
     expect(object instanceof Array).toBeTruthy();
@@ -84,6 +93,8 @@ describe('the librarian module', () => {
   });
 
   it('should raise a file reader error', (done) => {
+    document.body.innerHTML = '<div id="createMediaButton"><p class="errorMessage"></p>'
+    + '<input id="CSVFilePath" type="file"/><button id="deleteCreateButton"></div>';
     window.CSVFilePath = { files: [new Blob()] };
     const error = new Event('error');
     const load = new Event('load');
