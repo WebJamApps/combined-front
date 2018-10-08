@@ -35,13 +35,11 @@ export class Librarian {
     this.controller.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit = false; // the button on the form
     this.validType = false;
-    // this.preventDefault = this.preventEnter.bind(this);
   }
 
   types = ['hardback', 'paperback', 'pdf', 'webpage', 'video', 'audio', 'graphic'];
 
   accessArray = ['Private', 'Public'];
-  // newBook = null;
 
   async activate() {
     const uid = this.app.auth.getTokenPayload().sub;
@@ -50,39 +48,28 @@ export class Librarian {
     this.app.role = this.user.userType;
     this.types.sort();
     this.types.push('other');
-    // this.states.sort();
     this.setupValidation();
-    // window.addEventListener('keypress', this.preventDefault, false);
   }
-
-  // preventEnter(e) {
-  //   if (e.keyCode === 13) {
-  //     e.preventDefault();
-  //   }
-  // }
 
   textFileValidate() {
     const nub = document.getElementById('deleteCreateButton');
+    document.getElementsByClassName('errorMessage')[0].innerHTML = '';
     nub.style.display = 'none';
-    if (CSVFilePath.files.length === 0) {
-      alert('no file was selected');
-      return false;
-    }
+    let valid = false;
     for (let i = 0; i < CSVFilePath.files.length; i += 1) {
       const oInput = CSVFilePath.files[i];
-      // console.log(oInput.type);
       // the type is determined automatically during the creation of the Blob.
       // this value cannot be controlled by developer, hence cannot test it.
       /* istanbul ignore if */
       if (oInput.type === 'text/plain') {
-        // console.log('type is a plain text file');
         nub.style.display = 'block';
-        return true;
+        valid = true;
+      } else {
+        document.getElementsByClassName('errorMessage')[0].innerHTML = `Sorry, ${oInput.type} is an invalid file type.`;
+        valid = false;
       }
-      alert(`Sorry, ${oInput.type} is an invalid file type.`);
-      return false;
     }
-    return false;
+    return valid;
   }
 
   setupValidation() {
@@ -102,8 +89,6 @@ export class Librarian {
     let valid = true;
     const nub = document.getElementById('createMediaButton');
     nub.style.display = 'none';
-    // console.log('checking if I can submit');
-    // console.log(this.newBook.type);
     for (const result of validationResults) {
       if (result.valid === false) {
         valid = false;
@@ -119,16 +104,6 @@ export class Librarian {
   }
 
   createBook() {
-    // if (this.newBook.type !== 0){
-    //   this.newBook.type = this.types[this.newBook.type - 1];
-    // } else {
-    //   this.newBook.type = 'paperback';
-    // }
-    // if (this.newBook.access !== 0){
-    //   this.newBook.access = this.accessArray[this.newBook.access - 1];
-    // } else {
-    //   this.newBook.access = 'Public';
-    // }
     this.app.httpClient.fetch('/book/create', {
       method: 'post',
       body: json(this.newBook)
@@ -141,7 +116,7 @@ export class Librarian {
   async deleteBooks() {
     await fetch;
     this.app.httpClient.fetch('/book/deleteall', {
-      method: 'get'
+      method: 'delete'
     });
     this.app.router.navigate('/bookshelf');
   }
@@ -149,7 +124,7 @@ export class Librarian {
   async deleteCreateBooks() {
     await fetch;
     this.app.httpClient.fetch('/book/deleteall', {
-      method: 'get'
+      method: 'delete'
     }).then(() => {
       this.createBooksFromCSV();
     });
@@ -172,7 +147,6 @@ export class Librarian {
         });
     }
     async function loaded(evt) {
-      // console.log('in csv create');
       const fileString = evt.target.result;
       const options = {
         delimiter: '\t'
@@ -181,7 +155,7 @@ export class Librarian {
       makeLotaBooks(jsonObj);
     }
     function errorHandler() {
-      alert('The file could not be read');
+      document.getElementsByClassName('errorMessage')[0].innerHTML = 'The file could not be read';
     }
 
     this.reader.onload = loaded;
