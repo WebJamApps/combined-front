@@ -125,7 +125,6 @@ class User_ {
   }
 
   updateUser(evt) {
-    // console.log('trying to validate the user email with a code');
     const fetchClient = evt.target.fetchClient;
     const runFetch = evt.target.runFetch;
     const bodyData = { email: document.getElementsByClassName('email')[0].value, resetCode: document.getElementsByClassName('code')[0].value };
@@ -180,7 +179,7 @@ class User_ {
           }
           /* istanbul ignore if */
           if (process.env.NODE_ENV !== 'test') {
-            window.location.href = `${feurl}/login`;
+            window.location.href = `${feurl}/login?email=${document.getElementsByClassName('email')[0].value}`;
           }
         }
       })
