@@ -59,9 +59,11 @@ export class App {
 
   async authenticate(name) {
     let ret;
-    if (this.appState.isOhafLogin) ret = await this.auth.authenticate(name, false, { isOhafUser: true });
-    else ret = await this.auth.authenticate(name, false, { isOhafUser: false });
-    return this.auth.setToken(ret.token);
+    try {
+      ret = await this.auth.authenticate(name, false, { isOhafUser: this.appState.isOhafLogin });
+    } catch (e) { return Promise.reject(e); }
+    this.auth.setToken(ret.token);
+    return Promise.resolve(ret.token);
   }
 
   configHttpClient() {
