@@ -1,8 +1,11 @@
-import { noView, inject, customElement } from 'aurelia-framework';
+import {
+  noView,
+  inject,
+  customElement
+} from 'aurelia-framework';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HWComp from './react-comp.jsx';
-
+import HWComp from './react-comp';
 
 @noView()
 @inject(Element)

@@ -1,5 +1,8 @@
 import {
-  noView, inject, customElement, bindable
+  noView,
+  inject,
+  customElement,
+  bindable
 } from 'aurelia-framework';
 import React from 'react';
 import ReactDOM from 'react-dom';

@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TimeInput from 'material-ui-time-picker';
 import {
-  noView, customElement, bindable, inject
+  noView,
+  customElement,
+  bindable,
+  inject
 } from 'aurelia-framework';
 
 @noView()
