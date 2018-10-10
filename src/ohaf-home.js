@@ -1,9 +1,6 @@
 import { startSlides } from './commons/utils';
-// @inject(Router)
+
 export class OhafHome {
-  // constructor(router) {
-  //   this.router = router;
-  // }
   slideshowImages = [
     '../static/imgs/ohaf/slideshow2.png',
     '../static/imgs/ohaf/slideshow3.png',
@@ -18,6 +15,7 @@ export class OhafHome {
     '../static/imgs/ohaf/slideshow12.png', '../static/imgs/ohaf/slideshow1.png'];
 
   constructor() {
+    this.startSlides = startSlides;
     this.slideshow_data = {
       id: 'slideshow1',
       slideshow_images: this.slideshowImages
@@ -33,6 +31,6 @@ export class OhafHome {
   }
 
   attached() {
-    startSlides(['musicSlide1', 'musicSlide2'], 'you left the ohaf page', ['slideshow1', 'slideshow']);
+    return this.startSlides(['musicSlide1', 'musicSlide2'], 'you left the ohaf page', ['slideshow1', 'slideshow']);
   }
 }
