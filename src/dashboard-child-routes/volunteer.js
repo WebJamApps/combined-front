@@ -47,12 +47,8 @@ export class Volunteer {
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
     this.app.role = this.user.userType;
-    // if (this.user.userDetails === 'newUser'){
-    //   this.app.router.navigate('dashboard/user-account');
-    // } else {
     await this.fetchAllEvents();
     this.displayEvents();
-    // }
   }
 
   async displayEvents() {
@@ -96,7 +92,6 @@ export class Volunteer {
         this.events[i].voZipCode = '00000';
       }
       if (this.events[i].voCharityTypes === undefined || this.events[i].voCharityTypes === null || this.events[i].voCharityTypes.length === 0) {
-        // console.log('we have a missing charity type');
         this.events[i].voCharityTypes = ['not specified'];
       }
     }
@@ -105,11 +100,9 @@ export class Volunteer {
   filterPicked() {
     filterSelected(this);
     if (this.selectedFilter.includes('future only')) {
-      // console.log('you selected the starting date filter');
       markPast(this.events, formatDate);
       this.hidePast = true;
     } else {
-      // console.log('show past now!');
       this.hidePast = false;
     }
   }
@@ -144,9 +137,9 @@ export class Volunteer {
       await this.fetchAllEvents();
       this.checkScheduled();
       this.app.router.navigate('dashboard');
-      return thisevent;
+      return Promise.resolve(thisevent);
     }
-    return result;
+    return Promise.resolve(result);
   }
 
   async cancelSignup(thisevent) {
@@ -156,12 +149,10 @@ export class Volunteer {
   }
 
   doubleCheckSignups(thisevent) {
-    // console.log('double checking...');
     // get this event, check if start date is in past, check if max signups are already reached
     return this.app.httpClient.fetch(`/volopp/get/${thisevent._id}`)
       .then(response => response.json())
       .then((data) => {
-        // console.log(data);
         if (data.voStartDate) {
           let today = new Date(), testDate = data.voStartDate.replace('-', '');
           today = formatDate(today);
@@ -173,16 +164,12 @@ export class Volunteer {
         }
         if (data.voPeopleScheduled) {
           if (data.voPeopleScheduled.length >= data.voNumPeopleNeeded) {
-            // console.log(data.voPeopleScheduled.length);
             alert('this event has already reached max volunteers needed');
             this.canSignup = false;
           }
         }
-      // let user = data;
       }).catch((error) => {
         this.canSignup = false;
-        // console.log('inside volunteer module with error');
-        // console.log(error);
         return error;
       });
   }
@@ -198,7 +185,6 @@ export class Volunteer {
       this.selectedWorks = this.selectedWorks.filter(e => e !== '');
     }
     if (type === 'talents') {
-      // console.log('you picked talents');
       this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
       this.selectedTalents = this.selectedTalents.filter(e => e !== '');
     }
@@ -265,28 +251,14 @@ export class Volunteer {
   }
 
   showButton() {
-    // console.log('show button!');
     document.getElementById('updateUserButton').style.display = 'block';
   }
-
-  // get widescreen() {
-  //   console.log('am i here');
-  //   let isWide = document.documentElement.clientWidth > 766;
-  //   console.log(isWide);
-  // }
 
   attached() {
     document.getElementById('distanceInput').addEventListener('keydown', this.showButton);
     this.setupVolunteerUser();
     if (document.documentElement.clientWidth < 766) {
-      // console.log('i am cell phone');
       document.getElementsByClassName('checkboxes-div')[0].style.top = '124px';
     }
-
-    // console.log(this.widescreen);
-    // if (!this.app.widescreen){
-    //   console.log(this.app.widescreen);
-    //   console.log('cell phone mode detected');
-    // }
   }
 }
