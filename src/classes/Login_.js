@@ -25,7 +25,7 @@ class Login_ {
     + '<div class="loginerror" style="color:red"></div>'
     + '<div><button style="display:none; margin-bottom:-20px; margin-left:10px" type="button" class="loginbutton">Login</button>'
     + '<button style="display:none;margin-top:34px; margin-left:10px" class="resetpass" type="button">Reset Password</button></div></div></form>'
-    + '<button class="nevermind" style="margin-left:27px;margin-top:19px; margin-bottom:15px" type="button">Cancel</button></div></div></form>';
+    + '<button class="nevermind" style="margin-left:70%;margin-top:19px; margin-bottom:15px" type="button">Cancel</button></div></div></form>';
     const home = document.getElementsByClassName('home');
     home[0].insertBefore(loginform, home[0].childNodes[0]);
   }
@@ -160,8 +160,11 @@ class Login_ {
     return fetchClient(url + route, fetchData)
       .then(response => response.json())
       .then((data) => {
-        let front = window.location.href;
-        front = front.replace('/login', '');
+        let feurl = 'http://localhost:9000';
+        /* istanbul ignore if */
+        if (process.env.frontURL !== undefined) {
+          feurl = process.env.frontURL;
+        }
         if (data.token !== undefined) {
           localStorage.setItem('aurelia_id_token', data.token);
           // localStorage.setItem('token', data.token);
@@ -169,7 +172,7 @@ class Login_ {
           loginform1[0].style.display = 'none';
           /* istanbul ignore if */
           if (process.env.NODE_ENV !== 'test') {
-            window.location.assign(`${front}/dashboard`);
+            window.location.assign(`${feurl}/dashboard`);
           }
         }
         if (data.message) {

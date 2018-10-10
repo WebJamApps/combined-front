@@ -1,7 +1,7 @@
 <template>
   <div class="page-content">
     <h4 style="text-align:center;padding-top:15px; padding-bottom:0; margin-bottom:0"><strong>The Librarian Dashboard</strong></h4>
-        <p style="margin:0; padding:0">&nbsp;</p>
+    <p style="margin:0; padding:0">&nbsp;</p>
     <div class="material-content elevation3" style="max-width: 8.5in; margin:auto">
       <p style="padding:16px; max-width:7in; margin:auto">
         To get started, first create your first item using the <strong>Add Media</strong> web-form. Then, click the <strong>Export</strong> button. A new .txt file will download.
@@ -15,11 +15,12 @@
         <h4 class="material-header-h4">Import Media</h4>
         <p style="text-align:center">from a tab-separated .txt file</p>
         <form>
-          <input id="CSVFilePath" type="file" accept=".txt" files.bind="selectedFiles" style="padding-left: 100px" change.delegate="textFileValidate()"/>
+          <input id="CSVFilePath" type="file" accept=".txt" files.bind="selectedFiles" style="padding-left: 100px" change.delegate="textFileValidate()" />
           <button id="deleteCreateButton" class="button-lib" style="display:none" raised click.trigger="deleteCreateBooks()">
             Import
           </button>
         </form>
+        <p class="errorMessage" style="color:red;font-weight: bold;text-align: center;padding-top:5px"></p>
         <p style="padding:16px; max-width:7in; margin:auto">
           Special characters (copyright symbol, registered trademark and so forth) are suppoted by using
           <a href="https://www.w3schools.com/html/html_entities.asp" target="_blank">HTML character entities</a>
@@ -87,6 +88,5 @@
       </div>
       <p>&nbsp;</p>
     </div>
-    <!-- <div id="wjfooter" class="footer" style="padding:8px; background-color: #2a222a"></div> -->
   </div>
 </template>

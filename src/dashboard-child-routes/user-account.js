@@ -88,6 +88,18 @@ export class UserAccount {
     return this.canSubmit;
   }
 
+  async checkReader() {
+    if (this.user.userType === 'Reader' || this.user.userType === 'Developer') {
+      const res = await this.app.httpClient.fetch(`/book/findcheckedout/${this.uid}`);
+      this.books = await res.json();
+      if (this.books.length > 0) {
+        this.canChangeUserType = false;
+        this.canDelete = false;
+        this.changeReasons = `${this.changeReasons}<li>You have a book checked out.</li>`;
+      }
+    }
+  }
+
   async checkChangeUserType() {
     this.changeReasons = '';
     if (this.user.userType === 'Volunteer' || this.user.userType === 'Developer') {
@@ -104,15 +116,16 @@ export class UserAccount {
         this.changeReasons = `${this.changeReasons}<li>You are the manager of a charity.</li>`;
       }
     }
-    if (this.user.userType === 'Reader' || this.user.userType === 'Developer') {
-      const res = await this.app.httpClient.fetch(`/book/findcheckedout/${this.uid}`);
-      this.books = await res.json();
-      if (this.books.length > 0) {
-        this.canChangeUserType = false;
-        this.canDelete = false;
-        this.changeReasons = `${this.changeReasons}<li>You have a book checked out.</li>`;
-      }
-    }
+    return this.checkReader();
+    // if (this.user.userType === 'Reader' || this.user.userType === 'Developer') {
+    //   const res = await this.app.httpClient.fetch(`/book/findcheckedout/${this.uid}`);
+    //   this.books = await res.json();
+    //   if (this.books.length > 0) {
+    //     this.canChangeUserType = false;
+    //     this.canDelete = false;
+    //     this.changeReasons = `${this.changeReasons}<li>You have a book checked out.</li>`;
+    //   }
+    // }
   }
 
   async fetchAllEvents() {
@@ -178,10 +191,9 @@ export class UserAccount {
         if (data.message) {
           const messagediv = document.getElementsByClassName('formErrors')[0];
           messagediv.innerHTML = `<p style="text-align:left; padding-left:12px">${data.message}</p>`;
-          /* istanbul ignore if */
-        } else if (process.env.NODE_ENV !== 'test') {
-          window.location.assign(`/userutil/?changeemail=${this.user.changeemail.toLowerCase()}`);
-        }
+          return;
+        }/* istanbul ignore if */
+        if (process.env.NODE_ENV !== 'test') window.location.assign(`/userutil/?changeemail=${this.user.changeemail.toLowerCase()}`);
       })
       .catch(() => {
         // console.log(error);
