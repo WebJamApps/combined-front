@@ -63,7 +63,8 @@ describe('the Login module', () => {
     done();
   });
   it('attaches to the dom', (done) => {
-    document.body.innerHTML = '<div class="home"><input class="loginemail"/></div>';
+    document.body.innerHTML = '<div class="home"><div class="topSection"></div><input class="loginemail"/></div>';
+    window.history.pushState({}, 'Login', '/login');
     login.attached();
     const loginEmailValue = document.getElementsByClassName('loginemail')[0].value;
     expect(loginEmailValue).toBe('');
@@ -74,7 +75,6 @@ describe('the Login module', () => {
     window.history.pushState({}, 'Login', '/login?email=j@b.com');
     login.attached();
     const loginEmailValue = document.getElementsByClassName('loginemail')[0].value;
-    console.log(loginEmailValue);
     expect(loginEmailValue).toBe('j@b.com');
     done();
   });

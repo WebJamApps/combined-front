@@ -13,12 +13,12 @@ describe('the Music module', () => {
     done();
   });
   it('show slides when component is attached and there is no slide', (done) => {
-    // jasmine.clock().install();
-    // music1.attached();
-    // jasmine.clock().tick(5500);
+    jasmine.clock().install();
+    music1.attached();
+    jasmine.clock().tick(5500);
     // expect(document.getElementById('joshbio')).not.toBe(null);
+    jasmine.clock().uninstall();
     done();
-    // jasmine.clock().uninstall();
   });
   it('shows slides when component is attached', (done) => {
     jasmine.clock().install();
@@ -27,7 +27,7 @@ describe('the Music module', () => {
     music1.attached();
     jasmine.clock().tick(5500);
     expect(document.getElementById('musicSlide1')).not.toBe(null);
-    done();
     jasmine.clock().uninstall();
+    done();
   });
 });

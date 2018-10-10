@@ -393,26 +393,28 @@ describe('the Volunteer Module', () => {
     volunteer.cancelSignup(myEvent);
     expect(myEvent.voPeopleScheduled.indexOf('15')).toBe(-1);
     done();
-    // console.log(myEvent);
   });
 
-  // it('allows a volunteer to signup for an event', testAsync(async () => {
-  //   volunteer.uid = '155';
-  //   const myEvent = {
-  //     voStartDate: '2017-12-12',
-  //     voEndDate: '2017-12-12',
-  //     voWorkTypes: ['shoveling', 'sweeping', 'other'],
-  //     voWorkTypeOther: 'scrubbing',
-  //     _id: 1,
-  //     scheduled: false,
-  //     voNumPeopleScheduled: 10,
-  //     voNumPeopleNeeded: 5,
-  //     voStatus: 'cancel',
-  //     voPeopleScheduled: ['12', '13', '14', '15']
-  //   };
-  //   await volunteer.signupEvent(myEvent);
-  //   expect(myEvent.voPeopleScheduled.indexOf('155')).not.toBe(-1);
-  // }));
+  it('allows a volunteer to signup for an event', async () => {
+    volunteer.uid = '155';
+    volunteer.canSignup = true;
+    volunteer.doubleCheckSignups = function doubleCheckSignups() { return Promise.resolve(true); };
+    volunteer.checkScheduled = function checkScheduled() {};
+    const myEvent = {
+      voStartDate: '2017-12-12',
+      voEndDate: '2017-12-12',
+      voWorkTypes: ['shoveling', 'sweeping', 'other'],
+      voWorkTypeOther: 'scrubbing',
+      _id: 1,
+      scheduled: false,
+      voNumPeopleScheduled: 10,
+      voNumPeopleNeeded: 5,
+      voStatus: 'cancel',
+      voPeopleScheduled: ['12', '13', '14', '15']
+    };
+    const updatedEvent = await volunteer.signupEvent(myEvent);
+    expect(updatedEvent.voPeopleScheduled.indexOf('155')).not.toBe(-1);
+  });
 
   it('should not signup if date has past', testAsync(async () => {
     volunteer.activate();
