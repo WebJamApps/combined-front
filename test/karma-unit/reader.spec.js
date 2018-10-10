@@ -2,6 +2,8 @@ import { App } from '../../src/app';
 import { AuthStub, HttpMock } from './commons';
 import { Reader } from '../../src/dashboard-child-routes/reader';
 
+const sinon = require('sinon');
+
 describe('the Reader Module', () => {
   let auth, reader, app;
   const book = {
@@ -25,11 +27,7 @@ describe('the Reader Module', () => {
     auth.setToken({ sub: 'aowifjawifhiawofjo' });
     app = new App(auth, new HttpMock());
     app.activate();
-    // auth = new AuthStub();
-    // http = new HttpMock();
     reader = new Reader(app);
-    // reader2 = new Reader(App);
-    // auth.setToken(token);
   });
 
   it('activate reader', (done) => {
@@ -54,11 +52,11 @@ describe('the Reader Module', () => {
     done();
   });
 
-  // it('check out a book already taken', (done) => {
-  //   reader.activate().then(() => {
-  //     reader.checkOutBook(book);
-  //     reader.checkOutBook(book);
-  //     done();
-  //   });
-  // });
+  it('prevents check out a book already taken', (done) => {
+    const bMock = sinon.mock(reader.app.httpClient);
+    bMock.expects('fetch').resolves({ json() { return Promise.resolve({ checkedOutBy: '123' }); } });
+    reader.checkOutBook({ _id: '456' });
+    bMock.restore();
+    done();
+  });
 });
