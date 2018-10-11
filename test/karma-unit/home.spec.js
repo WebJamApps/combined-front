@@ -21,4 +21,10 @@ describe('the Home Module', () => {
     expect(home.top).toBe(undefined);
     done();
   });
+  it('attaches to the dom with a reload in the url', (done) => {
+    document.body.innerHTML = '<div class="home"><div class="topSection"></div><input class="loginemail"/></div>';
+    window.history.pushState({}, 'home', '/?reload=true');
+    home.attached();
+    done();
+  });
 });
