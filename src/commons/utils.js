@@ -1,4 +1,4 @@
-const slowSlides = require('./showSlides');
+const showSlides = require('./showSlides');
 
 exports.fixDates = function fixDates(myevents) {
   for (let i = 0; i < myevents.length; i += 1) {
@@ -91,7 +91,7 @@ exports.startSlides = function startSlides(idArray1, errorMsg, idArray2) {
     if (!(foundElement)) {
       return clearInterval(slideshowTimer);
     }
-    return slowSlides.showSlides(idArray2);
+    return showSlides.showSlides(idArray2);
   }, 5400);
 };
 
