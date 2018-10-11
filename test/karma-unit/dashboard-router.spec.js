@@ -2,8 +2,6 @@ import { DashboardRouter } from '../../src/dashboard-router';
 import { RouterStub, ConfigStub } from './commons';
 
 describe('the dashboard-router module', () => {
-  // let sut;
-  // let mockedRouter;
   const mockedRouter = new RouterStub();
   const config1 = new ConfigStub();
   config1.map([

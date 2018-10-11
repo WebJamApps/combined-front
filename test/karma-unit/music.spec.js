@@ -4,19 +4,17 @@ describe('the Music module', () => {
   let music1;
   beforeEach(() => {
     music1 = new Music();
-    // spyOn(music1, 'jump');
   });
   it('has jump links', (done) => {
     document.body.innerHTML = '<div id="joshbio"></div>';
     music1.jump('joshbio');
-    // expect(music1.jump).toHaveBeenCalledWith('joshbio');
     done();
   });
   it('show slides when component is attached and there is no slide', (done) => {
+    document.body.innerHTML = '<div></div>';
     jasmine.clock().install();
     music1.attached();
     jasmine.clock().tick(5500);
-    // expect(document.getElementById('joshbio')).not.toBe(null);
     jasmine.clock().uninstall();
     done();
   });
