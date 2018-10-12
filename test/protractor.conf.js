@@ -53,7 +53,8 @@ exports.config = {
   onPrepare() {
     process.env.BABEL_TARGET = 'node';
     process.env.IN_PROTRACTOR = 'true';
-    require('babel-register');
+    require('@babel/polyfill');
+    require('@babel/register');
   },
 
   plugins: [{
