@@ -107,4 +107,16 @@ describe('the develper module', () => {
     developer.deleteCreateBooks();
     done();
   });
+  it('catches error on delete all', async () => {
+    developer.app.httpClient.fetch = function fetch() { return Promise.reject(new Error('bad')); };
+    try {
+      await developer.deleteBooks();
+    } catch (e) { expect(e.message).toBe('bad'); }
+  });
+  it('catches error on deleteCreate', async () => {
+    developer.app.httpClient.fetch = function fetch() { return Promise.reject(new Error('bad')); };
+    try {
+      await developer.deleteCreateBooks();
+    } catch (e) { expect(e.message).toBe('bad'); }
+  });
 });
