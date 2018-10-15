@@ -115,3 +115,24 @@ exports.nevermind = function nevermind(className) {
     regform1[0].style.display = 'none';
   }
 };
+
+exports.textFileValidate = function textFileValidate() {
+  const nub = document.getElementById('deleteCreateButton');
+  document.getElementsByClassName('errorMessage')[0].innerHTML = '';
+  nub.style.display = 'none';
+  let valid = false;
+  for (let i = 0; i < CSVFilePath.files.length; i += 1) {
+    const oInput = CSVFilePath.files[i];
+    // the type is determined automatically during the creation of the Blob.
+    // this value cannot be controlled by developer, hence cannot test it.
+    /* istanbul ignore if */
+    if (oInput.type === 'text/plain') {
+      nub.style.display = 'block';
+      valid = true;
+    } else {
+      document.getElementsByClassName('errorMessage')[0].innerHTML = `Sorry, ${oInput.type} is an invalid file type.`;
+      valid = false;
+    }
+  }
+  return valid;
+};

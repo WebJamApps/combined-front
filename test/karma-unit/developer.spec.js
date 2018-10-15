@@ -62,7 +62,7 @@ describe('the develper module', () => {
     let valid = true;
     document.body.innerHTML = '<div id="createMediaButton"><input id="CSVFilePath" type="file"/><button id="deleteCreateButton">'
     + '</button><p class="errorMessage"></p></div>';
-    valid = developer.textFileValidate();
+    valid = developer.utils.textFileValidate();
     expect(valid).toBe(false);
     done();
   });

@@ -15,7 +15,7 @@
         <h4 class="material-header-h4">Import Media</h4>
         <p style="text-align:center">from a tab-separated .txt file</p>
         <form>
-          <input id="CSVFilePath" type="file" accept=".txt" files.bind="selectedFiles" style="padding-left: 100px" change.delegate="textFileValidate()" />
+          <input id="CSVFilePath" type="file" accept=".txt" files.bind="selectedFiles" style="padding-left: 100px" change.delegate="utils.textFileValidate()" />
           <button id="deleteCreateButton" class="button-lib" style="display:none" raised click.trigger="deleteCreateBooks()">
             Import
           </button>
