@@ -1,6 +1,6 @@
 {
   "name": "combined-front",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Front End of web-jam.com App",
   "main": "dist/index.html",
   "repository": {
@@ -95,9 +95,6 @@
     "aurelia-tools": "latest",
     "aurelia-pal-nodejs": "latest",
     "aurelia-protractor-plugin": "latest",
-    "gulp": "latest",
-    "gulp-rename": "latest",
-    "gulp-util": "latest",
     "protractor": "latest",
     "babel-eslint": "7.2.3",
     "babel-plugin-istanbul": "latest",
