@@ -1,5 +1,5 @@
 import 'aurelia-polyfills';
-import 'babel-polyfill';
+import '@babel/polyfill';
 import 'aurelia-loader-webpack';
 import { install as installJasmineAsync } from 'jest-jasmine2/build/jasmine_async';
 
