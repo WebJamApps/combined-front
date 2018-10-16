@@ -27,7 +27,7 @@ exports.config = {
 
   SELENIUM_PROMISE_MANAGER: false,
 
-  directConnect: true,
+  directConnect: false,
 
   capabilities: {
     browserName: 'chrome',
