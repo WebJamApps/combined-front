@@ -8,12 +8,14 @@ import { FormValidator } from '../classes/FormValidator';
 
 const csvjson = require('csvjson');
 const filesaver = require('file-saver');
+const utils = require('../commons/utils');
 @inject(App, FileReader, filesaver, ValidationControllerFactory, Validator)
 export class Librarian {
   constructor(app, reader, saver, controllerFactory, validator) {
     this.app = app;
     this.reader = reader;
     this.filesaver = saver;
+    this.utils = utils;
     this.newBook = {
       title: '',
       type: '',
@@ -51,26 +53,26 @@ export class Librarian {
     this.setupValidation();
   }
 
-  textFileValidate() {
-    const nub = document.getElementById('deleteCreateButton');
-    document.getElementsByClassName('errorMessage')[0].innerHTML = '';
-    nub.style.display = 'none';
-    let valid = false;
-    for (let i = 0; i < CSVFilePath.files.length; i += 1) {
-      const oInput = CSVFilePath.files[i];
-      // the type is determined automatically during the creation of the Blob.
-      // this value cannot be controlled by developer, hence cannot test it.
-      /* istanbul ignore if */
-      if (oInput.type === 'text/plain') {
-        nub.style.display = 'block';
-        valid = true;
-      } else {
-        document.getElementsByClassName('errorMessage')[0].innerHTML = `Sorry, ${oInput.type} is an invalid file type.`;
-        valid = false;
-      }
-    }
-    return valid;
-  }
+  // textFileValidate() {
+  //   const nub = document.getElementById('deleteCreateButton');
+  //   document.getElementsByClassName('errorMessage')[0].innerHTML = '';
+  //   nub.style.display = 'none';
+  //   let valid = false;
+  //   for (let i = 0; i < CSVFilePath.files.length; i += 1) {
+  //     const oInput = CSVFilePath.files[i];
+  //     // the type is determined automatically during the creation of the Blob.
+  //     // this value cannot be controlled by developer, hence cannot test it.
+  //     /* istanbul ignore if */
+  //     if (oInput.type === 'text/plain') {
+  //       nub.style.display = 'block';
+  //       valid = true;
+  //     } else {
+  //       document.getElementsByClassName('errorMessage')[0].innerHTML = `Sorry, ${oInput.type} is an invalid file type.`;
+  //       valid = false;
+  //     }
+  //   }
+  //   return valid;
+  // }
 
   setupValidation() {
     ValidationRules

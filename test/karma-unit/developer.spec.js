@@ -62,7 +62,7 @@ describe('the develper module', () => {
     let valid = true;
     document.body.innerHTML = '<div id="createMediaButton"><input id="CSVFilePath" type="file"/><button id="deleteCreateButton">'
     + '</button><p class="errorMessage"></p></div>';
-    valid = developer.textFileValidate();
+    valid = developer.utils.textFileValidate();
     expect(valid).toBe(false);
     done();
   });
@@ -106,5 +106,17 @@ describe('the develper module', () => {
     developer.deleteBooks();
     developer.deleteCreateBooks();
     done();
+  });
+  it('catches error on delete all', async () => {
+    developer.app.httpClient.fetch = function fetch() { return Promise.reject(new Error('bad')); };
+    try {
+      await developer.deleteBooks();
+    } catch (e) { expect(e.message).toBe('bad'); }
+  });
+  it('catches error on deleteCreate', async () => {
+    developer.app.httpClient.fetch = function fetch() { return Promise.reject(new Error('bad')); };
+    try {
+      await developer.deleteCreateBooks();
+    } catch (e) { expect(e.message).toBe('bad'); }
   });
 });
