@@ -28,7 +28,7 @@ class ValidatorMock extends Validator {
 }
 
 describe('the librarian module', () => {
-  let librarian, app1, http, reader, vc, val, auth;
+  let librarian, app1, http, vc, val, auth, reader;
   global.CSVFilePath = { files: [csvFixture.string, 'sample.txt'] };
 
   beforeEach(() => {
@@ -40,7 +40,7 @@ describe('the librarian module', () => {
     vc = new VCMock();
     val = new ValidatorMock();
     app1.activate();
-    librarian = new Librarian(app1, reader, {}, vc, val);
+    librarian = new Librarian(app1, reader, vc, val);
     librarian.app.appState = new AppStateStub();
     librarian.CSVFilePath = { files: [csvFixture.string] };
   });
@@ -107,12 +107,6 @@ describe('the librarian module', () => {
       // expect(http.status).toBe(200);
       done();
     }, 2001);
-  });
-
-  it('should make a .csv file', (done) => {
-    librarian.makeCSVfile();
-    // expect(http2.status).toBe(200);
-    done();
   });
 
   it('should delete and deleteCreate', (done) => {
