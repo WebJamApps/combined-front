@@ -1,3 +1,5 @@
+const csvjson = require('csvjson');
+const filesaver = require('file-saver');
 const showSlides = require('./showSlides');
 
 exports.fixDates = function fixDates(myevents) {
@@ -135,4 +137,18 @@ exports.textFileValidate = function textFileValidate() {
     }
   }
   return valid;
+};
+
+exports.makeCSVfile = function makeCSVfile(fetchClient, route, fileName) {
+  fetchClient.fetch(route)
+    .then(response => response.json())
+    .then((data) => {
+      const options = {
+        delimiter: '\t',
+        headers: 'key'
+      };
+      const myFile = csvjson.toCSV(data, options);
+      const file = new File([myFile], fileName, { type: 'text/plain;charset=utf-8' });
+      filesaver.saveAs(file);
+    });
 };

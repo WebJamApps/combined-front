@@ -7,14 +7,14 @@ import { App } from '../app';
 import { FormValidator } from '../classes/FormValidator';
 
 const csvjson = require('csvjson');
-const filesaver = require('file-saver');
+// const filesaver = require('file-saver');
 const utils = require('../commons/utils');
-@inject(App, FileReader, filesaver, ValidationControllerFactory, Validator)
+@inject(App, FileReader, ValidationControllerFactory, Validator)
 export class Developer {
-  constructor(app, reader, saver, controllerFactory, validator) {
+  constructor(app, reader, controllerFactory, validator) {
     this.app = app;
     this.reader = reader;
-    this.filesaver = saver;
+    // this.filesaver = saver;
     this.utils = utils;
     this.newSong = {
       title: '',
@@ -40,27 +40,6 @@ export class Developer {
     this.app.role = this.user.userType;
     this.setupValidation();
   }
-
-  // textFileValidate() {
-  //   const nub = document.getElementById('deleteCreateButton');
-  //   document.getElementsByClassName('errorMessage')[0].innerHTML = '';
-  //   nub.style.display = 'none';
-  //   let valid = false;
-  //   for (let i = 0; i < CSVFilePath.files.length; i += 1) {
-  //     const oInput = CSVFilePath.files[i];
-  //     // the type is determined automatically during the creation of the Blob.
-  //     // this value cannot be controlled by developer, hence cannot test it.
-  //     /* istanbul ignore if */
-  //     if (oInput.type === 'text/plain') {
-  //       nub.style.display = 'block';
-  //       valid = true;
-  //     } else {
-  //       document.getElementsByClassName('errorMessage')[0].innerHTML = `Sorry, ${oInput.type} is an invalid file type.`;
-  //       valid = false;
-  //     }
-  //   }
-  //   return valid;
-  // }
 
   setupValidation() {
     ValidationRules
@@ -156,18 +135,18 @@ export class Developer {
     this.reader.readAsText(CSVFilePath.files[0]);
   }
 
-  makeCSVfile() {
-    this.app.httpClient.fetch('/song')
-      .then(response => response.json())
-      .then((data) => {
-        const options = {
-          delimiter: '\t',
-          headers: 'key'
-        };
-        this.songs = JSON.stringify(data);
-        this.songs = csvjson.toCSV(data, options);
-        const file = new File([this.songs], 'songs_export.txt', { type: 'text/plain;charset=utf-8' });
-        this.filesaver.saveAs(file);
-      });
-  }
+  // makeCSVfile() {
+  //   this.app.httpClient.fetch('/song')
+  //     .then(response => response.json())
+  //     .then((data) => {
+  //       const options = {
+  //         delimiter: '\t',
+  //         headers: 'key'
+  //       };
+  //       this.songs = JSON.stringify(data);
+  //       this.songs = csvjson.toCSV(data, options);
+  //       const file = new File([this.songs], 'songs_export.txt', { type: 'text/plain;charset=utf-8' });
+  //       this.filesaver.saveAs(file);
+  //     });
+  // }
 }
