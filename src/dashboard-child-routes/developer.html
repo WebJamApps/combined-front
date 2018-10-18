@@ -1,6 +1,6 @@
 <template>
   <div class="page-content">
-    <h4 style="text-align:center;padding-top:15px; padding-bottom:0; margin-bottom:0"><strong>The Developer Dashboard</strong></h4>
+    <h2 style="text-align:center;padding-top:15px; padding-bottom:0; margin-bottom:0">The Developer Dashboard</h2>
     <p style="margin:0; padding:0">&nbsp;</p>
     <div class="material-content elevation3" style="max-width: 8.5in; margin:auto">
       <p style="padding:16px; max-width:7in; margin:auto">
@@ -12,7 +12,7 @@
     <div class="books">
       <p>&nbsp;</p>
       <div class="material-content elevation3" style="max-width:5in; margin:auto">
-        <h2 class="material-header-h4">Import Songs</h2>
+        <h3 class="material-header-h4">Import Songs</h3>
         <p style="text-align:center">from a tab-separated .txt file</p>
         <form>
           <input id="CSVFilePath" type="file" accept=".txt" files.bind="selectedFiles" style="padding-left: 100px" change.delegate="utils.textFileValidate()" />
@@ -29,17 +29,17 @@
       </div>
       <p>&nbsp;</p>
       <div class="material-content elevation3" style="max-width:5in; margin:auto">
-        <h4 class="material-header-h4">Export Songs</h4>
+        <h3 class="material-header-h4">Export Songs</h3>
         <p style="text-align:center">to a tab-separated .txt file</p>
         <form>
-          <button class="button-lib" raised click.trigger="makeCSVfile()">
+          <button class="button-lib" raised click.trigger="utils.makeCSVfile(app.httpClient,'/song', 'songs_export.txt')">
             Export
           </button>
         </form>
       </div>
       <p>&nbsp;</p>
       <div class="material-content elevation3" style="max-width:5in; margin:auto">
-        <h4 class="material-header-h4">Delete All Songs</h4>
+        <h3 class="material-header-h4">Delete All Songs</h3>
         <form>
           <button class="button-lib; width:3cm" raised click.trigger="deleteBooks()">
             Delete Songs
@@ -48,7 +48,7 @@
       </div>
       <p>&nbsp;</p>
       <div class="material-content elevation3" style="max-width:5in; margin:auto">
-        <h4 class="material-header-h4">Add Song</h4>
+        <h3 class="material-header-h4">Add Song</h3>
         <form>
           <label>Title (required)</label>
           <input value.two-way="newSong.title & validate">
