@@ -87,7 +87,7 @@ export class App {
     });
   }
 
-  configureRouter(config, router) {
+  configureRouter(config, router) { // There is no way to refactor this that I can tell
     config.title = 'Web Jam LLC';
     config.options.pushState = true;
     config.options.root = '/';
