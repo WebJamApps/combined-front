@@ -27,19 +27,19 @@ class ValidatorMock extends Validator {
 }
 
 describe('the develper module', () => {
-  let developer, app1, http, reader, vc, val, auth;
+  let developer, app1, http, vc, val, auth, reader;
   global.CSVFilePath = { files: ['title author url performer  category', 'sample.txt'] };
 
   beforeEach(() => {
+    reader = new FileReader();
     auth = new AuthStub();
     auth.setToken({ sub: '1' });
     http = new HttpMock();
-    reader = new FileReader();
     app1 = new App(auth, http);
     vc = new VCMock();
     val = new ValidatorMock();
     app1.activate();
-    developer = new Developer(app1, reader, {}, vc, val);
+    developer = new Developer(app1, reader, vc, val);
     developer.app.appState = new AppStateStub();
     developer.CSVFilePath = { files: ['title author url performer  category'] };
   });
@@ -67,12 +67,6 @@ describe('the develper module', () => {
     done();
   });
 
-  it('should parse the csv.fixtures into object', (done) => {
-    const object = csvjson.toObject(developer.CSVFilePath.files[0]);
-    expect(object instanceof Array).toBeTruthy();
-    done();
-  });
-
   it('should confirm 200 https status after createSong is run', (done) => {
     developer.createBook();
     expect(http.status).toBe(200);
@@ -94,12 +88,6 @@ describe('the develper module', () => {
       // expect(http.status).toBe(200);
       done();
     }, 2001);
-  });
-
-  it('makes a .csv file', (done) => {
-    developer.makeCSVfile();
-    // expect(http2.status).toBe(200);
-    done();
   });
 
   it('should delete and Create', (done) => {
