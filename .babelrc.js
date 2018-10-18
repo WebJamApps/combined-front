@@ -22,8 +22,7 @@ module.exports = (api) => {
           "node": process.env.IN_PROTRACTOR ? '6' : 'current'
         } : {
           "browsers": [
-            "last 2 versions",
-            "not ie < 11"
+            "last 2 versions"
           ]
         },
         "loose": true,
