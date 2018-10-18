@@ -21,14 +21,14 @@ export class App {
     this.style = 'wj';
     this.appUtils = appUtils;
   }
-
-  email = '';
-
-  password = '';
+  //
+  // email = '';
+  //
+  // password = '';
 
   authenticated = false;
 
-  token = '';
+  // token = '';
 
   @bindable
   drawerWidth = '182px';
@@ -87,24 +87,8 @@ export class App {
     });
   }
 
-  configureRouter(config, router) { // There is no way to refactor this that I can tell
-    config.title = 'Web Jam LLC';
-    config.options.pushState = true;
-    config.options.root = '/';
-    config.addPipelineStep('authorize', AuthorizeStep);// Is the actually Authorization to get into the /dashboard
-    config.addPipelineStep('authorize', this.userAccess);// provides access controls to prevent users from certain
-    config.addPostRenderStep({
-      run(routingContext, next) {
-        if (!routingContext.config.settings.noScrollToTop) {
-          const top = document.getElementsByClassName('material-header')[0];
-          if (top !== null && top !== undefined) {
-            top.scrollIntoView();
-          }
-        }
-        return next();
-      }
-    });
-    config.map([
+  mapConfig(config) {
+    return config.map([
       {
         route: 'dashboard',
         name: 'dashboard-router',
@@ -150,6 +134,26 @@ export class App {
         route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: false, title: '', settings: 'fa fa-home'
       }
     ]);
+  }
+
+  configureRouter(config, router) { // There is no way to refactor this that I can tell
+    config.title = 'Web Jam LLC';
+    config.options.pushState = true;
+    config.options.root = '/';
+    config.addPipelineStep('authorize', AuthorizeStep);// Is the actually Authorization to get into the /dashboard
+    config.addPipelineStep('authorize', this.userAccess);// provides access controls to prevent users from certain
+    config.addPostRenderStep({
+      run(routingContext, next) {
+        if (!routingContext.config.settings.noScrollToTop) {
+          const top = document.getElementsByClassName('material-header')[0];
+          if (top !== null && top !== undefined) {
+            top.scrollIntoView();
+          }
+        }
+        return next();
+      }
+    });
+    config = this.mapConfig(config);
     config.fallbackRoute('/');
     this.router = router;
   }
