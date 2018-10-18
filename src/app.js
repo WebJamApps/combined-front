@@ -88,7 +88,7 @@ export class App {
   }
 
   mapConfig(config) {
-    return config.map([
+    return config.map([ // There is no way to refactor this that I can tell
       {
         route: 'dashboard',
         name: 'dashboard-router',
@@ -136,7 +136,7 @@ export class App {
     ]);
   }
 
-  configureRouter(config, router) { // There is no way to refactor this that I can tell
+  configureRouter(config, router) {
     config.title = 'Web Jam LLC';
     config.options.pushState = true;
     config.options.root = '/';
