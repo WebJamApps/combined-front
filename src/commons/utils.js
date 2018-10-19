@@ -6,15 +6,11 @@ exports.fixDates = function fixDates(myevents) {
   for (let i = 0; i < myevents.length; i += 1) {
     const startDate = myevents[i].voStartDate;
     const endDate = myevents[i].voEndDate;
-    if (startDate !== null) {
-      if (startDate.indexOf('T') !== -1) {
-        myevents[i].voStartDate = startDate.substr(0, startDate.indexOf('T'));
-      }
+    if (startDate !== null && startDate.indexOf('T') !== -1) {
+      myevents[i].voStartDate = startDate.substr(0, startDate.indexOf('T'));
     }
-    if (endDate !== null) {
-      if (endDate.indexOf('T') !== -1) {
-        myevents[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
-      }
+    if (endDate !== null && endDate.indexOf('T') !== -1) {
+      myevents[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
     }
   }
   return myevents;
