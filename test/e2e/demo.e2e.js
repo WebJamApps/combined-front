@@ -1,4 +1,4 @@
-const config = require('../protractor.conf');
+const config = require('../protractor.conf').config;
 
 const PageObjectSkeleton = require('./skeleton.po');
 
