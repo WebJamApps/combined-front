@@ -6,15 +6,11 @@ exports.fixDates = function fixDates(myevents) {
   for (let i = 0; i < myevents.length; i += 1) {
     const startDate = myevents[i].voStartDate;
     const endDate = myevents[i].voEndDate;
-    if (startDate !== null) {
-      if (startDate.indexOf('T') !== -1) {
-        myevents[i].voStartDate = startDate.substr(0, startDate.indexOf('T'));
-      }
+    if (startDate !== null && startDate.indexOf('T') !== -1) {
+      myevents[i].voStartDate = startDate.substr(0, startDate.indexOf('T'));
     }
-    if (endDate !== null) {
-      if (endDate.indexOf('T') !== -1) {
-        myevents[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
-      }
+    if (endDate !== null && endDate.indexOf('T') !== -1) {
+      myevents[i].voEndDate = endDate.substr(0, endDate.indexOf('T'));
     }
   }
   return myevents;
@@ -56,14 +52,7 @@ exports.makeFilterDropdown = function makeFilterDropdown(filterName, model, attr
   }
 };
 
-exports.filterSelected = function filterSelected(myModule) {
-  if (myModule.selectedFilter.length === 0) {
-    for (let i = 0; i < myModule.filters.length; i += 1) {
-      myModule.filters[i].value = '';
-      myModule[myModule.filters[i].filterby] = false;
-    }
-    return;
-  }
+exports.finishFiltering = function finishFiltering(myModule) {
   for (let s = 0; s < myModule.selectedFilter.length; s += 1) {
     for (let u = 0; u < myModule.filters.length; u += 1) {
       if (myModule.filters[u].filterby === myModule.selectedFilter[s]) {
@@ -77,6 +66,17 @@ exports.filterSelected = function filterSelected(myModule) {
       myModule.filters[a].value = '';
     }
   }
+};
+
+exports.filterSelected = function filterSelected(myModule) {
+  if (myModule.selectedFilter.length === 0) {
+    for (let i = 0; i < myModule.filters.length; i += 1) {
+      myModule.filters[i].value = '';
+      myModule[myModule.filters[i].filterby] = false;
+    }
+    return;
+  }
+  this.finishFiltering(myModule);
 };
 
 exports.startSlides = function startSlides(idArray1, errorMsg, idArray2) {

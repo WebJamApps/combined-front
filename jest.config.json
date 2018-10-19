@@ -4,7 +4,7 @@
   "testPathIgnorePatterns": ["/node_modules/", "/test/karma-unit/", "/test/react-unit/"],
   "coverageDirectory": "coverage/jest",
   "collectCoverageFrom": ["src/classes/*.{js,jsx}", "src/commons/*.{js,jsx}", "!**/node_modules/**", "!src/commons/slideshow.js", "!src/commons/showSlides.js",
-    "!src/commons/utils.js", "!src/classes/AppState.js", "!src/classes/UserAccess.js", "!src/classes/FormValidator.js"
+    "!src/classes/AppState.js", "!src/classes/UserAccess.js", "!src/classes/FormValidator.js"
   ],
   "collectCoverage": true,
   "testEnvironment": "jest-environment-jsdom",
