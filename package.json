@@ -158,7 +158,7 @@
     "test:karma": "cross-env NODE_ENV=test nps test.karma",
     "test:debug": "cross-env NODE_ENV=test nps test.karma.debug",
     "test:lint": "nps test.lint",
-    "installglobals": "npm i -g npm@latest",
+    "installglobals": "npm i -g npm@latest && npm i -g yarn@latest",
     "cleaninstall": "rm -rf yarn.lock && rm -rf node_modules && yarn cache clean && yarn install",
     "snyk-protect": "snyk protect",
     "eslint:fix": "./node_modules/eslint/bin/eslint.js --fix .",

@@ -6196,8 +6196,8 @@ isbinaryfile@^3.0.0:
     buffer-alloc "^1.2.0"
 
 isemail@3.x.x:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/isemail/-/isemail-3.2.0.tgz#59310a021931a9fb06bbb51e155ce0b3f236832c"
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/isemail/-/isemail-3.1.4.tgz#76e2187ff7bee59d57522c6fd1c3f09a331933cf"
   dependencies:
     punycode "2.x.x"
 
