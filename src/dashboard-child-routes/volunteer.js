@@ -1,13 +1,16 @@
 import { inject } from 'aurelia-framework';
 import { App } from '../app';
 import {
-  fixDates, formatDate, markPast, showCheckboxes, filterSelected
+  fixDates, formatDate, markPast, showCheckboxes,
 } from '../commons/utils';
+
+const commonUtils = require('../commons/utils');
 @inject(App)
 export class Volunteer {
   constructor(app) {
     this.showCheckboxes = showCheckboxes;
     this.app = app;
+    this.commonUtils = commonUtils;
     this.events = [];
     this.signup = {};
     this.selectedFilter = ['future only'];
@@ -98,7 +101,7 @@ export class Volunteer {
   }
 
   filterPicked() {
-    filterSelected(this);
+    this.commonUtils.filterSelected(this);
     if (this.selectedFilter.includes('future only')) {
       markPast(this.events, formatDate);
       this.hidePast = true;

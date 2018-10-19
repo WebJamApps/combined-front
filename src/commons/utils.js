@@ -56,14 +56,7 @@ exports.makeFilterDropdown = function makeFilterDropdown(filterName, model, attr
   }
 };
 
-exports.filterSelected = function filterSelected(myModule) {
-  if (myModule.selectedFilter.length === 0) {
-    for (let i = 0; i < myModule.filters.length; i += 1) {
-      myModule.filters[i].value = '';
-      myModule[myModule.filters[i].filterby] = false;
-    }
-    return;
-  }
+exports.finishFiltering = function finishFiltering(myModule) {
   for (let s = 0; s < myModule.selectedFilter.length; s += 1) {
     for (let u = 0; u < myModule.filters.length; u += 1) {
       if (myModule.filters[u].filterby === myModule.selectedFilter[s]) {
@@ -77,6 +70,30 @@ exports.filterSelected = function filterSelected(myModule) {
       myModule.filters[a].value = '';
     }
   }
+};
+
+exports.filterSelected = function filterSelected(myModule) {
+  if (myModule.selectedFilter.length === 0) {
+    for (let i = 0; i < myModule.filters.length; i += 1) {
+      myModule.filters[i].value = '';
+      myModule[myModule.filters[i].filterby] = false;
+    }
+    return;
+  }
+  this.finishFiltering(myModule);
+  // for (let s = 0; s < myModule.selectedFilter.length; s += 1) {
+  //   for (let u = 0; u < myModule.filters.length; u += 1) {
+  //     if (myModule.filters[u].filterby === myModule.selectedFilter[s]) {
+  //       myModule[myModule.filters[u].filterby] = true;
+  //     }
+  //   }
+  // }
+  // for (let a = 0; a < myModule.filters.length; a += 1) {
+  //   if (myModule.selectedFilter.indexOf(myModule.filters[a].filterby) === -1) {
+  //     myModule[myModule.filters[a].filterby] = false;
+  //     myModule.filters[a].value = '';
+  //   }
+  // }
 };
 
 exports.startSlides = function startSlides(idArray1, errorMsg, idArray2) {
