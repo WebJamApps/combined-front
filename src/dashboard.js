@@ -29,18 +29,6 @@ export class Dashboard {
       this.app.appState.setUser(this.user);
       return this.app.router.navigate('dashboard/user-account');
     }
-    /* istanbul ignore else */
-    if (this.user.userType === 'Charity') {
-      return this.app.router.navigate('dashboard/charity');
-    } if (this.user.userType === 'Volunteer') {
-      return this.app.router.navigate('dashboard/volunteer');
-    } if (this.user.userType === 'Reader') {
-      return this.app.router.navigate('dashboard/reader');
-    } if (this.user.userType === 'Librarian') {
-      return this.app.router.navigate('dashboard/librarian');
-    } if (this.user.userType === 'Developer') {
-      return this.app.router.navigate('dashboard/developer');
-    }
-    return this.app.router.navigate('/');
+    return this.app.router.navigate(`dashboard/${this.user.userType.toLowerCase()}`);
   }
 }
