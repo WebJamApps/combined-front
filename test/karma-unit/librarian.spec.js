@@ -28,7 +28,7 @@ class ValidatorMock extends Validator {
 }
 
 describe('the librarian module', () => {
-  let librarian, app1, http, reader, vc, val, auth;
+  let librarian, app1, http, vc, val, auth, reader;
   global.CSVFilePath = { files: [csvFixture.string, 'sample.txt'] };
 
   beforeEach(() => {
@@ -40,7 +40,7 @@ describe('the librarian module', () => {
     vc = new VCMock();
     val = new ValidatorMock();
     app1.activate();
-    librarian = new Librarian(app1, reader, {}, vc, val);
+    librarian = new Librarian(app1, reader, vc, val);
     librarian.app.appState = new AppStateStub();
     librarian.CSVFilePath = { files: [csvFixture.string] };
   });
@@ -61,7 +61,7 @@ describe('the librarian module', () => {
     let valid = true;
     document.body.innerHTML = '<div id="createMediaButton"><input id="CSVFilePath" type="file"/><button id="deleteCreateButton">'
     + '</button><p class="errorMessage"></p></div>';
-    valid = librarian.textFileValidate();
+    valid = librarian.utils.textFileValidate();
     expect(valid).toBe(false);
     done();
   });
@@ -109,33 +109,9 @@ describe('the librarian module', () => {
     }, 2001);
   });
 
-  it('should validate textFile', (done) => {
-    // document.body.innerHTML = '<div id="deleteCreateButton"></div>';
-    // librarian.newBook.type = 'text/plain';
-    // librarian.textFileValidate();
-    done();
-  });
-
-  it('should createBooksFromCSV', (done) => {
-    // librarian.createBooksFromCSV();
-    done();
-  });
-
-  it('should make a .csv file', (done) => {
-    librarian.makeCSVfile();
-    // expect(http2.status).toBe(200);
-    done();
-  });
-
   it('should delete and deleteCreate', (done) => {
     librarian.deleteBooks();
     librarian.deleteCreateBooks();
     done();
   });
-
-  // it('should validate textFile', (done) => {
-  //   // global.CSVFilePath = { files: [] };
-  //   // librarian.textFileValidate();
-  //   done();
-  // });
 });

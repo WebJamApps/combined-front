@@ -27,19 +27,19 @@ class ValidatorMock extends Validator {
 }
 
 describe('the develper module', () => {
-  let developer, app1, http, reader, vc, val, auth;
+  let developer, app1, http, vc, val, auth, reader;
   global.CSVFilePath = { files: ['title author url performer  category', 'sample.txt'] };
 
   beforeEach(() => {
+    reader = new FileReader();
     auth = new AuthStub();
     auth.setToken({ sub: '1' });
     http = new HttpMock();
-    reader = new FileReader();
     app1 = new App(auth, http);
     vc = new VCMock();
     val = new ValidatorMock();
     app1.activate();
-    developer = new Developer(app1, reader, {}, vc, val);
+    developer = new Developer(app1, reader, vc, val);
     developer.app.appState = new AppStateStub();
     developer.CSVFilePath = { files: ['title author url performer  category'] };
   });
@@ -62,14 +62,8 @@ describe('the develper module', () => {
     let valid = true;
     document.body.innerHTML = '<div id="createMediaButton"><input id="CSVFilePath" type="file"/><button id="deleteCreateButton">'
     + '</button><p class="errorMessage"></p></div>';
-    valid = developer.textFileValidate();
+    valid = developer.utils.textFileValidate();
     expect(valid).toBe(false);
-    done();
-  });
-
-  it('should parse the csv.fixtures into object', (done) => {
-    const object = csvjson.toObject(developer.CSVFilePath.files[0]);
-    expect(object instanceof Array).toBeTruthy();
     done();
   });
 
@@ -96,15 +90,21 @@ describe('the develper module', () => {
     }, 2001);
   });
 
-  it('makes a .csv file', (done) => {
-    developer.makeCSVfile();
-    // expect(http2.status).toBe(200);
-    done();
-  });
-
   it('should delete and Create', (done) => {
     developer.deleteBooks();
     developer.deleteCreateBooks();
     done();
+  });
+  it('catches error on delete all', async () => {
+    developer.app.httpClient.fetch = function fetch() { return Promise.reject(new Error('bad')); };
+    try {
+      await developer.deleteBooks();
+    } catch (e) { expect(e.message).toBe('bad'); }
+  });
+  it('catches error on deleteCreate', async () => {
+    developer.app.httpClient.fetch = function fetch() { return Promise.reject(new Error('bad')); };
+    try {
+      await developer.deleteCreateBooks();
+    } catch (e) { expect(e.message).toBe('bad'); }
   });
 });

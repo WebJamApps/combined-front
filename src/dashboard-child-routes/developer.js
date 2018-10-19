@@ -7,13 +7,15 @@ import { App } from '../app';
 import { FormValidator } from '../classes/FormValidator';
 
 const csvjson = require('csvjson');
-const filesaver = require('file-saver');
-@inject(App, FileReader, filesaver, ValidationControllerFactory, Validator)
+// const filesaver = require('file-saver');
+const utils = require('../commons/utils');
+@inject(App, FileReader, ValidationControllerFactory, Validator)
 export class Developer {
-  constructor(app, reader, saver, controllerFactory, validator) {
+  constructor(app, reader, controllerFactory, validator) {
     this.app = app;
     this.reader = reader;
-    this.filesaver = saver;
+    // this.filesaver = saver;
+    this.utils = utils;
     this.newSong = {
       title: '',
       url: '',
@@ -37,27 +39,6 @@ export class Developer {
     this.app.dashboardTitle = this.user.userType;
     this.app.role = this.user.userType;
     this.setupValidation();
-  }
-
-  textFileValidate() {
-    const nub = document.getElementById('deleteCreateButton');
-    document.getElementsByClassName('errorMessage')[0].innerHTML = '';
-    nub.style.display = 'none';
-    let valid = false;
-    for (let i = 0; i < CSVFilePath.files.length; i += 1) {
-      const oInput = CSVFilePath.files[i];
-      // the type is determined automatically during the creation of the Blob.
-      // this value cannot be controlled by developer, hence cannot test it.
-      /* istanbul ignore if */
-      if (oInput.type === 'text/plain') {
-        nub.style.display = 'block';
-        valid = true;
-      } else {
-        document.getElementsByClassName('errorMessage')[0].innerHTML = `Sorry, ${oInput.type} is an invalid file type.`;
-        valid = false;
-      }
-    }
-    return valid;
   }
 
   setupValidation() {
@@ -107,28 +88,29 @@ export class Developer {
   }
 
   async deleteBooks() {
-    await fetch;
-    this.app.httpClient.fetch('/song', {
-      method: 'delete'
-    });
-    this.app.router.navigate('/dashboard');
+    try {
+      await this.app.httpClient.fetch('/song', {
+        method: 'delete'
+      });
+    } catch (e) { throw e; }
+    return this.app.router.navigate('/dashboard');
   }
 
   async deleteCreateBooks() {
-    await fetch;
-    this.app.httpClient.fetch('/song', {
-      method: 'delete'
-    }).then(() => {
-      this.createBooksFromCSV();
-    });
+    try {
+      await this.app.httpClient.fetch('/song', {
+        method: 'delete'
+      });
+    } catch (e) { throw e; }
+    this.createBooksFromCSV();
   }
 
   createBooksFromCSV() {
     let jsonObj;
     const httpClient = this.app.httpClient;
     const router = this.app.router;
-    async function makeLotaBooks(jsonObject) {
-      httpClient.fetch('/song', {
+    function makeLotaBooks(jsonObject) {
+      return httpClient.fetch('/song', {
         method: 'post',
         body: json(jsonObject)
       })
@@ -141,33 +123,30 @@ export class Developer {
     }
     async function loaded(evt) {
       const fileString = evt.target.result;
-      const options = {
-        delimiter: '\t'
-      };
+      const options = { delimiter: '\t' };
       jsonObj = csvjson.toObject(fileString, options);
-      makeLotaBooks(jsonObj);
+      return makeLotaBooks(jsonObj);
     }
     function errorHandler() {
       document.getElementsByClassName('errorMessage')[0].innerHTML = 'The file could not be read';
     }
-
     this.reader.onload = loaded;
     this.reader.onerror = errorHandler;
     this.reader.readAsText(CSVFilePath.files[0]);
   }
 
-  makeCSVfile() {
-    this.app.httpClient.fetch('/song')
-      .then(response => response.json())
-      .then((data) => {
-        const options = {
-          delimiter: '\t',
-          headers: 'key'
-        };
-        this.songs = JSON.stringify(data);
-        this.songs = csvjson.toCSV(data, options);
-        const file = new File([this.songs], 'songs_export.txt', { type: 'text/plain;charset=utf-8' });
-        this.filesaver.saveAs(file);
-      });
-  }
+  // makeCSVfile() {
+  //   this.app.httpClient.fetch('/song')
+  //     .then(response => response.json())
+  //     .then((data) => {
+  //       const options = {
+  //         delimiter: '\t',
+  //         headers: 'key'
+  //       };
+  //       this.songs = JSON.stringify(data);
+  //       this.songs = csvjson.toCSV(data, options);
+  //       const file = new File([this.songs], 'songs_export.txt', { type: 'text/plain;charset=utf-8' });
+  //       this.filesaver.saveAs(file);
+  //     });
+  // }
 }
