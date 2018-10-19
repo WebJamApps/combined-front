@@ -140,7 +140,7 @@ exports.textFileValidate = function textFileValidate() {
 };
 
 exports.makeCSVfile = function makeCSVfile(fetchClient, route, fileName) {
-  fetchClient.fetch(route)
+  return fetchClient.fetch(route)
     .then(response => response.json())
     .then((data) => {
       const options = {
@@ -149,6 +149,6 @@ exports.makeCSVfile = function makeCSVfile(fetchClient, route, fileName) {
       };
       const myFile = csvjson.toCSV(data, options);
       const file = new File([myFile], fileName, { type: 'text/plain;charset=utf-8' });
-      filesaver.saveAs(file);
+      return filesaver.saveAs(file);
     });
 };
