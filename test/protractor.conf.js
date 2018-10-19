@@ -41,6 +41,7 @@ exports.config = {
         '--disable-background-timer-throttling',
         '--disable-renderer-backgrounding',
         '--disable-device-discovery-notifications',
+        '--window-size=1920,1080'
         /* enable these if you'd like to test using Chrome Headless
           '--no-gpu',
           '--headless'
