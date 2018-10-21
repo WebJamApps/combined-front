@@ -1,6 +1,7 @@
+import { PageObjectSkeleton } from './skeleton.po';
+
 const config = require('../protractor.conf').config;
 
-import {PageObjectSkeleton} from "./skeleton.po";
 
 describe('aurelia skeleton app', () => {
   // let poWelcome;
