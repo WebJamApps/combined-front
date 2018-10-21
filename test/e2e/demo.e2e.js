@@ -41,10 +41,10 @@ describe('aurelia skeleton app', () => {
     await expect(poSkeleton.getCurrentPageTitle()).toBe('Music | Web Jam LLC');
   });
 
-  it('should navigate to OHAF page', async () => {
-    await poSkeleton.navigateTo('/ohaf');
-    await expect(poSkeleton.getCurrentPageTitle()).toBe('OHAF | Web Jam LLC');
-  });
+  // it('should navigate to OHAF page', async () => {
+  //   await poSkeleton.navigateTo('/ohaf');
+  //   await expect(poSkeleton.getCurrentPageTitle()).toBe('OHAF | Web Jam LLC');
+  // });
 
   it('should navigate to SC2RS page', async () => {
     await poSkeleton.navigateTo('/sc2rs');
