@@ -14,9 +14,9 @@ describe('aurelia skeleton app', () => {
     // browser.manage().window().setSize(new Dimension(1600,900));
   });
 
-  it('should load the page and display the initial page title', async () => {
-    await expect(poSkeleton.getCurrentPageTitle()).toBe('Web Jam LLC');
-  });
+  // it('should load the page and display the initial page title', async () => {
+  //   await expect(poSkeleton.getCurrentPageTitle()).toBe('Web Jam LLC');
+  // });
 
   // it('should display greeting', () => {
   //   expect(poWelcome.getGreeting()).toBe('Welcome to the Aurelia Navigation App!');
@@ -36,28 +36,28 @@ describe('aurelia skeleton app', () => {
   //   expect(poWelcome.openAlertDialog()).toBe(true);
   // });
 
-  it('should navigate to Music page', async () => {
-    await poSkeleton.navigateTo('/music');
-    await expect(poSkeleton.getCurrentPageTitle()).toBe('Music | Web Jam LLC');
-  });
+  // it('should navigate to Music page', async () => {
+  //   await poSkeleton.navigateTo('/music');
+  //   await expect(poSkeleton.getCurrentPageTitle()).toBe('Music | Web Jam LLC');
+  // });
 
   // it('should navigate to OHAF page', async () => {
   //   await poSkeleton.navigateTo('/ohaf');
   //   await expect(poSkeleton.getCurrentPageTitle()).toBe('OHAF | Web Jam LLC');
   // });
 
-  it('should navigate to SC2RS page', async () => {
-    await poSkeleton.navigateTo('/sc2rs');
-    await expect(poSkeleton.getCurrentPageTitle()).toBe('SC2RS | Web Jam LLC');
-  });
+  // it('should navigate to SC2RS page', async () => {
+  //   await poSkeleton.navigateTo('/sc2rs');
+  //   await expect(poSkeleton.getCurrentPageTitle()).toBe('SC2RS | Web Jam LLC');
+  // });
 
   // it('should navigate to Library page', async () => {
   //   await poSkeleton.navigateTo('/library');
   //   await expect(poSkeleton.getCurrentPageTitle()).toBe('Library | Web Jam LLC');
   // });
 
-  it('should navigate to Login page', async () => {
-    await poSkeleton.navigateTo('/login');
-    await expect(poSkeleton.getCurrentPageTitle()).toBe('Login | Web Jam LLC');
-  });
+  // it('should navigate to Login page', async () => {
+  //   await poSkeleton.navigateTo('/login');
+  //   await expect(poSkeleton.getCurrentPageTitle()).toBe('Login | Web Jam LLC');
+  // });
 });
