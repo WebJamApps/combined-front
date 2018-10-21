@@ -1,6 +1,6 @@
 const config = require('../protractor.conf').config;
 
-const PageObjectSkeleton = require('./skeleton.po');
+import {PageObjectSkeleton} from "./skeleton.po";
 
 describe('aurelia skeleton app', () => {
   // let poWelcome;
@@ -36,15 +36,15 @@ describe('aurelia skeleton app', () => {
   //   expect(poWelcome.openAlertDialog()).toBe(true);
   // });
 
-  // it('should navigate to Music page', async () => {
-  //   await poSkeleton.navigateTo('/music');
-  //   await expect(poSkeleton.getCurrentPageTitle()).toBe('Music | Web Jam LLC');
-  // });
+  it('should navigate to Music page', async () => {
+    await poSkeleton.navigateTo('/music');
+    await expect(poSkeleton.getCurrentPageTitle()).toBe('Music | Web Jam LLC');
+  });
 
-  // it('should navigate to OHAF page', async () => {
-  //   await poSkeleton.navigateTo('/ohaf');
-  //   await expect(poSkeleton.getCurrentPageTitle()).toBe('OHAF | Web Jam LLC');
-  // });
+  it('should navigate to OHAF page', async () => {
+    await poSkeleton.navigateTo('/ohaf');
+    await expect(poSkeleton.getCurrentPageTitle()).toBe('OHAF | Web Jam LLC');
+  });
 
   // it('should navigate to SC2RS page', async () => {
   //   await poSkeleton.navigateTo('/sc2rs');

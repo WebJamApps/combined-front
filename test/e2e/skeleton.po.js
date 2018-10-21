@@ -1,4 +1,4 @@
-class PageObjectSkeleton {
+export class PageObjectSkeleton {
   getCurrentPageTitle() {
     return browser.getTitle();
   }
@@ -9,5 +9,3 @@ class PageObjectSkeleton {
     await navigatingReady;
   }
 }
-
-module.exports = PageObjectSkeleton;
