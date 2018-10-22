@@ -10,6 +10,7 @@ class User_ {
     this.formType += this.searchParams.get('form');
     this.userToken = localStorage.getItem('aurelia_id_token');
     this.verifyEmail();
+    this.myForm = {};
   }
 
   createVerifyCodeForm() {
@@ -87,32 +88,36 @@ class User_ {
     element.formType = this.formType;
   }
 
-  validateForm(evt) {
-    document.getElementsByClassName('loginerror')[0].innerHTML = '';
+  setupValidationForm(evt) {
     this.formType = evt.target.formType;
-    const newpasswd = document.getElementsByClassName('loginpass')[0];
-    const isemailvalid = document.getElementsByClassName('email')[0].checkValidity();
-    const emValue = document.getElementsByClassName('email')[0].value;
-    const edot = emValue.split('.');
-    const isvalidcode = document.getElementsByClassName('code')[0].value;
-    const submitbutton = document.getElementsByClassName('regbutton')[0];
-    submitbutton.style.display = 'none';
+    this.myForm.newpasswd = document.getElementsByClassName('loginpass')[0];
+    this.myForm.isemailvalid = document.getElementsByClassName('email')[0].checkValidity();
+    this.myForm.emValue = document.getElementsByClassName('email')[0].value;
+    this.myForm.edot = this.myForm.emValue.split('.');
+    this.myForm.isvalidcode = document.getElementsByClassName('code')[0].value;
+    this.myForm.submitbutton = document.getElementsByClassName('regbutton')[0];
+    this.myForm.submitbutton.style.display = 'none';
     document.getElementsByClassName('loginerror')[0].innerHTML = '';
+  }
+
+  validateForm(evt) {
+    this.setupValidationForm(evt);
     let errorMessage = '<ul style="margin-right:0; margin-top:0; margin-bottom:20px; text-align:left; padding-left:20px; font-size:10pt">';
     if (this.formType === 'reset') {
-      const validPassword = newpasswd.checkValidity();
-      if (validPassword && isemailvalid && edot.length > 1 && isvalidcode > 9999 && isvalidcode < 100000) {
-        submitbutton.style.display = 'block';
+      const validPassword = this.myForm.newpasswd.checkValidity();
+      if (validPassword && this.myForm.isemailvalid && this.myForm.edot.length > 1
+        && this.myForm.isvalidcode > 9999 && this.myForm.isvalidcode < 100000) {
+        this.myForm.submitbutton.style.display = 'block';
         return true;
       }
       if (!validPassword) {
         errorMessage += '<li>Password is not >= 8 characters</li>';
       }
     }
-    if (!(isvalidcode > 9999 && isvalidcode < 100000)) {
+    if (!(this.myForm.isvalidcode > 9999 && this.myForm.isvalidcode < 100000)) {
       errorMessage += '<li>Invalid passcode</li>';
     }
-    if (!isemailvalid || !(edot.length > 1)) {
+    if (!this.myForm.isemailvalid || !(this.myForm.edot.length > 1)) {
       errorMessage += '<li>Invalid email address</li>';
     }
     if (errorMessage !== '<ul style="margin-right:0; margin-top:0; margin-bottom:20px; text-align:left; padding-left:20px; font-size:10pt">') {
@@ -120,7 +125,7 @@ class User_ {
       document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
       return false;
     }
-    submitbutton.style.display = 'block';
+    this.myForm.submitbutton.style.display = 'block';
     return null;
   }
 
