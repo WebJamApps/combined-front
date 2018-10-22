@@ -12,7 +12,7 @@ describe('aurelia skeleton app', () => {
     // poWelcome = new PageObjectWelcome();
 
     await browser.loadAndWaitForAureliaPage(`http://localhost:${config.port}`);
-    // browser.manage().window().setSize(new Dimension(1600, 900));
+    await browser.driver.manage().window().maximize();
   });
 
   it('should load the page and display the initial page title', async () => {
