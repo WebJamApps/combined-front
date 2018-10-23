@@ -13,6 +13,8 @@ describe('aurelia skeleton app', () => {
 
     await browser.loadAndWaitForAureliaPage(`http://localhost:${config.port}`);
     await browser.driver.manage().window().maximize();
+    // console.log('did I get here or fail before?');
+    await poSkeleton.sleep(1000);
   });
 
   it('should load the page and display the initial page title', async () => {
