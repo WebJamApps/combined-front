@@ -1,3 +1,5 @@
+const SpecReporter = require('jasmine-spec-reporter').SpecReporter;
+
 const port = 19876;
 
 exports.config = {
@@ -21,7 +23,9 @@ exports.config = {
     showTiming: true,
     showColors: true,
     isVerbose: true,
+    includeStackTrace: true,
     defaultTimeoutInterval: 400000
+    // print: function () {},
   },
 
   SELENIUM_PROMISE_MANAGER: false,
@@ -41,7 +45,10 @@ exports.config = {
         '--disable-background-timer-throttling',
         '--disable-renderer-backgrounding',
         '--disable-device-discovery-notifications',
-        '--window-size=1920,1080'
+        '--window-size=1920,1080',
+        '--headless',
+        '--no-gpu',
+        '--no-sandbox'
         /* enable these if you'd like to test using Chrome Headless
           '--no-gpu',
           '--headless'
@@ -51,6 +58,12 @@ exports.config = {
   },
 
   onPrepare() {
+    jasmine.getEnv().addReporter(new SpecReporter({
+      displayFailuresSummary: true,
+      displayFailuredSpec: true,
+      displaySuiteNumber: true,
+      displaySpecDuration: true
+    }));
     process.env.BABEL_TARGET = 'node';
     process.env.IN_PROTRACTOR = 'true';
     require('@babel/polyfill');
