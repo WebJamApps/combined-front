@@ -3,7 +3,7 @@
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as Bluebird from 'bluebird';
-import 'babel-polyfill';
+import '@babel/polyfill';
 import config from './authConfig';
 import '../static/styles.css';
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)

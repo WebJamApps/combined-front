@@ -1,6 +1,7 @@
-// import {PageObjectWelcome} from './welcome.po.js';
 import { PageObjectSkeleton } from './skeleton.po';
-import { config } from '../protractor.conf';
+
+const config = require('../protractor.conf').config;
+
 
 describe('aurelia skeleton app', () => {
   // let poWelcome;
@@ -11,30 +12,14 @@ describe('aurelia skeleton app', () => {
     // poWelcome = new PageObjectWelcome();
 
     await browser.loadAndWaitForAureliaPage(`http://localhost:${config.port}`);
-    browser.driver.manage().window().maximize();
+    await browser.driver.manage().window().maximize();
+    // console.log('did I get here or fail before?');
+    await poSkeleton.sleep(1000);
   });
 
   it('should load the page and display the initial page title', async () => {
     await expect(poSkeleton.getCurrentPageTitle()).toBe('Web Jam LLC');
   });
-
-  // it('should display greeting', () => {
-  //   expect(poWelcome.getGreeting()).toBe('Welcome to the Aurelia Navigation App!');
-  // });
-
-  // it('should automatically write down the fullname', () => {
-  //   poWelcome.setFirstname('John');
-  //   poWelcome.setLastname('Doe');
-  //
-  //   // For now there is a timing issue with the binding.
-  //   // Until resolved we will use a short sleep to overcome the issue.
-  //   browser.sleep(200);
-  //   expect(poWelcome.getFullname()).toBe('JOHN DOE');
-  // });
-  //
-  // it('should show alert message when clicking submit button', () => {
-  //   expect(poWelcome.openAlertDialog()).toBe(true);
-  // });
 
   it('should navigate to Music page', async () => {
     await poSkeleton.navigateTo('/music');
@@ -51,10 +36,10 @@ describe('aurelia skeleton app', () => {
     await expect(poSkeleton.getCurrentPageTitle()).toBe('SC2RS | Web Jam LLC');
   });
 
-  // it('should navigate to Library page', async () => {
-  //   await poSkeleton.navigateTo('/library');
-  //   await expect(poSkeleton.getCurrentPageTitle()).toBe('Library | Web Jam LLC');
-  // });
+  it('should navigate to Library page', async () => {
+    await poSkeleton.navigateTo('/library');
+    await expect(poSkeleton.getCurrentPageTitle()).toBe('Library | Web Jam LLC');
+  });
 
   it('should navigate to Login page', async () => {
     await poSkeleton.navigateTo('/login');
