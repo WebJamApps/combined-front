@@ -1,14 +1,11 @@
 import { inject } from 'aurelia-framework';
 import { App } from '../app';
-import {
-  fixDates, formatDate, markPast, showCheckboxes,
-} from '../commons/utils';
 
 const commonUtils = require('../commons/utils');
 @inject(App)
 export class Volunteer {
   constructor(app) {
-    this.showCheckboxes = showCheckboxes;
+    this.showCheckboxes = commonUtils.showCheckboxes;
     this.app = app;
     this.commonUtils = commonUtils;
     this.events = [];
@@ -20,8 +17,9 @@ export class Volunteer {
     this.cause = false;
     this.keyword = false;
     this.allCauses = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
-    this.allTalents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
-    this.allWorks = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
+    this.allTalents = ['music', 'athletics', 'childcare', 'arts & crafts', 'mechanics',
+      'construction', 'computers', 'communication', 'chess playing', 'listening'];
+    this.allWorks = ['hashbrown slinging', 'word processing', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
     this.selectedCauses = [];
     this.selectedTalents = [];
     this.selectedWorks = [];
@@ -52,18 +50,18 @@ export class Volunteer {
     this.app.role = this.user.userType;
     await this.fetchAllEvents();
     this.displayEvents();
+    this.commonUtils.makeFilterDropdown(this.siteLocations, this.events, 'voZipCode');
+    this.commonUtils.makeFilterDropdown(this.causes, this.events, 'voCharityTypes');
   }
 
   async displayEvents() {
     if (this.events.length > 0) {
       this.fixZipcodesAndTypes();
-      fixDates(this.events);
+      this.commonUtils.fixDates(this.events);
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
-      this.populateSites();
-      this.populateCauses();
       this.checkScheduled();
-      markPast(this.events, formatDate);
+      this.commonUtils.markPast(this.events, this.commonUtils.formatDate);
     }
   }
 
@@ -103,32 +101,10 @@ export class Volunteer {
   filterPicked() {
     this.commonUtils.filterSelected(this);
     if (this.selectedFilter.includes('future only')) {
-      markPast(this.events, formatDate);
+      this.commonUtils.markPast(this.events, this.commonUtils.formatDate);
       this.hidePast = true;
     } else {
       this.hidePast = false;
-    }
-  }
-
-  populateSites() {
-    this.siteLocations.push('');
-    for (const next of this.events) {
-      const nextSite = next.voZipCode;
-      if (this.siteLocations.indexOf(nextSite) === -1) {
-        this.siteLocations.push(nextSite);
-      }
-    }
-  }
-
-  populateCauses() {
-    this.causes.push('');
-    for (const next of this.events) {
-      const nextCharityType = next.voCharityTypes;
-      for (const nextType of nextCharityType) {
-        if (this.causes.indexOf(nextType) === -1) {
-          this.causes.push(nextType);
-        }
-      }
     }
   }
 
@@ -158,7 +134,7 @@ export class Volunteer {
       .then((data) => {
         if (data.voStartDate) {
           let today = new Date(), testDate = data.voStartDate.replace('-', '');
-          today = formatDate(today);
+          today = this.commonUtils.formatDate(today);
           testDate = testDate.replace('-', '');
           if (testDate < today) {
             alert('this event has already started');
