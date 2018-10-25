@@ -21,7 +21,8 @@ exports.formatDate = function formatDate(today) {
   const dd = today.getDate();
   today = [today.getFullYear(),
     (mm > 9 ? '' : '0') + mm,
-    (dd > 9 ? '' : '0') + dd].join('');
+    (dd > 9 ? '' : '0') + dd
+  ].join('');
   return today;
 };
 
@@ -148,7 +149,9 @@ exports.makeCSVfile = function makeCSVfile(fetchClient, route, fileName) {
         headers: 'key'
       };
       const myFile = csvjson.toCSV(data, options);
-      const file = new File([myFile], fileName, { type: 'text/plain;charset=utf-8' });
+      const file = new File([myFile], fileName, {
+        type: 'text/plain;charset=utf-8'
+      });
       return filesaver.saveAs(file);
     });
 };

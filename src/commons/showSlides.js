@@ -1,6 +1,5 @@
 exports.showSlides = function showSlides(idArray) {
   idArray.forEach((id) => {
-    // let slides;
     const slides = document.getElementById(id);
     if (slides !== null) {
       $(`#${id} > div:first`)
