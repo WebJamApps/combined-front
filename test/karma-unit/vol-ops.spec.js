@@ -622,23 +622,23 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  it('the submit button is not displayed when the form is not valid', (done) => {
-    // volops2.activate();
-    document.body.innerHTML = '<button class="updateButton"></button>';
-    volops2.charityName = 'OHAF';
-    volops2.voOpp = {
-      voWorkTypes: ['other'],
-      voCharityName: '',
-      voStartDate: '2017-12-12',
-      voEndDate: '2017-12-12',
-      voTalentTypes: ['shoveling', 'sweeping', 'other'],
-      voTalentTypeOther: 'scrubbing',
-      _id: '2222'
-    };
-    volops2.validate2();
-    expect(volops2.charityName === 'OHAF').toBeTruthy();
-    done();
-  });
+  // it('the submit button is not displayed when the form is not valid', (done) => {
+  // volops2.activate();
+  // document.body.innerHTML = '<button class="updateButton"></button>';
+  // volops2.charityName = 'OHAF';
+  // volops2.voOpp = {
+  //   voWorkTypes: ['other'],
+  //   voCharityName: '',
+  //   voStartDate: '2017-12-12',
+  //   voEndDate: '2017-12-12',
+  //   voTalentTypes: ['shoveling', 'sweeping', 'other'],
+  //   voTalentTypeOther: 'scrubbing',
+  //   _id: '2222'
+  // };
+  // volops2.validate2();
+  // expect(volops2.charityName === 'OHAF').toBeTruthy();
+  // done();
+  // });
 
   it('events must have at least one volunteer', (done) => {
     // volops2.activate();
