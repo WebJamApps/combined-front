@@ -20,25 +20,28 @@ export class Bookshelf {
 
   siteLocations = [];
 
-  filterby = ['keyword', 'media type', 'location'];
+  filterby = ['keyword', 'type', 'location'];
 
   selectedFilter = [];
 
-  keyword = false;
-
-  mediaType = false;
-
-  siteLocation = false;
+  // keyword = false;
+  //
+  // mediaType = false;
+  //
+  // siteLocation = false;
 
   filters = [{
+    filterby: 'keyword',
     value: '',
     keys: ['title', 'type', 'author', 'numberPages', 'dateOfPub', 'siteLocation', 'access', 'comments']
   },
   {
+    filterby: 'type',
     value: '',
     keys: ['type']
   },
   {
+    filterby: 'location',
     value: '',
     keys: ['siteLocation']
   }
@@ -56,37 +59,40 @@ export class Bookshelf {
     }
   }
 
-  finishFilterPicker(arrayLength) {
-    for (let i = 0; i < arrayLength; i += 1) {
-      if (this.selectedFilter.includes('keyword')) this.keyword = true;
-      else {
-        this.filters[0].value = '';
-        this.keyword = false;
-      }
-      if (this.selectedFilter.includes('media type')) this.mediaType = true;
-      else {
-        this.filters[1].value = '';
-        this.mediaType = false;
-      }
-      if (this.selectedFilter.includes('location')) this.siteLocation = true;
-      else {
-        this.filters[2].value = '';
-        this.siteLocation = false;
-      }
-    }
-  }
-
+  // finishFilterPicker(arrayLength) {
+  //   for (let i = 0; i < arrayLength; i += 1) {
+  //     if (this.selectedFilter.includes('keyword')) this.keyword = true;
+  //     else {
+  //       this.filters[0].value = '';
+  //       this.keyword = false;
+  //     }
+  //     if (this.selectedFilter.includes('media type')) this.mediaType = true;
+  //     else {
+  //       this.filters[1].value = '';
+  //       this.mediaType = false;
+  //     }
+  //     if (this.selectedFilter.includes('location')) this.siteLocation = true;
+  //     else {
+  //       this.filters[2].value = '';
+  //       this.siteLocation = false;
+  //     }
+  //   }
+  // }
+  //
+  // filterPicked() {
+  //   const arrayLength = this.selectedFilter.length;
+  //   this.keyword = false;
+  //   this.mediaType = false;
+  //   this.siteLocation = false;
+  //   if (arrayLength === 0) {
+  //     this.filters[0].value = '';
+  //     this.filters[1].value = '';
+  //     this.filters[2].value = '';
+  //     return;
+  //   }
+  //   this.finishFilterPicker(arrayLength);
+  // }
   filterPicked() {
-    const arrayLength = this.selectedFilter.length;
-    this.keyword = false;
-    this.mediaType = false;
-    this.siteLocation = false;
-    if (arrayLength === 0) {
-      this.filters[0].value = '';
-      this.filters[1].value = '';
-      this.filters[2].value = '';
-      return;
-    }
-    this.finishFilterPicker(arrayLength);
+    this.commonUtils.filterSelected(this);
   }
 }

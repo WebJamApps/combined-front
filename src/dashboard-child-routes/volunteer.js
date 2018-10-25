@@ -31,11 +31,11 @@ export class Volunteer {
 
   filterby = ['keyword', 'zipcode', 'cause', 'future only'];
 
-  keyword = false;
-
-  siteLocation = false;
-
-  causeFilter = false;
+  // keyword = false;
+  //
+  // siteLocation = false;
+  //
+  // causeFilter = false;
 
   filters = [
     { filterby: 'keyword', value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState'] },

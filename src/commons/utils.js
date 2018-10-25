@@ -56,6 +56,7 @@ exports.makeFilterDropdown = function makeFilterDropdown(filterName, model, attr
 exports.finishFiltering = function finishFiltering(myModule) {
   for (let s = 0; s < myModule.selectedFilter.length; s += 1) {
     for (let u = 0; u < myModule.filters.length; u += 1) {
+      console.log(myModule.selectedFilter[s]);
       if (myModule.filters[u].filterby === myModule.selectedFilter[s]) {
         myModule[myModule.filters[u].filterby] = true;
       }
