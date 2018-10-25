@@ -24,12 +24,6 @@ export class Bookshelf {
 
   selectedFilter = [];
 
-  // keyword = false;
-  //
-  // mediaType = false;
-  //
-  // siteLocation = false;
-
   filters = [{
     filterby: 'keyword',
     value: '',
@@ -59,39 +53,6 @@ export class Bookshelf {
     }
   }
 
-  // finishFilterPicker(arrayLength) {
-  //   for (let i = 0; i < arrayLength; i += 1) {
-  //     if (this.selectedFilter.includes('keyword')) this.keyword = true;
-  //     else {
-  //       this.filters[0].value = '';
-  //       this.keyword = false;
-  //     }
-  //     if (this.selectedFilter.includes('media type')) this.mediaType = true;
-  //     else {
-  //       this.filters[1].value = '';
-  //       this.mediaType = false;
-  //     }
-  //     if (this.selectedFilter.includes('location')) this.siteLocation = true;
-  //     else {
-  //       this.filters[2].value = '';
-  //       this.siteLocation = false;
-  //     }
-  //   }
-  // }
-  //
-  // filterPicked() {
-  //   const arrayLength = this.selectedFilter.length;
-  //   this.keyword = false;
-  //   this.mediaType = false;
-  //   this.siteLocation = false;
-  //   if (arrayLength === 0) {
-  //     this.filters[0].value = '';
-  //     this.filters[1].value = '';
-  //     this.filters[2].value = '';
-  //     return;
-  //   }
-  //   this.finishFilterPicker(arrayLength);
-  // }
   filterPicked() {
     this.commonUtils.filterSelected(this);
   }

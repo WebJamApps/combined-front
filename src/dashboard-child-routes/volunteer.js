@@ -31,12 +31,6 @@ export class Volunteer {
 
   filterby = ['keyword', 'zipcode', 'cause', 'future only'];
 
-  // keyword = false;
-  //
-  // siteLocation = false;
-  //
-  // causeFilter = false;
-
   filters = [
     { filterby: 'keyword', value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState'] },
     { filterby: 'zipcode', value: '', keys: ['voZipCode'] },
@@ -52,6 +46,7 @@ export class Volunteer {
     this.displayEvents();
     this.commonUtils.makeFilterDropdown(this.siteLocations, this.events, 'voZipCode');
     this.commonUtils.makeFilterDropdown(this.causes, this.events, 'voCharityTypes');
+    return Promise.resolve(true);
   }
 
   async displayEvents() {

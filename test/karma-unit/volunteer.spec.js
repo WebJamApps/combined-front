@@ -78,12 +78,12 @@ describe('the Volunteer Module', () => {
     spyOn(volunteer, 'reload').and.callFake(() => 'nope is nothn');
   });
 
-  afterEach(() => {
-    // viewport.reset();
-  });
+  // afterEach(() => {
+  //   // viewport.reset();
+  // });
 
-  it('should active so it can display the volunteer settings', (done) => {
-    volunteer.activate();
+  it('should active so it can display the volunteer settings', async () => {
+    volunteer.commonUtils.makeFilterDropdown = function makeFilterDropdown() {};
     volunteer.app.appState.user = {
       name: 'Iddris Elba',
       userType: 'Volunteer',
@@ -97,9 +97,8 @@ describe('the Volunteer Module', () => {
       userDetails: 'newUser',
       isOhafUser: true
     };
-    volunteer.activate();
-    // console.log(volunteer.user);
-    done();
+    const res = await volunteer.activate();
+    expect(res).toBe(true);
   });
 
   it('sets the filter dropdown position for cell phone display', (done) => {
