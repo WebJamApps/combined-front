@@ -291,13 +291,8 @@ export class VolunteerOpps {
     }
   }
 
-  clickaChoo() {
-    const element = document.querySelector('#start input');
-    element.click();
-  }
-
-  clickaCha() {
-    const element = document.querySelector('#end input');
+  clickaChooAndChaa(position) {
+    const element = document.querySelector(`#${position} input`);
     element.click();
   }
 
