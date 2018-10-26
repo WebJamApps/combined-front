@@ -1,46 +1,53 @@
-import { StageComponent } from 'aurelia-testing';
-import { Dashboard } from '../../src/dashboard';
-import { App } from '../../src/app';
 import {
-  AuthStub, HttpMock, AppStateStub, RouterStub
+  StageComponent
+} from 'aurelia-testing';
+import {
+  Dashboard
+} from '../../src/dashboard';
+import {
+  App
+} from '../../src/app';
+import {
+  AuthStub,
+  HttpMock,
+  AppStateStub,
+  RouterStub
 } from './commons';
 
 describe('the Dashboard Module', () => {
   let dashboard;
-
   describe('Dashboard DI', () => {
     let auth, app, http;
     beforeEach(() => {
       auth = new AuthStub();
-      auth.setToken({ sub: '3456' });
+      auth.setToken({
+        sub: '3456'
+      });
       app = new App(auth, new HttpMock());
       app.router = new RouterStub();
       app.activate();
-      // vc = new VCMock();
-      // val = new ValidatorMock();
       dashboard = new Dashboard(app);
       dashboard.app.appState = new AppStateStub();
-      // dahsboard.activate();
     });
 
-    it('should activate dashboard', (done) => {
+    it('should activate dashboard', async () => {
       const thisuser = {
-        _id: '3456', userType: 'Developer'
+        _id: '3456',
+        userType: 'Developer'
       };
       dashboard.app.appState.setUser(thisuser);
-      // dashboard.app.appState = new AppStateStub();
-      dashboard.activate();
-      setTimeout(() => {
-        // expect(http.status).toBe(200);
-        done();
-      }, 10);
+      let res;
+      try {
+        res = await dashboard.activate();
+        expect(res).toBe(true);
+      } catch (e) {
+        throw e;
+      }
     });
 
     it('sets the token to be the aurelia token', (done) => {
       localStorage.setItem('aurelia_id_token', '123');
-      // localStorage.removeItem('token');
       dashboard.activate();
-      // expect(localStorage.getItem('token')).toBe('123');
       done();
     });
 
@@ -52,17 +59,29 @@ describe('the Dashboard Module', () => {
     });
 
     it('should default to Volunteer only when a new ohaf user', (done) => {
-      dashboard.user = { userType: '', isOhafUser: true };
+      dashboard.user = {
+        userType: '',
+        isOhafUser: true
+      };
       dashboard.childRoute();
-      dashboard.user = { userType: '', isOhafUser: false };
+      dashboard.user = {
+        userType: '',
+        isOhafUser: false
+      };
       dashboard.childRoute();
-      dashboard.user = { userType: 'Charity', isOhafUser: true };
+      dashboard.user = {
+        userType: 'Charity',
+        isOhafUser: true
+      };
       dashboard.childRoute();
       done();
     });
 
     it('should expect change in http status after Volunteer activate call', (done) => {
-      http = new HttpMock({ name: 'Iddris Elba', userType: 'Volunteer' });
+      http = new HttpMock({
+        name: 'Iddris Elba',
+        userType: 'Volunteer'
+      });
       app = new App(auth, http);
       dashboard = new Dashboard(app);
       dashboard.app.appState = new AppStateStub();
@@ -76,7 +95,9 @@ describe('the Dashboard Module', () => {
     it('should expect route for all userTypes', (done) => {
       const userTypes = ['Developer', 'Charity', 'Librarian', 'Reader', 'Volunteer'];
       for (const i of userTypes) {
-        dashboard.user = { userType: i };
+        dashboard.user = {
+          userType: i
+        };
         dashboard.childRoute();
       }
       done();
@@ -84,7 +105,10 @@ describe('the Dashboard Module', () => {
 
     it('should route to user-account when user is disabled', (done) => {
       dashboard.user = {
-        _id: '1', name: 'Iddris Elba', userType: 'Volunteer', userStatus: 'disabled'
+        _id: '1',
+        name: 'Iddris Elba',
+        userType: 'Volunteer',
+        userStatus: 'disabled'
       };
       dashboard.childRoute();
       done();
@@ -93,7 +117,9 @@ describe('the Dashboard Module', () => {
     it('should not route a user if they do not have any user type defined', (done) => {
       // let userTypes = [''];
       // for (let i of userTypes) {
-      dashboard.user = { userType: '' };
+      dashboard.user = {
+        userType: ''
+      };
       dashboard.childRoute();
       // }
       done();
@@ -139,10 +165,10 @@ describe('the Dashboard Module', () => {
     //   done();
     // });
 
-  //   it('should validate property', (done) => {
-  //     dashboard.validator.validateProperty({}, 'school', 'schoolRules');
-  //     done();
-  //   });
+    //   it('should validate property', (done) => {
+    //     dashboard.validator.validateProperty({}, 'school', 'schoolRules');
+    //     done();
+    //   });
   });
 
   describe('Staging Dashboard', () => {
@@ -150,7 +176,11 @@ describe('the Dashboard Module', () => {
       dashboard = StageComponent
         .withResources('src/dashboard')
         .inView('<dashboard></dashboard>')
-        .boundTo({ user: { name: 'John Fitzgerald' } });
+        .boundTo({
+          user: {
+            name: 'John Fitzgerald'
+          }
+        });
     });
     it('staging the dashboard', (done) => {
       done();

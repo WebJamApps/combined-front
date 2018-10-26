@@ -8,11 +8,15 @@ export class Dashboard {
 
   async activate() {
     try {
-      this.uid = this.app.auth.getTokenPayload().sub;
-    } catch (e) { this.app.logout(); }
+      this.uid = await this.app.auth.getTokenPayload().sub;
+    } catch (e) {
+      this.app.logout();
+      return Promise.resolve(false);
+    }
     this.user = await this.app.appState.getUser(this.uid);
     window.localStorage.setItem('userEmail', this.user.email);
     this.childRoute();
+    return Promise.resolve(true);
   }
 
   childRoute() {

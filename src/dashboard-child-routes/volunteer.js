@@ -49,15 +49,17 @@ export class Volunteer {
     return Promise.resolve(true);
   }
 
-  async displayEvents() {
+  displayEvents() {
     if (this.events.length > 0) {
-      this.fixZipcodesAndTypes();
+      this.fixZipcodesAndTypes(); // TODO move to volunteerUtils.js
       this.commonUtils.fixDates(this.events);
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
-      this.checkScheduled();
+      this.checkScheduled(); // TODO move to volunteerUtils.js
       this.commonUtils.markPast(this.events, this.commonUtils.formatDate);
+      return Promise.resolve(true);
     }
+    return Promise.resolve(false);
   }
 
   async fetchAllEvents() {
@@ -142,9 +144,10 @@ export class Volunteer {
             this.canSignup = false;
           }
         }
+        return Promise.resolve(true);
       }).catch((error) => {
         this.canSignup = false;
-        return error;
+        return Promise.reject(error);
       });
   }
 
