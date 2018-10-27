@@ -252,10 +252,6 @@ export class VolunteerOpps {
     return this.canSubmit2;
   }
 
-  // validate2() {
-  //   return this.validator2.validateObject(this.voOpp);
-  // }
-
   /* istanbul ignore next */
   setupValidation2() {
     ValidationRules
