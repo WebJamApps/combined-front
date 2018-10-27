@@ -146,6 +146,7 @@ describe('the Volunteer Opps Module', () => {
     volops4 = new VolunteerOpps(app4, new VCMock(), new ValidatorMock());
     volops4.activate();
     volops4.app.appState = new AppStateStub();
+    spyOn(volops, 'clickaChooAndChaa');
   });
 
   it('activates and there are events and runs the show time', (done) => {
@@ -646,12 +647,22 @@ describe('the Volunteer Opps Module', () => {
   it('should click a choo', (done) => {
     document.body.innerHTML = '<div id="start" horizontal-align="right" vertical-align="top" style="margin-top:25px;"><input /></div>';
     volops.clickaChooAndChaa('start');
+    expect(document.getElementById('start').style.display).toBeFalsy();
+    done();
+  });
+
+  it('should show the time picker input is open', (done) => {
+    document.body.innerHTML = '<div id="start" horizontal-align="right" vertical-align="top" style="margin-top:25px;"><input /></div>';
+    volops.clickaChooAndChaa('start');
+    expect(document.querySelector('#start input').style.display).toBe('');
+    expect(volops.clickaChooAndChaa).toHaveBeenCalledWith('start');
     done();
   });
 
   it('should click a cha', (done) => {
     document.body.innerHTML = '<div id="end" horizontal-align="right" vertical-align="top" style="margin-top:25px;"><input /></div>';
     volops.clickaChooAndChaa('end');
+    expect(document.getElementById('end').style.display).toBeFalsy();
     done();
   });
 });
