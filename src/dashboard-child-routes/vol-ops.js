@@ -1,22 +1,16 @@
 import { inject } from 'aurelia-framework';
 import { json } from 'aurelia-fetch-client';
-import {
-  ValidationControllerFactory, ValidationRules, Validator, validateTrigger
-} from 'aurelia-validation';
+import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import { App } from '../app';
 import { FormValidator } from '../classes/FormValidator';
-import {
-  fixDates, formatDate, markPast, showCheckboxes
-} from '../commons/utils';
+import { fixDates, formatDate, markPast, showCheckboxes } from '../commons/utils';
 
 @inject(App, ValidationControllerFactory, Validator)
 export class VolunteerOpps {
   controller = null;
-
   validator = null;
 
   constructor(app, controllerFactory, validator) {
-    // this.validationRules = ValidationRules;
     this.app = app;
     this.selectedTalents = [];
     this.selectedWorks = [];
@@ -241,9 +235,7 @@ export class VolunteerOpps {
   updateCanSubmit2(validationResults) {
     let valid = true;
     const nub = document.getElementsByClassName('updateButton')[0];
-    if (nub !== undefined) {
-      nub.style.display = 'none';
-    }
+    if (nub !== undefined) nub.style.display = 'none';
     for (const result of validationResults) {
       if (result.valid === false) {
         valid = false;
@@ -260,51 +252,21 @@ export class VolunteerOpps {
     return this.canSubmit2;
   }
 
-  validate2() {
-    return this.validator2.validateObject(this.voOpp);
-  }
-
   /* istanbul ignore next */
   setupValidation2() {
     ValidationRules
       .ensure('voContactPhone').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
-      .ensure('voContactEmail')
-      .email()
-      .ensure('voName')
-      .required()
-      .withMessage('Event Name is required')
-      .maxLength(40)
-      .ensure('voNumPeopleNeeded')
-      .required()
-      .withMessage('How Many Volunteers please')
-      .ensure('voStartTime')
-      .required()
-      .withMessage('Event Start time is required')
-      .ensure('voEndTime')
-      .required()
-      .withMessage('Event End time is required')
-      .ensure('voStartDate')
-      .required()
-      .withMessage('Event Start Date is required')
-      .ensure('voEndDate')
-      .required()
-      .withMessage('Event End Date is required')
-      .ensure('voZipCode')
-      .required()
-      .withMessage('5-digit Zipcode is required')
-      .matches(/\b\d{5}\b/)
-      .ensure('voCity')
-      .required()
-      .withMessage('Event City is required')
-      .matches(/[^0-9]+/)
-      .maxLength(30)
-      .ensure('voStreet')
-      .required()
-      .withMessage('Event Street Address is required')
-      .maxLength(40)
-      .ensure('voState')
-      .required()
-      .withMessage('Event State is required')
+      .ensure('voContactEmail').email()
+      .ensure('voName').required().withMessage('Event Name is required').maxLength(40)
+      .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
+      .ensure('voStartTime').required().withMessage('Event Start time is required')
+      .ensure('voEndTime').required().withMessage('Event End time is required')
+      .ensure('voStartDate').required().withMessage('Event Start Date is required')
+      .ensure('voEndDate').required().withMessage('Event End Date is required')
+      .ensure('voZipCode').required().withMessage('5-digit Zipcode is required').matches(/\b\d{5}\b/)
+      .ensure('voCity').required().withMessage('Event City is required').matches(/[^0-9]+/).maxLength(30)
+      .ensure('voStreet').required().withMessage('Event Street Address is required').maxLength(40)
+      .ensure('voState').required().withMessage('Event State is required')
       .on(this.voOpp);
   }
 
@@ -325,13 +287,8 @@ export class VolunteerOpps {
     }
   }
 
-  clickaChoo() {
-    const element = document.querySelector('#start input');
-    element.click();
-  }
-
-  clickaCha() {
-    const element = document.querySelector('#end input');
+  clickaChooAndChaa(position) {
+    const element = document.querySelector(`#${position} input`);
     element.click();
   }
 
