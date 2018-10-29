@@ -13,11 +13,8 @@ exports.childRoute = function childroute(module) {
 };
 
 exports.subRoute = async function subRoute(module, ls) {
-  try {
-    module.uid = await module.app.auth.getTokenPayload().sub;
-  } catch (e) {
-    return module.app.logout();
-  }
+  module.uid = await module.app.auth.getTokenPayload().sub;
+  if (module.uid === null || module.uid === undefined) return module.app.logout();
   module.user = await module.app.appState.getUser(module.uid);
   ls.setItem('userEmail', module.user.email);
   return this.childRoute(module);
