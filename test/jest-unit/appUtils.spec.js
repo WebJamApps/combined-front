@@ -95,7 +95,7 @@ describe('the appUtils', () => {
   });
   it('provides a click function', (done) => {
     window.$ = a => ({
-      parent() { return { css(a, b) {} }; }
+      parent() { return { css(a, b) {} }; } // eslint-disable-line no-shadow
     });
     document.body.innerHTML = '<div class="mobile-menu-toggle page-host"><div class="swipe-area"></div><div class="drawer"></div></div>';
     au.clickFunc({ target: { className: 'menu' } });

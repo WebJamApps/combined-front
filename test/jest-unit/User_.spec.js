@@ -15,7 +15,7 @@ const mockStorage = {
 window.localStorage = mockStorage;
 
 document.body.innerHTML = '<div><div class="home"></div></div>';
-let user = new User_(), mockfetch;
+let user = new User_();
 
 test('generates a email varification form', () => {
   user.verifyEmail();
@@ -102,7 +102,7 @@ test('it hides submit button if the reset password form is invalid', () => {
 });
 
 test('it resets the password', () => {
-  mockfetch = function mockfetch(url, data) {
+  const mockfetch2 = function mockfetch2(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -111,13 +111,13 @@ test('it resets the password', () => {
       json: () => Promise.resolve({})
     });
   };
-  user.fetch = mockfetch;
+  user.fetch = mockfetch2;
   user.formType = 'reset';
   user.verifyEmail();
   document.getElementsByClassName('loginpass')[0].value = 'password1';
   document.getElementsByClassName('code')[0].value = '12345';
   document.getElementsByClassName('email')[0].value = 'joe@smith.com';
-  const evt = { target: { formType: 'reset', fetchClient: mockfetch, runFetch: user.runFetch } };
+  const evt = { target: { formType: 'reset', fetchClient: mockfetch2, runFetch: user.runFetch } };
   user.resetPasswd(evt).then(() => {
     const messagediv = document.getElementsByClassName('loginerror')[0];
     expect(messagediv.innerHTML).toBe('');
@@ -130,7 +130,7 @@ test('it displays the error message from reset password PUT', () => {
   user.formType = 'reset';
   user.userEmail = 'joe@smith.com';
   user.verifyEmail();
-  mockfetch = function mockfetch(url, data) {
+  const mockfetch2 = function mockfetch2(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -139,7 +139,7 @@ test('it displays the error message from reset password PUT', () => {
       json: () => Promise.resolve({ message: 'incorrect email' })
     });
   };
-  const evt = { target: { formType: 'reset', fetchClient: mockfetch, runFetch: user.runFetch } };
+  const evt = { target: { formType: 'reset', fetchClient: mockfetch2, runFetch: user.runFetch } };
   document.getElementsByClassName('loginpass')[0].value = 'password1';
   document.getElementsByClassName('code')[0].value = '12345';
   user.resetPasswd(evt).then(() => {
@@ -150,7 +150,7 @@ test('it displays the error message from reset password PUT', () => {
 });
 
 test('it catches the error from reset password PUT', () => {
-  mockfetch = function mockfetch(url, data) {
+  const mockfetch2 = function mockfetch2(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -159,13 +159,13 @@ test('it catches the error from reset password PUT', () => {
       json: () => Promise.reject(new Error({ error: 'server error' }))
     });
   };
-  const evt = { target: { formType: 'reset', fetchClient: mockfetch, runFetch: user.runFetch } };
+  const evt = { target: { formType: 'reset', fetchClient: mockfetch2, runFetch: user.runFetch } };
   return user.resetPasswd(evt)
     .catch(e => expect(e).toBeTruthy());
 });
 
 test('it updates the user', () => {
-  mockfetch = function mockfetch(url, data) {
+  const mockfetch2 = function mockfetch2(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -174,7 +174,7 @@ test('it updates the user', () => {
       json: () => Promise.resolve({})
     });
   };
-  const evt = { target: { fetchClient: mockfetch, runFetch: user.runFetch } };
+  const evt = { target: { fetchClient: mockfetch2, runFetch: user.runFetch } };
   user.updateUser(evt).then(() => {
     const messagediv = document.getElementsByClassName('loginerror')[0];
     expect(messagediv.innerHTML).toBe('');
@@ -182,7 +182,7 @@ test('it updates the user', () => {
 });
 
 test('it displays error message on updates the user PUT', () => {
-  mockfetch = function mockfetch(url, data) {
+  const mockfetch2 = function mockfetch2(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -191,7 +191,7 @@ test('it displays error message on updates the user PUT', () => {
       json: () => Promise.resolve({ message: 'wrong email' })
     });
   };
-  const evt = { target: { fetchClient: mockfetch, runFetch: user.runFetch } };
+  const evt = { target: { fetchClient: mockfetch2, runFetch: user.runFetch } };
   user.updateUser(evt).then(() => {
     const messagediv = document.getElementsByClassName('loginerror')[0];
     expect(messagediv.innerHTML).toMatch(/wrong email/);
@@ -200,7 +200,7 @@ test('it displays error message on updates the user PUT', () => {
 });
 
 test('it catches errors on update the user PUT', () => {
-  mockfetch = function mockfetch(url, data) {
+  const mockfetch2 = function mockfetch2(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -209,7 +209,7 @@ test('it catches errors on update the user PUT', () => {
       json: () => Promise.reject(new Error({ error: 'big problem' }))
     });
   };
-  const evt = { target: { fetchClient: mockfetch, runFetch: user.runFetch } };
+  const evt = { target: { fetchClient: mockfetch2, runFetch: user.runFetch } };
   return user.updateUser(evt)
     .catch(e => expect(e).toBeTruthy());
 });
@@ -229,7 +229,7 @@ test('it displays a email varification form for a change email request', () => {
 });
 
 test('it sends PUT request to varify the changed email with pin', () => {
-  mockfetch = function mockfetch(url, data) {
+  const mockfetch2 = function mockfetch2(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -238,17 +238,17 @@ test('it sends PUT request to varify the changed email with pin', () => {
       json: () => Promise.resolve({ success: true })
     });
   };
-  user.fetch = mockfetch;
+  user.fetch = mockfetch2;
   document.body.innerHTML = '<input class="email" value="new@email.com">'
   + '<input class="code" value="12345"><div class="loginerror"></div>';
-  const evt = { target: { fetchClient: mockfetch, runFetch: user.runFetch } };
+  const evt = { target: { fetchClient: mockfetch2, runFetch: user.runFetch } };
   return user.verifyChangeEmail(evt).then(() => {
     expect(document.getElementsByClassName('loginerror')[0].innerHTML).toBe('');
   });
 });
 
 test('it sends PUT request to varify the changed email with pin and displays error message', () => {
-  mockfetch = function mockfetch(url, data) {
+  const mockfetch2 = function mockfetch2(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -257,17 +257,17 @@ test('it sends PUT request to varify the changed email with pin and displays err
       json: () => Promise.resolve({ message: 'incorrect pin' })
     });
   };
-  user.fetch = mockfetch;
+  user.fetch = mockfetch2;
   document.body.innerHTML = '<input class="email" value="new@email.com">'
   + '<input class="code" value="12345"><div class="loginerror"></div>';
-  const evt = { target: { fetchClient: mockfetch, runFetch: user.runFetch } };
+  const evt = { target: { fetchClient: mockfetch2, runFetch: user.runFetch } };
   return user.verifyChangeEmail(evt).then(() => {
     expect(document.getElementsByClassName('loginerror')[0].innerHTML).toBe('<p style="text-align:left; padding-left:12px">incorrect pin</p>');
   });
 });
 
 test('it sends PUT request to varify the changed email with pin and catches error', () => {
-  mockfetch = function mockfetch(url, data) {
+  const mockfetch2 = function mockfetch2(url, data) {
     this.headers = {};
     this.headers.url = url;
     this.headers.method = data.method;
@@ -276,8 +276,8 @@ test('it sends PUT request to varify the changed email with pin and catches erro
       json: () => Promise.reject(new Error({ error: 'big problem' }))
     });
   };
-  user.fetch = mockfetch;
-  const evt = { target: { fetchClient: mockfetch, runFetch: user.runFetch } };
+  user.fetch = mockfetch2;
+  const evt = { target: { fetchClient: mockfetch2, runFetch: user.runFetch } };
   return user.verifyChangeEmail(evt)
     .catch(e => expect(e).toBeTruthy());
 });
