@@ -38,21 +38,40 @@ export class MusicPlayer {
     }
   }
 
+  reactPlayer() {
+    return (<ReactPlayer
+      style={{ backgroundColor: '#eee', textAlign: 'center' }}
+      url={this.url.url}
+      playing={this.playing}
+      controls
+      onEnded={this.playEnd}
+      width="100%"
+      id="mainPlayer"
+      config={{ file: { attributes: { controlsList: 'nodownload' } } }}
+    />)
+  }
+
+  buttons() {
+    return (
+      <section className="mt-0 col-12 col-md-7">
+        <button id="play-pause" role="menu" onClick={this.play}>Play/Pause</button>
+        <button role="menu" onClick={this.next}>Next</button>
+        <button role="menu" onClick={this.prev}>Prev</button>
+        <button id="shuffle" role="menu" onClick={this.shuffle}>Shuffle</button>
+        <button role="menu" onClick={this.share}>Share</button>
+        <button role="menu">
+          <a id="homeLink" href="/?reload=true">Home</a>
+        </button>
+      </section>
+    )
+  }
+
   get html() {
     return (
       <div className="container-fluid">
         <div id="player" className="mb-2 row justify-content-md-center">
           <section id="playSection" className="col-12 mt-2 mr-0 col-md-7" style={{ display: 'inline', textAlign: 'center' }}>
-            <ReactPlayer
-              style={{ backgroundColor: '#eee', textAlign: 'center' }}
-              url={this.url.url}
-              playing={this.playing}
-              controls
-              onEnded={this.playEnd}
-              width="100%"
-              id="mainPlayer"
-              config={{ file: { attributes: { controlsList: 'nodownload' } } }}
-            />
+            {this.reactPlayer()}
           </section>
           <section className="col-12 row col-md-7 m-0 mt-2 d-none" id="copier">
             <div id="copyInput">
@@ -63,23 +82,12 @@ export class MusicPlayer {
             </div>
           </section>
           <section id="copyMessage" className="col-12 col-md-7 d-none m-0">
-            <span className="text-success" style={{ fontSize: '0.8em' }}>
-Url copied Url to clipboard
-            </span>
+            <span className="text-success" style={{ fontSize: '0.8em' }}>Url copied Url to clipboard</span>
           </section>
           <section className="col-12 col-md-7 mt-1" style={{ fontSize: '0.8em' }}>
             {this.url.title}
           </section>
-          <section className="mt-0 col-12 col-md-7">
-            <button id="play-pause" role="menu" onClick={this.play}>Play/Pause</button>
-            <button role="menu" onClick={this.next}>Next</button>
-            <button role="menu" onClick={this.prev}>Prev</button>
-            <button id="shuffle" role="menu" onClick={this.shuffle}>Shuffle</button>
-            <button role="menu" onClick={this.share}>Share</button>
-            <button role="menu">
-              <a id="homeLink" href="/?reload=true">Home</a>
-            </button>
-          </section>
+          {this.buttons()}
         </div>
       </div>
     );
