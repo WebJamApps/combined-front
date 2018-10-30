@@ -2,12 +2,14 @@ import { inject } from 'aurelia-framework';
 import { App } from '../app';
 
 const commonUtils = require('../commons/utils');
+const ohafUtils = require('../commons/ohafUtils');
 @inject(App)
 export class Volunteer {
   constructor(app) {
     this.showCheckboxes = commonUtils.showCheckboxes;
     this.app = app;
     this.commonUtils = commonUtils;
+    this.ohafUtils = ohafUtils;
     this.events = [];
     this.signup = {};
     this.selectedFilter = ['future only'];
@@ -106,7 +108,13 @@ export class Volunteer {
   }
 
   async signupEvent(thisevent) {
-    const result = await this.doubleCheckSignups(thisevent);
+    let result;
+    try {
+      result = await this.ohafUtils.doubleCheckSignups(thisevent, this, document);
+    } catch (e) {
+      console.log(e); // eslint-disable-line no-console
+      return this.app.logout();
+    }
     if (this.canSignup) {
       thisevent.voPeopleScheduled.push(this.uid);
       this.app.updateById('/volopp/', thisevent._id, thisevent);
@@ -124,32 +132,32 @@ export class Volunteer {
     this.app.router.navigate('dashboard');
   }
 
-  doubleCheckSignups(thisevent) {
-    // get this event, check if start date is in past, check if max signups are already reached
-    return this.app.httpClient.fetch(`/volopp/get/${thisevent._id}`)
-      .then(response => response.json())
-      .then((data) => {
-        if (data.voStartDate) {
-          let today = new Date(), testDate = data.voStartDate.replace('-', '');
-          today = this.commonUtils.formatDate(today);
-          testDate = testDate.replace('-', '');
-          if (testDate < today) {
-            alert('this event has already started');
-            this.canSignup = false;
-          }
-        }
-        if (data.voPeopleScheduled) {
-          if (data.voPeopleScheduled.length >= data.voNumPeopleNeeded) {
-            alert('this event has already reached max volunteers needed');
-            this.canSignup = false;
-          }
-        }
-        return Promise.resolve(true);
-      }).catch((error) => {
-        this.canSignup = false;
-        return Promise.reject(error);
-      });
-  }
+  // doubleCheckSignups(thisevent) {
+  //   // get this event, check if start date is in past, check if max signups are already reached
+  //   return this.app.httpClient.fetch(`/volopp/get/${thisevent._id}`)
+  //     .then(response => response.json())
+  //     .then((data) => {
+  //       if (data.voStartDate) {
+  //         let today = new Date(), testDate = data.voStartDate.replace('-', '');
+  //         today = this.commonUtils.formatDate(today);
+  //         testDate = testDate.replace('-', '');
+  //         if (testDate < today) {
+  //           alert('this event has already started');
+  //           this.canSignup = false;
+  //         }
+  //       }
+  //       if (data.voPeopleScheduled) {
+  //         if (data.voPeopleScheduled.length >= data.voNumPeopleNeeded) {
+  //           alert('this event has already reached max volunteers needed');
+  //           this.canSignup = false;
+  //         }
+  //       }
+  //       return Promise.resolve(true);
+  //     }).catch((error) => {
+  //       this.canSignup = false;
+  //       return Promise.reject(error);
+  //     });
+  // }
 
   selectPickChange(type) {
     this.showButton();
