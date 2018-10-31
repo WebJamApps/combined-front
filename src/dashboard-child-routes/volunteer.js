@@ -53,11 +53,11 @@ export class Volunteer {
 
   displayEvents() {
     if (this.events.length > 0) {
-      this.fixZipcodesAndTypes(); // TODO move to volunteerUtils.js
+      this.fixZipcodesAndTypes(); // TODO move to ohafUtils.js
       this.commonUtils.fixDates(this.events);
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
-      this.checkScheduled(); // TODO move to volunteerUtils.js
+      this.checkScheduled(); // TODO move to ohafUtils.js
       this.commonUtils.markPast(this.events, this.commonUtils.formatDate);
       return Promise.resolve(true);
     }
@@ -107,23 +107,8 @@ export class Volunteer {
     }
   }
 
-  async signupEvent(thisevent) {
-    let result;
-    try {
-      result = await this.ohafUtils.doubleCheckSignups(thisevent, this, document);
-    } catch (e) {
-      console.log(e); // eslint-disable-line no-console
-      return this.app.logout();
-    }
-    if (this.canSignup) {
-      thisevent.voPeopleScheduled.push(this.uid);
-      this.app.updateById('/volopp/', thisevent._id, thisevent);
-      await this.fetchAllEvents();
-      this.checkScheduled();
-      this.app.router.navigate('dashboard');
-      return Promise.resolve(thisevent);
-    }
-    return Promise.resolve(result);
+  signupEvent(thisevent) {
+    return this.ohafUtils.signupEvent(thisevent, this, document);
   }
 
   async cancelSignup(thisevent) {
@@ -131,33 +116,6 @@ export class Volunteer {
     await this.app.updateById('/volopp/', thisevent._id, thisevent);
     this.app.router.navigate('dashboard');
   }
-
-  // doubleCheckSignups(thisevent) {
-  //   // get this event, check if start date is in past, check if max signups are already reached
-  //   return this.app.httpClient.fetch(`/volopp/get/${thisevent._id}`)
-  //     .then(response => response.json())
-  //     .then((data) => {
-  //       if (data.voStartDate) {
-  //         let today = new Date(), testDate = data.voStartDate.replace('-', '');
-  //         today = this.commonUtils.formatDate(today);
-  //         testDate = testDate.replace('-', '');
-  //         if (testDate < today) {
-  //           alert('this event has already started');
-  //           this.canSignup = false;
-  //         }
-  //       }
-  //       if (data.voPeopleScheduled) {
-  //         if (data.voPeopleScheduled.length >= data.voNumPeopleNeeded) {
-  //           alert('this event has already reached max volunteers needed');
-  //           this.canSignup = false;
-  //         }
-  //       }
-  //       return Promise.resolve(true);
-  //     }).catch((error) => {
-  //       this.canSignup = false;
-  //       return Promise.reject(error);
-  //     });
-  // }
 
   selectPickChange(type) {
     this.showButton();

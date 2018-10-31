@@ -30,3 +30,22 @@ exports.doubleCheckSignups = async function doubleCheckSignups(thisevent, module
   }
   return Promise.resolve(module.canSignup);
 };
+
+exports.signupEvent = async function signupEvent(thisevent, module, document) {
+  let result;
+  try {
+    result = await this.doubleCheckSignups(thisevent, module, document);
+  } catch (e) {
+    console.log(e); // eslint-disable-line no-console
+    return module.app.logout();
+  }
+  if (module.canSignup) {
+    thisevent.voPeopleScheduled.push(module.uid);
+    await module.app.updateById('/volopp/', thisevent._id, thisevent);
+    await module.fetchAllEvents();
+    module.checkScheduled();
+    module.app.router.navigate('dashboard');
+    return Promise.resolve(thisevent);
+  }
+  return Promise.resolve(result);
+};
