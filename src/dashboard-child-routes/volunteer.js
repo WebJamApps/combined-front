@@ -53,11 +53,11 @@ export class Volunteer {
 
   displayEvents() {
     if (this.events.length > 0) {
-      this.fixZipcodesAndTypes(); // TODO move to ohafUtils.js
+      this.fixZipcodesAndTypes();
       this.commonUtils.fixDates(this.events);
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
-      this.checkScheduled(); // TODO move to ohafUtils.js
+      this.checkScheduled();
       this.commonUtils.markPast(this.events, this.commonUtils.formatDate);
       return Promise.resolve(true);
     }
