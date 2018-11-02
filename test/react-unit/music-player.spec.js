@@ -107,4 +107,9 @@ describe('++MusicPlayer tests', () => {
     mp.bind();
     done();
   });
+
+  it('should test the htmls', () => {
+    mp.reactPlayer();
+    mp.buttons();
+  });
 });
