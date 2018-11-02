@@ -28,11 +28,8 @@ export class Volunteer {
   }
 
   siteLocations = [];
-
   causes = [];
-
   filterby = ['keyword', 'zipcode', 'cause', 'future only'];
-
   filters = [
     { filterby: 'keyword', value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState'] },
     { filterby: 'zipcode', value: '', keys: ['voZipCode'] },
