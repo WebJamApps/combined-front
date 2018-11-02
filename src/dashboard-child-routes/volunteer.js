@@ -170,11 +170,6 @@ export class Volunteer {
     }
   }
 
-  /* istanbul ignore next */
-  reload() {
-    window.location.reload();
-  }
-
   changeCauses(item, vol, container) {
     item.sort();
     item.push('other');
@@ -188,9 +183,7 @@ export class Volunteer {
   }
 
   async updateUser() {
-    await this.app.updateById('/user/', this.uid, this.user);
-    await this.activate();
-    this.reload();
+    return this.ohafUtils.updateUser(this, window);
   }
 
   showButton() {
@@ -198,10 +191,6 @@ export class Volunteer {
   }
 
   attached() {
-    document.getElementById('distanceInput').addEventListener('keydown', this.showButton);
-    this.setupVolunteerUser();
-    if (document.documentElement.clientWidth < 766) {
-      document.getElementsByClassName('checkboxes-div')[0].style.top = '124px';
-    }
+    return this.ohafUtils.attachVolPage(document, this);
   }
 }

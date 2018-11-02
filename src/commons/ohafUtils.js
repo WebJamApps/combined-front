@@ -49,3 +49,22 @@ exports.signupEvent = async function signupEvent(thisevent, module, document) {
   }
   return Promise.resolve(result);
 };
+
+exports.updateUser = async function updateUser(module, win) {
+  // async updateUser() {
+  await module.app.updateById('/user/', module.uid, module.user);
+  await module.activate();
+  /* istanbul ignore if */
+  if (process.env.NODE_ENV !== 'test') {
+    win.location.reload();
+  }
+  return Promise.resolve(true);
+  // }
+};
+
+exports.attachVolPage = function attachVolPage(doc, module) {
+  doc.getElementById('distanceInput').addEventListener('keydown', module.showButton);
+  module.setupVolunteerUser();
+  if (doc.documentElement.clientWidth < 766) doc.getElementsByClassName('checkboxes-div')[0].style.top = '124px';
+  return Promise.resolve(true);
+};

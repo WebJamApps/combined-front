@@ -84,7 +84,7 @@ describe('the Volunteer Module', () => {
     };
     app2.activate();
     volunteer2 = new Volunteer(app2);
-    spyOn(volunteer, 'reload').and.callFake(() => 'nope is nothn');
+    // spyOn(volunteer, 'reload').and.callFake(() => 'nope is nothn');
   });
 
   it('should active so it can display the volunteer settings', async () => {
