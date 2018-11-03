@@ -5,10 +5,12 @@ import {
   App
 } from './app';
 
+const libraryUtils = require('./commons/libraryUtils');
 const commonUtils = require('./commons/utils');
 @inject(App)
 export class Bookshelf {
   constructor(app) {
+    this.libraryUtils = libraryUtils;
     this.app = app;
     this.showCheckboxes = commonUtils.showCheckboxes;
     this.filterType = '';
@@ -46,11 +48,7 @@ export class Bookshelf {
     this.books = await res.json();
     this.commonUtils.makeFilterDropdown(this.mediaTypes, this.books, 'type');
     this.commonUtils.makeFilterDropdown(this.siteLocations, this.books, 'siteLocation');
-    if (this.app.auth.isAuthenticated()) {
-      this.uid = this.app.auth.getTokenPayload().sub;
-      this.user = await this.app.appState.getUser(this.uid);
-      if (this.user.userType === 'Reader' || this.user.userType === 'Developer') this.reader = true;
-    }
+    return this.libraryUtils.checkReader(this);
   }
 
   filterPicked() {
