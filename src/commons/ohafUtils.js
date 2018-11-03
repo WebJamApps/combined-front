@@ -11,10 +11,9 @@ exports.doubleCheckSignups = async function doubleCheckSignups(thisevent, module
     return Promise.reject(e);
   }
   if (data.voStartDate) {
-    let today = new Date(),
-      testDate = data.voStartDate.replace('-', '');
+    let today = new Date();
+    const testDate = data.voStartDate.replace('-', '');
     today = module.commonUtils.formatDate(today);
-    testDate = testDate.replace('-', '');
     if (testDate < today) {
       errorP.innerHTML = 'this event has already started';
       module.canSignup = false;
