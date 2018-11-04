@@ -67,7 +67,7 @@ function installJestExpect() {
       };
     });
 
-    const expect = global.expect;
+    // const expect = global.expect;
     expect.extend(jestMatchersObject);
   };
 }

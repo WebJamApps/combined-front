@@ -117,21 +117,11 @@ export class UserAccount {
       }
     }
     return this.checkReader();
-    // if (this.user.userType === 'Reader' || this.user.userType === 'Developer') {
-    //   const res = await this.app.httpClient.fetch(`/book/findcheckedout/${this.uid}`);
-    //   this.books = await res.json();
-    //   if (this.books.length > 0) {
-    //     this.canChangeUserType = false;
-    //     this.canDelete = false;
-    //     this.changeReasons = `${this.changeReasons}<li>You have a book checked out.</li>`;
-    //   }
-    // }
   }
 
   async fetchAllEvents() {
     const res = await this.app.httpClient.fetch('/volopp/getall');
     this.events2 = await res.json();
-    // fixDates(this.events2); //TODO determine if this is still needed or fix (this should be a backend function)
     markPast(this.events2, formatDate);
     this.fixPeopleScheduled(this.events2);
   }
@@ -166,7 +156,6 @@ export class UserAccount {
 
   afterUpdateUser() {
     if (this.user.changeemail !== '') {
-      // console.log('email address was changed!');
       this.changeUserEmail();
     } else {
       this.app.appState.setUser(this.user);

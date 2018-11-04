@@ -9,9 +9,6 @@ export class Register {
     this.registerClass = new Register_();
   }
 
-  // showRegister(appName) {
-  //   this.registerClass.register(appName);
-  // }
   attached() {
     this.app.appUtils.checkIfLoggedIn(this.app);
   }

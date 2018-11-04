@@ -1,15 +1,19 @@
-import { Volunteer } from '../../src/dashboard-child-routes/volunteer';
-import { App } from '../../src/app';
 import {
-  AuthStub, HttpMock, AppStateStub, RouterStub
+  Volunteer
+} from '../../src/dashboard-child-routes/volunteer';
+import {
+  App
+} from '../../src/app';
+import {
+  AuthStub,
+  HttpMock,
+  AppStateStub,
+  RouterStub
 } from './commons';
-import { formatDate, markPast } from '../../src/commons/utils';
-
-function testAsync(runAsync) {
-  return (done) => {
-    runAsync().then(done, (e) => { fail(e); done(); });
-  };
-}
+import {
+  formatDate,
+  markPast
+} from '../../src/commons/utils';
 
 class HttpMockEvent extends HttpMock {
   fetch(url, obj) {
@@ -48,13 +52,18 @@ describe('the Volunteer Module', () => {
   let volunteer, volunteer2, app, app2, auth;
   beforeEach(() => {
     auth = new AuthStub();
-    auth.setToken({ sub: '1' });
+    auth.setToken({
+      sub: '1'
+    });
     app = new App(auth, new HttpMock());
     app.appState = new AppStateStub();
     app.router = new RouterStub();
     app.activate();
     app.appState.user = {
-      _id: '1', name: 'billy', email: 'billy@billy.com', volCauses: ['', '']
+      _id: '1',
+      name: 'billy',
+      email: 'billy@billy.com',
+      volCauses: ['', '']
     };
     volunteer = new Volunteer(app);
     app2 = new App(auth, new HttpMockEvent());
@@ -75,15 +84,11 @@ describe('the Volunteer Module', () => {
     };
     app2.activate();
     volunteer2 = new Volunteer(app2);
-    spyOn(volunteer, 'reload').and.callFake(() => 'nope is nothn');
+    // spyOn(volunteer, 'reload').and.callFake(() => 'nope is nothn');
   });
 
-  afterEach(() => {
-    // viewport.reset();
-  });
-
-  it('should active so it can display the volunteer settings', (done) => {
-    volunteer.activate();
+  it('should active so it can display the volunteer settings', async () => {
+    volunteer.commonUtils.makeFilterDropdown = function makeFilterDropdown() {};
     volunteer.app.appState.user = {
       name: 'Iddris Elba',
       userType: 'Volunteer',
@@ -97,21 +102,8 @@ describe('the Volunteer Module', () => {
       userDetails: 'newUser',
       isOhafUser: true
     };
-    volunteer.activate();
-    // console.log(volunteer.user);
-    done();
-  });
-
-  it('sets the filter dropdown position for cell phone display', (done) => {
-    // viewport.set(800);
-    // document.body.innerHTML = '<div class="checkboxes-div" style="top:33px"></div><div id="distanceInput"><div>';
-    // volunteer.setupVolunteerUser = function () {};
-    // volunteer.attached();
-    // expect(document.getElementsByClassName('checkboxes-div')[0].style.top).toBe('124px');
-    // viewport.set(500);
-    // volunteer.attached();
-    // expect(document.getElementsByClassName('checkboxes-div')[0].style.top).toBe('124px');
-    done();
+    const res = await volunteer.activate();
+    expect(res).toBe(true);
   });
 
   it('setup volunteer with other not selected', (done) => {
@@ -147,7 +139,7 @@ describe('the Volunteer Module', () => {
       volWorkOther: ''
     };
     document.body.innerHTML = '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div>'
-    + '<button id="updateUserButton"></button>';
+      + '<button id="updateUserButton"></button>';
     volunteer.selectPickChange('causes');
     volunteer.selectPickChange('work');
     volunteer.selectPickChange('talents');
@@ -192,61 +184,61 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  it('displays the events including past events', (done) => {
-    // volunteer2.activate();
-    volunteer2.events = [{
-      voStartDate: '2017-12-12T',
-      voEndDate: '2017-12-12',
-      voWorkTypes: ['shoveling', 'sweeping', 'other'],
-      voWorkTypeOther: 'scrubbing',
-      _id: 1,
-      scheduled: false,
-      voNumPeopleScheduled: 10,
-      voNumPeopleNeeded: 5,
-      voStatus: 'cancel',
-      voCharityTypes: ['ages', 'in', 'the', 'wake']
-    }, {
-      voStartDate: '2017-12-12',
-      voEndDate: '2017-12-12T',
-      voWorkTypes: [''],
-      voWorkTypeOther: '',
-      _id: 2,
-      scheduled: false,
-      voNumPeopleScheduled: 10,
-      voNumPeopleNeeded: 5,
-      voStatus: 'cancel',
-      voCharityTypes: ['ages', 'in', 'the', 'wake']
-    }];
-    volunteer2.selectedFilter = [];
-    volunteer2.displayEvents();
-    // console.log(volunteer2.events);
-    // expect(volunteer2.events[1].workHtml).toBe('<p style="font-size:10pt">not specified</p>');
-    done();
-  });
+  // it('displays the events including past events', async () => {
+  //   volunteer2.events = [{
+  //     voStartDate: '2017-12-12T',
+  //     voEndDate: '2017-12-12',
+  //     voWorkTypes: ['shoveling', 'sweeping', 'other'],
+  //     voWorkTypeOther: 'scrubbing',
+  //     _id: 1,
+  //     scheduled: false,
+  //     voNumPeopleScheduled: 10,
+  //     voNumPeopleNeeded: 5,
+  //     voStatus: 'cancel',
+  //     voCharityTypes: ['ages', 'in', 'the', 'wake']
+  //   }, {
+  //     voStartDate: '2017-12-12',
+  //     voEndDate: '2017-12-12T',
+  //     voWorkTypes: [''],
+  //     voWorkTypeOther: '',
+  //     _id: 2,
+  //     scheduled: false,
+  //     voNumPeopleScheduled: 10,
+  //     voNumPeopleNeeded: 5,
+  //     voStatus: 'cancel',
+  //     voCharityTypes: ['ages', 'in', 'the', 'wake']
+  //   }];
+  //   volunteer2.selectedFilter = [];
+  //   const res = await volunteer2.displayEvents();
+  //   expect(res).toBe(true);
+  // });
 
-  it('should run attached to setup the volunteer user', (done) => {
+  it('should run attached to setup the volunteer user', async () => {
     volunteer.activate();
     document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector">'
-    + '</div><input id="distanceInput"><button id="updateUserButton"></button>';
+      + '</div><input id="distanceInput"><button id="updateUserButton"></button>';
     volunteer.user = {
       volCauses: ['Hunger', 'other'],
       volTalents: ['Cooking', 'other'],
       volWorkPrefs: ['Chopping', 'other'],
-      volCauseOther:
-      'Thirst',
+      volCauseOther: 'Thirst',
       volTalentOther: 'Singing',
       volWorkOther: 'Cleaning'
     };
-    volunteer.attached();
-    done();
+    await volunteer.attached();
   });
 
   it('should not display the checkboxes', (done) => {
     volunteer.activate();
     document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div>'
-    + '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div>';
+      + '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div>';
     volunteer.user = {
-      volCauses: [], volTalents: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''
+      volCauses: [],
+      volTalents: [],
+      volWorkPrefs: [],
+      volCauseOther: '',
+      volTalentOther: '',
+      volWorkOther: ''
     };
     volunteer.setupVolunteerUser();
     expect(document.getElementById('selectWork').style.display).not.toBe('block');
@@ -258,9 +250,14 @@ describe('the Volunteer Module', () => {
   it('removes double quote empty string array elements', (done) => {
     volunteer.activate();
     document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector"></div>'
-    + '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div><button id="updateUserButton"></button>';
+      + '<div id="selectTalents"></div><div id="selectCauses"></div><div id="selectWork"></div><button id="updateUserButton"></button>';
     volunteer.user = {
-      volCauses: [], volTalents: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''
+      volCauses: [],
+      volTalents: [],
+      volWorkPrefs: [],
+      volCauseOther: '',
+      volTalentOther: '',
+      volWorkOther: ''
     };
     volunteer.selectedCauses = ['', 'hunger'];
     volunteer.selectedWorks = ['', 'scrubbing'];
@@ -277,10 +274,15 @@ describe('the Volunteer Module', () => {
   it('hides the checkboxes when all are unchecked', (done) => {
     volunteer.activate();
     document.body.innerHTML = '<div id="causesSelector"></div><div id="talentsSelector"></div><div id="worksSelector">'
-    + '</div><div id="selectTalents" style="display:block"></div><div id="selectCauses" style="display:block"></div>'
-    + '<div id="selectWork" style="display:block"></div><button id="updateUserButton"></button>';
+      + '</div><div id="selectTalents" style="display:block"></div><div id="selectCauses" style="display:block"></div>'
+      + '<div id="selectWork" style="display:block"></div><button id="updateUserButton"></button>';
     volunteer.user = {
-      volCauses: [], volTalents: [], volWorkPrefs: [], volCauseOther: '', volTalentOther: '', volWorkOther: ''
+      volCauses: [],
+      volTalents: [],
+      volWorkPrefs: [],
+      volCauseOther: '',
+      volTalentOther: '',
+      volWorkOther: ''
     };
     volunteer.selectedCauses = [];
     volunteer.selectedWorks = [];
@@ -294,7 +296,7 @@ describe('the Volunteer Module', () => {
     done();
   });
 
-  it('should check scheduled and set to zero', (done) => {
+  it('should check scheduled and set to zero', async () => {
     volunteer.events = [{
       voStartDate: '2017-12-12',
       voEndDate: '2017-12-12',
@@ -316,11 +318,8 @@ describe('the Volunteer Module', () => {
       voNumPeopleNeeded: 5,
       voStatus: 'cancel'
     }];
-    volunteer.checkScheduled();
-    // volunteer.doubleCheckSignups = false;
-    // volunteer.checkScheduled();
+    await volunteer.checkScheduled();
     expect(volunteer.events[0].voNumPeopleScheduled).toBe(0);
-    done();
   });
 
   it('should check scheduled and set to correct number, full, and scheduled', (done) => {
@@ -348,8 +347,6 @@ describe('the Volunteer Module', () => {
     }];
     volunteer.uid = '15';
     volunteer.checkScheduled();
-    // volunteer.doubleCheckSignups = false;
-    // volunteer.checkScheduled();
     expect(volunteer.events[0].voNumPeopleScheduled).toBe(5);
     expect(volunteer.events[0].full).toBe(true);
     expect(volunteer.events[0].scheduled).toBe(true);
@@ -398,7 +395,9 @@ describe('the Volunteer Module', () => {
   it('allows a volunteer to signup for an event', async () => {
     volunteer.uid = '155';
     volunteer.canSignup = true;
-    volunteer.doubleCheckSignups = function doubleCheckSignups() { return Promise.resolve(true); };
+    volunteer.doubleCheckSignups = function doubleCheckSignups() {
+      return Promise.resolve(true);
+    };
     volunteer.checkScheduled = function checkScheduled() {};
     const myEvent = {
       voStartDate: '2017-12-12',
@@ -416,7 +415,7 @@ describe('the Volunteer Module', () => {
     expect(updatedEvent.voPeopleScheduled.indexOf('155')).not.toBe(-1);
   });
 
-  it('should not signup if date has past', testAsync(async () => {
+  it('should not signup if date has past', async () => {
     volunteer.activate();
     volunteer.uid = '155';
     const myEvent = {
@@ -433,10 +432,9 @@ describe('the Volunteer Module', () => {
     };
     await volunteer.signupEvent(myEvent);
     expect(myEvent.voPeopleScheduled.indexOf('155')).toBe(-1);
-  }));
+  });
 
-  it('should not signup if already at max volunteers needed', testAsync(async () => {
-    volunteer.activate();
+  it('should not signup if already at max volunteers needed', async () => {
     volunteer.uid = '155';
     const myEvent = {
       voStartDate: '2017-12-12',
@@ -445,42 +443,26 @@ describe('the Volunteer Module', () => {
       voWorkTypeOther: 'scrubbing',
       _id: '2345',
       scheduled: false,
-      voNumPeopleScheduled: 10,
+      voNumPeopleScheduled: 5,
       voNumPeopleNeeded: 5,
       voStatus: 'cancel',
-      voPeopleScheduled: ['12', '13', '14', '15']
+      voPeopleScheduled: ['12', '13', '14', '15', '16']
     };
     await volunteer.signupEvent(myEvent);
     expect(myEvent.voPeopleScheduled.indexOf('155')).toBe(-1);
-  }));
+  });
 
-  // it('should signup', testAsync(async () => {
-  //   volunteer.activate();
-  //   volunteer.uid = '155';
-  //   const myEvent = {
-  //     voStartDate: '2017-12-12',
-  //     voEndDate: '2017-12-12',
-  //     voWorkTypes: ['shoveling', 'sweeping', 'other'],
-  //     voWorkTypeOther: 'scrubbing',
-  //     _id: '23456',
-  //     scheduled: false,
-  //     voNumPeopleNeeded: 5,
-  //     voStatus: 'cancel',
-  //     voPeopleScheduled: ['12']
-  //   };
-  //   const thisevent = await volunteer.signupEvent(myEvent);
-  //   expect(thisevent.voPeopleScheduled.indexOf('155')).not.toBe(-1);
-  // }));
+  it('catches error on doubleCheckSignups', async () => {
+    try {
+      await volunteer.doubleCheckSignups({
+        _id: '234567'
+      });
+    } catch (e) {
+      expect(e.message).not.toBe(undefined);
+    }
+  });
 
-  it('should catch error on doubleCheckSignups', testAsync(async () => {
-    volunteer.doubleCheckSignups({ _id: '234567' }).then(() => {
-      // console.log('is this an error?');
-      // console.log(isError);
-      // expect(isError).toBe(Error{});
-    });
-  }));
-
-  it('should mark past dates', testAsync(async () => {
+  it('should mark past dates', async () => {
     volunteer.activate();
     volunteer.uid = '155';
     volunteer.events = [{
@@ -494,11 +476,11 @@ describe('the Volunteer Module', () => {
       voStatus: 'cancel',
       voPeopleScheduled: ['12']
     }];
-    markPast(volunteer.events, formatDate);
+    await markPast(volunteer.events, formatDate);
     expect(volunteer.events[0].past).toBe(true);
-  }));
+  });
 
-  it('should mark not past', testAsync(async () => {
+  it('should mark not past', async () => {
     volunteer.activate();
     volunteer.uid = '155';
     volunteer.events = [{
@@ -512,12 +494,14 @@ describe('the Volunteer Module', () => {
       voStatus: 'cancel',
       voPeopleScheduled: ['12']
     }];
-    markPast(volunteer.events, formatDate);
+    await markPast(volunteer.events, formatDate);
     expect(volunteer.events[0].past).toBe(false);
-  }));
+  });
 
   it('should not change the zipcode if defined', (done) => {
-    volunteer.events = [{ voZipCode: '24153' }];
+    volunteer.events = [{
+      voZipCode: '24153'
+    }];
     volunteer.fixZipcodesAndTypes();
     expect(volunteer.events[0].voZipCode).toBe('24153');
     done();
@@ -532,30 +516,21 @@ describe('the Volunteer Module', () => {
     expect(newDate).toBe('20170101');
     done();
   });
-  //
-  // it('should format the date of December 12, 2017', (done) => {
-  //   let date = new Date();
-  //   date.setMonth(11);
-  //   date.setDate(12);
-  //   date.setFullYear(2017);
-  //   const newDate = volunteer.formatDate(date);
-  //   expect(newDate).toBe('20171212');
-  //   done();
-  // });
 
   it('should not signup when event is full', (done) => {
-    // volunteer.canSignup = false;
     volunteer.uid = 1298471410910974;
-    volunteer.signupEvent({ _id: 1298471058100, full: true });
-    // expect signup user id array to be length of zero
+    volunteer.signupEvent({
+      _id: 1298471058100,
+      full: true
+    });
     done();
   });
 
   it('should signup event', (done) => {
-    // volunteer.canSignup = true;
     volunteer.uid = 1298471410910974;
-    volunteer.signupEvent({ _id: 1298471058100 });
-    // expect signup user id array to contain this user id
+    volunteer.signupEvent({
+      _id: 1298471058100
+    });
     done();
   });
 });
