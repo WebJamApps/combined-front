@@ -101,7 +101,64 @@ describe('the ohaf utils module', () => {
       throw e;
     }
   });
-  // it('tries to signup, but cannot', async () => {
-  //
-  // });
+  it('tries to signup, but cannot', async () => {
+    ohafUtils.doubleCheckSignups = function doubleCheckSignups() {
+      return Promise.resolve(false);
+    };
+    let res;
+    try {
+      res = await ohafUtils.signupEvent({}, {
+        canSignup: false
+      }, {});
+      expect(res).toBe(false);
+    } catch (e) {
+      throw e;
+    }
+  });
+  it('updates the user', async () => {
+    volStub.app.updateById = function updateById() {
+      return Promise.resolve(true);
+    };
+    volStub.activate = function activate() {
+      return Promise.resolve(true);
+    };
+    let res;
+    try {
+      res = await ohafUtils.updateUser(volStub, {
+        location: {
+          reload() {}
+        }
+      });
+      expect(res).toBe(true);
+    } catch (e) {
+      throw e;
+    }
+  });
+  it('attaches to volunteer page', async () => {
+    volStub.setupVolunteerUser = function setupVolunteerUser() {};
+    const doc = {
+      getElementsByClassName() {
+        return [{
+          style: {
+            top: ''
+          }
+        }];
+      },
+      documentElement: {
+        clientWidth: 700
+      },
+      getElementById() {
+        return {
+          addEventListener() {}
+        };
+      }
+    };
+    let res;
+    try {
+      res = await ohafUtils.attachVolPage(doc, volStub);
+      expect(res).toBe(true);
+    } catch (e) {
+      throw e;
+    }
+  });
 });
