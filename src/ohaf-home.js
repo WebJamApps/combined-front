@@ -31,6 +31,6 @@ export class OhafHome {
   }
 
   attached() {
-    return this.startSlides(['musicSlide1', 'musicSlide2'], 'you left the ohaf page', ['slideshow1', 'slideshow']);
+    return this.startSlides(['musicSlide1', 'musicSlide2'], 'you left the ohaf page', ['slideshow1', 'slideshow'], document);
   }
 }

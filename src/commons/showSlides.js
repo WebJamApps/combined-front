@@ -1,6 +1,7 @@
-exports.showSlides = function showSlides(idArray) {
+exports.showSlides = function showSlides(idArray, doc) {
+  let nullCounter = 0;
   idArray.forEach((id) => {
-    const slides = document.getElementById(id);
+    const slides = doc.getElementById(id);
     if (slides !== null) {
       $(`#${id} > div:first`)
         .hide()
@@ -8,6 +9,7 @@ exports.showSlides = function showSlides(idArray) {
         .fadeIn(1500)
         .end()
         .appendTo(`#${id}`);
-    }
+    } else nullCounter += 1;
   });
+  return Promise.resolve(nullCounter);
 };
