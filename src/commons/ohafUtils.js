@@ -52,7 +52,6 @@ exports.signupEvent = async function signupEvent(thisevent, module, document) {
 };
 
 exports.updateUser = async function updateUser(module, win) {
-  // async updateUser() {
   await module.app.updateById('/user/', module.uid, module.user);
   await module.activate();
   /* istanbul ignore if */
@@ -60,7 +59,6 @@ exports.updateUser = async function updateUser(module, win) {
     win.location.reload();
   }
   return Promise.resolve(true);
-  // }
 };
 
 exports.attachVolPage = function attachVolPage(doc, module) {
