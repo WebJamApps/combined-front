@@ -174,7 +174,7 @@ export class Charity {
     this.updateCharity.charityManagers[0] = this.user.name;
     this.updateCharity.charityMngIds[0] = this.user._id;
     this.updateCharity.charityEmail = this.updateCharity.charityEmail.toLowerCase();
-    if (this.updateCharity.charityEmail !== '' && this.updateCharity.charityEmail !== null) {
+    if (this.updateCharity.charityEmail) {
       this.findUserByEmail('post');
     } else {
       this.postCharity();
@@ -221,7 +221,7 @@ export class Charity {
 
   updateCharityFunct() {
     this.updateCharity.charityEmail = this.updateCharity.charityEmail.toLowerCase();
-    if (this.updateCharity.charityEmail !== '' && this.updateCharity.charityEmail !== null) {
+    if (this.updateCharity.charityEmail) {
       this.findUserByEmail('put');
     } else {
       this.putCharity();
