@@ -20,7 +20,7 @@ export class Music {
       if (ms1 !== null && ms1 !== undefined) {
         ms1.style.display = 'none';
       } else { return clearInterval(musicTimer); }
-      return this.showSlides.showSlides(['slideshowMusic']);
+      return this.showSlides.showSlides(['slideshowMusic'], document);
     }, 5400);
   }
 }

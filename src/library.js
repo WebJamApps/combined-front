@@ -25,6 +25,6 @@ export class Library {
   }
 
   attached() {
-    startSlides(['lSlide1', 'lSlide2'], 'you left the library page', ['libslideshow1', 'libslideshow']);
+    startSlides(['lSlide1', 'lSlide2'], 'you left the library page', ['libslideshow1', 'libslideshow'], document);
   }
 }

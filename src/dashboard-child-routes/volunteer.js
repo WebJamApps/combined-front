@@ -1,16 +1,15 @@
 import { inject } from 'aurelia-framework';
 import { App } from '../app';
-import {
-  fixDates, formatDate, markPast, showCheckboxes,
-} from '../commons/utils';
 
 const commonUtils = require('../commons/utils');
+const ohafUtils = require('../commons/ohafUtils');
 @inject(App)
 export class Volunteer {
   constructor(app) {
-    this.showCheckboxes = showCheckboxes;
+    this.showCheckboxes = commonUtils.showCheckboxes;
     this.app = app;
     this.commonUtils = commonUtils;
+    this.ohafUtils = ohafUtils;
     this.events = [];
     this.signup = {};
     this.selectedFilter = ['future only'];
@@ -20,25 +19,17 @@ export class Volunteer {
     this.cause = false;
     this.keyword = false;
     this.allCauses = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
-    this.allTalents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
-    this.allWorks = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
+    this.allTalents = ['music', 'athletics', 'childcare', 'arts & crafts', 'mechanics',
+      'construction', 'computers', 'communication', 'chess playing', 'listening'];
+    this.allWorks = ['hashbrown slinging', 'word processing', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
     this.selectedCauses = [];
     this.selectedTalents = [];
     this.selectedWorks = [];
   }
 
   siteLocations = [];
-
   causes = [];
-
   filterby = ['keyword', 'zipcode', 'cause', 'future only'];
-
-  keyword = false;
-
-  siteLocation = false;
-
-  causeFilter = false;
-
   filters = [
     { filterby: 'keyword', value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState'] },
     { filterby: 'zipcode', value: '', keys: ['voZipCode'] },
@@ -52,19 +43,22 @@ export class Volunteer {
     this.app.role = this.user.userType;
     await this.fetchAllEvents();
     this.displayEvents();
+    this.commonUtils.makeFilterDropdown(this.siteLocations, this.events, 'voZipCode');
+    this.commonUtils.makeFilterDropdown(this.causes, this.events, 'voCharityTypes');
+    return Promise.resolve(true);
   }
 
-  async displayEvents() {
+  displayEvents() {
     if (this.events.length > 0) {
       this.fixZipcodesAndTypes();
-      fixDates(this.events);
+      this.commonUtils.fixDates(this.events);
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
-      this.populateSites();
-      this.populateCauses();
       this.checkScheduled();
-      markPast(this.events, formatDate);
+      this.commonUtils.markPast(this.events, this.commonUtils.formatDate);
+      return Promise.resolve(true);
     }
+    return Promise.resolve(false);
   }
 
   async fetchAllEvents() {
@@ -103,78 +97,21 @@ export class Volunteer {
   filterPicked() {
     this.commonUtils.filterSelected(this);
     if (this.selectedFilter.includes('future only')) {
-      markPast(this.events, formatDate);
+      this.commonUtils.markPast(this.events, this.commonUtils.formatDate);
       this.hidePast = true;
     } else {
       this.hidePast = false;
     }
   }
 
-  populateSites() {
-    this.siteLocations.push('');
-    for (const next of this.events) {
-      const nextSite = next.voZipCode;
-      if (this.siteLocations.indexOf(nextSite) === -1) {
-        this.siteLocations.push(nextSite);
-      }
-    }
-  }
-
-  populateCauses() {
-    this.causes.push('');
-    for (const next of this.events) {
-      const nextCharityType = next.voCharityTypes;
-      for (const nextType of nextCharityType) {
-        if (this.causes.indexOf(nextType) === -1) {
-          this.causes.push(nextType);
-        }
-      }
-    }
-  }
-
-  async signupEvent(thisevent) {
-    const result = await this.doubleCheckSignups(thisevent);
-    if (this.canSignup) {
-      thisevent.voPeopleScheduled.push(this.uid);
-      this.app.updateById('/volopp/', thisevent._id, thisevent);
-      await this.fetchAllEvents();
-      this.checkScheduled();
-      this.app.router.navigate('dashboard');
-      return Promise.resolve(thisevent);
-    }
-    return Promise.resolve(result);
+  signupEvent(thisevent) {
+    return this.ohafUtils.signupEvent(thisevent, this, document);
   }
 
   async cancelSignup(thisevent) {
     thisevent.voPeopleScheduled = thisevent.voPeopleScheduled.filter(e => e !== this.uid);
     await this.app.updateById('/volopp/', thisevent._id, thisevent);
     this.app.router.navigate('dashboard');
-  }
-
-  doubleCheckSignups(thisevent) {
-    // get this event, check if start date is in past, check if max signups are already reached
-    return this.app.httpClient.fetch(`/volopp/get/${thisevent._id}`)
-      .then(response => response.json())
-      .then((data) => {
-        if (data.voStartDate) {
-          let today = new Date(), testDate = data.voStartDate.replace('-', '');
-          today = formatDate(today);
-          testDate = testDate.replace('-', '');
-          if (testDate < today) {
-            alert('this event has already started');
-            this.canSignup = false;
-          }
-        }
-        if (data.voPeopleScheduled) {
-          if (data.voPeopleScheduled.length >= data.voNumPeopleNeeded) {
-            alert('this event has already reached max volunteers needed');
-            this.canSignup = false;
-          }
-        }
-      }).catch((error) => {
-        this.canSignup = false;
-        return error;
-      });
   }
 
   selectPickChange(type) {
@@ -230,11 +167,6 @@ export class Volunteer {
     }
   }
 
-  /* istanbul ignore next */
-  reload() {
-    window.location.reload();
-  }
-
   changeCauses(item, vol, container) {
     item.sort();
     item.push('other');
@@ -248,9 +180,7 @@ export class Volunteer {
   }
 
   async updateUser() {
-    await this.app.updateById('/user/', this.uid, this.user);
-    await this.activate();
-    this.reload();
+    return this.ohafUtils.updateUser(this, window);
   }
 
   showButton() {
@@ -258,10 +188,6 @@ export class Volunteer {
   }
 
   attached() {
-    document.getElementById('distanceInput').addEventListener('keydown', this.showButton);
-    this.setupVolunteerUser();
-    if (document.documentElement.clientWidth < 766) {
-      document.getElementsByClassName('checkboxes-div')[0].style.top = '124px';
-    }
+    return this.ohafUtils.attachVolPage(document, this);
   }
 }

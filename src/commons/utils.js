@@ -80,7 +80,7 @@ exports.filterSelected = function filterSelected(myModule) {
   this.finishFiltering(myModule);
 };
 
-exports.startSlides = function startSlides(idArray1, errorMsg, idArray2) {
+exports.startSlides = function startSlides(idArray1, errorMsg, idArray2, doc) {
   const slideshowTimer = setInterval(() => {
     let foundElement = false;
     idArray1.forEach((id) => {
@@ -94,7 +94,7 @@ exports.startSlides = function startSlides(idArray1, errorMsg, idArray2) {
     if (!(foundElement)) {
       return clearInterval(slideshowTimer);
     }
-    return showSlides.showSlides(idArray2);
+    return showSlides.showSlides(idArray2, doc);
   }, 5400);
 };
 
