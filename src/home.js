@@ -3,9 +3,7 @@ export class Home {
     this.top = null;
   }
 
-  get widescreenHomepage() {
-    return document.documentElement.clientWidth > 1200;
-  }
+  get widescreenHomepage() { return document.documentElement.clientWidth > 1200; }
 
   attached() {
     this.searchParams = new URLSearchParams(window.location.search);
