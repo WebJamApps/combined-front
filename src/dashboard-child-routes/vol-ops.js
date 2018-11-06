@@ -261,6 +261,7 @@ export class VolunteerOpps {
       .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
       .ensure('voStartTime').required().withMessage('Event Start time is required')
       .ensure('voEndTime').required().withMessage('Event End time is required')
+      .satisfies(val => (this.voOpp.voEndDate > this.voOpp.voStartDate) || (val > this.voOpp.voStartTime))
       .ensure('voStartDate').required().withMessage('Event Start Date is required')
       .ensure('voEndDate').required().withMessage('Event End Date is required')
       .ensure('voZipCode').required().withMessage('5-digit Zipcode is required').matches(/\b\d{5}\b/)
