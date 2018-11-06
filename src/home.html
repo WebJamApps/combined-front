@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-6" style="top:0;padding-right:6px">
-            <p if.bind = "widescreenHomepage" style="margin-top:45px; margin-bottom:40px;font-size:18px">
+            <p if.bind="widescreenHomepage" style="margin-top:45px; margin-bottom:40px;font-size:18px">
               Web Jam LLC helps businesses bring their web technologies into the 21st century! Let us
               help make your website mobile-friendly and grow your business by utilizing the power of online services. More information is available in our
               <a href="WebJamLLC_FactSheet.pdf" target="_blank">Fact Sheet</a>.
@@ -25,15 +25,15 @@
           </div>
           <div class="col-md-6" style="padding:1px;right:0;">
             <div id="slideshow1">
-              <img src="../static/imgs/banner1.jpg">
+              <img alt="webJamBannerLarge" src="../static/imgs/banner1.jpg">
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div if.bind = "!widescreenHomepage" style="margin-top:1px;">
+    <div if.bind="!widescreenHomepage" style="margin-top:1px;">
       <div id="slideshow">
-        <img src="../static/imgs/banner1.jpg">
+        <img alt="webJamBanner" src="../static/imgs/banner1.jpg">
       </div>
       <div style="padding:10px; margin-bottom:-20px">
         <p style="font-size:18px">
@@ -63,35 +63,47 @@
         <h4 style="text-align:center"><strong>Our Hands and Feet (<a href="/ohaf">OHAF</a>)</strong></h4>
         <p style="text-align:center">This app connects volunteers with charity opportunities.</p>
         <div style="text-align:center">
-          <img style="width:260px" src="https://web-jam.com/static/imgs/ohaf/charitylogo.png"><br>
+          <img alt="ohafLogo" style="width:260px" src="https://web-jam.com/static/imgs/ohaf/charitylogo.png"><br>
           <a href="http://www.ourhandsandfeet.org" target="_blank" style="text-decoration:underline; text-align:center">ourhandsandfeet.org</a>
         </div>
       </div>
-      <p>&nbsp;</p>
+      <p style="font-size: 6pt; margin-bottom:0">&nbsp;</p>
       <div class="elevation2" style="padding:10px; max-width:500px;margin:auto">
         <h4 style="text-align:center"><strong>Street Corner to Rock-Star (<a href="/sc2rs">SC2RS</a>)</strong></h4>
         <p style="text-align:center">This app connects bands with performance opportunities.</p>
         <div style="text-align:center">
-          <img style="width:260px" src="../static/imgs/sc2rs.png"><br>
+          <img alt="sc2rsHome" style="width:260px" src="../static/imgs/sc2rs.png"><br>
           <a href="http://www.sc2rs.com" target="_blank" style="text-decoration:underline; text-align:center">sc2rs.com</a><br>
         </div>
       </div>
-      <p>&nbsp;</p>
+      <p style="font-size: 6pt; margin-bottom:0">&nbsp;</p>
       <div class="elevation2" style="padding:10px; max-width:500px;margin:auto">
         <h4 style="text-align:center"><strong>Web Jam <a href="/library">Library</a></strong></h4>
         <p style="text-align:center">This app allows Readers to checkout physical books.</p>
         <div style="text-align:center">
-          <img style="width:260px" src="https://web-jam.com/static/imgs/library/books2.jpg"><br>
+          <img alt="libraryHomePage" style="width:260px" src="https://web-jam.com/static/imgs/library/books2.jpg"><br>
         </div>
       </div>
-      <p>&nbsp;</p>
+      <p style="font-size: 6pt; margin-bottom:0">&nbsp;</p>
       <div class="elevation2" style="padding:10px; max-width:500px;margin:auto">
         <h4 style="text-align:center"><strong>Apperson Automotive</strong></h4>
         <div style="text-align:center">
-          <img style="width:260px" src="../static/imgs/AppersonAutomotive.png"><br>
+          <img alt="appseronHomePage" style="width:260px" src="../static/imgs/AppersonAutomotive.png"><br>
           <a href="http://www.appersonautomotive.com" target="_blank" style="text-decoration:underline; text-align:center">appersonautomotive.com</a><br>
         </div>
       </div>
+      <p style="font-size: 6pt; margin-bottom:0">&nbsp;</p>
+      <div class="col-md-6" style="max-width:500px;margin:auto">
+        <iframe if.bind="widescreenHomepage" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FWebJamLLC%2F&tabs=timeline&width=500&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=2207148322688942"
+          width="500" height="500" style="border:none;overflow:hidden;margin-left:-14px" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media">
+        </iframe>
+      </div>
+      <div if.bind="!widescreenHomepage" style="max-width:300px;margin:auto">
+        <iframe if.bind="!widescreenHomepage" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FWebJamLLC%2F&tabs=timeline&width=300&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=2207148322688942"
+          width="300" height="300" style="border:none;overflow:hidden;" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media">
+        </iframe>
+      </div>
     </div>
+  </div>
   </div>
 </template>
