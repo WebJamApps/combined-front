@@ -15,6 +15,7 @@
     "node/no-unsupported-features/es-syntax": 0,
     "no-mixed-operators": 0,
     "no-useless-escape": 0,
+    "no-multi-assign": "off",
     "comma-dangle": [0, "never"],
     "no-undef": [0, "never"],
     "react/jsx-filename-extension": 0,
