@@ -17,7 +17,6 @@ This is the front end for the following apps:
 </ul>
 
 <br> Here are the steps to get the development version running. First, read our <a href="https://docs.google.com/document/d/1_QDDbqmBrJuGqBoib59fmgYtls03dAXXuLqRR5roPO4/edit">Developer's Guide</a> gdoc to make sure you have all of the necessary prerequisites installed, including the correct version of NodeJS that matches the version specified in our package.json and yarn.
-
 Clone this repository into a directory of your choice from the terminal using <b>git clone [url of this repository]</b><br>
 Install and use the version of nodejs currently listing in our package.json<br>
 Create a <b>.env</b> file at the project root and request the contents from <b>@JoshuaVSherman</b>.<br>You will not be able to build without this file, so there is no need to try installing anything until you have this in place.<br>

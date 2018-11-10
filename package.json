@@ -9,7 +9,7 @@
   },
   "author": "HandlersAndKickers",
   "engines": {
-    "node": ">=10.13.0"
+    "node": "10.13.0"
   },
   "files": [
     "webpack.config.js",
@@ -52,7 +52,7 @@
     "aurelia-polyfills": "^1.3.0",
     "aurelia-router": "latest",
     "aurelia-templating": "latest",
-    "aurelia-validation": "latest",
+    "aurelia-validation": "1.2.3",
     "aurelia-webpack-plugin": "latest",
     "autoprefixer": "^8.1.0",
     "babel-core": "^7.0.0-bridge.0",
