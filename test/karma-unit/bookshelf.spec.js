@@ -1,4 +1,3 @@
-// const Counter = require('assertions-counter');
 import { HttpMock, AuthStub, AppStateStub } from './commons';
 import { Bookshelf } from '../../src/bookshelf';
 import { App } from '../../src/app';
@@ -39,6 +38,7 @@ class HttpStub2 {
       resolve({ json: () => response });
     });
   }
+
   configure(fn) {
     this.__configureCallback = fn;
     return this.__configureReturns;

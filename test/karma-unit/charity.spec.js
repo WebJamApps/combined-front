@@ -5,7 +5,6 @@ import { AuthStub, HttpMock, AppStateStub } from './commons';
 
 class VCMock {
   createForCurrentScope() {
-    // console.log(validator);
     return { validateTrigger: null };
   }
 }
@@ -15,8 +14,8 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
+
   validateObject(obj) {
-    // console.log(rules);
     if (obj.charityTypes.indexOf('True') > -1) {
       return Promise.resolve([{
         rule: Object, object: Object, propertyName: 'charityPhoneNumber', valid: true, message: 'Charity Phone Number is correct'
@@ -26,6 +25,7 @@ class ValidatorMock extends Validator {
       rule: Object, object: Object, propertyName: 'charityPhoneNumber', valid: false, message: 'Charity Phone Number is not correct'
     }]);
   }
+
   validateProperty() {
     // console.log(rules);
     return Promise.resolve({});
@@ -74,6 +74,7 @@ describe('the Charity Module', () => {
     charityTypesHtml: '',
     charityPhoneNumber: '0237654897'
   };
+
   beforeEach(() => {
     vc = new VCMock();
     val = new ValidatorMock();
@@ -88,27 +89,27 @@ describe('the Charity Module', () => {
     charity2 = new Charity(app2, vc, val);
     charity2.app.appState = new AppStateStub();
   });
-  // it('should call submit callback', (done) => {
-  //   charity.validator2.cb([]);
-  //   done();
-  // });
+
   it('displays the checkboxes inside a select box', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
     charity.showCheckboxes('types');
     expect(document.getElementById('types').style.display).toBe('block');
     done();
   });
+
   it('checkboxes closed', (done) => {
     document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;display:block"></div>';
     charity.showCheckboxes('types');
     expect(document.getElementById('types').style.display).toBe('none');
     done();
   });
+
   it('it does not display the charities table when there are no charities', (done) => {
     charity2.activate();
     expect(charity2.charities).toHaveLength(0);
     done();
   });
+
   it('it displays the new charity form on page load', (done) => {
     charity2.activate();
     charity2.setupValidation2 = function setupValidation2() {};
@@ -118,6 +119,7 @@ describe('the Charity Module', () => {
     charity2.attached();
     done();
   });
+
   it('displays the update charity table', (done) => {
     charity.activate();
     charity.setupValidation2 = function setupValidation2() {};
@@ -164,30 +166,6 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('creates a new charity in the database with email as quote quote, null, and filled in', (done) => {
-    charity.activate();
-    const user = { name: 'Josh', _id: '1234' };
-    charity.user = user;
-    charity.setupValidation2 = function setupValidation2() {};
-    charity.updateCharity = {
-      charityName: 'test charity',
-      charityCity: '',
-      charityState: '',
-      charityZipCode: '',
-      charityTypes: ['other'],
-      charityManagers: [],
-      charityMngIds: [],
-      charityTypeOther: '',
-      charityTypesHtml: '',
-      charityEmail: ''
-    };
-    document.body.innerHTML = '<div id="charityDash"></div>';
-    charity.updateCharity.charityEmail = '';
-    charity.createCharity();
-    charity.updateCharity.charityEmail = 'howdy@howdy.com';
-    charity.createCharity();
-    done();
-  });
   it('detects when the charity type is changed in the update form', (done) => {
     charity.activate();
     charity.controller2 = { errors: [{ _id: 123 }], validate: () => {} };
@@ -224,6 +202,7 @@ describe('the Charity Module', () => {
     expect(document.getElementsByClassName('ctypeerror')[0].style.display).toBe('none');
     done();
   });
+
   it('it displays the submit or update button on the form if the form is valid', (done) => {
     charity.activate();
     charity.validType2 = true;
@@ -235,6 +214,7 @@ describe('the Charity Module', () => {
     expect(charity.canSubmit2).toBe(true);
     done();
   });
+
   it('displays the create new charity webform with hidden submit button and the charities table', (done) => {
     jasmine.clock().install();
     charity.activate();
@@ -248,6 +228,7 @@ describe('the Charity Module', () => {
     done();
     jasmine.clock().uninstall();
   });
+
   it('hides the update charity button if it was displayed', (done) => {
     charity.activate();
     document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection">'
@@ -271,6 +252,7 @@ describe('the Charity Module', () => {
     expect(document.getElementById('updateCharityButton').style.display).toBe('block');
     done();
   });
+
   it('it does not try to display the submit or update button if it does not exist', (done) => {
     charity.activate();
     charity.validType2 = true;
@@ -281,6 +263,7 @@ describe('the Charity Module', () => {
     expect(charity.canSubmit2).toBe(false);
     done();
   });
+
   it('does not disable the submit button for create new charity', (done) => {
     charity.activate();
     charity.validType2 = true;
@@ -291,6 +274,7 @@ describe('the Charity Module', () => {
     expect(document.getElementsByClassName('updateButton')[0].style.display).toBe('block');
     done();
   });
+
   it('disables the update button when the update form initially displays', (done) => {
     charity.activate();
     charity.validType2 = true;
@@ -316,6 +300,7 @@ describe('the Charity Module', () => {
   });
 
   it('displays charity types when there are some', (done) => {
+    charity2.app.httpClient = { fetch: '' };
     charity2.activate();
     charity2.charities = [{ charityTypes: [''], charityManagers: ['Home', 'Elderly'] }, {
       charityTypes:
@@ -337,7 +322,9 @@ describe('the Charity Module', () => {
     charity2.buildManagers();
     done();
   });
+
   it('does not remove the user as manager when he or she is not assigned to the charity', (done) => {
+    charity2.app.auth = { getTokenPayload: '' };
     charity2.activate();
     const fakeCharity = {
       charityManagers: ['Josh'], charityMngIds: '1234'
@@ -348,8 +335,10 @@ describe('the Charity Module', () => {
     charity2.uid = '4556';
     charity2.user = fakeUser;
     charity2.removeManager(fakeCharity);
+    expect(charity2.updateCharity.charityManagers).toHaveLength(1);
     done();
   });
+
   it('displays the submit button when a type has been selected and the rest of the form is valid', (done) => {
     charity2.activate();
     charity2.controller2 = { errors: [{ _id: 123 }], validate: () => {} };
@@ -360,6 +349,7 @@ describe('the Charity Module', () => {
     expect(document.getElementsByClassName('ctypeerror')[0].style.display).toBe('none');
     done();
   });
+
   it('does not add a new charity manager if the email is not a user of the app', (done) => {
     charity2.activate();
     charity2.updateCharity = {
@@ -374,19 +364,23 @@ describe('the Charity Module', () => {
       charityTypesHtml: '',
       charityEmail: 'yoyo@yoyo.com'
     };
-    charity2.findUserByEmail();
+    const data = charity2.findUserByEmail();
+    expect(data).not.toBe(null);
     done();
   });
+
   it('it checks if a charity does not have any events', (done) => {
     charity2.activate();
     charity2.charities = [{ _id: '1234', charityTypes: [''], charityManagers: [''] },
       { _id: '2345', charityTypes: ['Home', 'Elderly', 'other'], charityManagers: ['Home', 'Elderly', 'other'] }];
     charity2.checkEvents();
+    expect(charity2.charities[0].hasEvents).toBeFalsy();
     done();
   });
 
   it('deletes charity', (done) => {
     charity.deleteCharity();
+    expect(charity.update).toBe(undefined);
     done();
   });
 
@@ -397,8 +391,9 @@ describe('the Charity Module', () => {
     document.getElementsByTagName('body')[0].appendChild(node);
     charity.updateCharity.charityEmail = 'dannyyean@me.com';
     charity.updateCharityFunct();
-    charity.updateCharity.charityEmail = 'dannyyean@me.com';
+    charity.updateCharity.charityEmail = 'dannyYean@me.com';
     charity.updateCharityFunct();
+    expect(charity.updateCharity.charityEmail).toBe('dannyyean@me.com');
     done();
   });
 
@@ -409,12 +404,57 @@ describe('the Charity Module', () => {
     document.getElementsByTagName('body')[0].appendChild(node);
     charity.updateCharity.charityEmail = '';
     charity.updateCharityFunct();
+    expect(charity.updateCharity.charityEmail).toBe('');
     done();
   });
 
   it('removes manager', (done) => {
     charity.user = { name: 'Dev Patel' };
-    charity.removeManager(updatedCharity);
+    charity.uid = null;
+    const updateCharity = {
+      charityManagers: ['Dev Patel'],
+      charityMngIds: [null],
+    };
+    charity.removeManager(updateCharity);
+    expect(charity.updateCharity.charityMngIds).toHaveLength(0);
     done();
+  });
+
+  it('creates a new charity without managers and IDs', () => {
+    charity.user = { name: 'Dev Patel', _id: 190 };
+    charity.updateCharity = {
+      charityName: 'test charity',
+      charityCity: '',
+      charityState: '',
+      charityZipCode: '',
+      charityTypes: ['Christian', 'other'],
+      charityManagers: [],
+      charityMngIds: [],
+      charityTypeOther: '',
+      charityTypesHtml: '',
+      charityEmail: ''
+    };
+    document.body.innerHTML = '<div id="charityDash">Dashing charity</div>';
+    charity.createCharity(updatedCharity);
+    expect(document.getElementById('charityDash').style.display).toBeFalsy();
+  });
+
+  it('creates a new charity with managers and IDs', () => {
+    charity.user = { name: 'Dev Patel', _id: 190 };
+    charity.updateCharity = {
+      charityName: 'test charity',
+      charityCity: '',
+      charityState: '',
+      charityZipCode: '',
+      charityTypes: ['Christian', 'other'],
+      charityManagers: [],
+      charityMngIds: [],
+      charityTypeOther: '',
+      charityTypesHtml: '',
+      charityEmail: 'lockesh.ambani@tata.com'
+    };
+    document.body.innerHTML = '<div id="charityDash">Dashing charity</div>';
+    charity.createCharity(updatedCharity);
+    expect(document.getElementById('charityDash').style.display).toBeFalsy();
   });
 });

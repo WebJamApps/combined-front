@@ -17,16 +17,18 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
+
   validateObject() {
     return Promise.resolve([{ name: 'john', valid: true }]);
   }
+
   validateProperty() {
     return Promise.resolve({});
   }
 }
 
 describe('the librarian module', () => {
-  let librarian, app1, http, reader, vc, val, auth;
+  let librarian, app1, http, vc, val, auth, reader;
   global.CSVFilePath = { files: [csvFixture.string, 'sample.txt'] };
 
   beforeEach(() => {
@@ -38,7 +40,7 @@ describe('the librarian module', () => {
     vc = new VCMock();
     val = new ValidatorMock();
     app1.activate();
-    librarian = new Librarian(app1, reader, {}, vc, val);
+    librarian = new Librarian(app1, reader, vc, val);
     librarian.app.appState = new AppStateStub();
     librarian.CSVFilePath = { files: [csvFixture.string] };
   });
@@ -52,6 +54,15 @@ describe('the librarian module', () => {
     document.body.innerHTML = '<div id="createMediaButton"></div>';
     librarian.validate();
     librarian.updateCanSubmit([{ valid: false }]);
+    done();
+  });
+
+  it('validates the import txt file', (done) => {
+    let valid = true;
+    document.body.innerHTML = '<div id="createMediaButton"><input id="CSVFilePath" type="file"/><button id="deleteCreateButton">'
+    + '</button><p class="errorMessage"></p></div>';
+    valid = librarian.utils.textFileValidate();
+    expect(valid).toBe(false);
     done();
   });
 
@@ -82,6 +93,8 @@ describe('the librarian module', () => {
   });
 
   it('should raise a file reader error', (done) => {
+    document.body.innerHTML = '<div id="createMediaButton"><p class="errorMessage"></p>'
+    + '<input id="CSVFilePath" type="file"/><button id="deleteCreateButton"></div>';
     window.CSVFilePath = { files: [new Blob()] };
     const error = new Event('error');
     const load = new Event('load');
@@ -96,33 +109,9 @@ describe('the librarian module', () => {
     }, 2001);
   });
 
-  it('should validate textFile', (done) => {
-    // document.body.innerHTML = '<div id="deleteCreateButton"></div>';
-    // librarian.newBook.type = 'text/plain';
-    // librarian.textFileValidate();
-    done();
-  });
-
-  it('should createBooksFromCSV', (done) => {
-    // librarian.createBooksFromCSV();
-    done();
-  });
-
-  it('should make a .csv file', (done) => {
-    librarian.makeCSVfile();
-    // expect(http2.status).toBe(200);
-    done();
-  });
-
   it('should delete and deleteCreate', (done) => {
     librarian.deleteBooks();
     librarian.deleteCreateBooks();
-    done();
-  });
-
-  it('should validate textFile', (done) => {
-    // global.CSVFilePath = { files: [] };
-    // librarian.textFileValidate();
     done();
   });
 });

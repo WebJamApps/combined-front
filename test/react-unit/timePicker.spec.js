@@ -45,7 +45,7 @@ describe('++TimePicker tests', () => {
     tp.showTimer();
     done();
   });
-  it('should show timer on start', (done) => {
+  it('should show timer on end', (done) => {
     document.body.innerHTML = '<div id="end"><input class="MuiInput-input-11"/></div>';
     tp.type = 'end';
     tp.showTimer();
@@ -63,7 +63,7 @@ describe('++TimePicker tests', () => {
     tp.bind();
     done();
   });
-  it('should bind element', (done) => {
+  it('should bind element again', (done) => {
     document.body.innerHTML = '<div id="renderer"></div>';
     tp.element = document.getElementById('renderer');
     tp.type = 'start';

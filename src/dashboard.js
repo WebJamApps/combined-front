@@ -1,45 +1,15 @@
 import { inject } from 'aurelia-framework';
 import { App } from './app';
+
+const dashboardUtils = require('./commons/dashboardUtils');
 @inject(App)
 export class Dashboard {
   constructor(app) {
     this.app = app;
+    this.dashboardUtils = dashboardUtils;
   }
 
   async activate() {
-    try {
-      this.uid = this.app.auth.getTokenPayload().sub;
-    } catch (e) { this.app.logout(); }
-    this.user = await this.app.appState.getUser(this.uid);
-    window.localStorage.setItem('userEmail', this.user.email);
-    this.childRoute();
-  }
-  childRoute() {
-    if (this.user.userStatus === 'disabled') {
-      return this.app.router.navigate('dashboard/user-account');
-    }
-    if (this.user.userType === undefined || this.user.userType === '') {
-      this.user.userDetails = 'newUser';
-      if (this.user.isOhafUser) {
-        this.user.userType = 'Volunteer';
-      } else {
-        this.user.userType = 'user-account';
-      }
-      this.app.appState.setUser(this.user);
-      return this.app.router.navigate('dashboard/user-account');
-    }
-    /* istanbul ignore else */
-    if (this.user.userType === 'Charity') {
-      return this.app.router.navigate('dashboard/charity');
-    } if (this.user.userType === 'Volunteer') {
-      return this.app.router.navigate('dashboard/volunteer');
-    } if (this.user.userType === 'Reader') {
-      return this.app.router.navigate('dashboard/reader');
-    } if (this.user.userType === 'Librarian') {
-      return this.app.router.navigate('dashboard/librarian');
-    } if (this.user.userType === 'Developer') {
-      return this.app.router.navigate('dashboard/developer');
-    }
-    return this.app.router.navigate('/');
+    this.dashboardUtils.subRoute(this, window.localStorage);
   }
 }

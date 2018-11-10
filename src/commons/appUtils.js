@@ -40,7 +40,6 @@ exports.returnIsWide = function returnIsWide(app, isWide, drawer, drawerParent) 
       drawer.style.display = 'block';
       swipeArea.style.display = 'none';
       drawerParent.css('display', 'block');
-      // $(drawer).parent().css('display', 'block');
       mobileMenuToggle.style.display = 'none';
     }
   } else { app.contentWidth = '0px'; }
@@ -59,7 +58,6 @@ exports.handleScreenSize = function handleScreenSize(app, isWide, drawerParent) 
     /* istanbul ignore else */
     if (drawer !== null && drawer !== undefined) {
       drawer.style.display = 'none';
-      // drawerParent.style.display = 'none';
       drawerParent.css('display', 'none');
       mobileMenuToggle.style.display = 'block';
       swipeArea.style.display = 'block';

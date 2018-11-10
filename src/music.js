@@ -2,6 +2,7 @@ const showSlides = require('./commons/showSlides');
 
 export class Music {
   constructor() {
+    this.showSlides = showSlides;
     this.slideshow_data = {
       id: 'slideshowMusic',
       slideshow_images: ['../../static/imgs/martinsville2017.png', '../../static/imgs/fifthWedAnniversary.png', '../../static/imgs/prom2015.png',
@@ -19,7 +20,7 @@ export class Music {
       if (ms1 !== null && ms1 !== undefined) {
         ms1.style.display = 'none';
       } else { return clearInterval(musicTimer); }
-      return showSlides.showSlides(['slideshowMusic']);
+      return this.showSlides.showSlides(['slideshowMusic'], document);
     }, 5400);
   }
 }

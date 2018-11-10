@@ -8,7 +8,15 @@ export class Login {
     this.app = app;
     this.login_Class = new Login_();
   }
+
   attached() {
     this.app.appUtils.checkIfLoggedIn(this.app);
+    if (document.location.search.includes('email=')) {
+      document.getElementsByClassName('topSection')[0].style.display = 'none';
+      this.app.showForm('', this.login_Class);
+      this.searchParams = new URLSearchParams(window.location.search);
+      this.userEmail = this.searchParams.get('email');
+      document.getElementsByClassName('loginemail')[0].value = this.userEmail;
+    }
   }
 }

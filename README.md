@@ -1,4 +1,5 @@
 # combined-front
+
 [![CircleCI](https://circleci.com/gh/WebJamApps/combined-front.svg?style=svg)](https://circleci.com/gh/WebJamApps/combined-front)
 [![Test Coverage](https://codeclimate.com/github/WebJamApps/combined-front/badges/coverage.svg)](https://codeclimate.com/github/WebJamApps/combined-front/coverage)
 [![Issue Count](https://codeclimate.com/github/WebJamApps/combined-front/badges/issue_count.svg)](https://codeclimate.com/github/WebJamApps/combined-front/issues)
@@ -7,10 +8,12 @@
 
 This is the front end for the following apps:
 <ui>
+
   <li><a href="https://www.web-jam.com">Web Jam LLC</a></li>
 <li><a href="http://www.ourhandsandfeet.org">ourhandsandfeet.org</a></li>
 <li><a href="http://joshandmariamusic.com">joshandmariamusic.com</a></li>
 <li><a href="https://www.web-jam.com/library">Web Jam Library</a></li>
+
 </ul>
 
 <br> Here are the steps to get the development version running. First, read our <a href="https://docs.google.com/document/d/1_QDDbqmBrJuGqBoib59fmgYtls03dAXXuLqRR5roPO4/edit">Developer's Guide</a> gdoc to make sure you have all of the necessary prerequisites installed, including the correct version of NodeJS that matches the version specified in our package.json and yarn.
@@ -28,16 +31,12 @@ Now, open your browser and go to <b>localhost:9000</b>
 
 The homepage should display correctly.
 
-<b><i>Note</b></i>: you will not be able to use the "Login" feature of the website unless you also run the back end server.
+<b><i>Note</i></b>: you will not be able to use the "Login" feature of the website unless you also run the back end server.
 
-When working on unit tests, use the command <b>npm run test:debug</b><br>
-This will run the tests in continuous mode and launch a Chrome browser with Karma debugging enabled.
-To run all of the tests (linter, karma, jest, protractor), ``npm test``
+To get the latest version of code, <b>git pull origin dev</b>, create a new branch, then switch to your own branch.
 
-To get the latest version of code, <b>git pull origin dev</b> and then switch to your own branch.
+You cannot push directly to the dev branch. Push to your own branch and then submit a pull request to the <b>dev</b> branch.
 
-You will no be able to push directly to the dev branch, rather we would appreciate if you pushed to your own branch and then submit a pull request to the <b>dev</b> branch.
-
-<br>
-<a href="https://www.browserstack.com"><img src="https://d3but80xmlhqzj.cloudfront.net/production/images/static/header/header-logo.svg" alt="BrowserStack" width="200px"/></a>
-<br>We are using BrowserStack to test compatibility with Safari and IE 11, and we thank them for supporting open-source projects.
+<div style="background-color:black;padding:10px;margin-right:65%">
+<a href="https://www.browserstack.com"><img src="https://d3but80xmlhqzj.cloudfront.net/production/images/static/header/header-logo.svg" alt="BrowserStack" width="200px"/></a></div>
+<p>We are using BrowserStack to test compatibility with Safari and IE 11, and we thank them for supporting open-source projects.</p>

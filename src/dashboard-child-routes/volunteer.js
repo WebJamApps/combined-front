@@ -1,13 +1,15 @@
 import { inject } from 'aurelia-framework';
 import { App } from '../app';
-import {
-  fixDates, formatDate, markPast, showCheckboxes, filterSelected
-} from '../commons/utils';
+
+const commonUtils = require('../commons/utils');
+const ohafUtils = require('../commons/ohafUtils');
 @inject(App)
 export class Volunteer {
   constructor(app) {
-    this.showCheckboxes = showCheckboxes;
+    this.showCheckboxes = commonUtils.showCheckboxes;
     this.app = app;
+    this.commonUtils = commonUtils;
+    this.ohafUtils = ohafUtils;
     this.events = [];
     this.signup = {};
     this.selectedFilter = ['future only'];
@@ -17,8 +19,9 @@ export class Volunteer {
     this.cause = false;
     this.keyword = false;
     this.allCauses = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
-    this.allTalents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
-    this.allWorks = ['hashbrown slinging', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
+    this.allTalents = ['music', 'athletics', 'childcare', 'arts & crafts', 'mechanics',
+      'construction', 'computers', 'communication', 'chess playing', 'listening'];
+    this.allWorks = ['hashbrown slinging', 'word processing', 'nail hammering', 'leaf removal', 'floor mopping', 'counseling', 'visitation'];
     this.selectedCauses = [];
     this.selectedTalents = [];
     this.selectedWorks = [];
@@ -27,9 +30,6 @@ export class Volunteer {
   siteLocations = [];
   causes = [];
   filterby = ['keyword', 'zipcode', 'cause', 'future only'];
-  keyword = false;
-  siteLocation = false;
-  causeFilter = false;
   filters = [
     { filterby: 'keyword', value: '', keys: ['voName', 'voDescription', 'voCharityName', 'voContactName', 'voStreet', 'voCity', 'voState'] },
     { filterby: 'zipcode', value: '', keys: ['voZipCode'] },
@@ -41,25 +41,24 @@ export class Volunteer {
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
     this.app.role = this.user.userType;
-    // if (this.user.userDetails === 'newUser'){
-    //   this.app.router.navigate('dashboard/user-account');
-    // } else {
     await this.fetchAllEvents();
     this.displayEvents();
-    // }
+    this.commonUtils.makeFilterDropdown(this.siteLocations, this.events, 'voZipCode');
+    this.commonUtils.makeFilterDropdown(this.causes, this.events, 'voCharityTypes');
+    return Promise.resolve(true);
   }
 
-  async displayEvents() {
+  displayEvents() {
     if (this.events.length > 0) {
       this.fixZipcodesAndTypes();
-      fixDates(this.events);
+      this.commonUtils.fixDates(this.events);
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
-      this.populateSites();
-      this.populateCauses();
       this.checkScheduled();
-      markPast(this.events, formatDate);
+      this.commonUtils.markPast(this.events, this.commonUtils.formatDate);
+      return Promise.resolve(true);
     }
+    return Promise.resolve(false);
   }
 
   async fetchAllEvents() {
@@ -90,95 +89,29 @@ export class Volunteer {
         this.events[i].voZipCode = '00000';
       }
       if (this.events[i].voCharityTypes === undefined || this.events[i].voCharityTypes === null || this.events[i].voCharityTypes.length === 0) {
-        // console.log('we have a missing charity type');
         this.events[i].voCharityTypes = ['not specified'];
       }
     }
   }
 
   filterPicked() {
-    filterSelected(this);
+    this.commonUtils.filterSelected(this);
     if (this.selectedFilter.includes('future only')) {
-      // console.log('you selected the starting date filter');
-      markPast(this.events, formatDate);
+      this.commonUtils.markPast(this.events, this.commonUtils.formatDate);
       this.hidePast = true;
     } else {
-      // console.log('show past now!');
       this.hidePast = false;
     }
   }
 
-  populateSites() {
-    this.siteLocations.push('');
-    for (const next of this.events) {
-      const nextSite = next.voZipCode;
-      if (this.siteLocations.indexOf(nextSite) === -1) {
-        this.siteLocations.push(nextSite);
-      }
-    }
-  }
-
-  populateCauses() {
-    this.causes.push('');
-    for (const next of this.events) {
-      const nextCharityType = next.voCharityTypes;
-      for (const nextType of nextCharityType) {
-        if (this.causes.indexOf(nextType) === -1) {
-          this.causes.push(nextType);
-        }
-      }
-    }
-  }
-
-  async signupEvent(thisevent) {
-    const result = await this.doubleCheckSignups(thisevent);
-    if (this.canSignup) {
-      thisevent.voPeopleScheduled.push(this.uid);
-      this.app.updateById('/volopp/', thisevent._id, thisevent);
-      await this.fetchAllEvents();
-      this.checkScheduled();
-      this.app.router.navigate('dashboard');
-      return thisevent;
-    }
-    return result;
+  signupEvent(thisevent) {
+    return this.ohafUtils.signupEvent(thisevent, this, document);
   }
 
   async cancelSignup(thisevent) {
     thisevent.voPeopleScheduled = thisevent.voPeopleScheduled.filter(e => e !== this.uid);
     await this.app.updateById('/volopp/', thisevent._id, thisevent);
     this.app.router.navigate('dashboard');
-  }
-
-  doubleCheckSignups(thisevent) {
-    // console.log('double checking...');
-    // get this event, check if start date is in past, check if max signups are already reached
-    return this.app.httpClient.fetch(`/volopp/get/${thisevent._id}`)
-      .then(response => response.json())
-      .then((data) => {
-        // console.log(data);
-        if (data.voStartDate) {
-          let today = new Date(), testDate = data.voStartDate.replace('-', '');
-          today = formatDate(today);
-          testDate = testDate.replace('-', '');
-          if (testDate < today) {
-            alert('this event has already started');
-            this.canSignup = false;
-          }
-        }
-        if (data.voPeopleScheduled) {
-          if (data.voPeopleScheduled.length >= data.voNumPeopleNeeded) {
-            // console.log(data.voPeopleScheduled.length);
-            alert('this event has already reached max volunteers needed');
-            this.canSignup = false;
-          }
-        }
-      // let user = data;
-      }).catch((error) => {
-        this.canSignup = false;
-        // console.log('inside volunteer module with error');
-        // console.log(error);
-        return error;
-      });
   }
 
   selectPickChange(type) {
@@ -192,7 +125,6 @@ export class Volunteer {
       this.selectedWorks = this.selectedWorks.filter(e => e !== '');
     }
     if (type === 'talents') {
-      // console.log('you picked talents');
       this.app.selectPickedChange(this.user, this, 'selectedTalents', 'volTalentOther', 'talentOther', true, 'volTalents');
       this.selectedTalents = this.selectedTalents.filter(e => e !== '');
     }
@@ -235,11 +167,6 @@ export class Volunteer {
     }
   }
 
-  /* istanbul ignore next */
-  reload() {
-    window.location.reload();
-  }
-
   changeCauses(item, vol, container) {
     item.sort();
     item.push('other');
@@ -253,34 +180,14 @@ export class Volunteer {
   }
 
   async updateUser() {
-    await this.app.updateById('/user/', this.uid, this.user);
-    await this.activate();
-    this.reload();
+    return this.ohafUtils.updateUser(this, window);
   }
 
   showButton() {
-    // console.log('show button!');
     document.getElementById('updateUserButton').style.display = 'block';
   }
 
-  // get widescreen() {
-  //   console.log('am i here');
-  //   let isWide = document.documentElement.clientWidth > 766;
-  //   console.log(isWide);
-  // }
-
   attached() {
-    document.getElementById('distanceInput').addEventListener('keydown', this.showButton);
-    this.setupVolunteerUser();
-    if (document.documentElement.clientWidth < 766) {
-      // console.log('i am cell phone');
-      document.getElementsByClassName('checkboxes-div')[0].style.top = '124px';
-    }
-
-    // console.log(this.widescreen);
-    // if (!this.app.widescreen){
-    //   console.log(this.app.widescreen);
-    //   console.log('cell phone mode detected');
-    // }
+    return this.ohafUtils.attachVolPage(document, this);
   }
 }

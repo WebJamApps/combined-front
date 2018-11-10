@@ -1,8 +1,6 @@
 import { inject } from 'aurelia-framework';
 import { json } from 'aurelia-fetch-client';
-import {
-  ValidationControllerFactory, ValidationRules, Validator, validateTrigger
-} from 'aurelia-validation';
+import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import { App } from '../app';
 import { FormValidator } from '../classes/FormValidator';
 import { showCheckboxes } from '../commons/utils';
@@ -11,6 +9,7 @@ import { showCheckboxes } from '../commons/utils';
 export class Charity {
   controller = null;
   validator = null;
+
   constructor(app, controllerFactory, validator) {
     this.showCheckboxes = showCheckboxes;
     this.app = app;
@@ -23,6 +22,7 @@ export class Charity {
     this.charityTypeValid = false;
     this.uid = '';
   }
+
   async activate() {
     let res;
     this.counter = 1;
@@ -30,15 +30,11 @@ export class Charity {
     this.types = ['Christian', 'Environmental', 'Hunger', 'Animal Rights', 'Homeless', 'Veterans', 'Elderly'];
     this.types.sort();
     this.types.push('other');
-    try {
-      this.uid = this.app.auth.getTokenPayload().sub;
-    } catch (e) { return this.app.logout(); }
+    try { this.uid = this.app.auth.getTokenPayload().sub; } catch (e) { return this.app.logout(); }
     this.user = await this.app.appState.getUser(this.uid);
     this.app.dashboardTitle = this.user.userType;
     this.app.role = this.user.userType;
-    try {
-      res = await this.app.httpClient.fetch(`/charity/${this.uid}`);
-    } catch (e) { return this.app.logout(); }
+    try { res = await this.app.httpClient.fetch(`/charity/${this.uid}`); } catch (e) { return this.app.logout(); }
     this.charities = await res.json();
     if (this.charities.length !== 0) {
       this.app.buildPTag(this.charities, 'charityTypes', 'charityTypeOther', 'charityTypesHtml');
@@ -47,6 +43,7 @@ export class Charity {
     }
     return this.charities;
   }
+
   async checkEvents() {
     for (let i = 0; i < this.charities.length; i += 1) {
       let foundEvents = [];
@@ -56,6 +53,7 @@ export class Charity {
       this.charities[i].hasEvents = foundEvents.length > 0;
     }
   }
+
   createNewCharity() {
     const charity = {
       charityEmail: '',
@@ -100,6 +98,7 @@ export class Charity {
     else document.getElementById('charityDash').scrollIntoView();
     this.buildErrors();
   }
+
   buildErrors() {
     const errorList = document.getElementById('valErrors');
     let innerH = '';
@@ -127,42 +126,24 @@ export class Charity {
     this.typeOther = this.updateCharity.charityTypes.includes('other');
     this.updateCharity.charityTypeOther = !this.typeOther ? '' : this.updateCharity.charityTypeOther;
   }
+
   setupValidation2() {
     ValidationRules
       .ensure('charityTypes').required().minLength(1).withMessage('charity type is required')
-      .ensure('charityPhoneNumber')
-      .matches(/\b[2-9]\d{9}\b/)
-      .withMessage('10 digits only')
-      .ensure('charityName')
-      .required()
-      .maxLength(40)
-      .withMessage('Charity name is required')
-      .ensure('charityEmail')
-      .email()
-      .ensure('charityZipCode')
-      .required()
-      .matches(/\b\d{5}\b/)
-      .withMessage('5-digit zipcode')
-      .ensure('charityCity')
-      .required()
-      .matches(/[^0-9]+/)
-      .maxLength(30)
-      .withMessage('City is required')
-      .ensure('charityStreet')
-      .required()
-      .maxLength(40)
-      .withMessage('Street address is required')
-      .ensure('charityState')
-      .required()
-      .withMessage('State is required')
+      .ensure('charityPhoneNumber').matches(/\b[2-9]\d{9}\b/).withMessage('10 digits only')
+      .ensure('charityName').required().maxLength(40).withMessage('Charity name is required')
+      .ensure('charityEmail').email()
+      .ensure('charityZipCode').required().matches(/\b\d{5}\b/).withMessage('5-digit zipcode')
+      .ensure('charityCity').required().matches(/[^0-9]+/).maxLength(30).withMessage('City is required')
+      .ensure('charityStreet').required().maxLength(40).withMessage('Street address is required')
+      .ensure('charityState').required().withMessage('State is required')
       .on(this.updateCharity);
   }
+
   updateCanSubmit2(validationResults) {
     let valid = true;
     const nub = document.getElementsByClassName('updateButton')[0];
-    if (nub !== undefined) {
-      nub.style.display = 'none';
-    }
+    if (nub !== undefined) nub.style.display = 'none';
     for (const result of validationResults) {
       if (result.valid === false) { valid = false; }
     }
@@ -193,7 +174,7 @@ export class Charity {
     this.updateCharity.charityManagers[0] = this.user.name;
     this.updateCharity.charityMngIds[0] = this.user._id;
     this.updateCharity.charityEmail = this.updateCharity.charityEmail.toLowerCase();
-    if (this.updateCharity.charityEmail !== '' && this.updateCharity.charityEmail !== null) {
+    if (this.updateCharity.charityEmail) {
       this.findUserByEmail('post');
     } else {
       this.postCharity();
@@ -206,7 +187,6 @@ export class Charity {
       body: json(this.updateCharity)
     })
       .then(() => {
-      // console.log(data);
         document.getElementById('charityDash').scrollIntoView();
         this.activate();
         this.createNewCharity();
@@ -234,7 +214,6 @@ export class Charity {
       method: 'delete'
     })
       .then(() => {
-      // console.log('your charity has been deleted');
         this.activate();
         this.createNewCharity();
       });
@@ -242,8 +221,7 @@ export class Charity {
 
   updateCharityFunct() {
     this.updateCharity.charityEmail = this.updateCharity.charityEmail.toLowerCase();
-    // console.log('this is the update charity email: ' + this.updateCharity.charityEmail);
-    if (this.updateCharity.charityEmail !== '' && this.updateCharity.charityEmail !== null) {
+    if (this.updateCharity.charityEmail) {
       this.findUserByEmail('put');
     } else {
       this.putCharity();
@@ -280,14 +258,8 @@ export class Charity {
       .then(response => response.json())
       .then((data) => {
         if (data.length !== 0) {
-        // console.log('the additional manager is: ' + JSON.stringify(data));
           const tempManager = data;
-          // console.log('this is the additional manager: ');
-          // console.log(tempManager[0].name);
-          // console.log(tempManager[0]._id);
-          // only do this if the array does not already contain the user id, else alert that the user is already a manager of this charity
           for (let l = 0; l < this.updateCharity.charityMngIds.length; l += 1) {
-            // console.log('checking for already a manager');
             if (this.updateCharity.charityMngIds.indexOf(tempManager[0]._id) > -1) {
               return alert('this user is already a manager of this charity');
             }

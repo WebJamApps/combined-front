@@ -3,17 +3,19 @@
   <div class="page-content">
     <div id="topSection">
       <h3 style="margin-top:10px; text-align:center" id="eventHeader">Events for ${voOpp.voCharityName}</h3>
-      <div if.bind="events.length === 0"><p style="text-align:center">There are no scheduled events</p></div>
+      <div if.bind="events.length === 0">
+        <p style="text-align:center">There are no scheduled events</p>
+      </div>
       <div if.bind="events.length !== 0" class="search-table-outer" style="position:relative;overflow-x:auto;">
         <table style="border-collapse: collapse;" aurelia-table="data.bind: events; display-data.bind: $displayData; filters.bind: filters" class="bookshelf">
           <thead>
             <tr>
               <th style="padding:8px; text-align:center">Action</th>
               <th style="padding:8px; min-width:150px" aut-sort="key: voName; default: asc">Name</th>
-              <th style="padding:8px; min-width:200px" >Description</th>
-              <th style="padding:8px; min-width:200px" >Location</th>
-              <th style="padding:8px; min-width:100px" >Start Date</th>
-              <th style="padding:8px; min-width:100px" >Start Time</th>
+              <th style="padding:8px; min-width:200px">Description</th>
+              <th style="padding:8px; min-width:200px">Location</th>
+              <th style="padding:8px; min-width:100px">Start Date</th>
+              <th style="padding:8px; min-width:100px">Start Time</th>
               <th style="padding:8px; min-width:100px">End Date</th>
               <th style="padding:8px; min-width:100px">End Time</th>
               <th style="padding:8px">People<br>Needed</th>
@@ -43,7 +45,10 @@
               </td>
               <td style="padding:8px" innerhtml.bind="event.voName"></td>
               <td style="padding:8px" innerhtml.bind="event.voDescription"></td>
-              <td style="padding:8px; min-width:100px"><p>${event.voStreet}</p><p>${event.voCity}, ${event.voState}&nbsp;&nbsp;${event.voZipCode}</p></td>
+              <td style="padding:8px; min-width:100px">
+                <p>${event.voStreet}</p>
+                <p>${event.voCity}, ${event.voState}&nbsp;&nbsp;${event.voZipCode}</p>
+              </td>
               <td style="padding:8px" innerhtml.bind="event.voStartDate"></td>
               <td style="padding:8px" innerhtml.bind="event.voStartTime"></td>
               <td style="padding:8px" innerhtml.bind="event.voEndDate"></td>
@@ -69,10 +74,10 @@
           <thead>
             <tr>
               <th style="padding:8px; min-width:150px" aut-sort="key: name; default: asc">Name</th>
-              <th style="padding:8px; min-width:200px" >Email</th>
-              <th style="padding:8px; min-width:200px" >Phone</th>
-              <th style="padding:8px; min-width:200px" >City</th>
-              <th style="padding:8px; min-width:200px" >Zipcode</th>
+              <th style="padding:8px; min-width:200px">Email</th>
+              <th style="padding:8px; min-width:200px">Phone</th>
+              <th style="padding:8px; min-width:200px">City</th>
+              <th style="padding:8px; min-width:200px">Zipcode</th>
             </tr>
           </thead>
           <tbody>
@@ -148,7 +153,7 @@
         <!-- <input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text" click.delegate="showTime('s-time')"> -->
         <!--<input id="s-time" value.two-way="voOpp.voStartTime & validate:controller2" type="text">-->
         <div>
-          <input style="outline:0;" click.delegate="clickaChoo()" value.two-way="voOpp.voStartTime & validate:controller2" type="text">
+          <input style="outline:0;" click.delegate="clickaChooAndChaa('start')" value.two-way="voOpp.voStartTime & validate:controller2" type="text">
         </div>
         <div style="display:none;" id="start">
           <div>
@@ -159,7 +164,7 @@
         <!-- <input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text" click.delegate="showTime('e-time')"> -->
         <!--<input id="e-time" value.two-way="voOpp.voEndTime & validate:controller2" type="text">-->
         <div>
-          <input style="outline:0;" click.delegate="clickaCha()" value.two-way="voOpp.voEndTime & validate:controller2" type="text">
+          <input style="outline:0;" click.delegate="clickaChooAndChaa('end')" value.two-way="voOpp.voEndTime & validate:controller2" type="text">
         </div>
         <div style="display:none;" id="end">
           <!--<input hidden="true" id="e-time" value.two-way="" type="time">-->

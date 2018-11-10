@@ -1,36 +1,110 @@
-import { Developer } from '../../src/dashboard-child-routes/developer';
+import csvjson from 'csvjson';
+import { Validator } from 'aurelia-validation';
 import { App } from '../../src/app';
 import { AuthStub, HttpMock, AppStateStub } from './commons';
+import { Developer } from '../../src/dashboard-child-routes/developer';
 
-class HttpMockDev extends HttpMock {
-  fetch(url, obj) {
-    // console.log(url);
-    this.headers.url = url;
-    this.headers.method = obj ? obj.method : 'GET';
-    if (obj && obj.method === 'put') {
-      this.user = obj.body;
-    }
-    this.status = 200;
-    return Promise.resolve({
-      Headers: this.headers,
-      json: () => Promise.resolve([])
-    });
+class VCMock {
+  createForCurrentScope() {
+    return { validateTrigger: null };
   }
 }
 
-describe('the Developer Module', () => {
-  let developer, auth, app;
+class ValidatorMock extends Validator {
+  constructor(a, b) {
+    super();
+    this.a = a;
+    this.b = b;
+  }
+
+  validateObject() {
+    return Promise.resolve([{ valid: true }]);
+  }
+
+  validateProperty() {
+    return Promise.resolve({});
+  }
+}
+
+describe('the develper module', () => {
+  let developer, app1, http, vc, val, auth, reader;
+  global.CSVFilePath = { files: ['title author url performer  category', 'sample.txt'] };
+
   beforeEach(() => {
+    reader = new FileReader();
     auth = new AuthStub();
     auth.setToken({ sub: '1' });
-    app = new App(auth, new HttpMockDev());
-    app.activate();
-    developer = new Developer(app);
+    http = new HttpMock();
+    app1 = new App(auth, http);
+    vc = new VCMock();
+    val = new ValidatorMock();
+    app1.activate();
+    developer = new Developer(app1, reader, vc, val);
     developer.app.appState = new AppStateStub();
+    developer.CSVFilePath = { files: ['title author url performer  category'] };
   });
 
-  it('activates', (done) => {
+  it('should activate', (done) => {
     developer.activate();
     done();
+  });
+
+  it('should validate', (done) => {
+    document.body.innerHTML = '<div id="createMediaButton"></div>';
+    developer.newSong = {};
+    developer.newSong.category = 'original';
+    developer.validate();
+    developer.updateCanSubmit([{ valid: false }]);
+    done();
+  });
+
+  it('validates the import txt file', (done) => {
+    let valid = true;
+    document.body.innerHTML = '<div id="createMediaButton"><input id="CSVFilePath" type="file"/><button id="deleteCreateButton">'
+    + '</button><p class="errorMessage"></p></div>';
+    valid = developer.utils.textFileValidate();
+    expect(valid).toBe(false);
+    done();
+  });
+
+  it('should confirm 200 https status after createSong is run', (done) => {
+    developer.createBook();
+    expect(http.status).toBe(200);
+    done();
+  });
+
+  it('should raise a file reader error', (done) => {
+    document.body.innerHTML = '<div id="createMediaButton"><p class="errorMessage"></p>'
+    + '<input id="CSVFilePath" type="file"/><button id="deleteCreateButton"></div>';
+    window.CSVFilePath = { files: [new Blob()] };
+    const error = new Event('error');
+    const load = new Event('load');
+    developer.createBooksFromCSV();
+    // if dashbook.createBooksFromCSV is called, it should called the makeLotaBooks that
+    // places a http call and HttpMock will respond to it and also change the status.
+    developer.reader.dispatchEvent(error);
+    developer.reader.dispatchEvent(load);
+    setTimeout(() => {
+      // expect(http.status).toBe(200);
+      done();
+    }, 2001);
+  });
+
+  it('should delete and Create', (done) => {
+    developer.deleteBooks();
+    developer.deleteCreateBooks();
+    done();
+  });
+  it('catches error on delete all', async () => {
+    developer.app.httpClient.fetch = function fetch() { return Promise.reject(new Error('bad')); };
+    try {
+      await developer.deleteBooks();
+    } catch (e) { expect(e.message).toBe('bad'); }
+  });
+  it('catches error on deleteCreate', async () => {
+    developer.app.httpClient.fetch = function fetch() { return Promise.reject(new Error('bad')); };
+    try {
+      await developer.deleteCreateBooks();
+    } catch (e) { expect(e.message).toBe('bad'); }
   });
 });

@@ -29,7 +29,7 @@ module.exports = ({
   production, server, extractCss, coverage, analyze
 } = {}) => ({
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.js', '.jsx'],
     modules: [srcDir, 'node_modules'],
   },
   entry: {
@@ -73,7 +73,7 @@ module.exports = ({
       },
       { test: /\.html$/i, loader: 'html-loader' },
       {
-        test: /\.js$/i,
+        test: /\.jsx?$/i,
         loader: 'babel-loader',
         exclude: nodeModulesDir,
         options: coverage ? { sourceMap: 'inline', plugins: ['istanbul'] } : {},

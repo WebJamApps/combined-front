@@ -25,7 +25,7 @@ class Login_ {
     + '<div class="loginerror" style="color:red"></div>'
     + '<div><button style="display:none; margin-bottom:-20px; margin-left:10px" type="button" class="loginbutton">Login</button>'
     + '<button style="display:none;margin-top:34px; margin-left:10px" class="resetpass" type="button">Reset Password</button></div></div></form>'
-    + '<button class="nevermind" style="margin-left:27px;margin-top:19px; margin-bottom:15px" type="button">Cancel</button></div></div></form>';
+    + '<button class="nevermind" style="margin-left:70%;margin-top:19px; margin-bottom:15px" type="button">Cancel</button></div></div></form>';
     const home = document.getElementsByClassName('home');
     home[0].insertBefore(loginform, home[0].childNodes[0]);
   }
@@ -69,7 +69,6 @@ class Login_ {
   validateLogin(evt) {
     const appName = evt.target.appName;
     const buttonsErrors = evt.target.buttonsErrors;
-    // const useridValue = document.getElementsByClassName('userid')[0].value;
     const validpass = document.getElementsByClassName('loginpass')[0].checkValidity();
     const emailValue = document.getElementsByClassName('loginemail')[0].value;
     let validemail = document.getElementsByClassName('loginemail')[0].checkValidity(), message = '';
@@ -106,7 +105,6 @@ class Login_ {
   }
 
   resetpass(evt) {
-    // let appName = evt.target.appName;
     const fetchClient = evt.target.fetchClient;
     const runFetch = evt.target.runFetch;
 
@@ -126,18 +124,16 @@ class Login_ {
     if (process.env.NODE_ENV !== 'production') {
       backend = process.env.BackendUrl;
     }
-    return runFetch(fetchClient, backend, '/auth/resetpass', fetchData, null, null, loginEmail);
+    return runFetch(fetchClient, backend, '/user/auth/resetpswd', fetchData, null, null, loginEmail);
   }
 
   logMeIn(evt) {
-    // console.log('going to log you in');
     const fetchClient = evt.target.fetchClient;
     const runFetch = evt.target.runFetch;
     const appName = evt.target.appName;
     const generateSession = evt.target.generateSession;
     let backend = '', emailValue = '';
     const passwordValue = document.getElementsByClassName('loginpass')[0].value;
-    // useridValue = document.getElementsByClassName('userid')[0].value;
 
     emailValue = document.getElementsByClassName('loginemail')[0].value.toLowerCase();
 
@@ -154,7 +150,7 @@ class Login_ {
     if (process.env.NODE_ENV !== 'production') {
       backend = process.env.BackendUrl;
     }
-    return runFetch(fetchClient, backend, '/auth/login', fetchData, generateSession, appName, null);
+    return runFetch(fetchClient, backend, '/user/auth/login', fetchData, generateSession, appName, null);
   }
 
   runFetch(fetchClient, url, route, fetchData) {
@@ -164,8 +160,11 @@ class Login_ {
     return fetchClient(url + route, fetchData)
       .then(response => response.json())
       .then((data) => {
-        let front = window.location.href;
-        front = front.replace('/login', '');
+        let feurl = 'http://localhost:9000';
+        /* istanbul ignore if */
+        if (process.env.frontURL !== undefined) {
+          feurl = process.env.frontURL;
+        }
         if (data.token !== undefined) {
           localStorage.setItem('aurelia_id_token', data.token);
           // localStorage.setItem('token', data.token);
@@ -173,7 +172,7 @@ class Login_ {
           loginform1[0].style.display = 'none';
           /* istanbul ignore if */
           if (process.env.NODE_ENV !== 'test') {
-            window.location.assign(`${front}/dashboard`);
+            window.location.assign(`${feurl}/dashboard`);
           }
         }
         if (data.message) {

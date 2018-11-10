@@ -37,14 +37,17 @@ describe('the App module', () => {
         ok();
         return this;
       }
+
       useStandardConfiguration() {
         ok();
         return this;
       }
+
       withBaseUrl() {
         ok();
         return this;
       }
+
       withInterceptor(token) {
         expect(token).toBe(app1.auth.tokenInterceptor);
         ok();
@@ -52,39 +55,39 @@ describe('the App module', () => {
       }
     })());
   });
-  it('scrolls page to top after route changes', (done) => {
-    document.body.innerHTML = '<div class="material-header"></div>';
-    app1.activate();
-    let router, config = {
-      fallbackRoute() {},
-      map() {},
-      title: '',
-      options: { pushstate: '', root: '' },
-      addPipelineStep() {},
-      addPostRenderStep(funObj) { funObj.run({ config: { settings: { noScrollToTop: false } } }, () => {}); }
-    };
-    app2.configureRouter(config, router);
-    document.body.innerHTML = '';
-    app2.configureRouter(config, router);
-    config = {
-      fallbackRoute() {},
-      map() {},
-      title: '',
-      options: { pushstate: '', root: '' },
-      addPipelineStep() {},
-      addPostRenderStep(funObj) { funObj.run({ config: { settings: { noScrollToTop: true } } }, () => {}); }
-    };
-    app2.configureRouter(config, router);
-    done();
-  });
-  it('configures the router', (done) => {
-    const configStub = {
-      options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}
-    };
-    app1.configureRouter(configStub, RouterStub);
-    expect(app1.router).toBeDefined();
-    done();
-  });
+  // it('scrolls page to top after route changes', (done) => {
+  //   document.body.innerHTML = '<div class="material-header"></div>';
+  //   app1.activate();
+  //   let router, config = {
+  //     fallbackRoute() {},
+  //     map() {},
+  //     title: '',
+  //     options: { pushstate: '', root: '' },
+  //     addPipelineStep() {},
+  //     addPostRenderStep(funObj) { funObj.run({ config: { settings: { noScrollToTop: false } } }, () => {}); }
+  //   };
+  //   app2.configureRouter(config, router);
+  //   document.body.innerHTML = '';
+  //   app2.configureRouter(config, router);
+  //   config = {
+  //     fallbackRoute() {},
+  //     map() {},
+  //     title: '',
+  //     options: { pushstate: '', root: '' },
+  //     addPipelineStep() {},
+  //     addPostRenderStep(funObj) { funObj.run({ config: { settings: { noScrollToTop: true } } }, () => {}); }
+  //   };
+  //   app2.configureRouter(config, router);
+  //   done();
+  // });
+  // it('configures the router', (done) => {
+  //   const configStub = {
+  //     options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}
+  //   };
+  //   app1.configureRouter(configStub, RouterStub);
+  //   expect(app1.router).toBeDefined();
+  //   done();
+  // });
 
   it('updates by id', testAsync(async () => {
     await app1.updateById('/volopp/', '123', {});
@@ -116,15 +119,15 @@ describe('the App module', () => {
     expect(app1.authenticated).toBe(false);
   }));
 
-  it('gets the current route', testAsync(async () => {
-    await app1.activate();
-    const configStub = {
-      options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}
-    };
-    await app1.configureRouter(configStub, RouterStub);
-    const route = await app1.currentRoute;
-    expect(route).toBe(route);
-  }));
+  // it('gets the current route', testAsync(async () => {
+  //   await app1.activate();
+  //   const configStub = {
+  //     options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}
+  //   };
+  //   await app1.configureRouter(configStub, RouterStub);
+  //   const route = await app1.currentRoute;
+  //   expect(route).toBe(route);
+  // }));
 
   it('gets the current fragment', (done) => {
     app1.router = new RouterStub();

@@ -5,6 +5,8 @@ import {
 } from './commons';
 import { App } from '../../src/app';
 
+const sinon = require('sinon');
+
 function testAsync(runAsync) {
   return (done) => {
     runAsync().then(done, (e) => { fail(e); done(); });
@@ -12,13 +14,12 @@ function testAsync(runAsync) {
 }
 class VCMock {
   createForCurrentScope() {
-    // console.log(validator);
     return { validateTrigger: null };
   }
 }
 class HttpStub extends HttpMock {
   fetch(url) {
-    if (url === '/auth/changeemail') {
+    if (url === '/user/auth/changeemail') {
       return Promise.resolve({
         json: () => ({ message: 'in the jungle' })
       });
@@ -30,7 +31,7 @@ class HttpStub extends HttpMock {
 }
 class HttpStub2 extends HttpMock {
   fetch(url) {
-    if (url === '/auth/changeemail') {
+    if (url === '/user/auth/changeemail') {
       return Promise.resolve({
         json: () => ({ email: 'yo@yo.com' })
       });
@@ -46,12 +47,12 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
+
   validateObject() {
-    // console.log(rules);
     return Promise.resolve([{ name: 'john', valid: true }]);
   }
+
   validateProperty() {
-    // console.log(rules);
     return Promise.resolve({});
   }
 }
@@ -89,7 +90,6 @@ describe('the UserAccount Module', () => {
   });
   it('should activate and get the user type from appState', testAsync(async () => {
     ua.app.appState.getUser = function getUser() {
-      // console.log('did I call this?');
       return new Promise((resolve) => {
         resolve({ userType: 'monster', email: 'yo@yo.com' });
       });
@@ -198,6 +198,21 @@ describe('the UserAccount Module', () => {
     await ua.checkScheduled();
     expect(ua.canChangeUserType).toBe(false);
   }));
+  it('allows change user type when no books have been checked out', (done) => {
+    ua.uid = '123';
+    ua.changeUserType = true;
+    ua.events2 = [{ voPeopleScheduled: ['123'], past: true }];
+    ua.changeReasons = '';
+    ua.user = {};
+    ua.user.userType = 'Reader';
+    const bMock = sinon.mock(ua.app.httpClient);
+    const books = { json() { return Promise.resolve([]); } };
+    bMock.expects('fetch').resolves(books);
+    ua.checkReader();
+    expect(ua.canChangeUserType).toBe(false);
+    bMock.restore();
+    done();
+  });
   it('does not allow change user type and we already have the reason', testAsync(async () => {
     ua.uid = '123';
     ua.events2 = [{ voPeopleScheduled: ['123'], past: false }];

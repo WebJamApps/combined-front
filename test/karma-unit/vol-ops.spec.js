@@ -23,12 +23,14 @@ class ValidatorMock extends Validator {
     this.a = a;
     this.b = b;
   }
+
   validateObject() {
     // console.log(rules);
     return Promise.resolve([{
       rule: Object, object: Object, propertyName: 'voStartTime', valid: true, message: ''
     }]);
   }
+
   validateProperty() {
     // console.log(rules);
     return Promise.resolve({});
@@ -41,6 +43,7 @@ class ValidatorMockFalse extends Validator {
     this.a = a;
     this.b = b;
   }
+
   validateObject() {
     // console.log(rules);
     // console.log('obj');
@@ -49,6 +52,7 @@ class ValidatorMockFalse extends Validator {
       rule: Object, object: Object, propertyName: 'voStartTime', valid: false, message: ''
     }]);
   }
+
   validateProperty() {
     // console.log(rules);
     return Promise.resolve({});
@@ -142,6 +146,7 @@ describe('the Volunteer Opps Module', () => {
     volops4 = new VolunteerOpps(app4, new VCMock(), new ValidatorMock());
     volops4.activate();
     volops4.app.appState = new AppStateStub();
+    spyOn(volops, 'clickaChooAndChaa');
   });
 
   it('activates and there are events and runs the show time', (done) => {
@@ -618,24 +623,6 @@ describe('the Volunteer Opps Module', () => {
     done();
   });
 
-  it('the submit button is not displayed when the form is not valid', (done) => {
-    // volops2.activate();
-    document.body.innerHTML = '<button class="updateButton"></button>';
-    volops2.charityName = 'OHAF';
-    volops2.voOpp = {
-      voWorkTypes: ['other'],
-      voCharityName: '',
-      voStartDate: '2017-12-12',
-      voEndDate: '2017-12-12',
-      voTalentTypes: ['shoveling', 'sweeping', 'other'],
-      voTalentTypeOther: 'scrubbing',
-      _id: '2222'
-    };
-    volops2.validate2();
-    expect(volops2.charityName === 'OHAF').toBeTruthy();
-    done();
-  });
-
   it('events must have at least one volunteer', (done) => {
     // volops2.activate();
     document.body.innerHTML = '<button class="updateButton"></button>';
@@ -659,13 +646,23 @@ describe('the Volunteer Opps Module', () => {
 
   it('should click a choo', (done) => {
     document.body.innerHTML = '<div id="start" horizontal-align="right" vertical-align="top" style="margin-top:25px;"><input /></div>';
-    volops.clickaChoo();
+    volops.clickaChooAndChaa('start');
+    expect(document.getElementById('start').style.display).toBeFalsy();
+    done();
+  });
+
+  it('should show the time picker input is open', (done) => {
+    document.body.innerHTML = '<div id="start" horizontal-align="right" vertical-align="top" style="margin-top:25px;"><input /></div>';
+    volops.clickaChooAndChaa('start');
+    expect(document.querySelector('#start input').style.display).toBe('');
+    expect(volops.clickaChooAndChaa).toHaveBeenCalledWith('start');
     done();
   });
 
   it('should click a cha', (done) => {
     document.body.innerHTML = '<div id="end" horizontal-align="right" vertical-align="top" style="margin-top:25px;"><input /></div>';
-    volops.clickaCha();
+    volops.clickaChooAndChaa('end');
+    expect(document.getElementById('end').style.display).toBeFalsy();
     done();
   });
 });
