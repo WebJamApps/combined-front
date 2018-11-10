@@ -27,6 +27,8 @@
     "object-curly-newline": "off",
     "prefer-destructuring": 0,
     "no-param-reassign": [0, "never"],
+    "jest/valid-expect-in-promise": "off",
+    " jest/no-jasmine-globals": "off",
     "import/prefer-default-export": [0, "never"],
     "max-len": ["error", {
       "code": 150
