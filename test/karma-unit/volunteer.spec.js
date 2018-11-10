@@ -1,19 +1,9 @@
-import {
-  Volunteer
-} from '../../src/dashboard-child-routes/volunteer';
-import {
-  App
-} from '../../src/app';
-import {
-  AuthStub,
-  HttpMock,
-  AppStateStub,
-  RouterStub
-} from './commons';
-import {
-  formatDate,
-  markPast
-} from '../../src/commons/utils';
+import { Volunteer } from '../../src/dashboard-child-routes/volunteer';
+import { App } from '../../src/app';
+import { AuthStub, HttpMock, AppStateStub, RouterStub } from './commons';
+
+const commonUtils = require('../../src/commons/utils');
+
 
 class HttpMockEvent extends HttpMock {
   fetch(url, obj) {
@@ -476,7 +466,7 @@ describe('the Volunteer Module', () => {
       voStatus: 'cancel',
       voPeopleScheduled: ['12']
     }];
-    await markPast(volunteer.events, formatDate);
+    await commonUtils.markPast(volunteer.events, commonUtils.formatDate);
     expect(volunteer.events[0].past).toBe(true);
   });
 
@@ -494,7 +484,7 @@ describe('the Volunteer Module', () => {
       voStatus: 'cancel',
       voPeopleScheduled: ['12']
     }];
-    await markPast(volunteer.events, formatDate);
+    await commonUtils.markPast(volunteer.events, commonUtils.formatDate);
     expect(volunteer.events[0].past).toBe(false);
   });
 
@@ -512,7 +502,7 @@ describe('the Volunteer Module', () => {
     date.setMonth(0);
     date.setDate(1);
     date.setFullYear(2017);
-    const newDate = formatDate(date);
+    const newDate = commonUtils.formatDate(date);
     expect(newDate).toBe('20170101');
     done();
   });

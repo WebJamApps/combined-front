@@ -2,7 +2,8 @@ import { Validator } from 'aurelia-validation';
 import { VolunteerOpps } from '../../src/dashboard-child-routes/vol-ops';
 import { App } from '../../src/app';
 import { AuthStub, HttpMock, AppStateStub } from './commons';
-import { formatDate, markPast } from '../../src/commons/utils';
+
+const commonUtils = require('../../src/commons/utils');
 
 function testAsync(runAsync) {
   return (done) => {
@@ -226,7 +227,7 @@ describe('the Volunteer Opps Module', () => {
       voStatus: 'cancel',
       voPeopleScheduled: ['12']
     }];
-    markPast(volops4.events, formatDate);
+    commonUtils.markPast(volops4.events, commonUtils.formatDate);
     expect(volops4.events[0].past).toBe(true);
   }));
 
@@ -244,7 +245,7 @@ describe('the Volunteer Opps Module', () => {
       voStatus: 'cancel',
       voPeopleScheduled: ['12']
     }];
-    markPast(volops4.events, formatDate);
+    commonUtils.markPast(volops4.events, commonUtils.formatDate);
     expect(volops4.events[0].past).toBe(false);
   }));
 
@@ -253,7 +254,7 @@ describe('the Volunteer Opps Module', () => {
     date.setMonth(11);
     date.setDate(12);
     date.setFullYear(2017);
-    const newDate = formatDate(date);
+    const newDate = commonUtils.formatDate(date);
     expect(newDate).toBe('20171212');
     done();
   });

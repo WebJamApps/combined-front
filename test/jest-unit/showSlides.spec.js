@@ -1,6 +1,6 @@
 const showSlides = require('../../src/commons/showSlides');
 
-describe('the showSlides module', async () => {
+describe('the showSlides module', () => {
   it('does nothing when id is not found', async () => {
     const doc = {
       getElementById() {
