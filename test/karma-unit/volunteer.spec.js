@@ -1,15 +1,6 @@
-import {
-  Volunteer
-} from '../../src/dashboard-child-routes/volunteer';
-import {
-  App
-} from '../../src/app';
-import {
-  AuthStub,
-  HttpMock,
-  AppStateStub,
-  RouterStub
-} from './commons';
+import { Volunteer } from '../../src/dashboard-child-routes/volunteer';
+import { App } from '../../src/app';
+import { AuthStub, HttpMock, AppStateStub, RouterStub } from './commons';
 
 const commonUtils = require('../../src/commons/utils');
 
