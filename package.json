@@ -9,7 +9,7 @@
   },
   "author": "HandlersAndKickers",
   "engines": {
-    "node": ">=10.13.0"
+    "node": "10.13.0"
   },
   "files": [
     "webpack.config.js",
@@ -52,7 +52,7 @@
     "aurelia-polyfills": "^1.3.0",
     "aurelia-router": "latest",
     "aurelia-templating": "latest",
-    "aurelia-validation": "latest",
+    "aurelia-validation": "1.2.3",
     "aurelia-webpack-plugin": "latest",
     "autoprefixer": "^8.1.0",
     "babel-core": "^7.0.0-bridge.0",
@@ -72,6 +72,7 @@
     "hammerjs": "^2.0.8",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.0.6",
+    "jasmine-spec-reporter": "latest",
     "jquery": "^3.2.1",
     "material-ui-time-picker": "latest",
     "mini-css-extract-plugin": "^0.4.0",
@@ -82,7 +83,6 @@
     "postcss": "^6.0.14",
     "postcss-loader": "latest",
     "postcss-sass": "^0.2.0",
-    "protractor": "^5.4.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
     "react-player": "^1.6.4",
@@ -124,7 +124,6 @@
     "istanbul-combine": "latest",
     "istanbul-instrumenter-loader": "latest",
     "jasmine-core": "latest",
-    "jasmine-spec-reporter": "latest",
     "jest": "latest",
     "jest-cli": "latest",
     "jest-jasmine2": "latest",
@@ -139,6 +138,7 @@
     "karma-jasmine": "latest",
     "karma-mocha-reporter": "latest",
     "karma-webpack": "^4.0.0-rc.2",
+    "protractor": "^5.4.1",
     "sinon": "latest",
     "stylelint": "latest",
     "stylelint-config-standard": "latest",
