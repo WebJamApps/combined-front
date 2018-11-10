@@ -227,7 +227,7 @@ describe('the Volunteer Opps Module', () => {
       voStatus: 'cancel',
       voPeopleScheduled: ['12']
     }];
-    commonUtils.commonUtils.markPast(volops4.events, commonUtils.formatDate);
+    commonUtils.markPast(volops4.events, commonUtils.formatDate);
     expect(volops4.events[0].past).toBe(true);
   }));
 
