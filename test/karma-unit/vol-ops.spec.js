@@ -382,7 +382,12 @@ describe('the Volunteer Opps Module', () => {
 
   it('it creates a new event', (done) => {
     // volops.activate();
-    document.body.innerHTML = '<div id="eventHeader"></div>';
+    volops.user = {
+      name: 'me',
+      email: 'me@me.org',
+      userPhone: '3333333333'
+    };
+    document.body.innerHTML = '<div id="eventHeader"><div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text"></div>';
     volops.charityName = 'OHAF';
     volops.voOpp = {
       voWorkTypes: ['other'],
@@ -393,6 +398,8 @@ describe('the Volunteer Opps Module', () => {
       voTalentTypes: ['shoveling', 'sweeping', 'other'],
       voTalentTypeOther: 'scrubbing'
     };
+    volops.setupValidation2 = function setupValidation2() {};
+    volops.controller2 = { validate: () => {} };
     volops.scheduleEvent();
     expect(volops.voOpp.voStatus).toBe('new');
     done();
