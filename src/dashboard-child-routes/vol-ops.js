@@ -128,7 +128,7 @@ export class VolunteerOpps {
     this.voOpp.voStatus = 'new';
     this.app.httpClient.fetch('/volopp/create', { method: 'post', body: json(this.voOpp) })
       .then(() => {
-        this.voOpp = {};
+        this.showNewEvent();
         document.getElementById('eventHeader').scrollIntoView();
         this.activate();
       });
@@ -263,6 +263,7 @@ export class VolunteerOpps {
       .ensure('voStartTime').required().withMessage('Event Start time is required')
       .ensure('voEndTime').required().withMessage('Event End time is required')
       .satisfies(val => (this.voOpp.voEndDate > this.voOpp.voStartDate || commonUtils.compareTime(val, this.voOpp.voStartTime)))
+      .withMessage('End time must be after start time')
       .ensure('voStartDate').required().withMessage('Event Start Date is required')
       .ensure('voEndDate').required().withMessage('Event End Date is required')
       .ensure('voZipCode').required().withMessage('5-digit Zipcode is required').matches(/\b\d{5}\b/)
