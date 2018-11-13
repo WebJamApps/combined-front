@@ -48,14 +48,14 @@ exports.compareTime = function compareTime(a, b) {
   const [bHour, bRest] = b.split(':');
   const [aMin, aZone] = aRest.split(' ');
   const [bMin, bZone] = bRest.split(' ');
-
-  if (aZone > bZone) return true;
+  let value = null;
+  if (aZone > bZone) value = true;
   if (aZone === bZone)
-    if (parseInt(aHour, 0) > parseInt(bHour, 0)) return true;
-    else if (parseInt(aHour, 0) < parseInt(bHour, 0)) return false;
-    else if (parseInt(aMin, 0) > parseInt(bMin, 0)) return true;
-    else if (parseInt(aMin, 0) < parseInt(bMin, 0)) return false;
-  return false;
+    if (parseInt(aHour, 0) > parseInt(bHour, 0)) value = true;
+    else if (parseInt(aHour, 0) < parseInt(bHour, 0)) value = false;
+    else if (parseInt(aMin, 0) > parseInt(bMin, 0)) value = true;
+    else if (parseInt(aMin, 0) < parseInt(bMin, 0)) value = false;
+  return value;
 };
 
 exports.markPast = function markPast(myEvents, formatDate) {
