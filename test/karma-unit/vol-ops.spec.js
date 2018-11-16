@@ -598,9 +598,8 @@ describe('the Volunteer Opps Module', () => {
       _id: '2222'
     };
     volops.validType2 = true;
-    const validationResults = [{ result: { valid: true } }];
-    const val = volops.updateCanSubmit2(validationResults);
-    expect(val).toBeTruthy();
+    const val = volops.updateCanSubmit2([{ valid: false }]);
+    expect(val).toBeFalsy();
     done();
   });
 
@@ -620,8 +619,7 @@ describe('the Volunteer Opps Module', () => {
     volops.validType2 = true;
     volops.updateEvent = true;
     volops.counter = 2;
-    const validationResults = [{ result: { valid: true } }];
-    volops.updateCanSubmit2(validationResults);
+    volops.updateCanSubmit2([{ valid: true }]);
     expect(document.getElementsByClassName('updateButton')[0].style.display).toBe('block');
     done();
   });
