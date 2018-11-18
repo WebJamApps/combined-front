@@ -1,5 +1,9 @@
 <template>
+  <require from="./components/pic-slider"></require>
   <div class="page-content">
+    <div>
+      <picture-slider data.bind="slides"></picture-slider>
+    </div>
     <div if.bind="widescreen">
       <div class="container-fluid">
         <div class="row">
