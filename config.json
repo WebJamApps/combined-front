@@ -1,5 +1,6 @@
 {
-  "songs": [{
+  "songs": [
+    {
       "title": "Down In The River - Josh & Maria Sherman",
       "category": "mission",
       "url": "DITR.mp3",
@@ -112,5 +113,19 @@
       "url": "https://soundcloud.com/joshandmariamusic/good-enough",
       "id": "28ru9weis2309urihw9q3rwy7fuih"
     }
+  ],
+  "slides": [
+    "../static/imgs/ohaf/slideshow2.png",
+    "../static/imgs/ohaf/slideshow3.png",
+    "../static/imgs/ohaf/slideshow4.png",
+    "../static/imgs/ohaf/slideshow5.png",
+    "../static/imgs/ohaf/slideshow6.png",
+    "../static/imgs/ohaf/slideshow7.png",
+    "../static/imgs/ohaf/slideshow8.png",
+    "../static/imgs/ohaf/slideshow9.png",
+    "../static/imgs/ohaf/slideshow10.png",
+    "../static/imgs/ohaf/slideshow11.png",
+    "../static/imgs/ohaf/slideshow12.png",
+    "../static/imgs/ohaf/slideshow1.png"
   ]
 }
