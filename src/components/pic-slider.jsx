@@ -1,7 +1,7 @@
 import { noView, inject, customElement, bindable } from 'aurelia-framework';
+import { Slideshow } from "react-slidez/src";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Slideshow from 'react-slidez'
 
 @noView()
 @inject(Element)
@@ -12,11 +12,20 @@ export class HelloWorld {
     this.element = element;
   }
 
+  get html() {
+    return (
+      <div>
+        <Slideshow slides={this.data} />
+      </div>
+    )
+  }
+
   render() {
-    ReactDOM.render(<Slideshow slides={this.data} />, this.element);
+    ReactDOM.render(this.html, this.element);
   }
 
   bind() {
+    console.log(this.data);
     this.render();
   }
 }
