@@ -1,7 +1,9 @@
 import { noView, inject, customElement, bindable } from 'aurelia-framework';
-import { Slideshow } from "react-slidez/src";
+import Slider from 'react-slick';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 @noView()
 @inject(Element)
@@ -10,13 +12,23 @@ import ReactDOM from 'react-dom';
 export class HelloWorld {
   constructor(element) {
     this.element = element;
+    this.settings = {
+      autoplay: true,
+      autoplaySpeed: 2000,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
   }
 
   get html() {
     return (
-      <div>
-        <Slideshow slides={this.data} />
-      </div>
+      <Slider {...this.settings}>
+        {this.data.map((data, key) => {
+          return <div key={key}><img src={data}/></div>
+        })}
+      </Slider>
     )
   }
 
@@ -25,7 +37,6 @@ export class HelloWorld {
   }
 
   bind() {
-    console.log(this.data);
     this.render();
   }
 }
