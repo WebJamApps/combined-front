@@ -1,9 +1,6 @@
 <template>
   <require from="./components/pic-slider"></require>
   <div class="page-content">
-    <div>
-      <picture-slider data.bind="slides"></picture-slider>
-    </div>
     <div if.bind="widescreen">
       <div class="container-fluid">
         <div class="row">
@@ -28,11 +25,10 @@
             </p>
           </div>
           <!-- The dimensions of the images are 950x300 -->
-          <div class="col-md-6" style="padding:1px">
-            <div id="musicSlide1">
-              <img alt="photo2" src="../static/imgs/ohaf/slideshow1.png">
+          <div class="col-md-6 pt-3">
+            <div>
+              <picture-slider data.bind="slides"></picture-slider>
             </div>
-            <compose view-model="./commons/slideshow" containerless model.bind="slideshow_data"></compose>
           </div>
         </div>
       </div>
