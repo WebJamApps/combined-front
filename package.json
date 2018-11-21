@@ -123,6 +123,7 @@
     "eslint-plugin-react": "latest",
     "eslint-plugin-security": "latest",
     "htmlhint": "latest",
+    "identity-obj-proxy": "^3.0.0",
     "istanbul-combine": "latest",
     "istanbul-instrumenter-loader": "latest",
     "jasmine-core": "latest",
