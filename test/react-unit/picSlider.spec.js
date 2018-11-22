@@ -3,6 +3,7 @@ import { PicSlider } from '../../src/components/pic-slider';
 
 describe('the App module', () => {
   let ps;
+
   beforeEach(() => {
     document.body.innerHTML = '<div id="renderer" class="swipe-area"></div>';
     ps = new PicSlider();
@@ -15,8 +16,10 @@ describe('the App module', () => {
     ];
     ps.element = document.getElementById('renderer');
   });
-  it('should bind empty', (done) => {
-    // ps.bind();
+
+  it('get html text', (done) => {
+    const html = ps.html();
+    expect(typeof html).toBe('object');
     done();
   });
 });
