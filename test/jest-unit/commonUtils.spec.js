@@ -68,10 +68,10 @@ describe('the common utils', () => {
     fMock.restore();
   });
   it('should filter selected module', () => {
-    utils.filterSelected({selectedFilter: [], filters: [{value: '', filterby: ''}]});
-    utils.filterSelected({selectedFilter: ['hello', 'sir'], filters: [{value: '', filterby: 'hello'}, {value: '', filterby: 'syre'}]})
+    utils.filterSelected({ selectedFilter: [], filters: [{ value: '', filterby: '' }] });
+    utils.filterSelected({ selectedFilter: ['hello', 'sir'], filters: [{ value: '', filterby: 'hello' }, { value: '', filterby: 'syre' }] });
   });
   it('should mark filter dropdown', () => {
-    utils.makeFilterDropdown([], [{attrib: 'hello'}], 'attrib');
-  })
+    utils.makeFilterDropdown([], [{ attrib: 'hello' }], 'attrib');
+  });
 });
