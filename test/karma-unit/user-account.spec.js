@@ -159,8 +159,13 @@ describe('the UserAccount Module', () => {
   });
   it('checks for scheduled events by a volunteer user', (done) => {
     ua.user.userType = 'Volunteer';
-    ua.fetchAllEvents = function fetchAllEvents() { return Promise.resolve(); };
+    ua.app.httpClient.fetch = function fetch() {
+      return Promise.resolve({
+        json: () => Promise.resolve([])
+      });
+    };
     ua.checkChangeUserType();
+    expect(ua.events2 instanceof Array).toBeTruthy();
     done();
   });
   it('should allow Charity user to change their user type if they have no charities', (done) => {
@@ -206,7 +211,7 @@ describe('the UserAccount Module', () => {
     ua.user = {};
     ua.user.userType = 'Reader';
     const bMock = sinon.mock(ua.app.httpClient);
-    const books = { json() { return Promise.resolve([]); } };
+    const books = { json() { return Promise.resolve(['books']); } };
     bMock.expects('fetch').resolves(books);
     ua.checkReader();
     expect(ua.canChangeUserType).toBe(true);

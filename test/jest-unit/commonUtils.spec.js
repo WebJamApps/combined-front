@@ -67,4 +67,21 @@ describe('the common utils', () => {
     } catch (e) { throw e; }
     fMock.restore();
   });
+  it('should filter selected module', () => {
+    utils.filterSelected({ selectedFilter: [], filters: [{ value: '', filterby: '' }] });
+    utils.filterSelected({ selectedFilter: ['hello', 'sir'], filters: [{ value: '', filterby: 'hello' }, { value: '', filterby: 'syre' }] });
+  });
+  it('should mark filter dropdown', () => {
+    utils.makeFilterDropdown([], [{ attrib: 'hello' }], 'attrib');
+  });
+  // it('should validate text file', () => {
+  //   sinon.mock('CSVFilePath');
+  //   document.body.innerHTML = '<div class="errorMessage"></div><div id="deleteCreateButton"></div>';
+  //   utils.textFileValidate();
+  // });
+  it('should show checkboxes', () => {
+    document.body.innerHTML = '<div class="errorMessage"></div><div id="delete" style="display: block;"></div>';
+    utils.showCheckboxes('delete', true);
+    utils.showCheckboxes('delete', false);
+  });
 });
