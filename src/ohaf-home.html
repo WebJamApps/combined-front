@@ -25,7 +25,7 @@
             </p>
           </div>
           <!-- The dimensions of the images are 950x300 -->
-          <div class="col-md-6 pt-3">
+          <div class="col-md-6 pt-1">
             <div>
               <picture-slider data.bind="slides"></picture-slider>
             </div>
@@ -69,7 +69,9 @@
       <div id="musicSlide2">
         <img alt="photo" src="../static/imgs/ohaf/slideshow1.png">
       </div>
-      <compose view-model="./commons/slideshow" containerless model.bind="slideshow_data2"></compose>
+      <div>
+        <picture-slider data.bind="slides"></picture-slider>
+      </div>
       <h3 class="material-content-h3" style="margin-left:10px">Connecting Volunteers with Charities</h3>
       <p class="material-content-p">Our Hands And Feet (OHAF) helps find the right volunteer positions for you by
         matching people with opportunities to help our local charities.
