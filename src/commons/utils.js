@@ -26,8 +26,40 @@ exports.formatDate = function formatDate(today) {
   return today;
 };
 
+exports.getTime = function getTime(a, b) {
+  if (a > 11 && a !== 0) {
+    zone = 'pm';
+  } else {
+    zone = 'am';
+  }
+  if (a > 12 && a !== 0) {
+    offset = a % 12;
+  } else if (a === 12 || a === 0) {
+    offset = 12;
+  } else {
+    offset = a;
+  }
+  return `${offset}:${b} ${zone}`;
+};
+
+exports.compareTime = function compareTime(a, b) {
+  if (!a || !b) return false;
+  const [aHour, aRest] = a.split(':');
+  const [bHour, bRest] = b.split(':');
+  const [aMin, aZone] = aRest.split(' ');
+  const [bMin, bZone] = bRest.split(' ');
+  let value = null;
+  if (aZone > bZone) value = true;
+  if (aZone === bZone)
+    if (parseInt(aHour, 0) > parseInt(bHour, 0)) value = true;
+    else if (parseInt(aHour, 0) < parseInt(bHour, 0)) value = false;
+    else if (parseInt(aMin, 0) > parseInt(bMin, 0)) value = true;
+    else if (parseInt(aMin, 0) < parseInt(bMin, 0)) value = false;
+  return value;
+};
+
 exports.markPast = function markPast(myEvents, formatDate) {
-  let testDate, today = new Date();
+  let testDate, today = date = new Date();
   today = formatDate(today);
   for (let i = 0; i < myEvents.length; i += 1) {
     if (myEvents[i].voStartDate === undefined || myEvents[i].voStartDate === null || myEvents[i].voStartDate === '') {
@@ -35,8 +67,11 @@ exports.markPast = function markPast(myEvents, formatDate) {
     }
     testDate = myEvents[i].voStartDate.replace('-', '');
     testDate = testDate.replace('-', '');
-    if (testDate <= today) {
+    const time = this.getTime(date.getHours(), date.getMinutes());
+    if (testDate < today) {
       myEvents[i].past = true;
+    } else if (testDate === today && this.compareTime(myEvents[i].voStartTime, time)) {
+      myEvents[i].past = false;
     } else {
       myEvents[i].past = false;
     }

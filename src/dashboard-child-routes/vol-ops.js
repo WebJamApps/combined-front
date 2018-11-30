@@ -3,7 +3,8 @@ import { json } from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import { App } from '../app';
 import { FormValidator } from '../classes/FormValidator';
-import { fixDates, formatDate, markPast, showCheckboxes } from '../commons/utils';
+
+const commonUtils = require('../commons/utils');
 
 @inject(App, ValidationControllerFactory, Validator)
 export class VolunteerOpps {
@@ -15,7 +16,7 @@ export class VolunteerOpps {
     this.selectedTalents = [];
     this.selectedWorks = [];
     this.newEvent = true;
-    this.showCheckboxes = showCheckboxes;
+    this.showCheckboxes = commonUtils.showCheckboxes;
     this.validator2 = new FormValidator(validator, results => this.updateCanSubmit2(results));
     this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
@@ -43,11 +44,11 @@ export class VolunteerOpps {
 
   makeDataTable() {
     if (this.events.length > 0) {
-      this.events = fixDates(this.events);
+      this.events = commonUtils.fixDates(this.events);
       this.app.buildPTag(this.events, 'voWorkTypes', 'voWorkTypeOther ', 'workHtml');
       this.app.buildPTag(this.events, 'voTalentTypes', 'voTalentTypeOther', 'talentHtml');
       this.checkScheduled();
-      markPast(this.events, formatDate);
+      commonUtils.markPast(this.events, commonUtils.formatDate);
     }
     this.findCharity();
     this.talents = ['music', 'athletics', 'childcare', 'mechanics', 'construction', 'computers', 'communication', 'chess playing', 'listening'];
@@ -127,7 +128,7 @@ export class VolunteerOpps {
     this.voOpp.voStatus = 'new';
     this.app.httpClient.fetch('/volopp/create', { method: 'post', body: json(this.voOpp) })
       .then(() => {
-        this.voOpp = {};
+        this.showNewEvent();
         document.getElementById('eventHeader').scrollIntoView();
         this.activate();
       });
@@ -261,6 +262,8 @@ export class VolunteerOpps {
       .ensure('voNumPeopleNeeded').required().withMessage('How Many Volunteers please')
       .ensure('voStartTime').required().withMessage('Event Start time is required')
       .ensure('voEndTime').required().withMessage('Event End time is required')
+      .satisfies(val => (this.voOpp.voEndDate > this.voOpp.voStartDate || commonUtils.compareTime(val, this.voOpp.voStartTime)))
+      .withMessage('End time must be after start time')
       .ensure('voStartDate').required().withMessage('Event Start Date is required')
       .ensure('voEndDate').required().withMessage('Event End Date is required')
       .ensure('voZipCode').required().withMessage('5-digit Zipcode is required').matches(/\b\d{5}\b/)

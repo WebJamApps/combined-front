@@ -1,4 +1,5 @@
 import { startSlides } from './commons/utils';
+import data from '../config.json';
 
 export class OhafHome {
   slideshowImages = [
@@ -12,7 +13,11 @@ export class OhafHome {
     '../static/imgs/ohaf/slideshow9.png',
     '../static/imgs/ohaf/slideshow10.png',
     '../static/imgs/ohaf/slideshow11.png',
-    '../static/imgs/ohaf/slideshow12.png', '../static/imgs/ohaf/slideshow1.png'];
+    '../static/imgs/ohaf/slideshow12.png',
+    '../static/imgs/ohaf/slideshow1.png'
+  ];
+
+  slides = data.slides;
 
   constructor() {
     this.startSlides = startSlides;

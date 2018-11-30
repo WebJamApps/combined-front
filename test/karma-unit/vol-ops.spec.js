@@ -2,7 +2,8 @@ import { Validator } from 'aurelia-validation';
 import { VolunteerOpps } from '../../src/dashboard-child-routes/vol-ops';
 import { App } from '../../src/app';
 import { AuthStub, HttpMock, AppStateStub } from './commons';
-import { formatDate, markPast } from '../../src/commons/utils';
+
+const commonUtils = require('../../src/commons/utils');
 
 function testAsync(runAsync) {
   return (done) => {
@@ -146,7 +147,6 @@ describe('the Volunteer Opps Module', () => {
     volops4 = new VolunteerOpps(app4, new VCMock(), new ValidatorMock());
     volops4.activate();
     volops4.app.appState = new AppStateStub();
-    spyOn(volops, 'clickaChooAndChaa');
   });
 
   it('activates and there are events and runs the show time', (done) => {
@@ -175,42 +175,38 @@ describe('the Volunteer Opps Module', () => {
       _id: '123', voPeopleScheduled: ['14444', '244444'], voStartDate: null, voEndDate: null, voWorkTypes: [], voTalentTypes: []
     }];
     volops4.app.httpClient.fetch = function fetch() {
-      return Promise.reject(new Error('fail'));
+      throw new Error('fail to get user');
     };
-    await volops4.checkScheduled().then(() => {
-      // console.log(isError);
-    });
-    expect(volops4.events[0].voNumPeopleScheduled).toBe(2);
+    await volops4.checkScheduled();
+    expect(volops4.events[0].voNumPeopleScheduled).toBe(0);
   }));
-  //
-  // it('it displays the list of volunteers', testAsync(async () => {
-  //   volops4.events = [{
-  //     _id: '123', voPeopleScheduled: ['14444', '244444'], voStartDate: null, voEndDate: null, voWorkTypes: [], voTalentTypes: []
-  //   }];
-  //   const fakeVolunteer = {
-  //     name: 'Iddris Elba',
-  //     userType: 'Volunteer',
-  //     _id: '3333333',
-  //     volTalents: ['childcare', 'other'],
-  //     volCauses:
-  //     ['Environmental', 'other'],
-  //     volWorkPrefs: ['counseling', 'other'],
-  //     volCauseOther: '',
-  //     volTalentOther: '',
-  //     volWorkOther: '',
-  //     userDetails: 'newUser',
-  //     isOhafUser: true
-  //   };
-  //   volops4.app.httpClient.fetch = function () {
-  //     return {
-  //       // Headers: this.headers,
-  //       json: () => Promise.resolve(fakeVolunteer)
-  //     };
-  //   };
-  //   document.body.innerHTML = '<div id="showvolunteers"></div>';
-  //   await volops4.viewPeople(volops4.events[0]);
-  //   expect(volops4.allPeople[0].name).toBe('Iddris Elba');
-  // }));
+
+  it('it displays the list of volunteers', testAsync(async () => {
+    volops4.events = [{
+      _id: '123', voPeopleScheduled: ['14444', '244444'], voStartDate: null, voEndDate: null, voWorkTypes: [], voTalentTypes: [], voName: 'mon'
+    }];
+    const fakeVolunteer = {
+      name: 'Iddris Elba',
+      userType: 'Volunteer',
+      _id: '3333333',
+      volTalents: ['childcare', 'other'],
+      volCauses: ['Environmental', 'other'],
+      volWorkPrefs: ['counseling', 'other'],
+      volCauseOther: '',
+      volTalentOther: '',
+      volWorkOther: '',
+      userDetails: 'newUser',
+      isOhafUser: true
+    };
+    volops4.app.httpClient.fetch = function fetch() {
+      return {
+        json: () => Promise.resolve(fakeVolunteer)
+      };
+    };
+    document.body.innerHTML = '<div id="showvolunteers"></div>';
+    await volops4.viewPeople(volops4.events[0]);
+    expect(volops4.eventTitle).toBe('mon');
+  }));
 
   it('should mark past dates', testAsync(async () => {
     volops4.activate();
@@ -226,7 +222,7 @@ describe('the Volunteer Opps Module', () => {
       voStatus: 'cancel',
       voPeopleScheduled: ['12']
     }];
-    markPast(volops4.events, formatDate);
+    commonUtils.markPast(volops4.events, commonUtils.formatDate);
     expect(volops4.events[0].past).toBe(true);
   }));
 
@@ -244,7 +240,7 @@ describe('the Volunteer Opps Module', () => {
       voStatus: 'cancel',
       voPeopleScheduled: ['12']
     }];
-    markPast(volops4.events, formatDate);
+    commonUtils.markPast(volops4.events, commonUtils.formatDate);
     expect(volops4.events[0].past).toBe(false);
   }));
 
@@ -253,7 +249,7 @@ describe('the Volunteer Opps Module', () => {
     date.setMonth(11);
     date.setDate(12);
     date.setFullYear(2017);
-    const newDate = formatDate(date);
+    const newDate = commonUtils.formatDate(date);
     expect(newDate).toBe('20171212');
     done();
   });
@@ -381,7 +377,12 @@ describe('the Volunteer Opps Module', () => {
 
   it('it creates a new event', (done) => {
     // volops.activate();
-    document.body.innerHTML = '<div id="eventHeader"></div>';
+    volops.user = {
+      name: 'me',
+      email: 'me@me.org',
+      userPhone: '3333333333'
+    };
+    document.body.innerHTML = '<div id="eventHeader"><div id="topSection"></div><input id="s-time" type="text"><input id="e-time" type="text"></div>';
     volops.charityName = 'OHAF';
     volops.voOpp = {
       voWorkTypes: ['other'],
@@ -392,6 +393,8 @@ describe('the Volunteer Opps Module', () => {
       voTalentTypes: ['shoveling', 'sweeping', 'other'],
       voTalentTypeOther: 'scrubbing'
     };
+    volops.setupValidation2 = function setupValidation2() {};
+    volops.controller2 = { validate: () => {} };
     volops.scheduleEvent();
     expect(volops.voOpp.voStatus).toBe('new');
     done();
@@ -595,9 +598,8 @@ describe('the Volunteer Opps Module', () => {
       _id: '2222'
     };
     volops.validType2 = true;
-    const validationResults = [{ result: { valid: true } }];
-    const val = volops.updateCanSubmit2(validationResults);
-    expect(val).toBeTruthy();
+    const val = volops.updateCanSubmit2([{ valid: false }]);
+    expect(val).toBeFalsy();
     done();
   });
 
@@ -617,8 +619,7 @@ describe('the Volunteer Opps Module', () => {
     volops.validType2 = true;
     volops.updateEvent = true;
     volops.counter = 2;
-    const validationResults = [{ result: { valid: true } }];
-    volops.updateCanSubmit2(validationResults);
+    volops.updateCanSubmit2([{ valid: true }]);
     expect(document.getElementsByClassName('updateButton')[0].style.display).toBe('block');
     done();
   });
@@ -655,7 +656,6 @@ describe('the Volunteer Opps Module', () => {
     document.body.innerHTML = '<div id="start" horizontal-align="right" vertical-align="top" style="margin-top:25px;"><input /></div>';
     volops.clickaChooAndChaa('start');
     expect(document.querySelector('#start input').style.display).toBe('');
-    expect(volops.clickaChooAndChaa).toHaveBeenCalledWith('start');
     done();
   });
 
