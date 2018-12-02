@@ -25,7 +25,7 @@
             </p>
           </div>
           <!-- The dimensions of the images are 950x300 -->
-          <div class="col-md-6 pt-1">
+          <div class="col-md-6 pt-0 pr-0 onePx">
             <div class="p-0 m-0">
               <picture-slider data.bind="slides"></picture-slider>
             </div>
@@ -66,9 +66,6 @@
     </div>
     <!-- The dimensions of the images are 950x300 -->
     <div if.bind="!widescreen">
-      <div id="musicSlide2">
-        <img alt="photo" src="../static/imgs/ohaf/slideshow1.png">
-      </div>
       <div>
         <picture-slider data.bind="slides"></picture-slider>
       </div>
