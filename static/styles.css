@@ -517,6 +517,11 @@ audio::-webkit-media-controls-panel {
   position: relative;
 }
 
+.onePx {
+  padding-top: 1px !important;
+  padding-right: 1px !important;
+}
+
 .selectBoxBig select {
   width: 100%;
   font-weight: bold;
