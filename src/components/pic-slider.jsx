@@ -19,19 +19,18 @@ export class PicSlider {
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
-      arrows: false
+      arrows: false,
+      fade: true
     };
   }
 
   html() {
     return (
-      <div>
-        <Slider {...this.settings}>
-          {this.data.map((data, key) => {
-            return <div key={key}><img width='100%' height='100%' src={data}/></div>
-          })}
-        </Slider>
-      </div>
+      <Slider {...this.settings}>
+        {this.data.map((data, key) => {
+          return <div key={key}><img width='100%' height='100%' src={data}/></div>
+        })}
+      </Slider>
     )
   }
 
