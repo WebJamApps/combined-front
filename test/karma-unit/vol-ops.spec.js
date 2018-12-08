@@ -128,6 +128,7 @@ class HttpMockChar extends HttpMock {
 
 describe('the Volunteer Opps Module', () => {
   let app, auth, volops, app2, volops2, app3, volops3, volops4, app4;
+
   beforeEach(() => {
     auth = new AuthStub();
     auth.setToken({ sub: 'aowifjawifhiawofjo' });
@@ -395,7 +396,10 @@ describe('the Volunteer Opps Module', () => {
     };
     volops.setupValidation2 = function setupValidation2() {};
     volops.controller2 = { validate: () => {} };
+    const unload = window.onbeforeunload;
+    window.onbeforeunload = jasmine.createSpy();
     volops.scheduleEvent();
+    window.onbeforeunload = unload;
     expect(volops.voOpp.voStatus).toBe('new');
     done();
   });
