@@ -396,10 +396,7 @@ describe('the Volunteer Opps Module', () => {
     };
     volops.setupValidation2 = function setupValidation2() {};
     volops.controller2 = { validate: () => {} };
-    const unload = window.onbeforeunload;
-    window.onbeforeunload = jasmine.createSpy();
     volops.scheduleEvent();
-    window.onbeforeunload = unload;
     expect(volops.voOpp.voStatus).toBe('new');
     done();
   });
