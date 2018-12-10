@@ -128,10 +128,9 @@ export class VolunteerOpps {
     this.voOpp.voStatus = 'new';
     this.app.httpClient.fetch('/volopp/create', { method: 'post', body: json(this.voOpp) })
       .then(() => {
-        window.location.reload(true);
-        // this.showNewEvent();
-        // document.getElementById('eventHeader').scrollIntoView();
-        // this.activate();
+        if (process.env.NODE_ENV !== 'test') {
+          window.location.reload();
+        }
       });
   }
 
