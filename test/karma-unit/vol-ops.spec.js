@@ -128,6 +128,7 @@ class HttpMockChar extends HttpMock {
 
 describe('the Volunteer Opps Module', () => {
   let app, auth, volops, app2, volops2, app3, volops3, volops4, app4;
+
   beforeEach(() => {
     auth = new AuthStub();
     auth.setToken({ sub: 'aowifjawifhiawofjo' });
