@@ -9,7 +9,7 @@
   },
   "author": "HandlersAndKickers",
   "engines": {
-    "node": "10.13.0"
+    "node": ">=11.4.0"
   },
   "files": [
     "webpack.config.js",
@@ -102,12 +102,12 @@
   },
   "peerDependencies": {},
   "devDependencies": {
+    "aurelia-tools": "latest",
     "assertions-counter": "latest",
     "aurelia-cli": "latest",
     "aurelia-pal-nodejs": "latest",
     "aurelia-protractor-plugin": "latest",
     "aurelia-testing": "latest",
-    "aurelia-tools": "latest",
     "babel-eslint": "7.2.3",
     "babel-jest": "latest",
     "babel-plugin-istanbul": "latest",
