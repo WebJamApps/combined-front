@@ -1,6 +1,6 @@
 {
   "plugins": ["node", "security", "jest", "react"],
-  "extends": ["airbnb",
+  "extends": ["./node_modules/aurelia-tools/.eslintrc.json", "airbnb",
     "plugin:jest/recommended", "plugin:security/recommended", "plugin:node/recommended"
   ],
   "rules": {

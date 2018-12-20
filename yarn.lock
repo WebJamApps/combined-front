@@ -2048,6 +2048,14 @@ aurelia-testing@latest:
     aurelia-pal "^1.0.0"
     aurelia-templating "^1.0.0"
 
+aurelia-tools@latest:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/aurelia-tools/-/aurelia-tools-2.0.0.tgz#92ad1d5891f1d2583730168330a4835df92b8582"
+  integrity sha1-kq0dWJHx0lg3MBaDMKSDXfkrhYI=
+  dependencies:
+    breeze-dag "^0.1.0"
+    through2 "^2.0.0"
+
 aurelia-validation@1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/aurelia-validation/-/aurelia-validation-1.2.3.tgz#376a265e4041cfc1bc00a3fdf1533afd3b260f2d"
@@ -2537,6 +2545,26 @@ brcast@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/brcast/-/brcast-3.0.1.tgz#6256a8349b20de9eed44257a9b24d71493cd48dd"
   integrity sha512-eI3yqf9YEqyGl9PCNTR46MGvDylGtaHjalcz6Q3fAPnP/PhpKkkve52vFdfGpwp4VUvK6LUr4TQN+2stCrEwTg==
+
+breeze-dag@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/breeze-dag/-/breeze-dag-0.1.0.tgz#c90c9455961e7973fc6feb4bef009a498bf1dc80"
+  integrity sha1-yQyUVZYeeXP8b+tL7wCaSYvx3IA=
+  dependencies:
+    breeze-queue "0.1.x"
+    gaia-tsort "*"
+
+breeze-nexttick@*:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/breeze-nexttick/-/breeze-nexttick-0.2.1.tgz#1e0b82f45eab600d84f0e91f16aef8d65b2dfbab"
+  integrity sha1-HguC9F6rYA2E8OkfFq741lst+6s=
+
+breeze-queue@0.1.x:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/breeze-queue/-/breeze-queue-0.1.0.tgz#7fd41058fe608725833d2491d88d28ca2cf89c90"
+  integrity sha1-f9QQWP5ghyWDPSSR2I0oyiz4nJA=
+  dependencies:
+    breeze-nexttick "*"
 
 brorand@^1.0.1:
   version "1.1.0"
@@ -5610,6 +5638,11 @@ functional-red-black-tree@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
+
+gaia-tsort@*:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/gaia-tsort/-/gaia-tsort-0.1.0.tgz#c9ed461ff096e12b8662dd06c41efa6101d7e840"
+  integrity sha1-ye1GH/CW4SuGYt0GxB76YQHX6EA=
 
 gauge@~2.7.3:
   version "2.7.4"

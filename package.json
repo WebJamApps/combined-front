@@ -102,6 +102,7 @@
   },
   "peerDependencies": {},
   "devDependencies": {
+    "aurelia-tools": "latest",
     "assertions-counter": "latest",
     "aurelia-cli": "latest",
     "aurelia-pal-nodejs": "latest",
