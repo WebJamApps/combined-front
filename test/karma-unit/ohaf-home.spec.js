@@ -11,11 +11,4 @@ describe('the OhafHome Module', () => {
     expect(typeof truth).toBe('boolean');
     done();
   });
-  it('attaches to the dom', (done) => {
-    let isAttached = false;
-    ohaf.startSlides = function startSlides() { return true; };
-    isAttached = ohaf.attached();
-    expect(isAttached).toBe(true);
-    done();
-  });
 });
