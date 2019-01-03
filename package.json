@@ -98,16 +98,17 @@
     "wait-on": "latest",
     "webpack": "latest",
     "webpack-bundle-analyzer": "latest",
-    "webpack-cli": "latest"
+    "webpack-cli": "latest",
+    "yarn": "^1.12.3"
   },
   "peerDependencies": {},
   "devDependencies": {
-    "aurelia-tools": "latest",
     "assertions-counter": "latest",
     "aurelia-cli": "latest",
     "aurelia-pal-nodejs": "latest",
     "aurelia-protractor-plugin": "latest",
     "aurelia-testing": "latest",
+    "aurelia-tools": "latest",
     "babel-eslint": "7.2.3",
     "babel-jest": "latest",
     "babel-plugin-istanbul": "latest",
