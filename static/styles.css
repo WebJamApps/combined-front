@@ -422,6 +422,10 @@ audio::-webkit-media-controls-panel {
   padding-right: 0;
 }
 
+#mobilemenutoggle {
+  cursor: pointer;
+}
+
 .mobile-menu-toggle {
   position: fixed;
   top: 32px;
