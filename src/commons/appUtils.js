@@ -6,6 +6,7 @@ exports.checkUser = async function checkUser(app) {
       uid = app.auth.getTokenPayload().sub;
     } catch (e) {
       app.logout();
+      localStorage.clear();
       return Promise.resolve('bad token');
     }
     app.user = await app.appState.getUser(uid);
