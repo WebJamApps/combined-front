@@ -10,7 +10,7 @@ export class Login {
   }
 
   attached() {
-    if (!this.app.authenticated) {
+    if (localStorage.getItem('origin') !== location.origin || !this.app.auth.isAuthenticated()) {
       localStorage.clear();
     }
     this.app.appUtils.checkIfLoggedIn(this.app);
