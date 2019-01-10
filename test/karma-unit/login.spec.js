@@ -65,6 +65,7 @@ describe('the Login module', () => {
   it('attaches to the dom', (done) => {
     document.body.innerHTML = '<div class="home"><div class="topSection"></div><input class="loginemail"/></div>';
     window.history.pushState({}, 'Login', '/login');
+    login.app.auth.isAuthenticated = () => false;
     login.attached();
     const loginEmailValue = document.getElementsByClassName('loginemail')[0].value;
     expect(loginEmailValue).toBe('');
