@@ -66,6 +66,7 @@ export class App {
       return Promise.reject(e);
     }
     this.auth.setToken(ret.token);
+    localStorage.setItem('origin', location.origin);
     return Promise.resolve(ret.token);
   }
 
