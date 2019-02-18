@@ -1,6 +1,9 @@
 {
   "verbose": true,
   "bail": true,
+  "setupFiles": [
+    "@babel/polyfill"
+  ],
   "testPathIgnorePatterns": ["/node_modules/", "/test/karma-unit/", "/test/react-unit/"],
   "coverageDirectory": "coverage/jest",
   "collectCoverageFrom": ["src/classes/*.{js,jsx}", "src/commons/*.{js,jsx}", "!**/node_modules/**", "!src/commons/slideshow.js",
