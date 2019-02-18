@@ -141,7 +141,7 @@
     "karma-coverage-istanbul-reporter": "latest",
     "karma-jasmine": "latest",
     "karma-mocha-reporter": "latest",
-    "karma-webpack": "^4.0.0-rc.2",
+    "karma-webpack": "^4.0.0-rc.3",
     "protractor": "^5.4.1",
     "sinon": "latest",
     "stylelint": "latest",
