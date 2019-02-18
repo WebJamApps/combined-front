@@ -1,3 +1,6 @@
+import 'url-search-params-polyfill';
+
+
 export class Home {
   constructor() {
     this.top = null;

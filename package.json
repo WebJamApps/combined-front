@@ -95,6 +95,7 @@
     "through2": "^2.0.3",
     "uglify-js": "latest",
     "url-loader": "latest",
+    "url-search-params-polyfill": "^5.0.0",
     "wait-on": "latest",
     "webpack": "latest",
     "webpack-bundle-analyzer": "latest",

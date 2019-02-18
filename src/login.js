@@ -1,3 +1,4 @@
+import 'url-search-params-polyfill';
 import { inject } from 'aurelia-framework';
 import { App } from './app';
 
