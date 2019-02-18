@@ -107,7 +107,7 @@ describe('the ohaf utils module', () => {
     };
     let res;
     try {
-      res = await ohafUtils.signupEvent({}, { canSignup: false, app: { logout(){} } }, {});
+      res = await ohafUtils.signupEvent({}, { canSignup: false, app: { logout() {} } }, {});
       expect(res).toBe(undefined);
     } catch (e) {
       throw e;
@@ -119,18 +119,17 @@ describe('the ohaf utils module', () => {
     };
     let res;
     try {
-      res = await ohafUtils.signupEvent({ voPeopleScheduled: [], _id: "" }, {
+      res = await ohafUtils.signupEvent({ voPeopleScheduled: [], _id: '' }, {
         canSignup: true,
-        checkScheduled(){},
-        fetchAllEvents(){ return Promise.resolve(true) },
+        checkScheduled() {},
+        fetchAllEvents() { return Promise.resolve(true); },
         app: {
-          updateById(){ return Promise.resolve(true) },
-          router: { navigate() {} },
+          updateById() { return Promise.resolve(true); },
+          router: { navigate() { } },
         }
       }, {});
       expect(typeof res).toBe('object');
-      
-      await ohafUtils.signupEvent({ voPeopleScheduled: [], _id: "" }, { canSignup: false }, {})
+      await ohafUtils.signupEvent({ voPeopleScheduled: [], _id: '' }, { canSignup: false }, {});
     } catch (e) {
       throw e;
     }
