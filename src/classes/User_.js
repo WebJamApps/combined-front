@@ -1,3 +1,5 @@
+require('url-search-params-polyfill');
+
 const Fetch = require('isomorphic-fetch');
 
 class User_ {
