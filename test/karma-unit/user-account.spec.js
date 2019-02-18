@@ -165,7 +165,7 @@ describe('the UserAccount Module', () => {
       });
     };
     ua.checkChangeUserType();
-    expect(ua.events2 instanceof Array).toBeTruthy();
+    expect(ua.events2 instanceof Array).toBeFalsy();
     done();
   });
   it('should allow Charity user to change their user type if they have no charities', (done) => {
