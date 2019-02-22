@@ -61,8 +61,12 @@ export class App {
     let ret;
     try {
       ret = await this.auth.authenticate(name, false, { isOhafUser: this.appState.isOhafLogin });
-    } catch (e) { return Promise.reject(e); }
+    } catch (e) {
+      localStorage.clear();
+      return Promise.reject(e);
+    }
     this.auth.setToken(ret.token);
+    localStorage.setItem('origin', location.origin);
     return Promise.resolve(ret.token);
   }
 

@@ -9,7 +9,7 @@
   },
   "author": "HandlersAndKickers",
   "engines": {
-    "node": ">=11.4.0"
+    "node": ">=11.9.0"
   },
   "files": [
     "webpack.config.js",
@@ -90,16 +90,16 @@
     "react-slick": "^0.23.2",
     "redux": "^3.7.2",
     "slick-carousel": "^1.8.1",
-    "snyk": "latest",
+    "snyk": "^1.124.1",
     "style-loader": "latest",
     "through2": "^2.0.3",
     "uglify-js": "latest",
     "url-loader": "latest",
+    "url-search-params-polyfill": "^5.0.0",
     "wait-on": "latest",
     "webpack": "latest",
     "webpack-bundle-analyzer": "latest",
-    "webpack-cli": "latest",
-    "yarn": "^1.12.3"
+    "webpack-cli": "latest"
   },
   "peerDependencies": {},
   "devDependencies": {
@@ -141,7 +141,7 @@
     "karma-coverage-istanbul-reporter": "latest",
     "karma-jasmine": "latest",
     "karma-mocha-reporter": "latest",
-    "karma-webpack": "^4.0.0-rc.2",
+    "karma-webpack": "^4.0.0-rc.3",
     "protractor": "^5.4.1",
     "sinon": "latest",
     "stylelint": "latest",

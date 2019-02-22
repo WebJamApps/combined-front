@@ -103,14 +103,33 @@ describe('the ohaf utils module', () => {
   });
   it('tries to signup, but cannot', async () => {
     ohafUtils.doubleCheckSignups = function doubleCheckSignups() {
+      throw new Error('an error');
+    };
+    let res;
+    try {
+      res = await ohafUtils.signupEvent({}, { canSignup: false, app: { logout() {} } }, {});
+      expect(res).toBe(undefined);
+    } catch (e) {
+      throw e;
+    }
+  });
+  it('tries to signup, but throws error and logs out', async () => {
+    ohafUtils.doubleCheckSignups = function doubleCheckSignups() {
       return Promise.resolve(false);
     };
     let res;
     try {
-      res = await ohafUtils.signupEvent({}, {
-        canSignup: false
+      res = await ohafUtils.signupEvent({ voPeopleScheduled: [], _id: '' }, {
+        canSignup: true,
+        checkScheduled() {},
+        fetchAllEvents() { return Promise.resolve(true); },
+        app: {
+          updateById() { return Promise.resolve(true); },
+          router: { navigate() { } },
+        }
       }, {});
-      expect(res).toBe(false);
+      expect(typeof res).toBe('object');
+      await ohafUtils.signupEvent({ voPeopleScheduled: [], _id: '' }, { canSignup: false }, {});
     } catch (e) {
       throw e;
     }

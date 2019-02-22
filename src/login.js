@@ -1,3 +1,4 @@
+import 'url-search-params-polyfill';
 import { inject } from 'aurelia-framework';
 import { App } from './app';
 
@@ -10,6 +11,9 @@ export class Login {
   }
 
   attached() {
+    if (localStorage.getItem('origin') !== location.origin || !this.app.auth.isAuthenticated()) {
+      localStorage.clear();
+    }
     this.app.appUtils.checkIfLoggedIn(this.app);
     if (document.location.search.includes('email=')) {
       document.getElementsByClassName('topSection')[0].style.display = 'none';

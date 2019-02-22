@@ -129,6 +129,19 @@ describe('the App module', () => {
   //   expect(route).toBe(route);
   // }));
 
+  it('should be able to configure router', (done) => {
+    const config = {
+      options: {},
+      addPipelineStep(a, b) { return null; },
+      addPostRenderStep(obj) { return obj; },
+      map(list) { return this; },
+      fallbackRoute(arg) { return arg; }
+    };
+    app1.configureRouter(config, {});
+    expect(typeof app1.router).toBe('object');
+    done();
+  });
+
   it('gets the current fragment', (done) => {
     app1.router = new RouterStub();
     const frag = app1.currentRouteFrag;
@@ -344,11 +357,11 @@ describe('the App module', () => {
     done();
   });
 
-  it('should toggle menu to be icons with text', () => {
-    // document.body.innerHTML = '<div class="main-panel"></div><div class="drawer-container"></div><div class="nav-list"></div>';
-    // app1.fullmenu = false;
-    // app1.toggleMenu();
-    // expect(app1.fullmenu).toBe(true);
-    // expect(app1.drawerWidth).toBe('182px');
-  });
+  // it('should toggle menu to be icons with text', () => {
+  //   document.body.innerHTML = '<div class="main-panel"></div><div class="drawer-container"></div><div class="nav-list"></div>';
+  //   app1.fullmenu = false;
+  //   app1.toggleMenu();
+  //   expect(app1.fullmenu).toBe(true);
+  //   expect(app1.drawerWidth).toBe('182px');
+  // });
 });

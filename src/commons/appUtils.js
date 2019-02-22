@@ -6,6 +6,7 @@ exports.checkUser = async function checkUser(app) {
       uid = app.auth.getTokenPayload().sub;
     } catch (e) {
       app.logout();
+      localStorage.clear();
       return Promise.resolve('bad token');
     }
     app.user = await app.appState.getUser(uid);
@@ -50,8 +51,11 @@ exports.returnIsWide = function returnIsWide(app, isWide, drawer, drawerParent) 
   return isWide;
 };
 
+exports.hiddenAlready = false;
+
 exports.handleScreenSize = function handleScreenSize(app, isWide, drawerParent) {
   const drawer = document.getElementsByClassName('drawer')[0];
+  const drawerContainer = document.getElementsByClassName('drawer-container')[0];
   const mobileMenuToggle = document.getElementsByClassName('mobile-menu-toggle')[0];
   const swipeArea = document.getElementsByClassName('swipe-area')[0];
   if (!app.menuToggled && !isWide) {
@@ -62,6 +66,13 @@ exports.handleScreenSize = function handleScreenSize(app, isWide, drawerParent) 
       mobileMenuToggle.style.display = 'block';
       swipeArea.style.display = 'block';
     }
+    this.hiddenAlready = true;
+  } else if (app.menuToggled && !isWide && !this.hiddenAlready) {
+    drawerContainer.style.display = 'none';
+    mobileMenuToggle.style.display = 'block';
+    this.hiddenAlready = true;
+  } else if (isWide) {
+    this.hiddenAlready = false;
   }
   return this.returnIsWide(app, isWide, drawer, drawerParent);
 };

@@ -3,7 +3,7 @@ const dashboardUtils = require('../../src/commons/dashboardUtils');
 const dashboardStub = {
   user: {},
   uid: '',
-  app: { auth: { getTokenPayload() { return Promise.resolve({ sub: '123' }); } },
+  app: { auth: { getTokenPayload() { return { sub: Promise.resolve('123') }; } },
     appState: { getUser() { return { email: 'jb@jb.com', userType: 'Reader' }; }, setUser() {} },
     router: { navigate(route) { return route; } },
     logout() { return Promise.resolve(true); }
