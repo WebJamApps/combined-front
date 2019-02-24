@@ -12,7 +12,7 @@ class User_ {
     this.formType += this.searchParams.get('form');
     this.userToken = localStorage.getItem('aurelia_id_token');
     this.verifyEmail();
-    this.myForm = {};
+    // this.myForm = {};
   }
 
   createVerifyCodeForm() {
@@ -90,36 +90,46 @@ class User_ {
     element.formType = this.formType;
   }
 
-  setupValidationForm(evt) {
-    this.formType = evt.target.formType;
-    this.myForm.newpasswd = document.getElementsByClassName('loginpass')[0];
-    this.myForm.isemailvalid = document.getElementsByClassName('email')[0].checkValidity();
-    this.myForm.emValue = document.getElementsByClassName('email')[0].value;
-    this.myForm.edot = this.myForm.emValue.split('.');
-    this.myForm.isvalidcode = document.getElementsByClassName('code')[0].value;
-    this.myForm.submitbutton = document.getElementsByClassName('regbutton')[0];
-    this.myForm.submitbutton.style.display = 'none';
-    document.getElementsByClassName('loginerror')[0].innerHTML = '';
-  }
+  // setupValidationForm(evt) {
+  //   this.formType = evt.target.formType;
+  //   this.myForm.newpasswd = document.getElementsByClassName('loginpass')[0];
+  //   this.myForm.isemailvalid = document.getElementsByClassName('email')[0].checkValidity();
+  //   this.myForm.emValue = document.getElementsByClassName('email')[0].value;
+  //   this.myForm.edot = this.myForm.emValue.split('.');
+  //   this.myForm.isvalidcode = document.getElementsByClassName('code')[0].value;
+  //   this.myForm.submitbutton = document.getElementsByClassName('regbutton')[0];
+  //   this.myForm.submitbutton.style.display = 'none';
+  //   document.getElementsByClassName('loginerror')[0].innerHTML = '';
+  // }
 
   validateForm(evt) {
-    this.setupValidationForm(evt);
+    const formType = evt.target.formType;
+    const myForm = {};
+    myForm.newpasswd = document.getElementsByClassName('loginpass')[0];
+    myForm.isemailvalid = document.getElementsByClassName('email')[0].checkValidity();
+    myForm.emValue = document.getElementsByClassName('email')[0].value;
+    myForm.edot = myForm.emValue.split('.');
+    myForm.isvalidcode = document.getElementsByClassName('code')[0].value;
+    myForm.submitbutton = document.getElementsByClassName('regbutton')[0];
+    myForm.submitbutton.style.display = 'none';
+    document.getElementsByClassName('loginerror')[0].innerHTML = '';
+    // this.setupValidationForm(evt);
     let errorMessage = '<ul style="margin-right:0; margin-top:0; margin-bottom:20px; text-align:left; padding-left:20px; font-size:10pt">';
-    if (this.formType === 'reset') {
-      const validPassword = this.myForm.newpasswd.checkValidity();
-      if (validPassword && this.myForm.isemailvalid && this.myForm.edot.length > 1
-        && this.myForm.isvalidcode > 9999 && this.myForm.isvalidcode < 100000) {
-        this.myForm.submitbutton.style.display = 'block';
+    if (formType === 'reset') {
+      const validPassword = myForm.newpasswd.checkValidity();
+      if (validPassword && myForm.isemailvalid && myForm.edot.length > 1
+        && myForm.isvalidcode > 9999 && myForm.isvalidcode < 100000) {
+        myForm.submitbutton.style.display = 'block';
         return true;
       }
       if (!validPassword) {
         errorMessage += '<li>Password is not >= 8 characters</li>';
       }
     }
-    if (!(this.myForm.isvalidcode > 9999 && this.myForm.isvalidcode < 100000)) {
+    if (!(myForm.isvalidcode > 9999 && myForm.isvalidcode < 100000)) {
       errorMessage += '<li>Invalid passcode</li>';
     }
-    if (!this.myForm.isemailvalid || !(this.myForm.edot.length > 1)) {
+    if (!myForm.isemailvalid || !(myForm.edot.length > 1)) {
       errorMessage += '<li>Invalid email address</li>';
     }
     if (errorMessage !== '<ul style="margin-right:0; margin-top:0; margin-bottom:20px; text-align:left; padding-left:20px; font-size:10pt">') {
@@ -127,7 +137,7 @@ class User_ {
       document.getElementsByClassName('loginerror')[0].innerHTML = errorMessage;
       return false;
     }
-    this.myForm.submitbutton.style.display = 'block';
+    myForm.submitbutton.style.display = 'block';
     return null;
   }
 
