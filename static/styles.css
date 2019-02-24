@@ -763,6 +763,11 @@ a:hover {
     overflow-x: hidden;
   }
 
+  .swipe-area {
+    width: 30px;
+    height: 100vh;
+  }
+
   ::-webkit-scrollbar:vertical {
     width: 0;
   }
