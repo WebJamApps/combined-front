@@ -291,6 +291,8 @@ describe('the Charity Module', () => {
   });
 
   it('does not display charity types when there are none', (done) => {
+    document.body.innerHTML = '<ul id="valErrors"></ul><button class="updateButton" style="display:none"></button>'
+        + '<button id="createNewCharityButton></button>';
     charity2.activate();
     charity2.charities = [{ charityTypes: [''], charityManagers: ['Home', 'Elderly'] }, {
       charityTypes:
