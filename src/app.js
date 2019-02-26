@@ -8,7 +8,7 @@ import * as Hammer from 'hammerjs';
 import { UserAccess } from './classes/UserAccess';
 import { AppState } from './classes/AppState';
 
-const appUtils = require('./commons/appUtils');
+const appUtils = require('wj-common-front').appUtils;
 
 @inject(AuthService, HttpClient)
 export class App {

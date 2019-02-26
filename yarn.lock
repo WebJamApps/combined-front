@@ -14070,6 +14070,13 @@ windows-release@^3.1.0:
   dependencies:
     execa "^0.10.0"
 
+wj-common-front@latest:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/wj-common-front/-/wj-common-front-0.0.2.tgz#3a7cf7b1bb14146fbdee7bf2296c0630e43f643a"
+  integrity sha512-dP/5hD80BQS5WToqXpvXx8gcNT7KH5KM7ssO2EWH1fD1mJO3LWZriNpTOrbXGWKuFElTUSatD/SB63Z2nj8qlw==
+  dependencies:
+    dotenv latest
+
 wordwrap@^1.0.0, wordwrap@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
