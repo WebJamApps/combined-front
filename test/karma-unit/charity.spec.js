@@ -209,7 +209,8 @@ describe('the Charity Module', () => {
     const validationResults = [{ valid: true }];
     charity.update = true;
     charity.counter = 9;
-    document.body.innerHTML = '<ul id="valErrors"></ul><button class="updateButton"></button>';
+    document.body.innerHTML = '<ul id="valErrors"></ul><button class="updateButton"></button>'
+      + '<button id="createNewCharityButton></button>';
     charity.updateCanSubmit2(validationResults);
     expect(charity.canSubmit2).toBe(true);
     done();
