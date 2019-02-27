@@ -27,6 +27,18 @@ describe('the App module', () => {
     app2.activate();
     app2.appState = new AppStateStub();
   });
+  it('displays a tooltip', (done) => {
+    document.body.innerHTML = '<div id="tt" style="display:none">howdy</div>';
+    app1.showTT('tt');
+    expect(document.getElementById('tt').style.display).toBe('block');
+    done();
+  });
+  it('hides a tooltip', (done) => {
+    document.body.innerHTML = '<div id="tt" style="display:block">howdy</div>';
+    app1.hideTT('tt');
+    expect(document.getElementById('tt').style.display).toBe('none');
+    done();
+  });
   it('tests configHttpClient', (done) => {
     const { add: ok } = new Counter(4, done);
     app1.auth.tokenInterceptor = 'tokenInterceptor';

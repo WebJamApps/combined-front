@@ -8,7 +8,7 @@ import * as Hammer from 'hammerjs';
 import { UserAccess } from './classes/UserAccess';
 import { AppState } from './classes/AppState';
 
-const appUtils = require('./commons/appUtils');
+const appUtils = require('wj-common-front').appUtils;
 
 @inject(AuthService, HttpClient)
 export class App {
@@ -51,6 +51,14 @@ export class App {
       'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     this.states.sort();
     await this.appUtils.checkUser(this);
+  }
+
+  showTT(id) {
+    document.getElementById(id).style.display = 'block';
+  }
+
+  hideTT(id) {
+    document.getElementById(id).style.display = 'none';
   }
 
   showForm(appName, className) {
@@ -193,7 +201,7 @@ export class App {
     }
   }
 
-  toggleMenu() {
+  toggleMenu() { // makes the widescreen side menu only display the icons and is only used for web-jam.com
     const dc = document.getElementsByClassName('drawer-container')[0];
     const nl = document.getElementsByClassName('nav-list')[0];
     if (this.fullmenu) {

@@ -26,6 +26,9 @@ docStub = {
   }
 };
 describe('the ohaf utils module', () => {
+  it('does nothing', (done) => {
+    done();
+  });
   it('double checks signups', async () => {
     try {
       await ohafUtils.doubleCheckSignups({}, volStub, docStub);
@@ -103,12 +106,12 @@ describe('the ohaf utils module', () => {
   });
   it('tries to signup, but cannot', async () => {
     ohafUtils.doubleCheckSignups = function doubleCheckSignups() {
-      throw new Error('an error');
+      return Promise.reject(new Error('bad'));
     };
-    let res;
+    let result;
     try {
-      res = await ohafUtils.signupEvent({}, { canSignup: false, app: { logout() {} } }, {});
-      expect(res).toBe(undefined);
+      result = await ohafUtils.signupEvent({}, { canSignup: false, app: { logout() { return Promise.resolve('logged out'); } } }, {});
+      expect(result).toBe('logged out');
     } catch (e) {
       throw e;
     }
@@ -165,6 +168,33 @@ describe('the ohaf utils module', () => {
       },
       documentElement: {
         clientWidth: 700
+      },
+      getElementById() {
+        return {
+          addEventListener() {}
+        };
+      }
+    };
+    let res;
+    try {
+      res = await ohafUtils.attachVolPage(doc, volStub);
+      expect(res).toBe(true);
+    } catch (e) {
+      throw e;
+    }
+  });
+  it('attaches to volunteer page when widescreen', async () => {
+    volStub.setupVolunteerUser = function setupVolunteerUser() {};
+    const doc = {
+      getElementsByClassName() {
+        return [{
+          style: {
+            top: ''
+          }
+        }];
+      },
+      documentElement: {
+        clientWidth: 900
       },
       getElementById() {
         return {
