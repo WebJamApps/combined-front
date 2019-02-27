@@ -208,7 +208,9 @@ class Register_ {
               }
             }
           }
+          return Promise.resolve(true);
         }
+        return Promise.resolve(false);
       })
       .catch(() => {
         // console.log(error);

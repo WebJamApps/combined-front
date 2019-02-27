@@ -3,7 +3,7 @@ import { json } from 'aurelia-fetch-client';
 import { ValidationControllerFactory, ValidationRules, Validator, validateTrigger } from 'aurelia-validation';
 import { App } from '../app';
 import { FormValidator } from '../classes/FormValidator';
-import { showCheckboxes } from '../commons/utils';
+import { showCheckboxes, updateCanSubmit } from '../commons/utils';
 
 @inject(App, ValidationControllerFactory, Validator)
 export class Charity {
@@ -12,9 +12,10 @@ export class Charity {
 
   constructor(app, controllerFactory, validator) {
     this.showCheckboxes = showCheckboxes;
+    this.updateCanSubmit = updateCanSubmit;
     this.app = app;
     this.charities = [];
-    this.validator2 = new FormValidator(validator, results => this.updateCanSubmit2(results));
+    this.validator2 = new FormValidator(validator, results => this.updateCanSubmit(results, this));
     this.controller2 = controllerFactory.createForCurrentScope(this.validator2);
     this.controller2.validateTrigger = validateTrigger.changeOrBlur;
     this.canSubmit2 = false;
@@ -140,35 +141,35 @@ export class Charity {
       .on(this.updateCharity);
   }
 
-  updateCanSubmit2(validationResults) {
-    let valid = true;
-    const nub = document.getElementsByClassName('updateButton')[0];
-    if (nub !== undefined) nub.style.display = 'none';
-    for (const result of validationResults) {
-      if (result.valid === false) { valid = false; }
-    }
-    if (!valid || !this.validType2) {
-      this.canSubmit2 = false;
-      this.buildErrors();
-      return false;
-    }
-    this.canSubmit2 = true;
-    nub.style.display = 'block';
-    document.getElementById('valErrors').style.display = 'none';
-    nub.removeAttribute('disabled');
-    if (this.update) {
-      nub.setAttribute('disabled', '');
-      nub.style.cursor = 'none';
-      nub.style.backgroundColor = 'buttonface';
-      this.counter += 1;
-      if (this.counter > 8) {
-        nub.removeAttribute('disabled');
-        nub.style.cursor = 'pointer';
-        nub.style.backgroundColor = '#dfc';
-      }
-    }
-    return null;
-  }
+  // updateCanSubmit2(validationResults) {
+  //   let valid = true;
+  //   const nub = document.getElementsByClassName('updateButton')[0];
+  //   if (nub !== undefined) nub.style.display = 'none';
+  //   for (const result of validationResults) {
+  //     if (result.valid === false) { valid = false; }
+  //   }
+  //   if (!valid || !this.validType2) {
+  //     this.canSubmit2 = false;
+  //     this.buildErrors();
+  //     return false;
+  //   }
+  //   this.canSubmit2 = true;
+  //   nub.style.display = 'block';
+  //   document.getElementById('valErrors').style.display = 'none';
+  //   nub.removeAttribute('disabled');
+  //   if (this.update) {
+  //     nub.setAttribute('disabled', '');
+  //     nub.style.cursor = 'none';
+  //     nub.style.backgroundColor = 'buttonface';
+  //     this.counter += 1;
+  //     if (this.counter > 8) {
+  //       nub.removeAttribute('disabled');
+  //       nub.style.cursor = 'pointer';
+  //       nub.style.backgroundColor = '#dfc';
+  //     }
+  //   }
+  //   return null;
+  // }
 
   createCharity() {
     this.updateCharity.charityManagers[0] = this.user.name;

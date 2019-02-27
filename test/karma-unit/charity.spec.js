@@ -203,18 +203,18 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('it displays the submit or update button on the form if the form is valid', (done) => {
-    charity.activate();
-    charity.validType2 = true;
-    const validationResults = [{ valid: true }];
-    charity.update = true;
-    charity.counter = 9;
-    document.body.innerHTML = '<ul id="valErrors"></ul><button class="updateButton"></button>'
-      + '<button id="createNewCharityButton></button>';
-    charity.updateCanSubmit2(validationResults);
-    expect(charity.canSubmit2).toBe(true);
-    done();
-  });
+  // it('it displays the submit or update button on the form if the form is valid', (done) => {
+  //   charity.activate();
+  //   charity.validType2 = true;
+  //   const validationResults = [{ valid: true }];
+  //   charity.update = true;
+  //   charity.counter = 9;
+  //   document.body.innerHTML = '<ul id="valErrors"></ul><button class="updateButton"></button>'
+  //     + '<button id="createNewCharityButton></button>';
+  //   charity.updateCanSubmit2(validationResults);
+  //   expect(charity.canSubmit2).toBe(true);
+  //   done();
+  // });
 
   it('displays the create new charity webform with hidden submit button and the charities table', (done) => {
     jasmine.clock().install();
@@ -254,41 +254,41 @@ describe('the Charity Module', () => {
     done();
   });
 
-  it('it does not try to display the submit or update button if it does not exist', (done) => {
-    charity.activate();
-    charity.validType2 = true;
-    charity.controller2 = { errors: [{ _id: 123 }], validate: () => {} };
-    document.body.innerHTML = '<ul id="valErrors"></ul><button class="updateButton"></button>';
-    const validationResults = [{ valid: false }, { valid: true }, { valid: false }];
-    charity.updateCanSubmit2(validationResults);
-    expect(charity.canSubmit2).toBe(false);
-    done();
-  });
+  // it('it does not try to display the submit or update button if it does not exist', (done) => {
+  //   charity.activate();
+  //   charity.validType2 = true;
+  //   charity.controller2 = { errors: [{ _id: 123 }], validate: () => {} };
+  //   document.body.innerHTML = '<ul id="valErrors"></ul><button class="updateButton"></button>';
+  //   const validationResults = [{ valid: false }, { valid: true }, { valid: false }];
+  //   charity.updateCanSubmit2(validationResults);
+  //   expect(charity.canSubmit2).toBe(false);
+  //   done();
+  // });
 
-  it('does not disable the submit button for create new charity', (done) => {
-    charity.activate();
-    charity.validType2 = true;
-    charity.update = false;
-    document.body.innerHTML = '<ul id="valErrors"></ul><button class="updateButton" style="display:none"></button>'
-    + '<button id="createNewCharityButton></button>';
-    const validationResults = [{ valid: true }, { valid: true }, { valid: true }];
-    charity.updateCanSubmit2(validationResults);
-    expect(document.getElementsByClassName('updateButton')[0].style.display).toBe('block');
-    done();
-  });
+  // it('does not disable the submit button for create new charity', (done) => {
+  //   charity.activate();
+  //   charity.validType2 = true;
+  //   charity.update = false;
+  //   document.body.innerHTML = '<ul id="valErrors"></ul><button class="updateButton" style="display:none"></button>'
+  //   + '<button id="createNewCharityButton></button>';
+  //   const validationResults = [{ valid: true }, { valid: true }, { valid: true }];
+  //   charity.updateCanSubmit2(validationResults);
+  //   expect(document.getElementsByClassName('updateButton')[0].style.display).toBe('block');
+  //   done();
+  // });
 
-  it('disables the update button when the update form initially displays', (done) => {
-    charity.activate();
-    charity.validType2 = true;
-    charity.update = true;
-    charity.counter = 1;
-    document.body.innerHTML = '<ul id="valErrors"></ul><button class="updateButton" style="display:none"></button>'
-        + '<button id="createNewCharityButton></button>';
-    const validationResults = [{ valid: true }, { valid: true }, { valid: true }];
-    charity.updateCanSubmit2(validationResults);
-    expect(document.getElementsByClassName('updateButton')[0].disabled).toBe(true);
-    done();
-  });
+  // it('disables the update button when the update form initially displays', (done) => {
+  //   charity.activate();
+  //   charity.validType2 = true;
+  //   charity.update = true;
+  //   charity.counter = 1;
+  //   document.body.innerHTML = '<ul id="valErrors"></ul><button class="updateButton" style="display:none"></button>'
+  //       + '<button id="createNewCharityButton></button>';
+  //   const validationResults = [{ valid: true }, { valid: true }, { valid: true }];
+  //   charity.updateCanSubmit2(validationResults);
+  //   expect(document.getElementsByClassName('updateButton')[0].disabled).toBe(true);
+  //   done();
+  // });
 
   it('does not display charity types when there are none', (done) => {
     document.body.innerHTML = '<ul id="valErrors"></ul><button class="updateButton" style="display:none"></button>'
