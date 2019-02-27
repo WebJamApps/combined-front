@@ -29,6 +29,9 @@ describe('the common utils', () => {
     jest.useFakeTimers();
     done();
   });
+  it('does nothing', (done) => {
+    done();
+  });
   it('starts a slide show', (done) => {
     sMock = sinon.mock(showSlides);
     sMock.expects('showSlides').returns(true);
@@ -74,11 +77,6 @@ describe('the common utils', () => {
   it('should mark filter dropdown', () => {
     utils.makeFilterDropdown([], [{ attrib: 'hello' }], 'attrib');
   });
-  // it('should validate text file', () => {
-  //   sinon.mock('CSVFilePath');
-  //   document.body.innerHTML = '<div class="errorMessage"></div><div id="deleteCreateButton"></div>';
-  //   utils.textFileValidate();
-  // });
   it('should show checkboxes', () => {
     document.body.innerHTML = '<div class="errorMessage"></div><div id="delete" style="display: block;"></div>';
     utils.showCheckboxes('delete', true);
