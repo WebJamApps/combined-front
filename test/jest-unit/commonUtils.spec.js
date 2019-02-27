@@ -84,4 +84,32 @@ describe('the common utils', () => {
     utils.showCheckboxes('delete', true);
     utils.showCheckboxes('delete', false);
   });
+  it('should enable submit button and hide validation errors on create charity form', (done) => {
+    document.body.innerHTML = '<div><button class="updateButton"></button><div id="valErrors" class="errorMessage"></div>'
+    + '<div id="delete" style="display: block;"></div></div>';
+    const result = utils.updateCanSubmit([{ valid: true }], { validType2: true });
+    expect(result).toBe(null);
+    done();
+  });
+  it('should enable submit button and hide validation errors on update charity form', (done) => {
+    document.body.innerHTML = '<div><button class="updateButton"></button><div id="valErrors" class="errorMessage"></div>'
+    + '<div id="delete" style="display: block;"></div></div>';
+    const result = utils.updateCanSubmit([{ valid: true }], { validType2: true, update: true, counter: 8 });
+    expect(result).toBe(null);
+    done();
+  });
+  it('should not enable submit button and it should hide validation errors on update charity form', (done) => {
+    document.body.innerHTML = '<div><button class="updateButton"></button><div id="valErrors" class="errorMessage"></div>'
+    + '<div id="delete" style="display: block;"></div></div>';
+    const result = utils.updateCanSubmit([{ valid: true }], { validType2: true, update: true, counter: 7 });
+    expect(result).toBe(null);
+    done();
+  });
+  it('should not display the submit button when form is invalid', (done) => {
+    document.body.innerHTML = '<div><button class=""></button><div id="valErrors" class="errorMessage"></div>'
+    + '<div id="delete" style="display: block;"></div></div>';
+    const result = utils.updateCanSubmit([{ valid: false }], { validType2: true, update: true, counter: 7, buildErrors() {} });
+    expect(result).toBe(false);
+    done();
+  });
 });
