@@ -90,15 +90,15 @@ describe('the Charity Module', () => {
     charity2.app.appState = new AppStateStub();
   });
 
-  it('displays the checkboxes inside a select box', (done) => {
-    document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
-    charity.showCheckboxes('types');
-    expect(document.getElementById('types').style.display).toBe('block');
-    done();
-  });
+  // it('displays the checkboxes inside a select box', (done) => {
+  //   document.body.innerHTML = '<div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;"></div>';
+  //   charity.showCheckboxes('types');
+  //   expect(document.getElementById('types').style.display).toBe('block');
+  //   done();
+  // });
 
   it('checkboxes closed', (done) => {
-    document.body.innerHTML = '  <div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;display:block"></div>';
+    document.body.innerHTML = '<div id="types" horizontal-align="right" vertical-align="top" style="margin-top:25px;display:block"></div>';
     charity.showCheckboxes('types');
     expect(document.getElementById('types').style.display).toBe('none');
     done();
