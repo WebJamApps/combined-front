@@ -2,6 +2,36 @@ const csvjson = require('csvjson');
 const filesaver = require('file-saver');
 const showSlides = require('./showSlides');
 
+exports.updateCanSubmit = function updateCanSubmit(validationResults, controller) {
+  let valid = true;
+  const nub = document.getElementsByClassName('updateButton')[0];
+  if (nub !== undefined) nub.style.display = 'none';
+  for (const result of validationResults) {
+    if (result.valid === false) { valid = false; }
+  }
+  if (!valid || !controller.validType2) {
+    controller.canSubmit2 = false;
+    controller.buildErrors();
+    return false;
+  }
+  controller.canSubmit2 = true;
+  nub.style.display = 'block';
+  document.getElementById('valErrors').style.display = 'none';
+  nub.removeAttribute('disabled');
+  if (controller.update) {
+    nub.setAttribute('disabled', '');
+    nub.style.cursor = 'none';
+    nub.style.backgroundColor = 'buttonface';
+    controller.counter += 1;
+    if (controller.counter > 8) {
+      nub.removeAttribute('disabled');
+      nub.style.cursor = 'pointer';
+      nub.style.backgroundColor = '#dfc';
+    }
+  }
+  return null;
+};
+
 exports.fixDates = function fixDates(myevents) {
   for (let i = 0; i < myevents.length; i += 1) {
     const startDate = myevents[i].voStartDate;

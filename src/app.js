@@ -201,7 +201,7 @@ export class App {
     }
   }
 
-  toggleMenu() {
+  toggleMenu() { // makes the widescreen side menu only display the icons and is only used for web-jam.com
     const dc = document.getElementsByClassName('drawer-container')[0];
     const nl = document.getElementsByClassName('nav-list')[0];
     if (this.fullmenu) {
