@@ -9,7 +9,7 @@
   },
   "author": "HandlersAndKickers",
   "engines": {
-    "node": ">=11.9.0"
+    "node": ">=11.10.0"
   },
   "files": [
     "webpack.config.js",
@@ -100,7 +100,7 @@
     "webpack": "latest",
     "webpack-bundle-analyzer": "latest",
     "webpack-cli": "latest",
-    "wj-common-front":"latest"
+    "wj-common-front": "latest"
   },
   "peerDependencies": {},
   "devDependencies": {
@@ -142,7 +142,7 @@
     "karma-coverage-istanbul-reporter": "latest",
     "karma-jasmine": "latest",
     "karma-mocha-reporter": "latest",
-    "karma-webpack": "^4.0.0-rc.3",
+    "karma-webpack": "^4.0.0-rc.6",
     "protractor": "^5.4.1",
     "sinon": "latest",
     "stylelint": "latest",
@@ -150,8 +150,13 @@
     "webpack-dev-server": "latest"
   },
   "scripts": {
+    "cc": "codeclimate analyze -f html > codeclimate.html",
     "start": "nps",
-    "test": "yarn run test:html && yarn run test:stylelint && npm run test:lint && rm -rf coverage && npm run test:jest && npm run test:jest-react && npm run test:karma && npm run combine-coverage && npm run protractor",
+    "test:lint-fix": "yarn test:html && yarn test:stylelint && nps test.lint.fix",
+    "test:lint": "yarn test:html && yarn test:stylelint && nps test.lint",
+    "test:unit": "rm -rf coverage && npm run test:jest && npm run test:jest-react && npm run test:karma && npm run combine-coverage",
+    "test": "yarn test:lint && yarn test:unit && nps e2e",
+    "test:local": "yarn test:lint-fix && yarn test:unit && nps e2e && yarn cc",
     "combine-coverage": "istanbul-combine -d coverage -p none -r lcov -r html coverage/jest-react/coverage-final.json coverage/jest/coverage-final.json coverage/coverage-karma/coverage-final.json",
     "test:jest": "cross-env NODE_ENV=test && jest --no-cache --config jest.config.json --notify",
     "protest": "nps test",
@@ -159,7 +164,6 @@
     "test:jest-react-u": "nps test.react.accept",
     "test:karma": "cross-env NODE_ENV=test nps test.karma",
     "test:debug": "cross-env NODE_ENV=test nps test.karma.debug",
-    "test:lint": "nps test.lint",
     "installglobals": "npm i -g npm@latest && npm i -g yarn@latest",
     "cleaninstall": "rm -rf yarn.lock && rm -rf node_modules && yarn cache clean && yarn install",
     "snyk-protect": "snyk protect",
