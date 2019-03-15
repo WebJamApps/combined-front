@@ -83,7 +83,7 @@ export class Librarian {
   }
 
   createBook() {
-    this.app.httpClient.fetch('/book/create', {
+    this.app.httpClient.fetch('/book', {
       method: 'post',
       body: json(this.newBook)
     })
@@ -94,7 +94,7 @@ export class Librarian {
 
   async deleteBooks() {
     await fetch;
-    this.app.httpClient.fetch('/book/deleteall', {
+    this.app.httpClient.fetch('/book', {
       method: 'delete'
     });
     this.app.router.navigate('/bookshelf');
@@ -102,7 +102,7 @@ export class Librarian {
 
   async deleteCreateBooks() {
     await fetch;
-    this.app.httpClient.fetch('/book/deleteall', {
+    this.app.httpClient.fetch('/book', {
       method: 'delete'
     }).then(() => {
       this.createBooksFromCSV();
@@ -114,7 +114,7 @@ export class Librarian {
     const httpClient = this.app.httpClient;
     const router = this.app.router;
     async function makeLotaBooks(jsonObject) {
-      httpClient.fetch('/book/create', {
+      httpClient.fetch('/book', {
         method: 'post',
         body: json(jsonObject)
       })
