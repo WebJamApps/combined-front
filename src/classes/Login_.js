@@ -182,7 +182,7 @@ class Login_ {
           loginform1[0].style.display = 'none';
           /* istanbul ignore if */
           if (process.env.NODE_ENV !== 'test') {
-            window.location.assign(`${front}/userutil/?email=${data.email}&form=reset`);
+            window.location.assign(`${feurl}/userutil/?email=${data.email}&form=reset`);
           }
         }
       })

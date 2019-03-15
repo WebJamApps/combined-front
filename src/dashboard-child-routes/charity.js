@@ -252,7 +252,7 @@ export class Charity {
 
   async findUserByEmail(thenDo) {
     await fetch;
-    this.app.httpClient.fetch('/user/', {
+    this.app.httpClient.fetch('/user', {
       method: 'post',
       body: json({ email: this.updateCharity.charityEmail })
     })

@@ -21,14 +21,7 @@ export class App {
     this.style = 'wj';
     this.appUtils = appUtils;
   }
-  //
-  // email = '';
-  //
-  // password = '';
-
   authenticated = false;
-
-  // token = '';
 
   @bindable
   drawerWidth = '182px';
@@ -196,9 +189,7 @@ export class App {
   }
 
   close() {
-    if (!this.widescreen) {
-      this.toggleMobileMenu('close');
-    }
+    if (!this.widescreen) this.toggleMobileMenu('close');
   }
 
   toggleMenu() { // makes the widescreen side menu only display the icons and is only used for web-jam.com
@@ -405,7 +396,7 @@ export class App {
 
   get widescreen() {
     return this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 900,
-      $(document.getElementsByClassName('drawer')).parent());
+      $(document.getElementsByClassName('drawer')).parent(), 'returnIsWide');
   }
 
   attached() {

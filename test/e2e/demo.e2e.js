@@ -3,7 +3,7 @@ import { PageObjectSkeleton } from './skeleton.po';
 const config = require('../protractor.conf').config;
 
 
-describe('aurelia skeleton app', () => {
+describe('combined-front', () => {
   // let poWelcome;
   let poSkeleton;
 
