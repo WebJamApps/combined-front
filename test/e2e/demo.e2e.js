@@ -21,11 +21,6 @@ describe('combined-front', () => {
     await expect(poSkeleton.getCurrentPageTitle()).toBe('Web Jam LLC');
   });
 
-  it('should navigate to Music page', async () => {
-    await poSkeleton.navigateTo('/music');
-    await expect(poSkeleton.getCurrentPageTitle()).toBe('Music | Web Jam LLC');
-  });
-
   it('should navigate to OHAF page', async () => {
     await poSkeleton.navigateTo('/ohaf');
     await expect(poSkeleton.getCurrentPageTitle()).toBe('OHAF | Web Jam LLC');

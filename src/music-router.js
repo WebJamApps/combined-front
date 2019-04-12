@@ -4,9 +4,6 @@ export class MusicRouter {
   configureRouter(config, router) {
     config.map([
       {
-        route: '', name: 'music', moduleId: PLATFORM.moduleName('./music'), nav: true, title: 'Music'
-      },
-      {
         route: 'originals', name: 'originals', moduleId: PLATFORM.moduleName('./music-child-routes/originals'), nav: true, title: 'Original Songs'
       },
       {
@@ -15,12 +12,6 @@ export class MusicRouter {
       {
         route: 'pub', name: 'pub', moduleId: PLATFORM.moduleName('./music-child-routes/pub'), nav: true, title: 'Pub Songs'
       },
-      {
-        route: 'songs', name: 'songs', moduleId: PLATFORM.moduleName('./music-child-routes/songs'), nav: true, title: 'Songs'
-      },
-      {
-        route: 'buymusic', name: 'buymusic', moduleId: PLATFORM.moduleName('./music-child-routes/buymusic'), nav: true, title: 'Buy Music'
-      }
     ]);
     this.router = router;
   }
