@@ -73,7 +73,7 @@
     "html-loader": "latest",
     "html-webpack-plugin": "latest",
     "jasmine-spec-reporter": "latest",
-    "jquery": "latest",
+    "jquery": "3.4.0",
     "material-ui-time-picker": "latest",
     "mini-css-extract-plugin": "latest",
     "minimatch": "latest",
