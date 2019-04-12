@@ -19,22 +19,25 @@
           <div id="loginTT" style="display:none;position:absolute;top:65px;right:68px;background-color:white;padding:3px">Login</div>
           <div class="menu-item" if.bind="!authenticated && Menu !== 'ohaf'">
             <a paper-drawer-toggle href="/login" class="nav-link" click.delegate="(close() || 1) && wjLogin()">
-              <span mouseover.delegate="showTT('loginTT')" mouseout.delegate="hideTT('loginTT')" class="fa fa-sign-in"></span>
+              <!-- <span mouseover.delegate="showTT('loginTT')" mouseout.delegate="hideTT('loginTT')" class="fa fa-sign-in"></span> -->
+              <span class="fa fa-sign-in"></span>
               <span if.bind="fullmenu" class="nav-item">Login</span>
             </a>
           </div>
           <div id="LoginOhafTT" style="display:none;position:absolute;top:65px;right:68px;background-color:white;padding:3px">Login</div>
           <div class="menu-item" if.bind="!authenticated && Menu === 'ohaf'">
             <a click.delegate="(close() || 1) && ohafLogin()" class="nav-link">
-              <span mouseover.delegate="showTT('LoginOhafTT')" mouseout.delegate="hideTT('LoginOhafTT')" class="fa fa-sign-in nav-item" style="text-decoration:none">
-              </span>
+              <!-- <span mouseover.delegate="showTT('LoginOhafTT')" mouseout.delegate="hideTT('LoginOhafTT')" class="fa fa-sign-in nav-item" style="text-decoration:none"> -->
+              <!-- </span> -->
+              <span class="fa fa-sign-in nav-item" style="text-decoration:none"></span>
               <span if.bind="fullmenu" class="nav-item">Login</span>
             </a>
           </div>
           <div id="registerTT" style="display:none;position:absolute;top:113px;right:68px;background-color:white;padding:3px">Register</div>
           <div class="menu-item" if.bind="!authenticated">
             <a paper-drawer-toggle href="/register" class="nav-link" click.delegate="(close() || 1)">
-              <span mouseover.delegate="showTT('registerTT')" mouseout.delegate="hideTT('registerTT')" class="fa fa-user-plus"></span>
+              <!-- <span mouseover.delegate="showTT('registerTT')" mouseout.delegate="hideTT('registerTT')" class="fa fa-user-plus"></span> -->
+              <span class="fa fa-user-plus"></span>
               <span if.bind="fullmenu" class="nav-item">Register</span>
             </a>
           </div>
@@ -53,21 +56,24 @@
           <div id="OHAFTT" style="display:none;position:absolute;top:161px;right:68px;background-color:white;padding:3px">OHAF</div>
           <div class="menu-item" if.bind="(Menu == 'wj' && currentRoute !=='sc2rs') || Menu =='volunteer' || Menu =='charity' || (Menu =='user-account' && (role =='Charity' || role =='Volunteer'))">
             <a paper-drawer-toggle href="/ohaf" class="nav-link" click.delegate="close()">
-              <span mouseover.delegate="showTT('OHAFTT')" mouseout.delegate="hideTT('OHAFTT')" class="fa fa-handshake-o"></span>
+              <!-- <span mouseover.delegate="showTT('OHAFTT')" mouseout.delegate="hideTT('OHAFTT')" class="fa fa-handshake-o"></span> -->
+              <span class="fa fa-handshake-o"></span>
               <span class="nav-item" if.bind="fullmenu">OHAF</span>
             </a>
           </div>
           <div id="sc2rsTT" style="display:none;position:absolute;top:209px;right:68px;background-color:white;padding:3px">SC2RS</div>
           <div class="menu-item" if.bind="Menu == 'wj' && currentRoute !=='sc2rs'">
             <a paper-drawer-toggle href="/sc2rs" class="nav-link" click.delegate="close()">
-              <span mouseover.delegate="showTT('sc2rsTT')" mouseout.delegate="hideTT('sc2rsTT')" class="fa fa-microphone"></span>
+              <!-- <span mouseover.delegate="showTT('sc2rsTT')" mouseout.delegate="hideTT('sc2rsTT')" class="fa fa-microphone"></span> -->
+              <span class="fa fa-microphone"></span>
               <span class="nav-item" if.bind="fullmenu">SC2RS</span>
             </a>
           </div>
           <div id="libTT" style="display:none;position:absolute;top:257px;right:68px;background-color:white;padding:3px">Library</div>
           <div class="menu-item" if.bind="(Menu=='wj' && curentRoute !=='library' && currentRoute !=='sc2rs') || Menu=='reader' || Menu=='librarian' || Menu=='bookshelf' || (currentRouteFrag =='/dashboard/user-account' && (role == 'Librarian' || role == 'Reader'))">
             <a paper-drawer-toggle href="/library" class="nav-link" click.delegate="close()">
-              <span mouseover.delegate="showTT('libTT')" mouseout.delegate="hideTT('libTT')" class="fa fa-book"></span>
+              <!-- <span mouseover.delegate="showTT('libTT')" mouseout.delegate="hideTT('libTT')" class="fa fa-book"></span> -->
+              <span class="fa fa-book"></span>
               <span class="nav-item" if.bind="fullmenu">Library</span>
             </a>
           </div>
@@ -103,40 +109,28 @@
           </div>
           <div id="musTT" style="display:none;position:absolute;top:305px;right:68px;background-color:white;padding:3px">Music</div>
           <div class="menu-item" if.bind="(Menu == 'wj' && currentRoute !='sc2rs' && currentRouteFrag !='/music') || (Menu =='music'  && currentRouteFrag !='/music')">
-            <a paper-drawer-toggle href="/music" class="nav-link" click.delegate="close()">
-              <span mouseover.delegate="showTT('musTT')" mouseout.delegate="hideTT('musTT')" class="fa fa-music"></span>
+            <a paper-drawer-toggle class="nav-link" click.delegate="navMusic()">
+              <!-- <span mouseover.delegate="showTT('musTT')" mouseout.delegate="hideTT('musTT')" class="fa fa-music"></span> -->
+              <span style="color:#23527c" class="fa fa-music"></span>
               <span class="nav-item" if.bind="fullmenu">Music</span>
             </a>
           </div>
           <div class="menu-item" if.bind="Menu =='music'">
-            <a paper-drawer-toggle href="/music/originals" class="nav-link" click.delegate="close()">
+            <a paper-drawer-toggle href="/wj-music/originals" class="nav-link" click.delegate="close()">
               <span class="fa fa-lightbulb-o"></span>
               <span class="nav-item" if.bind="fullmenu">Originals</span>
             </a>
           </div>
           <div class="menu-item" if.bind="Menu =='music'">
-            <a paper-drawer-toggle href="/music/mission" class="nav-link" click.delegate="close()">
+            <a paper-drawer-toggle href="/wj-music/mission" class="nav-link" click.delegate="close()">
               <span class="fa fa-crosshairs"></span>
               <span class="nav-item" if.bind="fullmenu">Mission Music</span>
             </a>
           </div>
           <div class="menu-item" if.bind="Menu =='music'">
-            <a paper-drawer-toggle href="/music/pub" class="nav-link" click.delegate="close()">
+            <a paper-drawer-toggle href="/wj-music/pub" class="nav-link" click.delegate="close()">
               <span class="fa fa-beer"></span>
               <span class="nav-item" if.bind="fullmenu">Pub Songs</span>
-            </a>
-          </div>
-          <!-- TODO put back after prod release -->
-          <!-- <div class="menu-item" if.bind="Menu =='music'">
-            <a paper-drawer-toggle href="/music/songs" class="nav-link" click.delegate="close()">
-              <span class="fa fa-music"></span>
-              <span class="nav-item" if.bind="fullmenu">Songs</span>
-            </a>
-          </div> -->
-          <div class="menu-item" if.bind="Menu =='music'">
-            <a paper-drawer-toggle href="/music/buymusic" class="nav-link" click.delegate="close()">
-              <span class="fa fa-money"></span>
-              <span class="nav-item" if.bind="fullmenu">Buy Music</span>
             </a>
           </div>
           <div class="menu-item" if.bind="(Menu !='wj' && currentRouteFrag !='/dashboard/charity' && currentRouteFrag !='/dashboard/volunteer' && currentRouteFrag !='/dashboard/librarian' && currentRouteFrag !='/dashboard/reader' && currentRouteFrag !='/dashboard/user-account')|| currentRoute=='login' || currentRoute=='register' || currentRoute=='sc2rs'">
