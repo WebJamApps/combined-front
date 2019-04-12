@@ -20,6 +20,7 @@ export class App {
     this.menuToggled = false;
     this.style = 'wj';
     this.appUtils = appUtils;
+    this.backend = '';
   }
   authenticated = false;
 
@@ -56,6 +57,10 @@ export class App {
 
   showForm(appName, className) {
     className.startup(appName);
+  }
+
+  navMusic() {
+    return window.location.assign(`${process.env.BackendUrl}/music`);
   }
 
   async authenticate(name) {
@@ -133,7 +138,7 @@ export class App {
         route: 'bookshelf', name: 'bookshelf', moduleId: PLATFORM.moduleName('./bookshelf'), nav: false, title: 'Bookshelf', settings: 'fa fa-book'
       },
       {
-        route: 'music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: false, title: '', settings: 'fa fa-music'
+        route: 'wj-music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: false, title: '', settings: 'fa fa-music'
       },
       {
         route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: false, title: '', settings: 'fa fa-home'
