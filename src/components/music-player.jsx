@@ -39,16 +39,18 @@ export class MusicPlayer {
   }
 
   reactPlayer() {
-    return (<ReactPlayer
-      style={{ backgroundColor: '#eee', textAlign: 'center' }}
-      url={this.url.url}
-      playing={this.playing}
-      controls
-      onEnded={this.playEnd}
-      width="100%"
-      id="mainPlayer"
-      config={{ file: { attributes: { controlsList: 'nodownload' } } }}
-    />)
+    return (
+      <ReactPlayer
+        style={{ backgroundColor: '#eee', textAlign: 'center' }}
+        url={this.url.url}
+        playing={this.playing}
+        controls
+        onEnded={this.playEnd}
+        width="100%"
+        id="mainPlayer"
+        config={{ file: { attributes: { controlsList: 'nodownload' } } }}
+      />
+    );
   }
 
   buttons() {
@@ -63,7 +65,7 @@ export class MusicPlayer {
           <a id="homeLink" href="/?reload=true">Home</a>
         </button>
       </section>
-    )
+    );
   }
 
   get html() {
@@ -96,7 +98,7 @@ export class MusicPlayer {
   pressKey() {}
 
   get playUrl() {
-    return `${document.location.origin}/music/${this.url.category}?oneplayer=true&id=${this.url.id}`;
+    return `${document.location.origin}/wj-music/${this.url.category}?oneplayer=true&id=${this.url.id}`;
   }
 
   /**
