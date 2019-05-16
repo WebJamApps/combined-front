@@ -47,9 +47,7 @@ export class App {
     await this.appUtils.checkUser(this);
   }
 
-  showTT(id) {
-    document.getElementById(id).style.display = 'block';
-  }
+  showTT(id) { document.getElementById(id).style.display = 'block'; }
 
   hideTT(id) {
     document.getElementById(id).style.display = 'none';
