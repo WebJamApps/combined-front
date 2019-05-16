@@ -3,9 +3,9 @@ export class MusicRouter {
 
   configureRouter(config, router) {
     config.map([
-      {
-        route: 'originals', name: 'originals', moduleId: PLATFORM.moduleName('./music-child-routes/originals'), nav: true, title: 'Original Songs'
-      },
+      // {
+      //   route: 'originals', name: 'originals', moduleId: PLATFORM.moduleName('./music-child-routes/originals'), nav: true, title: 'Original Songs'
+      // },
       {
         route: 'mission', name: 'mission', moduleId: PLATFORM.moduleName('./music-child-routes/mission'), nav: true, title: 'Mission Music'
       },

@@ -27,6 +27,7 @@ const configForDevelopment = {
       url: '/user/auth/google',
       clientId: process.env.GoogleClientId
     }
+    //
     // ,
     // linkedin:{
     //     clientId:'778mif8zyqbei7'
