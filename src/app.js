@@ -57,8 +57,8 @@ export class App {
     className.startup(appName);
   }
 
-  navMusic() {
-    return window.location.assign(`${process.env.BackendUrl}/music`);
+  navMusic(child) {
+    return window.location.assign(`${process.env.BackendUrl}/music${child}`);
   }
 
   async authenticate(name) {
