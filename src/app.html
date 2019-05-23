@@ -109,15 +109,15 @@
           </div>
           <div id="musTT" style="display:none;position:absolute;top:305px;right:68px;background-color:white;padding:3px">Music</div>
           <div class="menu-item" if.bind="(Menu == 'wj' && currentRoute !='sc2rs' && currentRouteFrag !='/music') || (Menu =='music'  && currentRouteFrag !='/music')">
-            <a paper-drawer-toggle class="nav-link" click.delegate="navMusic()">
+            <a paper-drawer-toggle class="nav-link" click.delegate="navMusic('')">
               <!-- <span mouseover.delegate="showTT('musTT')" mouseout.delegate="hideTT('musTT')" class="fa fa-music"></span> -->
               <span style="color:#23527c" class="fa fa-music"></span>
               <span class="nav-item" if.bind="fullmenu">Music</span>
             </a>
           </div>
           <div class="menu-item" if.bind="Menu =='music'">
-            <a paper-drawer-toggle href="/wj-music/originals" class="nav-link" click.delegate="close()">
-              <span class="fa fa-lightbulb-o"></span>
+            <a paper-drawer-toggle class="nav-link" click.delegate="navMusic('/originals')">
+              <span style="color:#23527c" class="fa fa-lightbulb-o"></span>
               <span class="nav-item" if.bind="fullmenu">Originals</span>
             </a>
           </div>
