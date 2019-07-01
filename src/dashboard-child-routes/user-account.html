@@ -1,29 +1,29 @@
 <template>
   <div class="page-content">
     <div>
-      <h3 class="ohaf" style="margin:auto; padding-top:20px; padding-bottom:20px;text-align:center"><strong>User Account</strong></h3>
+      <h3 class="ohaf" style="margin: auto; padding-top: 20px; padding-bottom: 20px;text-align: center"><strong>User Account</strong></h3>
     </div>
-  <div class="material-content elevation3" style="max-width:5in; margin:auto">
+  <div class="material-content elevation3" style="max-width: 5in; margin: auto">
     <h4 class="material-header-h4"><strong><i>Update Your Info</i></strong></h4>
     <form>
       <p if.bind="isGoogleEmail"><strong>User Name:</strong> <i>${user.name}</i></p>
       <div show.bind="!isGoogleEmail">
-        <label style="margin-top:0;padding-top:0">First & Last Name (required)</label>
-        <input value.two-way="user.name & validate" style="margin-bottom:12px; min-width:3in">
+        <label style="margin-top: 0;padding-top: 0">First & Last Name (required)</label>
+        <input value.two-way="user.name & validate" style="margin-bottom: 12px; min-width: 3in">
       </div>
-      <label style="margin-top:0;padding-top:0">Email (required)</label>
-      <input value.two-way="user.email & validate" style="min-width:3in">
-      <label style="margin-top:15px; padding-top:0;max-height:30px">Primary User Type<span if.bind="!canChangeUserType">:<i style="font-weight:normal;"> ${user.userType}</i><br><br></span></label>
-      <select if.bind="canChangeUserType" id="type" class="form-control" value.two-way="newUserType" style="width: 2in; margin-bottom:20px">
+      <label style="margin-top: 0;padding-top: 0">Email (required)</label>
+      <input value.two-way="user.email & validate" style="min-width: 3in">
+      <label style="margin-top: 15px; padding-top: 0;max-height: 30px">Primary User Type<span if.bind="!canChangeUserType">:<i style="font-weight: normal;"> ${user.userType}</i><br><br></span></label>
+      <select if.bind="canChangeUserType" id="type" class="form-control" value.two-way="newUserType" style="width: 2in; margin-bottom: 20px">
         <option repeat.for="type of userTypes" model.bind="type">${type}</option>
       </select>
-      <label if.bind="canChangeUserType" style="display: inline;margin-right:20px" repeat.for="stat of status">
-        <input style="min-width:10px;" type="radio" name="uStat" value.bind="stat" checked.bind="user.userStatus" change.delegate="showUpdateButton()" />
+      <label if.bind="canChangeUserType" style="display: inline;margin-right: 20px" repeat.for="stat of status">
+        <input style="min-width: 10px;" type="radio" name="uStat" value.bind="stat" checked.bind="user.userStatus" change.delegate="showUpdateButton()" />
         ${stat}
       </label>
       <p if.bind="!canChangeUserType"><i>You are not allowed to change or disable your primary user type for the following reasons:</i></p>
       <ul if.bind="!canChangeUserType" innerhtml.bind="changeReasons"></ul>
-      <label style="margin-top:10px">Street Address</label>
+      <label style="margin-top: 10px">Street Address</label>
       <input value.two-way="user.userStreetAddress & validate">
       <label>City (required)</label>
       <input value.two-way="user.userCity & validate">
@@ -34,32 +34,32 @@
       </select>
       <label>Zipcode (required)</label>
       <input value.two-way="user.userZip & validate">
-      <label style="margin-top:20px;">10 Digit Phone # (optional)</label>
-      <input type="number" style="max-width: 1.25in; margin:auto; padding:5px" class="newUserForm" value.bind="user.userPhone & validate" required>
+      <label style="margin-top: 20px;">10 Digit Phone # (optional)</label>
+      <input type="number" style="max-width: 1.25in; margin: auto; padding: 5px" class="newUserForm" value.bind="user.userPhone & validate" required>
       <label>Short Bio</label>
       <textarea value.two-way="user.userDetails & validate" rows="5" cols="33"></textarea>
-      <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding:10px">
+      <div validation-errors.bind="errors" class="form-group" style="max-width: 2in;padding: 10px">
         <ul if.bind="controller.errors">
-          <li repeat.for="error of controller.errors" style="margin-left:-24px; color:red; width:2in">
+          <li repeat.for="error of controller.errors" style="margin-left: -24px; color: red; width: 2in">
             ${error.message}
           </li>
         </ul>
-        <div class="formErrors" style="color:red"></div>
+        <div class="formErrors" style="color: red"></div>
       </div>
-      <div style="margin-top:-40px">
+      <div style="margin-top: -40px">
       <button id="updateUserButton" class="button-lib" raised click.trigger="updateUser()">update</button>
     </div>
       </form>
     </div>
     <p>&nbsp;</p>
-    <div if.bind="canDelete" class="elevation2" style="padding:5px;max-width:5in; margin:auto">
-      <h4 style="text-align:center;">Delete Your User Account</h4>
-      <div style="margin:auto; text-align:center">
-        <button style="width:1in;margin:auto; text-align:center; font-size:10pt" class="button-lib" raised click.trigger="deleteUser()">
+    <div if.bind="canDelete" class="elevation2" style="padding: 5px;max-width: 5in; margin: auto">
+      <h4 style="text-align: center;">Delete Your User Account</h4>
+      <div style="margin: auto; text-align: center">
+        <button style="width: 1in;margin: auto; text-align: center; font-size: 10pt" class="button-lib" raised click.trigger="deleteUser()">
           Delete User
         </button>
       </div>
-    <button if.bind="user.userStatus === 'disabled'" style="width:1.2in; margin-right:40%; margin-left:60%; margin-top:0" class="button-lib" raised click.trigger="disableUser('enabled')">
+    <button if.bind="user.userStatus === 'disabled'" style="width: 1.2in; margin-right: 40%; margin-left: 60%; margin-top: 0" class="button-lib" raised click.trigger="disableUser('enabled')">
     Re-enable User
   </button>
 </div>
