@@ -1,8 +1,15 @@
 {
   "plugins": ["node", "security", "jest", "react", "html"],
-  "extends": ["./node_modules/aurelia-tools/.eslintrc.json", "airbnb",
-    "plugin:jest/recommended", "plugin:security/recommended", "plugin:node/recommended"
+  "extends": [
+    "./node_modules/aurelia-tools/.eslintrc.json",
+    "airbnb",
+    "plugin:jest/recommended",
+    "plugin:security/recommended",
+    "plugin:node/recommended"
   ],
+  "parserOptions": {
+    "sourceType": "module"
+  },
   "rules": {
     "security/detect-possible-timing-attacks": 0,
     "lines-between-class-members": "off",
@@ -33,14 +40,20 @@
     "jest/valid-expect-in-promise": "off",
     "jest/no-jasmine-globals": "off",
     "import/prefer-default-export": [0, "never"],
-    "max-len": ["error", {
-      "code": 150
-    }],
+    "max-len": [
+      "error",
+      {
+        "code": 150
+      }
+    ],
     "one-var-declaration-per-line": [0, "never"],
-    "one-var": [2, {
-      "var": "never",
-      "let": "always",
-      "const": "never"
-    }]
+    "one-var": [
+      2,
+      {
+        "var": "never",
+        "let": "always",
+        "const": "never"
+      }
+    ]
   }
 }
