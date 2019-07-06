@@ -62,6 +62,8 @@
     "copy-webpack-plugin": "latest",
     "css-loader": "latest",
     "csvjson": "latest",
+    "core-js": "latest",
+    "regenerator-runtime": "latest",
     "dotenv": "latest",
     "expose-loader": "latest",
     "extract-text-webpack-plugin": "next",
@@ -116,7 +118,7 @@
     "enzyme": "latest",
     "enzyme-adapter-react-16": "latest",
     "enzyme-react-16-adapter-setup": "latest",
-    "eslint": "latest",
+    "eslint": "^5.0.0",
     "eslint-config-airbnb": "latest",
     "eslint-plugin-import": "latest",
     "eslint-plugin-jest": "latest",
@@ -144,7 +146,6 @@
     "karma-jasmine": "latest",
     "karma-mocha-reporter": "latest",
     "karma-webpack": "^4.0.0-rc.6",
-    "protractor": "5.4.2",
     "sinon": "latest",
     "stylelint": "latest",
     "stylelint-config-standard": "latest",
@@ -156,7 +157,7 @@
     "test:lint-fix": "yarn test:html && yarn test:stylelint && nps test.lint.fix",
     "test:lint": "yarn test:html && yarn test:stylelint && nps test.lint",
     "test:unit": "rm -rf coverage && npm run test:jest && npm run test:jest-react && npm run test:karma && npm run combine-coverage",
-    "test": "yarn test:lint && yarn test:unit && nps e2e",
+    "test": "yarn test:lint && yarn test:unit",
     "test:local": "yarn test:lint-fix && yarn test:unit && nps e2e && yarn cc",
     "combine-coverage": "istanbul-combine -d coverage -p none -r lcov -r html coverage/jest-react/coverage-final.json coverage/jest/coverage-final.json coverage/coverage-karma/coverage-final.json",
     "test:jest": "cross-env NODE_ENV=test && jest --no-cache --config jest.config.json --notify",
@@ -173,8 +174,7 @@
     "postinstall": "npm run fix:aurelia-val && npm start -- build",
     "protractor": "nps e2e",
     "test:stylelint": "stylelint \"src/**/*.html\" && stylelint \"static/**/*.css\"",
-    "test:html": "htmlhint src/**/*.html",
-    "prepublish": "npm run snyk-protect"
+    "test:html": "htmlhint src/**/*.html"
   },
   "snyk": true
 }

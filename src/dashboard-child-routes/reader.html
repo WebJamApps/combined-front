@@ -1,24 +1,24 @@
 <template>
   <div class="page-content">
-    <h3 style="margin-bottom: 10px; text-align:center">Book Checkout / Checkin</h3>
-    <div style="margin-bottom:20px">
-      <div class="search-table-outer" style="position:relative; overflow-x:auto">
+    <h3 style="margin-bottom: 10px; text-align: center">Book Checkout / Checkin</h3>
+    <div style="margin-bottom: 20px">
+      <div class="search-table-outer" style="position: relative; overflow-x: auto">
         <table aurelia-table="data.bind: books; display-data.bind: $displayData" class="bookshelf">
           <thead>
             <tr>
-              <th style="padding:8px" aut-sort="key: checkedOutByName">Action</th>
-              <th style="padding:8px" aut-sort="key: title; default: asc">Title</th>
-              <th style="padding:8px">Type</th>
-              <th style="padding:8px">Author</th>
-              <th style="padding:8px">Pages</th>
-              <th style="padding:8px">Year</th>
-              <th style="padding:8px" aut-sort="key: siteLocation">Location</th>
-              <th style="padding:8px">Comments</th>
+              <th style="padding: 8px" aut-sort="key: checkedOutByName">Action</th>
+              <th style="padding: 8px" aut-sort="key: title; default: asc">Title</th>
+              <th style="padding: 8px">Type</th>
+              <th style="padding: 8px">Author</th>
+              <th style="padding: 8px">Pages</th>
+              <th style="padding: 8px">Year</th>
+              <th style="padding: 8px" aut-sort="key: siteLocation">Location</th>
+              <th style="padding: 8px">Comments</th>
             </tr>
           </thead>
           <tbody>
             <tr repeat.for="book of $displayData">
-              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">
+              <td style="padding: 8px" if.bind="book.type=='hardback' || book.type=='paperback'">
                 <button class="button-checkout" raised click.delegate="checkOutBook(book)"
                 if.bind = "book.checkedOutBy == '' || book.checkedOutBy === undefined">
                 Checkout
@@ -32,13 +32,13 @@
                 <span if.bind = "book.checkedOutBy!==''">Checked out by ${book.checkedOutByName}
                 </span></span></span>
               </td>
-              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.title}</td>
-              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.type}</td>
-              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.author}</td>
-              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.numberPages}</td>
-              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.dateOfPub}</td>
-              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.siteLocation}</td>
-              <td style="padding:8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.comments}</td>
+              <td style="padding: 8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.title}</td>
+              <td style="padding: 8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.type}</td>
+              <td style="padding: 8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.author}</td>
+              <td style="padding: 8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.numberPages}</td>
+              <td style="padding: 8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.dateOfPub}</td>
+              <td style="padding: 8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.siteLocation}</td>
+              <td style="padding: 8px" if.bind="book.type=='hardback' || book.type=='paperback'">${book.comments}</td>
             </tr>
           </tbody>
         </table>
