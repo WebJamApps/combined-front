@@ -92,7 +92,7 @@
     "react-slick": "latest",
     "redux": "latest",
     "slick-carousel": "latest",
-    "snyk": "^1.189.0",
+    "snyk": "^1.192.3",
     "style-loader": "latest",
     "through2": "latest",
     "uglify-js": "latest",
