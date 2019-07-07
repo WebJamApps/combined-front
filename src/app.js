@@ -286,8 +286,7 @@ export class App {
       + '<i class="fa fa-facebook-square fa-2x footerIcon"'
       + `aria-hidden="true"></i></a><a target="_blank" style="color:${color};padding-right:5px"`
       + 'href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>'
-      + `<a target="_blank" style="color:${color};padding-right:5px" href="https://plus.google.com/u/1/109586499331294076292">`
-      + '<i class="fa fa-google-plus-square fa-2x footerIcon" aria-hidden="true"></i></a><p style="color:white; font-size: 9pt;margin-bottom:0">'
+      + '<p style="color:white; font-size: 9pt;margin-bottom:0">'
       + 'Powered by <a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>';
     }
   }
