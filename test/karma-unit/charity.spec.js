@@ -230,29 +230,29 @@ describe('the Charity Module', () => {
     jasmine.clock().uninstall();
   });
 
-  it('hides the update charity button if it was displayed', (done) => {
-    charity.activate();
-    document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection">'
-    + '</div><div><button id="updateCharityButton" style="display:block">Create</button><button id="createNewCharityButton></button>';
-    charity.setupValidation2 = function setupValidation2() {};
-    charity.update = true;
-    const myCharity = {
-      charityName: 'test charity',
-      charityCity: '',
-      charityState: '',
-      charityZipCode: '',
-      charityTypes: ['Christian', 'other'],
-      charityManagers: [],
-      charityMngIds: [],
-      charityTypeOther: '',
-      charityTypesHtml: '',
-      charityEmail: ''
-    };
-    charity.controller2 = { validate() {} };
-    charity.showUpdateCharity(myCharity);
-    expect(document.getElementById('updateCharityButton').style.display).toBe('block');
-    done();
-  });
+  // it('hides the update charity button if it was displayed', (done) => {
+  //   charity.activate();
+  //   document.body.innerHTML = '<div id="charTable" style="display:none"></div><div id="updateCharitySection">'
+  //   + '</div><div><button id="updateCharityButton" style="display:block">Create</button><button id="createNewCharityButton></button>';
+  //   charity.setupValidation2 = function setupValidation2() {};
+  //   charity.update = true;
+  //   const myCharity = {
+  //     charityName: 'test charity',
+  //     charityCity: '',
+  //     charityState: '',
+  //     charityZipCode: '',
+  //     charityTypes: ['Christian', 'other'],
+  //     charityManagers: [],
+  //     charityMngIds: [],
+  //     charityTypeOther: '',
+  //     charityTypesHtml: '',
+  //     charityEmail: ''
+  //   };
+  //   charity.controller2 = { validate() {} };
+  //   charity.showUpdateCharity(myCharity);
+  //   expect(document.getElementById('updateCharityButton').style.display).toBe('block');
+  //   done();
+  // });
 
   // it('it does not try to display the submit or update button if it does not exist', (done) => {
   //   charity.activate();
