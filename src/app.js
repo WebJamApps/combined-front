@@ -109,14 +109,14 @@ export class App {
       {
         route: 'login', name: 'login', moduleId: PLATFORM.moduleName('./login'), nav: false, title: 'Login', settings: 'fa fa-sign-in'
       },
-      {
-        route: 'react-example',
-        name: 'react-example',
-        moduleId: PLATFORM.moduleName('./react-example'),
-        nav: false,
-        title: 'React Example',
-        settings: ''
-      },
+      // {
+      //   route: 'react-example',
+      //   name: 'react-example',
+      //   moduleId: PLATFORM.moduleName('./react-example'),
+      //   nav: false,
+      //   title: 'React Example',
+      //   settings: ''
+      // },
       {
         route: 'register', name: 'register', moduleId: PLATFORM.moduleName('./register'), nav: false, title: 'Register', settings: 'fa fa-user-plus'
       },
@@ -124,7 +124,7 @@ export class App {
         route: 'userutil', name: 'userutil', moduleId: PLATFORM.moduleName('./userutil'), nav: false, title: ''
       },
       {
-        route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./ohaf-home'), nav: false, title: 'OHAF', settings: 'fa fa-handshake-o'
+        route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./ohaf-router'), nav: false, title: '', settings: 'fa fa-handshake-o'
       },
       {
         route: 'sc2rs', name: 'sc2rs', moduleId: PLATFORM.moduleName('./sc2rs'), nav: false, title: 'SC2RS', settings: 'fa fa-microphone'
@@ -132,9 +132,9 @@ export class App {
       {
         route: 'library', name: 'library', moduleId: PLATFORM.moduleName('./library'), nav: false, title: 'Library', settings: 'fa fa-book'
       },
-      {
-        route: 'bookshelf', name: 'bookshelf', moduleId: PLATFORM.moduleName('./bookshelf'), nav: false, title: 'Bookshelf', settings: 'fa fa-book'
-      },
+      // {
+      //   route: 'bookshelf', name: 'bookshelf', moduleId: PLATFORM.moduleName('./bookshelf'), nav: false, title: 'Bookshelf', settings: 'fa fa-book'
+      // },
       {
         route: 'wj-music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: false, title: '', settings: 'fa fa-music'
       },
