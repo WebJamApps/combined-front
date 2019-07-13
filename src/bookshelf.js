@@ -44,7 +44,7 @@ export class Bookshelf {
   ];
 
   async activate() {
-    const res = await this.app.httpClient.fetch('/book');
+    const res = await this.app.httpClient.fetch('/book?access=ohaf');
     this.books = await res.json();
     this.commonUtils.makeFilterDropdown(this.mediaTypes, this.books, 'type');
     this.commonUtils.makeFilterDropdown(this.siteLocations, this.books, 'siteLocation');

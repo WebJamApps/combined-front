@@ -61,24 +61,24 @@
               <span class="nav-item" if.bind="fullmenu">OHAF</span>
             </a>
           </div>
-          <div id="sc2rsTT" style="display: none;position: absolute;top: 209px;right: 68px;background-color: white;padding: 3px">SC2RS</div>
+          <!-- <div id="sc2rsTT" style="display: none;position: absolute;top: 209px;right: 68px;background-color: white;padding: 3px">SC2RS</div>
           <div class="menu-item" if.bind="Menu == 'wj' && currentRoute !=='sc2rs'">
-            <a paper-drawer-toggle href="/sc2rs" class="nav-link" click.delegate="close()">
-              <!-- <span mouseover.delegate="showTT('sc2rsTT')" mouseout.delegate="hideTT('sc2rsTT')" class="fa fa-microphone"></span> -->
-              <span class="fa fa-microphone"></span>
+            <a paper-drawer-toggle href="/sc2rs" class="nav-link" click.delegate="close()"> -->
+          <!-- <span mouseover.delegate="showTT('sc2rsTT')" mouseout.delegate="hideTT('sc2rsTT')" class="fa fa-microphone"></span> -->
+          <!-- <span class="fa fa-microphone"></span>
               <span class="nav-item" if.bind="fullmenu">SC2RS</span>
             </a>
-          </div>
-          <div id="libTT" style="display: none;position: absolute;top: 257px;right: 68px;background-color: white;padding: 3px">Library</div>
+          </div> -->
+          <!-- <div id="libTT" style="display: none;position: absolute;top: 257px;right: 68px;background-color: white;padding: 3px">Library</div>
           <div class="menu-item" if.bind="(Menu=='wj' && curentRoute !=='library' && currentRoute !=='sc2rs') || Menu=='reader' || Menu=='librarian' || Menu=='bookshelf' || (currentRouteFrag =='/dashboard/user-account' && (role == 'Librarian' || role == 'Reader'))">
-            <a paper-drawer-toggle href="/library" class="nav-link" click.delegate="close()">
-              <!-- <span mouseover.delegate="showTT('libTT')" mouseout.delegate="hideTT('libTT')" class="fa fa-book"></span> -->
-              <span class="fa fa-book"></span>
+            <a paper-drawer-toggle href="/library" class="nav-link" click.delegate="close()"> -->
+          <!-- <span mouseover.delegate="showTT('libTT')" mouseout.delegate="hideTT('libTT')" class="fa fa-book"></span> -->
+          <!-- <span class="fa fa-book"></span>
               <span class="nav-item" if.bind="fullmenu">Library</span>
             </a>
-          </div>
-          <div class="menu-item" if.bind="Menu=='reader' || Menu=='librarian' || Menu=='developer' || Menu=='library'">
-            <a paper-drawer-toggle href="/bookshelf" class="nav-link" click.delegate="close()">
+          </div> -->
+          <div class="menu-item" if.bind="Menu=='reader' || Menu=='librarian' || Menu=='developer' || Menu=='ohaf'">
+            <a paper-drawer-toggle href="/ohaf/bookshelf" class="nav-link" click.delegate="close()">
               <span class="fa fa-book"></span>
               <span class="nav-item" if.bind="fullmenu">Bookshelf</span>
             </a>

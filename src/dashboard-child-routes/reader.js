@@ -8,8 +8,8 @@ export class Reader {
   }
 
   async activate() {
-    await fetch;
-    const res = await this.app.httpClient.fetch('/book');
+    // await fetch;
+    const res = await this.app.httpClient.fetch('/book?access=ohaf');
     this.books = await res.json();
     this.uid = this.app.auth.getTokenPayload().sub;
     this.user = await this.app.appState.getUser(this.uid);

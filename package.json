@@ -1,6 +1,6 @@
 {
   "name": "combined-front",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "Front End of web-jam.com App",
   "main": "dist/index.html",
   "repository": {
@@ -9,7 +9,7 @@
   },
   "author": "HandlersAndKickers",
   "engines": {
-    "node": ">=12.1.0"
+    "node": ">=12.5.0"
   },
   "files": [
     "webpack.config.js",
@@ -158,7 +158,7 @@
     "test:lint": "yarn test:html && yarn test:stylelint && nps test.lint",
     "test:unit": "rm -rf coverage && npm run test:jest && npm run test:jest-react && npm run test:karma && npm run combine-coverage",
     "test": "yarn test:lint && yarn test:unit",
-    "test:local": "yarn test:lint-fix && yarn test:unit && nps e2e && yarn cc",
+    "test:local": "yarn test:lint-fix && yarn test:unit && yarn cc",
     "combine-coverage": "istanbul-combine -d coverage -p none -r lcov -r html coverage/jest-react/coverage-final.json coverage/jest/coverage-final.json coverage/coverage-karma/coverage-final.json",
     "test:jest": "cross-env NODE_ENV=test && jest --no-cache --config jest.config.json --notify",
     "protest": "nps test",
