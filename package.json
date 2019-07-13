@@ -109,7 +109,6 @@
     "assertions-counter": "latest",
     "aurelia-cli": "latest",
     "aurelia-pal-nodejs": "latest",
-    "aurelia-protractor-plugin": "latest",
     "aurelia-testing": "latest",
     "aurelia-tools": "latest",
     "babel-eslint": "7.2.3",
@@ -171,7 +170,7 @@
     "snyk-protect": "snyk protect",
     "eslint:fix": "./node_modules/eslint/bin/eslint.js --fix .",
     "fix:aurelia-val": "rm -rf ./node_modules/aurelia-validation/node_modules",
-    "postinstall": "npm run fix:aurelia-val && npm start -- build",
+    "postinstall": "npm run fix:aurelia-val && npm start build",
     "protractor": "nps e2e",
     "test:stylelint": "stylelint \"src/**/*.html\" && stylelint \"static/**/*.css\"",
     "test:html": "htmlhint src/**/*.html"
