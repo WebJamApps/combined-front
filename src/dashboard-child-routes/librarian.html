@@ -32,7 +32,7 @@
         <h4 class="material-header-h4">Export Media</h4>
         <p style="text-align: center">to a tab-separated .txt file</p>
         <form>
-          <button class="button-lib" raised click.trigger="utils.makeCSVfile(app.httpClient,'/book','books_export.txt')">
+          <button class="button-lib" raised click.trigger="utils.makeCSVfile(app.httpClient,'/book?access=ohaf','books_export.txt')">
             Export
           </button>
         </form>
