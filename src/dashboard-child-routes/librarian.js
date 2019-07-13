@@ -94,15 +94,15 @@ export class Librarian {
 
   async deleteBooks() {
     await fetch;
-    this.app.httpClient.fetch('/book', {
+    this.app.httpClient.fetch('/book?access=ohaf', {
       method: 'delete'
     });
-    this.app.router.navigate('/bookshelf');
+    this.app.router.navigate('/ohaf/bookshelf');
   }
 
   async deleteCreateBooks() {
     await fetch;
-    this.app.httpClient.fetch('/book', {
+    this.app.httpClient.fetch('/book?access=ohaf', {
       method: 'delete'
     }).then(() => {
       this.createBooksFromCSV();
@@ -122,7 +122,7 @@ export class Librarian {
         .then(() => {
           setTimeout(() => {
           }, 2000);
-          router.navigate('/bookshelf');
+          router.navigate('/ohaf/bookshelf');
         });
     }
     async function loaded(evt) {
