@@ -1,6 +1,6 @@
 {
   "name": "combined-front",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "Front End of web-jam.com App",
   "main": "dist/index.html",
   "repository": {
@@ -9,7 +9,7 @@
   },
   "author": "HandlersAndKickers",
   "engines": {
-    "node": ">=12.5.0"
+    "node": ">=12.6.0"
   },
   "files": [
     "webpack.config.js",
