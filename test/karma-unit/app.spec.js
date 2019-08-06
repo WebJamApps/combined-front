@@ -67,39 +67,6 @@ describe('the App module', () => {
       }
     })());
   });
-  // it('scrolls page to top after route changes', (done) => {
-  //   document.body.innerHTML = '<div class="material-header"></div>';
-  //   app1.activate();
-  //   let router, config = {
-  //     fallbackRoute() {},
-  //     map() {},
-  //     title: '',
-  //     options: { pushstate: '', root: '' },
-  //     addPipelineStep() {},
-  //     addPostRenderStep(funObj) { funObj.run({ config: { settings: { noScrollToTop: false } } }, () => {}); }
-  //   };
-  //   app2.configureRouter(config, router);
-  //   document.body.innerHTML = '';
-  //   app2.configureRouter(config, router);
-  //   config = {
-  //     fallbackRoute() {},
-  //     map() {},
-  //     title: '',
-  //     options: { pushstate: '', root: '' },
-  //     addPipelineStep() {},
-  //     addPostRenderStep(funObj) { funObj.run({ config: { settings: { noScrollToTop: true } } }, () => {}); }
-  //   };
-  //   app2.configureRouter(config, router);
-  //   done();
-  // });
-  // it('configures the router', (done) => {
-  //   const configStub = {
-  //     options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}
-  //   };
-  //   app1.configureRouter(configStub, RouterStub);
-  //   expect(app1.router).toBeDefined();
-  //   done();
-  // });
 
   it('updates by id', testAsync(async () => {
     await app1.updateById('/volopp/', '123', {});
@@ -130,16 +97,6 @@ describe('the App module', () => {
     await app1.logout();
     expect(app1.authenticated).toBe(false);
   }));
-
-  // it('gets the current route', testAsync(async () => {
-  //   await app1.activate();
-  //   const configStub = {
-  //     options: { pushState: true }, addPipelineStep() {}, addPostRenderStep() {}, map() {}, fallbackRoute() {}
-  //   };
-  //   await app1.configureRouter(configStub, RouterStub);
-  //   const route = await app1.currentRoute;
-  //   expect(route).toBe(route);
-  // }));
 
   it('should be able to configure router', (done) => {
     const config = {
@@ -200,37 +157,6 @@ describe('the App module', () => {
     expect(cs).toBeDefined();
     done();
   });
-
-  // it('gets the current styles with dashboard route', (done) => {
-  //   const routre = new RouterStub();
-  //   routre.currentInstruction.fragment = '/dashboard';
-  //   app1.router = routre;
-  //   const cs = app1.currentStyles;
-  //   expect(app1.Menu).toBe('dashboard');
-  //   expect(cs).toBeDefined();
-  //   done();
-  // });
-
-  // it('gets the current styles with bookshelf route', (done) => {
-  //   const routre = new RouterStub();
-  //   routre.currentInstruction.fragment = '/bookshelf';
-  //   app1.router = routre;
-  //   const cs = app1.currentStyles;
-  //   expect(app1.Menu).toBe('bookshelf');
-  //   expect(cs).toBeDefined();
-  //   done();
-  // });
-
-  // it('gets the current styles with user-account route', (done) => {
-  //   const routre = new RouterStub();
-  //   routre.currentInstruction.fragment = '/dashboard/user-account';
-  //   app1.router = routre;
-  //   const cs = app1.currentStyles;
-  //   expect(app1.Menu).toBe('user-account');
-  //   expect(cs).toBeDefined();
-  //   done();
-  // });
-
   it('gets the current styles dashboard/volunteer route', (done) => {
     const routre = new RouterStub();
     document.body.innerHTML = '<div id="ohaf-footer" class="footer drawer nav-list" elevation="4" '
@@ -252,83 +178,6 @@ describe('the App module', () => {
     const cs = app1.currentStyles;
     expect(app1.Menu).toBe('charity');
     expect(cs).toBeDefined();
-    done();
-  });
-
-  // it('gets the current styles with dashboard/reader route', (done) => {
-  //   const routre = new RouterStub();
-  //   routre.currentInstruction.fragment = '/dashboard/reader';
-  //   app1.router = routre;
-  //   const cs = app1.currentStyles;
-  //   expect(app1.Menu).toBe('reader');
-  //   expect(cs).toBeDefined();
-  //   done();
-  // });
-
-  // it('gets the current styles with dashboard/librarian route', (done) => {
-  //   const routre = new RouterStub();
-  //   routre.currentInstruction.fragment = '/dashboard/librarian';
-  //   app1.router = routre;
-  //   const cs = app1.currentStyles;
-  //   expect(app1.Menu).toBe('librarian');
-  //   expect(cs).toBeDefined();
-  //   done();
-  // });
-
-  // it('gets the current styles with dashboard/developer route', (done) => {
-  //   const routre = new RouterStub();
-  //   routre.currentInstruction.fragment = '/dashboard/developer';
-  //   app1.router = routre;
-  //   const cs = app1.currentStyles;
-  //   expect(app1.Menu).toBe('developer');
-  //   expect(cs).toBeDefined();
-  //   done();
-  // });
-
-  // it('gets the current styles with music-router route', (done) => {
-  //   const routre = new RouterStub();
-  //   routre.currentInstruction.config.name = 'music-router';
-  //   app1.router = routre;
-  //   const cs = app1.currentStyles;
-  //   expect(app1.Menu).toBe('music');
-  //   expect(cs).toBeDefined();
-  //   done();
-  // });
-
-  // it('gets the current styles when route is sc2rs', (done) => {
-  //   const routre = new RouterStub();
-  //   routre.currentInstruction.fragment = '/sc2rs';
-  //   app1.router = routre;
-  //   const cs = app1.currentStyles;
-  //   expect(cs).toBeDefined();
-  //   done();
-  // });
-
-  it('leaves the styles set to wj if undefined route frag', (done) => {
-    done();
-  });
-
-  it('closes the menu on widescreen when clicking the correct area', (done) => {
-    // document.body.innerHTML = '<div class="drawer mobile-menu-toggle page-host swipe-area"></div>';
-    // app1.clickFunc({ target: { className: 'nothing' } });
-    // expect(document.getElementsByClassName('page-host')[0].style.overflow).toBe('auto');
-    done();
-  });
-
-  it('closes the menu on cellphone display', (done) => {
-    // document.body.innerHTML = '<div class="page-host drawer mobile-menu-toggle main-panel swipe-area"></div>';
-    // app1.contentWidth = '0px';
-    // app1.close();
-    done();
-  });
-
-  it('should get widescreen', (done) => {
-    // const app3 = new App(new AuthStub(), new HttpMock());
-    // document.body.innerHTML = '<div class="drawer swipe-area"></div> <div class="mobile-menu-toggle"></div><div class="main-panel"></div>';
-    // window.$ = () => ({ parent: () => ({ css: arg }) });
-    // app3.contentWidth = '0px';
-    // expect(app3.widescreen).toBe(true);
-    // const ws = app2.widescreen;
     done();
   });
 
