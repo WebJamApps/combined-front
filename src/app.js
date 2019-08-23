@@ -47,9 +47,7 @@ export class App {
     await this.appUtils.checkUser(this);
   }
 
-  showTT(id) {
-    document.getElementById(id).style.display = 'block';
-  }
+  showTT(id) { document.getElementById(id).style.display = 'block'; }
 
   hideTT(id) {
     document.getElementById(id).style.display = 'none';
@@ -98,8 +96,7 @@ export class App {
   }
 
   mapConfig(config) {
-    return config.map([
-      // There is no way to refactor this that I can tell
+    return config.map([ // There is no way to refactor this that I can tell
       {
         route: 'dashboard',
         name: 'dashboard-router',
@@ -110,59 +107,25 @@ export class App {
         settings: 'fa fa-tachometer'
       },
       {
-        route: 'login',
-        name: 'login',
-        moduleId: PLATFORM.moduleName('./login'),
-        nav: false,
-        title: 'Login',
-        settings: 'fa fa-sign-in'
+        route: 'login', name: 'login', moduleId: PLATFORM.moduleName('./login'), nav: false, title: 'Login', settings: 'fa fa-sign-in'
       },
       {
-        route: 'register',
-        name: 'register',
-        moduleId: PLATFORM.moduleName('./register'),
-        nav: false,
-        title: 'Register',
-        settings: 'fa fa-user-plus'
+        route: 'register', name: 'register', moduleId: PLATFORM.moduleName('./register'), nav: false, title: 'Register', settings: 'fa fa-user-plus'
       },
       {
-        route: 'userutil',
-        name: 'userutil',
-        moduleId: PLATFORM.moduleName('./userutil'),
-        nav: false,
-        title: ''
+        route: 'userutil', name: 'userutil', moduleId: PLATFORM.moduleName('./userutil'), nav: false, title: ''
       },
       {
-        route: 'ohaf',
-        name: 'ohaf',
-        moduleId: PLATFORM.moduleName('./ohaf-router'),
-        nav: false,
-        title: '',
-        settings: 'fa fa-handshake-o'
+        route: 'ohaf', name: 'ohaf', moduleId: PLATFORM.moduleName('./ohaf-router'), nav: false, title: '', settings: 'fa fa-handshake-o'
       },
       {
-        route: 'sc2rs',
-        name: 'sc2rs',
-        moduleId: PLATFORM.moduleName('./sc2rs'),
-        nav: false,
-        title: 'SC2RS',
-        settings: 'fa fa-microphone'
+        route: 'sc2rs', name: 'sc2rs', moduleId: PLATFORM.moduleName('./sc2rs'), nav: false, title: 'SC2RS', settings: 'fa fa-microphone'
       },
       {
-        route: 'library',
-        name: 'library',
-        moduleId: PLATFORM.moduleName('./library'),
-        nav: false,
-        title: 'Library',
-        settings: 'fa fa-book'
+        route: 'library', name: 'library', moduleId: PLATFORM.moduleName('./library'), nav: false, title: 'Library', settings: 'fa fa-book'
       },
       {
-        route: ['', 'home'],
-        name: 'home',
-        moduleId: PLATFORM.moduleName('./home'),
-        nav: false,
-        title: '',
-        settings: 'fa fa-home'
+        route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: false, title: '', settings: 'fa fa-home'
       }
     ]);
   }
@@ -171,8 +134,8 @@ export class App {
     config.title = 'Web Jam LLC';
     config.options.pushState = true;
     config.options.root = '/';
-    config.addPipelineStep('authorize', AuthorizeStep); // Is the actually Authorization to get into the /dashboard
-    config.addPipelineStep('authorize', this.userAccess); // provides access controls to prevent users from certain
+    config.addPipelineStep('authorize', AuthorizeStep);// Is the actually Authorization to get into the /dashboard
+    config.addPipelineStep('authorize', this.userAccess);// provides access controls to prevent users from certain
     config.addPostRenderStep({
       run(routingContext, next) {
         if (!routingContext.config.settings.noScrollToTop) {
@@ -201,15 +164,11 @@ export class App {
     const toggleIcon = document.getElementsByClassName('mobile-menu-toggle')[0];
     if (drawer.style.display === 'none' && toggle !== 'close') {
       drawer.style.display = 'block';
-      $(drawer)
-        .parent()
-        .css('display', 'block');
+      $(drawer).parent().css('display', 'block');
       toggleIcon.style.display = 'none';
     } else {
       drawer.style.display = 'none';
-      $(drawer)
-        .parent()
-        .css('display', 'none');
+      $(drawer).parent().css('display', 'none');
       toggleIcon.style.display = 'block';
     }
     if (toggle === 'close') {
@@ -222,8 +181,7 @@ export class App {
     if (!this.widescreen) this.toggleMobileMenu('close');
   }
 
-  toggleMenu() {
-    // makes the widescreen side menu only display the icons and is only used for web-jam.com
+  toggleMenu() { // makes the widescreen side menu only display the icons and is only used for web-jam.com
     const dc = document.getElementsByClassName('drawer-container')[0];
     const nl = document.getElementsByClassName('nav-list')[0];
     if (this.fullmenu) {
@@ -304,21 +262,19 @@ export class App {
         color = '#c09580';
       }
       footer.innerHTML = '<div style="text-align: center;padding:6px">'
-        + `<a target="_blank" style="color:${color}; padding-right:5px" href="https://github.com/WebJamApps">`
-        + '<i class="fa fa-github fa-2x footerIcon" aria-hidden="true">'
-        + `</i></a><a target="_blank" style="color:${color};padding-right:5px" href="https://www.linkedin.com/company/webjam/">`
-        + `<i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a><a target="_blank" style="color:${color};padding-right:5px"`
-        + 'href="https://twitter.com/JoshuaVSherman"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a>'
-        + `<a target="_blank" style="color:${color};padding-right:5px" href="https://www.facebook.com/WebJamLLC/">`
-        + '<i class="fa fa-facebook-square fa-2x footerIcon"'
-        + 'aria-hidden="true"></i></a>'
-        + `<a target="_blank" style="color:${color};padding-right:5px" href="https://joshuavsherman.tumblr.com/">`
-        + '<i class="fa fa-tumblr fa-2x footerIcon"'
-        + 'aria-hidden="true"></i></a>'
-        + `<a target="_blank" style="color:${color};padding-right:5px"`
-        + 'href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>'
-        + '<p style="color:white; font-size: 9pt;margin-bottom:0">'
-        + 'Powered by <a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>';
+      + `<a target="_blank" style="color:${color}; padding-right:5px" href="https://github.com/WebJamApps">`
+      + '<i class="fa fa-github fa-2x footerIcon" aria-hidden="true">'
+      + `</i></a><a target="_blank" style="color:${color};padding-right:5px" href="https://www.linkedin.com/company/webjam/">`
+      + `<i class="fa fa-linkedin fa-2x footerIcon" aria-hidden="true"></i></a><a target="_blank" style="color:${color};padding-right:5px"`
+      + 'href="https://twitter.com/WebJamLLC"><i class="fa fa-twitter fa-2x footerIcon" aria-hidden="true"></i></a>'
+      + `<a target="_blank" style="color:${color};padding-right:5px" href="https://www.facebook.com/WebJamLLC/">`
+      + '<i class="fa fa-facebook-square fa-2x footerIcon"'
+      + `aria-hidden="true"></i></a><a target="_blank" style="color:${color};padding-right:5px"`
+      + 'href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>'
+      + `<a target="_blank" style="color:${color};padding-right:5px" href="https://joshuavsherman.tumblr.com/">`
+      + '<i class="fa fa-tumblr fa-2x footerIcon" aria-hidden="true"></i></a>'
+      + '<p style="color:white; font-size: 9pt;margin-bottom:0">'
+      + 'Powered by <a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>';
     }
   }
 
@@ -424,23 +380,19 @@ export class App {
         body: json(dataObj)
       });
       return cb.json();
-    } catch (e) {
-      return e;
-    }
+    } catch (e) { return e; }
   }
 
   get widescreen() {
-    return this.appUtils.handleScreenSize(
-      this,
-      document.documentElement.clientWidth > 900,
-      $(document.getElementsByClassName('drawer')).parent(),
-      'returnIsWide'
-    );
+    return this.appUtils.handleScreenSize(this, document.documentElement.clientWidth > 900,
+      $(document.getElementsByClassName('drawer')).parent(), 'returnIsWide');
   }
 
   attached() {
     this.manager = new Hammer.Manager(document.getElementsByClassName('swipe-area')[0], {
-      recognizers: [[Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]]
+      recognizers: [
+        [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]
+      ]
     });
     this.manager.on('swipe', this.close.bind(this));
     if (document.location.search.includes('oneplayer=true')) {
