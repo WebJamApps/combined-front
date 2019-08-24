@@ -109,14 +109,6 @@ export class App {
       {
         route: 'login', name: 'login', moduleId: PLATFORM.moduleName('./login'), nav: false, title: 'Login', settings: 'fa fa-sign-in'
       },
-      // {
-      //   route: 'react-example',
-      //   name: 'react-example',
-      //   moduleId: PLATFORM.moduleName('./react-example'),
-      //   nav: false,
-      //   title: 'React Example',
-      //   settings: ''
-      // },
       {
         route: 'register', name: 'register', moduleId: PLATFORM.moduleName('./register'), nav: false, title: 'Register', settings: 'fa fa-user-plus'
       },
@@ -131,12 +123,6 @@ export class App {
       },
       {
         route: 'library', name: 'library', moduleId: PLATFORM.moduleName('./library'), nav: false, title: 'Library', settings: 'fa fa-book'
-      },
-      // {
-      //   route: 'bookshelf', name: 'bookshelf', moduleId: PLATFORM.moduleName('./bookshelf'), nav: false, title: 'Bookshelf', settings: 'fa fa-book'
-      // },
-      {
-        route: 'wj-music', name: 'music-router', moduleId: PLATFORM.moduleName('./music-router'), nav: false, title: '', settings: 'fa fa-music'
       },
       {
         route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('./home'), nav: false, title: '', settings: 'fa fa-home'
@@ -248,7 +234,6 @@ export class App {
   checkNavMenu() {
     this.Menu = 'wj';
     if (this.currentRoute === 'ohaf' || this.currentRouteFrag === '/ohaf') this.Menu = 'ohaf';
-    else if (this.currentRoute === 'music-router') this.Menu = 'music';
     else if (this.currentRoute === 'library') this.Menu = 'library';
     else if (this.currentRoute === 'login') {
       if (this.appState.isOhafLogin) this.Menu = 'ohaf';
@@ -286,6 +271,8 @@ export class App {
       + '<i class="fa fa-facebook-square fa-2x footerIcon"'
       + `aria-hidden="true"></i></a><a target="_blank" style="color:${color};padding-right:5px"`
       + 'href="https://www.instagram.com/joshua.v.sherman/"><i class="fa fa-instagram fa-2x footerIcon" aria-hidden="true"></i></a>'
+      + `<a target="_blank" style="color:${color};padding-right:5px" href="https://joshuavsherman.tumblr.com/">`
+      + '<i class="fa fa-tumblr fa-2x footerIcon" aria-hidden="true"></i></a>'
       + '<p style="color:white; font-size: 9pt;margin-bottom:0">'
       + 'Powered by <a class="wjllc" target="_blank" href="https://www.web-jam.com">Web Jam LLC</a></p></div>';
     }

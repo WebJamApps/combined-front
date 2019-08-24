@@ -127,10 +127,7 @@ module.exports = ({
         removeComments: true,
         collapseWhitespace: true
       } : undefined,
-      metadata: {
-        // available in index.ejs //
-        title, server, baseUrl
-      }
+      metadata: { title, server, baseUrl }// available in index.ejs
     }),
     new CopyWebpackPlugin([
       { from: 'static/favicon.ico', to: 'favicon.ico' },
@@ -142,12 +139,6 @@ module.exports = ({
         return o;
       }, {})
     }),
-    new CopyWebpackPlugin([
-      { from: 'static/music/AT.mp3', to: 'AT.mp3' },
-      { from: 'static/music/TTGA.mp3', to: 'TTGA.mp3' },
-      { from: 'static/music/DITR.mp3', to: 'DITR.mp3' },
-      { from: 'static/WebJamLLC_FactSheet.pdf', to: 'WebJamLLC_FactSheet.pdf' }
-    ]),
     ...when(extractCss, new ExtractTextPlugin({
       filename: production ? '[md5:contenthash:hex:20].css' : '[id].css',
       allChunks: true
