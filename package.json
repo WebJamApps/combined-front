@@ -92,7 +92,7 @@
     "react-slick": "latest",
     "redux": "latest",
     "slick-carousel": "latest",
-    "snyk": "^1.192.3",
+    "snyk": "^1.230.5",
     "style-loader": "latest",
     "through2": "latest",
     "uglify-js": "latest",
@@ -173,7 +173,8 @@
     "postinstall": "npm run fix:aurelia-val && npm start build",
     "protractor": "nps e2e",
     "test:stylelint": "stylelint \"src/**/*.html\" && stylelint \"static/**/*.css\"",
-    "test:html": "htmlhint src/**/*.html"
+    "test:html": "htmlhint src/**/*.html",
+    "prepublish": "npm run snyk-protect"
   },
   "snyk": true
 }
